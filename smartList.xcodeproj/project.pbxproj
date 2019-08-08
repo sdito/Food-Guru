@@ -3,17 +3,32 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		165FE4DEEA11885B398FFCAE /* Pods_smartListTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7F488B427C9EA1D0083454 /* Pods_smartListTests.framework */; };
+		251D01FED1353E46E29BB939 /* Pods_smartList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F30C0C4898D5DF1DF11A7E59 /* Pods_smartList.framework */; };
+		D30C8AF1B700C4D5D1E2F1B9 /* Pods_smartListUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DF0F0395060F9BE10E20E39 /* Pods_smartListUITests.framework */; };
 		E216204722F658D10074A0DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216204622F658D10074A0DF /* AppDelegate.swift */; };
-		E216204922F658D10074A0DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216204822F658D10074A0DF /* ViewController.swift */; };
+		E216204922F658D10074A0DF /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216204822F658D10074A0DF /* HomeVC.swift */; };
 		E216204C22F658D10074A0DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E216204A22F658D10074A0DF /* Main.storyboard */; };
 		E216204E22F658D20074A0DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E216204D22F658D20074A0DF /* Assets.xcassets */; };
 		E216205122F658D20074A0DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E216204F22F658D20074A0DF /* LaunchScreen.storyboard */; };
 		E216205C22F658D20074A0DF /* smartListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216205B22F658D20074A0DF /* smartListTests.swift */; };
 		E216206722F658D20074A0DF /* smartListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216206622F658D20074A0DF /* smartListUITests.swift */; };
+		E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
+		E216207622F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
+		E216207722F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
+		E216207A22F660DF0074A0DF /* CreateListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216207922F660DF0074A0DF /* CreateListVC.swift */; };
+		E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B4694B22F78D1C006BA77D /* CreateListView.xib */; };
+		E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4694F22F78D44006BA77D /* CreateListView.swift */; };
+		E2B4695422F794F8006BA77D /* ListOrganizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4695322F794F8006BA77D /* ListOrganizer.swift */; };
+		E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4695622F7F18E006BA77D /* UITextField-Extension.swift */; };
+		E2B4695A22F7F485006BA77D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4695922F7F485006BA77D /* Colors.swift */; };
+		E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */; };
+		E2E529D222FA7F9100C55DA0 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D122FA7F9100C55DA0 /* List.swift */; };
+		E2E529D522FA80C400C55DA0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D422FA80C400C55DA0 /* Item.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,9 +49,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		23117D14B9AAF48D1D3EAB08 /* Pods-smartListTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartListTests.debug.xcconfig"; path = "Target Support Files/Pods-smartListTests/Pods-smartListTests.debug.xcconfig"; sourceTree = "<group>"; };
+		2C88071BA2D6027769549A73 /* Pods-smartList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartList.release.xcconfig"; path = "Target Support Files/Pods-smartList/Pods-smartList.release.xcconfig"; sourceTree = "<group>"; };
+		4DF0F0395060F9BE10E20E39 /* Pods_smartListUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_smartListUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		637340E166032438AC62EA0F /* Pods-smartList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartList.debug.xcconfig"; path = "Target Support Files/Pods-smartList/Pods-smartList.debug.xcconfig"; sourceTree = "<group>"; };
+		808C86907637F132A742D4A5 /* Pods-smartListUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartListUITests.debug.xcconfig"; path = "Target Support Files/Pods-smartListUITests/Pods-smartListUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		BB7F488B427C9EA1D0083454 /* Pods_smartListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_smartListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDA8BD7215F29012C997B584 /* Pods-smartListTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartListTests.release.xcconfig"; path = "Target Support Files/Pods-smartListTests/Pods-smartListTests.release.xcconfig"; sourceTree = "<group>"; };
 		E216204322F658D10074A0DF /* smartList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smartList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E216204622F658D10074A0DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E216204822F658D10074A0DF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E216204822F658D10074A0DF /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		E216204B22F658D10074A0DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E216204D22F658D20074A0DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E216205022F658D20074A0DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +69,18 @@
 		E216206222F658D20074A0DF /* smartListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = smartListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E216206622F658D20074A0DF /* smartListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = smartListUITests.swift; sourceTree = "<group>"; };
 		E216206822F658D20074A0DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E216207422F659860074A0DF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E216207922F660DF0074A0DF /* CreateListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListVC.swift; sourceTree = "<group>"; };
+		E2B4694B22F78D1C006BA77D /* CreateListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateListView.xib; sourceTree = "<group>"; };
+		E2B4694F22F78D44006BA77D /* CreateListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListView.swift; sourceTree = "<group>"; };
+		E2B4695322F794F8006BA77D /* ListOrganizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListOrganizer.swift; sourceTree = "<group>"; };
+		E2B4695622F7F18E006BA77D /* UITextField-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField-Extension.swift"; sourceTree = "<group>"; };
+		E2B4695922F7F485006BA77D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-Extension.swift"; sourceTree = "<group>"; };
+		E2E529D122FA7F9100C55DA0 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		E2E529D422FA80C400C55DA0 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		EA1C8AC62AFAE75802B4FD76 /* Pods-smartListUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartListUITests.release.xcconfig"; path = "Target Support Files/Pods-smartListUITests/Pods-smartListUITests.release.xcconfig"; sourceTree = "<group>"; };
+		F30C0C4898D5DF1DF11A7E59 /* Pods_smartList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_smartList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				251D01FED1353E46E29BB939 /* Pods_smartList.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				165FE4DEEA11885B398FFCAE /* Pods_smartListTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,12 +104,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D30C8AF1B700C4D5D1E2F1B9 /* Pods_smartListUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3FC523C94556427C3283406B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F30C0C4898D5DF1DF11A7E59 /* Pods_smartList.framework */,
+				BB7F488B427C9EA1D0083454 /* Pods_smartListTests.framework */,
+				4DF0F0395060F9BE10E20E39 /* Pods_smartListUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A1755B63879C02B0A87D8894 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				637340E166032438AC62EA0F /* Pods-smartList.debug.xcconfig */,
+				2C88071BA2D6027769549A73 /* Pods-smartList.release.xcconfig */,
+				23117D14B9AAF48D1D3EAB08 /* Pods-smartListTests.debug.xcconfig */,
+				DDA8BD7215F29012C997B584 /* Pods-smartListTests.release.xcconfig */,
+				808C86907637F132A742D4A5 /* Pods-smartListUITests.debug.xcconfig */,
+				EA1C8AC62AFAE75802B4FD76 /* Pods-smartListUITests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		E216203A22F658D10074A0DF = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +141,8 @@
 				E216205A22F658D20074A0DF /* smartListTests */,
 				E216206522F658D20074A0DF /* smartListUITests */,
 				E216204422F658D10074A0DF /* Products */,
+				A1755B63879C02B0A87D8894 /* Pods */,
+				3FC523C94556427C3283406B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,11 +160,16 @@
 			isa = PBXGroup;
 			children = (
 				E216204622F658D10074A0DF /* AppDelegate.swift */,
-				E216204822F658D10074A0DF /* ViewController.swift */,
+				E216207822F660C40074A0DF /* View Controllers */,
 				E216204A22F658D10074A0DF /* Main.storyboard */,
+				E2E529D322FA7F9700C55DA0 /* Classes */,
+				E2B4695522F79748006BA77D /* Structs */,
+				E2B4694D22F78D23006BA77D /* Views */,
+				E2B4695822F7F19C006BA77D /* Extensions */,
 				E216204D22F658D20074A0DF /* Assets.xcassets */,
 				E216204F22F658D20074A0DF /* LaunchScreen.storyboard */,
 				E216205222F658D20074A0DF /* Info.plist */,
+				E216207422F659860074A0DF /* GoogleService-Info.plist */,
 			);
 			path = smartList;
 			sourceTree = "<group>";
@@ -125,6 +192,59 @@
 			path = smartListUITests;
 			sourceTree = "<group>";
 		};
+		E216207822F660C40074A0DF /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E216204822F658D10074A0DF /* HomeVC.swift */,
+				E216207922F660DF0074A0DF /* CreateListVC.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		E2B4694D22F78D23006BA77D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E2B4694E22F78D2B006BA77D /* CreateListView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E2B4694E22F78D2B006BA77D /* CreateListView */ = {
+			isa = PBXGroup;
+			children = (
+				E2B4694B22F78D1C006BA77D /* CreateListView.xib */,
+				E2B4694F22F78D44006BA77D /* CreateListView.swift */,
+			);
+			path = CreateListView;
+			sourceTree = "<group>";
+		};
+		E2B4695522F79748006BA77D /* Structs */ = {
+			isa = PBXGroup;
+			children = (
+				E2B4695322F794F8006BA77D /* ListOrganizer.swift */,
+				E2E529D422FA80C400C55DA0 /* Item.swift */,
+				E2B4695922F7F485006BA77D /* Colors.swift */,
+			);
+			path = Structs;
+			sourceTree = "<group>";
+		};
+		E2B4695822F7F19C006BA77D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				E2B4695622F7F18E006BA77D /* UITextField-Extension.swift */,
+				E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E2E529D322FA7F9700C55DA0 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				E2E529D122FA7F9100C55DA0 /* List.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +252,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E216206B22F658D20074A0DF /* Build configuration list for PBXNativeTarget "smartList" */;
 			buildPhases = (
+				E5BB9C9DF234276440290F64 /* [CP] Check Pods Manifest.lock */,
 				E216203F22F658D10074A0DF /* Sources */,
 				E216204022F658D10074A0DF /* Frameworks */,
 				E216204122F658D10074A0DF /* Resources */,
+				CAB36106BB041121C33432F9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -149,6 +271,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E216206E22F658D20074A0DF /* Build configuration list for PBXNativeTarget "smartListTests" */;
 			buildPhases = (
+				2BECD1F053F984FDAF48D4BF /* [CP] Check Pods Manifest.lock */,
 				E216205322F658D20074A0DF /* Sources */,
 				E216205422F658D20074A0DF /* Frameworks */,
 				E216205522F658D20074A0DF /* Resources */,
@@ -167,6 +290,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E216207122F658D20074A0DF /* Build configuration list for PBXNativeTarget "smartListUITests" */;
 			buildPhases = (
+				89FB5E8D89F5A10536B251DB /* [CP] Check Pods Manifest.lock */,
 				E216205E22F658D20074A0DF /* Sources */,
 				E216205F22F658D20074A0DF /* Frameworks */,
 				E216206022F658D20074A0DF /* Resources */,
@@ -230,7 +354,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E216205122F658D20074A0DF /* LaunchScreen.storyboard in Resources */,
+				E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */,
 				E216204E22F658D20074A0DF /* Assets.xcassets in Resources */,
+				E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */,
 				E216204C22F658D10074A0DF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,6 +365,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E216207622F659860074A0DF /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,18 +373,113 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E216207722F659860074A0DF /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2BECD1F053F984FDAF48D4BF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-smartListTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		89FB5E8D89F5A10536B251DB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-smartListUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CAB36106BB041121C33432F9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-smartList/Pods-smartList-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-smartList/Pods-smartList-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-smartList/Pods-smartList-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E5BB9C9DF234276440290F64 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-smartList-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		E216203F22F658D10074A0DF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E216204922F658D10074A0DF /* ViewController.swift in Sources */,
+				E2E529D522FA80C400C55DA0 /* Item.swift in Sources */,
+				E216204922F658D10074A0DF /* HomeVC.swift in Sources */,
+				E2B4695422F794F8006BA77D /* ListOrganizer.swift in Sources */,
 				E216204722F658D10074A0DF /* AppDelegate.swift in Sources */,
+				E2B4695A22F7F485006BA77D /* Colors.swift in Sources */,
+				E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */,
+				E216207A22F660DF0074A0DF /* CreateListVC.swift in Sources */,
+				E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */,
+				E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */,
+				E2E529D222FA7F9100C55DA0 /* List.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,11 +652,13 @@
 		};
 		E216206C22F658D20074A0DF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 637340E166032438AC62EA0F /* Pods-smartList.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XVWYN7L6Y8;
 				INFOPLIST_FILE = smartList/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -448,11 +672,13 @@
 		};
 		E216206D22F658D20074A0DF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2C88071BA2D6027769549A73 /* Pods-smartList.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XVWYN7L6Y8;
 				INFOPLIST_FILE = smartList/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -466,6 +692,7 @@
 		};
 		E216206F22F658D20074A0DF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 23117D14B9AAF48D1D3EAB08 /* Pods-smartListTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -487,6 +714,7 @@
 		};
 		E216207022F658D20074A0DF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DDA8BD7215F29012C997B584 /* Pods-smartListTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -508,6 +736,7 @@
 		};
 		E216207222F658D20074A0DF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 808C86907637F132A742D4A5 /* Pods-smartListUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -528,6 +757,7 @@
 		};
 		E216207322F658D20074A0DF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA1C8AC62AFAE75802B4FD76 /* Pods-smartListUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
