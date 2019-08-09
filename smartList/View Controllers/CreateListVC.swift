@@ -8,8 +8,13 @@
 
 import UIKit
 
+import FirebaseCore
+import FirebaseFirestore
+
+
 class CreateListVC: UIViewController {
     
+    var db: Firestore!
     var all = ListOrganizer.createListViews()
     private var section: Section?
     private var textFieldCombo: [UITextField:Section] = [:]
@@ -28,6 +33,10 @@ class CreateListVC: UIViewController {
     lazy private var buttons: [UIButton] = [nameOutlet, storesOutlet, categoriesOutlet, peopleOutlet]
     
     override func viewDidLoad() {
+        let settings = FirestoreSettings()
+        Firestore.firestore().settings = settings
+        db = Firestore.firestore()
+        
         super.viewDidLoad()
         nameTextField.delegate = self
         scrollView.delegate = self
@@ -66,6 +75,12 @@ class CreateListVC: UIViewController {
         case stores
         case categories
         case people
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addItems" {
+            let destVC = segue.destination as! AddItemsVC
+            destVC.list = sender as? List
+        }
     }
 }
 
@@ -107,10 +122,19 @@ extension CreateListVC: UITextFieldDelegate {
             section = .people
         } else if textField == all[0].listView.textField {
             let list = List(name: nameTextField.text!, stores: all[2].items, categories: all[1].items, people: all[0].items, items: nil)
-            print("\(list.name) is the name")
-            print("\(String(describing: list.stores)) are the stores")
-            print("\(String(describing: list.categories)) are the categories")
-            print("\(String(describing: list.people)) are the people")
+            db.collection("lists").document().setData([
+                "name": list.name,
+                "stores": list.stores!,
+                "categories": list.categories!,
+                "people": list.people!
+            ]) { err in
+                if let err = err {
+                    print("Error writing document: \(err)")
+                } else {
+                    print("Document successfully written")
+                }
+            }
+            performSegue(withIdentifier: "addItems", sender: list)
         }
         return true
     }

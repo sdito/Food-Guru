@@ -196,16 +196,17 @@
                         <outlet property="scrollView" destination="79D-YL-7rt" id="see-3P-lti"/>
                         <outlet property="stackView" destination="Rh7-pR-LHj" id="TqP-IX-NFK"/>
                         <outlet property="storesOutlet" destination="ulb-DH-yp5" id="cWV-fY-ddX"/>
+                        <segue destination="AVh-qM-Vlx" kind="show" identifier="addItems" id="HwK-Ht-8i8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ae9-gf-boO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2074" y="-387"/>
         </scene>
-        <!--View Controller-->
+        <!--Add ItemsVC-->
         <scene sceneID="VmX-0h-R9o">
             <objects>
-                <viewController id="AVh-qM-Vlx" sceneMemberID="viewController">
+                <viewController id="AVh-qM-Vlx" customClass="AddItemsVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="N0S-xy-Xer">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
