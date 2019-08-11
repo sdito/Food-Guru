@@ -12,11 +12,8 @@ import FirebaseFirestore
 
 class SharedValues {
     var currentCategory: String = ""
-    var listIdentifier: DocumentReference? {
-        didSet {
-            print(self.listIdentifier?.documentID)
-        }
-    }
+    var listIdentifier: DocumentReference?
+    var userID: String?
     
     static let shared = SharedValues()
     private init() {}

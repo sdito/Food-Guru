@@ -24,6 +24,7 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
+        print(SharedValues.shared.userID)
     }
     
     override func viewWillAppear(_ animated: Bool) {

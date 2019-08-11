@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseCore
 import FirebaseFirestore
+import FirebaseUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,11 +18,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         // Override point for customization after application launch.
         FirebaseApp.configure()
-        let db = Firestore.firestore()
-        print(db)
-        
+        //let db = Firestore.firestore()
+        if Auth.auth().currentUser != nil {
+            let vc: NaviVC = storyboard.instantiateViewController(withIdentifier: "nav") as! NaviVC
+            self.window?.rootViewController = vc
+            self.window?.makeKeyAndVisible()
+            print("navigation controller")
+            SharedValues.shared.userID = Auth.auth().currentUser?.uid
+        }
         return true
     }
 

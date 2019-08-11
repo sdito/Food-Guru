@@ -68,6 +68,7 @@ class CreateListVC: UIViewController {
     @IBAction func peopleButton(_ sender: Any) {
         scrollView.scrollRectToVisible(CGRect(x: w*3, y: 0, width: w, height: h), animated: true)
         section = .people
+        
     }
     
     private enum Section {
