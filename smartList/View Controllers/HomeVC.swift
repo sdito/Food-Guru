@@ -10,14 +10,20 @@ import UIKit
 
 
 class HomeVC: UIViewController {
-    let deleteAfterTesting = ["One", "Two", "three", "four", "five", "six"]
+    let listsForTesting: [List] = [
+        List(name: "List 1", stores: ["Trader Joe's", "Whole Foods"], categories: ["Sweets", "Baking", "Fruit"], people: ["Steven"], items: nil),
+        List(name: "Sunday List", stores: ["Target", "Safeway", "Trader Joe's"], categories: ["Dairy", "Veggies", "Grains", "Fruit", "Other"], people: ["Nicole", "Steven", "Anthony"], items: nil),
+        List(name: "Steven's List", stores: [ "Safeway", "Trader Joe's"], categories: ["Dairy", "Veggies", "Grains", "Fruit", "Other"], people: ["Nicole", "Steven", "Anthony"], items: nil),
+        List(name: "Other List", stores: ["Target", "Safeway", "Trader Joe's"], categories: ["Dairy", "Veggies", "Grains", "Fruit", "Other"], people: ["Nicole", "Steven", "Anthony"], items: nil),
+        List(name: "Last List", stores: ["Target", "Safeway", "Trader Joe's"], categories: ["Dairy", "Veggies", "Grains", "Fruit"], people: ["Nicole", "Anthony"], items: nil)
+    ]
     
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,14 +42,16 @@ class HomeVC: UIViewController {
 
 extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0//deleteAfterTesting.count
+        return listsForTesting.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let item = deleteAfterTesting[indexPath.row]
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "listCell", for: indexPath) as! ListCell
-//        cell.setUI(str: item)
-        return UICollectionViewCell()
+        let item = listsForTesting[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "listCell", for: indexPath) as! ListCell
+        cell.setUI(list: item)
+        return cell
     }
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(listsForTesting[indexPath.row].name)
+    }
 }

@@ -35,38 +35,79 @@
                                     <segue destination="Kgx-m8-jVE" kind="show" id="hsE-dW-NkE"/>
                                 </connections>
                             </button>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="aMM-jm-5iz">
-                                <rect key="frame" x="0.0" y="351" width="414" height="269"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="88C-fl-0kc">
+                                <rect key="frame" x="0.0" y="487" width="414" height="115"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="end-ze-KpL">
-                                    <size key="itemSize" width="141" height="120"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="COU-RN-Ei5">
+                                    <size key="itemSize" width="127" height="99"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="listCell" id="u1M-6p-dM0" customClass="ListCell" customModule="smartList" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="141" height="120"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="listCell" id="owh-cs-q1G" customClass="ListCell" customModule="smartList" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="8" width="127" height="99"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="141" height="120"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="127" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FHS-d7-6Ct">
-                                                    <rect key="frame" x="49.5" y="49.5" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Haq-Zj-iCI">
+                                                    <rect key="frame" x="0.0" y="0.0" width="127" height="99"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Yrw-Zx-td5">
+                                                            <rect key="frame" x="0.0" y="0.0" width="127" height="99"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RpB-Xb-8TF">
+                                                                    <rect key="frame" x="39" y="0.0" width="49" height="25"/>
+                                                                    <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="15"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nIg-40-x0b">
+                                                                    <rect key="frame" x="47.5" y="25" width="32.5" height="24.5"/>
+                                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="# items" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2nz-cP-aGV">
+                                                                    <rect key="frame" x="39.5" y="49.5" width="48.5" height="25"/>
+                                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="# people" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6zm-Tz-8TV">
+                                                                    <rect key="frame" x="33" y="74.5" width="61.5" height="24.5"/>
+                                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstItem="Yrw-Zx-td5" firstAttribute="leading" secondItem="Haq-Zj-iCI" secondAttribute="leading" id="CMv-Kx-H5K"/>
+                                                        <constraint firstAttribute="bottom" secondItem="Yrw-Zx-td5" secondAttribute="bottom" id="LPG-Rr-zqh"/>
+                                                        <constraint firstItem="Yrw-Zx-td5" firstAttribute="top" secondItem="Haq-Zj-iCI" secondAttribute="top" id="Xvd-Ry-STZ"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Yrw-Zx-td5" secondAttribute="trailing" id="stc-XP-EWh"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                         </view>
                                         <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstItem="FHS-d7-6Ct" firstAttribute="centerY" secondItem="u1M-6p-dM0" secondAttribute="centerY" id="D7H-vH-QNQ"/>
-                                            <constraint firstItem="FHS-d7-6Ct" firstAttribute="centerX" secondItem="u1M-6p-dM0" secondAttribute="centerX" id="O6O-Pf-TeC"/>
+                                            <constraint firstAttribute="trailing" secondItem="Haq-Zj-iCI" secondAttribute="trailing" id="4Vj-fV-KTh"/>
+                                            <constraint firstItem="Haq-Zj-iCI" firstAttribute="top" secondItem="owh-cs-q1G" secondAttribute="top" id="8h5-j1-HnG"/>
+                                            <constraint firstItem="Haq-Zj-iCI" firstAttribute="leading" secondItem="owh-cs-q1G" secondAttribute="leading" id="FfW-kY-EYY"/>
+                                            <constraint firstAttribute="bottom" secondItem="Haq-Zj-iCI" secondAttribute="bottom" id="XoK-Ad-5mc"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="name" destination="FHS-d7-6Ct" id="P7j-AG-cSb"/>
+                                            <outlet property="date" destination="nIg-40-x0b" id="QST-b5-OBU"/>
+                                            <outlet property="items" destination="2nz-cP-aGV" id="Mvp-CU-Ppa"/>
+                                            <outlet property="name" destination="RpB-Xb-8TF" id="HQV-CR-dAj"/>
+                                            <outlet property="people" destination="6zm-Tz-8TV" id="UK7-tM-efg"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -77,7 +118,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="O1y-uL-tHA"/>
                     <connections>
-                        <outlet property="collectionView" destination="aMM-jm-5iz" id="a54-lD-IBH"/>
+                        <outlet property="collectionView" destination="88C-fl-0kc" id="qBp-XI-toS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
