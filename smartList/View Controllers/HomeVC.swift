@@ -10,10 +10,14 @@ import UIKit
 
 
 class HomeVC: UIViewController {
-
+    let deleteAfterTesting = ["One", "Two", "three", "four", "five", "six"]
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -28,3 +32,18 @@ class HomeVC: UIViewController {
 
 }
 
+
+
+extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 0//deleteAfterTesting.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let item = deleteAfterTesting[indexPath.row]
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "listCell", for: indexPath) as! ListCell
+//        cell.setUI(str: item)
+        return UICollectionViewCell()
+    }
+    
+}

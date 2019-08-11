@@ -19,7 +19,22 @@ extension UIButton {
     func notSelected() {
         self.alpha = 0.6
     }
+    
+    func createCategoryButton(with title: String) {
+        self.titleLabel?.font = UIFont(name: "futura", size: 18)
+        self.setTitle(title, for: .normal)
+        self.setTitleColor(Colors.main, for: .normal)
+        self.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+    
+    }
+    
+    @objc func buttonAction(sender: UIButton) {
+        SharedValues.shared.currentCategory = self.titleLabel?.text ?? "Other"
+    }
 }
+
+
+
 
 extension Array where Element: UIButton {
     func setSelected(selected: UIButton) {
@@ -32,3 +47,5 @@ extension Array where Element: UIButton {
         }
     }
 }
+
+

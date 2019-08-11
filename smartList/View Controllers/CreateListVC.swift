@@ -121,19 +121,14 @@ extension CreateListVC: UITextFieldDelegate {
             scrollView.scrollRectToVisible(CGRect(x: w*3, y: 0, width: w, height: h), animated: true)
             section = .people
         } else if textField == all[0].listView.textField {
-            let list = List(name: nameTextField.text!, stores: all[2].items, categories: all[1].items, people: all[0].items, items: nil)
-            db.collection("lists").document().setData([
-                "name": list.name,
-                "stores": list.stores!,
-                "categories": list.categories!,
-                "people": list.people!
-            ]) { err in
-                if let err = err {
-                    print("Error writing document: \(err)")
-                } else {
-                    print("Document successfully written")
-                }
-            }
+            var list = List(name: nameTextField.text!, stores: all[2].items, categories: all[1].items, people: all[0].items, items: nil)
+            
+            list.writeToFirestore(db: db)
+            list.categories = list.categories?.removeBlanks()
+            list.people = list.people?.removeBlanks()
+            list.stores = list.stores?.removeBlanks()
+            
+            list = List(name: "Steven's List", stores: ["Trader Joe's", "Target", "Whole Foods"], categories: ["Dairy", "Dry", "Fruit", "Veggies", "Sweets", "Other"], people: ["Steven", "Nicole"], items: nil)
             performSegue(withIdentifier: "addItems", sender: list)
         }
         return true

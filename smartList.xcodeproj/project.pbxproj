@@ -21,6 +21,7 @@
 		E216207622F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
 		E216207722F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
 		E216207A22F660DF0074A0DF /* CreateListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216207922F660DF0074A0DF /* CreateListVC.swift */; };
+		E2623A8A22FFDA44003B63E2 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2623A8922FFDA44003B63E2 /* ListCell.swift */; };
 		E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B4694B22F78D1C006BA77D /* CreateListView.xib */; };
 		E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4694F22F78D44006BA77D /* CreateListView.swift */; };
 		E2B4695422F794F8006BA77D /* ListOrganizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4695322F794F8006BA77D /* ListOrganizer.swift */; };
@@ -29,6 +30,9 @@
 		E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */; };
 		E2E529D222FA7F9100C55DA0 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D122FA7F9100C55DA0 /* List.swift */; };
 		E2E529D522FA80C400C55DA0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D422FA80C400C55DA0 /* Item.swift */; };
+		E2EB7FBE22FF5ACF003948A6 /* SharedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB7FBD22FF5ACF003948A6 /* SharedValues.swift */; };
+		E2EB7FC022FFAD7C003948A6 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB7FBF22FFAD7C003948A6 /* ItemCell.swift */; };
+		E2EB7FC322FFB29A003948A6 /* String-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB7FC222FFB29A003948A6 /* String-Extension.swift */; };
 		E2EBE5D322FD25060019BB0F /* AddItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EBE5D222FD25060019BB0F /* AddItemsVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +76,7 @@
 		E216206822F658D20074A0DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E216207422F659860074A0DF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E216207922F660DF0074A0DF /* CreateListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListVC.swift; sourceTree = "<group>"; };
+		E2623A8922FFDA44003B63E2 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		E2B4694B22F78D1C006BA77D /* CreateListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateListView.xib; sourceTree = "<group>"; };
 		E2B4694F22F78D44006BA77D /* CreateListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListView.swift; sourceTree = "<group>"; };
 		E2B4695322F794F8006BA77D /* ListOrganizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListOrganizer.swift; sourceTree = "<group>"; };
@@ -80,6 +85,9 @@
 		E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-Extension.swift"; sourceTree = "<group>"; };
 		E2E529D122FA7F9100C55DA0 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		E2E529D422FA80C400C55DA0 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
+		E2EB7FBD22FF5ACF003948A6 /* SharedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedValues.swift; sourceTree = "<group>"; };
+		E2EB7FBF22FFAD7C003948A6 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
+		E2EB7FC222FFB29A003948A6 /* String-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Extension.swift"; sourceTree = "<group>"; };
 		E2EBE5D222FD25060019BB0F /* AddItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemsVC.swift; sourceTree = "<group>"; };
 		EA1C8AC62AFAE75802B4FD76 /* Pods-smartListUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartListUITests.release.xcconfig"; path = "Target Support Files/Pods-smartListUITests/Pods-smartListUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F30C0C4898D5DF1DF11A7E59 /* Pods_smartList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_smartList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,6 +175,7 @@
 				E2E529D322FA7F9700C55DA0 /* Classes */,
 				E2B4695522F79748006BA77D /* Structs */,
 				E2B4694D22F78D23006BA77D /* Views */,
+				E2EB7FC122FFAD81003948A6 /* Cell */,
 				E2B4695822F7F19C006BA77D /* Extensions */,
 				E216204D22F658D20074A0DF /* Assets.xcassets */,
 				E216204F22F658D20074A0DF /* LaunchScreen.storyboard */,
@@ -224,8 +233,8 @@
 		E2B4695522F79748006BA77D /* Structs */ = {
 			isa = PBXGroup;
 			children = (
+				E2E529D122FA7F9100C55DA0 /* List.swift */,
 				E2B4695322F794F8006BA77D /* ListOrganizer.swift */,
-				E2E529D422FA80C400C55DA0 /* Item.swift */,
 				E2B4695922F7F485006BA77D /* Colors.swift */,
 			);
 			path = Structs;
@@ -235,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				E2B4695622F7F18E006BA77D /* UITextField-Extension.swift */,
+				E2EB7FC222FFB29A003948A6 /* String-Extension.swift */,
 				E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */,
 			);
 			path = Extensions;
@@ -243,9 +253,19 @@
 		E2E529D322FA7F9700C55DA0 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				E2E529D122FA7F9100C55DA0 /* List.swift */,
+				E2E529D422FA80C400C55DA0 /* Item.swift */,
+				E2EB7FBD22FF5ACF003948A6 /* SharedValues.swift */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		E2EB7FC122FFAD81003948A6 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				E2EB7FBF22FFAD7C003948A6 /* ItemCell.swift */,
+				E2623A8922FFDA44003B63E2 /* ListCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -473,16 +493,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2EB7FC022FFAD7C003948A6 /* ItemCell.swift in Sources */,
 				E2E529D522FA80C400C55DA0 /* Item.swift in Sources */,
 				E216204922F658D10074A0DF /* HomeVC.swift in Sources */,
+				E2623A8A22FFDA44003B63E2 /* ListCell.swift in Sources */,
 				E2B4695422F794F8006BA77D /* ListOrganizer.swift in Sources */,
 				E216204722F658D10074A0DF /* AppDelegate.swift in Sources */,
 				E2B4695A22F7F485006BA77D /* Colors.swift in Sources */,
 				E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */,
 				E216207A22F660DF0074A0DF /* CreateListVC.swift in Sources */,
 				E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */,
+				E2EB7FBE22FF5ACF003948A6 /* SharedValues.swift in Sources */,
 				E2EBE5D322FD25060019BB0F /* AddItemsVC.swift in Sources */,
 				E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */,
+				E2EB7FC322FFB29A003948A6 /* String-Extension.swift in Sources */,
 				E2E529D222FA7F9100C55DA0 /* List.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
