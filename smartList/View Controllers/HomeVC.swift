@@ -7,16 +7,22 @@
 //
 
 import UIKit
-
+import FirebaseFirestore
 
 class HomeVC: UIViewController {
-    let listsForTesting: [List] = [
-        List(name: "List 1", stores: ["Trader Joe's", "Whole Foods"], categories: ["Sweets", "Baking", "Fruit"], people: ["Steven"], items: nil),
-        List(name: "Sunday List", stores: ["Target", "Safeway", "Trader Joe's"], categories: ["Dairy", "Veggies", "Grains", "Fruit", "Other"], people: ["Nicole", "Steven", "Anthony"], items: nil),
-        List(name: "Steven's List", stores: [ "Safeway", "Trader Joe's"], categories: ["Dairy", "Veggies", "Grains", "Fruit", "Other"], people: ["Nicole", "Steven", "Anthony"], items: nil),
-        List(name: "Other List", stores: ["Target", "Safeway", "Trader Joe's"], categories: ["Dairy", "Veggies", "Grains", "Fruit", "Other"], people: ["Nicole", "Steven", "Anthony"], items: nil),
-        List(name: "Last List", stores: ["Target", "Safeway", "Trader Joe's"], categories: ["Dairy", "Veggies", "Grains", "Fruit"], people: ["Nicole", "Anthony"], items: nil)
-    ]
+    var db: Firestore!
+//    var listsForTesting: [List] = [
+//        List(name: "List 1", stores: ["Trader Joe's", "Whole Foods"], categories: ["Sweets", "Baking", "Fruit"], people: ["Steven"], items: nil),
+//        List(name: "Sunday List", stores: ["Target", "Safeway", "Trader Joe's"], categories: ["Dairy", "Veggies", "Grains", "Fruit", "Other"], people: ["Nicole", "Steven", "Anthony"], items: nil),
+//        List(name: "Steven's List", stores: [ "Safeway", "Trader Joe's"], categories: ["Dairy", "Veggies", "Grains", "Fruit", "Other"], people: ["Nicole", "Steven", "Anthony"], items: nil),
+//        List(name: "Other List", stores: ["Target", "Safeway", "Trader Joe's"], categories: ["Dairy", "Veggies", "Grains", "Fruit", "Other"], people: ["Nicole", "Steven", "Anthony"], items: nil),
+//        List(name: "Last List", stores: ["Target", "Safeway", "Trader Joe's"], categories: ["Dairy", "Veggies", "Grains", "Fruit"], people: ["Nicole", "Anthony"], items: nil)
+//    ]
+    var lists: [List]? {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -24,7 +30,26 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
-        print(SharedValues.shared.userID)
+        db = Firestore.firestore()
+        db.collection("lists").whereField("user", isEqualTo: SharedValues.shared.userID!).addSnapshotListener { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documents else {
+                print("Error fetching documents: \(error!)")
+                return
+            }
+            
+            self.lists?.removeAll()
+            for doc in documents {
+                let t = List(name: doc.get("name") as! String, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: nil, docID: doc.documentID)
+                if self.lists != nil {
+                    self.lists!.append(t)
+                } else {
+                    self.lists = [t]
+                }
+                
+            }
+//            let listsSnapshot = documents.map{$0["name"]!}
+//            print(listsSnapshot)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,16 +68,31 @@ class HomeVC: UIViewController {
 
 extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return listsForTesting.count
+        if let n = lists?.count {
+            return n
+        } else {
+            return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let item = listsForTesting[indexPath.row]
+        let item = lists![indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "listCell", for: indexPath) as! ListCell
         cell.setUI(list: item)
         return cell
     }
+    
+    
+    // CONTINUE HERE, HAVE THE CORRECT LIST BEING ABLE TO BE SELECTED, GO INTO THE EDIT LIST SCREEN
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(listsForTesting[indexPath.row].name)
+        let docID = lists![indexPath.row].docID
+        db.collection("lists").document(docID!).collection("items").addSnapshotListener { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documents else {
+                print("Error fetching documents: \(String(describing: error))")
+                return
+            }
+            let items = documents.map({$0["name"]})
+            print(items)
+        }
     }
 }

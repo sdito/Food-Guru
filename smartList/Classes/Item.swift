@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import FirebaseCore
+//import FirebaseCore
 import FirebaseFirestore
 
 class Item {
@@ -30,7 +30,8 @@ extension Item {
         db.collection("lists").document("\(SharedValues.shared.listIdentifier!.documentID)").collection("items").document().setData([
             "name": self.name,
             "category": self.category!,
-            "store": self.store!
+            "store": self.store!,
+            "user": SharedValues.shared.userID ?? "did not write"
         ]) { err in
             if let err = err {
                 print("Error writing document: \(err)")

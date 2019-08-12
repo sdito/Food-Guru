@@ -8,7 +8,7 @@ target 'smartList' do
   # Pods for smartList
 inhibit_all_warnings!
 
-pod 'Firebase/Core', :inhibit_warnings => true
+
 pod 'Firebase/Firestore', :inhibit_warnings => true
 pod 'FirebaseUI', :inhibit_warnings => true
 pod 'Firebase/Auth', :inhibit_warnings => true

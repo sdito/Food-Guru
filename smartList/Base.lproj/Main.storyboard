@@ -60,25 +60,19 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="127" height="99"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RpB-Xb-8TF">
-                                                                    <rect key="frame" x="39" y="0.0" width="49" height="25"/>
+                                                                    <rect key="frame" x="39" y="0.0" width="49" height="33"/>
                                                                     <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="15"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nIg-40-x0b">
-                                                                    <rect key="frame" x="47.5" y="25" width="32.5" height="24.5"/>
-                                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="# items" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2nz-cP-aGV">
-                                                                    <rect key="frame" x="39.5" y="49.5" width="48.5" height="25"/>
+                                                                    <rect key="frame" x="39.5" y="33" width="48.5" height="33"/>
                                                                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="# people" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6zm-Tz-8TV">
-                                                                    <rect key="frame" x="33" y="74.5" width="61.5" height="24.5"/>
+                                                                    <rect key="frame" x="33" y="66" width="61.5" height="33"/>
                                                                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
@@ -104,7 +98,6 @@
                                             <constraint firstAttribute="bottom" secondItem="Haq-Zj-iCI" secondAttribute="bottom" id="XoK-Ad-5mc"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="date" destination="nIg-40-x0b" id="QST-b5-OBU"/>
                                             <outlet property="items" destination="2nz-cP-aGV" id="Mvp-CU-Ppa"/>
                                             <outlet property="name" destination="RpB-Xb-8TF" id="HQV-CR-dAj"/>
                                             <outlet property="people" destination="6zm-Tz-8TV" id="UK7-tM-efg"/>
@@ -497,16 +490,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U0A-tl-CHO">
-                                <rect key="frame" x="184" y="433" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="logInStart:" destination="AAX-es-SHS" eventType="touchUpInside" id="YdT-Zd-pdP"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="33" translatesAutoresizingMaskIntoConstraints="NO" id="MHK-r0-CEs">
+                                <rect key="frame" x="41.5" y="390" width="331" height="116"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XHr-Da-wMi">
+                                        <rect key="frame" x="0.0" y="0.0" width="331" height="51"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="30"/>
+                                        <state key="normal" title="Create account or log in">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="logInStart:" destination="AAX-es-SHS" eventType="touchUpInside" id="jok-yn-dqh"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U0A-tl-CHO">
+                                        <rect key="frame" x="79.5" y="84" width="172" height="32"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                        <state key="normal" title="Continue without account">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="logInStart:" destination="AAX-es-SHS" eventType="touchUpInside" id="YdT-Zd-pdP"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="MHK-r0-CEs" firstAttribute="centerY" secondItem="IkW-NP-d4y" secondAttribute="centerY" id="Nkv-e3-UPr"/>
+                            <constraint firstItem="MHK-r0-CEs" firstAttribute="centerX" secondItem="IkW-NP-d4y" secondAttribute="centerX" id="fw7-Cb-nPs"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Phm-kb-fh7"/>
                     </view>
                     <connections>

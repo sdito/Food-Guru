@@ -7,12 +7,13 @@
 //
 
 import UIKit
-import FirebaseCore
+//import FirebaseCore
 import FirebaseFirestore
 
 class AddItemsVC: UIViewController {
-    var db: Firestore!
+    private var storeText: String?
     
+    var db: Firestore!
     var list: List? {
         didSet {
             if list?.items?.isEmpty == false {
@@ -35,7 +36,7 @@ class AddItemsVC: UIViewController {
         tableView.dataSource = self
         setUIfrom(list: list!)
         if let first = stackView.subviews.last as! UIButton? {
-            SharedValues.shared.currentCategory = first.titleLabel?.text ?? ""
+            SharedValues.shared.currentCategory = first.titleLabel?.text ?? "none"
         }
     }
     
@@ -45,14 +46,34 @@ class AddItemsVC: UIViewController {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        SharedValues.shared.listIdentifier?.updateData([
+            "numItems": list?.items?.count as Any
+        ])
+    }
+    
+    //currently crashes if something is empty from the list
     @IBAction func addItem(_ sender: Any) {
-        let item = Item(name: textField.text!, category: SharedValues.shared.currentCategory, store: segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex), documentID: SharedValues.shared.listIdentifier!)
+        if list?.stores?.isEmpty == false {
+            if let txt = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex) {
+                storeText = txt
+            } else {
+                storeText = "none - segmented control didnt work"
+            }
+        } else {
+            storeText = "none - stores is empty"
+        }
+        
+        
+        let item = Item(name: textField.text!, category: SharedValues.shared.currentCategory, store: storeText, documentID: SharedValues.shared.listIdentifier!)
         item.writeToFirestore(db: db)
+        
         if list?.items?.isEmpty == false {
             list?.items!.append(item)
         } else {
             list?.items = [item]
         }
+
         textField.text = ""
     }
     

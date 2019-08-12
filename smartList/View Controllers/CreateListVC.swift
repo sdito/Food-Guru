@@ -8,7 +8,7 @@
 
 import UIKit
 
-import FirebaseCore
+//import FirebaseCore
 import FirebaseFirestore
 
 
@@ -122,14 +122,14 @@ extension CreateListVC: UITextFieldDelegate {
             scrollView.scrollRectToVisible(CGRect(x: w*3, y: 0, width: w, height: h), animated: true)
             section = .people
         } else if textField == all[0].listView.textField {
-            var list = List(name: nameTextField.text!, stores: all[2].items, categories: all[1].items, people: all[0].items, items: nil)
+            var list = List(name: nameTextField.text!, stores: all[2].items, categories: all[1].items, people: all[0].items, items: nil, numItems: nil, docID: nil)
             
-            list.writeToFirestore(db: db)
+            
             list.categories = list.categories?.removeBlanks()
             list.people = list.people?.removeBlanks()
             list.stores = list.stores?.removeBlanks()
+            list.writeToFirestore(db: db)
             
-            list = List(name: "Steven's List", stores: ["Trader Joe's", "Target", "Whole Foods"], categories: ["Dairy", "Dry", "Fruit", "Veggies", "Sweets", "Other"], people: ["Steven", "Nicole"], items: nil)
             performSegue(withIdentifier: "addItems", sender: list)
         }
         return true

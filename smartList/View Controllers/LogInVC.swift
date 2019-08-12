@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import FirebaseCore
+//import FirebaseCore
 import FirebaseFirestore
 import FirebaseUI
 

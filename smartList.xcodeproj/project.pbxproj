@@ -210,11 +210,11 @@
 		E216207822F660C40074A0DF /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E2481B7E2300B00D0036E378 /* LogInVC.swift */,
+				E2AF8E272300D020005D49EF /* NaviVC.swift */,
 				E216204822F658D10074A0DF /* HomeVC.swift */,
 				E216207922F660DF0074A0DF /* CreateListVC.swift */,
 				E2EBE5D222FD25060019BB0F /* AddItemsVC.swift */,
-				E2481B7E2300B00D0036E378 /* LogInVC.swift */,
-				E2AF8E272300D020005D49EF /* NaviVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
