@@ -31,25 +31,27 @@ class HomeVC: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         db = Firestore.firestore()
-        db.collection("lists").whereField("user", isEqualTo: SharedValues.shared.userID!).addSnapshotListener { (querySnapshot, error) in
-            guard let documents = querySnapshot?.documents else {
-                print("Error fetching documents: \(error!)")
-                return
-            }
-            
-            self.lists?.removeAll()
-            for doc in documents {
-                let t = List(name: doc.get("name") as! String, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: nil, docID: doc.documentID)
-                if self.lists != nil {
-                    self.lists!.append(t)
-                } else {
-                    self.lists = [t]
-                }
-                
-            }
-//            let listsSnapshot = documents.map{$0["name"]!}
-//            print(listsSnapshot)
-        }
+        
+        lists = List.readAllUserLists(db: db, userID: SharedValues.shared.userID!)
+//        db.collection("lists").whereField("user", isEqualTo: SharedValues.shared.userID!).addSnapshotListener { (querySnapshot, error) in
+//            guard let documents = querySnapshot?.documents else {
+//                print("Error fetching documents: \(error!)")
+//                return
+//            }
+//            
+//            self.lists?.removeAll()
+//            for doc in documents {
+//                let t = List(name: doc.get("name") as! String, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: nil, docID: doc.documentID)
+//                if self.lists != nil {
+//                    self.lists!.append(t)
+//                } else {
+//                    self.lists = [t]
+//                }
+//                
+//            }
+////            let listsSnapshot = documents.map{$0["name"]!}
+////            print(listsSnapshot)
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -86,13 +88,22 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
     // CONTINUE HERE, HAVE THE CORRECT LIST BEING ABLE TO BE SELECTED, GO INTO THE EDIT LIST SCREEN
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let docID = lists![indexPath.row].docID
-        db.collection("lists").document(docID!).collection("items").addSnapshotListener { (querySnapshot, error) in
-            guard let documents = querySnapshot?.documents else {
-                print("Error fetching documents: \(String(describing: error))")
-                return
-            }
-            let items = documents.map({$0["name"]})
-            print(items)
-        }
+        let items = Item.readItems(db: db, docID: docID ?? "")
+//        db.collection("lists").document(docID!).collection("items").addSnapshotListener { (querySnapshot, error) in
+//            guard let documents = querySnapshot?.documents else {
+//                print("Error fetching documents: \(String(describing: error))")
+//                return
+//            }
+//            var listItems: [Item] = []
+//            for doc in documents {
+//                let i = Item(name: doc.get("name") as! String, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as! String))
+//                if listItems.isEmpty == false {
+//                    listItems.append(i)
+//                } else {
+//                    listItems = [i]
+//                }
+//            }
+//            print(listItems.map({$0.name}))
+//        }
     }
 }

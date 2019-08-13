@@ -65,7 +65,7 @@ class AddItemsVC: UIViewController {
         }
         
         
-        let item = Item(name: textField.text!, category: SharedValues.shared.currentCategory, store: storeText, documentID: SharedValues.shared.listIdentifier!)
+        let item = Item(name: textField.text!, category: SharedValues.shared.currentCategory, store: storeText, user: nil)
         item.writeToFirestore(db: db)
         
         if list?.items?.isEmpty == false {

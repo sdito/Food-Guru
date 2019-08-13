@@ -28,6 +28,26 @@ struct List {
         self.numItems = numItems
         self.docID = docID
     }
+    
+    static func readAllUserLists(db: Firestore, userID: String) -> [List] {
+        var lists: [List] = []
+        db.collection("lists").whereField("user", isEqualTo: userID).addSnapshotListener { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documents else {
+                print("Error fetching documents: \(String(describing: error))")
+                return
+            }
+            
+            for doc in documents {
+                let l = List(name: doc.get("name") as! String, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: nil/*(doc.get("numItems") as! Int)*/, docID: doc.documentID)
+                if lists.isEmpty == false {
+                    lists.append(l)
+                } else {
+                    lists = [l]
+                }
+            }
+        }
+        return lists
+    }
 }
 
 

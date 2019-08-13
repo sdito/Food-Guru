@@ -240,6 +240,7 @@
 			isa = PBXGroup;
 			children = (
 				E2E529D122FA7F9100C55DA0 /* List.swift */,
+				E2E529D422FA80C400C55DA0 /* Item.swift */,
 				E2B4695322F794F8006BA77D /* ListOrganizer.swift */,
 				E2B4695922F7F485006BA77D /* Colors.swift */,
 			);
@@ -259,7 +260,6 @@
 		E2E529D322FA7F9700C55DA0 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				E2E529D422FA80C400C55DA0 /* Item.swift */,
 				E2EB7FBD22FF5ACF003948A6 /* SharedValues.swift */,
 			);
 			path = Classes;
