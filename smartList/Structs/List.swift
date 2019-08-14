@@ -29,9 +29,10 @@ struct List {
         self.docID = docID
     }
     
-    static func readAllUserLists(db: Firestore, userID: String) -> [List] {
+    static func readAllUserLists(db: Firestore, userID: String, listsChanged: @escaping (_ lists: [List]) -> Void) {
         var lists: [List] = []
         db.collection("lists").whereField("user", isEqualTo: userID).addSnapshotListener { (querySnapshot, error) in
+            lists.removeAll()
             guard let documents = querySnapshot?.documents else {
                 print("Error fetching documents: \(String(describing: error))")
                 return
@@ -45,9 +46,12 @@ struct List {
                     lists = [l]
                 }
             }
+            listsChanged(lists)
+            // has the correct value in lists right here, returns [] though
         }
-        return lists
     }
+    
+
 }
 
 
