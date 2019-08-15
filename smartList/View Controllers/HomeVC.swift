@@ -41,7 +41,12 @@ class HomeVC: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         super.viewWillDisappear(animated)
     }
-
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "listSelected" {
+            let destVC = segue.destination as! AddItemsVC
+            destVC.list = sender as? List
+        }
+    }
 }
 
 
@@ -69,9 +74,11 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
         
         Item.readItems(db: db, docID: l.docID!) { (itm) in
             self.items = itm
+            let sendList = List(name: l.name, stores: l.stores, categories: l.categories, people: l.people, items: self.items, numItems: l.numItems, docID: l.docID)
+            self.performSegue(withIdentifier: "listSelected", sender: sendList)
         }
         
-        let list = List(name: l.name, stores: l.stores, categories: l.categories, people: l.people, items: l.items, numItems: l.numItems, docID: l.docID)
-        
+        // delayed by an extra press for the item to become the correct items
+        //print(items.map({$0.name}))
     }
 }

@@ -112,6 +112,7 @@
                     <navigationItem key="navigationItem" id="O1y-uL-tHA"/>
                     <connections>
                         <outlet property="collectionView" destination="88C-fl-0kc" id="qBp-XI-toS"/>
+                        <segue destination="AVh-qM-Vlx" kind="show" identifier="listSelected" id="K1U-HP-Wjo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -274,7 +275,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ae9-gf-boO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2074" y="-387"/>
+            <point key="canvasLocation" x="1820" y="-546"/>
         </scene>
         <!--Add ItemsVC-->
         <scene sceneID="VmX-0h-R9o">
@@ -465,7 +466,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HLN-GU-yAH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3063.768115942029" y="-753.34821428571422"/>
+            <point key="canvasLocation" x="2903" y="-416"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tA0-f8-jFz">
@@ -550,5 +551,8 @@
             <point key="canvasLocation" x="-141" y="115"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="K1U-HP-Wjo"/>
+    </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

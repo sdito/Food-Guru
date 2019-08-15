@@ -17,7 +17,10 @@ class AddItemsVC: UIViewController {
     var list: List? {
         didSet {
             if list?.items?.isEmpty == false {
-                tableView.reloadData()
+                print("ITEMS ARE \(list?.items)")
+                tableView.delegate = self
+                tableView.dataSource = self
+                //tableView.reloadData()
             }
         }
     }

@@ -27,6 +27,7 @@ struct Item {
     static func readItems(db: Firestore, docID: String, itemsChanged: @escaping (_ items: [Item]) -> Void) {
         var listItems: [Item] = []
         db.collection("lists").document(docID).collection("items").addSnapshotListener { (querySnapshot, error) in
+            listItems.removeAll()
             guard let documents = querySnapshot?.documents else {
                 print("Error fetching documents: \(String(describing: error))")
                 return
