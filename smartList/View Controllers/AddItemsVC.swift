@@ -34,7 +34,13 @@ class AddItemsVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         tableView.delegate = self
         tableView.dataSource = self
-        setUIfrom(list: list!)
+        
+        Item.readItems(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (itm) in
+            self.list?.items = itm
+            self.setUIfrom(list: self.list!)
+        }
+        
+        
         if let first = stackView.subviews.last as! UIButton? {
             SharedValues.shared.currentCategory = first.titleLabel?.text ?? "none"
         }
