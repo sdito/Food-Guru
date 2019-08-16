@@ -49,7 +49,9 @@ struct Item {
 
 extension Item {
     func writeToFirestore(db: Firestore!) {
-    db.collection("lists").document("\(SharedValues.shared.listIdentifier!.documentID)").collection("items").document().setData([
+        
+        print("id is \(SharedValues.shared.listIdentifier!.documentID)")
+        db.collection("lists").document("\(SharedValues.shared.listIdentifier!.documentID)").collection("items").document().setData([
             "name": self.name,
             "category": self.category!,
             "store": self.store!,

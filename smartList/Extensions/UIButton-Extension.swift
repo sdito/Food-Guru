@@ -23,7 +23,12 @@ extension UIButton {
     func createCategoryButton(with title: String) {
         self.titleLabel?.font = UIFont(name: "futura", size: 18)
         self.setTitle(title, for: .normal)
-        self.setTitleColor(Colors.main, for: .normal)
+        self.setTitleColor(.white, for: .normal)
+        //self.backgroundColor = Colors.main
+        
+        
+        self.layer.cornerRadius = 10
+        self.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
         self.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
     
     }

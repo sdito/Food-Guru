@@ -74,10 +74,11 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
         
         Item.readItems(db: db, docID: l.docID!) { (itm) in
             self.items = itm
-            let sendList = List(name: l.name, stores: l.stores, categories: l.categories, people: l.people, items: self.items, numItems: l.numItems, docID: l.docID)
-            self.performSegue(withIdentifier: "listSelected", sender: sendList)
         }
+        let sendList = List(name: l.name, stores: l.stores, categories: l.categories, people: l.people, items: self.items, numItems: l.numItems, docID: l.docID)
+        SharedValues.shared.listIdentifier = self.db.collection("lists").document("\(l.docID!)")
         
+        self.performSegue(withIdentifier: "listSelected", sender: sendList)
         // delayed by an extra press for the item to become the correct items
         //print(items.map({$0.name}))
     }
