@@ -13,6 +13,9 @@ import FirebaseFirestore
 class AddItemsVC: UIViewController {
     private var storeText: String?
     
+    private var arrayArrayItems: [[Item]] = []
+    private var sortedCategories: [String] = []
+    
     var db: Firestore!
     var list: List? {
         didSet {
@@ -34,16 +37,21 @@ class AddItemsVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         tableView.delegate = self
         tableView.dataSource = self
-        
+        storeText = list?.stores?.first
+        view.setGradientBackground(colorOne: .lightGray, colorTwo: .gray)
         Item.readItems(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (itm) in
             self.list?.items = itm
             self.setUIfrom(list: self.list!)
+            
+            (self.sortedCategories, self.arrayArrayItems) = (self.list?.sortForTableView(from: self.storeText!))! as! ([String], [[Item]])
+            //tableView stuff here
+            
         }
-        
-        
         if let first = stackView.subviews.last as! UIButton? {
             SharedValues.shared.currentCategory = first.titleLabel?.text ?? "none"
         }
+        
+        
     }
     
     override func viewDidLoad() {
@@ -112,12 +120,24 @@ class AddItemsVC: UIViewController {
 
 // have the cells organized by
 extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return list?.items?.count ?? 0
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sortedCategories.count
     }
-    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let l = UILabel()
+        l.text = sortedCategories[section]
+        l.font = UIFont(name: "futura", size: 15)
+        l.textColor = .black
+        l.backgroundColor = .white
+        l.alpha = 0.9
+        return l
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return arrayArrayItems[section].count
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let item = list?.items?[indexPath.row] else { return UITableViewCell() }
+        //guard let item = list?.items?[indexPath.row] else { return UITableViewCell() }
+        let item = arrayArrayItems[indexPath.section][indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell") as! ItemCell
         cell.setUI(item: item)
         return cell

@@ -46,7 +46,6 @@ struct Item {
     }
 }
 
-
 extension Item {
     func writeToFirestore(db: Firestore!) {
         

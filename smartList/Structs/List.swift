@@ -72,5 +72,20 @@ extension List {
             }
         }
     }
-    
+    func sortForTableView(from store: String) -> ([String]?, [[Item]]) {
+        let categories = self.categories?.sorted()
+        var sortedItems: [[Item]] = []
+        
+        categories?.forEach({ (category) in
+            var itms: [Item] = []
+            self.items?.forEach({ (itm) in
+                if itm.category == category {
+                    itms.append(itm)
+                }
+            })
+            sortedItems.append(itms)
+        })
+        
+        return (categories, sortedItems)
+    }
 }

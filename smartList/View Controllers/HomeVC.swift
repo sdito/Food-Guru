@@ -30,6 +30,7 @@ class HomeVC: UIViewController {
         List.readAllUserLists(db: db, userID: SharedValues.shared.userID!) { (dbLists) in
             self.lists = dbLists
         }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
