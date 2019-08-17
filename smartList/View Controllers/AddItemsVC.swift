@@ -11,7 +11,7 @@ import UIKit
 import FirebaseFirestore
 
 class AddItemsVC: UIViewController {
-    private var storeText: String?
+    private var storeText: String = "none"
     
     private var arrayArrayItems: [[Item]] = []
     private var sortedCategories: [String] = []
@@ -20,7 +20,8 @@ class AddItemsVC: UIViewController {
     var list: List? {
         didSet {
             if list?.items?.isEmpty == false {
-                tableView?.reloadData()
+                (self.sortedCategories, self.arrayArrayItems) = (self.list?.sortForTableView(from: self.storeText))! as! ([String], [[Item]])
+                tableView.reloadData()
             }
         }
     }
@@ -37,13 +38,16 @@ class AddItemsVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         tableView.delegate = self
         tableView.dataSource = self
-        storeText = list?.stores?.first
+        if list?.stores?.isEmpty == false {
+            storeText = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)!
+        }
+        setUIfrom(list: list!)
+        
         view.setGradientBackground(colorOne: .lightGray, colorTwo: .gray)
         Item.readItems(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (itm) in
             self.list?.items = itm
-            self.setUIfrom(list: self.list!)
-            
-            (self.sortedCategories, self.arrayArrayItems) = (self.list?.sortForTableView(from: self.storeText!))! as! ([String], [[Item]])
+            //self.setUIfrom(list: self.list!)
+            //(self.sortedCategories, self.arrayArrayItems) = (self.list?.sortForTableView(from: self.storeText))! as! ([String], [[Item]])
             //tableView stuff here
             
         }
@@ -127,9 +131,10 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
         let l = UILabel()
         l.text = sortedCategories[section]
         l.font = UIFont(name: "futura", size: 15)
-        l.textColor = .black
-        l.backgroundColor = .white
+        l.textColor = .white
+        l.backgroundColor = .lightGray
         l.alpha = 0.9
+        l.textAlignment = .center
         return l
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

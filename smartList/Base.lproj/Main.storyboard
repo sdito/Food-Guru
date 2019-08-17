@@ -317,7 +317,7 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Eeu-xt-zJT">
-                                        <rect key="frame" x="0.0" y="145" width="414" height="629"/>
+                                        <rect key="frame" x="0.0" y="139" width="414" height="635"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="itemCell" id="uhq-4D-dTy" customClass="ItemCell" customModule="smartList" customModuleProvider="target">
@@ -365,16 +365,16 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FB5-VA-M7G">
-                                        <rect key="frame" x="0.0" y="97" width="414" height="48"/>
+                                        <rect key="frame" x="0.0" y="97" width="414" height="32"/>
                                         <subviews>
                                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IWf-Pl-WMR">
-                                                <rect key="frame" x="15" y="0.0" width="384" height="48"/>
+                                                <rect key="frame" x="15" y="0.0" width="384" height="32"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="9Uw-5l-3GE">
-                                                        <rect key="frame" x="0.0" y="0.0" width="630" height="48"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="630" height="32"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Em-aI-e2C">
-                                                                <rect key="frame" x="0.0" y="0.0" width="80" height="48"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="80" height="32"/>
                                                                 <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="19"/>
                                                                 <state key="normal" title="Dairy">
@@ -382,7 +382,7 @@
                                                                 </state>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QDh-V8-I5e">
-                                                                <rect key="frame" x="110" y="0.0" width="80" height="48"/>
+                                                                <rect key="frame" x="110" y="0.0" width="80" height="32"/>
                                                                 <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="19"/>
                                                                 <state key="normal" title="Dry">
@@ -390,7 +390,7 @@
                                                                 </state>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eal-9i-Bvs">
-                                                                <rect key="frame" x="220" y="0.0" width="80" height="48"/>
+                                                                <rect key="frame" x="220" y="0.0" width="80" height="32"/>
                                                                 <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="19"/>
                                                                 <state key="normal" title="Fruit">
@@ -398,7 +398,7 @@
                                                                 </state>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wyq-sN-cuS">
-                                                                <rect key="frame" x="330" y="0.0" width="80" height="48"/>
+                                                                <rect key="frame" x="330" y="0.0" width="80" height="32"/>
                                                                 <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="19"/>
                                                                 <state key="normal" title="Veggies">
@@ -406,7 +406,7 @@
                                                                 </state>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h14-82-Ugh">
-                                                                <rect key="frame" x="440" y="0.0" width="80" height="48"/>
+                                                                <rect key="frame" x="440" y="0.0" width="80" height="32"/>
                                                                 <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="19"/>
                                                                 <state key="normal" title="Meat">
@@ -414,7 +414,7 @@
                                                                 </state>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPs-OT-8Mm">
-                                                                <rect key="frame" x="550" y="0.0" width="80" height="48"/>
+                                                                <rect key="frame" x="550" y="0.0" width="80" height="32"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="19"/>
                                                                 <state key="normal" title="Breakfast"/>
                                                             </button>
@@ -439,21 +439,21 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="0.088750404589999998" blue="0.050634536420000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="l3v-xn-fS2" firstAttribute="top" secondItem="EUV-NV-fy5" secondAttribute="top" id="2wX-O4-TCB"/>
                                     <constraint firstItem="FB5-VA-M7G" firstAttribute="leading" secondItem="EUV-NV-fy5" secondAttribute="leading" id="4Sc-18-BY4"/>
                                     <constraint firstItem="l3v-xn-fS2" firstAttribute="height" secondItem="EUV-NV-fy5" secondAttribute="height" multiplier="1:16" id="9rA-kF-hhR"/>
                                     <constraint firstAttribute="trailing" secondItem="RvJ-JD-oBH" secondAttribute="trailing" id="AgE-1Y-daj"/>
                                     <constraint firstItem="RvJ-JD-oBH" firstAttribute="height" secondItem="l3v-xn-fS2" secondAttribute="height" id="IIw-jp-7DQ"/>
-                                    <constraint firstItem="Eeu-xt-zJT" firstAttribute="top" secondItem="FB5-VA-M7G" secondAttribute="bottom" id="Iih-3f-x3p"/>
+                                    <constraint firstItem="Eeu-xt-zJT" firstAttribute="top" secondItem="FB5-VA-M7G" secondAttribute="bottom" constant="10" id="Iih-3f-x3p"/>
                                     <constraint firstItem="Eeu-xt-zJT" firstAttribute="leading" secondItem="EUV-NV-fy5" secondAttribute="leading" id="TTF-it-U6e"/>
                                     <constraint firstItem="l3v-xn-fS2" firstAttribute="leading" secondItem="EUV-NV-fy5" secondAttribute="leading" id="UMb-9K-5pI"/>
                                     <constraint firstItem="FB5-VA-M7G" firstAttribute="top" secondItem="RvJ-JD-oBH" secondAttribute="bottom" id="X7r-8j-vxC"/>
                                     <constraint firstAttribute="trailing" secondItem="Eeu-xt-zJT" secondAttribute="trailing" id="cwx-t8-aNH"/>
                                     <constraint firstAttribute="bottom" secondItem="Eeu-xt-zJT" secondAttribute="bottom" id="e00-4g-OPK"/>
                                     <constraint firstItem="RvJ-JD-oBH" firstAttribute="top" secondItem="l3v-xn-fS2" secondAttribute="bottom" id="i6g-Q4-hKY"/>
-                                    <constraint firstItem="FB5-VA-M7G" firstAttribute="height" secondItem="RvJ-JD-oBH" secondAttribute="height" id="mpA-53-axd"/>
+                                    <constraint firstItem="FB5-VA-M7G" firstAttribute="height" secondItem="RvJ-JD-oBH" secondAttribute="height" multiplier="2:3" id="mpA-53-axd"/>
                                     <constraint firstAttribute="trailing" secondItem="FB5-VA-M7G" secondAttribute="trailing" id="nzq-gJ-91H"/>
                                     <constraint firstAttribute="trailing" secondItem="l3v-xn-fS2" secondAttribute="trailing" id="sCF-eb-Lwt"/>
                                     <constraint firstItem="RvJ-JD-oBH" firstAttribute="leading" secondItem="EUV-NV-fy5" secondAttribute="leading" id="up7-pF-LPH"/>

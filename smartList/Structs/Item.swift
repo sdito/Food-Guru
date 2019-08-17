@@ -48,8 +48,6 @@ struct Item {
 
 extension Item {
     func writeToFirestore(db: Firestore!) {
-        
-        print("id is \(SharedValues.shared.listIdentifier!.documentID)")
         db.collection("lists").document("\(SharedValues.shared.listIdentifier!.documentID)").collection("items").document().setData([
             "name": self.name,
             "category": self.category!,

@@ -72,15 +72,10 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
     // CONTINUE HERE, HAVE THE CORRECT LIST BEING ABLE TO BE SELECTED, GO INTO THE EDIT LIST SCREEN
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let l = lists![indexPath.row]
-        
 //        Item.readItems(db: db, docID: l.docID!) { (itm) in
 //            self.items = itm
 //        }
-        
         SharedValues.shared.listIdentifier = self.db.collection("lists").document("\(l.docID!)")
-        
         self.performSegue(withIdentifier: "listSelected", sender: l)
-        // delayed by an extra press for the item to become the correct items
-        //print(items.map({$0.name}))
     }
 }

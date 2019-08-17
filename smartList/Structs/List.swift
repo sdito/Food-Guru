@@ -39,7 +39,7 @@ struct List {
             }
             
             for doc in documents {
-                let l = List(name: doc.get("name") as! String, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: nil/*(doc.get("numItems") as! Int)*/, docID: doc.documentID)
+                let l = List(name: doc.get("name") as! String, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID)
                 if lists.isEmpty == false {
                     lists.append(l)
                 } else {
@@ -73,18 +73,27 @@ extension List {
         }
     }
     func sortForTableView(from store: String) -> ([String]?, [[Item]]) {
-        let categories = self.categories?.sorted()
+        var categories = self.categories?.sorted()
         var sortedItems: [[Item]] = []
         
-        categories?.forEach({ (category) in
-            var itms: [Item] = []
-            self.items?.forEach({ (itm) in
-                if itm.category == category {
-                    itms.append(itm)
-                }
+        if categories?.isEmpty == true {
+            categories = ["All"]
+            sortedItems = [self.items] as! [[Item]]
+        } else {
+            
+            categories?.forEach({ (category) in
+                var itms: [Item] = []
+                self.items?.forEach({ (itm) in
+                    if itm.category == category {
+                        itms.append(itm)
+                    }
+                })
+                sortedItems.append(itms)
             })
-            sortedItems.append(itms)
-        })
+            
+        }
+        
+        
         
         return (categories, sortedItems)
     }

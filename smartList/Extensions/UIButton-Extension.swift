@@ -21,7 +21,7 @@ extension UIButton {
     }
     
     func createCategoryButton(with title: String) {
-        self.titleLabel?.font = UIFont(name: "futura", size: 18)
+        self.titleLabel?.font = UIFont(name: "futura", size: 16)
         self.setTitle(title, for: .normal)
         self.setTitleColor(.white, for: .normal)
         self.layer.cornerRadius = 10
