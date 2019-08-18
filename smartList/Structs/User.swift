@@ -39,9 +39,3 @@ struct User {
         })
     }
 }
-/*
-let updateDoc = db.collection("lists").document(listID)
-updateDoc.updateData([
-    "shared" : userIDs
-]
-*/

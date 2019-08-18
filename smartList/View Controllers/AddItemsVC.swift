@@ -46,9 +46,7 @@ class AddItemsVC: UIViewController {
         view.setGradientBackground(colorOne: .lightGray, colorTwo: .gray)
         Item.readItems(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (itm) in
             self.list?.items = itm
-            //self.setUIfrom(list: self.list!)
-            //(self.sortedCategories, self.arrayArrayItems) = (self.list?.sortForTableView(from: self.storeText))! as! ([String], [[Item]])
-            //tableView stuff here
+            print(itm.map({$0.ownID}))
             
         }
         if let first = stackView.subviews.last as! UIButton? {
@@ -83,9 +81,11 @@ class AddItemsVC: UIViewController {
         }
         
         
-        let item = Item(name: textField.text!, category: SharedValues.shared.currentCategory, store: storeText, user: nil)
+        var item = Item(name: textField.text!, selected: false, category: SharedValues.shared.currentCategory, store: storeText, user: nil, ownID: nil)
         item.writeToFirestore(db: db)
+        //NEED TO HAVE THE OWNID FOR THE ITEM IN ORDER TO WRITE TO DB IN THE FUTURE ABOUT ITEM EVENTS
         
+        //print("\(item.ownID) is the item id")
         if list?.items?.isEmpty == false {
             list?.items!.append(item)
         } else {
@@ -146,5 +146,8 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell") as! ItemCell
         cell.setUI(item: item)
         return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(list?.items.map({$0.map({$0.name})}))
     }
 }

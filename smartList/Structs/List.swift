@@ -77,9 +77,11 @@ extension List {
         
         if categories?.isEmpty == true {
             categories = ["All"]
-            sortedItems = [self.items] as! [[Item]]
+            let itmsForValue = self.items?.sorted(by: { (i1, i2) -> Bool in
+                i1.name < i2.name
+            })
+            sortedItems = [itmsForValue] as! [[Item]]
         } else {
-            
             categories?.forEach({ (category) in
                 var itms: [Item] = []
                 self.items?.forEach({ (itm) in
@@ -87,7 +89,11 @@ extension List {
                         itms.append(itm)
                     }
                 })
-                sortedItems.append(itms)
+                let itmsInOrder = itms.sorted(by: { (i1, i2) -> Bool in
+                    i1.name < i2.name
+                })
+                
+                sortedItems.append(itmsInOrder)
             })
             
         }

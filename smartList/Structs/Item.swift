@@ -11,19 +11,22 @@ import FirebaseFirestore
 
 struct Item {
     var name: String
+    var selected: Bool
     var category: String?
     var store: String?
-    //var documentID: DocumentReference?
     var user: String?
+    var ownID: String?
     
-    init(name: String, category: String?, store: String?/*, documentID: DocumentReference?*/, user: String?) {
+    init(name: String, selected: Bool, category: String?, store: String?, user: String?, ownID: String?) {
         self.name = name
+        self.selected = selected
         self.category = category
         self.store = store
-        //self.documentID = documentID
         self.user = user
+        self.ownID = ownID
     }
     
+    //correctly reads the ownID of the document of items
     static func readItems(db: Firestore, docID: String, itemsChanged: @escaping (_ items: [Item]) -> Void) {
         var listItems: [Item] = []
         db.collection("lists").document(docID).collection("items").addSnapshotListener { (querySnapshot, error) in
@@ -34,7 +37,7 @@ struct Item {
             }
             
             for doc in documents {
-                let i = Item(name: doc.get("name") as! String, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as! String))
+                let i = Item(name: doc.get("name") as! String, selected: false, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as! String), ownID: doc.documentID)
                 if listItems.isEmpty == false {
                     listItems.append(i)
                 } else {
@@ -47,8 +50,10 @@ struct Item {
 }
 
 extension Item {
-    func writeToFirestore(db: Firestore!) {
-        db.collection("lists").document("\(SharedValues.shared.listIdentifier!.documentID)").collection("items").document().setData([
+    mutating func writeToFirestore(db: Firestore!) {
+        let itemRef = db.collection("lists").document("\(SharedValues.shared.listIdentifier!.documentID)").collection("items").document()
+        self.ownID = itemRef.documentID
+        itemRef.setData([
             "name": self.name,
             "category": self.category!,
             "store": self.store!,
@@ -60,6 +65,13 @@ extension Item {
                 print("Document successfully written")
             }
         }
+    }
+    /*
+    mutating func selectedItem(db: Firestore) {
+        // to change the local item from the list and write to the db that the item was selected
+        // in the future, could only continuously write to the db is another user is viewing the list
+        
         
     }
+ */
 }
