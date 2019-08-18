@@ -31,7 +31,7 @@ struct List {
     
     static func readAllUserLists(db: Firestore, userID: String, listsChanged: @escaping (_ lists: [List]) -> Void) {
         var lists: [List] = []
-        db.collection("lists").whereField("user", isEqualTo: userID).addSnapshotListener { (querySnapshot, error) in
+        db.collection("lists").whereField("shared", arrayContains: userID).addSnapshotListener { (querySnapshot, error) in
             lists.removeAll()
             guard let documents = querySnapshot?.documents else {
                 print("Error fetching documents: \(String(describing: error))")

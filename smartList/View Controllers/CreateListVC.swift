@@ -124,6 +124,8 @@ extension CreateListVC: UITextFieldDelegate {
         } else if textField == all[0].listView.textField {
             var list = List(name: nameTextField.text!, stores: all[2].items, categories: all[1].items, people: all[0].items, items: nil, numItems: nil, docID: nil)
             
+            let email = (Auth.auth().currentUser?.email)!
+            list.people?.append(email)
             
             list.categories = list.categories?.removeBlanks()
             list.people = list.people?.removeBlanks()
