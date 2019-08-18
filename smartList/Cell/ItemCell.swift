@@ -13,6 +13,13 @@ class ItemCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     
     func setUI(item: Item) {
+        
+        
         nameLabel.text = item.name
+        if item.selected == true {
+            self.backgroundColor = .red
+        } else {
+            self.backgroundColor = .white
+        }
     }
 }

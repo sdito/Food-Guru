@@ -37,7 +37,7 @@ struct Item {
             }
             
             for doc in documents {
-                let i = Item(name: doc.get("name") as! String, selected: false, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as! String), ownID: doc.documentID)
+                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as! String), ownID: doc.documentID)
                 if listItems.isEmpty == false {
                     listItems.append(i)
                 } else {
@@ -57,7 +57,8 @@ extension Item {
             "name": self.name,
             "category": self.category!,
             "store": self.store!,
-            "user": SharedValues.shared.userID ?? "did not write"
+            "user": SharedValues.shared.userID ?? "did not write",
+            "selected": self.selected
         ]) { err in
             if let err = err {
                 print("Error writing document: \(err)")
@@ -66,12 +67,12 @@ extension Item {
             }
         }
     }
-    /*
-    mutating func selectedItem(db: Firestore) {
-        // to change the local item from the list and write to the db that the item was selected
-        // in the future, could only continuously write to the db is another user is viewing the list
+    
+    func selectedItem(db: Firestore) { db.collection("lists").document("\(SharedValues.shared.listIdentifier!.documentID)").collection("items").document(self.ownID!).updateData([
+            "selected": self.selected
+        ])
         
         
     }
- */
+ 
 }

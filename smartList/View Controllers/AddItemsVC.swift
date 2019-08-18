@@ -20,7 +20,8 @@ class AddItemsVC: UIViewController {
     var list: List? {
         didSet {
             if list?.items?.isEmpty == false {
-                (self.sortedCategories, self.arrayArrayItems) = (self.list?.sortForTableView(from: self.storeText))! as! ([String], [[Item]])
+                (sortedCategories, arrayArrayItems) = (list?.sortForTableView(from: storeText))! as! ([String], [[Item]])
+                print(self.list!.items!.map({$0.selected}))
                 tableView.reloadData()
             }
         }
@@ -46,8 +47,7 @@ class AddItemsVC: UIViewController {
         view.setGradientBackground(colorOne: .lightGray, colorTwo: .gray)
         Item.readItems(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (itm) in
             self.list?.items = itm
-            print(itm.map({$0.ownID}))
-            
+            //print(itm.map({$0.ownID}))
         }
         if let first = stackView.subviews.last as! UIButton? {
             SharedValues.shared.currentCategory = first.titleLabel?.text ?? "none"
@@ -148,6 +148,25 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(list?.items.map({$0.map({$0.name})}))
+        //print(list?.items.map({$0.map({$0.name})}))
+        
+        arrayArrayItems[indexPath.section][indexPath.row].selected = !arrayArrayItems[indexPath.section][indexPath.row].selected
+        arrayArrayItems[indexPath.section][indexPath.row].selectedItem(db: db)
+//        let id = arrayArrayItems[indexPath.section][indexPath.row].ownID!
+//        let item = list?.items?.filter({$0.ownID == id}).first?.selected
+//
+//        for itm in list!.items! {
+//            if itm.ownID = id {
+//                it
+//            }
+//        }
+        
+        //item?.selected = !item?.selected
+        
+        //print(item.name) // works
+        print(arrayArrayItems.map({$0.map({$0.name})}))
+        print(arrayArrayItems.map({$0.map({$0.ownID})}))
+        print(arrayArrayItems.map({$0.map({$0.selected})}))
+        tableView.reloadData()
     }
 }

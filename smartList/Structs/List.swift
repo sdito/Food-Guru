@@ -95,11 +95,7 @@ extension List {
                 
                 sortedItems.append(itmsInOrder)
             })
-            
         }
-        
-        
-        
         return (categories, sortedItems)
     }
 }
