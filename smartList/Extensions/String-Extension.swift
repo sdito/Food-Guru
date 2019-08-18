@@ -7,10 +7,12 @@
 //
 
 import Foundation
-
+import FirebaseFirestore
 
 extension Sequence where Element == String {
     func removeBlanks() -> [String] {
         return self.filter({$0 != ""})
     }
 }
+
+

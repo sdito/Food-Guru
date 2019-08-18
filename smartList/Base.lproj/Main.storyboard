@@ -105,8 +105,30 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Lists" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8OG-Oc-YP7">
+                                <rect key="frame" x="4" y="464" width="62" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S6A-KG-qQz">
+                                <rect key="frame" x="10" y="98" width="32" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="32" id="D8V-4s-qQm"/>
+                                    <constraint firstAttribute="height" constant="32" id="m1u-hM-Tca"/>
+                                </constraints>
+                                <state key="normal" image="settings-6-xl"/>
+                                <connections>
+                                    <action selector="settings:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3bl-hD-hJc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="S6A-KG-qQz" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="MLT-II-dvz"/>
+                            <constraint firstItem="S6A-KG-qQz" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="10" id="Zmc-NV-90P"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="O1y-uL-tHA"/>
@@ -501,7 +523,7 @@
         <!--Log InVC-->
         <scene sceneID="0GH-6Y-0xw">
             <objects>
-                <viewController id="AAX-es-SHS" customClass="LogInVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="logIn" id="AAX-es-SHS" customClass="LogInVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IkW-NP-d4y">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -566,6 +588,9 @@
             <point key="canvasLocation" x="-141" y="115"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="settings-6-xl" width="64" height="64"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="K1U-HP-Wjo"/>
     </inferredMetricsTieBreakers>

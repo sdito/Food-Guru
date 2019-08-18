@@ -7,18 +7,19 @@
 //
 
 import UIKit
-//import FirebaseCore
 import FirebaseFirestore
 import FirebaseUI
 
 class LogInVC: UIViewController {
-
+    var db: Firestore!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        db = Firestore.firestore()
     }
 
     @IBAction func logInStart(_ sender: Any) {
+    
         let authUI = FUIAuth.defaultAuthUI()
         guard authUI != nil else {
             return
@@ -38,6 +39,20 @@ extension LogInVC: FUIAuthDelegate {
         guard error == nil else {
             //log the error
             return
+        }
+        
+        
+        //to check to see if user is already in user database, if not write email and uid into firestore
+        let docRef = db.collection("users").document("\(authDataResult?.user.uid ?? "")")
+        
+        docRef.getDocument { (document, error) in
+            if document?.exists == false {
+                self.db.collection("users").document("\(authDataResult?.user.uid ?? "")").setData([
+                    "email": authDataResult?.user.email! as Any,
+                    "uid": authDataResult?.user.uid as Any,
+                    "name": authDataResult?.user.displayName as Any
+                    ])
+            }
         }
         
         SharedValues.shared.userID = authDataResult?.user.uid

@@ -10,7 +10,7 @@ import UIKit
 
 //import FirebaseCore
 import FirebaseFirestore
-
+import FirebaseAuth
 
 class CreateListVC: UIViewController {
     
@@ -129,6 +129,9 @@ extension CreateListVC: UITextFieldDelegate {
             list.people = list.people?.removeBlanks()
             list.stores = list.stores?.removeBlanks()
             list.writeToFirestore(db: db)
+            
+            //for testing
+            //User.emailToUid(emails: list.people, db: db, listID: SharedValues.shared.listIdentifier?.documentID ?? "")
             
             performSegue(withIdentifier: "addItems", sender: list)
         }

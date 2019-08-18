@@ -37,7 +37,6 @@ struct List {
                 print("Error fetching documents: \(String(describing: error))")
                 return
             }
-            
             for doc in documents {
                 let l = List(name: doc.get("name") as! String, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID)
                 if lists.isEmpty == false {
@@ -49,9 +48,8 @@ struct List {
             listsChanged(lists)
             // has the correct value in lists right here, returns [] though
         }
+        //db.collection("lists").whereField("shared", arrayContains: userID)
     }
-    
-
 }
 
 
@@ -69,6 +67,7 @@ extension List {
                 print("Error writing document: \(err)")
             } else {
                 print("Document successfully written")
+                User.emailToUid(emails: self.people, db: db, listID: SharedValues.shared.listIdentifier!.documentID)
             }
         }
     }

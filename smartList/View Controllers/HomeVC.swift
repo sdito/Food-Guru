@@ -26,7 +26,6 @@ class HomeVC: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         db = Firestore.firestore()
-        
         List.readAllUserLists(db: db, userID: SharedValues.shared.userID!) { (dbLists) in
             self.lists = dbLists
         }
@@ -48,6 +47,14 @@ class HomeVC: UIViewController {
             destVC.list = sender as? List
         }
     }
+    
+    
+    @IBAction func settings(_ sender: Any) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "logIn") as! LogInVC
+        //let vc = self.storyboard?.instantiateInitialViewController(withIdentifier: "logIn") as! LogInVC
+        present(vc, animated: true, completion: nil)
+    }
+    
 }
 
 
@@ -69,7 +76,6 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
     }
     
     
-    // CONTINUE HERE, HAVE THE CORRECT LIST BEING ABLE TO BE SELECTED, GO INTO THE EDIT LIST SCREEN
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let l = lists![indexPath.row]
 //        Item.readItems(db: db, docID: l.docID!) { (itm) in
