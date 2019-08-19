@@ -14,8 +14,17 @@ import FirebaseAuth
 
 class CreateListVC: UIViewController {
     
+    
+    
+    
+    var listToEdit: List?
+    
+    
+    
+    
     var db: Firestore!
     var all = ListOrganizer.createListViews()
+    
     private var section: Section?
     private var textFieldCombo: [UITextField:Section] = [:]
     private var w: CGFloat!
@@ -52,6 +61,10 @@ class CreateListVC: UIViewController {
         h = stackView.subviews[0].frame.height
         
         buttons.setSelected(selected: nameOutlet)
+        
+        
+        setUIforEditingList(list: listToEdit)
+
     }
     @IBAction func nameButton(_ sender: Any) {
         scrollView.scrollRectToVisible(CGRect(x: 0, y: 0, width: w, height: h), animated: true)
@@ -83,9 +96,16 @@ class CreateListVC: UIViewController {
             destVC.list = sender as? List
         }
     }
+    
+    private func setUIforEditingList(list: List?) {
+        if list != nil {
+            nameTextField.text = list?.name
+            all[2].items = list?.stores ?? [""]
+            all[1].items = list?.categories ?? [""]
+            all[0].items = list?.people ?? [""]
+        }
+    }
 }
-
-// not actually in use yet but writing the code first before finding where to implement it
 
 
 extension CreateListVC: CreateListViewDelegate {
@@ -130,10 +150,14 @@ extension CreateListVC: UITextFieldDelegate {
             list.categories = list.categories?.removeBlanks()
             list.people = list.people?.removeBlanks()
             list.stores = list.stores?.removeBlanks()
-            list.writeToFirestore(db: db)
             
-            //for testing
-            //User.emailToUid(emails: list.people, db: db, listID: SharedValues.shared.listIdentifier?.documentID ?? "")
+            // writeToFirestore for a brand new list; editListToFirestore for editing a preexisting list
+            if listToEdit == nil {
+                list.writeToFirestore(db: db)
+            } else {
+                list.editListToFirestore(db: db, listID: listToEdit!.docID!)
+            }
+            
             
             performSegue(withIdentifier: "addItems", sender: list)
         }

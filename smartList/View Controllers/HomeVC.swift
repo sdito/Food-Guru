@@ -41,6 +41,8 @@ class HomeVC: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         super.viewWillDisappear(animated)
     }
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "listSelected" {
             let destVC = segue.destination as! AddItemsVC

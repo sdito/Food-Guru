@@ -10,11 +10,13 @@ import UIKit
 //import FirebaseCore
 import FirebaseFirestore
 
+
 class AddItemsVC: UIViewController {
     private var storeText: String = "none"
-    
     private var arrayArrayItems: [[Item]] = []
     private var sortedCategories: [String] = []
+    
+    private var sendHome = true
     
     var db: Firestore!
     var list: List? {
@@ -39,6 +41,7 @@ class AddItemsVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         tableView.delegate = self
         tableView.dataSource = self
+        textField.delegate = self
         if list?.stores?.isEmpty == false {
             storeText = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)!
         }
@@ -53,7 +56,7 @@ class AddItemsVC: UIViewController {
             SharedValues.shared.currentCategory = first.titleLabel?.text ?? "none"
         }
         
-        
+        //sendHome = true
     }
     
     override func viewDidLoad() {
@@ -66,33 +69,19 @@ class AddItemsVC: UIViewController {
         SharedValues.shared.listIdentifier?.updateData([
             "numItems": list?.items?.count as Any
         ])
+        print(sendHome)
+        if sendHome == true {
+            navigationController?.popToRootViewController(animated: true)
+            //let vc = storyboard?.instantiateViewController(withIdentifier: "nav") as! NaviVC
+//            present(vc, animated: true, completion: nil)
+            //vc.becomeFirstResponder()
+        }
+        
     }
-    
-    //currently crashes if something is empty from the list
-    @IBAction func addItem(_ sender: Any) {
-        if list?.stores?.isEmpty == false {
-            if let txt = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex) {
-                storeText = txt
-            } else {
-                storeText = "none - segmented control didnt work"
-            }
-        } else {
-            storeText = "none - stores is empty"
-        }
-        
-        
-        var item = Item(name: textField.text!, selected: false, category: SharedValues.shared.currentCategory, store: storeText, user: nil, ownID: nil)
-        item.writeToFirestore(db: db)
-        //NEED TO HAVE THE OWNID FOR THE ITEM IN ORDER TO WRITE TO DB IN THE FUTURE ABOUT ITEM EVENTS
-        
-        //print("\(item.ownID) is the item id")
-        if list?.items?.isEmpty == false {
-            list?.items!.append(item)
-        } else {
-            list?.items = [item]
-        }
 
-        textField.text = ""
+    
+    @IBAction func addItem(_ sender: Any) {
+        toAddItem()
     }
     
     
@@ -119,6 +108,39 @@ class AddItemsVC: UIViewController {
         if list.stores?.isEmpty == true {
             segmentedControl.isHidden = true
         }
+    }
+    @IBAction func editList(_ sender: Any) {
+        sendHome = false
+        let vc = storyboard?.instantiateViewController(withIdentifier: "createList") as! CreateListVC
+        vc.listToEdit = list
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    
+    private func toAddItem() {
+        if list?.stores?.isEmpty == false {
+            if let txt = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex) {
+                storeText = txt
+            } else {
+                storeText = "none - segmented control didnt work"
+            }
+        } else {
+            storeText = "none - stores is empty"
+        }
+        
+        
+        var item = Item(name: textField.text!, selected: false, category: SharedValues.shared.currentCategory, store: storeText, user: nil, ownID: nil)
+        item.writeToFirestore(db: db)
+        //NEED TO HAVE THE OWNID FOR THE ITEM IN ORDER TO WRITE TO DB IN THE FUTURE ABOUT ITEM EVENTS
+        
+        //print("\(item.ownID) is the item id")
+        if list?.items?.isEmpty == false {
+            list?.items!.append(item)
+        } else {
+            list?.items = [item]
+        }
+        
+        textField.text = ""
     }
 }
 
@@ -152,21 +174,16 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
         
         arrayArrayItems[indexPath.section][indexPath.row].selected = !arrayArrayItems[indexPath.section][indexPath.row].selected
         arrayArrayItems[indexPath.section][indexPath.row].selectedItem(db: db)
-//        let id = arrayArrayItems[indexPath.section][indexPath.row].ownID!
-//        let item = list?.items?.filter({$0.ownID == id}).first?.selected
-//
-//        for itm in list!.items! {
-//            if itm.ownID = id {
-//                it
-//            }
-//        }
-        
-        //item?.selected = !item?.selected
-        
-        //print(item.name) // works
         print(arrayArrayItems.map({$0.map({$0.name})}))
         print(arrayArrayItems.map({$0.map({$0.ownID})}))
         print(arrayArrayItems.map({$0.map({$0.selected})}))
         tableView.reloadData()
+    }
+}
+
+extension AddItemsVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        toAddItem()
+        return true
     }
 }

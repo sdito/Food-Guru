@@ -60,7 +60,7 @@ extension List {
             "name": self.name,
             "stores": self.stores!,
             "categories": self.categories!,
-            "people": self.people!,
+            "people": Array(Set(self.people!)).sorted(),
             "user": SharedValues.shared.userID ?? "did not write"
         ]) { err in
             if let err = err {
@@ -71,11 +71,21 @@ extension List {
             }
         }
     }
+    func editListToFirestore(db: Firestore!, listID: String) {
+        db.collection("lists").document(listID).updateData([
+            "name": self.name,
+            "stores": self.stores!,
+            "categories": self.categories!,
+            "people": Array(Set(self.people!)).sorted()
+        ])
+    }
     func sortForTableView(from store: String) -> ([String]?, [[Item]]) {
         var categories = self.categories?.sorted()
+        categories?.append("")
         var sortedItems: [[Item]] = []
         
         if categories?.isEmpty == true {
+            // will never get called at the moment since "" is being appended to categories before this
             categories = ["All"]
             let itmsForValue = self.items?.sorted(by: { (i1, i2) -> Bool in
                 i1.name < i2.name
