@@ -112,7 +112,11 @@ class AddItemsVC: UIViewController {
     @IBAction func editList(_ sender: Any) {
         sendHome = false
         let vc = storyboard?.instantiateViewController(withIdentifier: "createList") as! CreateListVC
+        if list?.docID == nil {
+            list?.docID = SharedValues.shared.listIdentifier?.documentID
+        }
         vc.listToEdit = list
+        
         self.navigationController?.pushViewController(vc, animated: true)
         
     }

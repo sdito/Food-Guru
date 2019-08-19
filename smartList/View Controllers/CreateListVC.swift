@@ -155,6 +155,10 @@ extension CreateListVC: UITextFieldDelegate {
             if listToEdit == nil {
                 list.writeToFirestore(db: db)
             } else {
+                for _ in 1...10 {
+                    print(listToEdit?.docID)
+                }
+                
                 list.editListToFirestore(db: db, listID: listToEdit!.docID!)
             }
             
