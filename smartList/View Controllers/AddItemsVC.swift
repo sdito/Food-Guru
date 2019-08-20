@@ -28,6 +28,7 @@ class AddItemsVC: UIViewController {
             }
         }
     }
+    @IBOutlet weak var topView: UIView!
     
     @IBOutlet weak var storesView: UIView!
     @IBOutlet weak var categoriesView: UIView!
@@ -39,6 +40,7 @@ class AddItemsVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     override func viewWillAppear(_ animated: Bool) {
+        topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
         tableView.delegate = self
         tableView.dataSource = self
         textField.delegate = self
@@ -120,6 +122,18 @@ class AddItemsVC: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
+    @IBAction func deleteList(_ sender: Any) {
+        let alert = UIAlertController(title: "Delete list", message: "Are you sure you want to delete this list? This action can't be undone.", preferredStyle: .alert)
+    
+        alert.addAction(.init(title: "Delete", style: .destructive, handler: {action in
+            self.list?.deleteListToFirestore(db: self.db)
+            self.navigationController?.popToRootViewController(animated: true)
+        }))
+        
+        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alert, animated: true)
+    }
     
     private func toAddItem() {
         if list?.stores?.isEmpty == false {
@@ -178,9 +192,9 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
         
         arrayArrayItems[indexPath.section][indexPath.row].selected = !arrayArrayItems[indexPath.section][indexPath.row].selected
         arrayArrayItems[indexPath.section][indexPath.row].selectedItem(db: db)
-        print(arrayArrayItems.map({$0.map({$0.name})}))
-        print(arrayArrayItems.map({$0.map({$0.ownID})}))
-        print(arrayArrayItems.map({$0.map({$0.selected})}))
+//        print(arrayArrayItems.map({$0.map({$0.name})}))
+//        print(arrayArrayItems.map({$0.map({$0.ownID})}))
+//        print(arrayArrayItems.map({$0.map({$0.selected})}))
         tableView.reloadData()
     }
 }

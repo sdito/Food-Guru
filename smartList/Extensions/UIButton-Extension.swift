@@ -26,6 +26,7 @@ extension UIButton {
         self.setTitleColor(.white, for: .normal)
         self.layer.cornerRadius = 10
         self.backgroundColor = Colors.main
+        //self.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
         self.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
     
     }

@@ -30,6 +30,7 @@ class CreateListVC: UIViewController {
     private var w: CGFloat!
     private var h: CGFloat!
     
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var nameTextField: UITextField!
@@ -42,6 +43,7 @@ class CreateListVC: UIViewController {
     lazy private var buttons: [UIButton] = [nameOutlet, storesOutlet, categoriesOutlet, peopleOutlet]
     
     override func viewDidLoad() {
+        topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         db = Firestore.firestore()

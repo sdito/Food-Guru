@@ -31,6 +31,8 @@
 		E2B4695A22F7F485006BA77D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4695922F7F485006BA77D /* Colors.swift */; };
 		E2C4934123066012002907C2 /* UIView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C4934023066012002907C2 /* UIView-Extension.swift */; };
 		E2C49343230887F3002907C2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C49342230887F3002907C2 /* User.swift */; };
+		E2C49347230B3FC0002907C2 /* UIStackView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C49346230B3FC0002907C2 /* UIStackView-Extension.swift */; };
+		E2C49349230B45E4002907C2 /* CreateRecipeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C49348230B45E4002907C2 /* CreateRecipeVC.swift */; };
 		E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */; };
 		E2E529D222FA7F9100C55DA0 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D122FA7F9100C55DA0 /* List.swift */; };
 		E2E529D522FA80C400C55DA0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D422FA80C400C55DA0 /* Item.swift */; };
@@ -90,6 +92,8 @@
 		E2B4695922F7F485006BA77D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E2C4934023066012002907C2 /* UIView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView-Extension.swift"; sourceTree = "<group>"; };
 		E2C49342230887F3002907C2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E2C49346230B3FC0002907C2 /* UIStackView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView-Extension.swift"; sourceTree = "<group>"; };
+		E2C49348230B45E4002907C2 /* CreateRecipeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecipeVC.swift; sourceTree = "<group>"; };
 		E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-Extension.swift"; sourceTree = "<group>"; };
 		E2E529D122FA7F9100C55DA0 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		E2E529D422FA80C400C55DA0 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -219,6 +223,7 @@
 				E216204822F658D10074A0DF /* HomeVC.swift */,
 				E216207922F660DF0074A0DF /* CreateListVC.swift */,
 				E2EBE5D222FD25060019BB0F /* AddItemsVC.swift */,
+				E2C49348230B45E4002907C2 /* CreateRecipeVC.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -259,6 +264,7 @@
 				E2EB7FC222FFB29A003948A6 /* String-Extension.swift */,
 				E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */,
 				E2C4934023066012002907C2 /* UIView-Extension.swift */,
+				E2C49346230B3FC0002907C2 /* UIStackView-Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -534,10 +540,12 @@
 				E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */,
 				E216207A22F660DF0074A0DF /* CreateListVC.swift in Sources */,
 				E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */,
+				E2C49349230B45E4002907C2 /* CreateRecipeVC.swift in Sources */,
 				E2481B7F2300B00D0036E378 /* LogInVC.swift in Sources */,
 				E2C4934123066012002907C2 /* UIView-Extension.swift in Sources */,
 				E2EB7FBE22FF5ACF003948A6 /* SharedValues.swift in Sources */,
 				E2EBE5D322FD25060019BB0F /* AddItemsVC.swift in Sources */,
+				E2C49347230B3FC0002907C2 /* UIStackView-Extension.swift in Sources */,
 				E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */,
 				E2EB7FC322FFB29A003948A6 /* String-Extension.swift in Sources */,
 				E2E529D222FA7F9100C55DA0 /* List.swift in Sources */,

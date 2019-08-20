@@ -12,11 +12,12 @@ class ListCell: UICollectionViewCell {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var items: UILabel!
     @IBOutlet weak var people: UILabel!
+    @IBOutlet weak var view: UIView!
     
     
     func setUI(list: List) {
         name.text = list.name
-        
+        view.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
         switch list.numItems {
         case nil:
             items.text = "No items"

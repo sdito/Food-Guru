@@ -71,6 +71,9 @@ extension List {
             }
         }
     }
+    func deleteListToFirestore(db: Firestore!) {
+        db.collection("lists").document(self.docID ?? "").delete()
+    }
     func editListToFirestore(db: Firestore!, listID: String) {
         db.collection("lists").document(listID).updateData([
             "name": self.name,
