@@ -83,7 +83,7 @@ class AddItemsVC: UIViewController {
 
     
     @IBAction func addItem(_ sender: Any) {
-        toAddItem()
+        if textField.text != "" {toAddItem()}
     }
     
     
