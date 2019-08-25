@@ -13,6 +13,11 @@ import FirebaseFirestore
 
 class AddItemsVC: UIViewController {
     private var storeText: String = "none"
+    
+    private var currentStore: String {
+        return segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex) ?? "none"
+    }
+    
     private var arrayArrayItems: [[Item]] = []
     private var sortedCategories: [String] = []
     
@@ -22,7 +27,8 @@ class AddItemsVC: UIViewController {
     var list: List? {
         didSet {
             if list?.items?.isEmpty == false {
-                (sortedCategories, arrayArrayItems) = (list?.sortForTableView(from: storeText))! as! ([String], [[Item]])
+                //print(storeText)
+                (sortedCategories, arrayArrayItems) = (list?.sortForTableView(from: currentStore))! as! ([String], [[Item]])
                 print(self.list!.items!.map({$0.selected}))
                 tableView.reloadData()
             }
@@ -44,9 +50,9 @@ class AddItemsVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         textField.delegate = self
-        if list?.stores?.isEmpty == false {
-            storeText = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)!
-        }
+//        if list?.stores?.isEmpty == false {
+//            storeText = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)!
+//        }
         setUIfrom(list: list!)
         
         view.setGradientBackground(colorOne: .lightGray, colorTwo: .gray)
@@ -86,6 +92,10 @@ class AddItemsVC: UIViewController {
         if textField.text != "" {toAddItem()}
     }
     
+    @IBAction func segmentedControlPressed(_ sender: Any) {
+        (sortedCategories, arrayArrayItems) = (list?.sortForTableView(from: currentStore))! as! ([String], [[Item]])
+        tableView.reloadData()
+    }
     
     private func setUIfrom(list: List) {
         //segmented control set up
@@ -136,18 +146,17 @@ class AddItemsVC: UIViewController {
     }
     
     private func toAddItem() {
-        if list?.stores?.isEmpty == false {
-            if let txt = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex) {
-                storeText = txt
-            } else {
-                storeText = "none - segmented control didnt work"
-            }
-        } else {
-            storeText = "none - stores is empty"
-        }
+//        if list?.stores?.isEmpty == false {
+//            if let txt = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex) {
+//                storeText = txt
+//            } else {
+//                storeText = "none - segmented control didnt work"
+//            }
+//        } else {
+//            storeText = "none - stores is empty"
+//        }
         
-        
-        var item = Item(name: textField.text!, selected: false, category: SharedValues.shared.currentCategory, store: storeText, user: nil, ownID: nil)
+        var item = Item(name: textField.text!, selected: false, category: SharedValues.shared.currentCategory, store: currentStore, user: nil, ownID: nil)
         item.writeToFirestore(db: db)
         //NEED TO HAVE THE OWNID FOR THE ITEM IN ORDER TO WRITE TO DB IN THE FUTURE ABOUT ITEM EVENTS
         

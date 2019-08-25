@@ -444,6 +444,9 @@
                                                     <segment title="Target"/>
                                                     <segment title="Ralph's"/>
                                                 </segments>
+                                                <connections>
+                                                    <action selector="segmentedControlPressed:" destination="AVh-qM-Vlx" eventType="valueChanged" id="3BL-hD-ZMT"/>
+                                                </connections>
                                             </segmentedControl>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

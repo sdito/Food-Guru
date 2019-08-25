@@ -82,7 +82,9 @@ extension List {
             "people": Array(Set(self.people!)).sorted()
         ])
     }
+    
     func sortForTableView(from store: String) -> ([String]?, [[Item]]) {
+        
         var categories = self.categories?.sorted()
         categories?.append("")
         var sortedItems: [[Item]] = []
@@ -98,7 +100,8 @@ extension List {
             categories?.forEach({ (category) in
                 var itms: [Item] = []
                 self.items?.forEach({ (itm) in
-                    if itm.category == category {
+                    //print(store)
+                    if itm.category == category && itm.store == store {
                         itms.append(itm)
                     }
                 })
