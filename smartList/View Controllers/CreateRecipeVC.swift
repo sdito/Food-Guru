@@ -9,12 +9,15 @@
 import UIKit
 
 class CreateRecipeVC: UIViewController {
-
+    private var type: [String] = []
+    private var ingredients: [String] = []
+    private var instructions: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         
     }
-
-
 }
+
+
+
