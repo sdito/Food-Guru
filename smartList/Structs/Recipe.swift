@@ -12,27 +12,70 @@ import FirebaseFirestore
 
 struct Recipe {
     var name: String
-    var type: [String]
+    var recipeType: [RecipeType]
+    var cuisineType: CuisineType
     var cookTime: Int
     var prepTime: Int
     var ingredients: [String]
     var instructions: [String]
     var calories: Int
+    var numServes: Int
     var id: String?
+    var numReviews: Int?
+    var numStars: Int?
     
-    init(name: String, type: [String], cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int, id: String?) {
+    init(name: String, recipeType: [RecipeType], cuisineType: CuisineType, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int, numServes: Int, id: String?, numReviews: Int?, numStars: Int?) {
         self.name = name
-        self.type = type
+        self.recipeType = recipeType
+        self.cuisineType = cuisineType
         self.cookTime = cookTime
         self.prepTime = prepTime
         self.ingredients = ingredients
         self.instructions = instructions
         self.calories = calories
+        self.numServes = numServes
         self.id = id
+        self.numReviews = numReviews
+        self.numStars = numStars
     }
     
-    static func readRecipes() {
+    static func readRecipes(db: Firestore!, ingredients: [String]?, type: [String]?, user: String?) -> [Recipe]? {
+        var recipies: [Recipe]?
         
+        // all nil
+        if ingredients == nil && type == nil && user == nil {
+            return nil
+        } else if ingredients == nil && type == nil {
+            db.collection("recipes").whereField("user", isEqualTo: user as Any).getDocuments() {(QuerySnapshot, err) in
+                if let err = err {
+                    print("Error reading documents: \(err)")
+                } else {
+                    for doc in QuerySnapshot!.documents {
+                        let d = Recipe(name: doc.get("name") as! String, recipeType: doc.get("recipeType") as! [RecipeType], cuisineType: doc.get("cuisineType") as! CuisineType, cookTime: doc.get("cookTime") as! Int, prepTime: doc.get("prepTime") as! Int, ingredients: doc.get("ingredients") as! [String], instructions: doc.get("instructions") as! [String], calories: doc.get("calories") as! Int, numServes: doc.get("numServes") as! Int, id: doc.get("id") as? String, numReviews: doc.get("numReviews") as? Int, numStars: doc.get("numStars") as? Int)
+                        if recipies == nil {
+                            recipies = [d]
+                        } else {
+                            recipies!.append(d)
+                        }
+                    }
+                }
+            }
+        } else if ingredients == nil && type != nil && user == nil {
+            
+        } else if ingredients != nil && type == nil && user == nil {
+            
+        } else if ingredients == nil && type != nil && user != nil {
+            
+        } else if ingredients != nil && type == nil && user != nil {
+            
+        } else if ingredients != nil && type != nil && user == nil {
+            
+        } else if ingredients != nil && type != nil && user != nil {
+            
+        } else {
+            print("Missing one of the combinations for recipie search")
+        }
+        return recipies
     }
     
 }
@@ -45,12 +88,18 @@ extension Recipe {
         self.id = doc.documentID
         doc.setData([
             "name": self.name,
-            "type": self.type,
+            "recipeType": self.recipeType,
+            "cuisineType": self.cuisineType,
             "cookTime": self.cookTime,
             "prepTime": self.prepTime,
             "ingredients": self.ingredients,
             "instructions": self.instructions,
-            "calories": self.calories
+            "calories": self.calories,
+            "numServes": self.numServes,
+            "id": self.id as Any,
+            "numReviews": self.numReviews as Any,
+            "numStarts": self.numStars as Any
+            
         ]) { err in
             if let err = err {
                 print("Error writing document: \(err)")
