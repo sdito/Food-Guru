@@ -13,8 +13,19 @@ class SelectRecipeTypeVC: UIViewController {
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var topLabel: UILabel!
     
-    private var allTypes = RecipeType.allItems
+    private var typesSelected: Set<String> = [] {
+        didSet {
+            topLabel.text = self.typesSelected.sorted().joined(separator: ", ")
+        }
+    }
+    
+    private var allTypes: [String] = RecipeType.allItems {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -49,6 +60,10 @@ class SelectRecipeTypeVC: UIViewController {
 extension SelectRecipeTypeVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print("called")
+        allTypes = RecipeType.allItems
+        allTypes = allTypes.filter({ (type) -> Bool in
+            type.starts(with: searchBar.text!)
+        })
     }
 }
 
@@ -62,11 +77,23 @@ extension SelectRecipeTypeVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "recipeType") as! RecipeTypeCell
         let type = allTypes[indexPath.row]
-        cell.setUI(type: type)
+        cell.setUI(type: type, set: typesSelected)
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        let item = allTypes[indexPath.row]
+        if typesSelected.contains(item) == false {
+            typesSelected.insert(allTypes[indexPath.row])
+        } else {
+            typesSelected.remove(allTypes[indexPath.row])
+        }
+        
+        searchBar.text = ""
+        allTypes = RecipeType.allItems
+        print(typesSelected)
     }
+    
     
 }

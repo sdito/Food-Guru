@@ -146,15 +146,6 @@ class AddItemsVC: UIViewController {
     }
     
     private func toAddItem() {
-//        if list?.stores?.isEmpty == false {
-//            if let txt = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex) {
-//                storeText = txt
-//            } else {
-//                storeText = "none - segmented control didnt work"
-//            }
-//        } else {
-//            storeText = "none - stores is empty"
-//        }
         
         var item = Item(name: textField.text!, selected: false, category: SharedValues.shared.currentCategory, store: currentStore, user: nil, ownID: nil)
         item.writeToFirestore(db: db)

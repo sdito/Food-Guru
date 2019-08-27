@@ -12,10 +12,10 @@ class RecipeTypeCell: UITableViewCell {
     
     @IBOutlet weak var typeLabel: UILabel!
     
-    func setUI(type: String) {
+    func setUI(type: String, set: Set<String>?) {
         typeLabel.text = type
         
-        if self.isSelected == true {
+        if set?.contains(type) ?? false {
             typeLabel.textColor = Colors.main
             self.accessoryType = .checkmark
         } else {
