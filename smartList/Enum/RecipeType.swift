@@ -9,7 +9,7 @@
 import Foundation
 
 
-enum RecipeType {
+enum RecipeType: CaseIterable {
     case breakfast
     case brunch
     case lunch
@@ -162,4 +162,7 @@ enum RecipeType {
             return "Seafood"
         }
     }
+    
+    // all the cases in the enum represented in their clean string format
+    static var allItems: [String] = RecipeType.allCases.map{$0.description}.sorted()
 }

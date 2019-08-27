@@ -23,6 +23,8 @@ class HomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(RecipeType.allItems)
+        
         collectionView.dataSource = self
         collectionView.delegate = self
         db = Firestore.firestore()
