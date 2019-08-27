@@ -19,7 +19,7 @@ class CreateRecipeVC: UIViewController {
     @IBOutlet weak var caloriesTextField: UITextField!
     @IBOutlet weak var ingredientsTextField: UITextField!
     
-    
+    lazy private var currTextField: UITextField = nameTextField
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,17 +32,21 @@ class CreateRecipeVC: UIViewController {
         
         nameTextField.becomeFirstResponder()
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        UITextField().resignFirstResponder()
+    
+    
+    @IBAction func selectCuisine(_ sender: Any) {
+        pushToPopUp()
+    }
+    @IBAction func selectDescriptions(_ sender: Any) {
+        pushToPopUp()
     }
     
-    @IBAction func selectDescriptions(_ sender: Any) {
+    
+    private func pushToPopUp() {
+        currTextField.resignFirstResponder()
         self.add(popUp: SelectRecipeTypeVC.popUp.popOverVC)
     }
-    
 }
-
-
 
 extension CreateRecipeVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -65,5 +69,9 @@ extension CreateRecipeVC: UITextFieldDelegate {
         }
         
         return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        currTextField = textField
     }
 }

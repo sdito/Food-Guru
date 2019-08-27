@@ -9,7 +9,7 @@
 import Foundation
 
 
-enum CuisineType {
+enum CuisineType: CaseIterable {
     case italian
     case mexican
     case chinese
@@ -21,23 +21,16 @@ enum CuisineType {
     case african
     case european
     case australianAndNZ
-    case canadian
     case french
     case japanese
     case korean
     case mediterranean
     case ameircan
     case vietnamese
-    case soul
     case greek
-    case caribbean
     case german
-    case cajun
-    case moroccan
-    case peruvian
-    case british
-    case filipino
     case brazilian
+    case other
     
     
     
@@ -65,8 +58,6 @@ enum CuisineType {
             return "European"
         case .australianAndNZ:
             return "Australian and New Zealander"
-        case .canadian:
-            return "Canadian"
         case .french:
             return "French"
         case .japanese:
@@ -79,26 +70,23 @@ enum CuisineType {
             return "American"
         case .vietnamese:
             return "Vietnamese"
-        case .soul:
-            return "Soul"
         case .greek:
             return "Greek"
-        case .caribbean:
-            return "Caribbean"
         case .german:
             return "German"
-        case .cajun:
-            return "Cajun"
-        case .moroccan:
-            return "Moroccan"
-        case .peruvian:
-            return "Peruvian"
-        case .british:
-            return "British"
-        case .filipino:
-            return "Filipino"
         case .brazilian:
             return "Brazilian"
+        case .other:
+            return "Other"
         }
     }
+    
+    static var allItems: [String] {
+        var list = CuisineType.allCases.map{$0.description}.sorted()
+        list = list.filter({$0 != "Other"})
+        list.append("Other")
+        list.insert(" - ", at: 0)
+        return list
+    }
+    
 }

@@ -584,7 +584,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cYn-GZ-FqD">
-                                <rect key="frame" x="0.0" y="132" width="414" height="730"/>
+                                <rect key="frame" x="0.0" y="323.5" width="414" height="538.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="recipeType" rowHeight="64" id="oeK-K1-fad" customClass="RecipeTypeCell" customModule="smartList" customModuleProvider="target">
@@ -613,59 +613,100 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3aL-7Z-msc">
+                            <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="XSy-dW-PRp">
+                                <rect key="frame" x="0.0" y="279.5" width="414" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="Y9x-Ak-BgU"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2pd-bx-zYj">
                                 <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o9M-tL-Dk2">
-                                        <rect key="frame" x="361" y="8" width="37" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Done">
-                                            <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="exit:" destination="IUK-Ph-7gP" eventType="touchUpInside" id="5pr-Tw-rg4"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Select one or multiple descriptions" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OuB-QE-o8J">
-                                        <rect key="frame" x="18" y="12" width="263" height="23"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="uPS-gY-Kjp">
+                                        <rect key="frame" x="10" y="7" width="394" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select cuisine type" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bmn-lt-Izr">
+                                                <rect key="frame" x="0.0" y="0.0" width="192" height="30"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o9M-tL-Dk2">
+                                                <rect key="frame" x="202" y="0.0" width="192" height="30"/>
+                                                <state key="normal" title="Done">
+                                                    <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="exit:" destination="IUK-Ph-7gP" eventType="touchUpInside" id="5pr-Tw-rg4"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="uPS-gY-Kjp" firstAttribute="leading" secondItem="2pd-bx-zYj" secondAttribute="leading" constant="10" id="37p-Qh-aLy"/>
+                                    <constraint firstItem="uPS-gY-Kjp" firstAttribute="centerY" secondItem="2pd-bx-zYj" secondAttribute="centerY" id="FJz-oc-ah7"/>
+                                    <constraint firstAttribute="trailing" secondItem="uPS-gY-Kjp" secondAttribute="trailing" constant="10" id="cw0-lp-rdq"/>
+                                </constraints>
+                            </view>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="idD-Aw-LuC">
+                                <rect key="frame" x="0.0" y="88" width="414" height="147.5"/>
+                            </pickerView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3aL-7Z-msc">
+                                <rect key="frame" x="0.0" y="235.5" width="414" height="44"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select one or multiple descriptions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="OuB-QE-o8J">
+                                        <rect key="frame" x="10" y="10.5" width="394" height="22.5"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
-                            <searchBar contentMode="redraw" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="XSy-dW-PRp">
-                                <rect key="frame" x="0.0" y="88" width="414" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="Y9x-Ak-BgU"/>
+                                    <constraint firstAttribute="trailing" secondItem="OuB-QE-o8J" secondAttribute="trailing" constant="10" id="8XQ-Ur-DpB"/>
+                                    <constraint firstItem="OuB-QE-o8J" firstAttribute="leading" secondItem="3aL-7Z-msc" secondAttribute="leading" constant="10" id="C1L-Hy-0ZQ"/>
+                                    <constraint firstItem="OuB-QE-o8J" firstAttribute="centerY" secondItem="3aL-7Z-msc" secondAttribute="centerY" id="bMs-vy-U02"/>
                                 </constraints>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="cYn-GZ-FqD" firstAttribute="bottom" secondItem="FlF-QT-6lf" secondAttribute="bottom" id="1kJ-hV-wzm"/>
                             <constraint firstItem="FlF-QT-6lf" firstAttribute="trailing" secondItem="3aL-7Z-msc" secondAttribute="trailing" id="2zg-lD-9Gf"/>
+                            <constraint firstItem="XSy-dW-PRp" firstAttribute="top" secondItem="3aL-7Z-msc" secondAttribute="bottom" id="70j-rJ-gYg"/>
                             <constraint firstItem="XSy-dW-PRp" firstAttribute="leading" secondItem="FlF-QT-6lf" secondAttribute="leading" id="9zy-S1-wWe"/>
+                            <constraint firstItem="2pd-bx-zYj" firstAttribute="height" secondItem="3aL-7Z-msc" secondAttribute="height" id="A8K-O0-T7r"/>
                             <constraint firstItem="3aL-7Z-msc" firstAttribute="leading" secondItem="FlF-QT-6lf" secondAttribute="leading" id="F9s-gO-9az"/>
                             <constraint firstItem="XSy-dW-PRp" firstAttribute="trailing" secondItem="FlF-QT-6lf" secondAttribute="trailing" id="Fcj-G4-zzn"/>
-                            <constraint firstItem="cYn-GZ-FqD" firstAttribute="leading" secondItem="FlF-QT-6lf" secondAttribute="leading" id="Hxo-HV-W3i"/>
-                            <constraint firstItem="3aL-7Z-msc" firstAttribute="top" secondItem="FlF-QT-6lf" secondAttribute="top" id="QK5-xv-EAz"/>
-                            <constraint firstItem="cYn-GZ-FqD" firstAttribute="trailing" secondItem="FlF-QT-6lf" secondAttribute="trailing" id="R5A-36-1DZ"/>
-                            <constraint firstItem="cYn-GZ-FqD" firstAttribute="bottom" secondItem="FlF-QT-6lf" secondAttribute="bottom" id="fDo-de-3al"/>
-                            <constraint firstItem="XSy-dW-PRp" firstAttribute="height" secondItem="3aL-7Z-msc" secondAttribute="height" id="fPE-KQ-eca"/>
-                            <constraint firstItem="XSy-dW-PRp" firstAttribute="top" secondItem="3aL-7Z-msc" secondAttribute="bottom" id="gd8-Mu-iKh"/>
-                            <constraint firstItem="cYn-GZ-FqD" firstAttribute="top" secondItem="XSy-dW-PRp" secondAttribute="bottom" id="lUO-o2-rWW"/>
+                            <constraint firstAttribute="trailing" secondItem="cYn-GZ-FqD" secondAttribute="trailing" id="ImM-jB-Xfz"/>
+                            <constraint firstItem="cYn-GZ-FqD" firstAttribute="leading" secondItem="FlF-QT-6lf" secondAttribute="leading" id="Jh2-rg-eWi"/>
+                            <constraint firstItem="XSy-dW-PRp" firstAttribute="leading" secondItem="FlF-QT-6lf" secondAttribute="leading" id="JjQ-yX-fw7"/>
+                            <constraint firstItem="cYn-GZ-FqD" firstAttribute="top" secondItem="XSy-dW-PRp" secondAttribute="bottom" id="KAO-d5-oQw"/>
+                            <constraint firstItem="2pd-bx-zYj" firstAttribute="leading" secondItem="FlF-QT-6lf" secondAttribute="leading" id="Qeo-d8-iwu"/>
+                            <constraint firstItem="idD-Aw-LuC" firstAttribute="trailing" secondItem="FlF-QT-6lf" secondAttribute="trailing" id="Vvg-Ik-GrY"/>
+                            <constraint firstItem="3aL-7Z-msc" firstAttribute="top" secondItem="idD-Aw-LuC" secondAttribute="bottom" id="W1W-ki-4jg"/>
+                            <constraint firstItem="idD-Aw-LuC" firstAttribute="leading" secondItem="FlF-QT-6lf" secondAttribute="leading" id="Y5y-RU-FVq"/>
+                            <constraint firstItem="cYn-GZ-FqD" firstAttribute="height" secondItem="896-MC-jFV" secondAttribute="height" multiplier="3:5" constant="1" id="ZMO-3t-Ong"/>
+                            <constraint firstItem="2pd-bx-zYj" firstAttribute="trailing" secondItem="FlF-QT-6lf" secondAttribute="trailing" id="ZtN-Ke-fbS"/>
+                            <constraint firstItem="3aL-7Z-msc" firstAttribute="height" secondItem="XSy-dW-PRp" secondAttribute="height" id="gYU-mF-rai"/>
+                            <constraint firstItem="2pd-bx-zYj" firstAttribute="top" secondItem="FlF-QT-6lf" secondAttribute="top" id="sF9-4n-4am"/>
+                            <constraint firstItem="XSy-dW-PRp" firstAttribute="trailing" secondItem="FlF-QT-6lf" secondAttribute="trailing" id="sZF-Yi-dEd"/>
+                            <constraint firstItem="idD-Aw-LuC" firstAttribute="top" secondItem="2pd-bx-zYj" secondAttribute="bottom" id="y4R-Be-MfH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="FlF-QT-6lf"/>
                     </view>
                     <connections>
+                        <outlet property="cuisineLabel" destination="Bmn-lt-Izr" id="fOq-TB-gjc"/>
+                        <outlet property="descriptionLabel" destination="OuB-QE-o8J" id="Fta-4S-KDM"/>
+                        <outlet property="pickerView" destination="idD-Aw-LuC" id="BuW-qe-e83"/>
                         <outlet property="searchBar" destination="XSy-dW-PRp" id="IbB-j5-WMS"/>
                         <outlet property="searchDisplayController" destination="erd-wq-0Kq" id="Mqt-cs-Xb5"/>
+                        <outlet property="secondTopView" destination="3aL-7Z-msc" id="1ZE-rP-fbB"/>
                         <outlet property="tableView" destination="cYn-GZ-FqD" id="dlP-i5-WJp"/>
-                        <outlet property="topLabel" destination="OuB-QE-o8J" id="Fta-4S-KDM"/>
-                        <outlet property="topView" destination="3aL-7Z-msc" id="5BR-Cy-gtp"/>
+                        <outlet property="topView" destination="2pd-bx-zYj" id="uF4-JC-JUz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="903-kz-mha" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -728,8 +769,29 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="77M-Rc-xlY">
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="3L2-Jp-E8n">
                                         <rect key="frame" x="0.0" y="76" width="394" height="32"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cuisine" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AG4-DW-OVN">
+                                                <rect key="frame" x="0.0" y="0.0" width="86.5" height="32"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vcQ-Cu-Q2q">
+                                                <rect key="frame" x="92.5" y="0.0" width="301.5" height="32"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                                <state key="normal" title="Select cuisine type">
+                                                    <color key="titleColor" red="0.80950586930000001" green="0.80950586930000001" blue="0.80950586930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="selectCuisine:" destination="Kgx-m8-jVE" eventType="touchUpInside" id="AW6-8x-CRr"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="77M-Rc-xlY">
+                                        <rect key="frame" x="0.0" y="116" width="394" height="32"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qva-pO-JBC">
                                                 <rect key="frame" x="0.0" y="0.0" width="86.5" height="32"/>
@@ -746,24 +808,6 @@
                                                 <connections>
                                                     <action selector="selectDescriptions:" destination="Kgx-m8-jVE" eventType="touchUpInside" id="lE9-Ll-eWw"/>
                                                 </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="3L2-Jp-E8n">
-                                        <rect key="frame" x="0.0" y="116" width="394" height="32"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cuisine" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AG4-DW-OVN">
-                                                <rect key="frame" x="0.0" y="0.0" width="86.5" height="32"/>
-                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vcQ-Cu-Q2q">
-                                                <rect key="frame" x="92.5" y="0.0" width="301.5" height="32"/>
-                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                                <state key="normal" title="Button">
-                                                    <color key="titleColor" red="0.80950586930000001" green="0.80950586930000001" blue="0.80950586930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
                                             </button>
                                         </subviews>
                                     </stackView>
