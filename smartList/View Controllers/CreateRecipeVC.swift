@@ -24,6 +24,9 @@ class CreateRecipeVC: UIViewController {
     
     @IBOutlet weak var createRecipeOutlet: UIButton!
     
+    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var instructionsListStackView: UIStackView!
+    
     var currTextField: UITextField?
     
     var cuisineType: String? {
@@ -51,7 +54,7 @@ class CreateRecipeVC: UIViewController {
         createRecipeOutlet.layer.cornerRadius = 15
         createRecipeOutlet.clipsToBounds = true
         currTextField = nameTextField
-        
+        textView.border()
     }
     
     @IBAction func createRecipePressed(_ sender: Any) {
@@ -66,6 +69,13 @@ class CreateRecipeVC: UIViewController {
     }
     @IBAction func selectDescriptions(_ sender: Any) {
         pushToPopUp()
+        
+    }
+    @IBAction func addInstruction(_ sender: Any) {
+        print("called")
+        //instructionsListStackView.createInstructionRow()
+        instructionsListStackView.insertSubview(UIView(), at: 1)
+        print(instructionsListStackView.subviews.count)
     }
     
     

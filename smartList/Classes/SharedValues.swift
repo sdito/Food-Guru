@@ -15,6 +15,8 @@ class SharedValues {
     var listIdentifier: DocumentReference?
     var userID: String?
     
+    
+    
     static let shared = SharedValues()
     private init() {}
 }

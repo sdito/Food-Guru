@@ -20,5 +20,12 @@ extension UIView {
         gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
         self.layer.insertSublayer(gradientLayer, at: 0)
     }
+    
+    func border() {
+        self.layer.cornerRadius = 5
+        self.layer.borderWidth = 0.5
+        self.layer.borderColor = Colors.lightGray.cgColor
+        self.clipsToBounds = true
+    }
 }
 

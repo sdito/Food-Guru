@@ -20,6 +20,7 @@ extension UIButton {
         self.alpha = 0.6
     }
     
+    
     func createCategoryButton(with title: String) {
         self.titleLabel?.font = UIFont(name: "futura", size: 16)
         self.setTitle(title, for: .normal)

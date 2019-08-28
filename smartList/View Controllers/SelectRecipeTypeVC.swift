@@ -64,12 +64,14 @@ class SelectRecipeTypeVC: UIViewController {
         // collect the RecipeType and CuisineType from storyboard here before removeFromSuperview -- should be in enum type
         
         if cuisineType != nil && recipeType.isEmpty == false && cuisineType != " - " {
+            
+            
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
-            
             _ = vc.view
-            
             vc.cuisineType = cuisineType
             vc.recipeType = recipeType.sorted()
+            
+            
             SelectRecipeTypeVC.popUp.popOverVC.view.removeFromSuperview()
         } else {
             let alrt = UIAlertController(title: "Incomplete data", message: "Please make sure both cuisine type and reciple type are filled out", preferredStyle: .alert)
