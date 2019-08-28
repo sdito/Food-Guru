@@ -23,7 +23,7 @@ class HomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(RecipeType.allItems)
+        //print(RecipeType.allItems)
         
         collectionView.dataSource = self
         collectionView.delegate = self

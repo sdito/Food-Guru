@@ -163,6 +163,9 @@ enum RecipeType: CaseIterable {
         }
     }
     
+    
     // all the cases in the enum represented in their clean string format
     static var allItems: [String] = RecipeType.allCases.map{$0.description}.sorted()
+    
+    
 }

@@ -21,6 +21,9 @@ extension UITextField {
         toolbar.setItems([one, two, three], animated: false)
         self.inputAccessoryView = toolbar
     }
+    func toInt() -> Int? {
+        return Int(self.text ?? "")
+    }
 }
 
 

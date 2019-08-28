@@ -7,19 +7,35 @@
 //
 
 import UIKit
+import FirebaseFirestore
+import FirebaseAuth
 
 class CreateRecipeVC: UIViewController {
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var servingsTextField: UITextField!
-    
-    
     @IBOutlet weak var cookTimeTextField: UITextField!
     @IBOutlet weak var prepTimeTextField: UITextField!
     @IBOutlet weak var caloriesTextField: UITextField!
     @IBOutlet weak var ingredientsTextField: UITextField!
     
-    lazy private var currTextField: UITextField = nameTextField
+    @IBOutlet weak var cuisineOutlet: UIButton!
+    @IBOutlet weak var recipeDescriptionOutlet: UIButton!
+    
+    @IBOutlet weak var createRecipeOutlet: UIButton!
+    
+    var currTextField: UITextField?
+    
+    var cuisineType: String? {
+        didSet {
+            cuisineOutlet.setTitle(self.cuisineType!, for: .normal)
+        }
+    }
+    var recipeType: [String]? {
+        didSet {
+            recipeDescriptionOutlet.setTitle("name", for: .normal)//self.recipeType?.joined(separator: ", "), for: .normal)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +47,17 @@ class CreateRecipeVC: UIViewController {
         ingredientsTextField.delegate = self
         
         nameTextField.becomeFirstResponder()
+        createRecipeOutlet.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
+        createRecipeOutlet.layer.cornerRadius = 15
+        createRecipeOutlet.clipsToBounds = true
+        currTextField = nameTextField
+        
+    }
+    
+    @IBAction func createRecipePressed(_ sender: Any) {
+        
+        //still need to have notes for user to write in about recipe on storybaord
+        //let recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: <#T##[String]#>, instructions: <#T##[String]#>, calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, id: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: nil)
     }
     
     
@@ -43,7 +70,7 @@ class CreateRecipeVC: UIViewController {
     
     
     private func pushToPopUp() {
-        currTextField.resignFirstResponder()
+        currTextField?.resignFirstResponder()
         self.add(popUp: SelectRecipeTypeVC.popUp.popOverVC)
     }
 }

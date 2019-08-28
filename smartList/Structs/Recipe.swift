@@ -12,20 +12,20 @@ import FirebaseFirestore
 
 struct Recipe {
     var name: String
-    var recipeType: [RecipeType]
-    var cuisineType: CuisineType
+    var recipeType: [String]
+    var cuisineType: String
     var cookTime: Int
     var prepTime: Int
     var ingredients: [String]
     var instructions: [String]
-    var calories: Int
+    var calories: Int?
     var numServes: Int
     var id: String?
     var numReviews: Int?
     var numStars: Int?
     var notes: String?
     
-    init(name: String, recipeType: [RecipeType], cuisineType: CuisineType, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int, numServes: Int, id: String?, numReviews: Int?, numStars: Int?, notes: String?) {
+    init(name: String, recipeType: [String], cuisineType: String, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, id: String?, numReviews: Int?, numStars: Int?, notes: String?) {
         self.name = name
         self.recipeType = recipeType
         self.cuisineType = cuisineType
@@ -53,7 +53,7 @@ struct Recipe {
                     print("Error reading documents: \(err)")
                 } else {
                     for doc in QuerySnapshot!.documents {
-                        let d = Recipe(name: doc.get("name") as! String, recipeType: doc.get("recipeType") as! [RecipeType], cuisineType: doc.get("cuisineType") as! CuisineType, cookTime: doc.get("cookTime") as! Int, prepTime: doc.get("prepTime") as! Int, ingredients: doc.get("ingredients") as! [String], instructions: doc.get("instructions") as! [String], calories: doc.get("calories") as! Int, numServes: doc.get("numServes") as! Int, id: doc.get("id") as? String, numReviews: doc.get("numReviews") as? Int, numStars: doc.get("numStars") as? Int, notes: doc.get("notes") as? String)
+                        let d = Recipe(name: doc.get("name") as! String, recipeType: doc.get("recipeType") as! [String], cuisineType: doc.get("cuisineType") as! String, cookTime: doc.get("cookTime") as! Int, prepTime: doc.get("prepTime") as! Int, ingredients: doc.get("ingredients") as! [String], instructions: doc.get("instructions") as! [String], calories: doc.get("calories") as? Int, numServes: doc.get("numServes") as! Int, id: doc.get("id") as? String, numReviews: doc.get("numReviews") as? Int, numStars: doc.get("numStars") as? Int, notes: doc.get("notes") as? String)
                         if recipies == nil {
                             recipies = [d]
                         } else {
@@ -96,7 +96,7 @@ extension Recipe {
             "prepTime": self.prepTime,
             "ingredients": self.ingredients,
             "instructions": self.instructions,
-            "calories": self.calories,
+            "calories": self.calories as Any,
             "numServes": self.numServes,
             "id": self.id as Any,
             "numReviews": self.numReviews as Any,

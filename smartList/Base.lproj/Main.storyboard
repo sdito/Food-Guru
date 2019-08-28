@@ -206,6 +206,7 @@
                                                         </subviews>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
+                                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="U7S-b5-zJf" secondAttribute="trailing" constant="20" id="0vr-tw-qlw"/>
                                                             <constraint firstItem="U7S-b5-zJf" firstAttribute="leading" secondItem="ryk-ep-q6o" secondAttribute="leading" constant="30" id="1yL-py-yfX"/>
                                                             <constraint firstItem="U7S-b5-zJf" firstAttribute="top" secondItem="ryk-ep-q6o" secondAttribute="top" constant="30" id="Hzf-cL-SQr"/>
                                                             <constraint firstItem="lrc-Yv-Ipd" firstAttribute="top" secondItem="U7S-b5-zJf" secondAttribute="bottom" constant="30" id="cTK-92-Rxf"/>
@@ -416,7 +417,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hyc-Sg-TeI">
-                                                            <rect key="frame" x="30" y="9.5" width="47" height="25"/>
+                                                            <rect key="frame" x="30" y="9.5" width="46.5" height="25"/>
                                                             <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="19"/>
                                                             <color key="textColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -425,6 +426,7 @@
                                                     <constraints>
                                                         <constraint firstItem="hyc-Sg-TeI" firstAttribute="leading" secondItem="tCu-gS-Lbc" secondAttribute="leading" constant="30" id="Evj-Yi-Ihe"/>
                                                         <constraint firstItem="hyc-Sg-TeI" firstAttribute="centerY" secondItem="tCu-gS-Lbc" secondAttribute="centerY" id="jNa-ms-9PR"/>
+                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hyc-Sg-TeI" secondAttribute="trailing" constant="30" id="xAA-lG-G5t"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
@@ -724,13 +726,13 @@
         <!--Create RecipeVC-->
         <scene sceneID="tA0-f8-jFz">
             <objects>
-                <viewController id="Kgx-m8-jVE" customClass="CreateRecipeVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="cRecipe" id="Kgx-m8-jVE" customClass="CreateRecipeVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1B5-Xf-Wcl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zrW-m1-glA">
-                                <rect key="frame" x="10" y="128" width="394" height="347"/>
+                                <rect key="frame" x="10" y="128" width="394" height="393"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="UfB-Cf-aSb">
                                         <rect key="frame" x="0.0" y="0.0" width="394" height="30"/>
@@ -907,6 +909,17 @@
                                             </stackView>
                                         </subviews>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Na1-4m-cBc">
+                                        <rect key="frame" x="0.0" y="355" width="394" height="38"/>
+                                        <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="20"/>
+                                        <state key="normal" title="Create recipe">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="createRecipePressed:" destination="Kgx-m8-jVE" eventType="touchUpInside" id="Yh3-y9-73Y"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="pka-A0-pHZ" secondAttribute="trailing" id="4on-tt-hnJ"/>
@@ -923,13 +936,16 @@
                                     <constraint firstItem="77M-Rc-xlY" firstAttribute="leading" secondItem="zrW-m1-glA" secondAttribute="leading" id="SD4-hh-6j5"/>
                                     <constraint firstAttribute="trailing" secondItem="UfB-Cf-aSb" secondAttribute="trailing" id="SNl-7e-Yph"/>
                                     <constraint firstAttribute="trailing" secondItem="UIT-ef-ceI" secondAttribute="trailing" id="Se2-um-bTi"/>
+                                    <constraint firstAttribute="bottom" secondItem="Na1-4m-cBc" secondAttribute="bottom" id="TRE-8K-ayJ"/>
                                     <constraint firstAttribute="trailing" secondItem="77M-Rc-xlY" secondAttribute="trailing" id="VvU-ti-blc"/>
                                     <constraint firstItem="pka-A0-pHZ" firstAttribute="leading" secondItem="zrW-m1-glA" secondAttribute="leading" id="XO6-WB-BBF"/>
                                     <constraint firstAttribute="trailing" secondItem="SMT-Yl-3FH" secondAttribute="trailing" id="YBo-aL-mHb"/>
                                     <constraint firstItem="SMT-Yl-3FH" firstAttribute="leading" secondItem="zrW-m1-glA" secondAttribute="leading" id="gTN-HL-DgO"/>
                                     <constraint firstItem="UIT-ef-ceI" firstAttribute="leading" secondItem="zrW-m1-glA" secondAttribute="leading" id="giz-is-cfW"/>
                                     <constraint firstItem="7Nv-mY-Dy4" firstAttribute="width" secondItem="SBh-ce-yDF" secondAttribute="width" id="jr6-9r-Ap0"/>
+                                    <constraint firstItem="Na1-4m-cBc" firstAttribute="leading" secondItem="zrW-m1-glA" secondAttribute="leading" id="ms6-qz-xOQ"/>
                                     <constraint firstItem="AG4-DW-OVN" firstAttribute="width" secondItem="Qva-pO-JBC" secondAttribute="width" id="n3G-FE-dmJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="Na1-4m-cBc" secondAttribute="trailing" id="qVA-Pz-MAH"/>
                                     <constraint firstItem="5ey-Vd-JKz" firstAttribute="leading" secondItem="zrW-m1-glA" secondAttribute="leading" id="xt0-hU-bF7"/>
                                 </constraints>
                             </stackView>
@@ -946,9 +962,12 @@
                     <connections>
                         <outlet property="caloriesTextField" destination="KAK-ZQ-zso" id="0IX-d4-uWb"/>
                         <outlet property="cookTimeTextField" destination="NRa-hZ-B53" id="bXR-0t-6mv"/>
+                        <outlet property="createRecipeOutlet" destination="Na1-4m-cBc" id="Dqc-qX-uVJ"/>
+                        <outlet property="cuisineOutlet" destination="vcQ-Cu-Q2q" id="UuS-E3-bHj"/>
                         <outlet property="ingredientsTextField" destination="TyP-I0-qAn" id="eZ6-et-XXY"/>
                         <outlet property="nameTextField" destination="3GD-ug-Izc" id="00F-0e-Pov"/>
                         <outlet property="prepTimeTextField" destination="Zhd-ic-1Q6" id="UgD-k0-MaO"/>
+                        <outlet property="recipeDescriptionOutlet" destination="u7f-Sc-OcV" id="ZsZ-5c-w3U"/>
                         <outlet property="servingsTextField" destination="JVQ-tX-F7f" id="nuo-Bq-QMs"/>
                     </connections>
                 </viewController>

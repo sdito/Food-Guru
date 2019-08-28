@@ -21,9 +21,11 @@ class SelectRecipeTypeVC: UIViewController {
     @IBOutlet weak var cuisineLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    private var typesSelected: Set<String> = [] {
+    
+    private var cuisineType: String?
+    private var recipeType: Set<String> = [] {
         didSet {
-            descriptionLabel.text = self.typesSelected.sorted().joined(separator: ", ")
+            descriptionLabel.text = self.recipeType.sorted().joined(separator: ", ")
         }
     }
     
@@ -59,7 +61,22 @@ class SelectRecipeTypeVC: UIViewController {
     }
     
     @IBAction func exit(_ sender: Any) {
-        SelectRecipeTypeVC.popUp.popOverVC.view.removeFromSuperview()
+        // collect the RecipeType and CuisineType from storyboard here before removeFromSuperview -- should be in enum type
+        
+        if cuisineType != nil && recipeType.isEmpty == false && cuisineType != " - " {
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
+            
+            _ = vc.view
+            
+            vc.cuisineType = cuisineType
+            vc.recipeType = recipeType.sorted()
+            SelectRecipeTypeVC.popUp.popOverVC.view.removeFromSuperview()
+        } else {
+            let alrt = UIAlertController(title: "Incomplete data", message: "Please make sure both cuisine type and reciple type are filled out", preferredStyle: .alert)
+            alrt.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alrt, animated: true)
+        }
+        
     }
     
     struct popUp {
@@ -93,10 +110,12 @@ extension SelectRecipeTypeVC: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if row == 0 {
             cuisineLabel.text = "Select cuisine type"
+            
         } else {
             cuisineLabel.text = CuisineType.allItems[row]
+            
         }
-        
+        cuisineType = CuisineType.allItems[row]
     }
 }
 
@@ -109,17 +128,17 @@ extension SelectRecipeTypeVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "recipeType") as! RecipeTypeCell
         let type = allTypes[indexPath.row]
-        cell.setUI(type: type, set: typesSelected)
+        cell.setUI(type: type, set: recipeType)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let item = allTypes[indexPath.row]
-        if typesSelected.contains(item) == false {
-            typesSelected.insert(allTypes[indexPath.row])
+        if recipeType.contains(item) == false {
+            recipeType.insert(allTypes[indexPath.row])
         } else {
-            typesSelected.remove(allTypes[indexPath.row])
+            recipeType.remove(allTypes[indexPath.row])
         }
         
         searchBar.text = ""
