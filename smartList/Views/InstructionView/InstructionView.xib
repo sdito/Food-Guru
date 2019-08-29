@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InstructionView" customModule="smartList" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="499" height="108"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="oIH-db-GWQ">
+                    <rect key="frame" x="0.0" y="0.0" width="499" height="108"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J1e-C6-Wja">
+                            <rect key="frame" x="0.0" y="0.0" width="31" height="108"/>
+                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                            <state key="normal" title="2">
+                                <color key="titleColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                        </button>
+                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="R0T-Gp-fui">
+                            <rect key="frame" x="37" y="0.0" width="462" height="108"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <color key="textColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                        </textView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="R0T-Gp-fui" firstAttribute="width" secondItem="J1e-C6-Wja" secondAttribute="width" multiplier="15" id="Oh1-TG-MI8"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="oIH-db-GWQ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="mUH-Pe-1LG"/>
+                <constraint firstAttribute="bottom" secondItem="oIH-db-GWQ" secondAttribute="bottom" id="sBN-uU-WUG"/>
+                <constraint firstItem="oIH-db-GWQ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="tcR-9s-AdU"/>
+                <constraint firstAttribute="trailing" secondItem="oIH-db-GWQ" secondAttribute="trailing" id="wyb-qT-nLR"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="button" destination="J1e-C6-Wja" id="4uT-ui-AsA"/>
+                <outlet property="tv" destination="R0T-Gp-fui" id="Hce-SA-CQ7"/>
+            </connections>
+            <point key="canvasLocation" x="199.27536231884059" y="-162.05357142857142"/>
+        </view>
+    </objects>
+</document>

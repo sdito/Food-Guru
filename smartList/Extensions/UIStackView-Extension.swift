@@ -28,10 +28,12 @@ extension UIStackView {
         self.insertSubview(sv, at: self.subviews.count)
     }
     
+    
     func createInstructionRow() {
         //insert it into self at 'last'
         let sv = UIStackView()
         sv.axis = .horizontal
+        sv.distribution = .fillEqually
         
         let button = UIButton()
         button.setTitle("+", for: .normal)
@@ -43,12 +45,14 @@ extension UIStackView {
         tv.border()
         tv.textColor = Colors.main
         tv.font = UIFont(name: "futura", size: 17)
+        tv.backgroundColor = .red
         
         sv.insertSubview(button, at: 0)
         sv.insertSubview(tv, at: 1)
         
-        //sv.subviews[0].widthAnchor.constraint(equalTo: sv.subviews[1].widthAnchor, multiplier: 0.1, constant: 1)
         
-        self.insertSubview(sv, at: self.subviews.count + 1)
+        //self.insertSubview(sv, at: self.subviews.count + 1)
+        self.insertArrangedSubview(sv, at: self.subviews.count)
     }
+    
 }

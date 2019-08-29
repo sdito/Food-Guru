@@ -24,8 +24,9 @@ class CreateRecipeVC: UIViewController {
     
     @IBOutlet weak var createRecipeOutlet: UIButton!
     
-    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var instructionsListStackView: UIStackView!
+    
+    
     
     var currTextField: UITextField?
     
@@ -54,7 +55,7 @@ class CreateRecipeVC: UIViewController {
         createRecipeOutlet.layer.cornerRadius = 15
         createRecipeOutlet.clipsToBounds = true
         currTextField = nameTextField
-        textView.border()
+        initialInstructionSetUp()
     }
     
     @IBAction func createRecipePressed(_ sender: Any) {
@@ -72,27 +73,31 @@ class CreateRecipeVC: UIViewController {
         
     }
     @IBAction func addInstruction(_ sender: Any) {
-        print("called")
-        //instructionsListStackView.createInstructionRow()
-        //instructionsListStackView.insertSubview(UIView(), at: 1)
+        let v = (Bundle.main.loadNibNamed("InstructionView", owner: nil, options: nil)?.first as? InstructionView)!
+        v.setUI(num: "+")
+        //v.setUI(num: "\(instructionsListStackView.subviews.count)")
+        instructionsListStackView.insertArrangedSubview(v, at: instructionsListStackView.subviews.count)
+        //instructionsListStackView.insertSubview(v, at: 1)
+        for i in instructionsListStackView.subviews {
+            if i != instructionsListStackView.subviews.last && type(of: i) == InstructionView.self {
+                (i as! InstructionView).button.setTitle("\(instructionsListStackView.subviews.firstIndex(of: i) ?? 0)", for: .normal)
+            }
+        }
         
-        
-        let v = UIView()
-        v.backgroundColor = .red
-        v.heightAnchor.constraint(equalTo: instructionsListStackView.subviews[0].heightAnchor, multiplier: 1)
-        
-        
-        instructionsListStackView.insertSubview(v, at: 1)
-        
-        
-        
-        //print(instructionsListStackView.subviews.count)
     }
     
     
     private func pushToPopUp() {
         currTextField?.resignFirstResponder()
         self.add(popUp: SelectRecipeTypeVC.popUp.popOverVC)
+    }
+    private func initialInstructionSetUp() {
+        let v = (Bundle.main.loadNibNamed("InstructionView", owner: nil, options: nil)?.first as? InstructionView)!
+        let v2 = (Bundle.main.loadNibNamed("InstructionView", owner: nil, options: nil)?.first as? InstructionView)!
+        v.setUI(num: "1")
+        v2.setUI(num: "+")
+        instructionsListStackView.insertArrangedSubview(v, at: 1)
+        instructionsListStackView.insertArrangedSubview(v2, at: 2)
     }
 }
 

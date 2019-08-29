@@ -28,6 +28,8 @@
 		E25F071D231490A200E6738E /* RecipeTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071C231490A200E6738E /* RecipeTypeCell.swift */; };
 		E25F071F2314B07D00E6738E /* UIViewController-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071E2314B07D00E6738E /* UIViewController-Extension.swift */; };
 		E2623A8A22FFDA44003B63E2 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2623A8922FFDA44003B63E2 /* ListCell.swift */; };
+		E2A54E1D2318553400BEBF39 /* InstructionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2A54E1B2318553300BEBF39 /* InstructionView.xib */; };
+		E2A54E1E2318553400BEBF39 /* InstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A54E1C2318553400BEBF39 /* InstructionView.swift */; };
 		E2AF8E282300D020005D49EF /* NaviVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2AF8E272300D020005D49EF /* NaviVC.swift */; };
 		E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B4694B22F78D1C006BA77D /* CreateListView.xib */; };
 		E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4694F22F78D44006BA77D /* CreateListView.swift */; };
@@ -95,6 +97,8 @@
 		E25F071C231490A200E6738E /* RecipeTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTypeCell.swift; sourceTree = "<group>"; };
 		E25F071E2314B07D00E6738E /* UIViewController-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController-Extension.swift"; sourceTree = "<group>"; };
 		E2623A8922FFDA44003B63E2 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
+		E2A54E1B2318553300BEBF39 /* InstructionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionView.xib; sourceTree = "<group>"; };
+		E2A54E1C2318553400BEBF39 /* InstructionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
 		E2AF8E272300D020005D49EF /* NaviVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaviVC.swift; sourceTree = "<group>"; };
 		E2B4694B22F78D1C006BA77D /* CreateListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateListView.xib; sourceTree = "<group>"; };
 		E2B4694F22F78D44006BA77D /* CreateListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListView.swift; sourceTree = "<group>"; };
@@ -251,9 +255,19 @@
 			path = Enum;
 			sourceTree = "<group>";
 		};
+		E2A54E1F23186DEB00BEBF39 /* InstructionView */ = {
+			isa = PBXGroup;
+			children = (
+				E2A54E1C2318553400BEBF39 /* InstructionView.swift */,
+				E2A54E1B2318553300BEBF39 /* InstructionView.xib */,
+			);
+			path = InstructionView;
+			sourceTree = "<group>";
+		};
 		E2B4694D22F78D23006BA77D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E2A54E1F23186DEB00BEBF39 /* InstructionView */,
 				E2B4694E22F78D2B006BA77D /* CreateListView */,
 			);
 			path = Views;
@@ -426,6 +440,7 @@
 				E216204E22F658D20074A0DF /* Assets.xcassets in Resources */,
 				E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */,
 				E216204C22F658D10074A0DF /* Main.storyboard in Resources */,
+				E2A54E1D2318553400BEBF39 /* InstructionView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -580,6 +595,7 @@
 				E2EB7FC322FFB29A003948A6 /* String-Extension.swift in Sources */,
 				E2E529D222FA7F9100C55DA0 /* List.swift in Sources */,
 				E2C49343230887F3002907C2 /* User.swift in Sources */,
+				E2A54E1E2318553400BEBF39 /* InstructionView.swift in Sources */,
 				E25F071723146CC600E6738E /* RecipeType.swift in Sources */,
 				E2D8462D231264CD004B19C2 /* Recipe.swift in Sources */,
 			);
