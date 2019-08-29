@@ -71,11 +71,12 @@ class SelectRecipeTypeVC: UIViewController {
             vc.cuisineType = cuisineType
             vc.recipeType = recipeType.sorted()
             
-            
             SelectRecipeTypeVC.popUp.popOverVC.view.removeFromSuperview()
+            
         } else {
             let alrt = UIAlertController(title: "Incomplete data", message: "Please make sure both cuisine type and reciple type are filled out", preferredStyle: .alert)
             alrt.addAction(.init(title: "Ok", style: .default, handler: nil))
+            alrt.addAction(.init(title: "Exit", style: .destructive, handler: {(alert: UIAlertAction!) in SelectRecipeTypeVC.popUp.popOverVC.view.removeFromSuperview()}))
             present(alrt, animated: true)
         }
         

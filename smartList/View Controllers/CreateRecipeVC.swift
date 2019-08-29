@@ -74,8 +74,19 @@ class CreateRecipeVC: UIViewController {
     @IBAction func addInstruction(_ sender: Any) {
         print("called")
         //instructionsListStackView.createInstructionRow()
-        instructionsListStackView.insertSubview(UIView(), at: 1)
-        print(instructionsListStackView.subviews.count)
+        //instructionsListStackView.insertSubview(UIView(), at: 1)
+        
+        
+        let v = UIView()
+        v.backgroundColor = .red
+        v.heightAnchor.constraint(equalTo: instructionsListStackView.subviews[0].heightAnchor, multiplier: 1)
+        
+        
+        instructionsListStackView.insertSubview(v, at: 1)
+        
+        
+        
+        //print(instructionsListStackView.subviews.count)
     }
     
     
