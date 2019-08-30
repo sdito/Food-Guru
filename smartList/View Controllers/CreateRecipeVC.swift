@@ -17,14 +17,15 @@ class CreateRecipeVC: UIViewController {
     @IBOutlet weak var cookTimeTextField: UITextField!
     @IBOutlet weak var prepTimeTextField: UITextField!
     @IBOutlet weak var caloriesTextField: UITextField!
-    @IBOutlet weak var ingredientsTextField: UITextField!
+    
+    @IBOutlet weak var notesTextView: UITextView!
     
     @IBOutlet weak var cuisineOutlet: UIButton!
     @IBOutlet weak var recipeDescriptionOutlet: UIButton!
-    
     @IBOutlet weak var createRecipeOutlet: UIButton!
     
     @IBOutlet weak var instructionsListStackView: UIStackView!
+    @IBOutlet weak var ingredientsStackView: UIStackView!
     
     
     
@@ -48,7 +49,8 @@ class CreateRecipeVC: UIViewController {
         cookTimeTextField.delegate = self
         prepTimeTextField.delegate = self
         caloriesTextField.delegate = self
-        ingredientsTextField.delegate = self
+        //notesTextView.delegate = self
+        
         
         nameTextField.becomeFirstResponder()
         createRecipeOutlet.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
@@ -56,12 +58,13 @@ class CreateRecipeVC: UIViewController {
         createRecipeOutlet.clipsToBounds = true
         currTextField = nameTextField
         initialInstructionSetUp()
+        notesTextView.border()
     }
     
     @IBAction func createRecipePressed(_ sender: Any) {
         
         //still need to have notes for user to write in about recipe on storybaord
-        //let recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: <#T##[String]#>, instructions: <#T##[String]#>, calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, id: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: nil)
+        //let recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: <#T##[String]#>, instructions: <#T##[String]#>, calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, id: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text)
     }
     
     
@@ -102,6 +105,13 @@ class CreateRecipeVC: UIViewController {
         v.alpha = 1.0
         instructionsListStackView.insertArrangedSubview(v, at: 1)
         instructionsListStackView.insertArrangedSubview(v2, at: 2)
+        
+        
+        let t = (Bundle.main.loadNibNamed("IngredientView", owner: nil, options: nil)?.first as? IngredientView)!
+        let t2 = (Bundle.main.loadNibNamed("IngredientView", owner: nil, options: nil)?.first as? IngredientView)!
+        
+        ingredientsStackView.insertArrangedSubview(t, at: 1)
+        ingredientsStackView.insertArrangedSubview(t2, at: 2)
     }
     
     private func pushToPopUp() {
@@ -131,7 +141,7 @@ extension CreateRecipeVC: UITextFieldDelegate {
             caloriesTextField.becomeFirstResponder()
         } else if textField == caloriesTextField {
             textField.resignFirstResponder()
-            ingredientsTextField.becomeFirstResponder()
+            
         }
         
         return true

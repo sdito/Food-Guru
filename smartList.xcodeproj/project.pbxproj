@@ -48,6 +48,8 @@
 		E2EB7FC022FFAD7C003948A6 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB7FBF22FFAD7C003948A6 /* ItemCell.swift */; };
 		E2EB7FC322FFB29A003948A6 /* String-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB7FC222FFB29A003948A6 /* String-Extension.swift */; };
 		E2EBE5D322FD25060019BB0F /* AddItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EBE5D222FD25060019BB0F /* AddItemsVC.swift */; };
+		E2F380AD2319847A003857F7 /* IngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F380AC2319847A003857F7 /* IngredientView.swift */; };
+		E2F380B023198496003857F7 /* IngredientView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2F380AF23198496003857F7 /* IngredientView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +119,8 @@
 		E2EB7FBF22FFAD7C003948A6 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		E2EB7FC222FFB29A003948A6 /* String-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Extension.swift"; sourceTree = "<group>"; };
 		E2EBE5D222FD25060019BB0F /* AddItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemsVC.swift; sourceTree = "<group>"; };
+		E2F380AC2319847A003857F7 /* IngredientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
+		E2F380AF23198496003857F7 /* IngredientView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IngredientView.xib; sourceTree = "<group>"; };
 		EA1C8AC62AFAE75802B4FD76 /* Pods-smartListUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartListUITests.release.xcconfig"; path = "Target Support Files/Pods-smartListUITests/Pods-smartListUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F30C0C4898D5DF1DF11A7E59 /* Pods_smartList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_smartList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -267,6 +271,7 @@
 		E2B4694D22F78D23006BA77D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E2F380AE2319847F003857F7 /* IngredientView */,
 				E2A54E1F23186DEB00BEBF39 /* InstructionView */,
 				E2B4694E22F78D2B006BA77D /* CreateListView */,
 			);
@@ -324,6 +329,15 @@
 				E25F071C231490A200E6738E /* RecipeTypeCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		E2F380AE2319847F003857F7 /* IngredientView */ = {
+			isa = PBXGroup;
+			children = (
+				E2F380AC2319847A003857F7 /* IngredientView.swift */,
+				E2F380AF23198496003857F7 /* IngredientView.xib */,
+			);
+			path = IngredientView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -436,6 +450,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E216205122F658D20074A0DF /* LaunchScreen.storyboard in Resources */,
+				E2F380B023198496003857F7 /* IngredientView.xib in Resources */,
 				E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */,
 				E216204E22F658D20074A0DF /* Assets.xcassets in Resources */,
 				E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */,
@@ -596,6 +611,7 @@
 				E2E529D222FA7F9100C55DA0 /* List.swift in Sources */,
 				E2C49343230887F3002907C2 /* User.swift in Sources */,
 				E2A54E1E2318553400BEBF39 /* InstructionView.swift in Sources */,
+				E2F380AD2319847A003857F7 /* IngredientView.swift in Sources */,
 				E25F071723146CC600E6738E /* RecipeType.swift in Sources */,
 				E2D8462D231264CD004B19C2 /* Recipe.swift in Sources */,
 			);

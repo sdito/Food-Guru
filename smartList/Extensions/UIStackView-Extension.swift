@@ -10,49 +10,22 @@ import Foundation
 import UIKit
 
 extension UIStackView {
-    func insertRow() {
-        //needs a label for number and associated text field
-        let sv = UIStackView()
-        sv.axis = .horizontal
-        
-        let label = UILabel()
-        label.font = UIFont(name: "futura", size: 17)
-        label.text = "\(self.subviews.count + 1)."
-        
-        let textField = UITextField()
-        textField.font = UIFont(name: "futura", size: 17)
-        textField.textColor = Colors.main
-        
-        sv.insertSubview(label, at: 0)
-        sv.insertSubview(textField, at: 1)
-        self.insertSubview(sv, at: self.subviews.count)
-    }
-    
-    
-    func createInstructionRow() {
-        //insert it into self at 'last'
-        let sv = UIStackView()
-        sv.axis = .horizontal
-        sv.distribution = .fillEqually
-        
-        let button = UIButton()
-        button.setTitle("+", for: .normal)
-        button.setTitleColor(Colors.main, for: .normal)
-        button.titleLabel?.font = UIFont(name: "futura", size: 17)
-        
-        let tv = UITextView()
-        tv.isScrollEnabled = false
-        tv.border()
-        tv.textColor = Colors.main
-        tv.font = UIFont(name: "futura", size: 17)
-        tv.backgroundColor = .red
-        
-        sv.insertSubview(button, at: 0)
-        sv.insertSubview(tv, at: 1)
-        
-        
-        //self.insertSubview(sv, at: self.subviews.count + 1)
-        self.insertArrangedSubview(sv, at: self.subviews.count)
-    }
-    
+//    func insertRow() {
+//        //needs a label for number and associated text field
+//        let sv = UIStackView()
+//        sv.axis = .horizontal
+//
+//        let label = UILabel()
+//        label.font = UIFont(name: "futura", size: 17)
+//        label.text = "\(self.subviews.count + 1)."
+//
+//        let textField = UITextField()
+//        textField.font = UIFont(name: "futura", size: 17)
+//        textField.textColor = Colors.main
+//
+//        sv.insertSubview(label, at: 0)
+//        sv.insertSubview(textField, at: 1)
+//        self.insertSubview(sv, at: self.subviews.count)
+//    }
+
 }
