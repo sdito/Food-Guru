@@ -73,31 +73,44 @@ class CreateRecipeVC: UIViewController {
         
     }
     @IBAction func addInstruction(_ sender: Any) {
+        insert()
+        
+    }
+    
+    private func insert() {
         let v = (Bundle.main.loadNibNamed("InstructionView", owner: nil, options: nil)?.first as? InstructionView)!
         v.setUI(num: "+")
+        v.button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        
         //v.setUI(num: "\(instructionsListStackView.subviews.count)")
         instructionsListStackView.insertArrangedSubview(v, at: instructionsListStackView.subviews.count)
         //instructionsListStackView.insertSubview(v, at: 1)
         for i in instructionsListStackView.subviews {
             if i != instructionsListStackView.subviews.last && type(of: i) == InstructionView.self {
                 (i as! InstructionView).button.setTitle("\(instructionsListStackView.subviews.firstIndex(of: i) ?? 0)", for: .normal)
+                i.alpha = 1.0
             }
         }
-        
     }
     
+    private func initialInstructionSetUp() {
+        let v = (Bundle.main.loadNibNamed("InstructionView", owner: nil, options: nil)?.first as? InstructionView)!
+        let v2 = (Bundle.main.loadNibNamed("InstructionView", owner: nil, options: nil)?.first as? InstructionView)!
+        v2.button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        v.setUI(num: "1")
+        v2.setUI(num: "+")
+        v.alpha = 1.0
+        instructionsListStackView.insertArrangedSubview(v, at: 1)
+        instructionsListStackView.insertArrangedSubview(v2, at: 2)
+    }
     
     private func pushToPopUp() {
         currTextField?.resignFirstResponder()
         self.add(popUp: SelectRecipeTypeVC.popUp.popOverVC)
     }
-    private func initialInstructionSetUp() {
-        let v = (Bundle.main.loadNibNamed("InstructionView", owner: nil, options: nil)?.first as? InstructionView)!
-        let v2 = (Bundle.main.loadNibNamed("InstructionView", owner: nil, options: nil)?.first as? InstructionView)!
-        v.setUI(num: "1")
-        v2.setUI(num: "+")
-        instructionsListStackView.insertArrangedSubview(v, at: 1)
-        instructionsListStackView.insertArrangedSubview(v2, at: 2)
+    
+    @objc private func buttonAction(sender: UIButton) {
+        insert()
     }
 }
 

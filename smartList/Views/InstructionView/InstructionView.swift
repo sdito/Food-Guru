@@ -16,9 +16,7 @@ class InstructionView: UIView {
     func setUI(num: String) {
         tv.border()
         button.setTitle("\(num)", for: .normal)
-        
-        
+        self.alpha = 0.4
         
     }
-    
 }
