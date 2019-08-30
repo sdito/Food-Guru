@@ -22,10 +22,19 @@ class IngredientView: UIView, UITextFieldDelegate {
             textField.resignFirstResponder()
             right.becomeFirstResponder()
         } else {
-            let t = (Bundle.main.loadNibNamed("IngredientView", owner: nil, options: nil)?.first as? IngredientView)!
-            (self.superview as! UIStackView).insertArrangedSubview(t, at: (self.superview as! UIStackView).subviews.count)
-            textField.resignFirstResponder()
-            t.left.becomeFirstResponder()
+            //create another ingredientView and set the left tf to become the first responder
+            if (self.superview as! UIStackView).subviews.firstIndex(of: self) == (self.superview as! UIStackView).subviews.count - 1 {
+                let t = (Bundle.main.loadNibNamed("IngredientView", owner: nil, options: nil)?.first as? IngredientView)!
+                (self.superview as! UIStackView).insertArrangedSubview(t, at: (self.superview as! UIStackView).subviews.count)
+                textField.resignFirstResponder()
+                t.left.becomeFirstResponder()
+            } else {
+                // don't need to create another ingredientsView, just need to set the next textfield to first responder
+                textField.resignFirstResponder()
+                ((self.superview as! UIStackView).subviews[(self.superview as! UIStackView).subviews.firstIndex(of: self)! + 1] as! IngredientView).left.becomeFirstResponder()
+            }
+            
+            
         }
         return true
     }
