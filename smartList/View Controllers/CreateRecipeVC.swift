@@ -28,9 +28,11 @@ class CreateRecipeVC: UIViewController {
     @IBOutlet weak var ingredientsStackView: UIStackView!
     
     
-    
-    var currTextField: UITextField?
-    
+    var currTextField: UIView? {
+        didSet {
+            print("this was called")
+        }
+    }
     var cuisineType: String? {
         didSet {
             cuisineOutlet.setTitle(self.cuisineType!, for: .normal)
@@ -49,8 +51,7 @@ class CreateRecipeVC: UIViewController {
         cookTimeTextField.delegate = self
         prepTimeTextField.delegate = self
         caloriesTextField.delegate = self
-        //notesTextView.delegate = self
-        
+        notesTextView.delegate = self
         
         nameTextField.becomeFirstResponder()
         createRecipeOutlet.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
@@ -59,6 +60,9 @@ class CreateRecipeVC: UIViewController {
         currTextField = nameTextField
         initialInstructionSetUp()
         notesTextView.border()
+        
+        
+        
     }
     
     @IBAction func createRecipePressed(_ sender: Any) {
@@ -84,6 +88,7 @@ class CreateRecipeVC: UIViewController {
         let v = (Bundle.main.loadNibNamed("InstructionView", owner: nil, options: nil)?.first as? InstructionView)!
         v.setUI(num: "+")
         v.button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        v.tv.delegate = self
         
         //v.setUI(num: "\(instructionsListStackView.subviews.count)")
         instructionsListStackView.insertArrangedSubview(v, at: instructionsListStackView.subviews.count)
@@ -103,6 +108,9 @@ class CreateRecipeVC: UIViewController {
         v.setUI(num: "1")
         v2.setUI(num: "+")
         v.alpha = 1.0
+        
+        v.tv.delegate = self
+        v2.tv.delegate = self
         instructionsListStackView.insertArrangedSubview(v, at: 1)
         instructionsListStackView.insertArrangedSubview(v2, at: 2)
         
@@ -124,6 +132,13 @@ class CreateRecipeVC: UIViewController {
     }
 }
 
+extension CreateRecipeVC: TextFieldDelegate {
+    func setCurrent(from view: UIView) {
+        currTextField = view
+    }
+}
+
+
 extension CreateRecipeVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == nameTextField {
@@ -141,13 +156,20 @@ extension CreateRecipeVC: UITextFieldDelegate {
             caloriesTextField.becomeFirstResponder()
         } else if textField == caloriesTextField {
             textField.resignFirstResponder()
-            
         }
-        
         return true
     }
-    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         currTextField = textField
+        print("textFieldDidBeginEditing")
+    }
+}
+
+
+extension CreateRecipeVC: UITextViewDelegate {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        currTextField = textView
+        print("textViewDidBeginEditing")
+        return true
     }
 }

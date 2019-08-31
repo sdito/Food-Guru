@@ -7,7 +7,18 @@
 
 import UIKit
 
+
+
+// need to set the currTextField on CreateRecipeVC from here
+protocol TextFieldDelegate {
+    func setCurrent(from view: UIView)
+}
+
+
+
 class IngredientView: UIView, UITextFieldDelegate {
+    
+    var delegate: TextFieldDelegate!
     
     @IBOutlet weak var left: UITextField!
     @IBOutlet weak var right: UITextField!
@@ -16,6 +27,7 @@ class IngredientView: UIView, UITextFieldDelegate {
         left.delegate = self
         right.delegate = self
     }
+    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == left {
@@ -31,14 +43,19 @@ class IngredientView: UIView, UITextFieldDelegate {
             } else {
                 // don't need to create another ingredientsView, just need to set the next textfield to first responder
                 textField.resignFirstResponder()
-                ((self.superview as! UIStackView).subviews[(self.superview as! UIStackView).subviews.firstIndex(of: self)! + 1] as! IngredientView).left.becomeFirstResponder()
+                
+                // get the index of the current view, and set the 'left' textField of the next view in order to become frist responder
+                let vi = ((self.superview as! UIStackView).subviews[(self.superview as! UIStackView).subviews.firstIndex(of: self)! + 1] as! IngredientView).left//.becomeFirstResponder()
+                vi?.becomeFirstResponder()
             }
-            
-            
         }
         return true
     }
-
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        delegate = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
+        delegate.setCurrent(from: textField)
+        return true
+    }
 }
 
 

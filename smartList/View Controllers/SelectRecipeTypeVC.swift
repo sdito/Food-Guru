@@ -68,6 +68,7 @@ class SelectRecipeTypeVC: UIViewController {
             
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
             _ = vc.view
+            
             vc.cuisineType = cuisineType
             vc.recipeType = recipeType.sorted()
             
