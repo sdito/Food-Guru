@@ -9,7 +9,18 @@
 import UIKit
 
 
+
+
+protocol RecipeDescriptionDelegate {
+    func transferValues(cuisine: String, description: [String])
+}
+
+
+
+
 class SelectRecipeTypeVC: UIViewController {
+    var delegate: RecipeDescriptionDelegate!
+    
     
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var secondTopView: UIView!
@@ -65,13 +76,13 @@ class SelectRecipeTypeVC: UIViewController {
         
         if cuisineType != nil && recipeType.isEmpty == false && cuisineType != " - " {
             
-            
-            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
-            _ = vc.view
-            
-            vc.cuisineType = cuisineType
-            vc.recipeType = recipeType.sorted()
-            
+            // should use a protocol for this instead
+//            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
+//            _ = vc.view
+//            vc.cuisineType = cuisineType
+//            vc.recipeType = recipeType.sorted()
+            delegate = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
+            delegate.transferValues(cuisine: cuisineType ?? "", description: recipeType.sorted())
             SelectRecipeTypeVC.popUp.popOverVC.view.removeFromSuperview()
             
         } else {

@@ -34,19 +34,8 @@ class CreateRecipeVC: UIViewController {
         }
     }//UITextField?
     
-    var cuisineType: String? {
-        didSet {
-            print(self.cuisineType)
-            self.cuisineOutlet.setTitle(self.cuisineType!, for: .normal)
-            cuisineOutlet.backgroundColor = .red
-        }
-    }
-    var recipeType: [String]? {
-        didSet {
-            print(self.recipeType)
-            recipeDescriptionOutlet.setTitle(self.recipeType?.joined(separator: ", "), for: .normal)
-        }
-    }
+    var cuisineType: String?
+    var recipeType: [String]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,6 +129,13 @@ class CreateRecipeVC: UIViewController {
 extension CreateRecipeVC: TextFieldDelegate {
     func setCurrent(from view: UIView) {
         currTextField = view
+    }
+}
+
+extension CreateRecipeVC: RecipeDescriptionDelegate {
+    func transferValues(cuisine: String, description: [String]) {
+        cuisineType = cuisine
+        recipeType = description
     }
 }
 
