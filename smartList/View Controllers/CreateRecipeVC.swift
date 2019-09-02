@@ -30,17 +30,21 @@ class CreateRecipeVC: UIViewController {
     
     var currTextField: UIView? {
         didSet {
-            print("this was called")
+            print(self.currTextField)
         }
-    }
+    }//UITextField?
+    
     var cuisineType: String? {
         didSet {
-            cuisineOutlet.setTitle(self.cuisineType!, for: .normal)
+            print(self.cuisineType)
+            self.cuisineOutlet.setTitle(self.cuisineType!, for: .normal)
+            cuisineOutlet.backgroundColor = .red
         }
     }
     var recipeType: [String]? {
         didSet {
-            recipeDescriptionOutlet.setTitle("name", for: .normal)//self.recipeType?.joined(separator: ", "), for: .normal)
+            print(self.recipeType)
+            recipeDescriptionOutlet.setTitle(self.recipeType?.joined(separator: ", "), for: .normal)
         }
     }
     
@@ -66,7 +70,8 @@ class CreateRecipeVC: UIViewController {
     }
     
     @IBAction func createRecipePressed(_ sender: Any) {
-        
+        print(currTextField)
+        print(recipeType, cuisineType)
         //still need to have notes for user to write in about recipe on storybaord
         //let recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: <#T##[String]#>, instructions: <#T##[String]#>, calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, id: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text)
     }
@@ -79,10 +84,10 @@ class CreateRecipeVC: UIViewController {
         pushToPopUp()
         
     }
-    @IBAction func addInstruction(_ sender: Any) {
-        insert()
-        
-    }
+//    @IBAction func addInstruction(_ sender: Any) {
+//        insert()
+//        
+//    }
     
     private func insert() {
         let v = (Bundle.main.loadNibNamed("InstructionView", owner: nil, options: nil)?.first as? InstructionView)!
