@@ -623,7 +623,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2pd-bx-zYj">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="44"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="uPS-gY-Kjp">
                                         <rect key="frame" x="10" y="7" width="394" height="30"/>
@@ -654,7 +654,7 @@
                                 </constraints>
                             </view>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="idD-Aw-LuC">
-                                <rect key="frame" x="0.0" y="88" width="414" height="147.5"/>
+                                <rect key="frame" x="0.0" y="132" width="414" height="103.5"/>
                             </pickerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3aL-7Z-msc">
                                 <rect key="frame" x="0.0" y="235.5" width="414" height="44"/>
@@ -721,7 +721,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1047.8260869565217" y="775.44642857142856"/>
+            <point key="canvasLocation" x="2745" y="971"/>
         </scene>
         <!--Create RecipeVC-->
         <scene sceneID="tA0-f8-jFz">
@@ -992,6 +992,7 @@
                         <outlet property="prepTimeTextField" destination="Zhd-ic-1Q6" id="UgD-k0-MaO"/>
                         <outlet property="recipeDescriptionOutlet" destination="u7f-Sc-OcV" id="ZsZ-5c-w3U"/>
                         <outlet property="servingsTextField" destination="JVQ-tX-F7f" id="nuo-Bq-QMs"/>
+                        <segue destination="IUK-Ph-7gP" kind="show" identifier="recipeDetailSelection" id="VEA-1C-1vw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2FW-dJ-czR" userLabel="First Responder" sceneMemberID="firstResponder"/>

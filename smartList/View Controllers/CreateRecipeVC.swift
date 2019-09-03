@@ -34,8 +34,16 @@ class CreateRecipeVC: UIViewController {
         }
     }//UITextField?
     
-    var cuisineType: String?
-    var recipeType: [String]?
+    var cuisineType: String? {
+        didSet {
+            cuisineOutlet.setTitle(self.cuisineType, for: .normal)
+        }
+    }
+    var recipeType: [String]? {
+        didSet {
+            recipeDescriptionOutlet.setTitle(self.recipeType?.joined(separator: ", "), for: .normal)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,17 +58,26 @@ class CreateRecipeVC: UIViewController {
         createRecipeOutlet.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
         createRecipeOutlet.layer.cornerRadius = 15
         createRecipeOutlet.clipsToBounds = true
+        
         currTextField = nameTextField
+        
         initialInstructionSetUp()
         notesTextView.border()
         
-        
-        
+        if SharedValues.shared.recipeType != nil && SharedValues.shared.cuisineType != nil {
+            cuisineType = SharedValues.shared.cuisineType
+            recipeType = SharedValues.shared.recipeType
+            
+            SharedValues.shared.cuisineType = nil
+            SharedValues.shared.recipeType = nil
+            
+            cuisineOutlet.setTitleColor(Colors.main, for: .normal)
+            recipeDescriptionOutlet.setTitleColor(Colors.main, for: .normal)
+        }
     }
     
     @IBAction func createRecipePressed(_ sender: Any) {
         print(currTextField)
-        print(recipeType, cuisineType)
         //still need to have notes for user to write in about recipe on storybaord
         //let recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: <#T##[String]#>, instructions: <#T##[String]#>, calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, id: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text)
     }
@@ -73,10 +90,6 @@ class CreateRecipeVC: UIViewController {
         pushToPopUp()
         
     }
-//    @IBAction func addInstruction(_ sender: Any) {
-//        insert()
-//        
-//    }
     
     private func insert() {
         let v = (Bundle.main.loadNibNamed("InstructionView", owner: nil, options: nil)?.first as? InstructionView)!
@@ -117,8 +130,9 @@ class CreateRecipeVC: UIViewController {
     }
     
     private func pushToPopUp() {
-        currTextField?.resignFirstResponder()
-        self.add(popUp: SelectRecipeTypeVC.popUp.popOverVC)
+//        currTextField?.resignFirstResponder()
+//        self.add(popUp: SelectRecipeTypeVC.popUp.popOverVC)
+        performSegue(withIdentifier: "recipeDetailSelection", sender: nil)
     }
     
     @objc private func buttonAction(sender: UIButton) {
@@ -132,13 +146,19 @@ extension CreateRecipeVC: TextFieldDelegate {
     }
 }
 
+/*
 extension CreateRecipeVC: RecipeDescriptionDelegate {
     func transferValues(cuisine: String, description: [String]) {
         cuisineType = cuisine
         recipeType = description
+        print("CALLED")
+        print("CALLED")
+        print("CALLED")
+        print("CALLED")
+        print("CALLED")
     }
 }
-
+*/
 
 extension CreateRecipeVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

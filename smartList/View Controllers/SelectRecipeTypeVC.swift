@@ -11,15 +11,16 @@ import UIKit
 
 
 
+/*
 protocol RecipeDescriptionDelegate {
     func transferValues(cuisine: String, description: [String])
 }
-
+*/
 
 
 
 class SelectRecipeTypeVC: UIViewController {
-    var delegate: RecipeDescriptionDelegate!
+    //var delegate: RecipeDescriptionDelegate!
     
     
     @IBOutlet weak var topView: UIView!
@@ -75,28 +76,40 @@ class SelectRecipeTypeVC: UIViewController {
         // collect the RecipeType and CuisineType from storyboard here before removeFromSuperview -- should be in enum type
         
         if cuisineType != nil && recipeType.isEmpty == false && cuisineType != " - " {
+            //delegate = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
+            //delegate.transferValues(cuisine: cuisineType ?? "", description: recipeType.sorted())
             
-            // should use a protocol for this instead
-//            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
-//            _ = vc.view
-//            vc.cuisineType = cuisineType
-//            vc.recipeType = recipeType.sorted()
-            delegate = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
-            delegate.transferValues(cuisine: cuisineType ?? "", description: recipeType.sorted())
-            SelectRecipeTypeVC.popUp.popOverVC.view.removeFromSuperview()
+            //self.dismiss(animated: true, completion: nil)
+            SharedValues.shared.cuisineType = cuisineType
+            SharedValues.shared.recipeType = recipeType.sorted()
+            
+            back()
             
         } else {
             let alrt = UIAlertController(title: "Incomplete data", message: "Please make sure both cuisine type and reciple type are filled out", preferredStyle: .alert)
             alrt.addAction(.init(title: "Ok", style: .default, handler: nil))
-            alrt.addAction(.init(title: "Exit", style: .destructive, handler: {(alert: UIAlertAction!) in SelectRecipeTypeVC.popUp.popOverVC.view.removeFromSuperview()}))
+            alrt.addAction(.init(title: "Exit", style: .destructive, handler: {(alert: UIAlertAction!) in self.dismiss(animated: true, completion: nil)}))
             present(alrt, animated: true)
         }
         
     }
     
     struct popUp {
-        static let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "recipeType") as! SelectRecipeTypeVC
+        static let popOverVC = UIStoryboard(name: "main", bundle: nil).instantiateViewController(withIdentifier: "recipeType") as! SelectRecipeTypeVC
     }
+    
+    private func back() {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
+        present(vc, animated: false, completion: nil)
+    }
+    
+    /*
+    private func send() {
+        print("called")
+        delegate = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
+        delegate.transferValues(cuisine: cuisineType ?? "", description: recipeType.sorted())
+    }
+ */
 }
 
 

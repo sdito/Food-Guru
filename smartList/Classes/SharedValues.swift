@@ -14,7 +14,8 @@ class SharedValues {
     var currentCategory: String = ""
     var listIdentifier: DocumentReference?
     var userID: String?
-    
+    var recipeType: [String]?
+    var cuisineType: String?
     
     
     static let shared = SharedValues()

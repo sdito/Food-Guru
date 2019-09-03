@@ -13,9 +13,12 @@ import UIKit
 extension UIViewController {
     
     func add(popUp: SelectRecipeTypeVC) {
-        self.addChild(popUp)
-        popUp.view.frame = self.view.frame
-        self.view.addSubview(popUp.view)
-        popUp.didMove(toParent: self)
+//        self.addChild(popUp)
+//        popUp.view.frame = self.view.frame
+//        self.view.addSubview(popUp.view)
+//        popUp.didMove(toParent: self)
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "recipeType") as! SelectRecipeTypeVC
+        self.present(vc, animated: true, completion: nil)
+
     }
 }
