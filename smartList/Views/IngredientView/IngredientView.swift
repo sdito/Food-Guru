@@ -8,17 +8,8 @@
 import UIKit
 
 
-
-// need to set the currTextField on CreateRecipeVC from here
-protocol TextFieldDelegate {
-    func setCurrent(from view: UIView)
-}
-
-
-
 class IngredientView: UIView, UITextFieldDelegate {
     
-    var delegate: TextFieldDelegate!
     
     @IBOutlet weak var left: UITextField!
     @IBOutlet weak var right: UITextField!
@@ -28,6 +19,20 @@ class IngredientView: UIView, UITextFieldDelegate {
         right.delegate = self
     }
     
+    // to get the ingredients from each ingredient view in [String] format
+    
+    class func getIngredients(stack: UIStackView) -> [String] {
+        var ingredients: [String] = []
+        for view in stack.subviews {
+            if type(of: view) == IngredientView.self {
+                ingredients += (view as! IngredientView).ingredients()
+            }
+        }
+        
+        // get rid of blanks and have it alphabetical
+        ingredients = ingredients.filter({$0 != ""})
+        return ingredients.sorted()
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == left {
@@ -52,10 +57,16 @@ class IngredientView: UIView, UITextFieldDelegate {
         return true
     }
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        delegate = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
-        delegate.setCurrent(from: textField)
+//        delegate = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
+//        delegate.setCurrent(from: textField)
+        SharedValues.shared.currText = textField
         return true
     }
 }
 
 
+extension IngredientView {
+    func ingredients() -> [String] {
+        return [self.left.text ?? "", self.right.text ?? ""]
+    }
+}

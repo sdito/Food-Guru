@@ -88,7 +88,7 @@ class SelectRecipeTypeVC: UIViewController {
         } else {
             let alrt = UIAlertController(title: "Incomplete data", message: "Please make sure both cuisine type and reciple type are filled out", preferredStyle: .alert)
             alrt.addAction(.init(title: "Ok", style: .default, handler: nil))
-            alrt.addAction(.init(title: "Exit", style: .destructive, handler: {(alert: UIAlertAction!) in self.dismiss(animated: true, completion: nil)}))
+            alrt.addAction(.init(title: "Exit", style: .destructive, handler: {(alert: UIAlertAction!) in self.back()}))
             present(alrt, animated: true)
         }
         

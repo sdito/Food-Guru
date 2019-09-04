@@ -16,7 +16,7 @@ class SharedValues {
     var userID: String?
     var recipeType: [String]?
     var cuisineType: String?
-    
+    var currText: UIView?
     
     static let shared = SharedValues()
     private init() {}

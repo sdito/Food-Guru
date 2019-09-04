@@ -28,11 +28,7 @@ class CreateRecipeVC: UIViewController {
     @IBOutlet weak var ingredientsStackView: UIStackView!
     
     
-    var currTextField: UIView? {
-        didSet {
-            print(self.currTextField)
-        }
-    }//UITextField?
+    //var currTextField: UIView?
     
     var cuisineType: String? {
         didSet {
@@ -59,7 +55,8 @@ class CreateRecipeVC: UIViewController {
         createRecipeOutlet.layer.cornerRadius = 15
         createRecipeOutlet.clipsToBounds = true
         
-        currTextField = nameTextField
+        //currTextField = nameTextField
+        SharedValues.shared.currText = nameTextField
         
         initialInstructionSetUp()
         notesTextView.border()
@@ -77,9 +74,10 @@ class CreateRecipeVC: UIViewController {
     }
     
     @IBAction func createRecipePressed(_ sender: Any) {
-        print(currTextField)
+        //print(SharedValues.shared.currText)
+        
         //still need to have notes for user to write in about recipe on storybaord
-        //let recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: <#T##[String]#>, instructions: <#T##[String]#>, calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, id: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text)
+        let recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, id: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text)
     }
     
     
@@ -140,25 +138,9 @@ class CreateRecipeVC: UIViewController {
     }
 }
 
-extension CreateRecipeVC: TextFieldDelegate {
-    func setCurrent(from view: UIView) {
-        currTextField = view
-    }
-}
 
-/*
-extension CreateRecipeVC: RecipeDescriptionDelegate {
-    func transferValues(cuisine: String, description: [String]) {
-        cuisineType = cuisine
-        recipeType = description
-        print("CALLED")
-        print("CALLED")
-        print("CALLED")
-        print("CALLED")
-        print("CALLED")
-    }
-}
-*/
+
+
 
 extension CreateRecipeVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -181,7 +163,7 @@ extension CreateRecipeVC: UITextFieldDelegate {
         return true
     }
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        currTextField = textField
+        SharedValues.shared.currText = textField
         print("textFieldDidBeginEditing")
     }
 }
@@ -189,7 +171,7 @@ extension CreateRecipeVC: UITextFieldDelegate {
 
 extension CreateRecipeVC: UITextViewDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        currTextField = textView
+        SharedValues.shared.currText = textView
         print("textViewDidBeginEditing")
         return true
     }

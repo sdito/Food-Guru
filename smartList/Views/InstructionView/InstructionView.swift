@@ -13,6 +13,19 @@ class InstructionView: UIView {
     @IBOutlet weak var tv: UITextView!
     @IBOutlet weak var button: UIButton!
     
+    class func getInstructions(stack: UIStackView) -> [String] {
+        var instructions: [String] = []
+        for view in stack.subviews {
+            if type(of: view) == InstructionView.self {
+                if let instruction = (view as! InstructionView).tv.text {
+                    instructions.append(instruction)
+                }
+            }
+        }
+        instructions = instructions.filter({$0 != ""})
+        return instructions
+    }
+    
     func setUI(num: String) {
         tv.border()
         button.setTitle("\(num)", for: .normal)
