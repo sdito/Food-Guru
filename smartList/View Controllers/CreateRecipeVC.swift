@@ -11,6 +11,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class CreateRecipeVC: UIViewController {
+    var db: Firestore!
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var servingsTextField: UITextField!
@@ -43,12 +44,18 @@ class CreateRecipeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        db = Firestore.firestore()
         nameTextField.delegate = self
         servingsTextField.delegate = self
         cookTimeTextField.delegate = self
         prepTimeTextField.delegate = self
         caloriesTextField.delegate = self
         notesTextView.delegate = self
+        
+        cuisineOutlet.border()
+        recipeDescriptionOutlet.border()
+        cuisineOutlet.titleEdgeInsets.left = 7
+        recipeDescriptionOutlet.titleEdgeInsets.left = 7
         
         nameTextField.becomeFirstResponder()
         createRecipeOutlet.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
@@ -77,7 +84,8 @@ class CreateRecipeVC: UIViewController {
         //print(SharedValues.shared.currText)
         
         //still need to have notes for user to write in about recipe on storybaord
-        let recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, id: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text)
+        let recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, userID: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text)
+        recipe.writeToFirestore(db: db)
     }
     
     
