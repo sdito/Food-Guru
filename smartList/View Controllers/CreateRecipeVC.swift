@@ -68,6 +68,9 @@ class CreateRecipeVC: UIViewController {
         initialInstructionSetUp()
         notesTextView.border()
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         if SharedValues.shared.recipeType != nil && SharedValues.shared.cuisineType != nil {
             cuisineType = SharedValues.shared.cuisineType
             recipeType = SharedValues.shared.recipeType
@@ -81,11 +84,10 @@ class CreateRecipeVC: UIViewController {
     }
     
     @IBAction func createRecipePressed(_ sender: Any) {
-        //print(SharedValues.shared.currText)
-        
         //still need to have notes for user to write in about recipe on storybaord
         let recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, userID: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text)
         recipe.writeToFirestore(db: db)
+        navigationController?.popToRootViewController(animated: true)
     }
     
     
@@ -136,8 +138,6 @@ class CreateRecipeVC: UIViewController {
     }
     
     private func pushToPopUp() {
-//        currTextField?.resignFirstResponder()
-//        self.add(popUp: SelectRecipeTypeVC.popUp.popOverVC)
         performSegue(withIdentifier: "recipeDetailSelection", sender: nil)
     }
     
@@ -157,8 +157,8 @@ extension CreateRecipeVC: UITextFieldDelegate {
             servingsTextField.becomeFirstResponder()
         } else if textField == servingsTextField {
             textField.resignFirstResponder()
-            self.add(popUp: SelectRecipeTypeVC.popUp.popOverVC)
             cookTimeTextField.becomeFirstResponder()
+            performSegue(withIdentifier: "recipeDetailSelection", sender: nil)
         } else if textField == cookTimeTextField {
             textField.resignFirstResponder()
             prepTimeTextField.becomeFirstResponder()

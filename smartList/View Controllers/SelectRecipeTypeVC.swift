@@ -94,22 +94,16 @@ class SelectRecipeTypeVC: UIViewController {
         
     }
     
-    struct popUp {
-        static let popOverVC = UIStoryboard(name: "main", bundle: nil).instantiateViewController(withIdentifier: "recipeType") as! SelectRecipeTypeVC
-    }
+//    struct popUp {
+//        static let popOverVC = UIStoryboard(name: "main", bundle: nil).instantiateViewController(withIdentifier: "recipeType") as! SelectRecipeTypeVC
+//    }
     
     private func back() {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
-        present(vc, animated: false, completion: nil)
+        //let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
+        //present(vc, animated: false, completion: nil)
+        navigationController?.popViewController(animated: true)
     }
-    
-    /*
-    private func send() {
-        print("called")
-        delegate = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
-        delegate.transferValues(cuisine: cuisineType ?? "", description: recipeType.sorted())
-    }
- */
+
 }
 
 
