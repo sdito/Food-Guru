@@ -106,16 +106,9 @@ class AddItemsVC: UIViewController {
         //segmented control set up
         segmentedControl.removeAllSegments()
         
-        if list.stores == nil {
-            segmentedControl.insertSegment(withTitle: "", at: 0, animated: false)
-            segmentedControl.isHidden = true
-        } else {
-            list.stores?.forEach({ (store) in
-                segmentedControl.insertSegment(withTitle: store, at: 0, animated: false)
-            })
-            segmentedControl.isHidden = false
-        }
-        
+        list.stores?.forEach({ (store) in
+            segmentedControl.insertSegment(withTitle: store, at: 0, animated: false)
+        })
         
         segmentedControl.selectedSegmentIndex = 0
         
