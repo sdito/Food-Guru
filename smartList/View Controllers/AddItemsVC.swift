@@ -15,7 +15,12 @@ class AddItemsVC: UIViewController {
     private var storeText: String = "none"
     
     private var currentStore: String {
-        return segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex) ?? "none"
+        if segmentedControl.numberOfSegments == 0 {
+            return ""
+        } else {
+            return segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex) ?? ""
+        }
+        
     }
     
     private var arrayArrayItems: [[Item]] = []
@@ -24,6 +29,7 @@ class AddItemsVC: UIViewController {
     private var sendHome = true
     
     var db: Firestore!
+    
     var list: List? {
         didSet {
             if list?.items?.isEmpty == false {
@@ -77,7 +83,6 @@ class AddItemsVC: UIViewController {
         SharedValues.shared.listIdentifier?.updateData([
             "numItems": list?.items?.count as Any
         ])
-        print(sendHome)
         if sendHome == true {
             navigationController?.popToRootViewController(animated: true)
             //let vc = storyboard?.instantiateViewController(withIdentifier: "nav") as! NaviVC
@@ -100,9 +105,17 @@ class AddItemsVC: UIViewController {
     private func setUIfrom(list: List) {
         //segmented control set up
         segmentedControl.removeAllSegments()
-        list.stores?.forEach({ (store) in
-            segmentedControl.insertSegment(withTitle: store, at: 0, animated: false)
-        })
+        
+        if list.stores == nil {
+            segmentedControl.insertSegment(withTitle: "", at: 0, animated: false)
+            segmentedControl.isHidden = true
+        } else {
+            list.stores?.forEach({ (store) in
+                segmentedControl.insertSegment(withTitle: store, at: 0, animated: false)
+            })
+            segmentedControl.isHidden = false
+        }
+        
         
         segmentedControl.selectedSegmentIndex = 0
         
@@ -192,9 +205,6 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
         
         arrayArrayItems[indexPath.section][indexPath.row].selected = !arrayArrayItems[indexPath.section][indexPath.row].selected
         arrayArrayItems[indexPath.section][indexPath.row].selectedItem(db: db)
-//        print(arrayArrayItems.map({$0.map({$0.name})}))
-//        print(arrayArrayItems.map({$0.map({$0.ownID})}))
-//        print(arrayArrayItems.map({$0.map({$0.selected})}))
         tableView.reloadData()
     }
 }

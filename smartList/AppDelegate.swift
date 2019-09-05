@@ -28,7 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let vc: NaviVC = storyboard.instantiateViewController(withIdentifier: "nav") as! NaviVC
             self.window?.rootViewController = vc
             self.window?.makeKeyAndVisible()
-            print("navigation controller")
             SharedValues.shared.userID = Auth.auth().currentUser?.uid
         }
         return true

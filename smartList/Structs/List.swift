@@ -85,6 +85,10 @@ extension List {
     
     func sortForTableView(from store: String) -> ([String]?, [[Item]]) {
         
+        for _ in 1...50 {
+            print(store)
+        }
+        
         var categories = self.categories?.sorted()
         categories?.append("")
         var sortedItems: [[Item]] = []
@@ -112,6 +116,7 @@ extension List {
                 sortedItems.append(itmsInOrder)
             })
         }
+        
         return (categories, sortedItems)
     }
 }

@@ -85,9 +85,12 @@ class CreateRecipeVC: UIViewController {
     
     @IBAction func createRecipePressed(_ sender: Any) {
         //still need to have notes for user to write in about recipe on storybaord
+        print(cuisineType, recipeType)
+
         let recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, userID: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text)
         recipe.writeToFirestore(db: db)
         navigationController?.popToRootViewController(animated: true)
+
     }
     
     
@@ -172,7 +175,6 @@ extension CreateRecipeVC: UITextFieldDelegate {
     }
     func textFieldDidBeginEditing(_ textField: UITextField) {
         SharedValues.shared.currText = textField
-        print("textFieldDidBeginEditing")
     }
 }
 
@@ -180,7 +182,6 @@ extension CreateRecipeVC: UITextFieldDelegate {
 extension CreateRecipeVC: UITextViewDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         SharedValues.shared.currText = textView
-        print("textViewDidBeginEditing")
         return true
     }
 }
