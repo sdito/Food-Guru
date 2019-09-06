@@ -18,8 +18,9 @@ struct List {
     var items: [Item]?
     var numItems: Int?
     var docID: String?
+    var timeIntervalSince1970: TimeInterval?
     
-    init(name: String, stores: [String]?, categories: [String]?, people: [String]?, items: [Item]?, numItems: Int?, docID: String?) {
+    init(name: String, stores: [String]?, categories: [String]?, people: [String]?, items: [Item]?, numItems: Int?, docID: String?, timeIntervalSince1970: TimeInterval?) {
         self.name = name
         self.stores = stores
         self.categories = categories
@@ -27,6 +28,7 @@ struct List {
         self.items = items
         self.numItems = numItems
         self.docID = docID
+        self.timeIntervalSince1970 = timeIntervalSince1970
     }
     
     static func readAllUserLists(db: Firestore, userID: String, listsChanged: @escaping (_ lists: [List]) -> Void) {
@@ -38,7 +40,8 @@ struct List {
                 return
             }
             for doc in documents {
-                let l = List(name: doc.get("name") as! String, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID)
+                let l = List(name: doc.get("name") as! String, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval)
+                
                 if lists.isEmpty == false {
                     lists.append(l)
                 } else {
@@ -61,7 +64,8 @@ extension List {
             "stores": self.stores!,
             "categories": self.categories!,
             "people": Array(Set(self.people!)).sorted(),
-            "user": SharedValues.shared.userID ?? "did not write"
+            "user": SharedValues.shared.userID ?? "did not write",
+            "timeIntervalSince1970": Date().timeIntervalSince1970
         ]) { err in
             if let err = err {
                 print("Error writing document: \(err)")
@@ -79,15 +83,12 @@ extension List {
             "name": self.name,
             "stores": self.stores!,
             "categories": self.categories!,
-            "people": Array(Set(self.people!)).sorted()
+            "people": Array(Set(self.people!)).sorted(),
+            "timeIntervalSince1970": Date().timeIntervalSince1970
         ])
     }
     
     func sortForTableView(from store: String) -> ([String]?, [[Item]]) {
-        
-        for _ in 1...50 {
-            print(store)
-        }
         
         var categories = self.categories?.sorted()
         categories?.append("")

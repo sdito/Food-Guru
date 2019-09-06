@@ -9,9 +9,14 @@
 import UIKit
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseStorage
+
 
 class CreateRecipeVC: UIViewController {
     var db: Firestore!
+    var storage: Storage!
+    let imagePicker = UIImagePickerController()
+    var image: Data?
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var servingsTextField: UITextField!
@@ -21,6 +26,7 @@ class CreateRecipeVC: UIViewController {
     
     @IBOutlet weak var notesTextView: UITextView!
     
+    @IBOutlet weak var selectimageOutlet: UIButton!
     @IBOutlet weak var cuisineOutlet: UIButton!
     @IBOutlet weak var recipeDescriptionOutlet: UIButton!
     @IBOutlet weak var createRecipeOutlet: UIButton!
@@ -45,6 +51,12 @@ class CreateRecipeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
+        storage = Storage.storage()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
+        selectimageOutlet.border()
+        
         nameTextField.delegate = self
         servingsTextField.delegate = self
         cookTimeTextField.delegate = self
@@ -87,11 +99,16 @@ class CreateRecipeVC: UIViewController {
         //still need to have notes for user to write in about recipe on storybaord
         //print("name: \(nameTextField.text!), recipeType: \(recipeType!), cuisineType: \(cuisineType!), cookTime: \(cookTimeTextField.toInt()!), prepTime: \(prepTimeTextField.toInt()!), ingredients: \(IngredientView.getIngredients(stack: ingredientsStackView)), instructions: \(InstructionView.getInstructions(stack: instructionsListStackView)), calories: \(caloriesTextField.toInt()), numServes: \(servingsTextField.toInt()!), userID: \(Auth.auth().currentUser?.uid), numReviews: nil, numStars: nil, notes: \(notesTextView.text)")
         
-        let recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, userID: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text)
-        recipe.writeToFirestore(db: db)
+        let recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, userID: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text, recipeImage: image)
+        recipe.writeToFirestore(db: db, storage: storage)
         navigationController?.popToRootViewController(animated: true)
 
     }
+    
+    @IBAction func selectImage(_ sender: Any) {
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
     
     
     @IBAction func selectCuisine(_ sender: Any) {
@@ -184,4 +201,20 @@ extension CreateRecipeVC: UITextViewDelegate {
         SharedValues.shared.currText = textView
         return true
     }
+}
+
+
+extension CreateRecipeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            selectimageOutlet.contentMode = .scaleAspectFit
+            selectimageOutlet.setBackgroundImage(pickedImage, for: .normal)
+            selectimageOutlet.setTitle("", for: .normal)
+            image = pickedImage.jpegData(compressionQuality: 0.75)
+            
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
 }

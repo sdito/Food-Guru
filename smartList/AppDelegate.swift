@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.makeKeyAndVisible()
             SharedValues.shared.userID = Auth.auth().currentUser?.uid
         }
+        
         return true
     }
 

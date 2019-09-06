@@ -1,5 +1,5 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '10.0'
 
 target 'smartList' do
   # Comment the next line if you don't want to use dynamic frameworks
@@ -12,6 +12,7 @@ inhibit_all_warnings!
 pod 'Firebase/Firestore', :inhibit_warnings => true
 pod 'FirebaseUI', :inhibit_warnings => true
 pod 'Firebase/Auth', :inhibit_warnings => true
+pod 'Firebase/Storage', :inhibit_warnings => true
 
   target 'smartListTests' do
     inherit! :search_paths

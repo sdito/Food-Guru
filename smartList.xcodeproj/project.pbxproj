@@ -25,12 +25,12 @@
 		E2445CF22321D8F90089582F /* RecipeHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CF12321D8F90089582F /* RecipeHomeVC.swift */; };
 		E2445CF42321DC100089582F /* StorageHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CF32321DC100089582F /* StorageHomeVC.swift */; };
 		E2445CF62321DC220089582F /* SettingsHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CF52321DC220089582F /* SettingsHomeVC.swift */; };
+		E2445CFE23220D950089582F /* TimeInterval-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CFD23220D950089582F /* TimeInterval-Extension.swift */; };
 		E2481B7F2300B00D0036E378 /* LogInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2481B7E2300B00D0036E378 /* LogInVC.swift */; };
 		E25F071723146CC600E6738E /* RecipeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071623146CC600E6738E /* RecipeType.swift */; };
 		E25F071923146E5E00E6738E /* CuisineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071823146E5E00E6738E /* CuisineType.swift */; };
 		E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */; };
 		E25F071D231490A200E6738E /* RecipeTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071C231490A200E6738E /* RecipeTypeCell.swift */; };
-		E25F071F2314B07D00E6738E /* UIViewController-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071E2314B07D00E6738E /* UIViewController-Extension.swift */; };
 		E2623A8A22FFDA44003B63E2 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2623A8922FFDA44003B63E2 /* ListCell.swift */; };
 		E2A54E1D2318553400BEBF39 /* InstructionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2A54E1B2318553300BEBF39 /* InstructionView.xib */; };
 		E2A54E1E2318553400BEBF39 /* InstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A54E1C2318553400BEBF39 /* InstructionView.swift */; };
@@ -99,12 +99,12 @@
 		E2445CF12321D8F90089582F /* RecipeHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeHomeVC.swift; sourceTree = "<group>"; };
 		E2445CF32321DC100089582F /* StorageHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageHomeVC.swift; sourceTree = "<group>"; };
 		E2445CF52321DC220089582F /* SettingsHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsHomeVC.swift; path = "../New Group1/SettingsHomeVC.swift"; sourceTree = "<group>"; };
+		E2445CFD23220D950089582F /* TimeInterval-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval-Extension.swift"; sourceTree = "<group>"; };
 		E2481B7E2300B00D0036E378 /* LogInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInVC.swift; sourceTree = "<group>"; };
 		E25F071623146CC600E6738E /* RecipeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeType.swift; sourceTree = "<group>"; };
 		E25F071823146E5E00E6738E /* CuisineType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuisineType.swift; sourceTree = "<group>"; };
 		E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRecipeTypeVC.swift; sourceTree = "<group>"; };
 		E25F071C231490A200E6738E /* RecipeTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTypeCell.swift; sourceTree = "<group>"; };
-		E25F071E2314B07D00E6738E /* UIViewController-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController-Extension.swift"; sourceTree = "<group>"; };
 		E2623A8922FFDA44003B63E2 /* ListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCell.swift; sourceTree = "<group>"; };
 		E2A54E1B2318553300BEBF39 /* InstructionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionView.xib; sourceTree = "<group>"; };
 		E2A54E1C2318553400BEBF39 /* InstructionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
@@ -345,11 +345,11 @@
 			isa = PBXGroup;
 			children = (
 				E2B4695622F7F18E006BA77D /* UITextField-Extension.swift */,
-				E25F071E2314B07D00E6738E /* UIViewController-Extension.swift */,
 				E2EB7FC222FFB29A003948A6 /* String-Extension.swift */,
 				E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */,
 				E2C4934023066012002907C2 /* UIView-Extension.swift */,
 				E2C49346230B3FC0002907C2 /* UIStackView-Extension.swift */,
+				E2445CFD23220D950089582F /* TimeInterval-Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -647,7 +647,7 @@
 				E2445CF22321D8F90089582F /* RecipeHomeVC.swift in Sources */,
 				E2EB7FBE22FF5ACF003948A6 /* SharedValues.swift in Sources */,
 				E2EBE5D322FD25060019BB0F /* AddItemsVC.swift in Sources */,
-				E25F071F2314B07D00E6738E /* UIViewController-Extension.swift in Sources */,
+				E2445CFE23220D950089582F /* TimeInterval-Extension.swift in Sources */,
 				E2C49347230B3FC0002907C2 /* UIStackView-Extension.swift in Sources */,
 				E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */,
 				E2EB7FC322FFB29A003948A6 /* String-Extension.swift in Sources */,

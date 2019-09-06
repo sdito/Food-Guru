@@ -9,6 +9,8 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseStorage
+
 
 struct Recipe {
     var name: String
@@ -24,8 +26,9 @@ struct Recipe {
     var numReviews: Int?
     var numStars: Int?
     var notes: String?
+    var recipeImage: Data?
     
-    init(name: String, recipeType: [String], cuisineType: String, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, userID: String?, numReviews: Int?, numStars: Int?, notes: String?) {
+    init(name: String, recipeType: [String], cuisineType: String, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, userID: String?, numReviews: Int?, numStars: Int?, notes: String?, recipeImage: Data?) {
         self.name = name
         self.recipeType = recipeType
         self.cuisineType = cuisineType
@@ -39,6 +42,7 @@ struct Recipe {
         self.numReviews = numReviews
         self.numStars = numStars
         self.notes = notes
+        self.recipeImage = recipeImage
     }
     
     static func readRecipes(db: Firestore!, ingredients: [String]?, type: [String]?, user: String?) -> [Recipe]? {
@@ -53,7 +57,7 @@ struct Recipe {
                     print("Error reading documents: \(err)")
                 } else {
                     for doc in QuerySnapshot!.documents {
-                        let d = Recipe(name: doc.get("name") as! String, recipeType: doc.get("recipeType") as! [String], cuisineType: doc.get("cuisineType") as! String, cookTime: doc.get("cookTime") as! Int, prepTime: doc.get("prepTime") as! Int, ingredients: doc.get("ingredients") as! [String], instructions: doc.get("instructions") as! [String], calories: doc.get("calories") as? Int, numServes: doc.get("numServes") as! Int, userID: doc.get("userID") as? String, numReviews: doc.get("numReviews") as? Int, numStars: doc.get("numStars") as? Int, notes: doc.get("notes") as? String)
+                        let d = Recipe(name: doc.get("name") as! String, recipeType: doc.get("recipeType") as! [String], cuisineType: doc.get("cuisineType") as! String, cookTime: doc.get("cookTime") as! Int, prepTime: doc.get("prepTime") as! Int, ingredients: doc.get("ingredients") as! [String], instructions: doc.get("instructions") as! [String], calories: doc.get("calories") as? Int, numServes: doc.get("numServes") as! Int, userID: doc.get("userID") as? String, numReviews: doc.get("numReviews") as? Int, numStars: doc.get("numStars") as? Int, notes: doc.get("notes") as? String, recipeImage: nil)
                         if recipies == nil {
                             recipies = [d]
                         } else {
@@ -85,7 +89,7 @@ struct Recipe {
 
 
 extension Recipe {
-    func writeToFirestore(db: Firestore!) {
+    func writeToFirestore(db: Firestore!, storage: Storage) {
         let doc = db.collection("recipes").document()
         doc.setData([
             "name": self.name,
@@ -108,5 +112,11 @@ extension Recipe {
                 print("Document successfully written")
             }
         }
+        
+        //NEED TO WRITE THE IMAGE TO FIREBASE CLOUD STORAGE
+        let uploadReference = Storage.storage().reference(withPath: "recipe/\(doc.documentID)")
+        guard let imageData = self.recipeImage else { return }
+        
+        uploadReference.putData(imageData)
     }
 }

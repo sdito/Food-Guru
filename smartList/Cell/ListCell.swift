@@ -13,6 +13,7 @@ class ListCell: UICollectionViewCell {
     @IBOutlet weak var items: UILabel!
     @IBOutlet weak var people: UILabel!
     @IBOutlet weak var view: UIView!
+    @IBOutlet weak var time: UILabel!
     
     
     func setUI(list: List) {
@@ -31,5 +32,7 @@ class ListCell: UICollectionViewCell {
         
         //items.text = "\(list.items?.count ?? 0) \(itemItems)"
         people.text = "\(list.people?.count ?? 99) shared with"
+        time.text = list.timeIntervalSince1970?.timeSince()
+        view.border()
     }
 }
