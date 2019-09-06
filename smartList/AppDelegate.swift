@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         //let db = Firestore.firestore()
         if Auth.auth().currentUser != nil {
-            let vc: NaviVC = storyboard.instantiateViewController(withIdentifier: "nav") as! NaviVC
+            let vc: TabVC = storyboard.instantiateViewController(withIdentifier: "tabVC") as! TabVC
             self.window?.rootViewController = vc
             self.window?.makeKeyAndVisible()
             SharedValues.shared.userID = Auth.auth().currentUser?.uid

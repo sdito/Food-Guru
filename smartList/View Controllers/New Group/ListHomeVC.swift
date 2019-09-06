@@ -1,15 +1,16 @@
 //
-//  HomeVC.swift
+//  ListHomeVC.swift
 //  smartList
 //
-//  Created by Steven Dito on 8/3/19.
+//  Created by Steven Dito on 9/5/19.
 //  Copyright © 2019 Steven Dito. All rights reserved.
 //
 
 import UIKit
 import FirebaseFirestore
 
-class HomeVC: UIViewController {
+class ListHomeVC: UIViewController {
+    
     var db: Firestore!
     
     private var items: [Item] = []
@@ -18,22 +19,6 @@ class HomeVC: UIViewController {
             collectionView.reloadData()
         }
     }
-    
-    @IBOutlet weak var collectionView: UICollectionView!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //print(RecipeType.allItems)
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        db = Firestore.firestore()
-        List.readAllUserLists(db: db, userID: SharedValues.shared.userID!) { (dbLists) in
-            self.lists = dbLists
-        }
-        
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         super.viewWillAppear(animated)
@@ -44,6 +29,17 @@ class HomeVC: UIViewController {
         super.viewWillDisappear(animated)
     }
     
+    @IBOutlet weak var collectionView: UICollectionView!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
+        db = Firestore.firestore()
+        List.readAllUserLists(db: db, userID: SharedValues.shared.userID!) { (dbLists) in
+            self.lists = dbLists
+        }
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "listSelected" {
@@ -52,18 +48,10 @@ class HomeVC: UIViewController {
         }
     }
     
-    
-    @IBAction func settings(_ sender: Any) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "logIn") as! LogInVC
-        //let vc = self.storyboard?.instantiateInitialViewController(withIdentifier: "logIn") as! LogInVC
-        present(vc, animated: true, completion: nil)
-    }
-    
 }
 
 
-
-extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
+extension ListHomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let n = lists?.count {
             return n
@@ -82,9 +70,9 @@ extension HomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let l = lists![indexPath.row]
-//        Item.readItems(db: db, docID: l.docID!) { (itm) in
-//            self.items = itm
-//        }
+        //        Item.readItems(db: db, docID: l.docID!) { (itm) in
+        //            self.items = itm
+        //        }
         SharedValues.shared.listIdentifier = self.db.collection("lists").document("\(l.docID!)")
         self.performSegue(withIdentifier: "listSelected", sender: l)
     }
