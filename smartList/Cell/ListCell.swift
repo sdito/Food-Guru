@@ -33,6 +33,5 @@ class ListCell: UICollectionViewCell {
         //items.text = "\(list.items?.count ?? 0) \(itemItems)"
         people.text = "\(list.people?.count ?? 99) shared with"
         time.text = list.timeIntervalSince1970?.timeSince()
-        view.border()
     }
 }

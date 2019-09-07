@@ -7,20 +7,41 @@
 //
 
 import UIKit
+import FirebaseFirestore
+
 
 class RecipeHomeVC: UIViewController {
-
-    @IBAction func settings(_ sender: Any) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "logIn") as! LogInVC
-        //let vc = self.storyboard?.instantiateInitialViewController(withIdentifier: "logIn") as! LogInVC
-        present(vc, animated: true, completion: nil)
+    @IBOutlet weak var collectionView: UICollectionView!
+    var db: Firestore!
+    
+    var recipes: [Recipe] = [] {
+        didSet {
+            collectionView.reloadData()
+        }
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        db = Firestore.firestore()
+        Recipe.readUserRecipes(db: db) { (recipesReturned) in
+            self.recipes = recipesReturned
+        }
     }
     
+}
 
+extension RecipeHomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return recipes.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeShow", for: indexPath) as! RecipeShowCell
+        let recipe = recipes[indexPath.row]
+        cell.setUI(recipe: recipe)
+        return cell
+    }
 }

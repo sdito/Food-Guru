@@ -96,10 +96,8 @@ class CreateRecipeVC: UIViewController {
     }
     
     @IBAction func createRecipePressed(_ sender: Any) {
-        //still need to have notes for user to write in about recipe on storybaord
-        //print("name: \(nameTextField.text!), recipeType: \(recipeType!), cuisineType: \(cuisineType!), cookTime: \(cookTimeTextField.toInt()!), prepTime: \(prepTimeTextField.toInt()!), ingredients: \(IngredientView.getIngredients(stack: ingredientsStackView)), instructions: \(InstructionView.getInstructions(stack: instructionsListStackView)), calories: \(caloriesTextField.toInt()), numServes: \(servingsTextField.toInt()!), userID: \(Auth.auth().currentUser?.uid), numReviews: nil, numStars: nil, notes: \(notesTextView.text)")
         
-        let recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, userID: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text, recipeImage: image)
+        var recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, userID: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text, recipeImage: image, imagePath: nil)
         recipe.writeToFirestore(db: db, storage: storage)
         navigationController?.popToRootViewController(animated: true)
 

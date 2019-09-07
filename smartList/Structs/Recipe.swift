@@ -27,8 +27,9 @@ struct Recipe {
     var numStars: Int?
     var notes: String?
     var recipeImage: Data?
+    var imagePath: String?
     
-    init(name: String, recipeType: [String], cuisineType: String, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, userID: String?, numReviews: Int?, numStars: Int?, notes: String?, recipeImage: Data?) {
+    init(name: String, recipeType: [String], cuisineType: String, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, userID: String?, numReviews: Int?, numStars: Int?, notes: String?, recipeImage: Data?, imagePath: String?) {
         self.name = name
         self.recipeType = recipeType
         self.cuisineType = cuisineType
@@ -43,54 +44,32 @@ struct Recipe {
         self.numStars = numStars
         self.notes = notes
         self.recipeImage = recipeImage
+        self.imagePath = imagePath
     }
     
-    static func readRecipes(db: Firestore!, ingredients: [String]?, type: [String]?, user: String?) -> [Recipe]? {
-        var recipies: [Recipe]?
-        
-        // all nil
-        if ingredients == nil && type == nil && user == nil {
-            return nil
-        } else if ingredients == nil && type == nil {
-            db.collection("recipes").whereField("user", isEqualTo: user as Any).getDocuments() {(QuerySnapshot, err) in
-                if let err = err {
-                    print("Error reading documents: \(err)")
-                } else {
-                    for doc in QuerySnapshot!.documents {
-                        let d = Recipe(name: doc.get("name") as! String, recipeType: doc.get("recipeType") as! [String], cuisineType: doc.get("cuisineType") as! String, cookTime: doc.get("cookTime") as! Int, prepTime: doc.get("prepTime") as! Int, ingredients: doc.get("ingredients") as! [String], instructions: doc.get("instructions") as! [String], calories: doc.get("calories") as? Int, numServes: doc.get("numServes") as! Int, userID: doc.get("userID") as? String, numReviews: doc.get("numReviews") as? Int, numStars: doc.get("numStars") as? Int, notes: doc.get("notes") as? String, recipeImage: nil)
-                        if recipies == nil {
-                            recipies = [d]
-                        } else {
-                            recipies!.append(d)
-                        }
-                    }
-                }
+    static func readUserRecipes(db: Firestore, recipesReturned: @escaping (_ recipe: [Recipe]) -> Void) {
+        var recipes: [Recipe] = []
+        db.collection("recipes").whereField("userID", isEqualTo: SharedValues.shared.userID ?? "").getDocuments { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documents else {
+                print("Error fetching documents: \(String(describing: error))")
+                return
             }
-        } else if ingredients == nil && type != nil && user == nil {
-            
-        } else if ingredients != nil && type == nil && user == nil {
-            
-        } else if ingredients == nil && type != nil && user != nil {
-            
-        } else if ingredients != nil && type == nil && user != nil {
-            
-        } else if ingredients != nil && type != nil && user == nil {
-            
-        } else if ingredients != nil && type != nil && user != nil {
-            
-        } else {
-            print("Missing one of the combinations for recipie search")
+            for doc in documents {
+                let r = Recipe(name: doc.get("name") as! String, recipeType: doc.get("recipeType") as! [String], cuisineType: doc.get("cuisineType") as! String, cookTime: doc.get("cookTime") as! Int, prepTime: doc.get("prepTime") as! Int, ingredients: doc.get("ingredients") as! [String], instructions: doc.get("instructions") as! [String], calories: doc.get("calories") as? Int, numServes: doc.get("numServes") as! Int, userID: doc.get("userID") as? String, numReviews: doc.get("numReviews") as? Int, numStars: doc.get("numStars") as? Int, notes: doc.get("notes") as? String, recipeImage: nil, imagePath: doc.get("path") as? String)
+                recipes.append(r)
+            }
+            recipesReturned(recipes)
         }
-        return recipies
     }
-
 }
 
 
 
 extension Recipe {
-    func writeToFirestore(db: Firestore!, storage: Storage) {
+    mutating func writeToFirestore(db: Firestore!, storage: Storage) {
         let doc = db.collection("recipes").document()
+        self.imagePath = "recipe/\(doc.documentID).jpg"
+        
         doc.setData([
             "name": self.name,
             "recipeType": self.recipeType,
@@ -104,7 +83,8 @@ extension Recipe {
             "userID": self.userID as Any,
             "numReviews": self.numReviews as Any,
             "numStars": self.numStars as Any,
-            "notes": self.notes as Any
+            "notes": self.notes as Any,
+            "path": self.imagePath as Any
         ]) { err in
             if let err = err {
                 print("Error writing document: \(err)")
@@ -112,11 +92,26 @@ extension Recipe {
                 print("Document successfully written")
             }
         }
-        
-        //NEED TO WRITE THE IMAGE TO FIREBASE CLOUD STORAGE
-        let uploadReference = Storage.storage().reference(withPath: "recipe/\(doc.documentID)")
+        let uploadReference = Storage.storage().reference(withPath: imagePath ?? "")
         guard let imageData = self.recipeImage else { return }
         
         uploadReference.putData(imageData)
+        //NEED TO SET RECIPE VALUE (ADD IT TO THE STRUCT) TO THE METHOD I.E. URL THAT THE IMAGE COULD BE READ FROM
+    }
+    func getImageFromStorage(imageReturned: @escaping (_ image: UIImage?) -> Void) {
+        var image: UIImage?
+        
+        let storageRef = Storage.storage().reference(withPath: self.imagePath ?? "")
+        storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
+            if let error = error {
+                print("Got an error fetching data: \(error)")
+                return
+            }
+            if let data = data {
+                image = UIImage(data: data)
+                
+            }
+            imageReturned(image)
+        }
     }
 }
