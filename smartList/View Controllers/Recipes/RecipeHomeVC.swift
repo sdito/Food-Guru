@@ -23,9 +23,7 @@ class RecipeHomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let layout = collectionView?.collectionViewLayout as? DynamicHeightLayout {
-            layout.delegate = self
-        }
+        
         collectionView.dataSource = self
         collectionView.delegate = self
         db = Firestore.firestore()
@@ -49,13 +47,4 @@ extension RecipeHomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
         return cell
     }
     
-}
-
-
-extension RecipeHomeVC: DynamicHeightLayoutDelegate {
-    func collectionView(_ collectionView: UICollectionView,
-                        heightForPhotoAtIndexPath indexPath:IndexPath) -> CGFloat {
-        
-        return recipes[indexPath.item].imageHeight ?? 0
-    }
 }

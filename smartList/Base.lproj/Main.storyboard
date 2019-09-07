@@ -901,71 +901,77 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ew9-Jx-NE4">
                                 <rect key="frame" x="0.0" y="275.5" width="414" height="537.5"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewLayout key="collectionViewLayout" id="UQJ-Ip-5YI" customClass="DynamicHeightLayout" customModule="smartList" customModuleProvider="target"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2xX-AH-6Bm">
+                                    <size key="itemSize" width="194" height="299"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="recipeShow" id="TfX-Ka-fyQ" customClass="RecipeShowCell" customModule="smartList" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="196" height="328"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="recipeShow" id="kuj-zv-ynH" customClass="RecipeShowCell" customModule="smartList" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="194" height="299"/>
+                                        <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="196" height="328"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="194" height="299"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oLO-rB-haj">
-                                                    <rect key="frame" x="0.0" y="0.0" width="196" height="328"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lef-x4-Kf7">
+                                                    <rect key="frame" x="8" y="8" width="178" height="283"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aQa-pQ-RnY">
-                                                            <rect key="frame" x="0.0" y="0.0" width="196" height="239.5"/>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="F4U-dG-miv">
+                                                            <rect key="frame" x="5" y="5" width="168" height="168"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="F4U-dG-miv" secondAttribute="height" multiplier="1:1" id="90l-1C-p1i"/>
+                                                            </constraints>
                                                         </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title of the recipe" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="78x-fm-dVd">
-                                                            <rect key="frame" x="4" y="249.5" width="188" height="22.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMN-6Q-BeM">
+                                                            <rect key="frame" x="4" y="181" width="170" height="23"/>
                                                             <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MIB-2a-BKU">
-                                                            <rect key="frame" x="4" y="301" width="188" height="17"/>
-                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cuisine" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e5L-m4-hKz">
+                                                            <rect key="frame" x="4" y="214" width="170" height="19"/>
+                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cuisine" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yah-Vr-UUR">
-                                                            <rect key="frame" x="4" y="282" width="188" height="17"/>
-                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k39-J9-f5k">
+                                                            <rect key="frame" x="4" y="235" width="170" height="19"/>
+                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
-                                                        <constraint firstItem="Yah-Vr-UUR" firstAttribute="top" secondItem="78x-fm-dVd" secondAttribute="bottom" constant="10" id="1vI-KU-bxx"/>
-                                                        <constraint firstItem="aQa-pQ-RnY" firstAttribute="leading" secondItem="oLO-rB-haj" secondAttribute="leading" id="GeV-fK-bKL"/>
-                                                        <constraint firstAttribute="trailing" secondItem="Yah-Vr-UUR" secondAttribute="trailing" constant="4" id="Hko-9l-EpS"/>
-                                                        <constraint firstItem="78x-fm-dVd" firstAttribute="top" secondItem="aQa-pQ-RnY" secondAttribute="bottom" constant="10" id="P7P-T6-fL3"/>
-                                                        <constraint firstItem="MIB-2a-BKU" firstAttribute="top" secondItem="Yah-Vr-UUR" secondAttribute="bottom" constant="2" id="RIj-7k-vYj"/>
-                                                        <constraint firstItem="Yah-Vr-UUR" firstAttribute="leading" secondItem="oLO-rB-haj" secondAttribute="leading" constant="4" id="U9C-lD-fRW"/>
-                                                        <constraint firstItem="MIB-2a-BKU" firstAttribute="leading" secondItem="oLO-rB-haj" secondAttribute="leading" constant="4" id="YsX-U0-PS9"/>
-                                                        <constraint firstAttribute="trailing" secondItem="MIB-2a-BKU" secondAttribute="trailing" constant="4" id="ZnR-9S-jzB"/>
-                                                        <constraint firstAttribute="bottom" secondItem="MIB-2a-BKU" secondAttribute="bottom" constant="10" id="iKY-QH-xvu"/>
-                                                        <constraint firstAttribute="trailing" secondItem="aQa-pQ-RnY" secondAttribute="trailing" id="oms-Gx-0M8"/>
-                                                        <constraint firstItem="78x-fm-dVd" firstAttribute="leading" secondItem="oLO-rB-haj" secondAttribute="leading" constant="4" id="qLQ-j4-tdw"/>
-                                                        <constraint firstItem="aQa-pQ-RnY" firstAttribute="top" secondItem="oLO-rB-haj" secondAttribute="top" id="sqz-9i-EOg"/>
-                                                        <constraint firstAttribute="trailing" secondItem="78x-fm-dVd" secondAttribute="trailing" constant="4" id="t9D-Cu-yPy"/>
+                                                        <constraint firstItem="e5L-m4-hKz" firstAttribute="top" secondItem="fMN-6Q-BeM" secondAttribute="bottom" constant="10" id="0r0-9P-Svp"/>
+                                                        <constraint firstItem="F4U-dG-miv" firstAttribute="top" secondItem="lef-x4-Kf7" secondAttribute="top" constant="5" id="3qB-cV-qgG"/>
+                                                        <constraint firstAttribute="trailing" secondItem="e5L-m4-hKz" secondAttribute="trailing" constant="4" id="66H-n3-90d"/>
+                                                        <constraint firstAttribute="trailing" secondItem="fMN-6Q-BeM" secondAttribute="trailing" constant="4" id="CMI-F5-7xU"/>
+                                                        <constraint firstItem="F4U-dG-miv" firstAttribute="leading" secondItem="lef-x4-Kf7" secondAttribute="leading" constant="5" id="HwZ-uG-uso"/>
+                                                        <constraint firstAttribute="trailing" secondItem="F4U-dG-miv" secondAttribute="trailing" constant="5" id="JPo-xd-5eU"/>
+                                                        <constraint firstAttribute="trailing" secondItem="k39-J9-f5k" secondAttribute="trailing" constant="4" id="O5w-v5-s8r"/>
+                                                        <constraint firstItem="fMN-6Q-BeM" firstAttribute="leading" secondItem="lef-x4-Kf7" secondAttribute="leading" constant="4" id="TMb-qp-AlM"/>
+                                                        <constraint firstItem="k39-J9-f5k" firstAttribute="leading" secondItem="lef-x4-Kf7" secondAttribute="leading" constant="4" id="bXa-5w-vQS"/>
+                                                        <constraint firstItem="fMN-6Q-BeM" firstAttribute="top" secondItem="F4U-dG-miv" secondAttribute="bottom" constant="8" id="dan-Zf-lm7"/>
+                                                        <constraint firstItem="k39-J9-f5k" firstAttribute="top" secondItem="e5L-m4-hKz" secondAttribute="bottom" constant="2" id="kua-NM-d4e"/>
+                                                        <constraint firstItem="e5L-m4-hKz" firstAttribute="leading" secondItem="lef-x4-Kf7" secondAttribute="leading" constant="4" id="vLm-pb-Toa"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="oLO-rB-haj" firstAttribute="leading" secondItem="TfX-Ka-fyQ" secondAttribute="leading" id="ORE-Cf-zTg"/>
-                                            <constraint firstItem="oLO-rB-haj" firstAttribute="top" secondItem="TfX-Ka-fyQ" secondAttribute="top" id="Q4C-XL-mkP"/>
-                                            <constraint firstAttribute="trailing" secondItem="oLO-rB-haj" secondAttribute="trailing" id="SOs-Kd-Wle"/>
-                                            <constraint firstAttribute="bottom" secondItem="oLO-rB-haj" secondAttribute="bottom" id="hxi-Mf-xNv"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="lef-x4-Kf7" secondAttribute="bottom" id="GIr-QA-elp"/>
+                                            <constraint firstItem="lef-x4-Kf7" firstAttribute="leading" secondItem="kuj-zv-ynH" secondAttribute="leadingMargin" id="aXr-Ud-zJe"/>
+                                            <constraint firstItem="lef-x4-Kf7" firstAttribute="top" secondItem="kuj-zv-ynH" secondAttribute="topMargin" id="gjG-jF-3Dx"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="lef-x4-Kf7" secondAttribute="trailing" id="y9K-nm-LRI"/>
                                         </constraints>
-                                        <size key="customSize" width="196" height="328"/>
                                         <connections>
-                                            <outlet property="cuisine" destination="Yah-Vr-UUR" id="vZl-KU-RX5"/>
-                                            <outlet property="image" destination="aQa-pQ-RnY" id="98g-pb-Nou"/>
-                                            <outlet property="recipeDescription" destination="MIB-2a-BKU" id="9Ko-5e-5RL"/>
-                                            <outlet property="title" destination="78x-fm-dVd" id="fZ1-Sn-VGM"/>
+                                            <outlet property="cuisine" destination="e5L-m4-hKz" id="mGn-md-ogQ"/>
+                                            <outlet property="image" destination="F4U-dG-miv" id="YUj-5s-HcJ"/>
+                                            <outlet property="recipeDescription" destination="k39-J9-f5k" id="WzX-1d-P3O"/>
+                                            <outlet property="title" destination="fMN-6Q-BeM" id="gSG-VM-yGU"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

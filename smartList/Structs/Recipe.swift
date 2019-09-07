@@ -28,10 +28,9 @@ struct Recipe {
     var notes: String?
     var recipeImage: Data?
     var imagePath: String?
-    var imageHeight: CGFloat?
     
     
-    init(name: String, recipeType: [String], cuisineType: String, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, userID: String?, numReviews: Int?, numStars: Int?, notes: String?, recipeImage: Data?, imagePath: String?, imageHeight: CGFloat?) {
+    init(name: String, recipeType: [String], cuisineType: String, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, userID: String?, numReviews: Int?, numStars: Int?, notes: String?, recipeImage: Data?, imagePath: String?) {
         self.name = name
         self.recipeType = recipeType
         self.cuisineType = cuisineType
@@ -47,7 +46,6 @@ struct Recipe {
         self.notes = notes
         self.recipeImage = recipeImage
         self.imagePath = imagePath
-        self.imageHeight = imageHeight
     }
     
     static func readUserRecipes(db: Firestore, recipesReturned: @escaping (_ recipe: [Recipe]) -> Void) {
@@ -58,7 +56,7 @@ struct Recipe {
                 return
             }
             for doc in documents {
-                let r = Recipe(name: doc.get("name") as! String, recipeType: doc.get("recipeType") as! [String], cuisineType: doc.get("cuisineType") as! String, cookTime: doc.get("cookTime") as! Int, prepTime: doc.get("prepTime") as! Int, ingredients: doc.get("ingredients") as! [String], instructions: doc.get("instructions") as! [String], calories: doc.get("calories") as? Int, numServes: doc.get("numServes") as! Int, userID: doc.get("userID") as? String, numReviews: doc.get("numReviews") as? Int, numStars: doc.get("numStars") as? Int, notes: doc.get("notes") as? String, recipeImage: nil, imagePath: doc.get("path") as? String, imageHeight: doc.get("imageHeight") as? CGFloat)
+                let r = Recipe(name: doc.get("name") as! String, recipeType: doc.get("recipeType") as! [String], cuisineType: doc.get("cuisineType") as! String, cookTime: doc.get("cookTime") as! Int, prepTime: doc.get("prepTime") as! Int, ingredients: doc.get("ingredients") as! [String], instructions: doc.get("instructions") as! [String], calories: doc.get("calories") as? Int, numServes: doc.get("numServes") as! Int, userID: doc.get("userID") as? String, numReviews: doc.get("numReviews") as? Int, numStars: doc.get("numStars") as? Int, notes: doc.get("notes") as? String, recipeImage: nil, imagePath: doc.get("path") as? String)
                 recipes.append(r)
             }
             recipesReturned(recipes)
@@ -88,8 +86,7 @@ extension Recipe {
             "numReviews": self.numReviews as Any,
             "numStars": self.numStars as Any,
             "notes": self.notes as Any,
-            "path": self.imagePath as Any,
-            "imageHeight": self.imageHeight as Any
+            "path": self.imagePath as Any
         ]) { err in
             if let err = err {
                 print("Error writing document: \(err)")
