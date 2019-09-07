@@ -44,4 +44,5 @@ extension RecipeHomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
         cell.setUI(recipe: recipe)
         return cell
     }
+    
 }

@@ -19,13 +19,13 @@ class RecipeShowCell: UICollectionViewCell {
         title.text = recipe.name
         
         cuisine.text = recipe.cuisineType
-        recipeDescription.text = recipe.recipeType.joined(separator: " - ")
+        recipeDescription.text = recipe.instructions.joined(separator: ", ")//recipe.recipeType.joined(separator: " - ")
         recipe.getImageFromStorage { (img) in
             self.image.image = img
         }
-        //image.clipsToBounds = true
-        //image.layer.cornerRadius = 10
-        image.addShadow(offset: CGSize.init(width: 0, height: 3), color: UIColor.black, radius: 2.0, opacity: 0.35)
+        image.clipsToBounds = true
+        image.layer.cornerRadius = 5
+        
         
     }
     
