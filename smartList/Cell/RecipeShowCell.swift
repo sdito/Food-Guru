@@ -19,7 +19,7 @@ class RecipeShowCell: UICollectionViewCell {
         title.text = recipe.name
         
         cuisine.text = recipe.cuisineType
-        recipeDescription.text = recipe.instructions.joined(separator: ", ")//recipe.recipeType.joined(separator: " - ")
+        recipeDescription.text = recipe.recipeType.joined(separator: " - ")
         recipe.getImageFromStorage { (img) in
             self.image.image = img
         }

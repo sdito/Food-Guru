@@ -54,7 +54,7 @@ class CreateRecipeVC: UIViewController {
         storage = Storage.storage()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
-        imagePicker.allowsEditing = true
+        //imagePicker.allowsEditing = true
         selectimageOutlet.border()
         
         nameTextField.delegate = self
@@ -96,8 +96,10 @@ class CreateRecipeVC: UIViewController {
     }
     
     @IBAction func createRecipePressed(_ sender: Any) {
-        
-        var recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, userID: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text, recipeImage: image, imagePath: nil)
+        for _ in 1...50 {
+            print(UIImage(data: image!)?.size.height)
+        }
+        var recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, userID: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text, recipeImage: image, imagePath: nil, imageHeight: UIImage(data: image!)?.size.height)
         recipe.writeToFirestore(db: db, storage: storage)
         navigationController?.popToRootViewController(animated: true)
 
@@ -204,7 +206,7 @@ extension CreateRecipeVC: UITextViewDelegate {
 
 extension CreateRecipeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             selectimageOutlet.contentMode = .scaleAspectFit
             selectimageOutlet.setBackgroundImage(pickedImage, for: .normal)
             selectimageOutlet.setTitle("", for: .normal)

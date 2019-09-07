@@ -40,6 +40,7 @@
 		E2B4695422F794F8006BA77D /* ListOrganizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4695322F794F8006BA77D /* ListOrganizer.swift */; };
 		E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4695622F7F18E006BA77D /* UITextField-Extension.swift */; };
 		E2B4695A22F7F485006BA77D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4695922F7F485006BA77D /* Colors.swift */; };
+		E2B5707F23242BFF00B051C2 /* DynamicHeightLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B5707E23242BFF00B051C2 /* DynamicHeightLayout.swift */; };
 		E2C4934123066012002907C2 /* UIView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C4934023066012002907C2 /* UIView-Extension.swift */; };
 		E2C49343230887F3002907C2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C49342230887F3002907C2 /* User.swift */; };
 		E2C49347230B3FC0002907C2 /* UIStackView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C49346230B3FC0002907C2 /* UIStackView-Extension.swift */; };
@@ -115,6 +116,7 @@
 		E2B4695322F794F8006BA77D /* ListOrganizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListOrganizer.swift; sourceTree = "<group>"; };
 		E2B4695622F7F18E006BA77D /* UITextField-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField-Extension.swift"; sourceTree = "<group>"; };
 		E2B4695922F7F485006BA77D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		E2B5707E23242BFF00B051C2 /* DynamicHeightLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightLayout.swift; sourceTree = "<group>"; };
 		E2C4934023066012002907C2 /* UIView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView-Extension.swift"; sourceTree = "<group>"; };
 		E2C49342230887F3002907C2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E2C49346230B3FC0002907C2 /* UIStackView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView-Extension.swift"; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 				E216204622F658D10074A0DF /* AppDelegate.swift */,
 				E216207822F660C40074A0DF /* View Controllers */,
 				E216204A22F658D10074A0DF /* Main.storyboard */,
+				E2B5708023242C0700B051C2 /* Layouts */,
 				E2E529D322FA7F9700C55DA0 /* Classes */,
 				E2B4695522F79748006BA77D /* Structs */,
 				E25F071523146C9A00E6738E /* Enum */,
@@ -354,6 +357,14 @@
 				E2445CFD23220D950089582F /* TimeInterval-Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E2B5708023242C0700B051C2 /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				E2B5707E23242BFF00B051C2 /* DynamicHeightLayout.swift */,
+			);
+			path = Layouts;
 			sourceTree = "<group>";
 		};
 		E2E529D322FA7F9700C55DA0 /* Classes */ = {
@@ -645,6 +656,7 @@
 				E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */,
 				E2C49349230B45E4002907C2 /* CreateRecipeVC.swift in Sources */,
 				E2445CF02321D8EA0089582F /* ListHomeVC.swift in Sources */,
+				E2B5707F23242BFF00B051C2 /* DynamicHeightLayout.swift in Sources */,
 				E2481B7F2300B00D0036E378 /* LogInVC.swift in Sources */,
 				E2C4934123066012002907C2 /* UIView-Extension.swift in Sources */,
 				E2445CF22321D8F90089582F /* RecipeHomeVC.swift in Sources */,
