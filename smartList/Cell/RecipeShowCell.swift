@@ -26,7 +26,7 @@ class RecipeShowCell: UICollectionViewCell {
         image.clipsToBounds = true
         image.layer.cornerRadius = 5
         
-        
+        print(recipeDescription.frame.height)
     }
     
 }
