@@ -10,6 +10,9 @@
 		165FE4DEEA11885B398FFCAE /* Pods_smartListTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7F488B427C9EA1D0083454 /* Pods_smartListTests.framework */; };
 		251D01FED1353E46E29BB939 /* Pods_smartList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F30C0C4898D5DF1DF11A7E59 /* Pods_smartList.framework */; };
 		D30C8AF1B700C4D5D1E2F1B9 /* Pods_smartListUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DF0F0395060F9BE10E20E39 /* Pods_smartListUITests.framework */; };
+		E20AFF3123246AB600A5479A /* DynamicHeightLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AFF3023246AB600A5479A /* DynamicHeightLayout.swift */; };
+		E20AFF3823248E1C00A5479A /* RecipeBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AFF3723248E1C00A5479A /* RecipeBottomView.swift */; };
+		E20AFF3A23248E3300A5479A /* RecipeBottomView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E20AFF3923248E3300A5479A /* RecipeBottomView.xib */; };
 		E216204722F658D10074A0DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216204622F658D10074A0DF /* AppDelegate.swift */; };
 		E216204C22F658D10074A0DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E216204A22F658D10074A0DF /* Main.storyboard */; };
 		E216204E22F658D20074A0DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E216204D22F658D20074A0DF /* Assets.xcassets */; };
@@ -42,7 +45,6 @@
 		E2B4695A22F7F485006BA77D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4695922F7F485006BA77D /* Colors.swift */; };
 		E2C4934123066012002907C2 /* UIView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C4934023066012002907C2 /* UIView-Extension.swift */; };
 		E2C49343230887F3002907C2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C49342230887F3002907C2 /* User.swift */; };
-		E2C49347230B3FC0002907C2 /* UIStackView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C49346230B3FC0002907C2 /* UIStackView-Extension.swift */; };
 		E2C49349230B45E4002907C2 /* CreateRecipeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C49348230B45E4002907C2 /* CreateRecipeVC.swift */; };
 		E2D8462D231264CD004B19C2 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D8462C231264CD004B19C2 /* Recipe.swift */; };
 		E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */; };
@@ -81,6 +83,9 @@
 		808C86907637F132A742D4A5 /* Pods-smartListUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartListUITests.debug.xcconfig"; path = "Target Support Files/Pods-smartListUITests/Pods-smartListUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BB7F488B427C9EA1D0083454 /* Pods_smartListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_smartListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA8BD7215F29012C997B584 /* Pods-smartListTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartListTests.release.xcconfig"; path = "Target Support Files/Pods-smartListTests/Pods-smartListTests.release.xcconfig"; sourceTree = "<group>"; };
+		E20AFF3023246AB600A5479A /* DynamicHeightLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightLayout.swift; sourceTree = "<group>"; };
+		E20AFF3723248E1C00A5479A /* RecipeBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeBottomView.swift; sourceTree = "<group>"; };
+		E20AFF3923248E3300A5479A /* RecipeBottomView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecipeBottomView.xib; sourceTree = "<group>"; };
 		E216204322F658D10074A0DF /* smartList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smartList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E216204622F658D10074A0DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E216204B22F658D10074A0DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -117,7 +122,6 @@
 		E2B4695922F7F485006BA77D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E2C4934023066012002907C2 /* UIView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView-Extension.swift"; sourceTree = "<group>"; };
 		E2C49342230887F3002907C2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		E2C49346230B3FC0002907C2 /* UIStackView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView-Extension.swift"; sourceTree = "<group>"; };
 		E2C49348230B45E4002907C2 /* CreateRecipeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecipeVC.swift; sourceTree = "<group>"; };
 		E2D8462C231264CD004B19C2 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-Extension.swift"; sourceTree = "<group>"; };
@@ -184,6 +188,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		E20AFF3223246ABE00A5479A /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				E20AFF3023246AB600A5479A /* DynamicHeightLayout.swift */,
+			);
+			path = Layouts;
+			sourceTree = "<group>";
+		};
 		E216203A22F658D10074A0DF = {
 			isa = PBXGroup;
 			children = (
@@ -212,6 +224,7 @@
 				E216204622F658D10074A0DF /* AppDelegate.swift */,
 				E216207822F660C40074A0DF /* View Controllers */,
 				E216204A22F658D10074A0DF /* Main.storyboard */,
+				E20AFF3223246ABE00A5479A /* Layouts */,
 				E2E529D322FA7F9700C55DA0 /* Classes */,
 				E2B4695522F79748006BA77D /* Structs */,
 				E25F071523146C9A00E6738E /* Enum */,
@@ -314,6 +327,8 @@
 		E2B4694D22F78D23006BA77D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E20AFF3723248E1C00A5479A /* RecipeBottomView.swift */,
+				E20AFF3923248E3300A5479A /* RecipeBottomView.xib */,
 				E2F380AE2319847F003857F7 /* IngredientView */,
 				E2A54E1F23186DEB00BEBF39 /* InstructionView */,
 				E2B4694E22F78D2B006BA77D /* CreateListView */,
@@ -350,7 +365,6 @@
 				E2EB7FC222FFB29A003948A6 /* String-Extension.swift */,
 				E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */,
 				E2C4934023066012002907C2 /* UIView-Extension.swift */,
-				E2C49346230B3FC0002907C2 /* UIStackView-Extension.swift */,
 				E2445CFD23220D950089582F /* TimeInterval-Extension.swift */,
 			);
 			path = Extensions;
@@ -498,6 +512,7 @@
 				E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */,
 				E216204E22F658D20074A0DF /* Assets.xcassets in Resources */,
 				E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */,
+				E20AFF3A23248E3300A5479A /* RecipeBottomView.xib in Resources */,
 				E216204C22F658D10074A0DF /* Main.storyboard in Resources */,
 				E2A54E1D2318553400BEBF39 /* InstructionView.xib in Resources */,
 			);
@@ -645,6 +660,7 @@
 				E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */,
 				E2C49349230B45E4002907C2 /* CreateRecipeVC.swift in Sources */,
 				E2445CF02321D8EA0089582F /* ListHomeVC.swift in Sources */,
+				E20AFF3123246AB600A5479A /* DynamicHeightLayout.swift in Sources */,
 				E2481B7F2300B00D0036E378 /* LogInVC.swift in Sources */,
 				E2C4934123066012002907C2 /* UIView-Extension.swift in Sources */,
 				E2445CF22321D8F90089582F /* RecipeHomeVC.swift in Sources */,
@@ -652,12 +668,12 @@
 				E2EBE5D322FD25060019BB0F /* AddItemsVC.swift in Sources */,
 				E2445D022323308F0089582F /* RecipeShowCell.swift in Sources */,
 				E2445CFE23220D950089582F /* TimeInterval-Extension.swift in Sources */,
-				E2C49347230B3FC0002907C2 /* UIStackView-Extension.swift in Sources */,
 				E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */,
 				E2EB7FC322FFB29A003948A6 /* String-Extension.swift in Sources */,
 				E2E529D222FA7F9100C55DA0 /* List.swift in Sources */,
 				E2445CF62321DC220089582F /* SettingsHomeVC.swift in Sources */,
 				E2C49343230887F3002907C2 /* User.swift in Sources */,
+				E20AFF3823248E1C00A5479A /* RecipeBottomView.swift in Sources */,
 				E2A54E1E2318553400BEBF39 /* InstructionView.swift in Sources */,
 				E2F380AD2319847A003857F7 /* IngredientView.swift in Sources */,
 				E25F071723146CC600E6738E /* RecipeType.swift in Sources */,

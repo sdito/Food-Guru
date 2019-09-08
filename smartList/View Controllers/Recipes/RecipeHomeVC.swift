@@ -12,6 +12,7 @@ import FirebaseFirestore
 
 class RecipeHomeVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
+    
     var db: Firestore!
     
     var recipes: [Recipe] = [] {
@@ -23,7 +24,9 @@ class RecipeHomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if let layout = collectionView?.collectionViewLayout as? DynamicHeightLayout {
+            layout.delegate = self
+        }
         collectionView.dataSource = self
         collectionView.delegate = self
         db = Firestore.firestore()
@@ -47,4 +50,11 @@ extension RecipeHomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
         return cell
     }
     
+}
+
+
+extension RecipeHomeVC: DynamicHeightLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, heightForCellAtIndexPath indexPath: IndexPath) -> CGFloat {
+        return CGFloat(500)//RecipeShowCell().frame.width
+    }
 }
