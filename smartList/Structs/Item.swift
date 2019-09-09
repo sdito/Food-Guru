@@ -17,6 +17,11 @@ struct Item {
     var user: String?
     var ownID: String?
     
+    
+    var timeAdded: TimeInterval?
+    var timeExpires: TimeInterval?
+    
+    
     init(name: String, selected: Bool, category: String?, store: String?, user: String?, ownID: String?) {
         self.name = name
         self.selected = selected

@@ -18,7 +18,7 @@ class DynamicHeightLayout: UICollectionViewLayout {
     weak var delegate: DynamicHeightLayoutDelegate!
     
     fileprivate var numberOfColumns = 2
-    fileprivate var cellPadding: CGFloat = 6
+    fileprivate var cellPadding: CGFloat = 2
     fileprivate var cache = [UICollectionViewLayoutAttributes]()
     fileprivate var contentHeight: CGFloat = 0
     fileprivate var contentWidth: CGFloat {

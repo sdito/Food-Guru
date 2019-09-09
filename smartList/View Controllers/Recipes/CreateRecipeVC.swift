@@ -17,6 +17,7 @@ class CreateRecipeVC: UIViewController {
     var storage: Storage!
     let imagePicker = UIImagePickerController()
     var image: Data?
+    var imageAspectRatio: Double?
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var servingsTextField: UITextField!
@@ -25,6 +26,7 @@ class CreateRecipeVC: UIViewController {
     @IBOutlet weak var caloriesTextField: UITextField!
     
     @IBOutlet weak var notesTextView: UITextView!
+    @IBOutlet weak var taglineTextView: UITextView!
     
     @IBOutlet weak var selectimageOutlet: UIButton!
     @IBOutlet weak var cuisineOutlet: UIButton!
@@ -63,6 +65,7 @@ class CreateRecipeVC: UIViewController {
         prepTimeTextField.delegate = self
         caloriesTextField.delegate = self
         notesTextView.delegate = self
+        taglineTextView.delegate = self
         
         cuisineOutlet.border()
         recipeDescriptionOutlet.border()
@@ -79,6 +82,7 @@ class CreateRecipeVC: UIViewController {
         
         initialInstructionSetUp()
         notesTextView.border()
+        taglineTextView.border()
         
     }
     
@@ -96,7 +100,7 @@ class CreateRecipeVC: UIViewController {
     }
     
     @IBAction func createRecipePressed(_ sender: Any) {
-        var recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, userID: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text, recipeImage: image, imagePath: nil)
+        var recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, userID: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text, tagline: taglineTextView.text, recipeImage: image, imagePath: nil)
         recipe.writeToFirestore(db: db, storage: storage)
         navigationController?.popToRootViewController(animated: true)
 
@@ -208,7 +212,8 @@ extension CreateRecipeVC: UIImagePickerControllerDelegate, UINavigationControlle
             selectimageOutlet.setBackgroundImage(pickedImage, for: .normal)
             selectimageOutlet.setTitle("", for: .normal)
             image = pickedImage.jpegData(compressionQuality: 0.75)
-            
+            imageAspectRatio = Double(pickedImage.size.height / pickedImage.size.width)
+            print(pickedImage.size.height, pickedImage.size.width)
         }
         
         dismiss(animated: true, completion: nil)

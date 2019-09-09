@@ -10,6 +10,8 @@ import UIKit
 import FirebaseFirestore
 
 class ListHomeVC: UIViewController {
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var mainListView: UIView!
     
     var db: Firestore!
     
@@ -29,11 +31,15 @@ class ListHomeVC: UIViewController {
         super.viewWillDisappear(animated)
     }
     
-    @IBOutlet weak var collectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
+       
+        mainListView.layer.cornerRadius = 50
+        mainListView.clipsToBounds = true
+        mainListView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.lightGray)
         
         db = Firestore.firestore()
         List.readAllUserLists(db: db, userID: SharedValues.shared.userID!) { (dbLists) in

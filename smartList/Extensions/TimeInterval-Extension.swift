@@ -10,6 +10,15 @@ import Foundation
 import UIKit
 
 extension TimeInterval {
+    func dateFormatted(style: DateFormatter.Style) -> String {
+        let date = NSDate(timeIntervalSince1970: self)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = style
+        dateFormatter.timeZone = .current
+        let localDate = dateFormatter.string(from: date as Date)
+        return localDate
+    }
+    
     func timeSince() -> String {
         let difference = abs(Date().timeIntervalSince1970 - self)
         switch difference {

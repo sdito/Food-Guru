@@ -11,50 +11,41 @@ import FirebaseFirestore
 
 
 class RecipeHomeVC: UIViewController {
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var tableView: UITableView!
     
     var db: Firestore!
     
     var recipes: [Recipe] = [] {
         didSet {
-            collectionView.reloadData()
+            tableView.reloadData()
         }
+        
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let layout = collectionView?.collectionViewLayout as? DynamicHeightLayout {
-            layout.delegate = self
-        }
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        tableView.dataSource = self
+        tableView.delegate = self
         db = Firestore.firestore()
         Recipe.readUserRecipes(db: db) { (recipesReturned) in
             self.recipes = recipesReturned
         }
-        
     }
     
 }
 
-extension RecipeHomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension RecipeHomeVC: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return recipes.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeShow", for: indexPath) as! RecipeShowCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let recipe = recipes[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "recipeShowCell", for: indexPath) as! RecipeShowCell
         cell.setUI(recipe: recipe)
         return cell
     }
     
-}
-
-
-extension RecipeHomeVC: DynamicHeightLayoutDelegate {
-    func collectionView(_ collectionView: UICollectionView, heightForCellAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return CGFloat(500)//RecipeShowCell().frame.width
-    }
+    
 }

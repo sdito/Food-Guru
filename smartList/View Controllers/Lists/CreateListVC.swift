@@ -8,20 +8,11 @@
 
 import UIKit
 
-//import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
 
 class CreateListVC: UIViewController {
-    
-    
-    
-    
     var listToEdit: List?
-    
-    
-    
-    
     var db: Firestore!
     var all = ListOrganizer.createListViews()
     
@@ -31,6 +22,8 @@ class CreateListVC: UIViewController {
     private var h: CGFloat!
     
     @IBOutlet weak var topView: UIView!
+    
+    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var nameTextField: UITextField!

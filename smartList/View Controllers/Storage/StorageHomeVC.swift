@@ -9,22 +9,39 @@
 import UIKit
 
 class StorageHomeVC: UIViewController {
-
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    
+    var items: [Item] = [Item(name: "Eggs", selected: false, category: nil, store: nil, user: nil, ownID: nil), Item(name: "Milk", selected: false, category: nil, store: nil, user: nil, ownID: nil), Item(name: "Cheese", selected: false, category: nil, store: nil, user: nil, ownID: nil)] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        tableView.dataSource = self
+        tableView.delegate = self
+    }
+    
+    @IBAction func searchPressed(_ sender: Any) {
     }
     
 
-    /*
-    // MARK: - Navigation
+}
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+
+extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return items.count
     }
-    */
-
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "storageCell") as! StorageCell
+        let item = items[indexPath.row]
+        cell.setUI(item: item)
+        return cell
+    }
+    
+    
 }
