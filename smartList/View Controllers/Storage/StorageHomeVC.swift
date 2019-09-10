@@ -12,7 +12,7 @@ class StorageHomeVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
-    var items: [Item] = [Item(name: "Eggs", selected: false, category: nil, store: nil, user: nil, ownID: nil), Item(name: "Milk", selected: false, category: nil, store: nil, user: nil, ownID: nil), Item(name: "Cheese", selected: false, category: nil, store: nil, user: nil, ownID: nil)] {
+    var items: [Item] = [Item(name: "Eggs", selected: false, category: nil, store: nil, user: nil, ownID: nil, storageSection: "none", timeAdded: Date().timeIntervalSince1970, timeExpires: nil), Item(name: "Milk", selected: false, category: nil, store: nil, user: nil, ownID: nil, storageSection: nil, timeAdded: Date().timeIntervalSince1970, timeExpires: nil), Item(name: "Cheese", selected: false, category: nil, store: nil, user: nil, ownID: nil, storageSection: nil, timeAdded: Date().timeIntervalSince1970, timeExpires: nil)] {
         didSet {
             tableView.reloadData()
         }

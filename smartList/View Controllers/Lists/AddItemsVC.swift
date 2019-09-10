@@ -62,7 +62,7 @@ class AddItemsVC: UIViewController {
         setUIfrom(list: list!)
         
         view.setGradientBackground(colorOne: .lightGray, colorTwo: .gray)
-        Item.readItems(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (itm) in
+        Item.readItemsForList(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (itm) in
             self.list?.items = itm
             //print(itm.map({$0.ownID}))
         }
@@ -85,9 +85,6 @@ class AddItemsVC: UIViewController {
         ])
         if sendHome == true {
             navigationController?.popToRootViewController(animated: true)
-            //let vc = storyboard?.instantiateViewController(withIdentifier: "nav") as! NaviVC
-//            present(vc, animated: true, completion: nil)
-            //vc.becomeFirstResponder()
         }
         
     }
@@ -151,9 +148,18 @@ class AddItemsVC: UIViewController {
         self.present(alert, animated: true)
     }
     
+    @IBAction func doneWithList(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "Are you done with the list?", message: "The selected items from this list will be added to your storage, where you can keep track of your items.", preferredStyle: .alert)
+        alert.addAction(.init(title: "Back", style: .cancel, handler: nil))
+        alert.addAction(.init(title: "Continue", style: .default, handler: nil))
+        present(alert, animated: true)
+    }
+    
+    
     private func toAddItem() {
         
-        var item = Item(name: textField.text!, selected: false, category: SharedValues.shared.currentCategory, store: currentStore, user: nil, ownID: nil)
+        var item = Item(name: textField.text!, selected: false, category: SharedValues.shared.currentCategory, store: currentStore, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil)
         item.writeToFirestore(db: db)
         //NEED TO HAVE THE OWNID FOR THE ITEM IN ORDER TO WRITE TO DB IN THE FUTURE ABOUT ITEM EVENTS
         
