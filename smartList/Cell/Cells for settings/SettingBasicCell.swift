@@ -11,6 +11,8 @@ import UIKit
 class SettingBasicCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     
+    
+    
     func setUI(str: String) {
         label.text = str
     }

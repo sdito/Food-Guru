@@ -13,12 +13,14 @@
     private var cells: [[Setting]] = []
     
     
+    
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = .lightGray
         (sections, cells) = Setting.createSettings()
         tableView.reloadData()
     }
@@ -26,7 +28,7 @@
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "settingDetail" {
             let destVC = segue.destination as! SettingsDetailVC
-            destVC.setting = sender as? Setting
+            destVC.setting = sender as? Setting.SettingName
         }
     }
     
@@ -39,6 +41,7 @@
 }
   
 extension SettingsHomeVC: UITableViewDataSource, UITableViewDelegate {
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
@@ -63,7 +66,7 @@ extension SettingsHomeVC: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let setting = cells[indexPath.section][indexPath.row]
+        let setting = cells[indexPath.section][indexPath.row].settingName
         performSegue(withIdentifier: "settingDetail", sender: setting)
     }
     
