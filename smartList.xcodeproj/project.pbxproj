@@ -15,6 +15,10 @@
 		E20BC6CF2327430C00F1E5E7 /* SettingsDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6CE2327430C00F1E5E7 /* SettingsDetailVC.swift */; };
 		E20BC6D1232752A600F1E5E7 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6D0232752A600F1E5E7 /* Setting.swift */; };
 		E20BC6D323275BC200F1E5E7 /* SettingBasicCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6D223275BC200F1E5E7 /* SettingBasicCell.swift */; };
+		E20BC6D62328326600F1E5E7 /* SettingButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6D52328326600F1E5E7 /* SettingButtonCell.swift */; };
+		E20BC6D82328429F00F1E5E7 /* GroupNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6D72328429F00F1E5E7 /* GroupNameCell.swift */; };
+		E20BC6DA232843E400F1E5E7 /* CreateGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6D9232843E400F1E5E7 /* CreateGroupVC.swift */; };
+		E20BC6DC23288B9C00F1E5E7 /* EmailCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6DB23288B9C00F1E5E7 /* EmailCheck.swift */; };
 		E20F2AD62324B76B00CD907A /* RecipeShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F2AD52324B76B00CD907A /* RecipeShowCell.swift */; };
 		E20F2AD823258A4B00CD907A /* StorageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F2AD723258A4B00CD907A /* StorageCell.swift */; };
 		E216204722F658D10074A0DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216204622F658D10074A0DF /* AppDelegate.swift */; };
@@ -91,6 +95,10 @@
 		E20BC6CE2327430C00F1E5E7 /* SettingsDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsDetailVC.swift; path = "smartList/View Controllers/SettingsDetailVC.swift"; sourceTree = SOURCE_ROOT; };
 		E20BC6D0232752A600F1E5E7 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		E20BC6D223275BC200F1E5E7 /* SettingBasicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingBasicCell.swift; sourceTree = "<group>"; };
+		E20BC6D52328326600F1E5E7 /* SettingButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButtonCell.swift; sourceTree = "<group>"; };
+		E20BC6D72328429F00F1E5E7 /* GroupNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNameCell.swift; sourceTree = "<group>"; };
+		E20BC6D9232843E400F1E5E7 /* CreateGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateGroupVC.swift; path = smartList/Cell/CreateGroupVC.swift; sourceTree = SOURCE_ROOT; };
+		E20BC6DB23288B9C00F1E5E7 /* EmailCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailCheck.swift; sourceTree = "<group>"; };
 		E20F2AD52324B76B00CD907A /* RecipeShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeShowCell.swift; sourceTree = "<group>"; };
 		E20F2AD723258A4B00CD907A /* StorageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCell.swift; sourceTree = "<group>"; };
 		E216204322F658D10074A0DF /* smartList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smartList.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -199,6 +207,7 @@
 			children = (
 				E20BC6D223275BC200F1E5E7 /* SettingBasicCell.swift */,
 				E20BC6CA2327376000F1E5E7 /* SettingCell.swift */,
+				E20BC6D52328326600F1E5E7 /* SettingButtonCell.swift */,
 			);
 			path = "Cells for settings";
 			sourceTree = "<group>";
@@ -309,6 +318,7 @@
 			children = (
 				E20AFF3B2324911300A5479A /* SettingsHomeVC.swift */,
 				E20BC6CE2327430C00F1E5E7 /* SettingsDetailVC.swift */,
+				E20BC6D9232843E400F1E5E7 /* CreateGroupVC.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -317,6 +327,7 @@
 			isa = PBXGroup;
 			children = (
 				E25F071623146CC600E6738E /* RecipeType.swift */,
+				E20BC6DB23288B9C00F1E5E7 /* EmailCheck.swift */,
 				E25F071823146E5E00E6738E /* CuisineType.swift */,
 			);
 			path = Enum;
@@ -392,6 +403,7 @@
 				E20BC6D423275BDC00F1E5E7 /* Cells for settings */,
 				E20F2AD723258A4B00CD907A /* StorageCell.swift */,
 				E20F2AD52324B76B00CD907A /* RecipeShowCell.swift */,
+				E20BC6D72328429F00F1E5E7 /* GroupNameCell.swift */,
 				E2623A8922FFDA44003B63E2 /* ListCell.swift */,
 				E25F071C231490A200E6738E /* RecipeTypeCell.swift */,
 			);
@@ -657,6 +669,7 @@
 				E25F071D231490A200E6738E /* RecipeTypeCell.swift in Sources */,
 				E2E529D522FA80C400C55DA0 /* Item.swift in Sources */,
 				E2445CF42321DC100089582F /* StorageHomeVC.swift in Sources */,
+				E20BC6DC23288B9C00F1E5E7 /* EmailCheck.swift in Sources */,
 				E2623A8A22FFDA44003B63E2 /* ListCell.swift in Sources */,
 				E2B4695422F794F8006BA77D /* ListOrganizer.swift in Sources */,
 				E25F071923146E5E00E6738E /* CuisineType.swift in Sources */,
@@ -680,7 +693,10 @@
 				E2EBE5D322FD25060019BB0F /* AddItemsVC.swift in Sources */,
 				E2445CFE23220D950089582F /* TimeInterval-Extension.swift in Sources */,
 				E20BC6CF2327430C00F1E5E7 /* SettingsDetailVC.swift in Sources */,
+				E20BC6D82328429F00F1E5E7 /* GroupNameCell.swift in Sources */,
+				E20BC6DA232843E400F1E5E7 /* CreateGroupVC.swift in Sources */,
 				E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */,
+				E20BC6D62328326600F1E5E7 /* SettingButtonCell.swift in Sources */,
 				E2EB7FC322FFB29A003948A6 /* String-Extension.swift in Sources */,
 				E2E529D222FA7F9100C55DA0 /* List.swift in Sources */,
 				E2C49343230887F3002907C2 /* User.swift in Sources */,

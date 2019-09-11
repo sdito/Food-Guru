@@ -45,6 +45,13 @@ class ListHomeVC: UIViewController {
         List.readAllUserLists(db: db, userID: SharedValues.shared.userID!) { (dbLists) in
             self.lists = dbLists
         }
+        
+        
+        User.checkIfEmailIsValid(db: db, email: "sfdito@nasfdlkasdlkj") { (ec) in
+            for _ in 1...10 {
+                print(ec)
+            }
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

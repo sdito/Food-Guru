@@ -23,6 +23,8 @@
         tableView.backgroundColor = .lightGray
         (sections, cells) = Setting.createSettings()
         tableView.reloadData()
+        
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -33,10 +35,7 @@
     }
     
     
-    @IBAction func settings(_ sender: Any) {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "logIn") as! LogInVC
-        present(vc, animated: true, completion: nil)
-    }
+    
     
 }
   
