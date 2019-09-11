@@ -53,9 +53,13 @@ class SettingsDetailVC: UIViewController {
             
         case .group:
             var groupID: String?
-            db.collection("users").document(Auth.auth().currentUser?.uid ?? "").getDocument { (document, error) in
+            
+            
+            
+            db.collection("users").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
                 if let document = document {
                     groupID = document.get("groupID") as? String
+                    
                 }
             }
             

@@ -57,8 +57,27 @@ struct User {
         }
     }
     
-    static func writeGroupToFirestore(db: Firestore, emails: [String]) {
-        //first need to check to make sure every user exists and every user is not already in a group (users are limited to one group per)
+    static func writeGroupToFirestoreAndAddToUsers(db: Firestore, emails: [String]) {
+        // write the group to firestore first
+        let groupRef = db.collection("groups").document()
+        let groupDocID = groupRef.documentID
+        groupRef.setData([
+            "dateCreated": Date().timeIntervalSince1970,
+            "ownID": groupDocID,
+            "emails": emails
+        ])
+        
+        
+        
+        // change the user data to add their id to their group
+        emails.forEach { (email) in
+            db.collection("users").whereField("email", isEqualTo: email).getDocuments(completion: { (querySnapshot, error) in
+                if let doc = querySnapshot?.documents.first {
+                    let uid: String = doc.get("uid") as! String
+                    db.collection("users").document(uid).setData(["groupID": groupDocID], merge: true)
+                }
+            })
+        }
         
     }
 }

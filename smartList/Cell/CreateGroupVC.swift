@@ -8,13 +8,14 @@
 
 import UIKit
 import FirebaseFirestore
+import FirebaseAuth
 
 class CreateGroupVC: UIViewController {
     var db: Firestore!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var textField: UITextField!
     
-    var emails: [String] = [] {
+    var emails: [String] = [(Auth.auth().currentUser?.email)!] {
         didSet {
             collectionView.reloadData()
         }
@@ -34,7 +35,8 @@ class CreateGroupVC: UIViewController {
     }
     
     @IBAction func createGroup(_ sender: Any) {
-        User.writeGroupToFirestore(db: db, emails: emails)
+        User.writeGroupToFirestoreAndAddToUsers(db: db, emails: emails)
+        self.dismiss(animated: true, completion: nil)
     }
     
 }
@@ -55,10 +57,26 @@ extension CreateGroupVC: UICollectionViewDataSource, UICollectionViewDelegate {
 
 extension CreateGroupVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField.text != "" {
-            emails.append(textField.text!)
-            textField.text = ""
+        User.checkIfEmailIsValid(db: db, email: textField.text!) { (ec) in
+            if let ec = ec {
+                switch ec {
+                case .approved:
+                    self.emails.append(textField.text!)
+                    textField.text = ""
+                case .alreadyInGroup:
+                    let alert = UIAlertController(title: "Error", message: "This user is in a group. Ask them to leave the group they are currently in if you want them to join your group.", preferredStyle: .alert)
+                    alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
+                    self.present(alert, animated: true)
+                case .noUser:
+                    let alert = UIAlertController(title: "Error", message: "This email does not have an account associated with it. Double check the email or ask them to make an account.", preferredStyle: .alert)
+                    alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
+                    self.present(alert, animated: true)
+                }
+            }
         }
         return true
     }
 }
+
+
+
