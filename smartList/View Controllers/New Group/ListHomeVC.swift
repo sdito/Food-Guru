@@ -23,13 +23,13 @@ class ListHomeVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        super.viewWillAppear(animated)
+        //super.viewWillAppear(animated)
         
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        super.viewWillDisappear(animated)
+        //self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        //super.viewWillDisappear(animated)
     }
     
     
@@ -54,6 +54,11 @@ class ListHomeVC: UIViewController {
             let destVC = segue.destination as! AddItemsVC
             destVC.list = sender as? List
         }
+    }
+    @IBAction func setUpList(_ sender: Any) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "setUpList") as! SetUpListVC
+        present(vc, animated: true, completion: nil)
+
     }
     
 }

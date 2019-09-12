@@ -17,9 +17,6 @@ class SharedValues {
     var recipeType: [String]?
     var cuisineType: String?
     var currText: UIView?
-    //var groupID: String?
-    //var data: (emails: [String], date: String)?
-    //var group: User.Group = User.Group(groupID: nil, date: nil, emails: nil)
     
     var groupID: String?
     var groupEmails: [String]?

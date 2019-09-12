@@ -24,13 +24,6 @@ class StorageHomeVC: UIViewController {
         tableView.delegate = self
     }
     
-    
-    @IBAction func searchPressed(_ sender: Any) {
-        print(SharedValues.shared.groupID)
-        print(SharedValues.shared.groupEmails)
-        print(SharedValues.shared.groupDate)
-    }
-    
 
 }
 

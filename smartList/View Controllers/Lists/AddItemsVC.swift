@@ -52,6 +52,8 @@ class AddItemsVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        super.viewWillAppear(animated)
         topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
         tableView.delegate = self
         tableView.dataSource = self
@@ -72,7 +74,6 @@ class AddItemsVC: UIViewController {
         
         //sendHome = true
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
@@ -80,6 +81,8 @@ class AddItemsVC: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        super.viewWillDisappear(animated)
         SharedValues.shared.listIdentifier?.updateData([
             "numItems": list?.items?.count as Any
         ])

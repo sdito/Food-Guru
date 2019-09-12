@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 extension UITextField {
+    // might not need this code after changing vc for list creating, make sure to check
     func insertToolBar() {
         let one = UIBarButtonItem(barButtonSystemItem: .rewind, target: nil, action: nil)
         one.tintColor = .clear
@@ -23,6 +24,19 @@ extension UITextField {
     }
     func toInt() -> Int? {
         return Int(self.text ?? "")
+    }
+    
+    
+    func setUpListToolbar(action: Selector, arrowAction: Selector) {
+        let one = UIBarButtonItem(barButtonSystemItem: .fastForward, target: nil, action: arrowAction)
+        let two = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let three = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: action)
+        one.tintColor = Colors.main
+        three.tintColor = Colors.main
+        let toolbar = UIToolbar()
+        toolbar.autoresizingMask = .flexibleHeight
+        toolbar.setItems([one, two, three], animated: false)
+        self.inputAccessoryView = toolbar
     }
 }
 

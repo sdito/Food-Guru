@@ -20,6 +20,8 @@
 		E20BC6DA232843E400F1E5E7 /* CreateGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6D9232843E400F1E5E7 /* CreateGroupVC.swift */; };
 		E20BC6DC23288B9C00F1E5E7 /* EmailCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6DB23288B9C00F1E5E7 /* EmailCheck.swift */; };
 		E20BC6DE2329A43300F1E5E7 /* SettingTwoLevelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6DD2329A43300F1E5E7 /* SettingTwoLevelCell.swift */; };
+		E20BC6E0232AB39F00F1E5E7 /* SetUpListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6DF232AB39F00F1E5E7 /* SetUpListVC.swift */; };
+		E20BC6E2232AE13300F1E5E7 /* UIStackView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6E1232AE13300F1E5E7 /* UIStackView-Extension.swift */; };
 		E20F2AD62324B76B00CD907A /* RecipeShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F2AD52324B76B00CD907A /* RecipeShowCell.swift */; };
 		E20F2AD823258A4B00CD907A /* StorageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F2AD723258A4B00CD907A /* StorageCell.swift */; };
 		E216204722F658D10074A0DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216204622F658D10074A0DF /* AppDelegate.swift */; };
@@ -101,6 +103,8 @@
 		E20BC6D9232843E400F1E5E7 /* CreateGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateGroupVC.swift; path = smartList/Cell/CreateGroupVC.swift; sourceTree = SOURCE_ROOT; };
 		E20BC6DB23288B9C00F1E5E7 /* EmailCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailCheck.swift; sourceTree = "<group>"; };
 		E20BC6DD2329A43300F1E5E7 /* SettingTwoLevelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTwoLevelCell.swift; sourceTree = "<group>"; };
+		E20BC6DF232AB39F00F1E5E7 /* SetUpListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpListVC.swift; sourceTree = "<group>"; };
+		E20BC6E1232AE13300F1E5E7 /* UIStackView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView-Extension.swift"; sourceTree = "<group>"; };
 		E20F2AD52324B76B00CD907A /* RecipeShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeShowCell.swift; sourceTree = "<group>"; };
 		E20F2AD723258A4B00CD907A /* StorageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCell.swift; sourceTree = "<group>"; };
 		E216204322F658D10074A0DF /* smartList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smartList.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -293,6 +297,7 @@
 			children = (
 				E2445CEF2321D8EA0089582F /* ListHomeVC.swift */,
 				E216207922F660DF0074A0DF /* CreateListVC.swift */,
+				E20BC6DF232AB39F00F1E5E7 /* SetUpListVC.swift */,
 				E2EBE5D222FD25060019BB0F /* AddItemsVC.swift */,
 			);
 			path = Lists;
@@ -387,6 +392,7 @@
 				E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */,
 				E2C4934023066012002907C2 /* UIView-Extension.swift */,
 				E2445CFD23220D950089582F /* TimeInterval-Extension.swift */,
+				E20BC6E1232AE13300F1E5E7 /* UIStackView-Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -689,6 +695,7 @@
 				E2445CF02321D8EA0089582F /* ListHomeVC.swift in Sources */,
 				E20BC6CB2327376000F1E5E7 /* SettingCell.swift in Sources */,
 				E2481B7F2300B00D0036E378 /* LogInVC.swift in Sources */,
+				E20BC6E0232AB39F00F1E5E7 /* SetUpListVC.swift in Sources */,
 				E2C4934123066012002907C2 /* UIView-Extension.swift in Sources */,
 				E2445CF22321D8F90089582F /* RecipeHomeVC.swift in Sources */,
 				E20F2AD823258A4B00CD907A /* StorageCell.swift in Sources */,
@@ -706,6 +713,7 @@
 				E2C49343230887F3002907C2 /* User.swift in Sources */,
 				E2A54E1E2318553400BEBF39 /* InstructionView.swift in Sources */,
 				E2F380AD2319847A003857F7 /* IngredientView.swift in Sources */,
+				E20BC6E2232AE13300F1E5E7 /* UIStackView-Extension.swift in Sources */,
 				E20BC6D1232752A600F1E5E7 /* Setting.swift in Sources */,
 				E25F071723146CC600E6738E /* RecipeType.swift in Sources */,
 				E20AFF3C2324911300A5479A /* SettingsHomeVC.swift in Sources */,
