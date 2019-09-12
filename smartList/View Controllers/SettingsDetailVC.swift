@@ -26,10 +26,6 @@ class SettingsDetailVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         tableView.reloadData()
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        // just to make sure these values are not accidently used
-        SharedValues.shared.data = nil
-    }
     
     private func returnCells(setting: Setting.SettingName, db: Firestore!) -> [UITableViewCell] {
         switch setting {
@@ -76,10 +72,12 @@ class SettingsDetailVC: UIViewController {
             } else {
                 
                 let topCell = tableView.dequeueReusableCell(withIdentifier: "settingTwoLevelCell") as! SettingTwoLevelCell
+                /*
                 User.getGroupInfo(db: db) { (emails, date) in
                     SharedValues.shared.data = (emails, date)
                 }
-                topCell.setUI(date: SharedValues.shared.data?.date ?? "", emails: SharedValues.shared.data?.emails ?? [""])
+                */
+                topCell.setUI(date: (SharedValues.shared.groupDate)?.dateFormatted(style: .short) ?? "", emails: SharedValues.shared.groupEmails ?? [""])
                 
                 let editGroup = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
                 editGroup.setUI(title: "Edit group")

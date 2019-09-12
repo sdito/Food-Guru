@@ -12,11 +12,19 @@ import FirebaseAuth
 
 struct User {
     
+    /*
     struct Group {
-        var emails: [String]?
-        var dateCreated: TimeInterval?
         var groupID: String?
+        var date: TimeInterval?
+        var emails: [String]?
+        
+        init(groupID: String?, date: TimeInterval?, emails: [String]?) {
+            self.groupID = groupID
+            self.date = date
+            self.emails = emails
+        }
     }
+    */
     
     static func emailToUid(emails: [String]?, db: Firestore, listID: String) {
         var userIDs: [String] = []
@@ -118,13 +126,23 @@ struct User {
         
     }
     
-    static func setAndPersistGroupID(db: Firestore) {
+    // has listeners, so will only need to pull group data from shared values
+    static func setAndPersistGroupDataInSharedValues(db: Firestore) {
         let docRef = db.collection("users").document(Auth.auth().currentUser?.uid ?? "")
         docRef.addSnapshotListener { (docSnapshot, error) in
             if let docSnapshot = docSnapshot {
-                SharedValues.shared.groupID = docSnapshot.get("groupID") as? String
+                let groupID = docSnapshot.get("groupID") as! String
+                SharedValues.shared.groupID = groupID
+                db.collection("groups").document(groupID).addSnapshotListener({ (snapshot, error) in
+                    if let snapshot = snapshot {
+                        SharedValues.shared.groupEmails = snapshot.get("emails") as? [String]
+                        SharedValues.shared.groupDate = snapshot.get("dateCreated") as? TimeInterval
+                    }
+                })
             }
         }
+        
+        
     }
     static func getGroupInfo(db: Firestore!, dataReturned: @escaping (_ email: [String], _ date: String) -> Void) {
         var emails: [String] = []
