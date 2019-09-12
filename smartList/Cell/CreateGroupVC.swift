@@ -16,7 +16,7 @@ class CreateGroupVC: UIViewController {
     @IBOutlet weak var textField: UITextField!
     
     
-    var emails: [String] = [(Auth.auth().currentUser?.email)!] {
+    var emails: [String] = SharedValues.shared.groupEmails ?? [(Auth.auth().currentUser?.email)!] {
         didSet {
             collectionView.reloadData()
         }

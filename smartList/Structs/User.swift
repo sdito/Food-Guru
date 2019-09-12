@@ -131,14 +131,15 @@ struct User {
         let docRef = db.collection("users").document(Auth.auth().currentUser?.uid ?? "")
         docRef.addSnapshotListener { (docSnapshot, error) in
             if let docSnapshot = docSnapshot {
-                let groupID = docSnapshot.get("groupID") as! String
-                SharedValues.shared.groupID = groupID
-                db.collection("groups").document(groupID).addSnapshotListener({ (snapshot, error) in
-                    if let snapshot = snapshot {
-                        SharedValues.shared.groupEmails = snapshot.get("emails") as? [String]
-                        SharedValues.shared.groupDate = snapshot.get("dateCreated") as? TimeInterval
-                    }
-                })
+                if let groupID = docSnapshot.get("groupID") as? String {
+                    SharedValues.shared.groupID = groupID
+                    db.collection("groups").document(groupID).addSnapshotListener({ (snapshot, error) in
+                        if let snapshot = snapshot {
+                            SharedValues.shared.groupEmails = snapshot.get("emails") as? [String]
+                            SharedValues.shared.groupDate = snapshot.get("dateCreated") as? TimeInterval
+                        }
+                    })
+                }
             }
         }
         
