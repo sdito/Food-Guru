@@ -8,7 +8,7 @@
 
 import UIKit
 import FirebaseFirestore
-
+import FirebaseAuth
 
 class SetUpListVC: UIViewController {
     private var listToEdit: List?
@@ -65,6 +65,7 @@ class SetUpListVC: UIViewController {
     }
     
     @IBAction func writeToFirestoreIfValid() {
+        gatherListData()
         let list = List(name: name ?? "", stores: stores, categories: categories, people: people, items: nil, numItems: nil, docID: nil, timeIntervalSince1970: Date().timeIntervalSince1970)
         
         if name != "" {
@@ -77,7 +78,6 @@ class SetUpListVC: UIViewController {
             let alert = UIAlertController(title: "Missing name", message: "Please enter a name to finish creating the list", preferredStyle: .alert)
             alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
         }
-        
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -93,6 +93,7 @@ class SetUpListVC: UIViewController {
         categories = categoriesStackView.extractDataFromStackView()
         people = peopleStackView.extractDataFromStackView()
         stores = stores?.removeBlanks(); categories = categories?.removeBlanks(); people = people?.removeBlanks()
+        people?.append(Auth.auth().currentUser?.email ?? "")
     }
     
     

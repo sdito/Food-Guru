@@ -71,6 +71,12 @@ extension List {
                 print("Error writing document: \(err)")
             } else {
                 print("Document successfully written")
+                print(self.people, SharedValues.shared.listIdentifier!.documentID)
+                print(self.people, SharedValues.shared.listIdentifier!.documentID)
+                print(self.people, SharedValues.shared.listIdentifier!.documentID)
+                print(self.people, SharedValues.shared.listIdentifier!.documentID)
+                print(self.people, SharedValues.shared.listIdentifier!.documentID)
+                
                 User.emailToUid(emails: self.people, db: db, listID: SharedValues.shared.listIdentifier!.documentID)
             }
         }

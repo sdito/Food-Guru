@@ -27,11 +27,6 @@ class ListHomeVC: UIViewController {
         
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        //self.navigationController?.setNavigationBarHidden(false, animated: animated)
-        //super.viewWillDisappear(animated)
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
