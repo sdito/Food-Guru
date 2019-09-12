@@ -29,10 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = vc
             self.window?.makeKeyAndVisible()
             SharedValues.shared.userID = Auth.auth().currentUser?.uid
-            
-            
         }
-        
         return true
     }
 

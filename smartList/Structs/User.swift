@@ -8,8 +8,16 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
 struct User {
+    
+    struct Group {
+        var emails: [String]?
+        var dateCreated: TimeInterval?
+        var groupID: String?
+    }
+    
     static func emailToUid(emails: [String]?, db: Firestore, listID: String) {
         var userIDs: [String] = []
         emails?.forEach({ (email) in
@@ -58,6 +66,35 @@ struct User {
     }
     
     static func writeGroupToFirestoreAndAddToUsers(db: Firestore, emails: [String]) {
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //NEED TO CHECK EACH USER AGAIN BEFORE FINALLY WRITING, THEY COULD BE ADDED INTO A GROUP AT THE SAME TIME FROM TWO DIFFERENT DEVICES, OR WRITE A PLACEHOLDER GROUPID VALUE IN THEIR FILE
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         // write the group to firestore first
         let groupRef = db.collection("groups").document()
         let groupDocID = groupRef.documentID
@@ -79,5 +116,25 @@ struct User {
             })
         }
         
+    }
+    
+    static func setAndPersistGroupID(db: Firestore) {
+        let docRef = db.collection("users").document(Auth.auth().currentUser?.uid ?? "")
+        docRef.addSnapshotListener { (docSnapshot, error) in
+            if let docSnapshot = docSnapshot {
+                SharedValues.shared.groupID = docSnapshot.get("groupID") as? String
+            }
+        }
+    }
+    static func getGroupInfo(db: Firestore!, dataReturned: @escaping (_ email: [String], _ date: String) -> Void) {
+        var emails: [String] = []
+        var date: String = ""
+        db.collection("groups").document(SharedValues.shared.groupID ?? "").getDocument { (documentSnapshot, error) in
+            if let doc = documentSnapshot {
+                date = (doc.get("dateCreated") as! TimeInterval).dateFormatted(style: .short)
+                emails = doc.get("emails") as! [String]
+            }
+            dataReturned(emails, date)
+        }
     }
 }

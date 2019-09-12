@@ -19,6 +19,7 @@
 		E20BC6D82328429F00F1E5E7 /* GroupNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6D72328429F00F1E5E7 /* GroupNameCell.swift */; };
 		E20BC6DA232843E400F1E5E7 /* CreateGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6D9232843E400F1E5E7 /* CreateGroupVC.swift */; };
 		E20BC6DC23288B9C00F1E5E7 /* EmailCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6DB23288B9C00F1E5E7 /* EmailCheck.swift */; };
+		E20BC6DE2329A43300F1E5E7 /* SettingTwoLevelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6DD2329A43300F1E5E7 /* SettingTwoLevelCell.swift */; };
 		E20F2AD62324B76B00CD907A /* RecipeShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F2AD52324B76B00CD907A /* RecipeShowCell.swift */; };
 		E20F2AD823258A4B00CD907A /* StorageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F2AD723258A4B00CD907A /* StorageCell.swift */; };
 		E216204722F658D10074A0DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216204622F658D10074A0DF /* AppDelegate.swift */; };
@@ -99,6 +100,7 @@
 		E20BC6D72328429F00F1E5E7 /* GroupNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNameCell.swift; sourceTree = "<group>"; };
 		E20BC6D9232843E400F1E5E7 /* CreateGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateGroupVC.swift; path = smartList/Cell/CreateGroupVC.swift; sourceTree = SOURCE_ROOT; };
 		E20BC6DB23288B9C00F1E5E7 /* EmailCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailCheck.swift; sourceTree = "<group>"; };
+		E20BC6DD2329A43300F1E5E7 /* SettingTwoLevelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTwoLevelCell.swift; sourceTree = "<group>"; };
 		E20F2AD52324B76B00CD907A /* RecipeShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeShowCell.swift; sourceTree = "<group>"; };
 		E20F2AD723258A4B00CD907A /* StorageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCell.swift; sourceTree = "<group>"; };
 		E216204322F658D10074A0DF /* smartList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smartList.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -208,6 +210,7 @@
 				E20BC6D223275BC200F1E5E7 /* SettingBasicCell.swift */,
 				E20BC6CA2327376000F1E5E7 /* SettingCell.swift */,
 				E20BC6D52328326600F1E5E7 /* SettingButtonCell.swift */,
+				E20BC6DD2329A43300F1E5E7 /* SettingTwoLevelCell.swift */,
 			);
 			path = "Cells for settings";
 			sourceTree = "<group>";
@@ -399,8 +402,8 @@
 		E2EB7FC122FFAD81003948A6 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				E2EB7FBF22FFAD7C003948A6 /* ItemCell.swift */,
 				E20BC6D423275BDC00F1E5E7 /* Cells for settings */,
+				E2EB7FBF22FFAD7C003948A6 /* ItemCell.swift */,
 				E20F2AD723258A4B00CD907A /* StorageCell.swift */,
 				E20F2AD52324B76B00CD907A /* RecipeShowCell.swift */,
 				E20BC6D72328429F00F1E5E7 /* GroupNameCell.swift */,
@@ -696,6 +699,7 @@
 				E20BC6D82328429F00F1E5E7 /* GroupNameCell.swift in Sources */,
 				E20BC6DA232843E400F1E5E7 /* CreateGroupVC.swift in Sources */,
 				E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */,
+				E20BC6DE2329A43300F1E5E7 /* SettingTwoLevelCell.swift in Sources */,
 				E20BC6D62328326600F1E5E7 /* SettingButtonCell.swift in Sources */,
 				E2EB7FC322FFB29A003948A6 /* String-Extension.swift in Sources */,
 				E2E529D222FA7F9100C55DA0 /* List.swift in Sources */,

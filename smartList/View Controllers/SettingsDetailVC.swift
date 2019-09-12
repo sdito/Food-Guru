@@ -22,6 +22,15 @@ class SettingsDetailVC: UIViewController {
         db = Firestore.firestore()
         tableView.backgroundColor = .lightGray
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        // just to make sure these values are not accidently used
+        SharedValues.shared.data = nil
+    }
+    
     private func returnCells(setting: Setting.SettingName, db: Firestore!) -> [UITableViewCell] {
         switch setting {
         case .account:
@@ -52,19 +61,12 @@ class SettingsDetailVC: UIViewController {
           
             
         case .group:
-            var groupID: String?
             
+            //PROBLEM HERE, NEED TO PULL GROUPID FROM FIRESTORE TO CHECK IF USER IS IN A GROUP, WILL NEED TO BE ABLE TO PULL GROUPID ON DEMAND
             
-            
-            db.collection("users").document(Auth.auth().currentUser!.uid).getDocument { (document, error) in
-                if let document = document {
-                    groupID = document.get("groupID") as? String
-                    
-                }
-            }
             
             //case: not in a group -> need to create a group
-            if groupID == nil {
+            if SharedValues.shared.groupID == nil {
                 let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
                 cell1.setUI(str: "Not in a group, create or join a group to easily share lists and storage with other members in your group.")
                 let cell2 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
@@ -72,11 +74,21 @@ class SettingsDetailVC: UIViewController {
                 cell2.button.addTarget(self, action: #selector(createGroup), for: .touchUpInside)
                 return [cell1, cell2]
             } else {
-                return [UITableViewCell()]
+                
+                let topCell = tableView.dequeueReusableCell(withIdentifier: "settingTwoLevelCell") as! SettingTwoLevelCell
+                User.getGroupInfo(db: db) { (emails, date) in
+                    SharedValues.shared.data = (emails, date)
+                }
+                topCell.setUI(date: SharedValues.shared.data?.date ?? "", emails: SharedValues.shared.data?.emails ?? [""])
+                
+                let editGroup = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                editGroup.setUI(title: "Edit group")
+                
+                let leaveGroup = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                leaveGroup.setUI(title: "Leave current group")
+                
+                return [topCell, editGroup, leaveGroup]
             }
-            
-            //case: in a group, only member in group -> add members to group
-            //case: in a group -> leave group or add more members (edit group)
             
             
             

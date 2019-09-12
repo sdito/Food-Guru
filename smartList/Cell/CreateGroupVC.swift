@@ -15,6 +15,7 @@ class CreateGroupVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var textField: UITextField!
     
+    
     var emails: [String] = [(Auth.auth().currentUser?.email)!] {
         didSet {
             collectionView.reloadData()
@@ -28,7 +29,6 @@ class CreateGroupVC: UIViewController {
         collectionView.delegate = self
         textField.delegate = self
         textField.becomeFirstResponder()
-        
     }
     @IBAction func exit(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -36,6 +36,7 @@ class CreateGroupVC: UIViewController {
     
     @IBAction func createGroup(_ sender: Any) {
         User.writeGroupToFirestoreAndAddToUsers(db: db, emails: emails)
+        
         self.dismiss(animated: true, completion: nil)
     }
     

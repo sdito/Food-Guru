@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class TabVC: UITabBarController {
-
+    var db: Firestore!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        db = Firestore.firestore()
+        User.setAndPersistGroupID(db: db)
         // Do any additional setup after loading the view.
     }
     

@@ -1405,6 +1405,41 @@
                                             <outlet property="button" destination="nMQ-jt-Ysp" id="y63-lT-AUQ"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingTwoLevelCell" rowHeight="147" id="Utw-Rp-8F0" customClass="SettingTwoLevelCell" customModule="smartList" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="182" width="414" height="147"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Utw-Rp-8F0" id="A7M-ia-Ppd">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="146.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Fg-Of-mAX">
+                                                    <rect key="frame" x="30" y="16" width="364" height="23"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xx7-IJ-A3M">
+                                                    <rect key="frame" x="30" y="44" width="364" height="87"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="9Fg-Of-mAX" firstAttribute="leading" secondItem="A7M-ia-Ppd" secondAttribute="leadingMargin" constant="10" id="H5x-a2-qUF"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="9Fg-Of-mAX" secondAttribute="trailing" id="Zer-0e-2Ja"/>
+                                                <constraint firstItem="Xx7-IJ-A3M" firstAttribute="top" secondItem="9Fg-Of-mAX" secondAttribute="bottom" constant="5" id="deJ-R4-mc9"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Xx7-IJ-A3M" secondAttribute="bottom" constant="5" id="gZ4-sr-QV2"/>
+                                                <constraint firstItem="Xx7-IJ-A3M" firstAttribute="leading" secondItem="A7M-ia-Ppd" secondAttribute="leadingMargin" constant="10" id="hsq-GY-2P1"/>
+                                                <constraint firstItem="9Fg-Of-mAX" firstAttribute="top" secondItem="A7M-ia-Ppd" secondAttribute="topMargin" constant="5" id="iFP-Ma-Ve7"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Xx7-IJ-A3M" secondAttribute="trailing" id="rZ7-L1-GyS"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="bottomLabel" destination="Xx7-IJ-A3M" id="sbb-ce-Swd"/>
+                                            <outlet property="topLabel" destination="9Fg-Of-mAX" id="uGE-sU-2Yr"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
