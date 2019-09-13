@@ -33,7 +33,6 @@
 		E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
 		E216207622F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
 		E216207722F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
-		E216207A22F660DF0074A0DF /* CreateListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216207922F660DF0074A0DF /* CreateListVC.swift */; };
 		E2445CEE2321D6500089582F /* TabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CED2321D6500089582F /* TabVC.swift */; };
 		E2445CF02321D8EA0089582F /* ListHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CEF2321D8EA0089582F /* ListHomeVC.swift */; };
 		E2445CF22321D8F90089582F /* RecipeHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CF12321D8F90089582F /* RecipeHomeVC.swift */; };
@@ -49,7 +48,6 @@
 		E2A54E1E2318553400BEBF39 /* InstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A54E1C2318553400BEBF39 /* InstructionView.swift */; };
 		E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B4694B22F78D1C006BA77D /* CreateListView.xib */; };
 		E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4694F22F78D44006BA77D /* CreateListView.swift */; };
-		E2B4695422F794F8006BA77D /* ListOrganizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4695322F794F8006BA77D /* ListOrganizer.swift */; };
 		E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4695622F7F18E006BA77D /* UITextField-Extension.swift */; };
 		E2B4695A22F7F485006BA77D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4695922F7F485006BA77D /* Colors.swift */; };
 		E2C4934123066012002907C2 /* UIView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C4934023066012002907C2 /* UIView-Extension.swift */; };
@@ -120,7 +118,6 @@
 		E216206622F658D20074A0DF /* smartListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = smartListUITests.swift; sourceTree = "<group>"; };
 		E216206822F658D20074A0DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E216207422F659860074A0DF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		E216207922F660DF0074A0DF /* CreateListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListVC.swift; sourceTree = "<group>"; };
 		E2445CED2321D6500089582F /* TabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabVC.swift; sourceTree = "<group>"; };
 		E2445CEF2321D8EA0089582F /* ListHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListHomeVC.swift; path = "../New Group/ListHomeVC.swift"; sourceTree = "<group>"; };
 		E2445CF12321D8F90089582F /* RecipeHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeHomeVC.swift; sourceTree = "<group>"; };
@@ -136,7 +133,6 @@
 		E2A54E1C2318553400BEBF39 /* InstructionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
 		E2B4694B22F78D1C006BA77D /* CreateListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateListView.xib; sourceTree = "<group>"; };
 		E2B4694F22F78D44006BA77D /* CreateListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListView.swift; sourceTree = "<group>"; };
-		E2B4695322F794F8006BA77D /* ListOrganizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListOrganizer.swift; sourceTree = "<group>"; };
 		E2B4695622F7F18E006BA77D /* UITextField-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField-Extension.swift"; sourceTree = "<group>"; };
 		E2B4695922F7F485006BA77D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E2C4934023066012002907C2 /* UIView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView-Extension.swift"; sourceTree = "<group>"; };
@@ -296,7 +292,6 @@
 			isa = PBXGroup;
 			children = (
 				E2445CEF2321D8EA0089582F /* ListHomeVC.swift */,
-				E216207922F660DF0074A0DF /* CreateListVC.swift */,
 				E20BC6DF232AB39F00F1E5E7 /* SetUpListVC.swift */,
 				E2EBE5D222FD25060019BB0F /* AddItemsVC.swift */,
 			);
@@ -377,7 +372,6 @@
 				E2C49342230887F3002907C2 /* User.swift */,
 				E2E529D422FA80C400C55DA0 /* Item.swift */,
 				E2E6A19A2326FF6A00477AB1 /* FoodStorage.swift */,
-				E2B4695322F794F8006BA77D /* ListOrganizer.swift */,
 				E2B4695922F7F485006BA77D /* Colors.swift */,
 				E20BC6D0232752A600F1E5E7 /* Setting.swift */,
 			);
@@ -680,14 +674,12 @@
 				E2445CF42321DC100089582F /* StorageHomeVC.swift in Sources */,
 				E20BC6DC23288B9C00F1E5E7 /* EmailCheck.swift in Sources */,
 				E2623A8A22FFDA44003B63E2 /* ListCell.swift in Sources */,
-				E2B4695422F794F8006BA77D /* ListOrganizer.swift in Sources */,
 				E25F071923146E5E00E6738E /* CuisineType.swift in Sources */,
 				E20F2AD62324B76B00CD907A /* RecipeShowCell.swift in Sources */,
 				E20BC6D323275BC200F1E5E7 /* SettingBasicCell.swift in Sources */,
 				E216204722F658D10074A0DF /* AppDelegate.swift in Sources */,
 				E2B4695A22F7F485006BA77D /* Colors.swift in Sources */,
 				E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */,
-				E216207A22F660DF0074A0DF /* CreateListVC.swift in Sources */,
 				E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */,
 				E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */,
 				E2E6A19B2326FF6A00477AB1 /* FoodStorage.swift in Sources */,

@@ -35,7 +35,6 @@ class AddItemsVC: UIViewController {
             if list?.items?.isEmpty == false {
                 //print(storeText)
                 (sortedCategories, arrayArrayItems) = (list?.sortForTableView(from: currentStore))! as! ([String], [[Item]])
-                print(self.list!.items!.map({$0.selected}))
                 tableView.reloadData()
             }
         }
@@ -129,13 +128,13 @@ class AddItemsVC: UIViewController {
     }
     @IBAction func editList(_ sender: Any) {
         sendHome = false
-        let vc = storyboard?.instantiateViewController(withIdentifier: "createList") as! CreateListVC
+        let vc = storyboard?.instantiateViewController(withIdentifier: "setUpList") as! SetUpListVC
         if list?.docID == nil {
             list?.docID = SharedValues.shared.listIdentifier?.documentID
         }
         vc.listToEdit = list
         
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.present(vc, animated: true, completion: nil)
         
     }
     @IBAction func deleteList(_ sender: Any) {

@@ -11,7 +11,46 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class SetUpListVC: UIViewController {
-    private var listToEdit: List?
+    
+    var returnGroupID: String?
+    
+    private var usingGroup: Bool? {
+        didSet {
+            if self.usingGroup == true {
+                switchOutlet.isOn = true
+            } else if self.usingGroup == false {
+                switchOutlet.isOn = false
+            }
+            switch self.usingGroup {
+            case true:
+                groupOrNotLabel.text = "Using group"
+                for person in SharedValues.shared.groupEmails ?? [""] {
+                    print(person)
+                    insertTextFieldIn(stackView: peopleStackView, text: person, userInteraction: false)
+                }
+                for view in peopleStackView.subviews {
+                    if (view as? UITextField)?.text == "" {
+                        view.removeFromSuperview()
+                    }
+                }
+            default:
+                groupOrNotLabel.text = "Not using group"
+                peopleStackView.subviews.forEach { (view) in
+                    if peopleStackView.subviews.firstIndex(of: view)! > 1 {
+                        view.removeFromSuperview()
+                    } else {
+                        if type(of: view) == UITextField.self {
+                            (view as! UITextField).text = ""
+                            (view as! UITextField).isUserInteractionEnabled = true
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    var listToEdit: List?
     private var db: Firestore!
     
     //start list data
@@ -36,11 +75,16 @@ class SetUpListVC: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var storesTextField: UITextField!
     @IBOutlet weak var categoriesTextField: UITextField!
-    @IBOutlet weak var peopleTextField: UITextField!
+    //@IBOutlet weak var peopleTextField: UITextField!
     
     @IBOutlet weak var storesStackView: UIStackView!
     @IBOutlet weak var categoriesStackView: UIStackView!
     @IBOutlet weak var peopleStackView: UIStackView!
+    
+    @IBOutlet weak var finishCreatingOrEditing: UIButton!
+    @IBOutlet weak var groupOrNotLabel: UILabel!
+    
+    @IBOutlet weak var switchOutlet: UISwitch!
     
     
     override func viewDidLoad() {
@@ -49,12 +93,10 @@ class SetUpListVC: UIViewController {
         nameTextField.delegate = self
         storesTextField.delegate = self
         categoriesTextField.delegate = self
-        peopleTextField.delegate = self
         
         nameTextField.setUpListToolbar(action: #selector(handleTextFieldForPlus), arrowAction: #selector(handleTextFieldForArrow))
         storesTextField.setUpListToolbar(action: #selector(handleTextFieldForPlus), arrowAction: #selector(handleTextFieldForArrow))
         categoriesTextField.setUpListToolbar(action: #selector(handleTextFieldForPlus), arrowAction: #selector(handleTextFieldForArrow))
-        peopleTextField.setUpListToolbar(action: #selector(handleTextFieldForPlus), arrowAction: #selector(handleTextFieldForArrow))
         
         nameTextField.becomeFirstResponder()
         
@@ -62,11 +104,17 @@ class SetUpListVC: UIViewController {
             setUIifListIsBeingEdited(list: listToEdit!)
         }
         
+        if SharedValues.shared.groupID == nil || listToEdit?.isGroup == false {
+            usingGroup = false
+        } else {
+            usingGroup = true
+        }
+        
     }
     
     @IBAction func writeToFirestoreIfValid() {
         gatherListData()
-        let list = List(name: name ?? "", stores: stores, categories: categories, people: people, items: nil, numItems: nil, docID: nil, timeIntervalSince1970: Date().timeIntervalSince1970)
+        let list = List(name: name ?? "", isGroup: usingGroup, stores: stores, categories: categories, people: people, items: nil, numItems: nil, docID: nil, timeIntervalSince1970: Date().timeIntervalSince1970, groupID: returnGroupID)
         
         if name != "" {
             if listToEdit == nil {
@@ -86,6 +134,15 @@ class SetUpListVC: UIViewController {
         topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
     }
     
+    @IBAction func switchAction(_ sender: Any) {
+        if switchOutlet.isOn == true {
+            usingGroup = true
+        } else if switchOutlet.isOn == false {
+            usingGroup = false
+        }
+    }
+    
+    
     private func gatherListData() {
         name = nil; stores = nil; categories = nil; isGroup = nil; people = nil
         name = nameTextField.text ?? ""
@@ -94,18 +151,45 @@ class SetUpListVC: UIViewController {
         people = peopleStackView.extractDataFromStackView()
         stores = stores?.removeBlanks(); categories = categories?.removeBlanks(); people = people?.removeBlanks()
         people?.append(Auth.auth().currentUser?.email ?? "")
+        if usingGroup == true {
+            returnGroupID = SharedValues.shared.groupID
+        }
     }
     
     
     private func setUIifListIsBeingEdited(list: List) {
         nameTextField.text = list.name
+        finishCreatingOrEditing.setTitle("Done editing", for: .normal)
+        
+        
+        list.stores?.forEach({ (store) in
+            insertTextFieldIn(stackView: storesStackView, text: store, userInteraction: true)
+        })
+        list.people?.forEach({ (person) in
+            insertTextFieldIn(stackView: peopleStackView, text: person, userInteraction: true)
+        })
+        list.categories?.forEach({ (category) in
+            insertTextFieldIn(stackView: categoriesStackView, text: category, userInteraction: true)
+        })
         
     }
+    
+    private func insertTextFieldIn(stackView: UIStackView, text: String, userInteraction: Bool) {
+        let textField = UITextField()
+        textField.borderStyle = .roundedRect
+        textField.font = UIFont(name: "futura", size: 15)
+        textField.textColor = Colors.main
+        textField.delegate = self
+        textField.text = text
+        stackView.insertArrangedSubview(textField, at: 1)
+        textField.isUserInteractionEnabled = userInteraction
+    }
+    
     
     private func insertTextFieldInCorrectSpot(currentTextField: UITextField) {
         let textField = UITextField()
         //textField.border()
-        textField.font = UIFont(name: "futura", size: 16)
+        textField.font = UIFont(name: "futura", size: 15)
         textField.textColor = Colors.main
         textField.delegate = self
         textField.borderStyle = .roundedRect

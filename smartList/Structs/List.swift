@@ -12,6 +12,7 @@ import FirebaseFirestore
 
 struct List {
     var name: String
+    var isGroup: Bool?
     var stores: [String]?
     var categories: [String]?
     var people: [String]?
@@ -19,9 +20,12 @@ struct List {
     var numItems: Int?
     var docID: String?
     var timeIntervalSince1970: TimeInterval?
+    var groupID: String?
     
-    init(name: String, stores: [String]?, categories: [String]?, people: [String]?, items: [Item]?, numItems: Int?, docID: String?, timeIntervalSince1970: TimeInterval?) {
+    
+    init(name: String, isGroup: Bool?, stores: [String]?, categories: [String]?, people: [String]?, items: [Item]?, numItems: Int?, docID: String?, timeIntervalSince1970: TimeInterval?, groupID: String?) {
         self.name = name
+        self.isGroup = isGroup
         self.stores = stores
         self.categories = categories
         self.people = people
@@ -29,6 +33,7 @@ struct List {
         self.numItems = numItems
         self.docID = docID
         self.timeIntervalSince1970 = timeIntervalSince1970
+        self.groupID = groupID
     }
     
     static func readAllUserLists(db: Firestore, userID: String, listsChanged: @escaping (_ lists: [List]) -> Void) {
@@ -40,7 +45,7 @@ struct List {
                 return
             }
             for doc in documents {
-                let l = List(name: doc.get("name") as! String, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval)
+                let l = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String)
                 
                 if lists.isEmpty == false {
                     lists.append(l)
@@ -61,22 +66,18 @@ extension List {
         SharedValues.shared.listIdentifier = db.collection("lists").document()
         SharedValues.shared.listIdentifier?.setData([
             "name": self.name,
+            "isGroup": self.isGroup ?? false,
             "stores": self.stores!,
             "categories": self.categories!,
             "people": Array(Set(self.people!)).sorted(),
             "user": SharedValues.shared.userID ?? "did not write",
-            "timeIntervalSince1970": Date().timeIntervalSince1970
+            "timeIntervalSince1970": Date().timeIntervalSince1970,
+            "groupID": self.groupID as Any
         ]) { err in
             if let err = err {
                 print("Error writing document: \(err)")
             } else {
                 print("Document successfully written")
-                print(self.people, SharedValues.shared.listIdentifier!.documentID)
-                print(self.people, SharedValues.shared.listIdentifier!.documentID)
-                print(self.people, SharedValues.shared.listIdentifier!.documentID)
-                print(self.people, SharedValues.shared.listIdentifier!.documentID)
-                print(self.people, SharedValues.shared.listIdentifier!.documentID)
-                
                 User.emailToUid(emails: self.people, db: db, listID: SharedValues.shared.listIdentifier!.documentID)
             }
         }
