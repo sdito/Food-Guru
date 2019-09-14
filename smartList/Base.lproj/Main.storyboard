@@ -145,6 +145,7 @@
                                                                     </label>
                                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O6c-Od-dVS">
                                                                         <rect key="frame" x="240" y="0.0" width="51" height="31"/>
+                                                                        <color key="onTintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <connections>
                                                                             <action selector="switchAction:" destination="DLP-QI-gOQ" eventType="valueChanged" id="69D-wK-31P"/>
                                                                         </connections>
@@ -1282,6 +1283,55 @@
                                             <outlet property="name" destination="8jR-du-5JF" id="Ec0-jV-pO2"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingBasicCell" rowHeight="80" id="dhW-7E-bK4" customClass="SettingBasicCell" customModule="smartList" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="132" width="414" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dhW-7E-bK4" id="KCM-p6-www">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="79.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7fA-g0-0Ct">
+                                                    <rect key="frame" x="30" y="16" width="364" height="48"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="7fA-g0-0Ct" secondAttribute="trailing" id="NU4-7B-Ngq"/>
+                                                <constraint firstItem="7fA-g0-0Ct" firstAttribute="leading" secondItem="KCM-p6-www" secondAttribute="leadingMargin" constant="10" id="RkR-N0-cJa"/>
+                                                <constraint firstItem="7fA-g0-0Ct" firstAttribute="top" secondItem="KCM-p6-www" secondAttribute="topMargin" constant="5" id="Yqn-Xc-dv2"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="7fA-g0-0Ct" secondAttribute="bottom" constant="5" id="lMc-By-Zor"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="label" destination="7fA-g0-0Ct" id="rq7-kb-Oq8"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingButtonCell" rowHeight="74" id="q5X-MR-DJG" customClass="SettingButtonCell" customModule="smartList" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="212" width="414" height="74"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="q5X-MR-DJG" id="TDo-zL-MCD">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="73.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xOG-GR-BPo">
+                                                    <rect key="frame" x="20" y="11" width="374" height="52"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                                    <state key="normal" title="Button"/>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="xOG-GR-BPo" secondAttribute="bottom" id="SgT-en-m6G"/>
+                                                <constraint firstItem="xOG-GR-BPo" firstAttribute="leading" secondItem="TDo-zL-MCD" secondAttribute="leadingMargin" id="arp-gP-Omo"/>
+                                                <constraint firstItem="xOG-GR-BPo" firstAttribute="top" secondItem="TDo-zL-MCD" secondAttribute="topMargin" id="fMX-YY-vHZ"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="xOG-GR-BPo" secondAttribute="trailing" id="zoe-nW-QuN"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="button" destination="xOG-GR-BPo" id="4vf-og-UEq"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yIr-eq-aLA">
@@ -1289,7 +1339,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="search-3-xl-1"/>
                                 <connections>
-                                    <action selector="searchPressed:" destination="TBV-k4-MLm" eventType="touchUpInside" id="QoC-3c-5y5"/>
+                                    <action selector="searchPressed:" destination="TBV-k4-MLm" eventType="touchUpInside" id="9D5-MI-bSg"/>
                                 </connections>
                             </button>
                         </subviews>

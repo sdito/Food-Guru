@@ -12,20 +12,6 @@ import FirebaseAuth
 
 struct User {
     
-    /*
-    struct Group {
-        var groupID: String?
-        var date: TimeInterval?
-        var emails: [String]?
-        
-        init(groupID: String?, date: TimeInterval?, emails: [String]?) {
-            self.groupID = groupID
-            self.date = date
-            self.emails = emails
-        }
-    }
-    */
-    
     static func emailToUid(emails: [String]?, db: Firestore, listID: String) {
         var userIDs: [String] = []
         emails?.forEach({ (email) in
@@ -44,6 +30,28 @@ struct User {
             }
         })
     }
+    
+//    static func emailToUidForStorage(emails: [String]?, db: Firestore, storageID: String) {
+//        var userIDs: [String] = []
+//        emails?.forEach({ (email) in
+//            db.collection("users").whereField("email", isEqualTo: email).getDocuments(completion: { (querySnapshot, err) in
+//                if let doc = querySnapshot?.documents.first {
+//                    if let id = doc.get("uid") as? String {
+//                        userIDs.append(id)
+//                        db.collection("users").document(id).updateData([
+//                            "storageID": storageID
+//                        ])
+//                        
+//                    }
+//                }
+//                let updateDoc = db.collection("storages").document(storageID)
+//                updateDoc.updateData([
+//                    "shared": userIDs
+//                ])
+//            }) 
+//        })
+//    }
+    
     
     static func turnEmailToUid(db: Firestore, email: String, uidReturned: @escaping (_ userID: String?) -> Void) {
         var uid: String?
@@ -139,6 +147,15 @@ struct User {
                             SharedValues.shared.groupDate = snapshot.get("dateCreated") as? TimeInterval
                         }
                     })
+                } else {
+                    SharedValues.shared.groupID = nil
+                    SharedValues.shared.groupEmails = nil
+                    SharedValues.shared.groupDate = nil
+                }
+                if let storageID = docSnapshot.get("storageID") as? String {
+                    SharedValues.shared.foodStorageID = storageID
+                } else {
+                    SharedValues.shared.foodStorageID = nil
                 }
             }
         }

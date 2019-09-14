@@ -22,6 +22,7 @@ class SharedValues {
     var groupEmails: [String]?
     var groupDate: TimeInterval?
     
+    var foodStorageID: String?
     
     static let shared = SharedValues()
     private init() {}

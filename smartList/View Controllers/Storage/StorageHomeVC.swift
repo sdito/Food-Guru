@@ -7,37 +7,146 @@
 //
 
 import UIKit
+import FirebaseFirestore
+import FirebaseAuth
 
 class StorageHomeVC: UIViewController {
+    var db: Firestore!
+    lazy private var emptyCells: [UITableViewCell] = []
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
-    var items: [Item] = [Item(name: "Eggs", selected: false, category: nil, store: nil, user: nil, ownID: nil, storageSection: "none", timeAdded: Date().timeIntervalSince1970, timeExpires: nil), Item(name: "Milk", selected: false, category: nil, store: nil, user: nil, ownID: nil, storageSection: nil, timeAdded: Date().timeIntervalSince1970, timeExpires: nil), Item(name: "Cheese", selected: false, category: nil, store: nil, user: nil, ownID: nil, storageSection: nil, timeAdded: Date().timeIntervalSince1970, timeExpires: nil)] {
+    var items: [Item] = [] {
         didSet {
             tableView.reloadData()
         }
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        emptyCells = createEmptyStorageCells()
+        tableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        db = Firestore.firestore()
+        
+        
     }
     
-
+    @IBAction func searchPressed(_ sender: Any) {
+        tableView.reloadData()
+    }
+    
+    
+    @objc func createGroupSelector() {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
+        present(vc, animated: true, completion: nil)
+        
+    }
+    @objc func createIndividualStorage() {
+        print("create individual storage")
+        let foodStorage = FoodStorage(isGroup: false, groupID: nil, peopleEmails: [Auth.auth().currentUser?.email ?? "no email"], items: nil, numberOfPeople: 1)
+        FoodStorage.createStorageToFirestoreWithPeople(db: db, foodStorage: foodStorage)
+        tableView.reloadData()
+        
+    }
+    
+    @objc func createGroupStorage() {
+        print("create group storage")
+        let foodStorage = FoodStorage(isGroup: true, groupID: SharedValues.shared.groupID, peopleEmails: SharedValues.shared.groupEmails ?? ["emails didnt work"], items: nil, numberOfPeople: SharedValues.shared.groupEmails?.count)
+        FoodStorage.createStorageToFirestoreWithPeople(db: db, foodStorage: foodStorage)
+        
+        tableView.reloadData()
+        
+    }
 }
 
 
 extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
+    func createEmptyStorageCells() -> [UITableViewCell] {
+        var createGroup: Bool?
+        let one = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+        var oneText: String {
+            if SharedValues.shared.groupID == nil {
+                createGroup = true
+                return " Create a group to share storage with other users, or start a storage with only yourself."
+            } else {
+                createGroup = false
+                return ""
+            }
+        }
+        one.setUI(str: "You do not yes have your storage set up. The storage will help you keep track of your purchased food, and can help you find recipes to cook.\(oneText)")
+        
+        let two = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+        two.setUI(title: "Create a storage with group (recommended)")
+        two.button.addTarget(self, action: #selector(createGroupStorage), for: .touchUpInside)
+        let four = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+        four.setUI(title: "Create your own storage without group")
+        four.button.addTarget(self, action: #selector(createIndividualStorage), for: .touchUpInside)
+        
+        if createGroup == false {
+            return [one, two, four]
+        } else {
+            let three = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+            three.setUI(title: "Create a group")
+            three.button.addTarget(self, action: #selector(createGroupSelector), for: .touchUpInside)
+            
+            
+            return [one, three, four]
+        }
+        
+        
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        if SharedValues.shared.foodStorageID != nil {
+            tableView.backgroundColor = .white
+            return nil
+        } else {
+            tableView.backgroundColor = .lightGray
+            let v = UIView()
+            v.backgroundColor = .lightGray
+            return v
+        }
+    }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items.count
+        if SharedValues.shared.foodStorageID != nil {
+            return items.count
+        } else {
+            return emptyCells.count
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "storageCell") as! StorageCell
-        let item = items[indexPath.row]
-        cell.setUI(item: item)
-        return cell
+        if SharedValues.shared.foodStorageID != nil {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "storageCell") as! StorageCell
+            let item = items[indexPath.row]
+            cell.setUI(item: item)
+            return cell
+        } else {
+            
+            return emptyCells[indexPath.row]
+        }
+        
+    }
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if SharedValues.shared.foodStorageID != nil {
+            tableView.backgroundColor = .white
+            return UIView()
+            
+        } else {
+            tableView.backgroundColor = .lightGray
+            let v = UIView()
+            v.backgroundColor = .lightGray
+            return v
+        }
     }
     
     

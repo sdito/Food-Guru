@@ -38,11 +38,17 @@ class SetUpListVC: UIViewController {
                 peopleStackView.subviews.forEach { (view) in
                     if peopleStackView.subviews.firstIndex(of: view)! > 1 {
                         view.removeFromSuperview()
+                        
                     } else {
                         if type(of: view) == UITextField.self {
                             (view as! UITextField).text = ""
                             (view as! UITextField).isUserInteractionEnabled = true
+                            (view as! UITextField).setUpListToolbar(action: #selector(handleTextFieldForPlus), arrowAction: #selector(handleTextFieldForArrow))
                         }
+                        
+                    }
+                    if peopleStackView.subviews.count == 1 {
+                        insertTextFieldIn(stackView: peopleStackView, text: "", userInteraction: true)
                     }
                 }
             }
@@ -103,6 +109,7 @@ class SetUpListVC: UIViewController {
         if listToEdit != nil {
             setUIifListIsBeingEdited(list: listToEdit!)
         }
+        
         
         if SharedValues.shared.groupID == nil || listToEdit?.isGroup == false {
             usingGroup = false
@@ -166,7 +173,9 @@ class SetUpListVC: UIViewController {
             insertTextFieldIn(stackView: storesStackView, text: store, userInteraction: true)
         })
         list.people?.forEach({ (person) in
-            insertTextFieldIn(stackView: peopleStackView, text: person, userInteraction: true)
+            if list.isGroup == false {
+                insertTextFieldIn(stackView: peopleStackView, text: person, userInteraction: true)
+            }
         })
         list.categories?.forEach({ (category) in
             insertTextFieldIn(stackView: categoriesStackView, text: category, userInteraction: true)
