@@ -54,7 +54,6 @@ struct List {
                 }
             }
             listsChanged(lists)
-            // has the correct value in lists right here, returns [] though
         }
         //db.collection("lists").whereField("shared", arrayContains: userID)
     }

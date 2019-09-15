@@ -22,9 +22,9 @@ class StorageHomeVC: UIViewController {
             tableView.reloadData()
         }
     }
-    override func viewDidAppear(_ animated: Bool) {
-        emptyCells = createEmptyStorageCells()
-        tableView.reloadData()
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {
@@ -32,10 +32,18 @@ class StorageHomeVC: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         db = Firestore.firestore()
+        createObserver()
         
+        
+        Item.readItemsForStorage(db: db, docID: SharedValues.shared.foodStorageID ?? " ") { (itms) in
+            self.items = itms
+        }
         
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        emptyCells = createEmptyStorageCells()
+        tableView.reloadData()
+    }
     @IBAction func searchPressed(_ sender: Any) {
         tableView.reloadData()
     }
@@ -61,6 +69,14 @@ class StorageHomeVC: UIViewController {
         
         tableView.reloadData()
         
+    }
+    
+    private func createObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(observerSelectorFoodStorageID), name: .foodStorageIDchanged, object: nil)
+    }
+    
+    @objc func observerSelectorFoodStorageID() {
+        tableView.reloadData()
     }
 }
 
@@ -103,7 +119,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        if SharedValues.shared.foodStorageID != nil {
+        if SharedValues.shared.foodStorageID != nil && items.isEmpty == false {
             tableView.backgroundColor = .white
             return nil
         } else {
@@ -117,7 +133,12 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if SharedValues.shared.foodStorageID != nil {
-            return items.count
+            if items.isEmpty == false {
+                return items.count
+            } else {
+                return 1
+            }
+            
         } else {
             return emptyCells.count
         }
@@ -126,10 +147,17 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if SharedValues.shared.foodStorageID != nil {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "storageCell") as! StorageCell
-            let item = items[indexPath.row]
-            cell.setUI(item: item)
-            return cell
+            if items.isEmpty == false {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "storageCell") as! StorageCell
+                let item = items[indexPath.row]
+                cell.setUI(item: item)
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+                cell.setUI(str: "Your storage is empty. To add and keep track of your items, select done after you are done using one of your lists or manually add the items.")
+                return cell
+            }
+            
         } else {
             
             return emptyCells[indexPath.row]
@@ -137,7 +165,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         
     }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if SharedValues.shared.foodStorageID != nil {
+        if SharedValues.shared.foodStorageID != nil && items.isEmpty == false {
             tableView.backgroundColor = .white
             return UIView()
             

@@ -56,18 +56,26 @@ struct Item {
         }
     }
     
-//    static func readItemsForStorage(db: Firestore, docID: String, itemsChanged: @escaping (_ items: [Item]) -> Void) {
-//        db.collection("storage").document(docID).collection("items").addSnapshotListener { (querySnapshot, error) in
-//            guard let documents = querySnapshot?.documents else {
-//                print("Error fetching documents: \(String(describing: error))")
-//                return
-//            }
-//
-//            for doc in documents {
-//
-//            }
-//        }
-//    }
+    static func readItemsForStorage(db: Firestore!, docID: String, itemsChanged: @escaping (_ items: [Item]) -> Void) {
+        var storageItems: [Item] = []
+        db.collection("storages").document(docID).collection("items").addSnapshotListener { (querySnapshot, error) in
+            storageItems.removeAll()
+            guard let documents = querySnapshot?.documents else {
+                print("Error fetching documents: \(String(describing: error))")
+                return
+            }
+            
+            for doc in documents {
+                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as! String), ownID: doc.documentID, storageSection: doc.get("storageSelection") as? String, timeAdded: doc.get("timeAdded") as? TimeInterval, timeExpires: doc.get("timeExpires") as? TimeInterval)
+                if storageItems.isEmpty == false {
+                    storageItems.append(i)
+                } else {
+                    storageItems = [i]
+                }
+            }
+            itemsChanged(storageItems)
+        }
+    }
     
 }
 

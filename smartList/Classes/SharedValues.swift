@@ -22,7 +22,12 @@ class SharedValues {
     var groupEmails: [String]?
     var groupDate: TimeInterval?
     
-    var foodStorageID: String?
+    var foodStorageID: String? {
+        didSet {
+            
+            NotificationCenter.default.post(name: .foodStorageIDchanged, object: nil)
+        }
+    }
     
     static let shared = SharedValues()
     private init() {}

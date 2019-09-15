@@ -46,7 +46,7 @@ class SettingsDetailVC: UIViewController {
             let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
             cell1.setUI(str: "This is for the about cell")
             return [cell1]
-            
+        
 
             
         case .contact:
@@ -96,6 +96,14 @@ class SettingsDetailVC: UIViewController {
         case .notifications:
             return [UITableViewCell()]
         case .licences:
+            return [UITableViewCell()]
+            
+        
+        case .list:
+            return [UITableViewCell()]
+        case .storage:
+            return [UITableViewCell()]
+        case .recipe:
             return [UITableViewCell()]
         }
     }

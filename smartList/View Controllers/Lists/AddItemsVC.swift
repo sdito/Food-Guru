@@ -65,7 +65,7 @@ class AddItemsVC: UIViewController {
         view.setGradientBackground(colorOne: .lightGray, colorTwo: .gray)
         Item.readItemsForList(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (itm) in
             self.list?.items = itm
-            //print(itm.map({$0.ownID}))
+            
         }
         if let first = stackView.subviews.last as! UIButton? {
             SharedValues.shared.currentCategory = first.titleLabel?.text ?? "none"
@@ -152,10 +152,30 @@ class AddItemsVC: UIViewController {
     
     @IBAction func doneWithList(_ sender: Any) {
         
-        let alert = UIAlertController(title: "Are you done with the list?", message: "The selected items from this list will be added to your storage, where you can keep track of your items.", preferredStyle: .alert)
-        alert.addAction(.init(title: "Back", style: .cancel, handler: nil))
-        alert.addAction(.init(title: "Continue", style: .default, handler: nil))
-        present(alert, animated: true)
+        if SharedValues.shared.foodStorageID != nil {
+            let alert = UIAlertController(title: "Are you done with the list?", message: "The selected items from this list will be added to your storage, where you can keep track of your items.", preferredStyle: .actionSheet)
+            alert.addAction(.init(title: "Add items to storage", style: .default, handler: nil))
+            alert.addAction(.init(title: "Back", style: .default, handler: nil))
+            present(alert, animated: true)
+        } else {
+            if SharedValues.shared.groupID == nil {
+                let alert = UIAlertController(title: "Error - can't add items to storage", message: "In order to have a shared storage where multiple people can view the items, first create a group.", preferredStyle: .actionSheet)
+                alert.addAction(.init(title: "Create group", style: .default, handler: nil))
+                alert.addAction(.init(title: "Create own storage without group", style: .default, handler: {(alert: UIAlertAction!) in print("create own storage without group")}))
+                alert.addAction(.init(title: "Back", style: .default, handler: nil))
+                present(alert, animated: true)
+            } else {
+                let alert = UIAlertController(title: "Error - can't add items to storage", message: "Create a storage to be able to view the current food items you have in stock.", preferredStyle: .actionSheet)
+                alert.addAction(.init(title: "Create storage with group (recommended)", style: .default, handler: nil))
+                alert.addAction(.init(title: "Create own storage without group", style: .default, handler: {(alert: UIAlertAction!) in print("create own storage without group")}))
+                alert.addAction(.init(title: "Back", style: .default, handler: nil))
+                
+                
+            }
+            
+        }
+        
+        
     }
     
     
@@ -216,3 +236,6 @@ extension AddItemsVC: UITextFieldDelegate {
         return true
     }
 }
+
+
+
