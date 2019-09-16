@@ -12,6 +12,24 @@ import FirebaseAuth
 
 struct User {
     
+    static func comparePeopleIn(list: List, foodStorageEmails: [String]?) -> (isEqual: Bool, emailsDifferent: [String]?) {
+        var listPeople = Set(list.people ?? [])
+        var foodStoragePeople = Set(foodStorageEmails ?? [])
+        
+        if listPeople == foodStoragePeople {
+            return (true, nil)
+        } else {
+            listPeople.subtract(Set(foodStorageEmails ?? []))
+            foodStoragePeople.subtract(Set(list.people ?? []))
+            
+            let both = listPeople.union(foodStoragePeople)
+            return (false, Array(both).sorted())
+        }
+        
+        
+    }
+    
+    
     static func emailToUid(emails: [String]?, db: Firestore, listID: String) {
         var userIDs: [String] = []
         emails?.forEach({ (email) in
@@ -31,25 +49,6 @@ struct User {
         })
     }
     
-//    static func emailToUidForStorage(emails: [String]?, db: Firestore, storageID: String) {
-//        var userIDs: [String] = []
-//        emails?.forEach({ (email) in
-//            db.collection("users").whereField("email", isEqualTo: email).getDocuments(completion: { (querySnapshot, err) in
-//                if let doc = querySnapshot?.documents.first {
-//                    if let id = doc.get("uid") as? String {
-//                        userIDs.append(id)
-//                        db.collection("users").document(id).updateData([
-//                            "storageID": storageID
-//                        ])
-//                        
-//                    }
-//                }
-//                let updateDoc = db.collection("storages").document(storageID)
-//                updateDoc.updateData([
-//                    "shared": userIDs
-//                ])
-//            }) 
-//        })
 //    }
     
     

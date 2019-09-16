@@ -25,6 +25,25 @@ struct FoodStorage {
     }
     
     
+    static func addItemsFromListintoFoodStorage(sendList: List, storageID: String, db: Firestore) {
+        for item in sendList.items ?? [] {
+            print(item.selected)
+            if item.selected == true {
+                item.writeToFirestoreForStorage(db: db, docID: storageID)
+            }
+        }
+    }
+    
+    static func getEmailsfromStorageID(storageID: String, db: Firestore, emailsReturned: @escaping (_ emails: [String]?) -> Void) {
+        var emails: [String]?
+        db.collection("storages").document(storageID).getDocument { (docSnapshot, error) in
+            if let doc = docSnapshot {
+                emails = doc.get("emails") as? [String]
+            }
+            emailsReturned(emails)
+        }
+    }
+    
     static func createStorageToFirestoreWithPeople(db: Firestore!, foodStorage: FoodStorage) {
         // need to write the storage to the individuals in people, create the storage
         let foodStorageRef = db.collection("storages").document()

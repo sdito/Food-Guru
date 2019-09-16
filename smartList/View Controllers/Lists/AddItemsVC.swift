@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import FirebaseCore
+import FirebaseAuth
 import FirebaseFirestore
 
 
@@ -26,6 +26,9 @@ class AddItemsVC: UIViewController {
     private var arrayArrayItems: [[Item]] = []
     private var sortedCategories: [String] = []
     
+    
+    
+    // check if this variable is being used for anything
     private var sendHome = true
     
     var db: Firestore!
@@ -152,23 +155,32 @@ class AddItemsVC: UIViewController {
     
     @IBAction func doneWithList(_ sender: Any) {
         
+        
+        
         if SharedValues.shared.foodStorageID != nil {
+            var gottenEmails: [String]?
+            FoodStorage.getEmailsfromStorageID(storageID: SharedValues.shared.foodStorageID ?? " ", db: db) { (emails) in
+                gottenEmails = emails
+            }
             let alert = UIAlertController(title: "Are you done with the list?", message: "The selected items from this list will be added to your storage, where you can keep track of your items.", preferredStyle: .actionSheet)
-            alert.addAction(.init(title: "Add items to storage", style: .default, handler: nil))
+            alert.addAction(.init(title: "Add items to storage", style: .default, handler: {(alert: UIAlertAction!) in self.addItemsToStorageIfPossible(sendList: self.list!, foodStorageEmails: gottenEmails)}))
             alert.addAction(.init(title: "Back", style: .default, handler: nil))
             present(alert, animated: true)
         } else {
+            let userFS = FoodStorage(isGroup: false, groupID: nil, peopleEmails: [Auth.auth().currentUser?.email ?? ""], items: nil, numberOfPeople: 1)
             if SharedValues.shared.groupID == nil {
                 let alert = UIAlertController(title: "Error - can't add items to storage", message: "In order to have a shared storage where multiple people can view the items, first create a group.", preferredStyle: .actionSheet)
-                alert.addAction(.init(title: "Create group", style: .default, handler: nil))
-                alert.addAction(.init(title: "Create own storage without group", style: .default, handler: {(alert: UIAlertAction!) in print("create own storage without group")}))
+                alert.addAction(.init(title: "Create group", style: .default, handler: {(alert: UIAlertAction!) in self.pushToCreateGroupVC()}))
+                alert.addAction(.init(title: "Create own storage without group", style: .default, handler: {(alert: UIAlertAction!) in FoodStorage.createStorageToFirestoreWithPeople(db: self.db, foodStorage: userFS)}))
                 alert.addAction(.init(title: "Back", style: .default, handler: nil))
                 present(alert, animated: true)
             } else {
+                let groupFS = FoodStorage(isGroup: true, groupID: SharedValues.shared.groupID, peopleEmails: SharedValues.shared.groupEmails, items: nil, numberOfPeople: SharedValues.shared.groupEmails?.count)
                 let alert = UIAlertController(title: "Error - can't add items to storage", message: "Create a storage to be able to view the current food items you have in stock.", preferredStyle: .actionSheet)
-                alert.addAction(.init(title: "Create storage with group (recommended)", style: .default, handler: nil))
-                alert.addAction(.init(title: "Create own storage without group", style: .default, handler: {(alert: UIAlertAction!) in print("create own storage without group")}))
+                alert.addAction(.init(title: "Create storage with group (recommended)", style: .default, handler: {(alert: UIAlertAction!) in FoodStorage.createStorageToFirestoreWithPeople(db: self.db, foodStorage: groupFS)}))
+                alert.addAction(.init(title: "Create own storage without group", style: .default, handler: {(alert: UIAlertAction!) in FoodStorage.createStorageToFirestoreWithPeople(db: self.db, foodStorage: userFS)}))
                 alert.addAction(.init(title: "Back", style: .default, handler: nil))
+                present(alert, animated: true)
                 
                 
             }
@@ -239,3 +251,42 @@ extension AddItemsVC: UITextFieldDelegate {
 
 
 
+
+// handlers
+extension AddItemsVC {
+    func pushToCreateGroupVC() {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
+        present(vc, animated: true, completion: nil)
+    }
+    func addItemsToStorageIfPossible(sendList: List, foodStorageEmails: [String]?) {
+        
+        var isEqual: Bool = false
+        var difference: [String]?
+        (isEqual, difference) = User.comparePeopleIn(list: sendList, foodStorageEmails: foodStorageEmails)
+        
+        if isEqual == true {
+            
+            if list != nil && list?.items?.isEmpty == false {
+                if let id = SharedValues.shared.foodStorageID {
+                    
+                    
+                    //successfully gotten to this point
+                    FoodStorage.addItemsFromListintoFoodStorage(sendList: list!, storageID: id, db: db)
+                    
+                    // to set all the items in the list to not selected
+                    for index in (list?.items!.indices)! {
+                        list?.items?[index].selected = false
+                    }
+                }
+            } else {
+                let alert = UIAlertController(title: "Error - there are no items in your list", message: nil, preferredStyle: .alert)
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                present(alert, animated: true)
+            }
+        } else {
+            let alert = UIAlertController(title: "Error - users in your list do not match the users in your storage", message: "Emails not in both your list and storage are: \(difference?.joined(separator: ", ") ?? ""), unable to add to your storage", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+        }
+    }
+}

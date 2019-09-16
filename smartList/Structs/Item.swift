@@ -56,9 +56,11 @@ struct Item {
         }
     }
     
-    static func readItemsForStorage(db: Firestore!, docID: String, itemsChanged: @escaping (_ items: [Item]) -> Void) {
+    
+    // hasnt been used yet
+    static func readItemsForStorage(db: Firestore!, storageID: String, itemsChanged: @escaping (_ items: [Item]) -> Void) {
         var storageItems: [Item] = []
-        db.collection("storages").document(docID).collection("items").addSnapshotListener { (querySnapshot, error) in
+        db.collection("storages").document(storageID).collection("items").addSnapshotListener { (querySnapshot, error) in
             storageItems.removeAll()
             guard let documents = querySnapshot?.documents else {
                 print("Error fetching documents: \(String(describing: error))")
@@ -98,7 +100,7 @@ extension Item {
         }
     }
     func writeToFirestoreForStorage(db: Firestore!, docID: String) {
-       let reference = db.collection("storage").document(docID).collection("items").document()
+       let reference = db.collection("storages").document(docID).collection("items").document()
         reference.setData([
             "name": self.name,
             "selected": false,

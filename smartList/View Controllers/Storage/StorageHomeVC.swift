@@ -35,7 +35,7 @@ class StorageHomeVC: UIViewController {
         createObserver()
         
         
-        Item.readItemsForStorage(db: db, docID: SharedValues.shared.foodStorageID ?? " ") { (itms) in
+        Item.readItemsForStorage(db: db, storageID: SharedValues.shared.foodStorageID ?? " ") { (itms) in
             self.items = itms
         }
         
@@ -177,5 +177,6 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    
 }
+
+

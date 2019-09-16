@@ -1243,16 +1243,16 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="qlf-rs-OCD">
-                                                    <rect key="frame" x="40" y="21" width="220" height="62"/>
+                                                    <rect key="frame" x="40" y="16" width="220" height="72"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Item name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8jR-du-5JF">
-                                                            <rect key="frame" x="0.0" y="0.0" width="94.5" height="42"/>
-                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="80.5" height="52"/>
+                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="irs-uV-EV0">
-                                                            <rect key="frame" x="0.0" y="46" width="220" height="16"/>
+                                                            <rect key="frame" x="0.0" y="56" width="220" height="16"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Added - 9/10/19" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H82-hB-S1h">
                                                                     <rect key="frame" x="0.0" y="0.0" width="95" height="16"/>
@@ -1272,9 +1272,9 @@
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="qlf-rs-OCD" secondAttribute="bottom" constant="10" id="PTp-4X-8hF"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="qlf-rs-OCD" secondAttribute="bottom" constant="5" id="PTp-4X-8hF"/>
                                                 <constraint firstItem="qlf-rs-OCD" firstAttribute="leading" secondItem="1It-HM-Lvc" secondAttribute="leadingMargin" constant="20" id="cxK-b1-v3S"/>
-                                                <constraint firstItem="qlf-rs-OCD" firstAttribute="top" secondItem="1It-HM-Lvc" secondAttribute="topMargin" constant="10" id="s5e-jj-Gn3"/>
+                                                <constraint firstItem="qlf-rs-OCD" firstAttribute="top" secondItem="1It-HM-Lvc" secondAttribute="topMargin" constant="5" id="s5e-jj-Gn3"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
