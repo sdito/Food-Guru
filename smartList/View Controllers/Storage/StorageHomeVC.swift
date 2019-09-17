@@ -19,6 +19,12 @@ class StorageHomeVC: UIViewController {
     
     var items: [Item] = [] {
         didSet {
+            sortedItems = self.items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl))
+        }
+    }
+    
+    var sortedItems: [Item] = [] {
+        didSet {
             tableView.reloadData()
         }
     }
@@ -45,9 +51,13 @@ class StorageHomeVC: UIViewController {
         tableView.reloadData()
     }
     @IBAction func searchPressed(_ sender: Any) {
-        tableView.reloadData()
+        print("Search was pressed")
+        
     }
     
+    @IBAction func segmentedControlPressed(_ sender: Any) {
+       sortedItems = self.items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl))
+    }
     
     @objc func createGroupSelector() {
         let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
@@ -118,7 +128,6 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
         if SharedValues.shared.foodStorageID != nil && items.isEmpty == false {
             tableView.backgroundColor = .white
             return nil
@@ -134,7 +143,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if SharedValues.shared.foodStorageID != nil {
             if items.isEmpty == false {
-                return items.count
+                return sortedItems.count
             } else {
                 return 1
             }
@@ -149,7 +158,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         if SharedValues.shared.foodStorageID != nil {
             if items.isEmpty == false {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "storageCell") as! StorageCell
-                let item = items[indexPath.row]
+                let item = sortedItems[indexPath.row]
                 cell.setUI(item: item)
                 return cell
             } else {
@@ -157,9 +166,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
                 cell.setUI(str: "Your storage is empty. To add and keep track of your items, select done after you are done using one of your lists or manually add the items.")
                 return cell
             }
-            
         } else {
-            
             return emptyCells[indexPath.row]
         }
         

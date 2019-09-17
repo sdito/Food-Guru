@@ -16,13 +16,13 @@ struct Item {
     var store: String?
     var user: String?
     var ownID: String?
-    var storageSection: String?
+    var storageSection: FoodStorageType?
     
     var timeAdded: TimeInterval?
     var timeExpires: TimeInterval?
     
     
-    init(name: String, selected: Bool, category: String?, store: String?, user: String?, ownID: String?, storageSection: String?, timeAdded: TimeInterval?, timeExpires: TimeInterval?) {
+    init(name: String, selected: Bool, category: String?, store: String?, user: String?, ownID: String?, storageSection: FoodStorageType?, timeAdded: TimeInterval?, timeExpires: TimeInterval?) {
         self.name = name
         self.selected = selected
         self.category = category
@@ -68,7 +68,7 @@ struct Item {
             }
             
             for doc in documents {
-                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as! String), ownID: doc.documentID, storageSection: doc.get("storageSelection") as? String, timeAdded: doc.get("timeAdded") as? TimeInterval, timeExpires: doc.get("timeExpires") as? TimeInterval)
+                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as! String), ownID: doc.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (doc.get("storageSection") as? String ?? " ")), timeAdded: doc.get("timeAdded") as? TimeInterval, timeExpires: doc.get("timeExpires") as? TimeInterval)
                 if storageItems.isEmpty == false {
                     storageItems.append(i)
                 } else {
@@ -107,8 +107,8 @@ extension Item {
             "category": self.category!,
             "store": self.store!,
             "user": self.user ?? "",
-            "ownID": self.ownID ?? "",
-            "storageSection": "none",
+            "ownID": reference.documentID,
+            "storageSection": FoodStorageType.unsorted.string,
             "timeAdded": Date().timeIntervalSince1970
         ])
     }
@@ -118,3 +118,10 @@ extension Item {
     }
 }
 
+
+extension Sequence where Element == Item {
+    func sortItemsForTableView(segment: FoodStorageType) -> [Item] {
+        let sorted = self.filter({$0.storageSection == segment})
+        return sorted
+    }
+}

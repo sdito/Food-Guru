@@ -1230,6 +1230,9 @@
                                     <segment title="Freezer"/>
                                     <segment title="Pantry"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentedControlPressed:" destination="TBV-k4-MLm" eventType="valueChanged" id="LSn-Bx-722"/>
+                                </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UVb-sG-vZ1">
                                 <rect key="frame" x="0.0" y="107" width="414" height="706"/>
