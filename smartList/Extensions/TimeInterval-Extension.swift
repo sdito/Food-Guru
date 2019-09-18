@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 extension TimeInterval {
+    
     func dateFormatted(style: DateFormatter.Style) -> String {
         let date = NSDate(timeIntervalSince1970: self)
         let dateFormatter = DateFormatter()
@@ -19,6 +20,7 @@ extension TimeInterval {
         return localDate
     }
     
+    // need to fix so it doesnt say 1 minutes or 1 hours etc
     func timeSince() -> String {
         let difference = abs(Date().timeIntervalSince1970 - self)
         switch difference {
@@ -26,6 +28,7 @@ extension TimeInterval {
         // seconds, just created
         case 0...60:
             return "Created now"
+            
         // return in minutes
         case 60...3600:
             return "\(Int(difference/60)) minutes ago"

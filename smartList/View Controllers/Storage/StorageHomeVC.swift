@@ -16,6 +16,7 @@ class StorageHomeVC: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var popUpView: UIView!
     
     var items: [Item] = [] {
         didSet {
@@ -26,6 +27,7 @@ class StorageHomeVC: UIViewController {
     var sortedItems: [Item] = [] {
         didSet {
             tableView.reloadData()
+            handlePopUpView()
         }
     }
     
@@ -44,8 +46,10 @@ class StorageHomeVC: UIViewController {
         Item.readItemsForStorage(db: db, storageID: SharedValues.shared.foodStorageID ?? " ") { (itms) in
             self.items = itms
         }
-        
+        popUpView.shadow()
+        popUpView.isHidden = true
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         emptyCells = createEmptyStorageCells()
         tableView.reloadData()
@@ -92,6 +96,13 @@ class StorageHomeVC: UIViewController {
 
 
 extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
+    private func handlePopUpView() {
+        if tableView.indexPathsForSelectedRows?.count ?? 0 >= 1 {
+            popUpView.setIsHidden(false, animated: true)
+        } else {
+            popUpView.setIsHidden(true, animated: true)
+        }
+    }
     func createEmptyStorageCells() -> [UITableViewCell] {
         var createGroup: Bool?
         let one = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
@@ -183,7 +194,12 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
             return v
         }
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        handlePopUpView()
+    }
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        handlePopUpView()
+    }
 }
 
 
