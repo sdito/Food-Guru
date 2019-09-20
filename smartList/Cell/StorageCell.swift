@@ -24,7 +24,7 @@ class StorageCell: UITableViewCell {
         }
         
         if let time = item.timeExpires {
-            expires.text = "Expires = \(time.dateFormatted(style: .short))"
+            expires.text = "Expires - \(time.dateFormatted(style: .short))"
         } else {
             expires.text = ""
         }

@@ -116,8 +116,14 @@ class StorageHomeVC: UIViewController {
         handleCellSortingTo(segment: "pantry")
     }
     @IBAction func doneAddingExpirationDate(_ sender: Any) {
-        print(pickerView.date.timeIntervalSince1970)
-        
+        let indexes = tableView.indexPathsForSelectedRows?.map({$0.row})
+        for item in sortedItems {
+            if let idx = sortedItems.firstIndex(of: item) {
+                if indexes?.contains(idx) ?? false {
+                    item.addExpirationDateToItem(db: db, timeIntervalSince1970: pickerView.date.timeIntervalSince1970)
+                }
+            }
+        }
         
     }
     
