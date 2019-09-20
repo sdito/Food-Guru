@@ -91,7 +91,6 @@ class StorageHomeVC: UIViewController {
         for item in sortedItems {
             if let idx = sortedItems.firstIndex(of: item) {
                 if indexes?.contains(idx) ?? false {
-                    print("deleting: \(item.name)")
                     item.deleteItemFromStorage(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
                 }
             }

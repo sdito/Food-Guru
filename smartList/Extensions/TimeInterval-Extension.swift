@@ -19,7 +19,14 @@ extension TimeInterval {
         let localDate = dateFormatter.string(from: date as Date)
         return localDate
     }
-    
+    func getPercentageUntilExpiringFromExpirationDate(timeAdded: TimeInterval) -> Double {
+        let nowUntilExpiry = self - Date().timeIntervalSince1970
+        let originalUntilExpiry = self - timeAdded
+        
+        let percentage = nowUntilExpiry / originalUntilExpiry
+        print(percentage)
+        return percentage
+    }
     // need to fix so it doesnt say 1 minutes or 1 hours etc
     func timeSince() -> String {
         let difference = abs(Date().timeIntervalSince1970 - self)

@@ -1273,17 +1273,28 @@
                                                         </stackView>
                                                     </subviews>
                                                 </stackView>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gMv-HI-qAV">
+                                                    <rect key="frame" x="322" y="21" width="62" height="62"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="gMv-HI-qAV" secondAttribute="height" multiplier="1:1" id="j9c-SX-gKq"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="gMv-HI-qAV" secondAttribute="bottom" constant="10" id="3aO-eG-oV0"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="qlf-rs-OCD" secondAttribute="bottom" constant="5" id="PTp-4X-8hF"/>
                                                 <constraint firstItem="qlf-rs-OCD" firstAttribute="leading" secondItem="1It-HM-Lvc" secondAttribute="leadingMargin" constant="20" id="cxK-b1-v3S"/>
                                                 <constraint firstItem="qlf-rs-OCD" firstAttribute="top" secondItem="1It-HM-Lvc" secondAttribute="topMargin" constant="5" id="s5e-jj-Gn3"/>
+                                                <constraint firstItem="gMv-HI-qAV" firstAttribute="top" secondItem="1It-HM-Lvc" secondAttribute="topMargin" constant="10" id="tBf-2I-B0Y"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="gMv-HI-qAV" secondAttribute="trailing" constant="10" id="tuY-qr-7Gg"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="added" destination="H82-hB-S1h" id="Bfz-C5-3y4"/>
                                             <outlet property="expires" destination="78v-MH-qhy" id="6mL-Vh-iiO"/>
                                             <outlet property="name" destination="8jR-du-5JF" id="Ec0-jV-pO2"/>
+                                            <outlet property="viewForCircle" destination="gMv-HI-qAV" id="yXH-Ed-4gM"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingBasicCell" rowHeight="80" id="dhW-7E-bK4" customClass="SettingBasicCell" customModule="smartList" customModuleProvider="target">

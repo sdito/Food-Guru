@@ -13,9 +13,20 @@ class StorageCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var added: UILabel!
     @IBOutlet weak var expires: UILabel!
+    @IBOutlet weak var viewForCircle: UIView!
     
     func setUI(item: Item) {
         name.text = item.name
+        
+        #warning("still need to make sure it handles expired items")
+        viewForCircle.layer.sublayers = nil
+        if item.timeExpires != nil {
+            viewForCircle.isHidden = false
+            viewForCircle.circularPercentageView(endStrokeAt: CGFloat(item.timeExpires!.getPercentageUntilExpiringFromExpirationDate(timeAdded: item.timeAdded ?? 0)))
+        } else {
+            viewForCircle.isHidden = true
+        }
+        
         
         if let time = item.timeAdded {
             added.text = "Added - \(time.dateFormatted(style: .short))"
