@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct Item {
+struct Item: Equatable {
     var name: String
     var selected: Bool
     var category: String?
@@ -115,6 +115,18 @@ extension Item {
     func selectedItem(db: Firestore) { db.collection("lists").document("\(SharedValues.shared.listIdentifier!.documentID)").collection("items").document(self.ownID!).updateData([
             "selected": self.selected
         ])
+    }
+    func switchItemToSegment(named: String, db: Firestore, storageID: String) {
+        let documentRef = db.collection("storages").document(SharedValues.shared.foodStorageID ?? " ").collection("items").document(self.ownID ?? " ")
+        documentRef.updateData([
+            "storageSection": named
+        ])
+    }
+    
+    #warning("have the deleted items go to a recently deleted items in the settings, could have a pop up say after the items are deleted (pop up only shown once) that deleted items can be found in the settings, could also keep track of the user that deletes the items")
+    func deleteItemFromStorage(db: Firestore, storageID: String) {
+        let documentRef = db.collection("storages").document(SharedValues.shared.foodStorageID ?? " ").collection("items").document(self.ownID ?? " ")
+        documentRef.delete()
     }
 }
 

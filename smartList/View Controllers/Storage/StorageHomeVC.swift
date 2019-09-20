@@ -14,9 +14,15 @@ class StorageHomeVC: UIViewController {
     var db: Firestore!
     lazy private var emptyCells: [UITableViewCell] = []
     
+    @IBOutlet weak var pickerView: UIDatePicker!
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var popUpView: UIView!
+    @IBOutlet weak var pickerPopUpView: UIView!
+    
+    @IBOutlet weak var expirationDateOutlet: UIButton!
+    
     
     var items: [Item] = [] {
         didSet {
@@ -47,7 +53,10 @@ class StorageHomeVC: UIViewController {
             self.items = itms
         }
         popUpView.shadow()
+        pickerPopUpView.shadow()
+        
         popUpView.isHidden = true
+        pickerPopUpView.isHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -76,6 +85,54 @@ class StorageHomeVC: UIViewController {
         
     }
     
+    
+    @IBAction func deleteCells(_ sender: Any) {
+        let indexes = tableView.indexPathsForSelectedRows?.map({$0.row})
+        for item in sortedItems {
+            if let idx = sortedItems.firstIndex(of: item) {
+                if indexes?.contains(idx) ?? false {
+                    print("deleting: \(item.name)")
+                    item.deleteItemFromStorage(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
+                }
+            }
+        }
+    }
+    @IBAction func addExpirationDateCells(_ sender: Any) {
+        if pickerPopUpView.isHidden {
+            pickerPopUpView.setIsHidden(false, animated: true)
+            expirationDateOutlet.setTitleColor(Colors.main, for: .normal)
+        } else {
+            pickerPopUpView.setIsHidden(true, animated: true)
+            expirationDateOutlet.setTitleColor(.lightGray, for: .normal)
+        }
+    }
+    @IBAction func putInFridgeCells(_ sender: Any) {
+        handleCellSortingTo(segment: "fridge")
+    }
+    @IBAction func putInFreezerCells(_ sender: Any) {
+        handleCellSortingTo(segment: "freezer")
+    }
+    @IBAction func putInPantryCells(_ sender: Any) {
+        handleCellSortingTo(segment: "pantry")
+    }
+    @IBAction func doneAddingExpirationDate(_ sender: Any) {
+        print(pickerView.date.timeIntervalSince1970)
+        
+        
+    }
+    
+    private func handleCellSortingTo(segment: String) {
+        let indexes = tableView.indexPathsForSelectedRows?.map({$0.row})
+        for item in sortedItems {
+            if let idx = sortedItems.firstIndex(of: item) {
+                if indexes?.contains(idx) ?? false {
+                    item.switchItemToSegment(named: segment, db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
+                }
+            }
+        }
+    }
+    
+    
     @objc func createGroupStorage() {
         print("create group storage")
         let foodStorage = FoodStorage(isGroup: true, groupID: SharedValues.shared.groupID, peopleEmails: SharedValues.shared.groupEmails ?? ["emails didnt work"], items: nil, numberOfPeople: SharedValues.shared.groupEmails?.count)
@@ -95,12 +152,15 @@ class StorageHomeVC: UIViewController {
 }
 
 
+
 extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     private func handlePopUpView() {
         if tableView.indexPathsForSelectedRows?.count ?? 0 >= 1 {
             popUpView.setIsHidden(false, animated: true)
         } else {
             popUpView.setIsHidden(true, animated: true)
+            pickerPopUpView.setIsHidden(true, animated: true)
+            expirationDateOutlet.setTitleColor(.lightGray, for: .normal)
         }
     }
     func createEmptyStorageCells() -> [UITableViewCell] {

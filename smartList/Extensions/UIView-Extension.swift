@@ -42,7 +42,7 @@ extension UIView {
                 self.isHidden = false
             }
             UIView.animate(withDuration: 0.2, animations: {
-                self.alpha = hidden ? 0.0 : 1.0
+                self.alpha = hidden ? 0.0 : 0.925
             }) { (complete) in
                 self.isHidden = hidden
             }
