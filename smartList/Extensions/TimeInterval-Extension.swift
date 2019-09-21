@@ -27,7 +27,7 @@ extension TimeInterval {
         print(percentage)
         return percentage
     }
-    // need to fix so it doesnt say 1 minutes or 1 hours etc
+    #warning("need to fix so it doesnt say 1 minutes or 1 hours etc")
     func timeSince() -> String {
         let difference = abs(Date().timeIntervalSince1970 - self)
         switch difference {

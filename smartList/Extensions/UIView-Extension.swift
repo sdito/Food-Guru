@@ -50,18 +50,23 @@ extension UIView {
             self.isHidden = hidden
         }
     }
-    func circularPercentageView(endStrokeAt: CGFloat) {
+    func circularPercentageView(endStrokeAt: CGFloat, color: CGColor) {
         self.layer.cornerRadius = self.frame.size.width / 2
         
         let circlePath = UIBezierPath(arcCenter: CGPoint(x: self.frame.size.width/2, y: self.frame.size.height / 2), radius: self.frame.size.width / 2, startAngle: CGFloat(-0.5 * .pi), endAngle: CGFloat(1.5 * .pi), clockwise: true)
         
         let circleShape = CAShapeLayer()
         circleShape.path = circlePath.cgPath
-        circleShape.strokeColor = Colors.main.cgColor
+        circleShape.strokeColor = color
         circleShape.fillColor = UIColor.clear.cgColor
         circleShape.lineWidth = 3.0
         circleShape.strokeStart = 0.0
-        circleShape.strokeEnd = endStrokeAt
+        if endStrokeAt < 0.2 {
+            circleShape.strokeEnd = 0.2
+        } else {
+            circleShape.strokeEnd = endStrokeAt
+        }
+        
         
         self.layer.addSublayer(circleShape)
     }

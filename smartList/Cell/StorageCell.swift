@@ -21,8 +21,9 @@ class StorageCell: UITableViewCell {
         #warning("still need to make sure it handles expired items")
         viewForCircle.layer.sublayers = nil
         if item.timeExpires != nil {
+            let pct = item.timeExpires!.getPercentageUntilExpiringFromExpirationDate(timeAdded: item.timeAdded ?? 0)
             viewForCircle.isHidden = false
-            viewForCircle.circularPercentageView(endStrokeAt: CGFloat(item.timeExpires!.getPercentageUntilExpiringFromExpirationDate(timeAdded: item.timeAdded ?? 0)))
+            viewForCircle.circularPercentageView(endStrokeAt: CGFloat(pct), color: Colors.getRGBcolorFromPercentage(double: pct).cgColor)
         } else {
             viewForCircle.isHidden = true
         }
