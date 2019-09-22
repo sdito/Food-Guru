@@ -52,6 +52,7 @@ class ListHomeVC: UIViewController {
     }
     @IBAction func setUpList(_ sender: Any) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "setUpList") as! SetUpListVC
+        vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
 
     }

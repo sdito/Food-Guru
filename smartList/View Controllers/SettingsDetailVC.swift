@@ -110,6 +110,7 @@ class SettingsDetailVC: UIViewController {
     
     @objc private func logOut() {
         let vc = storyboard?.instantiateViewController(withIdentifier: "logIn") as! LogInVC
+        vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
     @objc private func createGroup() {

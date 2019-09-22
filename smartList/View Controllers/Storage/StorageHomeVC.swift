@@ -23,7 +23,6 @@ class StorageHomeVC: UIViewController {
     
     @IBOutlet weak var expirationDateOutlet: UIButton!
     
-    
     var items: [Item] = [] {
         didSet {
             sortedItems = self.items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl))

@@ -136,7 +136,7 @@ class AddItemsVC: UIViewController {
             list?.docID = SharedValues.shared.listIdentifier?.documentID
         }
         vc.listToEdit = list
-        
+        vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
         
     }
@@ -256,6 +256,7 @@ extension AddItemsVC: UITextFieldDelegate {
 extension AddItemsVC {
     func pushToCreateGroupVC() {
         let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
+        
         present(vc, animated: true, completion: nil)
     }
     func addItemsToStorageIfPossible(sendList: List, foodStorageEmails: [String]?) {
