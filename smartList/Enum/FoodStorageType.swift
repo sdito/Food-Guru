@@ -59,5 +59,14 @@ enum FoodStorageType {
             return .unsorted
         }
     }
+    
+    static func isUnsortedSegmentNeeded(types: [FoodStorageType]) -> Bool {
+        for t in types {
+            if t == .unsorted {
+                return true
+            }
+        }
+        return false
+    }
 }
 

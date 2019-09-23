@@ -39,6 +39,7 @@
 		E2445CF42321DC100089582F /* StorageHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CF32321DC100089582F /* StorageHomeVC.swift */; };
 		E2445CFE23220D950089582F /* TimeInterval-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CFD23220D950089582F /* TimeInterval-Extension.swift */; };
 		E2481B7F2300B00D0036E378 /* LogInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2481B7E2300B00D0036E378 /* LogInVC.swift */; };
+		E24ADB0A23386E69008F2F9F /* StorageNewItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADB0923386E69008F2F9F /* StorageNewItemVC.swift */; };
 		E25F071723146CC600E6738E /* RecipeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071623146CC600E6738E /* RecipeType.swift */; };
 		E25F071923146E5E00E6738E /* CuisineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071823146E5E00E6738E /* CuisineType.swift */; };
 		E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */; };
@@ -126,6 +127,7 @@
 		E2445CF32321DC100089582F /* StorageHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageHomeVC.swift; sourceTree = "<group>"; };
 		E2445CFD23220D950089582F /* TimeInterval-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval-Extension.swift"; sourceTree = "<group>"; };
 		E2481B7E2300B00D0036E378 /* LogInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInVC.swift; sourceTree = "<group>"; };
+		E24ADB0923386E69008F2F9F /* StorageNewItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageNewItemVC.swift; sourceTree = "<group>"; };
 		E25F071623146CC600E6738E /* RecipeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeType.swift; sourceTree = "<group>"; };
 		E25F071823146E5E00E6738E /* CuisineType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuisineType.swift; sourceTree = "<group>"; };
 		E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRecipeTypeVC.swift; sourceTree = "<group>"; };
@@ -316,6 +318,7 @@
 			isa = PBXGroup;
 			children = (
 				E2445CF32321DC100089582F /* StorageHomeVC.swift */,
+				E24ADB0923386E69008F2F9F /* StorageNewItemVC.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -687,6 +690,7 @@
 				E2B4695A22F7F485006BA77D /* Colors.swift in Sources */,
 				E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */,
 				E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */,
+				E24ADB0A23386E69008F2F9F /* StorageNewItemVC.swift in Sources */,
 				E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */,
 				E2E6A19B2326FF6A00477AB1 /* FoodStorage.swift in Sources */,
 				E2C49349230B45E4002907C2 /* CreateRecipeVC.swift in Sources */,

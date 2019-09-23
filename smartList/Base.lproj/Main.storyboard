@@ -1454,17 +1454,30 @@
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="yIr-eq-aLA" secondAttribute="height" multiplier="1:1" id="oub-u6-Wxu"/>
                                 </constraints>
-                                <state key="normal" image="plus-6-xl"/>
+                                <state key="normal" image="search-3-xl"/>
                                 <connections>
                                     <action selector="searchPressed:" destination="TBV-k4-MLm" eventType="touchUpInside" id="9D5-MI-bSg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAQ-iX-8P3">
+                                <rect key="frame" x="187" y="758" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="8lu-jb-lHs"/>
+                                    <constraint firstAttribute="width" constant="40" id="Fhb-A6-2F5"/>
+                                </constraints>
+                                <state key="normal" image="plus-6-xl"/>
+                                <connections>
+                                    <action selector="plusWasPressed:" destination="TBV-k4-MLm" eventType="touchUpInside" id="rHx-yq-CVW"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Zhw-h2-rb1" firstAttribute="bottom" secondItem="MAQ-iX-8P3" secondAttribute="bottom" constant="15" id="3KZ-4M-RPB"/>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="bottom" secondItem="UVb-sG-vZ1" secondAttribute="bottom" id="9ze-vj-bhl"/>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="trailing" secondItem="z6d-S8-LRX" secondAttribute="trailing" constant="20" id="AUF-gp-ZLy"/>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="trailing" secondItem="UVb-sG-vZ1" secondAttribute="trailing" id="Awn-Uu-fVG"/>
+                            <constraint firstItem="MAQ-iX-8P3" firstAttribute="centerX" secondItem="XIK-7e-dU1" secondAttribute="centerX" id="CrQ-N9-gQ0"/>
                             <constraint firstItem="2pe-Jw-8cP" firstAttribute="top" secondItem="Zhw-h2-rb1" secondAttribute="top" constant="20" id="OlS-yf-jQ2"/>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="trailing" secondItem="Xf8-CJ-kAi" secondAttribute="trailing" constant="20" id="UAa-1I-Fhy"/>
                             <constraint firstItem="Xf8-CJ-kAi" firstAttribute="top" secondItem="2pe-Jw-8cP" secondAttribute="bottom" constant="50" id="UoE-IT-dWG"/>
@@ -1492,6 +1505,88 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1M9-XC-U2d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2084.057971014493" y="426.5625"/>
+        </scene>
+        <!--Storage New ItemVC-->
+        <scene sceneID="7ON-hg-Pl2">
+            <objects>
+                <viewController storyboardIdentifier="storageNewItem" id="s3e-O6-k2W" customClass="StorageNewItemVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Jv4-YR-rIY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New item name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="afB-rc-PAn">
+                                <rect key="frame" x="20" y="94" width="374" height="47"/>
+                                <color key="textColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="30"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xHK-eQ-tEv">
+                                <rect key="frame" x="20" y="151" width="374" height="32"/>
+                                <segments>
+                                    <segment title="Fridge"/>
+                                    <segment title="Freezer"/>
+                                    <segment title="Pantry"/>
+                                </segments>
+                            </segmentedControl>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="eQ3-1Q-PC5">
+                                <rect key="frame" x="109.5" y="222" width="195" height="31"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Expiration Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yzj-iy-wO2">
+                                        <rect key="frame" x="0.0" y="0.0" width="142" height="31"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L4p-ht-waK">
+                                        <rect key="frame" x="146" y="0.0" width="51" height="31"/>
+                                        <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="onTintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="switchAction:" destination="s3e-O6-k2W" eventType="valueChanged" id="Mqp-od-WVP"/>
+                                        </connections>
+                                    </switch>
+                                </subviews>
+                            </stackView>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="tST-Jr-JHx">
+                                <rect key="frame" x="47" y="253" width="320" height="216"/>
+                            </datePicker>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oPt-C8-S0c">
+                                <rect key="frame" x="365" y="46" width="39" height="38"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                                <state key="normal" title="Add"/>
+                                <connections>
+                                    <action selector="itemCreated:" destination="s3e-O6-k2W" eventType="touchUpInside" id="siW-rj-DVi"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="8L4-IS-eEL" firstAttribute="trailing" secondItem="xHK-eQ-tEv" secondAttribute="trailing" constant="20" id="2UQ-Zr-eTs"/>
+                            <constraint firstItem="afB-rc-PAn" firstAttribute="top" secondItem="8L4-IS-eEL" secondAttribute="top" constant="50" id="5U7-eq-d4G"/>
+                            <constraint firstItem="xHK-eQ-tEv" firstAttribute="leading" secondItem="8L4-IS-eEL" secondAttribute="leading" constant="20" id="8bj-js-jWx"/>
+                            <constraint firstItem="xHK-eQ-tEv" firstAttribute="top" secondItem="afB-rc-PAn" secondAttribute="bottom" constant="10" id="8eO-cX-WEo"/>
+                            <constraint firstItem="tST-Jr-JHx" firstAttribute="centerX" secondItem="Jv4-YR-rIY" secondAttribute="centerX" id="BkH-s3-WZI"/>
+                            <constraint firstItem="afB-rc-PAn" firstAttribute="leading" secondItem="8L4-IS-eEL" secondAttribute="leading" constant="20" id="HOU-qv-8jU"/>
+                            <constraint firstItem="8L4-IS-eEL" firstAttribute="trailing" secondItem="oPt-C8-S0c" secondAttribute="trailing" constant="10" id="OUh-gs-nAM"/>
+                            <constraint firstItem="8L4-IS-eEL" firstAttribute="trailing" secondItem="afB-rc-PAn" secondAttribute="trailing" constant="20" id="SNY-GK-5s6"/>
+                            <constraint firstItem="afB-rc-PAn" firstAttribute="centerX" secondItem="Jv4-YR-rIY" secondAttribute="centerX" id="TxW-Fr-rKY"/>
+                            <constraint firstItem="eQ3-1Q-PC5" firstAttribute="centerX" secondItem="Jv4-YR-rIY" secondAttribute="centerX" id="VTS-vH-4ec"/>
+                            <constraint firstItem="eQ3-1Q-PC5" firstAttribute="top" secondItem="xHK-eQ-tEv" secondAttribute="bottom" constant="40" id="Vx1-TG-FzD"/>
+                            <constraint firstItem="afB-rc-PAn" firstAttribute="top" secondItem="oPt-C8-S0c" secondAttribute="bottom" constant="10" id="YRH-KX-BCq"/>
+                            <constraint firstItem="tST-Jr-JHx" firstAttribute="top" secondItem="eQ3-1Q-PC5" secondAttribute="bottom" id="c0A-AJ-kls"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="8L4-IS-eEL"/>
+                    </view>
+                    <connections>
+                        <outlet property="datePicker" destination="tST-Jr-JHx" id="H6x-N1-sQ1"/>
+                        <outlet property="nameTextField" destination="afB-rc-PAn" id="Qzo-nM-K0e"/>
+                        <outlet property="segmentedControl" destination="xHK-eQ-tEv" id="7R6-7N-s5Z"/>
+                        <outlet property="switchOutlet" destination="L4p-ht-waK" id="En2-N9-7NC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VqP-xa-EQ7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1204" y="427"/>
         </scene>
         <!--Settings HomeVC-->
         <scene sceneID="0Hb-nF-PrK">
@@ -1551,7 +1646,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lzv-J2-7IQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1173.913043478261" y="1202.6785714285713"/>
+            <point key="canvasLocation" x="-1204" y="1203"/>
         </scene>
         <!--Settings DetailVC-->
         <scene sceneID="Y9A-h7-3i6">
@@ -1882,6 +1977,7 @@
         <image name="edit-2-xl" width="64" height="64"/>
         <image name="order" width="30" height="30"/>
         <image name="plus-6-xl" width="64" height="64"/>
+        <image name="search-3-xl" width="64" height="64"/>
         <image name="services" width="30" height="30"/>
         <image name="shopping_cart" width="30" height="30"/>
         <image name="trash-10-xxl" width="256" height="256"/>

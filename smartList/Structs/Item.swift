@@ -108,14 +108,18 @@ extension Item {
             "store": self.store!,
             "user": self.user ?? "",
             "ownID": reference.documentID,
-            "storageSection": FoodStorageType.unsorted.string,
-            "timeAdded": Date().timeIntervalSince1970
+            "storageSection": self.storageSection?.string ?? FoodStorageType.unsorted.string,
+            "timeAdded": Date().timeIntervalSince1970,
+            "timeExpires": self.timeExpires as Any
         ])
     }
+    
+    
     func selectedItem(db: Firestore) { db.collection("lists").document("\(SharedValues.shared.listIdentifier!.documentID)").collection("items").document(self.ownID!).updateData([
             "selected": self.selected
         ])
     }
+    
     #warning("dont think i need storageID here and on deleteItemFromStorage in same file")
     func switchItemToSegment(named: String, db: Firestore, storageID: String) {
         let documentRef = db.collection("storages").document(SharedValues.shared.foodStorageID ?? " ").collection("items").document(self.ownID ?? " ")

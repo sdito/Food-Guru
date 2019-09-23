@@ -25,6 +25,9 @@ class StorageHomeVC: UIViewController {
     
     var items: [Item] = [] {
         didSet {
+            let itms = self.items.map({$0.storageSection})
+            print(FoodStorageType.isUnsortedSegmentNeeded(types: itms as! [FoodStorageType]))
+            #error("this print gives out the right ansewr, just need to adjust the segmented control to now show the unsorted tab now")
             sortedItems = self.items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl))
         }
     }
@@ -64,6 +67,13 @@ class StorageHomeVC: UIViewController {
     }
     @IBAction func searchPressed(_ sender: Any) {
         print("Search was pressed")
+        
+    }
+    
+    @IBAction func plusWasPressed(_ sender: Any) {
+        print("Plus was pressed")
+        let vc = storyboard?.instantiateViewController(withIdentifier: "storageNewItem") as! StorageNewItemVC
+        present(vc, animated: true, completion: nil)
         
     }
     
