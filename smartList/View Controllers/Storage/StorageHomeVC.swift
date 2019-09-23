@@ -26,8 +26,8 @@ class StorageHomeVC: UIViewController {
     var items: [Item] = [] {
         didSet {
             let itms = self.items.map({$0.storageSection})
-            print(FoodStorageType.isUnsortedSegmentNeeded(types: itms as! [FoodStorageType]))
-            #error("this print gives out the right ansewr, just need to adjust the segmented control to now show the unsorted tab now")
+            let boolean = FoodStorageType.isUnsortedSegmentNeeded(types: itms as! [FoodStorageType])
+            haveNeededSectionsInSegmentedControl(unsortedNeeded: boolean, segmentedControl: segmentedControl)
             sortedItems = self.items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl))
         }
     }
@@ -49,7 +49,6 @@ class StorageHomeVC: UIViewController {
         tableView.delegate = self
         db = Firestore.firestore()
         createObserver()
-        
         
         Item.readItemsForStorage(db: db, storageID: SharedValues.shared.foodStorageID ?? " ") { (itms) in
             self.items = itms
@@ -145,7 +144,18 @@ class StorageHomeVC: UIViewController {
             }
         }
     }
-    
+    private func haveNeededSectionsInSegmentedControl(unsortedNeeded: Bool, segmentedControl: UISegmentedControl) {
+        switch unsortedNeeded {
+        case true:
+            segmentedControl.setWidth(segmentedControl.widthForSegment(at: 1), forSegmentAt: 0)
+            
+        case false:
+            segmentedControl.setWidth(0.1, forSegmentAt: 0)
+            if segmentedControl.selectedSegmentIndex == 0 {
+                segmentedControl.selectedSegmentIndex = 1
+            }
+        }
+    }
     
     @objc func createGroupStorage() {
         print("create group storage")

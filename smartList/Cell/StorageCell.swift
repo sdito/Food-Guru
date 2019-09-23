@@ -18,7 +18,7 @@ class StorageCell: UITableViewCell {
     func setUI(item: Item) {
         name.text = item.name
         
-        #warning("still need to make sure it handles expired items")
+        #warning("still need to make sure it handles expired items for the circle")
         viewForCircle.layer.sublayers = nil
         if item.timeExpires != nil {
             let pct = item.timeExpires!.getPercentageUntilExpiringFromExpirationDate(timeAdded: item.timeAdded ?? 0)
@@ -36,7 +36,26 @@ class StorageCell: UITableViewCell {
         }
         
         if let time = item.timeExpires {
-            expires.text = "Expires - \(time.dateFormatted(style: .short))"
+            // first, if item expires today
+            
+            if time.dateFormatted(style: .short) == Date().timeIntervalSince1970.dateFormatted(style: .short) {
+                expires.text = "Expires today"
+                expires.textColor = Colors.main
+                
+            //second, if item is already expired
+            } else if time < Date().timeIntervalSince1970 {
+                expires.text = "Expired on \(time.dateFormatted(style: .short))"
+                expires.textColor = .red
+            //third, if item is still fine, then show the date
+            } else {
+               expires.text = "Expires - \(time.dateFormatted(style: .short))"
+               expires.textColor = .lightGray
+            }
+            
+            
+            
+            
+            
         } else {
             expires.text = ""
         }

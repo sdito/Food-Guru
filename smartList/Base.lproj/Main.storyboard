@@ -1276,10 +1276,11 @@
                                                     </subviews>
                                                 </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gMv-HI-qAV">
-                                                    <rect key="frame" x="322" y="21" width="62" height="62"/>
+                                                    <rect key="frame" x="344" y="21" width="40" height="62"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="gMv-HI-qAV" secondAttribute="height" multiplier="1:1" id="j9c-SX-gKq"/>
+                                                        <constraint firstAttribute="width" constant="40" id="oXs-I2-UeF"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
