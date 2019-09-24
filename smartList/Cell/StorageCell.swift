@@ -40,7 +40,7 @@ class StorageCell: UITableViewCell {
             
             if time.dateFormatted(style: .short) == Date().timeIntervalSince1970.dateFormatted(style: .short) {
                 expires.text = "Expires today"
-                expires.textColor = Colors.main
+                expires.textColor = .darkGray
                 
             //second, if item is already expired
             } else if time < Date().timeIntervalSince1970 {
