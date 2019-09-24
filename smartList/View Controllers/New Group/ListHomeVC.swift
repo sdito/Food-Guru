@@ -10,15 +10,14 @@ import UIKit
 import FirebaseFirestore
 
 class ListHomeVC: UIViewController {
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var mainListView: UIView!
+    @IBOutlet weak var tableView: UITableView!
     
     var db: Firestore!
     
     private var items: [Item] = []
     private var lists: [List]? {
         didSet {
-            collectionView.reloadData()
+            tableView.reloadData()
         }
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -30,12 +29,9 @@ class ListHomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.dataSource = self
-        collectionView.delegate = self
-       
-        mainListView.layer.cornerRadius = 50
-        mainListView.clipsToBounds = true
-        mainListView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.lightGray)
+        
+        tableView.dataSource = self
+        tableView.delegate = self
         
         db = Firestore.firestore()
         List.readAllUserLists(db: db, userID: SharedValues.shared.userID!) { (dbLists) in
@@ -58,10 +54,8 @@ class ListHomeVC: UIViewController {
     }
     
 }
-
-
-extension ListHomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension ListHomeVC: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let n = lists?.count {
             return n
         } else {
@@ -69,20 +63,17 @@ extension ListHomeVC: UICollectionViewDataSource, UICollectionViewDelegate {
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = lists![indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "listCell", for: indexPath) as! ListCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "listHomeCell", for: indexPath) as! ListHomeCell
         cell.setUI(list: item)
         return cell
     }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let l = lists![indexPath.row]
-        //        Item.readItems(db: db, docID: l.docID!) { (itm) in
-        //            self.items = itm
-        //        }
         SharedValues.shared.listIdentifier = self.db.collection("lists").document("\(l.docID!)")
         self.performSegue(withIdentifier: "listSelected", sender: l)
     }
+    
+    
 }

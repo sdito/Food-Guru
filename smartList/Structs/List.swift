@@ -53,6 +53,9 @@ struct List {
                     lists = [l]
                 }
             }
+            lists = lists.sorted(by: { (l1, l2) -> Bool in
+                l1.timeIntervalSince1970 ?? 0 > l2.timeIntervalSince1970 ?? 0
+            })
             listsChanged(lists)
         }
         //db.collection("lists").whereField("shared", arrayContains: userID)
