@@ -27,7 +27,7 @@ class AddItemsVC: UIViewController {
     private var sortedCategories: [String] = []
     
     
-    
+    #warning("check")
     // check if this variable is being used for anything
     private var sendHome = true
     
@@ -42,6 +42,9 @@ class AddItemsVC: UIViewController {
             }
         }
     }
+    
+    
+    
     @IBOutlet weak var topView: UIView!
     
     @IBOutlet weak var storesView: UIView!
@@ -60,21 +63,23 @@ class AddItemsVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         textField.delegate = self
-//        if list?.stores?.isEmpty == false {
-//            storeText = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)!
-//        }
+        
         setUIfrom(list: list!)
         
         view.setGradientBackground(colorOne: .lightGray, colorTwo: .gray)
+        List.listenerOnListWithDocID(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (lst) in
+            self.list = lst
+        }
         Item.readItemsForList(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (itm) in
             self.list?.items = itm
             
         }
         if let first = stackView.subviews.last as! UIButton? {
-            SharedValues.shared.currentCategory = first.titleLabel?.text ?? "none"
+            SharedValues.shared.currentCategory = first.titleLabel?.text ?? ""
+        } else {
+            SharedValues.shared.currentCategory = ""
         }
         
-        //sendHome = true
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,6 +156,7 @@ class AddItemsVC: UIViewController {
         alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         
         self.present(alert, animated: true)
+        
     }
     
     @IBAction func doneWithList(_ sender: Any) {
@@ -239,6 +245,19 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
         arrayArrayItems[indexPath.section][indexPath.row].selected = !arrayArrayItems[indexPath.section][indexPath.row].selected
         arrayArrayItems[indexPath.section][indexPath.row].selectedItem(db: db)
         tableView.reloadData()
+    }
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let item = arrayArrayItems[indexPath.section][indexPath.row]
+        
+        tableView.beginUpdates()
+        self.tableView.deleteRows(at: [indexPath], with: .automatic)
+        arrayArrayItems[indexPath.section].remove(at: indexPath.row)
+        tableView.endUpdates()
+        item.deleteItemFromList(db: db, listID: list?.docID ?? " ")
     }
 }
 

@@ -36,6 +36,17 @@ struct List {
         self.groupID = groupID
     }
     
+    static func listenerOnListWithDocID(db: Firestore, docID: String, listReturned: @escaping (_ list: List?) -> Void) {
+        let reference = db.collection("lists").document(docID)
+        var l: List?
+        reference.addSnapshotListener { (docSnapshot, error) in
+            if let doc = docSnapshot {
+                l = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String)
+            }
+            listReturned(l)
+        }
+    }
+    
     static func readAllUserLists(db: Firestore, userID: String, listsChanged: @escaping (_ lists: [List]) -> Void) {
         var lists: [List] = []
         db.collection("lists").whereField("shared", arrayContains: userID).addSnapshotListener { (querySnapshot, error) in
@@ -94,7 +105,28 @@ extension List {
             "categories": self.categories!,
             "people": Array(Set(self.people!)).sorted(),
             "timeIntervalSince1970": Date().timeIntervalSince1970
-        ])
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document sucessfully updated")
+                
+                var listForTesting = self
+                print(listForTesting.items?.count)
+                listForTesting.removeItemsThatNoLongerBelong()
+                print(listForTesting.items?.count)
+                
+            }
+        }
+    }
+    
+    mutating func removeItemsThatNoLongerBelong() {
+        let categories: Set<String> = Set(self.categories ?? [""])
+        let stores: Set<String> = Set(self.stores ?? [""])
+        
+        self.items = self.items?.filter({ (itm) -> Bool in
+            categories.contains(itm.category ?? "") && stores.contains(itm.store ?? "")
+        })
     }
     
     func sortForTableView(from store: String) -> ([String]?, [[Item]]) {
@@ -128,5 +160,28 @@ extension List {
         }
         
         return (categories, sortedItems)
+    }
+}
+
+
+extension Sequence where Element == List {
+    func organizeTableViewForListHome() -> ([String]?, [[List]]?) {
+        let lists = self as? [List]
+        switch lists?.count {
+        case nil:
+            return (nil, nil)
+        case 1:
+            return (["Current list"], [lists!])
+        default:
+            
+            var notFirst = lists
+            if notFirst?.count ?? 0 >= 2 {
+                notFirst?.remove(at: 0)
+                return (["Current list", "Past lists"], [[(lists?.first)!], notFirst!])
+            } else {
+                return (nil, nil)
+            }
+            
+        }
     }
 }
