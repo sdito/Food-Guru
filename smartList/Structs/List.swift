@@ -110,23 +110,28 @@ extension List {
                 print("Error updating document: \(err)")
             } else {
                 print("Document sucessfully updated")
+                //#error("list UI is updated on the tableView, but the buttons do not update at the to the new categories and also stores probably, need to delete the items from the list below currently returns nil for both so thats a lot of fun")
                 
-                var listForTesting = self
-                print(listForTesting.items?.count)
-                listForTesting.removeItemsThatNoLongerBelong()
-                print(listForTesting.items?.count)
                 
             }
         }
     }
     
-    mutating func removeItemsThatNoLongerBelong() {
+    func removeItemsThatNoLongerBelong() -> [Item] {
         let categories: Set<String> = Set(self.categories ?? [""])
         let stores: Set<String> = Set(self.stores ?? [""])
-        
-        self.items = self.items?.filter({ (itm) -> Bool in
-            categories.contains(itm.category ?? "") && stores.contains(itm.store ?? "")
-        })
+        var goodItems: [Item] = []
+        if let items = self.items {
+            for item in items {
+                if categories.contains(item.category ?? "") && stores.contains(item.store ?? "") {
+                    goodItems.append(item)
+                } else {
+                    print("Item is being deleted: \(item.name)")
+                    item.deleteItemFromList(db: Firestore.firestore(), listID: self.docID ?? " ")
+                }
+            }
+        }
+        return goodItems
     }
     
     func sortForTableView(from store: String) -> ([String]?, [[Item]]) {

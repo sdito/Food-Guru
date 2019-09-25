@@ -134,8 +134,9 @@ extension Item {
         ])
     }
     
-    #warning("have the deleted items go to a recently deleted items in the settings, could have a pop up say after the items are deleted (pop up only shown once) that deleted items can be found in the settings, could also keep track of the user that deletes the items")
+    
     func deleteItemFromStorage(db: Firestore, storageID: String) {
+        print(storageID)
         let documentRef = db.collection("storages").document(SharedValues.shared.foodStorageID ?? " ").collection("items").document(self.ownID ?? " ")
         documentRef.delete()
     }
