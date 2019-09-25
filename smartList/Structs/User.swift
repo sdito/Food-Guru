@@ -29,7 +29,6 @@ struct User {
         
     }
     
-    
     static func emailToUid(emails: [String]?, db: Firestore, listID: String) {
         var userIDs: [String] = []
         emails?.forEach({ (email) in
@@ -171,5 +170,17 @@ struct User {
             }
             dataReturned(emails, date)
         }
+    }
+    
+    static func leaveGroupUser(db: Firestore, groupID: String) {
+        let reference = db.collection("groups").document(groupID)
+        var newEmails = SharedValues.shared.groupEmails
+        newEmails = newEmails?.filter({$0 != Auth.auth().currentUser?.email ?? ""})
+        reference.updateData([
+            "emails": newEmails as Any
+        ])
+        db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").updateData([
+            "groupID": FieldValue.delete()
+        ])
     }
 }

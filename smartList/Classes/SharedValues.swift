@@ -18,13 +18,16 @@ class SharedValues {
     var cuisineType: String?
     var currText: UIView?
     
-    var groupID: String?
+    var groupID: String? {
+        didSet {
+            NotificationCenter.default.post(name: .groupIDchanged, object: nil)
+        }
+    }
     var groupEmails: [String]?
     var groupDate: TimeInterval?
     
     var foodStorageID: String? {
         didSet {
-            
             NotificationCenter.default.post(name: .foodStorageIDchanged, object: nil)
         }
     }

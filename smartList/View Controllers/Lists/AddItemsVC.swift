@@ -76,6 +76,8 @@ class AddItemsVC: UIViewController {
             
             let listForChanging = self.list
             self.list?.items = listForChanging?.removeItemsThatNoLongerBelong()
+            
+            self.setUIfrom(list: self.list!)
         }
         Item.readItemsForList(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (itm) in
             self.list?.items = itm
@@ -282,7 +284,7 @@ extension AddItemsVC: UITextFieldDelegate {
 extension AddItemsVC {
     func pushToCreateGroupVC() {
         let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
-        
+        vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
     func addItemsToStorageIfPossible(sendList: List, foodStorageEmails: [String]?) {

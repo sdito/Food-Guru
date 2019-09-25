@@ -19,8 +19,13 @@ class SettingsDetailVC: UIViewController {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        createObserver()
         db = Firestore.firestore()
         tableView.backgroundColor = .lightGray
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -57,10 +62,6 @@ class SettingsDetailVC: UIViewController {
           
             
         case .group:
-            
-            //PROBLEM HERE, NEED TO PULL GROUPID FROM FIRESTORE TO CHECK IF USER IS IN A GROUP, WILL NEED TO BE ABLE TO PULL GROUPID ON DEMAND
-            
-            
             //case: not in a group -> need to create a group
             if SharedValues.shared.groupID == nil {
                 let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
@@ -81,9 +82,11 @@ class SettingsDetailVC: UIViewController {
                 
                 let editGroup = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
                 editGroup.setUI(title: "Edit group")
+                editGroup.button.addTarget(self, action: #selector(editGroupAction), for: .touchUpInside)
                 
                 let leaveGroup = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
                 leaveGroup.setUI(title: "Leave current group")
+                leaveGroup.button.addTarget(self, action: #selector(leaveGroupAction), for: .touchUpInside)
                 
                 return [topCell, editGroup, leaveGroup]
             }
@@ -108,16 +111,44 @@ class SettingsDetailVC: UIViewController {
         }
     }
     
+    private func createObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(observerSelectorGroupID), name: .groupIDchanged, object: nil)
+    }
+    
+    @objc func observerSelectorGroupID() {
+        tableView.reloadData()
+    }
+    
     @objc private func logOut() {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "logIn") as! LogInVC
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+        let alert = UIAlertController(title: "Are you sure you want to log out of your account?", message: nil, preferredStyle: .alert)
+        alert.addAction(.init(title: "Log out", style: .destructive, handler: {(alert: UIAlertAction!) in
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "logIn") as! LogInVC
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        }))
+        alert.addAction(.init(title: "Back", style: .cancel, handler: nil))
+        present(alert, animated: true)
     }
     @objc private func createGroup() {
         let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
+        vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
         
     }
+    @objc private func leaveGroupAction() {
+        let alert = UIAlertController(title: "Are you sure you want to leave your group?", message: nil, preferredStyle: .alert)
+        
+        alert.addAction(.init(title: "Leave group?", style: .destructive, handler: {(alert: UIAlertAction!) in User.leaveGroupUser(db: self.db, groupID: SharedValues.shared.groupID ?? " ")}))
+        alert.addAction(.init(title: "Back", style: .cancel, handler: nil))
+        present(alert, animated: true)
+    }
+    @objc private func editGroupAction() {
+        #error("need to implement something in the CreateGroupVC that takes in the groupID, and uses that theortetical value to decide whether to create a new group or to edit an existing group")
+        let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
+    
 }
 
 extension SettingsDetailVC: UITableViewDataSource, UITableViewDelegate {

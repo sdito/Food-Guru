@@ -51,7 +51,6 @@ extension CreateGroupVC: UICollectionViewDataSource, UICollectionViewDelegate {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "groupNameCell", for: indexPath) as! GroupNameCell
         let email = emails[indexPath.row]
         cell.setUI(str: email)
-        
         return cell
     }
 }
