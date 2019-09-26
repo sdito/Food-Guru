@@ -12,6 +12,8 @@ import FirebaseAuth
 
 class CreateGroupVC: UIViewController {
     var db: Firestore!
+    var previousGroupID: String?
+    
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var textField: UITextField!
     
@@ -27,6 +29,7 @@ class CreateGroupVC: UIViewController {
         db = Firestore.firestore()
         collectionView.dataSource = self
         collectionView.delegate = self
+        
         textField.delegate = self
         textField.becomeFirstResponder()
     }
@@ -35,9 +38,16 @@ class CreateGroupVC: UIViewController {
     }
     
     @IBAction func createGroup(_ sender: Any) {
-        User.writeGroupToFirestoreAndAddToUsers(db: db, emails: emails)
         
-        self.dismiss(animated: true, completion: nil)
+        if previousGroupID == nil {
+            // create a new group
+            User.writeGroupToFirestoreAndAddToUsers(db: db, emails: emails)
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            User.editedGroupInfo(db: db, initialEmails: SharedValues.shared.groupEmails ?? [""], updatedEmails: emails, groupID: SharedValues.shared.groupID ?? " ", storageID: SharedValues.shared.foodStorageID ?? " ")
+            self.dismiss(animated: true, completion: nil)
+        }
+        
     }
     
 }
@@ -51,7 +61,12 @@ extension CreateGroupVC: UICollectionViewDataSource, UICollectionViewDelegate {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "groupNameCell", for: indexPath) as! GroupNameCell
         let email = emails[indexPath.row]
         cell.setUI(str: email)
+        
         return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(emails[indexPath.row])
+        collectionView.reloadData()
     }
 }
 

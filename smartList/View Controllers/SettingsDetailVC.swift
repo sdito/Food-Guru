@@ -143,9 +143,9 @@ class SettingsDetailVC: UIViewController {
         present(alert, animated: true)
     }
     @objc private func editGroupAction() {
-        #error("need to implement something in the CreateGroupVC that takes in the groupID, and uses that theortetical value to decide whether to create a new group or to edit an existing group")
         let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
         vc.modalPresentationStyle = .fullScreen
+        vc.previousGroupID = SharedValues.shared.groupID
         present(vc, animated: true, completion: nil)
     }
     

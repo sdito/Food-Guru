@@ -10,8 +10,19 @@ import UIKit
 
 class GroupNameCell: UICollectionViewCell {
     @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var deleteButton: UIButton!
     
     func setUI(str: String) {
         name.text = str
+        name.layer.cornerRadius = 10
+        name.clipsToBounds = true
+        
+        switch self.isSelected {
+            
+        case true:
+            deleteButton.isHidden = false
+        case false:
+            deleteButton.isHidden = true
+        }
     }
 }

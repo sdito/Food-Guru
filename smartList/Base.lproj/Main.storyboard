@@ -1763,15 +1763,26 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BjK-sh-m7s">
+                                                    <rect key="frame" x="203.5" y="6.5" width="25.5" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="BjK-sh-m7s" secondAttribute="height" multiplier="1:1" id="GWw-IV-vGg"/>
+                                                    </constraints>
+                                                    <state key="normal" image="trash-10-xxl"/>
+                                                </button>
                                             </subviews>
                                         </view>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="BjK-sh-m7s" secondAttribute="trailing" constant="5" id="96M-yD-RPs"/>
                                             <constraint firstAttribute="bottom" secondItem="L43-wX-WbU" secondAttribute="bottom" id="SQm-R7-EEC"/>
                                             <constraint firstAttribute="trailing" secondItem="L43-wX-WbU" secondAttribute="trailing" id="gIN-QY-gic"/>
+                                            <constraint firstItem="BjK-sh-m7s" firstAttribute="height" secondItem="L43-wX-WbU" secondAttribute="height" multiplier="2:3" id="jYV-a8-ZUj"/>
+                                            <constraint firstItem="BjK-sh-m7s" firstAttribute="centerY" secondItem="uGT-ZW-aoi" secondAttribute="centerY" id="nw5-xJ-XY9"/>
                                             <constraint firstItem="L43-wX-WbU" firstAttribute="leading" secondItem="uGT-ZW-aoi" secondAttribute="leading" id="pDX-zn-CXH"/>
                                             <constraint firstItem="L43-wX-WbU" firstAttribute="top" secondItem="uGT-ZW-aoi" secondAttribute="top" id="xlq-cZ-e7h"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="deleteButton" destination="BjK-sh-m7s" id="UKD-c8-B7L"/>
                                             <outlet property="name" destination="L43-wX-WbU" id="d6M-as-n3U"/>
                                         </connections>
                                     </collectionViewCell>

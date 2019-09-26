@@ -25,8 +25,99 @@ struct User {
             let both = listPeople.union(foodStoragePeople)
             return (false, Array(both).sorted())
         }
-        
-        
+    }
+    
+    
+    static func editedGroupInfo(db: Firestore, initialEmails: [String], updatedEmails: [String], groupID: String, storageID: String) {
+        //first need to find out of the storage is part of a group
+        db.collection("storages").document(storageID).getDocument { (docSnapshot, error) in
+            if let doc = docSnapshot {
+                let isGroup = doc.get("isGroup") as? Bool
+                switch isGroup {
+                // STORAGE IS WITH THE GROUP
+                case true:
+                    // 1: update the group (email only)
+                    db.collection("groups").document(groupID).updateData([
+                        "emails": updatedEmails
+                    ])
+                    
+                    // 2: update the storage (emails and uid)
+                    db.collection("storages").document(storageID).updateData([
+                        "emails": updatedEmails
+                    ])
+                    
+                    var uids: [String] = []
+                    for person in updatedEmails {
+                        turnEmailToUid(db: db, email: person) { (uid) in
+                            uids.append(uid ?? " ")
+                            if uids.count == updatedEmails.count {
+                                db.collection("storages").document(storageID).updateData([
+                                    "shared" : uids
+                                ])
+                            }
+                        }
+                    }
+                    // 3: update each user
+                        // deleted users
+                    #warning("havent tested, dont have the ability to delete users yet")
+                    initialEmails.forEach { (email) in
+                        if !updatedEmails.contains(email) {
+                            print("need to delete: \(email)")
+                            turnEmailToUid(db: db, email: email) { (uid) in
+                                db.collection("users").document(uid ?? " ").updateData([
+                                    "storageID": FieldValue.delete(),
+                                    "groupID": FieldValue.delete()
+                                ])
+                            }
+                        }
+                    }
+                    
+                        // new users
+                    updatedEmails.forEach { (email) in
+                        if !initialEmails.contains(email) {
+                            print("need to add: \(email)")
+                            turnEmailToUid(db: db, email: email) { (uid) in
+                                db.collection("users").document(uid ?? " ").updateData([
+                                    "storageID": storageID,
+                                    "groupID": groupID
+                                ])
+                            }
+                        }
+                    }
+                // STORAGE IS NOT WITH THE GROUP
+                case false:
+                    // works for adding
+                    updatedEmails.forEach { (email) in
+                        if !initialEmails.contains(email) {
+                            print("need to add: \(email)")
+                            turnEmailToUid(db: db, email: email) { (uid) in
+                                db.collection("users").document(uid ?? " ").updateData([
+                                    "groupID": groupID
+                                ])
+                            }
+                        }
+                    }
+                    #warning("still need to test deleting")
+                    initialEmails.forEach { (email) in
+                        if !updatedEmails.contains(email) {
+                            print("need to delete: \(email)")
+                            turnEmailToUid(db: db, email: email) { (uid) in
+                                db.collection("users").document(uid ?? " ").updateData([
+                                    "groupID": FieldValue.delete()
+                                ])
+                            }
+                        }
+                    }
+                    
+                    db.collection("groups").document(groupID).updateData([
+                        "emails": updatedEmails
+                    ])
+                    
+                default:
+                    return
+                }
+            }
+        }
     }
     
     static func emailToUid(emails: [String]?, db: Firestore, listID: String) {
@@ -80,35 +171,7 @@ struct User {
     }
     
     static func writeGroupToFirestoreAndAddToUsers(db: Firestore, emails: [String]) {
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        //NEED TO CHECK EACH USER AGAIN BEFORE FINALLY WRITING, THEY COULD BE ADDED INTO A GROUP AT THE SAME TIME FROM TWO DIFFERENT DEVICES, OR WRITE A PLACEHOLDER GROUPID VALUE IN THEIR FILE
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        #warning("NEED TO CHECK EACH USER AGAIN BEFORE FINALLY WRITING, THEY COULD BE ADDED INTO A GROUP AT THE SAME TIME FROM TWO DIFFERENT DEVICES, OR WRITE A PLACEHOLDER GROUPID VALUE IN THEIR FILE")
         // write the group to firestore first
         let groupRef = db.collection("groups").document()
         let groupDocID = groupRef.documentID
@@ -134,17 +197,23 @@ struct User {
     
     // has listeners, so will only need to pull group data from shared values
     static func setAndPersistGroupDataInSharedValues(db: Firestore) {
-        let docRef = db.collection("users").document(Auth.auth().currentUser?.uid ?? "")
+        let docRef = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ")
         docRef.addSnapshotListener { (docSnapshot, error) in
             if let docSnapshot = docSnapshot {
                 if let groupID = docSnapshot.get("groupID") as? String {
                     SharedValues.shared.groupID = groupID
-                    db.collection("groups").document(groupID).addSnapshotListener({ (snapshot, error) in
-                        if let snapshot = snapshot {
-                            SharedValues.shared.groupEmails = snapshot.get("emails") as? [String]
-                            SharedValues.shared.groupDate = snapshot.get("dateCreated") as? TimeInterval
-                        }
-                    })
+                    if groupID != "" {
+                        db.collection("groups").document(groupID).addSnapshotListener({ (snapshot, error) in
+                            if let snapshot = snapshot {
+                                SharedValues.shared.groupEmails = snapshot.get("emails") as? [String]
+                                SharedValues.shared.groupDate = snapshot.get("dateCreated") as? TimeInterval
+                            }
+                        })
+                    } else {
+                        SharedValues.shared.groupEmails = nil
+                        SharedValues.shared.groupDate = nil
+                    }
+                    
                 } else {
                     SharedValues.shared.groupID = nil
                     SharedValues.shared.groupEmails = nil
@@ -163,7 +232,7 @@ struct User {
     static func getGroupInfo(db: Firestore!, dataReturned: @escaping (_ email: [String], _ date: String) -> Void) {
         var emails: [String] = []
         var date: String = ""
-        db.collection("groups").document(SharedValues.shared.groupID ?? "").getDocument { (documentSnapshot, error) in
+        db.collection("groups").document(SharedValues.shared.groupID ?? " ").getDocument { (documentSnapshot, error) in
             if let doc = documentSnapshot {
                 date = (doc.get("dateCreated") as! TimeInterval).dateFormatted(style: .short)
                 emails = doc.get("emails") as! [String]
@@ -175,6 +244,8 @@ struct User {
     static func leaveGroupUser(db: Firestore, groupID: String) {
         let reference = db.collection("groups").document(groupID)
         var newEmails = SharedValues.shared.groupEmails
+        let storageID = SharedValues.shared.foodStorageID
+        
         newEmails = newEmails?.filter({$0 != Auth.auth().currentUser?.email ?? ""})
         reference.updateData([
             "emails": newEmails as Any
@@ -182,5 +253,87 @@ struct User {
         db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").updateData([
             "groupID": FieldValue.delete()
         ])
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        #warning("need to remove the data from the storages here for USER LEAVING, only doing user leaving here")
+        db.collection("storages").document(storageID ?? " ").getDocument { (docSnapshot, error) in
+            if let doc = docSnapshot {
+                let isGroup = doc.get("isGroup") as? Bool
+                if isGroup == true {
+                    let previousEmails = doc.get("emails") as? [String]
+                    let previousShared = doc.get("shared") as? [String]
+                    
+                    let newEmails = previousEmails?.filter({$0 != Auth.auth().currentUser?.email ?? ""})
+                    let newShared = previousShared?.filter({$0 != Auth.auth().currentUser?.uid})
+                    
+                    print("Need to remove the information from the deleted user from the storage (email and uid)")
+                    db.collection("storages").document(storageID ?? " ").updateData([
+                        "emails": newEmails as Any,
+                        "shared": newShared as Any
+                    ])
+                    db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").updateData([
+                        "storageID": FieldValue.delete()
+                    ])
+                }
+            }
+        }
     }
 }

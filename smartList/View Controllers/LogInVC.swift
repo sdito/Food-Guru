@@ -46,11 +46,11 @@ extension LogInVC: FUIAuthDelegate {
         
         
         //to check to see if user is already in user database, if not write email and uid into firestore
-        let docRef = db.collection("users").document("\(authDataResult?.user.uid ?? "")")
+        let docRef = db.collection("users").document("\(authDataResult?.user.uid ?? " ")")
         
         docRef.getDocument { (document, error) in
             if document?.exists == false {
-                self.db.collection("users").document("\(authDataResult?.user.uid ?? "")").setData([
+                self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")").setData([
                     "email": authDataResult?.user.email! as Any,
                     "uid": authDataResult?.user.uid as Any,
                     "name": authDataResult?.user.displayName as Any
