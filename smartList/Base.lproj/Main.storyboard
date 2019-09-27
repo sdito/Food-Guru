@@ -1763,7 +1763,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BjK-sh-m7s">
+                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BjK-sh-m7s">
                                                     <rect key="frame" x="203.5" y="6.5" width="25.5" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="BjK-sh-m7s" secondAttribute="height" multiplier="1:1" id="GWw-IV-vGg"/>

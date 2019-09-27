@@ -13,6 +13,11 @@ import FirebaseAuth
 class CreateGroupVC: UIViewController {
     var db: Firestore!
     var previousGroupID: String?
+    private var selectedEmail: String? {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var textField: UITextField!
@@ -40,7 +45,7 @@ class CreateGroupVC: UIViewController {
     @IBAction func createGroup(_ sender: Any) {
         
         if previousGroupID == nil {
-            // create a new group
+            // create a new group, nothing to do with editing
             User.writeGroupToFirestoreAndAddToUsers(db: db, emails: emails)
             self.dismiss(animated: true, completion: nil)
         } else {
@@ -52,6 +57,7 @@ class CreateGroupVC: UIViewController {
     
 }
 
+
 extension CreateGroupVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return emails.count
@@ -60,13 +66,23 @@ extension CreateGroupVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "groupNameCell", for: indexPath) as! GroupNameCell
         let email = emails[indexPath.row]
-        cell.setUI(str: email)
-        
+        cell.setUI(str: email, selectedEmail: selectedEmail)
+        cell.deleteButton.addTarget(self, action: #selector(deleteEmailSelector), for: .touchUpInside)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print(emails[indexPath.row])
-        collectionView.reloadData()
+        let path = emails[indexPath.row]
+        if path == selectedEmail {
+            selectedEmail = nil
+        } else {
+            selectedEmail = emails[indexPath.row]
+        }
+        
+    }
+    #error("left off here")
+    @objc func deleteEmailSelector() {
+        print("email to delete: \(selectedEmail)")
     }
 }
 

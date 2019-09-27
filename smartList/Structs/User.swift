@@ -253,67 +253,6 @@ struct User {
         db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").updateData([
             "groupID": FieldValue.delete()
         ])
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        #warning("need to remove the data from the storages here for USER LEAVING, only doing user leaving here")
         db.collection("storages").document(storageID ?? " ").getDocument { (docSnapshot, error) in
             if let doc = docSnapshot {
                 let isGroup = doc.get("isGroup") as? Bool
