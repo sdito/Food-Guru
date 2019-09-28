@@ -59,7 +59,6 @@ struct User {
                     }
                     // 3: update each user
                         // deleted users
-                    #warning("havent tested, dont have the ability to delete users yet")
                     initialEmails.forEach { (email) in
                         if !updatedEmails.contains(email) {
                             print("need to delete: \(email)")
@@ -97,7 +96,7 @@ struct User {
                             }
                         }
                     }
-                    #warning("still need to test deleting")
+                    
                     initialEmails.forEach { (email) in
                         if !updatedEmails.contains(email) {
                             print("need to delete: \(email)")

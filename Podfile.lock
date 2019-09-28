@@ -168,9 +168,9 @@ PODS:
   - R.swift (5.0.3):
     - R.swift.Library (~> 5.0.0)
   - R.swift.Library (5.0.1)
-  - SDWebImage (5.1.1):
-    - SDWebImage/Core (= 5.1.1)
-  - SDWebImage/Core (5.1.1)
+  - SDWebImage (5.2.0):
+    - SDWebImage/Core (= 5.2.0)
+  - SDWebImage/Core (5.2.0)
 
 DEPENDENCIES:
   - Firebase/Auth
@@ -238,7 +238,7 @@ SPEC CHECKSUMS:
   Protobuf: 67fb42ba613def994e61854de2b3164f13790cc4
   R.swift: f5a87643b91ea569d23d6afb3eee9c743edde239
   R.swift.Library: cfe85d569d9bae6cb262922db130e7c3a7a5fad1
-  SDWebImage: 96d7f03415ccb28d299d765f93557ff8a617abd8
+  SDWebImage: 609192dcf3898c910a2848032372ead951e66364
 
 PODFILE CHECKSUM: 7c5c0a10c764854d6659192b45c02f161d42dc42
 

@@ -19,6 +19,8 @@ class CreateGroupVC: UIViewController {
         }
     }
     
+    @IBOutlet weak var exitOutlet: UIButton!
+    
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneCreatingOutlet: UIButton!

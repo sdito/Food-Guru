@@ -30,7 +30,7 @@ class StorageHomeVC: UIViewController {
             let itms = self.items.map({$0.storageSection})
             let boolean = FoodStorageType.isUnsortedSegmentNeeded(types: itms as! [FoodStorageType])
             haveNeededSectionsInSegmentedControl(unsortedNeeded: boolean, segmentedControl: segmentedControl)
-            sortedItems = self.items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl))
+            sortedItems = self.items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: searchBar.text ?? "")
         }
     }
     
@@ -74,6 +74,8 @@ class StorageHomeVC: UIViewController {
         searchBar.placeholder = ""
         searchOutlet.setImage(UIImage(named: "search-3-xl"), for: .normal)
         searchBar.resignFirstResponder()
+        searchBar.text = ""
+        sortedItems = items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: "")
     }
     @IBAction func searchPressed(_ sender: Any) {
         searchActive = !searchActive
@@ -91,6 +93,8 @@ class StorageHomeVC: UIViewController {
             searchOutlet.setImage(UIImage(named: "search-3-xl"), for: .normal)
             searchBar.resignFirstResponder()
             segmentedControl.isHidden = false
+            sortedItems = items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: "")
+            searchBar.text = ""
         }
     }
     
@@ -102,7 +106,7 @@ class StorageHomeVC: UIViewController {
     }
     
     @IBAction func segmentedControlPressed(_ sender: Any) {
-       sortedItems = self.items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl))
+        sortedItems = self.items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: searchBar.text ?? "")
     }
     
     @objc func createGroupSelector() {
@@ -206,7 +210,7 @@ extension StorageHomeVC: UISearchBarDelegate {
         searchBar.resignFirstResponder()
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(searchBar.text)
+        sortedItems = items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: searchBar.text ?? "")
     }
 }
 

@@ -99,7 +99,7 @@ extension Recipe {
         guard let imageData = self.recipeImage else { return }
         
         uploadReference.putData(imageData)
-        //NEED TO SET RECIPE VALUE (ADD IT TO THE STRUCT) TO THE METHOD I.E. URL THAT THE IMAGE COULD BE READ FROM
+        
     }
     func getImageFromStorage(imageReturned: @escaping (_ image: UIImage?) -> Void) {
         var image: UIImage?

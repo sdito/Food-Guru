@@ -27,7 +27,8 @@ extension TimeInterval {
         print(percentage)
         return percentage
     }
-    #warning("need to fix so it doesnt say 1 minutes or 1 hours etc")
+    
+    
     func timeSince() -> String {
         let difference = abs(Date().timeIntervalSince1970 - self)
         switch difference {
@@ -38,10 +39,23 @@ extension TimeInterval {
             
         // return in minutes
         case 60...3600:
-            return "\(Int(difference/60)) minutes ago"
+            let num = Int(difference/60)
+            switch num {
+            case 1:
+                return "1 minute ago"
+            default:
+                return "\(num) minutes ago"
+            }
+            
         // return in hours
         case 3600...86_400:
-            return "\(Int(difference/3600)) hours ago"
+            let num = Int(difference/3600)
+            switch num {
+            case 1:
+                return "1 hour ago"
+            default:
+                return "\(num) hours ago"
+            }
         
         // return in days
         case 86_400...2_678_400:
@@ -52,7 +66,13 @@ extension TimeInterval {
                     return Int(difference/86_400)
                 }
             }
-            return "\(days) days ago"
+            switch days {
+            case 1:
+                return "1 day ago"
+            default:
+                return "\(days) days ago"
+            }
+            
         
         // return in months
         case 2_678_400...31_538_000:
@@ -63,11 +83,23 @@ extension TimeInterval {
                     return Int(difference/2_628_000)
                 }
             }
-            return "\(months) months ago"
+            switch months {
+            case 1:
+                return "1 month ago"
+            default:
+                return "\(months) months ago"
+            }
+            
         
         // return in years
         case 31_538_000...:
-            return "\(Int(difference/31_538_000)) years ago"
+            let num = Int(difference/31_538_000)
+            switch num {
+            case 1:
+                return "1 year ago"
+            default:
+                return "\(num) years ago"
+            }
             
         default:
             return ""
