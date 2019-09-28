@@ -13,14 +13,16 @@ import FirebaseAuth
 class StorageHomeVC: UIViewController {
     var db: Firestore!
     lazy private var emptyCells: [UITableViewCell] = []
+    private var searchActive = false
     
     @IBOutlet weak var pickerView: UIDatePicker!
     
+    @IBOutlet weak var searchOutlet: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var popUpView: UIView!
     @IBOutlet weak var pickerPopUpView: UIView!
-    
+    @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var expirationDateOutlet: UIButton!
     
     var items: [Item] = [] {
@@ -65,8 +67,15 @@ class StorageHomeVC: UIViewController {
         tableView.reloadData()
     }
     @IBAction func searchPressed(_ sender: Any) {
-        print("Search was pressed")
-        
+        searchActive = !searchActive
+        switch searchActive {
+        case true:
+            textField.placeholder = "Search \(FoodStorageType.selectedSegment(segmentedControl: segmentedControl))"
+            textField.isHidden = false
+        case false:
+            textField.isHidden = true
+            textField.placeholder = ""
+        }
     }
     
     @IBAction func plusWasPressed(_ sender: Any) {

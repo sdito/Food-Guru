@@ -142,10 +142,20 @@ class SetUpListVC: UIViewController {
     }
     
     @IBAction func switchAction(_ sender: Any) {
-        if switchOutlet.isOn == true {
-            usingGroup = true
-        } else if switchOutlet.isOn == false {
-            usingGroup = false
+        if SharedValues.shared.groupID != nil {
+            if switchOutlet.isOn == true {
+                usingGroup = true
+            } else if switchOutlet.isOn == false {
+                usingGroup = false
+            }
+        } else {
+            switchOutlet.isOn = false
+            let alert = UIAlertController(title: "Error", message: "Can't use group for your list since you are not in a group.", preferredStyle: .alert)
+            alert.addAction(.init(title: "Create group", style: .default, handler: { (action) in
+                self.createGroupPopUp()
+            }))
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
         }
     }
     

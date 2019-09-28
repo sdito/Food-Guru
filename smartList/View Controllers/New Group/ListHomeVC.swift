@@ -16,6 +16,8 @@ class ListHomeVC: UIViewController {
     var sections: [String]?
     var listsForSections: [[List]]?
     
+    lazy private var emptyCells: [UITableViewCell] = createEmptyListCells()
+    
     private var items: [Item] = []
     private var lists: [List]? {
         didSet {
@@ -33,10 +35,9 @@ class ListHomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.dataSource = self
         tableView.delegate = self
-        
+        createObserver()
         db = Firestore.firestore()
         List.readAllUserLists(db: db, userID: SharedValues.shared.userID!) { (dbLists) in
             self.lists = dbLists
@@ -50,6 +51,11 @@ class ListHomeVC: UIViewController {
             destVC.list = sender as? List
         }
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     @IBAction func setUpList(_ sender: Any) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "setUpList") as! SetUpListVC
         vc.modalPresentationStyle = .fullScreen
@@ -57,20 +63,73 @@ class ListHomeVC: UIViewController {
 
     }
     
+    private func createObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(observerSelectorGroupID), name: .groupIDchanged, object: nil)
+    }
+    
+    @objc func observerSelectorGroupID() {
+        emptyCells = createEmptyListCells()
+        tableView.reloadData()
+    }
+    
 }
 extension ListHomeVC: UITableViewDataSource, UITableViewDelegate {
+    func createEmptyListCells() -> [UITableViewCell] {
+        let one = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+        var hasGroup: Bool {
+            switch SharedValues.shared.groupID {
+            case nil:
+                return false
+            default:
+                return true
+            }
+        }
+        var groupText: String {
+            switch hasGroup {
+            case false:
+                return "Create a group in order to have your lists shared with other people."
+            case true:
+                return ""
+            }
+        }
+        
+        one.setUI(str: "You do not have any lists created or shared with you yet.\(groupText)")
+        
+        switch hasGroup {
+        case true:
+            return [one]
+        case false:
+            let two = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+            two.setUI(title: "Create group")
+            two.button.addTarget(self, action: #selector(self.createGroupPopUp), for: .touchUpInside)
+            return [one, two]
+        }
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sections?.count ?? 1
+        switch lists?.count {
+        case 0:
+            return 1
+        default:
+            return sections?.count ?? 1
+        }
+        
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if lists != nil {
+        switch lists?.count {
+        case 0:
+            return emptyCells.count
+        default:
             return listsForSections?[section].count ?? 0
-        } else {
-            return 0
         }
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if lists != nil {
+        switch lists?.count {
+        case 0:
+            let view = UIView()
+            view.alpha = 0
+            return view
+        default:
             let label = UILabel()
             label.text = sections?[section]
             label.font = UIFont(name: "futura", size: 15)
@@ -79,21 +138,23 @@ extension ListHomeVC: UITableViewDataSource, UITableViewDelegate {
             label.alpha = 0.8
             return label
         }
-        return nil
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let item = lists![indexPath.row]
-        if lists != nil {
+        
+        switch lists?.count {
+        case 0:
+            return emptyCells[indexPath.row]
+        default:
             let item = listsForSections![indexPath.section][indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "listHomeCell", for: indexPath) as! ListHomeCell
             cell.setUI(list: item)
             return cell
         }
-        return UITableViewCell()
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //let l = lists![indexPath.row]
-        if lists != nil {
+        
+        if lists?.count != 0 {
             let l = listsForSections?[indexPath.section][indexPath.row]
             SharedValues.shared.listIdentifier = self.db.collection("lists").document("\(l?.docID! ?? " ")")
             self.performSegue(withIdentifier: "listSelected", sender: l)

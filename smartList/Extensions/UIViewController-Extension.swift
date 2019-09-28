@@ -40,4 +40,10 @@ extension UIViewController {
         
         self.view.addSubview(messageView)
     }
+    
+    @objc func createGroupPopUp() {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true, completion: nil)
+    }
 }
