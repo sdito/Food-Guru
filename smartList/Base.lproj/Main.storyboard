@@ -501,7 +501,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Y9x-Ak-BgU"/>
                                 </constraints>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </searchBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2pd-bx-zYj">
                                 <rect key="frame" x="0.0" y="88" width="414" height="44"/>
@@ -1347,7 +1347,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xf8-CJ-kAi">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xf8-CJ-kAi">
                                 <rect key="frame" x="314" y="142" width="80" height="200"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="4bS-H3-ze1">
@@ -1416,7 +1416,7 @@
                                     <constraint firstAttribute="width" constant="80" id="fJX-5x-mFE"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z6d-S8-LRX">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z6d-S8-LRX">
                                 <rect key="frame" x="74" y="352" width="320" height="216"/>
                                 <subviews>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="IQu-OV-dr4">
@@ -1467,33 +1467,31 @@
                                     <action selector="plusWasPressed:" destination="TBV-k4-MLm" eventType="touchUpInside" id="rHx-yq-CVW"/>
                                 </connections>
                             </button>
-                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Start typing item name..." textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jiz-9c-MKa">
-                                <rect key="frame" x="40" y="64" width="334" height="34"/>
-                                <color key="textColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <searchBar hidden="YES" contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="k1z-zh-Gs7">
+                                <rect key="frame" x="40" y="50" width="334" height="56"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="bottom" secondItem="MAQ-iX-8P3" secondAttribute="bottom" constant="15" id="3KZ-4M-RPB"/>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="bottom" secondItem="UVb-sG-vZ1" secondAttribute="bottom" id="9ze-vj-bhl"/>
+                            <constraint firstItem="k1z-zh-Gs7" firstAttribute="centerY" secondItem="2pe-Jw-8cP" secondAttribute="centerY" id="AMZ-1G-e3S"/>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="trailing" secondItem="z6d-S8-LRX" secondAttribute="trailing" constant="20" id="AUF-gp-ZLy"/>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="trailing" secondItem="UVb-sG-vZ1" secondAttribute="trailing" id="Awn-Uu-fVG"/>
                             <constraint firstItem="MAQ-iX-8P3" firstAttribute="centerX" secondItem="XIK-7e-dU1" secondAttribute="centerX" id="CrQ-N9-gQ0"/>
-                            <constraint firstItem="jiz-9c-MKa" firstAttribute="centerX" secondItem="XIK-7e-dU1" secondAttribute="centerX" id="Ml5-cg-FMI"/>
+                            <constraint firstItem="k1z-zh-Gs7" firstAttribute="centerX" secondItem="XIK-7e-dU1" secondAttribute="centerX" id="DUS-wy-jWf"/>
                             <constraint firstItem="2pe-Jw-8cP" firstAttribute="top" secondItem="Zhw-h2-rb1" secondAttribute="top" constant="20" id="OlS-yf-jQ2"/>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="trailing" secondItem="Xf8-CJ-kAi" secondAttribute="trailing" constant="20" id="UAa-1I-Fhy"/>
                             <constraint firstItem="Xf8-CJ-kAi" firstAttribute="top" secondItem="2pe-Jw-8cP" secondAttribute="bottom" constant="50" id="UoE-IT-dWG"/>
                             <constraint firstItem="yIr-eq-aLA" firstAttribute="leading" secondItem="2pe-Jw-8cP" secondAttribute="trailing" constant="5" id="YMp-f1-0LX"/>
+                            <constraint firstItem="k1z-zh-Gs7" firstAttribute="width" secondItem="2pe-Jw-8cP" secondAttribute="width" id="amL-V1-GhK"/>
                             <constraint firstItem="yIr-eq-aLA" firstAttribute="top" secondItem="2pe-Jw-8cP" secondAttribute="top" id="eE1-93-nxG"/>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="trailing" secondItem="2pe-Jw-8cP" secondAttribute="trailing" constant="40" id="hRU-ii-BBf"/>
                             <constraint firstItem="yIr-eq-aLA" firstAttribute="height" secondItem="2pe-Jw-8cP" secondAttribute="height" id="muV-uX-E2i"/>
                             <constraint firstItem="UVb-sG-vZ1" firstAttribute="leading" secondItem="Zhw-h2-rb1" secondAttribute="leading" id="nfQ-9R-3Cw"/>
-                            <constraint firstItem="jiz-9c-MKa" firstAttribute="top" secondItem="2pe-Jw-8cP" secondAttribute="top" id="p6K-cI-T1L"/>
                             <constraint firstItem="UVb-sG-vZ1" firstAttribute="top" secondItem="2pe-Jw-8cP" secondAttribute="bottom" constant="15" id="sDl-pM-bTF"/>
                             <constraint firstItem="2pe-Jw-8cP" firstAttribute="centerX" secondItem="XIK-7e-dU1" secondAttribute="centerX" id="vjT-kL-GVp"/>
-                            <constraint firstItem="jiz-9c-MKa" firstAttribute="width" secondItem="2pe-Jw-8cP" secondAttribute="width" id="wFm-Rl-gty"/>
                             <constraint firstItem="z6d-S8-LRX" firstAttribute="top" secondItem="Xf8-CJ-kAi" secondAttribute="bottom" constant="10" id="xAK-QX-zSy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Zhw-h2-rb1"/>
@@ -1504,10 +1502,10 @@
                         <outlet property="pickerPopUpView" destination="z6d-S8-LRX" id="Uxl-uC-5ii"/>
                         <outlet property="pickerView" destination="IQu-OV-dr4" id="NJR-OB-vj2"/>
                         <outlet property="popUpView" destination="Xf8-CJ-kAi" id="LCP-RS-EdU"/>
+                        <outlet property="searchBar" destination="k1z-zh-Gs7" id="5rl-Rd-kah"/>
                         <outlet property="searchOutlet" destination="yIr-eq-aLA" id="AZW-QL-c9D"/>
                         <outlet property="segmentedControl" destination="2pe-Jw-8cP" id="Ykj-d2-fpg"/>
                         <outlet property="tableView" destination="UVb-sG-vZ1" id="ykd-10-Srg"/>
-                        <outlet property="textField" destination="jiz-9c-MKa" id="b51-AY-RsO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1M9-XC-U2d" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -22,8 +22,8 @@ class StorageHomeVC: UIViewController {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var popUpView: UIView!
     @IBOutlet weak var pickerPopUpView: UIView!
-    @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var expirationDateOutlet: UIButton!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var items: [Item] = [] {
         didSet {
@@ -49,6 +49,7 @@ class StorageHomeVC: UIViewController {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        searchBar.delegate = self
         db = Firestore.firestore()
         createObserver()
         
@@ -58,23 +59,38 @@ class StorageHomeVC: UIViewController {
         popUpView.shadow()
         pickerPopUpView.shadow()
         
-        popUpView.isHidden = true
-        pickerPopUpView.isHidden = true
+        searchBar.placeholder = ""
+        searchBar.setTextProperties()
+        searchOutlet.setImage(UIImage(named: "search-3-xl"), for: .normal)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         emptyCells = createEmptyStorageCells()
         tableView.reloadData()
     }
+    override func viewDidDisappear(_ animated: Bool) {
+        searchBar.isHidden = true
+        segmentedControl.isHidden = false
+        searchBar.placeholder = ""
+        searchOutlet.setImage(UIImage(named: "search-3-xl"), for: .normal)
+        searchBar.resignFirstResponder()
+    }
     @IBAction func searchPressed(_ sender: Any) {
         searchActive = !searchActive
         switch searchActive {
         case true:
-            textField.placeholder = "Search \(FoodStorageType.selectedSegment(segmentedControl: segmentedControl))"
-            textField.isHidden = false
+            searchBar.placeholder = "Search \(FoodStorageType.selectedSegment(segmentedControl: segmentedControl))"
+            searchBar.isHidden = false
+            searchOutlet.setImage(UIImage(named: "x-mark-4-xl"), for: .normal)
+            searchBar.becomeFirstResponder()
+            segmentedControl.isHidden = true
+            
         case false:
-            textField.isHidden = true
-            textField.placeholder = ""
+            searchBar.isHidden = true
+            searchBar.placeholder = ""
+            searchOutlet.setImage(UIImage(named: "search-3-xl"), for: .normal)
+            searchBar.resignFirstResponder()
+            segmentedControl.isHidden = false
         }
     }
     
@@ -185,6 +201,14 @@ class StorageHomeVC: UIViewController {
     }
 }
 
+extension StorageHomeVC: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchBar.text)
+    }
+}
 
 
 extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
@@ -296,5 +320,4 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         handlePopUpView()
     }
 }
-
 

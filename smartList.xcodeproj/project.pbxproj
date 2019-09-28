@@ -47,6 +47,7 @@
 		E25F071923146E5E00E6738E /* CuisineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071823146E5E00E6738E /* CuisineType.swift */; };
 		E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */; };
 		E25F071D231490A200E6738E /* RecipeTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071C231490A200E6738E /* RecipeTypeCell.swift */; };
+		E27D70B4233F24A5009C68B3 /* UISearchBar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */; };
 		E2A54E1D2318553400BEBF39 /* InstructionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2A54E1B2318553300BEBF39 /* InstructionView.xib */; };
 		E2A54E1E2318553400BEBF39 /* InstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A54E1C2318553400BEBF39 /* InstructionView.swift */; };
 		E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B4694B22F78D1C006BA77D /* CreateListView.xib */; };
@@ -137,6 +138,7 @@
 		E25F071823146E5E00E6738E /* CuisineType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuisineType.swift; sourceTree = "<group>"; };
 		E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRecipeTypeVC.swift; sourceTree = "<group>"; };
 		E25F071C231490A200E6738E /* RecipeTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTypeCell.swift; sourceTree = "<group>"; };
+		E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar-Extension.swift"; sourceTree = "<group>"; };
 		E2A54E1B2318553300BEBF39 /* InstructionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionView.xib; sourceTree = "<group>"; };
 		E2A54E1C2318553400BEBF39 /* InstructionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
 		E2B4694B22F78D1C006BA77D /* CreateListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateListView.xib; sourceTree = "<group>"; };
@@ -399,6 +401,7 @@
 				E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */,
 				E2C4934023066012002907C2 /* UIView-Extension.swift */,
 				E2445CFD23220D950089582F /* TimeInterval-Extension.swift */,
+				E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */,
 				E20BC6E1232AE13300F1E5E7 /* UIStackView-Extension.swift */,
 				E2B68D6C232EBD92006A3B58 /* Notification.Name-Extension.swift */,
 				E24ADB0F233E7974008F2F9F /* UIViewController-Extension.swift */,
@@ -717,6 +720,7 @@
 				E20BC6D82328429F00F1E5E7 /* GroupNameCell.swift in Sources */,
 				E20BC6DA232843E400F1E5E7 /* CreateGroupVC.swift in Sources */,
 				E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */,
+				E27D70B4233F24A5009C68B3 /* UISearchBar-Extension.swift in Sources */,
 				E20BC6DE2329A43300F1E5E7 /* SettingTwoLevelCell.swift in Sources */,
 				E20BC6D62328326600F1E5E7 /* SettingButtonCell.swift in Sources */,
 				E2EB7FC322FFB29A003948A6 /* String-Extension.swift in Sources */,

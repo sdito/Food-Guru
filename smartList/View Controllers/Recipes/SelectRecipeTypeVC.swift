@@ -10,17 +10,7 @@ import UIKit
 
 
 
-
-/*
-protocol RecipeDescriptionDelegate {
-    func transferValues(cuisine: String, description: [String])
-}
-*/
-
-
-
 class SelectRecipeTypeVC: UIViewController {
-    //var delegate: RecipeDescriptionDelegate!
     
     
     @IBOutlet weak var topView: UIView!
@@ -55,7 +45,7 @@ class SelectRecipeTypeVC: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         super.viewWillDisappear(animated)
-        
+        searchBar.resignFirstResponder()
         
     }
     
@@ -67,7 +57,7 @@ class SelectRecipeTypeVC: UIViewController {
         searchBar.delegate = self
         pickerView.delegate = self
         pickerView.dataSource = self
-        
+        searchBar.setTextProperties()
         topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
         secondTopView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
     }
@@ -114,6 +104,9 @@ extension SelectRecipeTypeVC: UISearchBarDelegate {
         allTypes = allTypes.filter({ (type) -> Bool in
             type.starts(with: searchBar.text!)
         })
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
 
