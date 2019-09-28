@@ -35,7 +35,7 @@ class StorageNewItemVC: UIViewController {
         db = Firestore.firestore()
         nameTextField.delegate = self
         nameTextField.becomeFirstResponder()
-        nameTextField.setUpDoneToolbar(action: #selector(doneAction))
+        nameTextField.setUpDoneToolbar(action: #selector(doneAction), style: .done)
     }
     
     @IBAction func switchAction(_ sender: Any) {

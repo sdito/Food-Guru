@@ -41,7 +41,10 @@ struct List {
         var l: List?
         reference.addSnapshotListener { (docSnapshot, error) in
             if let doc = docSnapshot {
-                l = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String)
+                if doc.get("name") != nil {
+                  l = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String)
+                }
+                
             }
             listReturned(l)
         }
@@ -96,7 +99,7 @@ extension List {
         }
     }
     func deleteListToFirestore(db: Firestore!) {
-        db.collection("lists").document(self.docID ?? "").delete()
+        db.collection("lists").document(self.docID ?? " ").delete()
     }
     func editListToFirestore(db: Firestore!, listID: String) {
         db.collection("lists").document(listID).updateData([

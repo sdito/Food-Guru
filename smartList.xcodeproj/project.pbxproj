@@ -41,6 +41,8 @@
 		E2481B7F2300B00D0036E378 /* LogInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2481B7E2300B00D0036E378 /* LogInVC.swift */; };
 		E24ADB0A23386E69008F2F9F /* StorageNewItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADB0923386E69008F2F9F /* StorageNewItemVC.swift */; };
 		E24ADB0C23399BD8008F2F9F /* ListHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADB0B23399BD8008F2F9F /* ListHomeCell.swift */; };
+		E24ADB0E233DB063008F2F9F /* SettingContactDeveloperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADB0D233DB063008F2F9F /* SettingContactDeveloperCell.swift */; };
+		E24ADB10233E7974008F2F9F /* UIViewController-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADB0F233E7974008F2F9F /* UIViewController-Extension.swift */; };
 		E25F071723146CC600E6738E /* RecipeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071623146CC600E6738E /* RecipeType.swift */; };
 		E25F071923146E5E00E6738E /* CuisineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071823146E5E00E6738E /* CuisineType.swift */; };
 		E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */; };
@@ -129,6 +131,8 @@
 		E2481B7E2300B00D0036E378 /* LogInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInVC.swift; sourceTree = "<group>"; };
 		E24ADB0923386E69008F2F9F /* StorageNewItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageNewItemVC.swift; sourceTree = "<group>"; };
 		E24ADB0B23399BD8008F2F9F /* ListHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHomeCell.swift; sourceTree = "<group>"; };
+		E24ADB0D233DB063008F2F9F /* SettingContactDeveloperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContactDeveloperCell.swift; sourceTree = "<group>"; };
+		E24ADB0F233E7974008F2F9F /* UIViewController-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController-Extension.swift"; sourceTree = "<group>"; };
 		E25F071623146CC600E6738E /* RecipeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeType.swift; sourceTree = "<group>"; };
 		E25F071823146E5E00E6738E /* CuisineType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuisineType.swift; sourceTree = "<group>"; };
 		E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRecipeTypeVC.swift; sourceTree = "<group>"; };
@@ -214,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				E20BC6D223275BC200F1E5E7 /* SettingBasicCell.swift */,
+				E24ADB0D233DB063008F2F9F /* SettingContactDeveloperCell.swift */,
 				E20BC6CA2327376000F1E5E7 /* SettingCell.swift */,
 				E20BC6D52328326600F1E5E7 /* SettingButtonCell.swift */,
 				E20BC6DD2329A43300F1E5E7 /* SettingTwoLevelCell.swift */,
@@ -396,6 +401,7 @@
 				E2445CFD23220D950089582F /* TimeInterval-Extension.swift */,
 				E20BC6E1232AE13300F1E5E7 /* UIStackView-Extension.swift */,
 				E2B68D6C232EBD92006A3B58 /* Notification.Name-Extension.swift */,
+				E24ADB0F233E7974008F2F9F /* UIViewController-Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -680,6 +686,7 @@
 				E2EB7FC022FFAD7C003948A6 /* ItemCell.swift in Sources */,
 				E25F071D231490A200E6738E /* RecipeTypeCell.swift in Sources */,
 				E2E529D522FA80C400C55DA0 /* Item.swift in Sources */,
+				E24ADB10233E7974008F2F9F /* UIViewController-Extension.swift in Sources */,
 				E24ADB0C23399BD8008F2F9F /* ListHomeCell.swift in Sources */,
 				E2445CF42321DC100089582F /* StorageHomeVC.swift in Sources */,
 				E20BC6DC23288B9C00F1E5E7 /* EmailCheck.swift in Sources */,
@@ -689,6 +696,7 @@
 				E216204722F658D10074A0DF /* AppDelegate.swift in Sources */,
 				E2B4695A22F7F485006BA77D /* Colors.swift in Sources */,
 				E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */,
+				E24ADB0E233DB063008F2F9F /* SettingContactDeveloperCell.swift in Sources */,
 				E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */,
 				E24ADB0A23386E69008F2F9F /* StorageNewItemVC.swift in Sources */,
 				E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */,

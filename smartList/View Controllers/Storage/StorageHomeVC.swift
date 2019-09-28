@@ -231,6 +231,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
             tableView.backgroundColor = .lightGray
             let v = UIView()
             v.backgroundColor = .lightGray
+            v.alpha = 0
             return v
         }
     }

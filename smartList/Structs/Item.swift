@@ -149,7 +149,10 @@ extension Item {
 
 extension Sequence where Element == Item {
     func sortItemsForTableView(segment: FoodStorageType) -> [Item] {
-        let sorted = self.filter({$0.storageSection == segment})
-        return sorted
+        var returnSorted = self.filter({$0.storageSection == segment})
+        returnSorted.sort { (i1, i2) -> Bool in
+            i1.timeExpires ?? 0 < i2.timeExpires ?? 0
+        }
+        return returnSorted
     }
 }

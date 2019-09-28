@@ -55,7 +55,9 @@ class SettingsDetailVC: UIViewController {
 
             
         case .contact:
-            return [UITableViewCell()]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "settingContactDeveloperCell") as! SettingContactDeveloperCell
+            cell.delegate = self
+            return [cell]
         case .darkMode:
             return [UITableViewCell()]
             
@@ -151,6 +153,16 @@ class SettingsDetailVC: UIViewController {
     
 }
 
+extension SettingsDetailVC: UpdateScreenDelegate {
+    func updateScreen() {
+        navigationController?.popViewController(animated: true)
+        self.tabBarController?.createMessageView(color: Colors.messageGreen, text: "Message successfully sent")
+    }
+    
+    
+}
+
+
 extension SettingsDetailVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let v = UIView()
@@ -160,6 +172,7 @@ extension SettingsDetailVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let v = UIView()
         v.backgroundColor = .lightGray
+        v.alpha = 0
         return v
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

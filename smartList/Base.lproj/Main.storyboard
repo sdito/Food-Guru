@@ -587,21 +587,12 @@
                         <outlet property="descriptionLabel" destination="OuB-QE-o8J" id="Fta-4S-KDM"/>
                         <outlet property="pickerView" destination="idD-Aw-LuC" id="BuW-qe-e83"/>
                         <outlet property="searchBar" destination="XSy-dW-PRp" id="IbB-j5-WMS"/>
-                        <outlet property="searchDisplayController" destination="erd-wq-0Kq" id="Mqt-cs-Xb5"/>
                         <outlet property="secondTopView" destination="3aL-7Z-msc" id="1ZE-rP-fbB"/>
                         <outlet property="tableView" destination="cYn-GZ-FqD" id="dlP-i5-WJp"/>
                         <outlet property="topView" destination="2pd-bx-zYj" id="uF4-JC-JUz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="903-kz-mha" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <searchDisplayController id="erd-wq-0Kq">
-                    <connections>
-                        <outlet property="delegate" destination="IUK-Ph-7gP" id="9lP-ps-Gb7"/>
-                        <outlet property="searchContentsController" destination="IUK-Ph-7gP" id="f5T-1e-nTs"/>
-                        <outlet property="searchResultsDataSource" destination="IUK-Ph-7gP" id="Sih-wB-Ols"/>
-                        <outlet property="searchResultsDelegate" destination="IUK-Ph-7gP" id="26Q-an-hz9"/>
-                    </connections>
-                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="649" y="-321"/>
         </scene>
@@ -1675,13 +1666,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Fg-Of-mAX">
-                                                    <rect key="frame" x="30" y="16" width="364" height="23"/>
+                                                    <rect key="frame" x="30" y="16" width="364" height="22.5"/>
                                                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xx7-IJ-A3M">
-                                                    <rect key="frame" x="30" y="44" width="364" height="87"/>
+                                                    <rect key="frame" x="30" y="43.5" width="364" height="87.5"/>
                                                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -1700,6 +1691,78 @@
                                         <connections>
                                             <outlet property="bottomLabel" destination="Xx7-IJ-A3M" id="sbb-ce-Swd"/>
                                             <outlet property="topLabel" destination="9Fg-Of-mAX" id="uGE-sU-2Yr"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingContactDeveloperCell" rowHeight="290" id="d3R-i1-Zh4" customClass="SettingContactDeveloperCell" customModule="smartList" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="329" width="414" height="290"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="d3R-i1-Zh4" id="96e-tm-hGJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="290"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="OT1-9n-Fxc">
+                                                    <rect key="frame" x="20" y="11" width="374" height="268"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fe1-uV-nSi">
+                                                            <rect key="frame" x="0.0" y="0.0" width="374" height="35"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact developer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nw8-0S-cE5">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="165.5" height="35"/>
+                                                                    <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jah-dx-eLS">
+                                                                    <rect key="frame" x="165.5" y="0.0" width="208.5" height="35"/>
+                                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                                                    <state key="normal" title="Send"/>
+                                                                    <connections>
+                                                                        <action selector="sendFeedback:" destination="d3R-i1-Zh4" eventType="touchUpInside" id="bj4-Es-8L2"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                        </stackView>
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Return email (optional)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g2Q-3y-Qlm">
+                                                            <rect key="frame" x="0.0" y="43" width="374" height="47"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <textInputTraits key="textInputTraits"/>
+                                                        </textField>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's your question, problem, concern, or feedback?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qs2-ty-bL5">
+                                                            <rect key="frame" x="0.0" y="98" width="374" height="18.5"/>
+                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="LUY-JD-4wz">
+                                                            <rect key="frame" x="0.0" y="124.5" width="374" height="143.5"/>
+                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="143.5" id="RfR-zj-eMw"/>
+                                                            </constraints>
+                                                            <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                        </textView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="qs2-ty-bL5" secondAttribute="trailing" id="COr-Z0-RCN"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Fe1-uV-nSi" secondAttribute="trailing" id="Whq-lG-e48"/>
+                                                        <constraint firstAttribute="trailing" secondItem="g2Q-3y-Qlm" secondAttribute="trailing" id="rlA-3U-pgP"/>
+                                                        <constraint firstAttribute="trailing" secondItem="LUY-JD-4wz" secondAttribute="trailing" id="vKb-5n-btv"/>
+                                                        <constraint firstAttribute="bottom" secondItem="LUY-JD-4wz" secondAttribute="bottom" id="ye9-yH-QJT"/>
+                                                    </constraints>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="OT1-9n-Fxc" secondAttribute="bottom" id="0Iw-Ld-bbK"/>
+                                                <constraint firstItem="OT1-9n-Fxc" firstAttribute="leading" secondItem="96e-tm-hGJ" secondAttribute="leadingMargin" id="51W-Lp-IPt"/>
+                                                <constraint firstItem="OT1-9n-Fxc" firstAttribute="top" secondItem="96e-tm-hGJ" secondAttribute="topMargin" id="haa-Un-egh"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="OT1-9n-Fxc" secondAttribute="trailing" id="i7a-6i-kVo"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="textField" destination="g2Q-3y-Qlm" id="elw-9B-gz6"/>
+                                            <outlet property="textView" destination="LUY-JD-4wz" id="gaC-Mh-zRZ"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1797,7 +1860,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8SK-jI-Xxg">
                                 <rect key="frame" x="290" y="44" width="104" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <state key="normal" title="Create group">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1809,7 +1872,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="68R-0F-9c1">
                                 <rect key="frame" x="66" y="44" width="30" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <state key="normal" title="Exit">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1824,6 +1887,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="Y4I-Hi-hIN" id="3aH-TA-zcI"/>
+                        <outlet property="doneCreatingOutlet" destination="8SK-jI-Xxg" id="CNq-Do-haS"/>
                         <outlet property="textField" destination="TAL-xR-sVS" id="xH1-Rg-Urt"/>
                     </connections>
                 </viewController>

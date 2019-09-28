@@ -34,9 +34,9 @@ extension UITextField {
         self.placeholder = text
     }
     
-    func setUpDoneToolbar(action: Selector) {
+    func setUpDoneToolbar(action: Selector, style: UIBarButtonItem.SystemItem) {
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let done = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: action)
+        let done = UIBarButtonItem(barButtonSystemItem: style, target: nil, action: action)
         done.tintColor = Colors.main
         let toolbar = UIToolbar()
         toolbar.autoresizingMask = .flexibleHeight

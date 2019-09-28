@@ -66,10 +66,9 @@ extension UIView {
         } else {
             circleShape.strokeEnd = endStrokeAt
         }
-        
-        
         self.layer.addSublayer(circleShape)
     }
+    
 }
 
 

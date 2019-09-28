@@ -21,11 +21,13 @@ class CreateGroupVC: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var doneCreatingOutlet: UIButton!
     
     
     var emails: [String] = SharedValues.shared.groupEmails ?? [(Auth.auth().currentUser?.email)!] {
         didSet {
             collectionView.reloadData()
+            
         }
     }
     
@@ -37,6 +39,13 @@ class CreateGroupVC: UIViewController {
         
         textField.delegate = self
         textField.becomeFirstResponder()
+        textField.setUpDoneToolbar(action: #selector(addItem), style: .add)
+        textField.setUpStandardFormat(text: "Enter user's email")
+        if previousGroupID == nil {
+            doneCreatingOutlet.setTitle("Create group", for: .normal)
+        } else if previousGroupID != nil {
+            doneCreatingOutlet.setTitle("Done editing", for: .normal)
+        }
     }
     @IBAction func exit(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -54,7 +63,32 @@ class CreateGroupVC: UIViewController {
         }
         
     }
-    
+    @objc private func addItem() {
+        if emails.contains(textField.text!) == false {
+            User.checkIfEmailIsValid(db: db, email: textField.text!) { (ec) in
+                if let ec = ec {
+                    switch ec {
+                    case .approved:
+                        self.emails.append(self.textField.text!)
+                        self.textField.text = ""
+                    case .alreadyInGroup:
+                        let alert = UIAlertController(title: "Error", message: "This user is in a group. Ask them to leave the group they are currently in if you want them to join your group.", preferredStyle: .alert)
+                        alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
+                        self.present(alert, animated: true)
+                    case .noUser:
+                        let alert = UIAlertController(title: "Error", message: "This email does not have an account associated with it. Double check the email or ask them to make an account.", preferredStyle: .alert)
+                        alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
+                        self.present(alert, animated: true)
+                    }
+                }
+            }
+        } else {
+            let alert = UIAlertController(title: "Error", message: "User is already in your group", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
+            present(alert, animated: true)
+            textField.text = ""
+        }
+    }
 }
 
 
@@ -77,34 +111,26 @@ extension CreateGroupVC: UICollectionViewDataSource, UICollectionViewDelegate {
             selectedEmail = nil
         } else {
             selectedEmail = emails[indexPath.row]
+            
         }
         
     }
-    #error("left off here")
+    
     @objc func deleteEmailSelector() {
-        print("email to delete: \(selectedEmail)")
+        if selectedEmail != Auth.auth().currentUser?.email {
+            emails = emails.filter({$0 != selectedEmail})
+        } else {
+            let alert = UIAlertController(title: "Error", message: "If you want to leave the group, select 'Leave current group' from previous screen", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
+            present(alert, animated: true)
+            selectedEmail = nil
+        }
     }
 }
 
 extension CreateGroupVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        User.checkIfEmailIsValid(db: db, email: textField.text!) { (ec) in
-            if let ec = ec {
-                switch ec {
-                case .approved:
-                    self.emails.append(textField.text!)
-                    textField.text = ""
-                case .alreadyInGroup:
-                    let alert = UIAlertController(title: "Error", message: "This user is in a group. Ask them to leave the group they are currently in if you want them to join your group.", preferredStyle: .alert)
-                    alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
-                    self.present(alert, animated: true)
-                case .noUser:
-                    let alert = UIAlertController(title: "Error", message: "This email does not have an account associated with it. Double check the email or ask them to make an account.", preferredStyle: .alert)
-                    alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
-                    self.present(alert, animated: true)
-                }
-            }
-        }
+        addItem()
         return true
     }
 }
