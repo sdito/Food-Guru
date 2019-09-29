@@ -13,6 +13,8 @@ import FirebaseFirestore
 class RecipeHomeVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
+    var imageCache = NSCache<NSString, UIImage>()
+    
     var db: Firestore!
     
     var recipes: [Recipe] = [] {
@@ -54,6 +56,19 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let recipe = recipes[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCell
         cell.setUI(recipe: recipe)
+        
+        // pull the image from the cache if possible, if not pull from firebase
+        if let cachedImage = imageCache.object(forKey: "\(indexPath.row)" as NSString) {
+            cell.recipeImage.image = cachedImage
+            print("Cache for \(indexPath.row)")
+        } else {
+            recipe.getImageFromStorage { (img) in
+                cell.recipeImage.image = img
+                self.imageCache.setObject(img!, forKey: "\(indexPath.row)" as NSString)
+                print("Read for \(indexPath.row)")
+            }
+        }
+        
         return cell
     }
     
@@ -62,8 +77,6 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         return v
         
     }
-    
-    
 }
 
 

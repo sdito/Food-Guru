@@ -72,7 +72,6 @@ extension Recipe {
     mutating func writeToFirestore(db: Firestore!, storage: Storage) {
         let doc = db.collection("recipes").document()
         self.imagePath = "recipe/\(doc.documentID).jpg"
-        
         doc.setData([
             "name": self.name,
             "recipeType": self.recipeType,
@@ -97,14 +96,21 @@ extension Recipe {
         }
         let uploadReference = Storage.storage().reference(withPath: imagePath ?? "")
         guard let imageData = self.recipeImage else { return }
+        let newMetadata = StorageMetadata()
+        newMetadata.contentType = "image/jpeg"
+        //uploadReference.putData(imageData)
         
-        uploadReference.putData(imageData)
+        uploadReference.putData(imageData, metadata: newMetadata)
+        
         
     }
     func getImageFromStorage(imageReturned: @escaping (_ image: UIImage?) -> Void) {
         var image: UIImage?
-        
-        let storageRef = Storage.storage().reference(withPath: self.imagePath ?? "")
+        var thumbPath = self.imagePath
+        thumbPath?.removeLast(4)
+        #warning("check which thumbnail image size works the best and change here, then limit firebase extension to only keep that size so theres no extra images")
+        thumbPath?.append(contentsOf: "_200x200.jpg")
+        let storageRef = Storage.storage().reference(withPath: thumbPath ?? "")
         storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
             if let error = error {
                 print("Got an error fetching data: \(error)")

@@ -17,7 +17,6 @@ class CreateRecipeVC: UIViewController {
     var storage: Storage!
     let imagePicker = UIImagePickerController()
     var image: Data?
-    var imageAspectRatio: Double?
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var servingsTextField: UITextField!
@@ -212,8 +211,12 @@ extension CreateRecipeVC: UIImagePickerControllerDelegate, UINavigationControlle
             selectimageOutlet.setBackgroundImage(pickedImage, for: .normal)
             selectimageOutlet.setTitle("", for: .normal)
             image = pickedImage.jpegData(compressionQuality: 0.75)
-            imageAspectRatio = Double(pickedImage.size.height / pickedImage.size.width)
             print(pickedImage.size.height, pickedImage.size.width)
+        
+//            #error("have something working with the below three lines of code, need to get it so that the edited image gets written to firestore")
+//            let url = info[UIImagePickerController.InfoKey.imageURL] as! URL
+//            let uploadReference = Storage.storage().reference(withPath: "testImagePath")
+//            uploadReference.putFile(from: url)
         }
         
         dismiss(animated: true, completion: nil)

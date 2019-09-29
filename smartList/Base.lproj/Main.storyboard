@@ -1228,7 +1228,7 @@
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UVb-sG-vZ1">
                                 <rect key="frame" x="0.0" y="107" width="414" height="706"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="storageCell" rowHeight="104" id="Y4U-pR-t9C" customClass="StorageCell" customModule="smartList" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="104"/>
@@ -1267,7 +1267,6 @@
                                                 </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gMv-HI-qAV">
                                                     <rect key="frame" x="344" y="21" width="40" height="62"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="gMv-HI-qAV" secondAttribute="height" multiplier="1:1" id="j9c-SX-gKq"/>
                                                         <constraint firstAttribute="width" constant="40" id="oXs-I2-UeF"/>
@@ -1466,7 +1465,7 @@
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </searchBar>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="bottom" secondItem="MAQ-iX-8P3" secondAttribute="bottom" constant="15" id="3KZ-4M-RPB"/>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="bottom" secondItem="UVb-sG-vZ1" secondAttribute="bottom" id="9ze-vj-bhl"/>
