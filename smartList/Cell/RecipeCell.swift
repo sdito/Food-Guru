@@ -12,12 +12,13 @@ class RecipeCell: UICollectionViewCell {
     @IBOutlet weak var recipeImage: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var cuisine: UILabel!
-    @IBOutlet weak var recipeDescription: UILabel!
+    @IBOutlet weak var tagline: UILabel!
     
     func setUI(recipe: Recipe) {
         title.text = recipe.name
         cuisine.text = recipe.cuisineType
-        recipeDescription.text = recipe.recipeType.joined(separator: ", ")
+        tagline.text = recipe.recipeType.joined(separator: ", ")
+        // image set from RecipeHomeVC for easier control of cache
     }
 }
 

@@ -8,7 +8,7 @@
 
 import UIKit
 import FirebaseFirestore
-
+import AVFoundation
 
 class RecipeHomeVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
@@ -41,12 +41,30 @@ class RecipeHomeVC: UIViewController {
         Recipe.readUserRecipes(db: db) { (recipesReturned) in
             self.recipes = recipesReturned
         }
-        if let layout = collectionView.collectionViewLayout as? DynamicHeightLayout {
-            layout.delegate = self
-        }
+        let layout = collectionView.collectionViewLayout as! DynamicHeightLayout
+        layout.numberOfColumns = 2
+        layout.delegate = self
     }
     
 }
+
+
+extension RecipeHomeVC: DynamicHeightLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, heightForTextAtIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
+        //let random = arc4random_uniform(4) + 1
+        let textData = recipes[indexPath.item]
+        let title = heightForText(textData.name, width: width, font: UIFont(name: "futura", size: 20)!, oneSidePadding: 4)
+        let cuisine = heightForText(textData.cuisineType, width: width, font: UIFont(name: "futura", size: 17)!, oneSidePadding: 4)
+        let description = heightForText(textData.recipeType.joined(separator: ", "), width: width, font: UIFont(name: "futura", size: 15)!, oneSidePadding: 4)
+        return title + cuisine + description + 8
+        
+    }
+    func heightForText(_ text: String, width: CGFloat, font: UIFont, oneSidePadding: Int) -> CGFloat {
+        let rect = NSString(string: text).boundingRect(with: CGSize(width: width, height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+        return ceil(rect.height)
+    }
+}
+
 
 extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -57,7 +75,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCell
         cell.setUI(recipe: recipe)
         
-        // pull the image from the cache if possible, if not pull from firebase
+        // pull the image from the cache if possible, if not pull from cloud storage
         if let cachedImage = imageCache.object(forKey: "\(indexPath.row)" as NSString) {
             cell.recipeImage.image = cachedImage
             print("Cache for \(indexPath.row)")
@@ -78,11 +96,3 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
     }
 }
-
-
-extension RecipeHomeVC: DynamicHeightLayoutDelegate {
-    func collectionView(collectionView: UICollectionView, heightForItemAtIndexPath indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
-}
-
