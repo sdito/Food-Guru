@@ -22,7 +22,6 @@
 		E20BC6DE2329A43300F1E5E7 /* SettingTwoLevelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6DD2329A43300F1E5E7 /* SettingTwoLevelCell.swift */; };
 		E20BC6E0232AB39F00F1E5E7 /* SetUpListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6DF232AB39F00F1E5E7 /* SetUpListVC.swift */; };
 		E20BC6E2232AE13300F1E5E7 /* UIStackView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6E1232AE13300F1E5E7 /* UIStackView-Extension.swift */; };
-		E20F2AD62324B76B00CD907A /* RecipeShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F2AD52324B76B00CD907A /* RecipeShowCell.swift */; };
 		E20F2AD823258A4B00CD907A /* StorageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F2AD723258A4B00CD907A /* StorageCell.swift */; };
 		E216204722F658D10074A0DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216204622F658D10074A0DF /* AppDelegate.swift */; };
 		E216204C22F658D10074A0DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E216204A22F658D10074A0DF /* Main.storyboard */; };
@@ -48,6 +47,9 @@
 		E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */; };
 		E25F071D231490A200E6738E /* RecipeTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071C231490A200E6738E /* RecipeTypeCell.swift */; };
 		E27D70B4233F24A5009C68B3 /* UISearchBar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */; };
+		E27D70B62340079D009C68B3 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70B52340079D009C68B3 /* RecipeCell.swift */; };
+		E27D70BD234020E6009C68B3 /* RecipeReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70BC234020E6009C68B3 /* RecipeReusableView.swift */; };
+		E27D70C223404414009C68B3 /* DynamicHeightLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70C123404414009C68B3 /* DynamicHeightLayout.swift */; };
 		E2A54E1D2318553400BEBF39 /* InstructionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2A54E1B2318553300BEBF39 /* InstructionView.xib */; };
 		E2A54E1E2318553400BEBF39 /* InstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A54E1C2318553400BEBF39 /* InstructionView.swift */; };
 		E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B4694B22F78D1C006BA77D /* CreateListView.xib */; };
@@ -109,7 +111,6 @@
 		E20BC6DD2329A43300F1E5E7 /* SettingTwoLevelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTwoLevelCell.swift; sourceTree = "<group>"; };
 		E20BC6DF232AB39F00F1E5E7 /* SetUpListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpListVC.swift; sourceTree = "<group>"; };
 		E20BC6E1232AE13300F1E5E7 /* UIStackView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView-Extension.swift"; sourceTree = "<group>"; };
-		E20F2AD52324B76B00CD907A /* RecipeShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeShowCell.swift; sourceTree = "<group>"; };
 		E20F2AD723258A4B00CD907A /* StorageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCell.swift; sourceTree = "<group>"; };
 		E216204322F658D10074A0DF /* smartList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smartList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E216204622F658D10074A0DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +140,9 @@
 		E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRecipeTypeVC.swift; sourceTree = "<group>"; };
 		E25F071C231490A200E6738E /* RecipeTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTypeCell.swift; sourceTree = "<group>"; };
 		E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar-Extension.swift"; sourceTree = "<group>"; };
+		E27D70B52340079D009C68B3 /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
+		E27D70BC234020E6009C68B3 /* RecipeReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeReusableView.swift; sourceTree = "<group>"; };
+		E27D70C123404414009C68B3 /* DynamicHeightLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightLayout.swift; sourceTree = "<group>"; };
 		E2A54E1B2318553300BEBF39 /* InstructionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionView.xib; sourceTree = "<group>"; };
 		E2A54E1C2318553400BEBF39 /* InstructionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
 		E2B4694B22F78D1C006BA77D /* CreateListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateListView.xib; sourceTree = "<group>"; };
@@ -262,6 +266,7 @@
 				E2B4694D22F78D23006BA77D /* Views */,
 				E2EB7FC122FFAD81003948A6 /* Cell */,
 				E2B4695822F7F19C006BA77D /* Extensions */,
+				E27D70C023403A6D009C68B3 /* Layout */,
 				E216204D22F658D20074A0DF /* Assets.xcassets */,
 				E216204F22F658D20074A0DF /* LaunchScreen.storyboard */,
 				E216205222F658D20074A0DF /* Info.plist */,
@@ -351,6 +356,14 @@
 			path = Enum;
 			sourceTree = "<group>";
 		};
+		E27D70C023403A6D009C68B3 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				E27D70C123404414009C68B3 /* DynamicHeightLayout.swift */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
 		E2A54E1F23186DEB00BEBF39 /* InstructionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -363,6 +376,7 @@
 		E2B4694D22F78D23006BA77D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E27D70BC234020E6009C68B3 /* RecipeReusableView.swift */,
 				E2F380AE2319847F003857F7 /* IngredientView */,
 				E2A54E1F23186DEB00BEBF39 /* InstructionView */,
 				E2B4694E22F78D2B006BA77D /* CreateListView */,
@@ -422,8 +436,8 @@
 			children = (
 				E20BC6D423275BDC00F1E5E7 /* Cells for settings */,
 				E2EB7FBF22FFAD7C003948A6 /* ItemCell.swift */,
+				E27D70B52340079D009C68B3 /* RecipeCell.swift */,
 				E20F2AD723258A4B00CD907A /* StorageCell.swift */,
-				E20F2AD52324B76B00CD907A /* RecipeShowCell.swift */,
 				E20BC6D72328429F00F1E5E7 /* GroupNameCell.swift */,
 				E24ADB0B23399BD8008F2F9F /* ListHomeCell.swift */,
 				E25F071C231490A200E6738E /* RecipeTypeCell.swift */,
@@ -688,14 +702,15 @@
 				E2445CEE2321D6500089582F /* TabVC.swift in Sources */,
 				E2EB7FC022FFAD7C003948A6 /* ItemCell.swift in Sources */,
 				E25F071D231490A200E6738E /* RecipeTypeCell.swift in Sources */,
+				E27D70B62340079D009C68B3 /* RecipeCell.swift in Sources */,
 				E2E529D522FA80C400C55DA0 /* Item.swift in Sources */,
 				E24ADB10233E7974008F2F9F /* UIViewController-Extension.swift in Sources */,
 				E24ADB0C23399BD8008F2F9F /* ListHomeCell.swift in Sources */,
 				E2445CF42321DC100089582F /* StorageHomeVC.swift in Sources */,
 				E20BC6DC23288B9C00F1E5E7 /* EmailCheck.swift in Sources */,
 				E25F071923146E5E00E6738E /* CuisineType.swift in Sources */,
-				E20F2AD62324B76B00CD907A /* RecipeShowCell.swift in Sources */,
 				E20BC6D323275BC200F1E5E7 /* SettingBasicCell.swift in Sources */,
+				E27D70BD234020E6009C68B3 /* RecipeReusableView.swift in Sources */,
 				E216204722F658D10074A0DF /* AppDelegate.swift in Sources */,
 				E2B4695A22F7F485006BA77D /* Colors.swift in Sources */,
 				E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */,
@@ -717,6 +732,7 @@
 				E2445CFE23220D950089582F /* TimeInterval-Extension.swift in Sources */,
 				E20BC6CF2327430C00F1E5E7 /* SettingsDetailVC.swift in Sources */,
 				E2B68D7523305877006A3B58 /* FoodStorageType.swift in Sources */,
+				E27D70C223404414009C68B3 /* DynamicHeightLayout.swift in Sources */,
 				E20BC6D82328429F00F1E5E7 /* GroupNameCell.swift in Sources */,
 				E20BC6DA232843E400F1E5E7 /* CreateGroupVC.swift in Sources */,
 				E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */,

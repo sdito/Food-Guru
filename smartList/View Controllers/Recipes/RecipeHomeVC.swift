@@ -11,13 +11,13 @@ import FirebaseFirestore
 
 
 class RecipeHomeVC: UIViewController {
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     var db: Firestore!
     
     var recipes: [Recipe] = [] {
         didSet {
-            tableView.reloadData()
+            collectionView.reloadData()
         }
         
     }
@@ -33,27 +33,43 @@ class RecipeHomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
+        collectionView.dataSource = self
+        collectionView.delegate = self
         db = Firestore.firestore()
         Recipe.readUserRecipes(db: db) { (recipesReturned) in
             self.recipes = recipesReturned
+        }
+        if let layout = collectionView.collectionViewLayout as? DynamicHeightLayout {
+            layout.delegate = self
         }
     }
     
 }
 
-extension RecipeHomeVC: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return recipes.count
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let recipe = recipes[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "recipeShowCell", for: indexPath) as! RecipeShowCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCell
         cell.setUI(recipe: recipe)
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let v = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "reusableView", for: indexPath) as! RecipeReusableView
+        return v
+        
+    }
+    
     
 }
+
+
+extension RecipeHomeVC: DynamicHeightLayoutDelegate {
+    func collectionView(collectionView: UICollectionView, heightForItemAtIndexPath indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+}
+

@@ -13,7 +13,6 @@ pod 'Firebase/Firestore', :inhibit_warnings => true
 pod 'FirebaseUI', :inhibit_warnings => true
 pod 'Firebase/Auth', :inhibit_warnings => true
 pod 'Firebase/Storage', :inhibit_warnings => true
-pod 'R.swift', :inhibit_warnings => true
 
   target 'smartListTests' do
     inherit! :search_paths
