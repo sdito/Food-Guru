@@ -22,6 +22,8 @@ class SettingsDetailVC: UIViewController {
         createObserver()
         db = Firestore.firestore()
         tableView.backgroundColor = .lightGray
+        self.createNavigationBarTextAttributes()
+        self.title = setting?.description()
     }
     
     deinit {

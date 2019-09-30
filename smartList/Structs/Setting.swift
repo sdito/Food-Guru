@@ -51,3 +51,32 @@ struct Setting {
     
     
 }
+
+extension Setting.SettingName {
+    func description() -> String {
+        switch self {
+        case .account:
+            return "Account"
+        case .group:
+            return "Group"
+        case .list:
+            return "List"
+        case .recipe:
+            return "Recipe"
+        case .storage:
+            return "Storage"
+        case .textSize:
+            return "Text size"
+        case .darkMode:
+            return "Dark mode"
+        case .notifications:
+            return "Notifications"
+        case .contact:
+            return "Contact the developer"
+        case .licences:
+            return "Licenses"
+        case .about:
+            return "About"
+        }
+    }
+}

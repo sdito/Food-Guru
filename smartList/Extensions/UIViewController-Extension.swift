@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 
 extension UIViewController {
+    func createNavigationBarTextAttributes() {
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "futura", size: 20)!]
+        
+    }
     @objc func createMessageView(color: UIColor, text: String) {
         let messageView = UILabel()
         messageView.backgroundColor = color

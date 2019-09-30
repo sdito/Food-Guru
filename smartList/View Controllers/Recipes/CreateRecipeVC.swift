@@ -82,7 +82,7 @@ class CreateRecipeVC: UIViewController {
         initialInstructionSetUp()
         notesTextView.border()
         taglineTextView.border()
-        
+        self.createNavigationBarTextAttributes()
     }
     
     override func viewDidAppear(_ animated: Bool) {
