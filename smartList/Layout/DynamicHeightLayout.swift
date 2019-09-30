@@ -26,6 +26,7 @@ class DynamicHeightLayout: UICollectionViewLayout {
             return collectionView!.bounds.width
         }
     }
+    
     override var collectionViewContentSize: CGSize {
         return CGSize(width: width, height: contentHeight)
     }
@@ -59,6 +60,7 @@ class DynamicHeightLayout: UICollectionViewLayout {
             }
         }
     }
+    
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var layoutAttributes = [UICollectionViewLayoutAttributes]()
         for attributes in cache {

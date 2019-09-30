@@ -12,6 +12,7 @@ import AVFoundation
 
 class RecipeHomeVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var imageCache = NSCache<NSString, UIImage>()
     
@@ -37,6 +38,8 @@ class RecipeHomeVC: UIViewController {
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
+        searchBar.delegate = self
+        searchBar.setTextProperties()
         db = Firestore.firestore()
         Recipe.readUserRecipes(db: db) { (recipesReturned) in
             self.recipes = recipesReturned
@@ -44,14 +47,19 @@ class RecipeHomeVC: UIViewController {
         let layout = collectionView.collectionViewLayout as! DynamicHeightLayout
         layout.numberOfColumns = 2
         layout.delegate = self
+        
     }
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showRecipeDetail" {
+            let destVC = segue.destination as! RecipeDetailVC
+            destVC.data = sender as? (UIImage, Recipe)
+        }
+    }
 }
 
 
 extension RecipeHomeVC: DynamicHeightLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForTextAtIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
-        //let random = arc4random_uniform(4) + 1
         let textData = recipes[indexPath.item]
         let title = heightForText(textData.name, width: width, font: UIFont(name: "futura", size: 20)!, oneSidePadding: 4)
         let cuisine = heightForText(textData.cuisineType, width: width, font: UIFont(name: "futura", size: 17)!, oneSidePadding: 4)
@@ -70,6 +78,12 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return recipes.count
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selected = recipes[indexPath.item]
+        print(selected.name)
+        performSegue(withIdentifier: "showRecipeDetail", sender: (imageCache.object(forKey: "\(indexPath.row)" as NSString), selected))
+        
+    }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let recipe = recipes[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCell
@@ -80,7 +94,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.recipeImage.image = cachedImage
             print("Cache for \(indexPath.row)")
         } else {
-            recipe.getImageFromStorage { (img) in
+            recipe.getImageFromStorage(thumb: true) { (img) in
                 cell.recipeImage.image = img
                 self.imageCache.setObject(img!, forKey: "\(indexPath.row)" as NSString)
                 print("Read for \(indexPath.row)")
@@ -89,10 +103,8 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         return cell
     }
+}
+
+extension RecipeHomeVC: UISearchBarDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let v = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "reusableView", for: indexPath) as! RecipeReusableView
-        return v
-        
-    }
 }

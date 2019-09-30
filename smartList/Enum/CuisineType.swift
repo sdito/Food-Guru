@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 enum CuisineType: CaseIterable {
     case italian
     case mexican
@@ -80,6 +79,7 @@ enum CuisineType: CaseIterable {
             return "Other"
         }
     }
+    
     
     static var allItems: [String] {
         var list = CuisineType.allCases.map{$0.description}.sorted()

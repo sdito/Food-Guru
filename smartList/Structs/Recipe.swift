@@ -104,12 +104,16 @@ extension Recipe {
         
         
     }
-    func getImageFromStorage(imageReturned: @escaping (_ image: UIImage?) -> Void) {
+    func getImageFromStorage(thumb: Bool, imageReturned: @escaping (_ image: UIImage?) -> Void) {
         var image: UIImage?
         var thumbPath = self.imagePath
-        thumbPath?.removeLast(4)
+        if thumb == true {
+            thumbPath?.removeLast(4)
+            thumbPath?.append(contentsOf: "_200x200.jpg")
+        }
+        
         #warning("check which thumbnail image size works the best and change here, then limit firebase extension to only keep that size so theres no extra images")
-        thumbPath?.append(contentsOf: "_200x200.jpg")
+        
         let storageRef = Storage.storage().reference(withPath: thumbPath ?? "")
         storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
             if let error = error {
