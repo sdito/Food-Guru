@@ -11,7 +11,15 @@ import FirebaseFirestore
 import FirebaseAuth
 
 struct User {
-    
+    static func getNameFromUid(db: Firestore, uid: String, namereturned: @escaping (_ name: String?) -> Void) {
+        var name: String?
+        db.collection("users").document(uid).getDocument { (docSnapshot, error) in
+            if let docSnapshot = docSnapshot {
+                name = docSnapshot.get("name") as? String
+            }
+            namereturned(name)
+        }
+    }
     static func comparePeopleIn(list: List, foodStorageEmails: [String]?) -> (isEqual: Bool, emailsDifferent: [String]?) {
         var listPeople = Set(list.people ?? [])
         var foodStoragePeople = Set(foodStorageEmails ?? [])

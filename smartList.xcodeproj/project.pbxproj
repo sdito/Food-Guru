@@ -43,6 +43,8 @@
 		E24ADB0E233DB063008F2F9F /* SettingContactDeveloperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADB0D233DB063008F2F9F /* SettingContactDeveloperCell.swift */; };
 		E24ADB10233E7974008F2F9F /* UIViewController-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADB0F233E7974008F2F9F /* UIViewController-Extension.swift */; };
 		E253AC042341B4460018274A /* RecipeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253AC032341B4460018274A /* RecipeDetailVC.swift */; };
+		E253AC06234315170018274A /* ButtonIngredientView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E253AC05234315170018274A /* ButtonIngredientView.xib */; };
+		E253AC08234315BB0018274A /* ButtonIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253AC07234315BB0018274A /* ButtonIngredientView.swift */; };
 		E25F071723146CC600E6738E /* RecipeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071623146CC600E6738E /* RecipeType.swift */; };
 		E25F071923146E5E00E6738E /* CuisineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071823146E5E00E6738E /* CuisineType.swift */; };
 		E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */; };
@@ -136,6 +138,8 @@
 		E24ADB0D233DB063008F2F9F /* SettingContactDeveloperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContactDeveloperCell.swift; sourceTree = "<group>"; };
 		E24ADB0F233E7974008F2F9F /* UIViewController-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController-Extension.swift"; sourceTree = "<group>"; };
 		E253AC032341B4460018274A /* RecipeDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailVC.swift; sourceTree = "<group>"; };
+		E253AC05234315170018274A /* ButtonIngredientView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonIngredientView.xib; sourceTree = "<group>"; };
+		E253AC07234315BB0018274A /* ButtonIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonIngredientView.swift; sourceTree = "<group>"; };
 		E25F071623146CC600E6738E /* RecipeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeType.swift; sourceTree = "<group>"; };
 		E25F071823146E5E00E6738E /* CuisineType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuisineType.swift; sourceTree = "<group>"; };
 		E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRecipeTypeVC.swift; sourceTree = "<group>"; };
@@ -346,6 +350,15 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		E253AC0923431FA70018274A /* ButtonIngredientView */ = {
+			isa = PBXGroup;
+			children = (
+				E253AC05234315170018274A /* ButtonIngredientView.xib */,
+				E253AC07234315BB0018274A /* ButtonIngredientView.swift */,
+			);
+			path = ButtonIngredientView;
+			sourceTree = "<group>";
+		};
 		E25F071523146C9A00E6738E /* Enum */ = {
 			isa = PBXGroup;
 			children = (
@@ -377,6 +390,7 @@
 		E2B4694D22F78D23006BA77D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E253AC0923431FA70018274A /* ButtonIngredientView */,
 				E2F380AE2319847F003857F7 /* IngredientView */,
 				E2A54E1F23186DEB00BEBF39 /* InstructionView */,
 				E2B4694E22F78D2B006BA77D /* CreateListView */,
@@ -564,6 +578,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E216205122F658D20074A0DF /* LaunchScreen.storyboard in Resources */,
+				E253AC06234315170018274A /* ButtonIngredientView.xib in Resources */,
 				E2F380B023198496003857F7 /* IngredientView.xib in Resources */,
 				E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */,
 				E216204E22F658D20074A0DF /* Assets.xcassets in Resources */,
@@ -712,6 +727,7 @@
 				E20BC6D323275BC200F1E5E7 /* SettingBasicCell.swift in Sources */,
 				E216204722F658D10074A0DF /* AppDelegate.swift in Sources */,
 				E2B4695A22F7F485006BA77D /* Colors.swift in Sources */,
+				E253AC08234315BB0018274A /* ButtonIngredientView.swift in Sources */,
 				E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */,
 				E24ADB0E233DB063008F2F9F /* SettingContactDeveloperCell.swift in Sources */,
 				E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */,

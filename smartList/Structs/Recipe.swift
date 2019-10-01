@@ -86,7 +86,8 @@ extension Recipe {
             "numReviews": self.numReviews as Any,
             "numStars": self.numStars as Any,
             "notes": self.notes as Any,
-            "path": self.imagePath as Any
+            "path": self.imagePath as Any,
+            "tagline": self.tagline as Any
         ]) { err in
             if let err = err {
                 print("Error writing document: \(err)")
@@ -127,5 +128,13 @@ extension Recipe {
             imageReturned(image)
         }
     }
-    
+    //(Bundle.main.loadNibNamed("IngredientView", owner: nil, options: nil)?.first as? IngredientView)!
+    func addButtonIngredientViewsTo(stackView: UIStackView) {
+        for item in self.ingredients {
+            let v = Bundle.main.loadNibNamed("ButtonIngredientView", owner: nil, options: nil)?.first as! ButtonIngredientView
+            v.setUI(ingredient: item)
+            
+            stackView.insertArrangedSubview(v, at: 1)
+        }
+    }
 }
