@@ -21,7 +21,8 @@ class RecipeDetailVC: UIViewController {
     @IBOutlet weak var servings: UILabel!
     @IBOutlet weak var calories: UILabel!
     @IBOutlet weak var ingredientsStackView: UIStackView!
-    
+    @IBOutlet weak var instructionsStackView: UIStackView!
+    @IBOutlet weak var notes: UILabel!
     
     var data: (image: UIImage, recipe: Recipe)?
     
@@ -37,6 +38,9 @@ class RecipeDetailVC: UIViewController {
             self.imageView.image = img
         })
     }
+    @IBAction func addAllToList(_ sender: Any) {
+        print("Add all items to list")
+    }
     
     private func setUI(recipe: Recipe, image: UIImage) {
         imageView.image = data?.image
@@ -50,12 +54,17 @@ class RecipeDetailVC: UIViewController {
         cookTime.text = "\(recipe.cookTime) m"
         servings.text = "\(recipe.numServes)"
         calories.text = "\(recipe.calories!)"
+        if let n = recipe.notes {
+            notes.text = "Notes: \(n)"
+        }
         if let uid = recipe.userID {
             User.getNameFromUid(db: db, uid: uid) { (name) in
                 self.author.text = "By \(name ?? "unknown user")"
             }
         }
         recipe.addButtonIngredientViewsTo(stackView: ingredientsStackView)
+        recipe.addInstructionsToInstructionStackView(stackView: instructionsStackView)
+        
     }
 
 }

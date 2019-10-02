@@ -63,6 +63,8 @@
 		E2C4934123066012002907C2 /* UIView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C4934023066012002907C2 /* UIView-Extension.swift */; };
 		E2C49343230887F3002907C2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C49342230887F3002907C2 /* User.swift */; };
 		E2C49349230B45E4002907C2 /* CreateRecipeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C49348230B45E4002907C2 /* CreateRecipeVC.swift */; };
+		E2CE480D23442F4E0045FCC0 /* LabelInstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CE480C23442F4E0045FCC0 /* LabelInstructionView.swift */; };
+		E2CE480F23442F6F0045FCC0 /* LabelInstructionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2CE480E23442F6F0045FCC0 /* LabelInstructionView.xib */; };
 		E2D8462D231264CD004B19C2 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D8462C231264CD004B19C2 /* Recipe.swift */; };
 		E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */; };
 		E2E529D222FA7F9100C55DA0 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D122FA7F9100C55DA0 /* List.swift */; };
@@ -158,6 +160,8 @@
 		E2C4934023066012002907C2 /* UIView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView-Extension.swift"; sourceTree = "<group>"; };
 		E2C49342230887F3002907C2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E2C49348230B45E4002907C2 /* CreateRecipeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecipeVC.swift; sourceTree = "<group>"; };
+		E2CE480C23442F4E0045FCC0 /* LabelInstructionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelInstructionView.swift; sourceTree = "<group>"; };
+		E2CE480E23442F6F0045FCC0 /* LabelInstructionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LabelInstructionView.xib; sourceTree = "<group>"; };
 		E2D8462C231264CD004B19C2 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-Extension.swift"; sourceTree = "<group>"; };
 		E2E529D122FA7F9100C55DA0 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
@@ -390,6 +394,8 @@
 		E2B4694D22F78D23006BA77D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E2CE480C23442F4E0045FCC0 /* LabelInstructionView.swift */,
+				E2CE480E23442F6F0045FCC0 /* LabelInstructionView.xib */,
 				E253AC0923431FA70018274A /* ButtonIngredientView */,
 				E2F380AE2319847F003857F7 /* IngredientView */,
 				E2A54E1F23186DEB00BEBF39 /* InstructionView */,
@@ -583,6 +589,7 @@
 				E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */,
 				E216204E22F658D20074A0DF /* Assets.xcassets in Resources */,
 				E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */,
+				E2CE480F23442F6F0045FCC0 /* LabelInstructionView.xib in Resources */,
 				E216204C22F658D10074A0DF /* Main.storyboard in Resources */,
 				E2A54E1D2318553400BEBF39 /* InstructionView.xib in Resources */,
 			);
@@ -720,6 +727,7 @@
 				E27D70B62340079D009C68B3 /* RecipeCell.swift in Sources */,
 				E2E529D522FA80C400C55DA0 /* Item.swift in Sources */,
 				E24ADB10233E7974008F2F9F /* UIViewController-Extension.swift in Sources */,
+				E2CE480D23442F4E0045FCC0 /* LabelInstructionView.swift in Sources */,
 				E24ADB0C23399BD8008F2F9F /* ListHomeCell.swift in Sources */,
 				E2445CF42321DC100089582F /* StorageHomeVC.swift in Sources */,
 				E20BC6DC23288B9C00F1E5E7 /* EmailCheck.swift in Sources */,

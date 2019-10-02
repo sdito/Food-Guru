@@ -132,9 +132,19 @@ extension Recipe {
     func addButtonIngredientViewsTo(stackView: UIStackView) {
         for item in self.ingredients {
             let v = Bundle.main.loadNibNamed("ButtonIngredientView", owner: nil, options: nil)?.first as! ButtonIngredientView
-            v.setUI(ingredient: item)
             
+            v.setUI(ingredient: item)
             stackView.insertArrangedSubview(v, at: 1)
         }
     }
+    func addInstructionsToInstructionStackView(stackView: UIStackView) {
+        var counter = 1
+        for item in self.instructions {
+            let v = Bundle.main.loadNibNamed("LabelInstructionView", owner: nil, options: nil)?.first as! LabelInstructionView
+            v.setUI(num: counter, instr: item)
+            stackView.insertArrangedSubview(v, at: stackView.subviews.count)
+            counter += 1
+        }
+    }
+    
 }

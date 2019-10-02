@@ -14,7 +14,11 @@ class ButtonIngredientView: UIView {
     
     func setUI(ingredient: String) {
         label.text = ingredient
-        //button.addTarget(self, action: <#T##Selector#>, for: .touchUpInside)
+        button.addTarget(self, action: #selector(bAction), for: .touchUpInside)
+    }
+    
+    @objc private func bAction() {
+        print("ingredient")
     }
     
 }
