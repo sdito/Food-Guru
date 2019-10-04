@@ -35,6 +35,15 @@ struct List {
         self.timeIntervalSince1970 = timeIntervalSince1970
         self.groupID = groupID
     }
+    static func getUsersCurrentList(db: Firestore, userID: String, listReturned: @escaping (_ listID: String?) -> Void) {
+        var listID: String?
+        db.collection("lists").whereField("shared", arrayContains: userID).order(by: "timeIntervalSince1970", descending: true).limit(to: 1).getDocuments { (querySnapshot, error) in
+            if let doc = querySnapshot?.documents.first {
+                listID = doc.get("ownID") as? String
+            }
+            listReturned(listID)
+        }
+    }
     
     static func listenerOnListWithDocID(db: Firestore, docID: String, listReturned: @escaping (_ list: List?) -> Void) {
         let reference = db.collection("lists").document(docID)
@@ -74,6 +83,22 @@ struct List {
         }
         //db.collection("lists").whereField("shared", arrayContains: userID)
     }
+    static func addItemToListFromRecipe(db: Firestore, listID: String, name: String, userID: String) {
+        let reference = db.collection("lists").document(listID).collection("items").document()
+        reference.setData([
+            "category": "added_from_recipe_user_needs_to_sort",
+            "name": name,
+            "selected": false,
+            "store": "added_from_recipe_user_needs_to_sort",
+            "user": userID
+        ]) { err in
+            if let err = err {
+                print("Error adding item from recipe to list: \(err)")
+            } else {
+                print("Document successfully written")
+            }
+        }
+    }
 }
 
 
@@ -88,7 +113,8 @@ extension List {
             "people": Array(Set(self.people!)).sorted(),
             "user": SharedValues.shared.userID ?? "did not write",
             "timeIntervalSince1970": Date().timeIntervalSince1970,
-            "groupID": self.groupID as Any
+            "groupID": self.groupID as Any,
+            "ownID": SharedValues.shared.listIdentifier?.documentID as Any
         ]) { err in
             if let err = err {
                 print("Error writing document: \(err)")
@@ -121,8 +147,10 @@ extension List {
     }
     
     func removeItemsThatNoLongerBelong() -> [Item] {
-        let categories: Set<String> = Set(self.categories ?? [""])
-        let stores: Set<String> = Set(self.stores ?? [""])
+        let dontDelete = "added_from_recipe_user_needs_to_sort"
+        var categories: Set<String> = Set(self.categories ?? [dontDelete])
+        var stores: Set<String> = Set(self.stores ?? [dontDelete])
+        categories.insert(dontDelete); stores.insert(dontDelete)
         var goodItems: [Item] = []
         if let items = self.items {
             for item in items {

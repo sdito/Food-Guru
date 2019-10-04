@@ -82,7 +82,8 @@ struct Item: Equatable {
 }
 
 extension Item {
-    mutating func writeToFirestore(db: Firestore!) {
+    #warning("renamed this")
+    mutating func writeToFirestoreForList(db: Firestore!) {
         let itemRef = db.collection("lists").document("\(SharedValues.shared.listIdentifier!.documentID)").collection("items").document()
         self.ownID = itemRef.documentID
         itemRef.setData([

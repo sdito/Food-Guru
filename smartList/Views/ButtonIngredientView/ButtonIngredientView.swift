@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseFirestore
+import FirebaseAuth
 
 class ButtonIngredientView: UIView {
     @IBOutlet weak var button: UIButton!
@@ -18,7 +20,18 @@ class ButtonIngredientView: UIView {
     }
     
     @objc private func bAction() {
-        print("ingredient")
+        //print(self.label.text)
+        let db = Firestore.firestore()
+        let userID = Auth.auth().currentUser?.uid ?? " "
+        guard let name = label.text else { return print("Name did not set property from ButtonIngredientView") }
+        
+        List.getUsersCurrentList(db: db, userID: userID) { (list) in
+            List.addItemToListFromRecipe(db: db, listID: list ?? " ", name: name, userID: userID)
+        }
+        // need to add this item to the most current list
+        
+        // first from List, get the current list
+        // from that list, then just add the item
     }
     
 }

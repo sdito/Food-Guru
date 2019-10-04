@@ -61,13 +61,13 @@ class RecipeHomeVC: UIViewController {
 extension RecipeHomeVC: DynamicHeightLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForTextAtIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
         let textData = recipes[indexPath.item]
-        let title = heightForText(textData.name, width: width, font: UIFont(name: "futura", size: 20)!, oneSidePadding: 4)
-        let cuisine = heightForText(textData.cuisineType, width: width, font: UIFont(name: "futura", size: 17)!, oneSidePadding: 4)
-        let description = heightForText(textData.recipeType.joined(separator: ", "), width: width, font: UIFont(name: "futura", size: 15)!, oneSidePadding: 4)
+        let title = heightForText(textData.name, width: width - 8, font: UIFont(name: "futura", size: 20)!)
+        let cuisine = heightForText(textData.cuisineType, width: width - 8, font: UIFont(name: "futura", size: 17)!)
+        let description = heightForText(textData.recipeType.joined(separator: ", "), width: width - 10, font: UIFont(name: "futura", size: 15)!)
         return title + cuisine + description + 8
         
     }
-    func heightForText(_ text: String, width: CGFloat, font: UIFont, oneSidePadding: Int) -> CGFloat {
+    func heightForText(_ text: String, width: CGFloat, font: UIFont) -> CGFloat {
         let rect = NSString(string: text).boundingRect(with: CGSize(width: width, height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
         return ceil(rect.height)
     }

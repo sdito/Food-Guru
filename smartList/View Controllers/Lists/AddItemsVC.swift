@@ -42,7 +42,12 @@ class AddItemsVC: UIViewController {
             }
         }
     }
+    //start recipe items pop up
+    @IBOutlet weak var baseRecipeView: UIView!
+    @IBOutlet weak var topRecipeView: UIView!
     
+    
+    //end recipe items pop up
     
     
     @IBOutlet weak var topView: UIView!
@@ -93,7 +98,7 @@ class AddItemsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
-        
+        topRecipeView.shadow()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -209,7 +214,7 @@ class AddItemsVC: UIViewController {
     private func toAddItem() {
         
         var item = Item(name: textField.text!, selected: false, category: SharedValues.shared.currentCategory, store: currentStore, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil)
-        item.writeToFirestore(db: db)
+        item.writeToFirestoreForList(db: db)
         //NEED TO HAVE THE OWNID FOR THE ITEM IN ORDER TO WRITE TO DB IN THE FUTURE ABOUT ITEM EVENTS
         
         //print("\(item.ownID) is the item id")

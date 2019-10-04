@@ -363,6 +363,15 @@
 			path = ButtonIngredientView;
 			sourceTree = "<group>";
 		};
+		E25B12AE2346E48800B7FACF /* LabelInstructionView */ = {
+			isa = PBXGroup;
+			children = (
+				E2CE480C23442F4E0045FCC0 /* LabelInstructionView.swift */,
+				E2CE480E23442F6F0045FCC0 /* LabelInstructionView.xib */,
+			);
+			path = LabelInstructionView;
+			sourceTree = "<group>";
+		};
 		E25F071523146C9A00E6738E /* Enum */ = {
 			isa = PBXGroup;
 			children = (
@@ -394,8 +403,7 @@
 		E2B4694D22F78D23006BA77D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E2CE480C23442F4E0045FCC0 /* LabelInstructionView.swift */,
-				E2CE480E23442F6F0045FCC0 /* LabelInstructionView.xib */,
+				E25B12AE2346E48800B7FACF /* LabelInstructionView */,
 				E253AC0923431FA70018274A /* ButtonIngredientView */,
 				E2F380AE2319847F003857F7 /* IngredientView */,
 				E2A54E1F23186DEB00BEBF39 /* InstructionView */,
