@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SortItemView" customModule="smartList" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="402" height="234"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yn5-Af-ffa">
+                    <rect key="frame" x="0.0" y="0.0" width="402" height="234"/>
+                </pickerView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="56R-IY-yis">
+                    <rect key="frame" x="345" y="15" width="42" height="35"/>
+                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                    <state key="normal" title="Done">
+                        <color key="titleColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Yn5-Af-ffa" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="3nt-WZ-LYO"/>
+                <constraint firstItem="Yn5-Af-ffa" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="9W5-Yh-BoL"/>
+                <constraint firstItem="Yn5-Af-ffa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="E7j-3M-ZEj"/>
+                <constraint firstItem="56R-IY-yis" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="P4q-YK-72U"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="Yn5-Af-ffa" secondAttribute="bottom" id="RDv-86-Eal"/>
+                <constraint firstAttribute="trailing" secondItem="56R-IY-yis" secondAttribute="trailing" constant="15" id="cjt-jn-xak"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="doneButton" destination="56R-IY-yis" id="fjL-R7-U22"/>
+                <outlet property="pickerView" destination="Yn5-Af-ffa" id="G7T-or-RD0"/>
+            </connections>
+            <point key="canvasLocation" x="131.8840579710145" y="329.46428571428572"/>
+        </view>
+    </objects>
+</document>

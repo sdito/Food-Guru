@@ -9,6 +9,8 @@
 import UIKit
 import FirebaseFirestore
 
+
+
 class RecipeDetailVC: UIViewController {
     var db: Firestore!
     @IBOutlet weak var imageView: UIImageView!
@@ -38,6 +40,7 @@ class RecipeDetailVC: UIViewController {
             self.imageView.image = img
         })
     }
+    
     @IBAction func addAllToList(_ sender: Any) {
         print("Add all items to list")
     }
@@ -62,9 +65,18 @@ class RecipeDetailVC: UIViewController {
                 self.author.text = "By \(name ?? "unknown user")"
             }
         }
-        recipe.addButtonIngredientViewsTo(stackView: ingredientsStackView)
+        recipe.addButtonIngredientViewsTo(stackView: ingredientsStackView, delegateVC: self)
         recipe.addInstructionsToInstructionStackView(stackView: instructionsStackView)
         
     }
 
 }
+
+extension RecipeDetailVC: ButtonIngredientViewDelegate {
+    func haveUserSortItem() {
+        print("picker view added here")
+        self.createPickerView()
+    }
+}
+
+

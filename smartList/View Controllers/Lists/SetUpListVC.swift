@@ -121,7 +121,7 @@ class SetUpListVC: UIViewController {
     
     @IBAction func writeToFirestoreIfValid() {
         gatherListData()
-        let list = List(name: name ?? "", isGroup: usingGroup, stores: stores, categories: categories, people: people, items: nil, numItems: nil, docID: nil, timeIntervalSince1970: Date().timeIntervalSince1970, groupID: returnGroupID)
+        let list = List(name: name ?? "", isGroup: usingGroup, stores: stores, categories: categories, people: people, items: nil, numItems: nil, docID: nil, timeIntervalSince1970: Date().timeIntervalSince1970, groupID: returnGroupID, ownID: "")
         
         if name != "" {
             if listToEdit == nil {

@@ -42,13 +42,6 @@ class AddItemsVC: UIViewController {
             }
         }
     }
-    //start recipe items pop up
-    @IBOutlet weak var baseRecipeView: UIView!
-    @IBOutlet weak var topRecipeView: UIView!
-    
-    
-    //end recipe items pop up
-    
     
     @IBOutlet weak var topView: UIView!
     
@@ -98,7 +91,7 @@ class AddItemsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
-        topRecipeView.shadow()
+        //#error("left off here, need to decide where i want the button to go and to set up the screen, also need to set the action on the button about adding all the items from the recipe")
     }
     
     override func viewWillDisappear(_ animated: Bool) {

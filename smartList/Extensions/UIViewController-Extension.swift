@@ -9,7 +9,39 @@
 import Foundation
 import UIKit
 
+
+
 extension UIViewController {
+    @objc func removeFromSuperViewSelector() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    func createPickerView() {
+        let vc = UIViewController()
+        //vc.view.backgroundColor = .gray
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
+        button.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
+        button.addTarget(self, action: #selector(removeFromSuperViewSelector), for: .touchUpInside)
+        vc.view.insertSubview(button, at: 1)
+        
+        
+        let v = Bundle.main.loadNibNamed("SortItemView", owner: nil, options: nil)?.first as! SortItemView
+        v.setUI()
+        v.center = vc.view.center
+        vc.view.insertSubview(v, at: 2)
+        v.alpha = 0
+        v.shadowAndRounded()
+        vc.modalPresentationStyle = .overFullScreen
+        
+        self.present(vc, animated: false) {
+            UIView.animate(withDuration: 0.3) {
+                v.alpha = 1.0
+                
+            }
+            
+        }
+    }
     func createNavigationBarTextAttributes() {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "futura", size: 20)!]
         

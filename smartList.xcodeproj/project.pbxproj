@@ -66,6 +66,8 @@
 		E2CE480D23442F4E0045FCC0 /* LabelInstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CE480C23442F4E0045FCC0 /* LabelInstructionView.swift */; };
 		E2CE480F23442F6F0045FCC0 /* LabelInstructionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2CE480E23442F6F0045FCC0 /* LabelInstructionView.xib */; };
 		E2D8462D231264CD004B19C2 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D8462C231264CD004B19C2 /* Recipe.swift */; };
+		E2DA80BB2347F0E400BD7101 /* SortItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2DA80BA2347F0E400BD7101 /* SortItemView.xib */; };
+		E2DA80BD2347F10400BD7101 /* SortItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA80BC2347F10400BD7101 /* SortItemView.swift */; };
 		E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */; };
 		E2E529D222FA7F9100C55DA0 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D122FA7F9100C55DA0 /* List.swift */; };
 		E2E529D522FA80C400C55DA0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D422FA80C400C55DA0 /* Item.swift */; };
@@ -163,6 +165,8 @@
 		E2CE480C23442F4E0045FCC0 /* LabelInstructionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelInstructionView.swift; sourceTree = "<group>"; };
 		E2CE480E23442F6F0045FCC0 /* LabelInstructionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LabelInstructionView.xib; sourceTree = "<group>"; };
 		E2D8462C231264CD004B19C2 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
+		E2DA80BA2347F0E400BD7101 /* SortItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SortItemView.xib; sourceTree = "<group>"; };
+		E2DA80BC2347F10400BD7101 /* SortItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortItemView.swift; sourceTree = "<group>"; };
 		E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-Extension.swift"; sourceTree = "<group>"; };
 		E2E529D122FA7F9100C55DA0 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		E2E529D422FA80C400C55DA0 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -403,6 +407,7 @@
 		E2B4694D22F78D23006BA77D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E2DA80B92347F0C700BD7101 /* SortItemView */,
 				E25B12AE2346E48800B7FACF /* LabelInstructionView */,
 				E253AC0923431FA70018274A /* ButtonIngredientView */,
 				E2F380AE2319847F003857F7 /* IngredientView */,
@@ -449,6 +454,15 @@
 				E24ADB0F233E7974008F2F9F /* UIViewController-Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E2DA80B92347F0C700BD7101 /* SortItemView */ = {
+			isa = PBXGroup;
+			children = (
+				E2DA80BA2347F0E400BD7101 /* SortItemView.xib */,
+				E2DA80BC2347F10400BD7101 /* SortItemView.swift */,
+			);
+			path = SortItemView;
 			sourceTree = "<group>";
 		};
 		E2E529D322FA7F9700C55DA0 /* Classes */ = {
@@ -598,6 +612,7 @@
 				E216204E22F658D20074A0DF /* Assets.xcassets in Resources */,
 				E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */,
 				E2CE480F23442F6F0045FCC0 /* LabelInstructionView.xib in Resources */,
+				E2DA80BB2347F0E400BD7101 /* SortItemView.xib in Resources */,
 				E216204C22F658D10074A0DF /* Main.storyboard in Resources */,
 				E2A54E1D2318553400BEBF39 /* InstructionView.xib in Resources */,
 			);
@@ -760,6 +775,7 @@
 				E20F2AD823258A4B00CD907A /* StorageCell.swift in Sources */,
 				E2EB7FBE22FF5ACF003948A6 /* SharedValues.swift in Sources */,
 				E2EBE5D322FD25060019BB0F /* AddItemsVC.swift in Sources */,
+				E2DA80BD2347F10400BD7101 /* SortItemView.swift in Sources */,
 				E2445CFE23220D950089582F /* TimeInterval-Extension.swift in Sources */,
 				E20BC6CF2327430C00F1E5E7 /* SettingsDetailVC.swift in Sources */,
 				E2B68D7523305877006A3B58 /* FoodStorageType.swift in Sources */,

@@ -21,9 +21,10 @@ struct List {
     var docID: String?
     var timeIntervalSince1970: TimeInterval?
     var groupID: String?
+    var ownID: String?
     
     
-    init(name: String, isGroup: Bool?, stores: [String]?, categories: [String]?, people: [String]?, items: [Item]?, numItems: Int?, docID: String?, timeIntervalSince1970: TimeInterval?, groupID: String?) {
+    init(name: String, isGroup: Bool?, stores: [String]?, categories: [String]?, people: [String]?, items: [Item]?, numItems: Int?, docID: String?, timeIntervalSince1970: TimeInterval?, groupID: String?, ownID: String?) {
         self.name = name
         self.isGroup = isGroup
         self.stores = stores
@@ -34,12 +35,13 @@ struct List {
         self.docID = docID
         self.timeIntervalSince1970 = timeIntervalSince1970
         self.groupID = groupID
+        self.ownID = ownID
     }
-    static func getUsersCurrentList(db: Firestore, userID: String, listReturned: @escaping (_ listID: String?) -> Void) {
-        var listID: String?
+    static func getUsersCurrentList(db: Firestore, userID: String, listReturned: @escaping (_ list: List?) -> Void) {
+        var listID: List?
         db.collection("lists").whereField("shared", arrayContains: userID).order(by: "timeIntervalSince1970", descending: true).limit(to: 1).getDocuments { (querySnapshot, error) in
             if let doc = querySnapshot?.documents.first {
-                listID = doc.get("ownID") as? String
+                listID = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
             }
             listReturned(listID)
         }
@@ -51,7 +53,7 @@ struct List {
         reference.addSnapshotListener { (docSnapshot, error) in
             if let doc = docSnapshot {
                 if doc.get("name") != nil {
-                  l = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String)
+                    l = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
                 }
                 
             }
@@ -68,7 +70,7 @@ struct List {
                 return
             }
             for doc in documents {
-                let l = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String)
+                let l = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
                 
                 if lists.isEmpty == false {
                     lists.append(l)
@@ -86,10 +88,10 @@ struct List {
     static func addItemToListFromRecipe(db: Firestore, listID: String, name: String, userID: String) {
         let reference = db.collection("lists").document(listID).collection("items").document()
         reference.setData([
-            "category": "added_from_recipe_user_needs_to_sort",
+            "category": "",
             "name": name,
             "selected": false,
-            "store": "added_from_recipe_user_needs_to_sort",
+            "store": "",
             "user": userID
         ]) { err in
             if let err = err {
@@ -147,7 +149,7 @@ extension List {
     }
     
     func removeItemsThatNoLongerBelong() -> [Item] {
-        let dontDelete = "added_from_recipe_user_needs_to_sort"
+        let dontDelete = ""
         var categories: Set<String> = Set(self.categories ?? [dontDelete])
         var stores: Set<String> = Set(self.stores ?? [dontDelete])
         categories.insert(dontDelete); stores.insert(dontDelete)
