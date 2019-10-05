@@ -13,7 +13,7 @@ import FirebaseAuth
 
 
 protocol ButtonIngredientViewDelegate {
-    func haveUserSortItem()
+    func haveUserSortItem(addedItemName: String, addedItemStores: [String]?, addedItemCategories: [String]?, addedItemListID: String)
 }
 
 
@@ -37,13 +37,12 @@ class ButtonIngredientView: UIView {
         guard let name = label.text else { return print("Name did not set property from ButtonIngredientView") }
         
         List.getUsersCurrentList(db: db, userID: userID) { (list) in
-            //List.addItemToListFromRecipe(db: db, listID: list ?? " ", name: name, userID: userID)
             if let list = list {
                 if list.stores?.isEmpty == true && list.categories?.isEmpty == true {
-                    List.addItemToListFromRecipe(db: db, listID: list.ownID ?? " ", name: name, userID: userID)
+                    List.addItemToListFromRecipe(db: db, listID: list.ownID ?? " ", name: name, userID: userID, category: "", store: "")
                 } else {
                     print("stores and or categories is not empty, have picker view")
-                    self.delegate.haveUserSortItem()
+                    self.delegate.haveUserSortItem(addedItemName: name, addedItemStores: list.stores, addedItemCategories: list.categories, addedItemListID: list.ownID ?? " ")
                     
                 }
             } else {
@@ -52,10 +51,6 @@ class ButtonIngredientView: UIView {
                 UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
             }
         }
-        // need to add this item to the most current list
-        
-        // first from List, get the current list
-        // from that list, then just add the item
     }
     
 }

@@ -11,8 +11,10 @@ import FirebaseFirestore
 
 
 
+
 class RecipeDetailVC: UIViewController {
     var db: Firestore!
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var recipeName: UILabel!
     @IBOutlet weak var nameAndTitleView: UIView!
@@ -25,7 +27,7 @@ class RecipeDetailVC: UIViewController {
     @IBOutlet weak var ingredientsStackView: UIStackView!
     @IBOutlet weak var instructionsStackView: UIStackView!
     @IBOutlet weak var notes: UILabel!
-    
+
     var data: (image: UIImage, recipe: Recipe)?
     
     
@@ -39,10 +41,16 @@ class RecipeDetailVC: UIViewController {
         data?.recipe.getImageFromStorage(thumb: false, imageReturned: { (img) in
             self.imageView.image = img
         })
+        createObserver()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     @IBAction func addAllToList(_ sender: Any) {
         print("Add all items to list")
+        self.createPickerView(itemName: <#T##String#>, itemStores: <#T##[String]?#>, itemCategories: <#T##[String]?#>, itemListID: <#T##String#>)
     }
     
     private func setUI(recipe: Recipe, image: UIImage) {
@@ -69,13 +77,48 @@ class RecipeDetailVC: UIViewController {
         recipe.addInstructionsToInstructionStackView(stackView: instructionsStackView)
         
     }
+    
+    private func createObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(itemAddedSelector), name: .itemAddedFromRecipe, object: nil)
+    }
+    @objc func itemAddedSelector(_ notification: NSNotification) {
+        if let dict = notification.userInfo as NSDictionary? {
+            if let name = dict["itemName"] as? String {
+                print("Name of the item: \(name)")
+                for item in ingredientsStackView.subviews {
+                    if type(of: item) == ButtonIngredientView.self {
+                        let txt = (item as! ButtonIngredientView).label.text
+                        if txt == name {
+                            let itm = (item as! ButtonIngredientView)
+                            if #available(iOS 13.0, *) {
+                                itm.button.setImage(.strokedCheckmark, for: .normal)
+                                itm.label.textColor = .systemGreen
+                                itm.button.tintColor = .systemGreen
+                                itm.button.isUserInteractionEnabled = false
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                    itm.label.textColor = .secondaryLabel
+                                }
+                            } else {
+                                itm.label.textColor = .systemGreen
+                                itm.button.tintColor = .systemGreen
+                                itm.button.isUserInteractionEnabled = false
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                    itm.label.textColor = .lightGray
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 }
 
 extension RecipeDetailVC: ButtonIngredientViewDelegate {
-    func haveUserSortItem() {
+    func haveUserSortItem(addedItemName: String, addedItemStores: [String]?, addedItemCategories: [String]?, addedItemListID: String) {
         print("picker view added here")
-        self.createPickerView()
+        self.createPickerView(itemName: addedItemName, itemStores: addedItemStores, itemCategories: addedItemCategories, itemListID: addedItemListID)
     }
 }
 

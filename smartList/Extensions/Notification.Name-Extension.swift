@@ -12,4 +12,5 @@ import Foundation
 extension Notification.Name {
     static let foodStorageIDchanged = Notification.Name("stevenDito.foodStorageIDchanged")
     static let groupIDchanged = Notification.Name("stevenDito.groupIDchanged")
+    static let itemAddedFromRecipe = Notification.Name("stevenDito.itemAddedFromRecipe")
 }

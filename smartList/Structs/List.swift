@@ -85,19 +85,20 @@ struct List {
         }
         //db.collection("lists").whereField("shared", arrayContains: userID)
     }
-    static func addItemToListFromRecipe(db: Firestore, listID: String, name: String, userID: String) {
+    static func addItemToListFromRecipe(db: Firestore, listID: String, name: String, userID: String, category: String, store: String) {
         let reference = db.collection("lists").document(listID).collection("items").document()
         reference.setData([
-            "category": "",
+            "category": category,
             "name": name,
             "selected": false,
-            "store": "",
+            "store": store,
             "user": userID
         ]) { err in
             if let err = err {
                 print("Error adding item from recipe to list: \(err)")
             } else {
                 print("Document successfully written")
+                NotificationCenter.default.post(name: .itemAddedFromRecipe, object: nil, userInfo: ["itemName": name])
             }
         }
     }
