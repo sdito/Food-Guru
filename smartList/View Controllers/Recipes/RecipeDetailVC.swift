@@ -8,13 +8,14 @@
 
 import UIKit
 import FirebaseFirestore
-
+import FirebaseAuth
 
 
 
 class RecipeDetailVC: UIViewController {
     var db: Firestore!
     
+    @IBOutlet weak var addAllToListOutlet: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var recipeName: UILabel!
     @IBOutlet weak var nameAndTitleView: UIView!
@@ -41,6 +42,7 @@ class RecipeDetailVC: UIViewController {
         data?.recipe.getImageFromStorage(thumb: false, imageReturned: { (img) in
             self.imageView.image = img
         })
+        addAllToListOutlet.isUserInteractionEnabled = true
         createObserver()
     }
     
@@ -50,7 +52,23 @@ class RecipeDetailVC: UIViewController {
     
     @IBAction func addAllToList(_ sender: Any) {
         print("Add all items to list")
-        self.createPickerView(itemName: <#T##String#>, itemStores: <#T##[String]?#>, itemCategories: <#T##[String]?#>, itemListID: <#T##String#>)
+        let uid = Auth.auth().currentUser?.uid ?? " "
+        List.getUsersCurrentList(db: db, userID: uid) { (list) in
+            if let list = list {
+                if list.stores?.isEmpty == true && list.categories?.isEmpty == true {
+                    for item in (self.data?.recipe.ingredients)! {
+                        List.addItemToListFromRecipe(db: self.db, listID: list.ownID ?? " ", name: item, userID: uid, category: "", store: "")
+                    }
+                } else {
+                    self.createPickerView(itemNames: self.data?.recipe.ingredients ?? [""], itemStores: list.stores, itemCategories: list.categories, itemListID: list.ownID ?? " ", singleItem: false, delegateVC: self)
+                }
+            } else {
+                let alert = UIAlertController(title: "Error", message: "You first need to create a list before you can add items.", preferredStyle: .alert)
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true)
+                
+            }
+        }
     }
     
     private func setUI(recipe: Recipe, image: UIImage) {
@@ -116,10 +134,17 @@ class RecipeDetailVC: UIViewController {
 }
 
 extension RecipeDetailVC: ButtonIngredientViewDelegate {
-    func haveUserSortItem(addedItemName: String, addedItemStores: [String]?, addedItemCategories: [String]?, addedItemListID: String) {
+    func haveUserSortItem(addedItemName: [String], addedItemStores: [String]?, addedItemCategories: [String]?, addedItemListID: String) {
         print("picker view added here")
-        self.createPickerView(itemName: addedItemName, itemStores: addedItemStores, itemCategories: addedItemCategories, itemListID: addedItemListID)
+        self.createPickerView(itemNames: addedItemName, itemStores: addedItemStores, itemCategories: addedItemCategories, itemListID: addedItemListID, singleItem: true, delegateVC: self)
     }
 }
 
 
+extension RecipeDetailVC: DisableAddAllItemsDelegate {
+    func disableButton() {
+        addAllToListOutlet.removeFromSuperview()
+        #error("need to do this for simple lists too, and then fix the issue where if the user stops half way through of adding the items")
+    }
+    
+}

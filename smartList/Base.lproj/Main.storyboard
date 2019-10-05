@@ -1824,6 +1824,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="p6d-M6-sKB"/>
                     <connections>
+                        <outlet property="addAllToListOutlet" destination="JwD-NG-POb" id="DuJ-Pu-xMh"/>
                         <outlet property="author" destination="wEc-D5-fh0" id="s5w-dT-rKi"/>
                         <outlet property="calories" destination="XHC-LS-82E" id="4Qf-Um-Qvk"/>
                         <outlet property="cookTime" destination="cf8-dz-xR8" id="YtS-AK-hcf"/>

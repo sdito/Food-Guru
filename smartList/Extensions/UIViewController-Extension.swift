@@ -15,7 +15,7 @@ extension UIViewController {
     @objc func removeFromSuperViewSelector() {
         self.dismiss(animated: true, completion: nil)
     }
-    func createPickerView(itemName: String, itemStores: [String]?, itemCategories: [String]?, itemListID: String) {
+    func createPickerView(itemNames: [String], itemStores: [String]?, itemCategories: [String]?, itemListID: String, singleItem: Bool, delegateVC: UIViewController) {
         let vc = UIViewController()
         //vc.view.backgroundColor = .gray
         let button = UIButton()
@@ -27,7 +27,14 @@ extension UIViewController {
         
         
         let v = Bundle.main.loadNibNamed("SortItemView", owner: nil, options: nil)?.first as! SortItemView
-        v.setUI(name: itemName, stores: itemStores, categories: itemCategories, listID: itemListID)
+        v.delegate = delegateVC as? DisableAddAllItemsDelegate
+        switch singleItem {
+        case true:
+            v.setUIoneItem(name: itemNames.first!, stores: itemStores, categories: itemCategories, listID: itemListID)
+        case false:
+            v.setUIallItems(items: itemNames, stores: itemStores, cateogires: itemCategories, listID: itemListID)
+        }
+        
         v.center = vc.view.center
         vc.view.insertSubview(v, at: 2)
         v.alpha = 0
