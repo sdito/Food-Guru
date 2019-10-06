@@ -45,11 +45,6 @@ class RecipeDetailVC: UIViewController {
         })
         //addAllToListOutlet.isUserInteractionEnabled = true
         createObserver()
-        
-        
-        let v = Bundle.main.loadNibNamed("StarRatingView", owner: nil, options: nil)?.first as! StarRatingView
-        v.setUI(rating: 0.76)
-        ingredientsStackView.insertArrangedSubview(v, at: 0)
     }
     
     deinit {
@@ -82,6 +77,9 @@ class RecipeDetailVC: UIViewController {
         }
     }
     
+    @IBAction func reviewRecipe(_ sender: Any) {
+        self.createRatingView(delegateVC: self)
+    }
     private func setUI(recipe: Recipe, image: UIImage) {
         imageView.image = data?.image
         recipeName.text = recipe.name
@@ -163,4 +161,14 @@ extension RecipeDetailVC: DisableAddAllItemsDelegate {
         removeAddAllButton()
     }
     
+}
+
+extension RecipeDetailVC: GiveRatingViewDelegate {
+    func publishRating(stars: Int, rating: String?) {
+        print("Rating: \(stars) stars, text: \(rating)")
+        data?.recipe.addReviewToRecipe(stars: stars, review: rating, db: db)
+        self.dismiss(animated: false) {
+            self.createMessageView(color: Colors.messageGreen, text: "Review successfully written")
+        }
+    }
 }

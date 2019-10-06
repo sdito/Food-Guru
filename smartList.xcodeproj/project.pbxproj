@@ -49,6 +49,7 @@
 		E25F071923146E5E00E6738E /* CuisineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071823146E5E00E6738E /* CuisineType.swift */; };
 		E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */; };
 		E25F071D231490A200E6738E /* RecipeTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071C231490A200E6738E /* RecipeTypeCell.swift */; };
+		E26B9C50234A6F960039E9EE /* UITextView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26B9C4F234A6F960039E9EE /* UITextView-Extension.swift */; };
 		E27D70B4233F24A5009C68B3 /* UISearchBar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */; };
 		E27D70B62340079D009C68B3 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70B52340079D009C68B3 /* RecipeCell.swift */; };
 		E27D70C223404414009C68B3 /* DynamicHeightLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70C123404414009C68B3 /* DynamicHeightLayout.swift */; };
@@ -70,6 +71,8 @@
 		E2DA80BD2347F10400BD7101 /* SortItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA80BC2347F10400BD7101 /* SortItemView.swift */; };
 		E2DA80CC2349957700BD7101 /* StarRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2DA80C92349957600BD7101 /* StarRatingView.xib */; };
 		E2DA80CD2349957700BD7101 /* StarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA80CA2349957700BD7101 /* StarRatingView.swift */; };
+		E2DA80D02349BB6100BD7101 /* GiveRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2DA80CF2349BB6100BD7101 /* GiveRatingView.xib */; };
+		E2DA80D22349BB9000BD7101 /* GiveRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA80D12349BB9000BD7101 /* GiveRatingView.swift */; };
 		E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */; };
 		E2E529D222FA7F9100C55DA0 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D122FA7F9100C55DA0 /* List.swift */; };
 		E2E529D522FA80C400C55DA0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D422FA80C400C55DA0 /* Item.swift */; };
@@ -150,6 +153,7 @@
 		E25F071823146E5E00E6738E /* CuisineType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuisineType.swift; sourceTree = "<group>"; };
 		E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRecipeTypeVC.swift; sourceTree = "<group>"; };
 		E25F071C231490A200E6738E /* RecipeTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTypeCell.swift; sourceTree = "<group>"; };
+		E26B9C4F234A6F960039E9EE /* UITextView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView-Extension.swift"; sourceTree = "<group>"; };
 		E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar-Extension.swift"; sourceTree = "<group>"; };
 		E27D70B52340079D009C68B3 /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		E27D70C123404414009C68B3 /* DynamicHeightLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightLayout.swift; sourceTree = "<group>"; };
@@ -171,6 +175,8 @@
 		E2DA80BC2347F10400BD7101 /* SortItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortItemView.swift; sourceTree = "<group>"; };
 		E2DA80C92349957600BD7101 /* StarRatingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StarRatingView.xib; sourceTree = "<group>"; };
 		E2DA80CA2349957700BD7101 /* StarRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarRatingView.swift; sourceTree = "<group>"; };
+		E2DA80CF2349BB6100BD7101 /* GiveRatingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GiveRatingView.xib; sourceTree = "<group>"; };
+		E2DA80D12349BB9000BD7101 /* GiveRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveRatingView.swift; sourceTree = "<group>"; };
 		E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-Extension.swift"; sourceTree = "<group>"; };
 		E2E529D122FA7F9100C55DA0 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		E2E529D422FA80C400C55DA0 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -411,6 +417,7 @@
 		E2B4694D22F78D23006BA77D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E2DA80D32349BB9E00BD7101 /* GiveRatingView */,
 				E2DA80CE2349958600BD7101 /* StarRatingView */,
 				E2DA80B92347F0C700BD7101 /* SortItemView */,
 				E25B12AE2346E48800B7FACF /* LabelInstructionView */,
@@ -449,6 +456,7 @@
 			isa = PBXGroup;
 			children = (
 				E2B4695622F7F18E006BA77D /* UITextField-Extension.swift */,
+				E26B9C4F234A6F960039E9EE /* UITextView-Extension.swift */,
 				E2EB7FC222FFB29A003948A6 /* String-Extension.swift */,
 				E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */,
 				E2C4934023066012002907C2 /* UIView-Extension.swift */,
@@ -477,6 +485,15 @@
 				E2DA80C92349957600BD7101 /* StarRatingView.xib */,
 			);
 			path = StarRatingView;
+			sourceTree = "<group>";
+		};
+		E2DA80D32349BB9E00BD7101 /* GiveRatingView */ = {
+			isa = PBXGroup;
+			children = (
+				E2DA80CF2349BB6100BD7101 /* GiveRatingView.xib */,
+				E2DA80D12349BB9000BD7101 /* GiveRatingView.swift */,
+			);
+			path = GiveRatingView;
 			sourceTree = "<group>";
 		};
 		E2E529D322FA7F9700C55DA0 /* Classes */ = {
@@ -621,6 +638,7 @@
 			files = (
 				E216205122F658D20074A0DF /* LaunchScreen.storyboard in Resources */,
 				E2DA80CC2349957700BD7101 /* StarRatingView.xib in Resources */,
+				E2DA80D02349BB6100BD7101 /* GiveRatingView.xib in Resources */,
 				E253AC06234315170018274A /* ButtonIngredientView.xib in Resources */,
 				E2F380B023198496003857F7 /* IngredientView.xib in Resources */,
 				E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */,
@@ -770,6 +788,7 @@
 				E2445CF42321DC100089582F /* StorageHomeVC.swift in Sources */,
 				E20BC6DC23288B9C00F1E5E7 /* EmailCheck.swift in Sources */,
 				E25F071923146E5E00E6738E /* CuisineType.swift in Sources */,
+				E26B9C50234A6F960039E9EE /* UITextView-Extension.swift in Sources */,
 				E20BC6D323275BC200F1E5E7 /* SettingBasicCell.swift in Sources */,
 				E216204722F658D10074A0DF /* AppDelegate.swift in Sources */,
 				E2DA80CD2349957700BD7101 /* StarRatingView.swift in Sources */,
@@ -777,6 +796,7 @@
 				E253AC08234315BB0018274A /* ButtonIngredientView.swift in Sources */,
 				E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */,
 				E24ADB0E233DB063008F2F9F /* SettingContactDeveloperCell.swift in Sources */,
+				E2DA80D22349BB9000BD7101 /* GiveRatingView.swift in Sources */,
 				E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */,
 				E24ADB0A23386E69008F2F9F /* StorageNewItemVC.swift in Sources */,
 				E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */,

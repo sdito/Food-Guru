@@ -1631,7 +1631,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="wTA-f7-bDw">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="720.66666666666663"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="774.66666666666663"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0KN-1p-7uW">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="444"/>
@@ -1809,11 +1809,20 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WS9-3S-E6p">
+                                                <rect key="frame" x="0.0" y="743.66666666666663" width="414" height="31"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                                <state key="normal" title="Review the recipe"/>
+                                                <connections>
+                                                    <action selector="reviewRecipe:" destination="hdZ-0Z-sHl" eventType="touchUpInside" id="aoM-TU-yYp"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="7Qu-Xn-5os" secondAttribute="trailing" id="0x9-Th-YIm"/>
                                             <constraint firstAttribute="trailing" secondItem="Ytl-qP-e7p" secondAttribute="trailing" id="7Kl-p3-dey"/>
                                             <constraint firstAttribute="trailing" secondItem="QdG-nx-MYu" secondAttribute="trailing" id="A1V-pW-7pz"/>
+                                            <constraint firstItem="WS9-3S-E6p" firstAttribute="leading" secondItem="wTA-f7-bDw" secondAttribute="leading" id="Ec9-rU-Lkt"/>
                                             <constraint firstAttribute="trailing" secondItem="5pj-tg-s8d" secondAttribute="trailing" id="Efe-od-zZa"/>
                                             <constraint firstItem="Ytl-qP-e7p" firstAttribute="leading" secondItem="wTA-f7-bDw" secondAttribute="leading" id="H7S-1B-Fae"/>
                                             <constraint firstItem="0KN-1p-7uW" firstAttribute="leading" secondItem="wTA-f7-bDw" secondAttribute="leading" id="IO3-XY-fFn"/>
@@ -1823,6 +1832,7 @@
                                             <constraint firstItem="7Qu-Xn-5os" firstAttribute="leading" secondItem="wTA-f7-bDw" secondAttribute="leading" id="gpb-JZ-x8V"/>
                                             <constraint firstItem="Iag-iD-isv" firstAttribute="leading" secondItem="wTA-f7-bDw" secondAttribute="leading" id="m6h-FS-7JA"/>
                                             <constraint firstItem="5pj-tg-s8d" firstAttribute="leading" secondItem="wTA-f7-bDw" secondAttribute="leading" id="nmZ-S2-MOc"/>
+                                            <constraint firstAttribute="trailing" secondItem="WS9-3S-E6p" secondAttribute="trailing" id="onD-ng-Q3K"/>
                                             <constraint firstAttribute="trailing" secondItem="Iag-iD-isv" secondAttribute="trailing" id="tUp-ON-KSP"/>
                                         </constraints>
                                     </stackView>

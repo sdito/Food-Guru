@@ -13,7 +13,40 @@ import UIKit
 
 extension UIViewController {
     @objc func removeFromSuperViewSelector() {
-        self.dismiss(animated: true, completion: nil)
+        UIView.animate(withDuration: 0.3, animations: {
+            self.presentedViewController?.view.alpha = 0.0
+        }) { (true) in
+            self.dismiss(animated: false, completion: nil)
+        }
+        
+    }
+    func createRatingView(delegateVC: UIViewController) {
+        let vc = UIViewController()
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
+        button.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
+        button.addTarget(self, action: #selector(removeFromSuperViewSelector), for: .touchUpInside)
+        button.backgroundColor = .black
+        button.alpha = 0.3
+        vc.view.insertSubview(button, at: 1)
+        
+        let v = Bundle.main.loadNibNamed("GiveRatingView", owner: nil, options: nil)?.first as! GiveRatingView
+        v.delegate = delegateVC as? GiveRatingViewDelegate
+        v.center.x = vc.view.center.x
+        v.center.y = vc.view.center.y - 100
+        
+        
+        vc.view.insertSubview(v, at: 2)
+        v.alpha = 0
+        v.shadowAndRounded()
+        vc.modalPresentationStyle = .overFullScreen
+        
+        self.present(vc, animated: false) {
+            UIView.animate(withDuration: 0.3) {
+                v.alpha = 1.0
+            }
+        }
     }
     func createPickerView(itemNames: [String], itemStores: [String]?, itemCategories: [String]?, itemListID: String, singleItem: Bool, delegateVC: UIViewController) {
         let vc = UIViewController()

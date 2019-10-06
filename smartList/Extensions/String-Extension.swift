@@ -8,12 +8,21 @@
 
 import Foundation
 
-
+extension String {
+    func imagePathToDocID() -> String {
+        let slashIndex = self.firstIndex(of: "/")!
+        let periodIndex: String.Index = self.firstIndex(of: ".") ?? self.endIndex
+        var str = self[slashIndex..<periodIndex]
+        str.removeFirst()
+        return String(str)
+    }
+}
 
 extension Sequence where Element == String {
     func removeBlanks() -> [String] {
         return self.filter({$0 != ""})
     }
+    
 
 }
 

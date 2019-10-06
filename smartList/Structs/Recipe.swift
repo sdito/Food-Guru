@@ -128,13 +128,39 @@ extension Recipe {
             imageReturned(image)
         }
     }
+    
+    func addReviewToRecipe(stars: Int, review: String?, db: Firestore) {
+        let recipeID = self.imagePath?.imagePathToDocID()
+        let reference = db.collection("recipes").document(recipeID ?? " ").collection("reviews").document()
+        
+        
+        reference.setData([
+            "stars": stars,
+            "review": review as Any,
+            "user": Auth.auth().currentUser?.uid as Any,
+            "timeIntervalSince1970": Date().timeIntervalSince1970
+        ]) {err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written")
+                User.getNameFromUid(db: db, uid: self.userID ?? " ") { (name) in
+                    reference.updateData([
+                        "name": name as Any
+                    ])
+                }
+                // do the recalculation stuff here
+            }
+        }
+    }
+    
     //(Bundle.main.loadNibNamed("IngredientView", owner: nil, options: nil)?.first as? IngredientView)!
     func addButtonIngredientViewsTo(stackView: UIStackView, delegateVC: UIViewController) {
         for item in self.ingredients {
             let v = Bundle.main.loadNibNamed("ButtonIngredientView", owner: nil, options: nil)?.first as! ButtonIngredientView
             
             v.setUI(ingredient: item)
-            v.delegate = delegateVC as! ButtonIngredientViewDelegate
+            v.delegate = delegateVC as? ButtonIngredientViewDelegate
             stackView.insertArrangedSubview(v, at: 1)
         }
     }
