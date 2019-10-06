@@ -417,6 +417,27 @@
                                             <constraint firstAttribute="bottom" secondItem="IWf-Pl-WMR" secondAttribute="bottom" id="otX-DI-jBk"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" id="Ieh-Ef-AoX">
+                                        <rect key="frame" x="4" y="673" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RdE-Wb-reT">
+                                                <rect key="frame" x="2" y="5" width="404" height="34"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                                <state key="normal" title="Sort items added from recipe">
+                                                    <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="RdE-Wb-reT" firstAttribute="top" secondItem="Ieh-Ef-AoX" secondAttribute="top" constant="5" id="4MW-TU-Xtl"/>
+                                            <constraint firstAttribute="trailing" secondItem="RdE-Wb-reT" secondAttribute="trailing" constant="5" id="5PC-vW-KYG"/>
+                                            <constraint firstAttribute="bottom" secondItem="RdE-Wb-reT" secondAttribute="bottom" constant="5" id="hyZ-ZK-NCZ"/>
+                                            <constraint firstItem="RdE-Wb-reT" firstAttribute="leading" secondItem="Ieh-Ef-AoX" secondAttribute="leading" constant="5" id="zne-cp-8AQ"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -450,7 +471,9 @@
                     </view>
                     <navigationItem key="navigationItem" id="ZjQ-0G-uSO"/>
                     <connections>
+                        <outlet property="baseRecipeView" destination="Ieh-Ef-AoX" id="fIS-8Z-ljI"/>
                         <outlet property="categoriesView" destination="FB5-VA-M7G" id="ZY9-fH-aS6"/>
+                        <outlet property="recipeButtonOutlet" destination="RdE-Wb-reT" id="Qta-rs-oJ7"/>
                         <outlet property="scrollView" destination="IWf-Pl-WMR" id="47R-fS-Keo"/>
                         <outlet property="segmentedControl" destination="FyL-B2-6cH" id="e3B-7z-VGz"/>
                         <outlet property="stackView" destination="9Uw-5l-3GE" id="q4G-iw-5cJ"/>
@@ -1824,7 +1847,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="p6d-M6-sKB"/>
                     <connections>
-                        <outlet property="addAllToListOutlet" destination="JwD-NG-POb" id="DuJ-Pu-xMh"/>
                         <outlet property="author" destination="wEc-D5-fh0" id="s5w-dT-rKi"/>
                         <outlet property="calories" destination="XHC-LS-82E" id="4Qf-Um-Qvk"/>
                         <outlet property="cookTime" destination="cf8-dz-xR8" id="YtS-AK-hcf"/>

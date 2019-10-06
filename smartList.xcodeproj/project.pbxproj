@@ -68,6 +68,8 @@
 		E2D8462D231264CD004B19C2 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D8462C231264CD004B19C2 /* Recipe.swift */; };
 		E2DA80BB2347F0E400BD7101 /* SortItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2DA80BA2347F0E400BD7101 /* SortItemView.xib */; };
 		E2DA80BD2347F10400BD7101 /* SortItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA80BC2347F10400BD7101 /* SortItemView.swift */; };
+		E2DA80CC2349957700BD7101 /* StarRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2DA80C92349957600BD7101 /* StarRatingView.xib */; };
+		E2DA80CD2349957700BD7101 /* StarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA80CA2349957700BD7101 /* StarRatingView.swift */; };
 		E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */; };
 		E2E529D222FA7F9100C55DA0 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D122FA7F9100C55DA0 /* List.swift */; };
 		E2E529D522FA80C400C55DA0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D422FA80C400C55DA0 /* Item.swift */; };
@@ -167,6 +169,8 @@
 		E2D8462C231264CD004B19C2 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		E2DA80BA2347F0E400BD7101 /* SortItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SortItemView.xib; sourceTree = "<group>"; };
 		E2DA80BC2347F10400BD7101 /* SortItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortItemView.swift; sourceTree = "<group>"; };
+		E2DA80C92349957600BD7101 /* StarRatingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StarRatingView.xib; sourceTree = "<group>"; };
+		E2DA80CA2349957700BD7101 /* StarRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarRatingView.swift; sourceTree = "<group>"; };
 		E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-Extension.swift"; sourceTree = "<group>"; };
 		E2E529D122FA7F9100C55DA0 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		E2E529D422FA80C400C55DA0 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -407,6 +411,7 @@
 		E2B4694D22F78D23006BA77D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E2DA80CE2349958600BD7101 /* StarRatingView */,
 				E2DA80B92347F0C700BD7101 /* SortItemView */,
 				E25B12AE2346E48800B7FACF /* LabelInstructionView */,
 				E253AC0923431FA70018274A /* ButtonIngredientView */,
@@ -463,6 +468,15 @@
 				E2DA80BC2347F10400BD7101 /* SortItemView.swift */,
 			);
 			path = SortItemView;
+			sourceTree = "<group>";
+		};
+		E2DA80CE2349958600BD7101 /* StarRatingView */ = {
+			isa = PBXGroup;
+			children = (
+				E2DA80CA2349957700BD7101 /* StarRatingView.swift */,
+				E2DA80C92349957600BD7101 /* StarRatingView.xib */,
+			);
+			path = StarRatingView;
 			sourceTree = "<group>";
 		};
 		E2E529D322FA7F9700C55DA0 /* Classes */ = {
@@ -606,6 +620,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E216205122F658D20074A0DF /* LaunchScreen.storyboard in Resources */,
+				E2DA80CC2349957700BD7101 /* StarRatingView.xib in Resources */,
 				E253AC06234315170018274A /* ButtonIngredientView.xib in Resources */,
 				E2F380B023198496003857F7 /* IngredientView.xib in Resources */,
 				E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */,
@@ -757,6 +772,7 @@
 				E25F071923146E5E00E6738E /* CuisineType.swift in Sources */,
 				E20BC6D323275BC200F1E5E7 /* SettingBasicCell.swift in Sources */,
 				E216204722F658D10074A0DF /* AppDelegate.swift in Sources */,
+				E2DA80CD2349957700BD7101 /* StarRatingView.swift in Sources */,
 				E2B4695A22F7F485006BA77D /* Colors.swift in Sources */,
 				E253AC08234315BB0018274A /* ButtonIngredientView.swift in Sources */,
 				E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */,

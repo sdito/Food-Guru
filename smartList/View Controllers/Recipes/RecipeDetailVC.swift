@@ -14,6 +14,7 @@ import FirebaseAuth
 
 class RecipeDetailVC: UIViewController {
     var db: Firestore!
+    private var itemsAddedToList: Set<String>? = [""]
     
     @IBOutlet weak var addAllToListOutlet: UIButton!
     @IBOutlet weak var imageView: UIImageView!
@@ -42,8 +43,13 @@ class RecipeDetailVC: UIViewController {
         data?.recipe.getImageFromStorage(thumb: false, imageReturned: { (img) in
             self.imageView.image = img
         })
-        addAllToListOutlet.isUserInteractionEnabled = true
+        //addAllToListOutlet.isUserInteractionEnabled = true
         createObserver()
+        
+        
+        let v = Bundle.main.loadNibNamed("StarRatingView", owner: nil, options: nil)?.first as! StarRatingView
+        v.setUI(rating: 0.76)
+        ingredientsStackView.insertArrangedSubview(v, at: 0)
     }
     
     deinit {
@@ -59,8 +65,13 @@ class RecipeDetailVC: UIViewController {
                     for item in (self.data?.recipe.ingredients)! {
                         List.addItemToListFromRecipe(db: self.db, listID: list.ownID ?? " ", name: item, userID: uid, category: "", store: "")
                     }
+                    self.removeAddAllButton()
                 } else {
-                    self.createPickerView(itemNames: self.data?.recipe.ingredients ?? [""], itemStores: list.stores, itemCategories: list.categories, itemListID: list.ownID ?? " ", singleItem: false, delegateVC: self)
+                    var allItems = self.data?.recipe.ingredients ?? [""]
+                    print(allItems)
+                    allItems = allItems.filter({self.itemsAddedToList?.contains($0) == false})
+                    print(allItems)
+                    self.createPickerView(itemNames: allItems, itemStores: list.stores, itemCategories: list.categories, itemListID: list.ownID ?? " ", singleItem: false, delegateVC: self)
                 }
             } else {
                 let alert = UIAlertController(title: "Error", message: "You first need to create a list before you can add items.", preferredStyle: .alert)
@@ -99,10 +110,16 @@ class RecipeDetailVC: UIViewController {
     private func createObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(itemAddedSelector), name: .itemAddedFromRecipe, object: nil)
     }
+    private func removeAddAllButton() {
+        addAllToListOutlet.alpha = 0.4
+        addAllToListOutlet.setTitleColor(.black, for: .normal)
+        addAllToListOutlet.setTitle("✓ Add all to list", for: .normal)
+    }
     @objc func itemAddedSelector(_ notification: NSNotification) {
         if let dict = notification.userInfo as NSDictionary? {
             if let name = dict["itemName"] as? String {
                 print("Name of the item: \(name)")
+                itemsAddedToList?.insert(name)
                 for item in ingredientsStackView.subviews {
                     if type(of: item) == ButtonIngredientView.self {
                         let txt = (item as! ButtonIngredientView).label.text
@@ -143,8 +160,7 @@ extension RecipeDetailVC: ButtonIngredientViewDelegate {
 
 extension RecipeDetailVC: DisableAddAllItemsDelegate {
     func disableButton() {
-        addAllToListOutlet.removeFromSuperview()
-        #error("need to do this for simple lists too, and then fix the issue where if the user stops half way through of adding the items")
+        removeAddAllButton()
     }
     
 }
