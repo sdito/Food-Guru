@@ -128,12 +128,34 @@ extension Recipe {
             imageReturned(image)
         }
     }
+    func updateRecipeReviewInfo(stars: Int, reviews: Int, db: Firestore) {
+        
+        let recipeID = self.imagePath?.imagePathToDocID()
+        let starsValue = self.numStars
+        let reviewsValue = self.numReviews
+        
+        if starsValue == nil || reviewsValue == nil {
+            db.collection("recipes").document(recipeID ?? " ").updateData([
+                "numReviews": reviews,
+                "numStars": stars
+            ])
+        } else {
+            if var starsValue = starsValue, var reviewsValue = reviewsValue {
+                starsValue += stars
+                reviewsValue += reviews
+                db.collection("recipes").document(recipeID ?? " ").updateData([
+                    "numStars": starsValue,
+                    "numReviews": reviewsValue
+                ])
+            } else {
+                print("Error - updateRecipeReviewInfo(stars: Int, reviews: Int, db: Firestore)")
+            }
+        }
+    }
     
     func addReviewToRecipe(stars: Int, review: String?, db: Firestore) {
         let recipeID = self.imagePath?.imagePathToDocID()
         let reference = db.collection("recipes").document(recipeID ?? " ").collection("reviews").document()
-        
-        
         reference.setData([
             "stars": stars,
             "review": review as Any,
@@ -149,7 +171,10 @@ extension Recipe {
                         "name": name as Any
                     ])
                 }
+                self.updateRecipeReviewInfo(stars: stars, reviews: 1, db: db)
+                
                 // do the recalculation stuff here
+                
             }
         }
     }

@@ -16,6 +16,8 @@ class RecipeDetailVC: UIViewController {
     var db: Firestore!
     private var itemsAddedToList: Set<String>? = [""]
     
+    @IBOutlet weak var mainStackView: UIStackView!
+    @IBOutlet weak var reviewRecipeOutlet: UIButton!
     @IBOutlet weak var addAllToListOutlet: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var recipeName: UILabel!
@@ -102,9 +104,22 @@ class RecipeDetailVC: UIViewController {
         }
         recipe.addButtonIngredientViewsTo(stackView: ingredientsStackView, delegateVC: self)
         recipe.addInstructionsToInstructionStackView(stackView: instructionsStackView)
+        if let recipe = data?.recipe {
+            addStarRatingViewIfApplicable(recipe: recipe)
+        }
+        
         
     }
-    
+    private func addStarRatingViewIfApplicable(recipe: Recipe) {
+        if let nr = recipe.numReviews, let ns = recipe.numStars {
+            print("got to this point")
+            let v = Bundle.main.loadNibNamed("StarRatingView", owner: nil, options: nil)?.first as! StarRatingView
+            v.setUI(rating: Double(ns)/Double(nr), nReviews: nr)
+            if let idx = mainStackView.subviews.firstIndex(of: tagline) {
+                mainStackView.insertArrangedSubview(v, at: idx + 1)
+            }
+        }
+    }
     private func createObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(itemAddedSelector), name: .itemAddedFromRecipe, object: nil)
     }
@@ -165,10 +180,35 @@ extension RecipeDetailVC: DisableAddAllItemsDelegate {
 
 extension RecipeDetailVC: GiveRatingViewDelegate {
     func publishRating(stars: Int, rating: String?) {
-        print("Rating: \(stars) stars, text: \(rating)")
-        data?.recipe.addReviewToRecipe(stars: stars, review: rating, db: db)
-        self.dismiss(animated: false) {
-            self.createMessageView(color: Colors.messageGreen, text: "Review successfully written")
+        reviewRecipeOutlet.isUserInteractionEnabled = false
+        reviewRecipeOutlet.alpha = 0.4
+        reviewRecipeOutlet.setTitleColor(.black, for: .normal)
+        reviewRecipeOutlet.setTitle("✓ Review the recipe", for: .normal)
+        let recipeID = data?.recipe.imagePath?.imagePathToDocID()
+        
+        let reference = db.collection("recipes").document(recipeID ?? " ").collection("reviews")
+        reference.whereField("user", isEqualTo: Auth.auth().currentUser?.uid ?? " ").getDocuments { (querySnapshot, error) in
+            if (querySnapshot?.documents.count) == nil || querySnapshot?.documents.count == 0 {
+                self.data?.recipe.addReviewToRecipe(stars: stars, review: rating, db: self.db)
+                self.dismiss(animated: false) {
+                    self.createMessageView(color: Colors.messageGreen, text: "Review successfully written")
+                }
+            } else {
+                if let doc = querySnapshot?.documents.first {
+                    let starsToDelete = doc.get("stars") as? Int
+                    if self.data?.recipe.numStars != nil && self.data?.recipe.numReviews != nil {
+                        self.data?.recipe.numStars! -= starsToDelete ?? 0
+                        self.data?.recipe.numReviews! -= 1
+                    }
+                    querySnapshot?.documents.first?.reference.delete()
+                    
+                    self.data?.recipe.addReviewToRecipe(stars: stars, review: rating, db: self.db)
+                    self.dismiss(animated: false) {
+                        self.createMessageView(color: Colors.messageGreen, text: "Wrote over your previous review")
+                    }
+                }
+                
+            }
         }
     }
 }

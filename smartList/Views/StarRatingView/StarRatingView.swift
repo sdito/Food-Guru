@@ -17,8 +17,10 @@ class StarRatingView: UIView {
     @IBOutlet weak var three: UIImageView!
     @IBOutlet weak var four: UIImageView!
     @IBOutlet weak var five: UIImageView!
+    @IBOutlet weak var numReviews: UILabel!
     
-    func setUI(rating: Double) {
+    func setUI(rating: Double, nReviews: Int) {
+        numReviews.text = "\(nReviews)"
         if #available(iOS 13.0, *) {
             one.image = UIImage(systemName: full)
             two.image = UIImage(systemName: full)

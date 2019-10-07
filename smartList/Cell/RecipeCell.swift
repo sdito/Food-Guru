@@ -15,11 +15,27 @@ class RecipeCell: UICollectionViewCell {
     @IBOutlet weak var tagline: UILabel!
     
     func setUI(recipe: Recipe) {
+        for subview in recipeImage.subviews {
+            subview.removeFromSuperview()
+        }
+        
         title.text = recipe.name
         cuisine.text = recipe.cuisineType
         tagline.text = recipe.recipeType.joined(separator: ", ")
         recipeImage.layer.cornerRadius = 4.0
         recipeImage.clipsToBounds = true
+        
+        if let stars = recipe.numStars, let reviews = recipe.numReviews {
+            let v = Bundle.main.loadNibNamed("StarRatingView", owner: nil, options: nil)?.first as! StarRatingView
+            v.translatesAutoresizingMaskIntoConstraints = false
+            v.setUI(rating: Double(stars) / Double(reviews), nReviews: reviews)
+            v.layer.cornerRadius = 4
+            v.clipsToBounds = true
+            //v.widthAnchor.constraint(equalToConstant: 100).isActive = true
+            recipeImage.insertSubview(v, at: 1)
+        }
+        
+        
         // image set from RecipeHomeVC for easier control of cache
         self.contentView.layer.cornerRadius = 4.0
         self.contentView.layer.borderWidth = 1.0
