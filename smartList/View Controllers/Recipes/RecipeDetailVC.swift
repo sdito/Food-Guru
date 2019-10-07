@@ -95,7 +95,7 @@ class RecipeDetailVC: UIViewController {
         servings.text = "\(recipe.numServes)"
         calories.text = "\(recipe.calories!)"
         if let n = recipe.notes {
-            notes.text = "Notes: \(n)"
+            notes.text = "Notes: \(n)" 
         }
         if let uid = recipe.userID {
             User.getNameFromUid(db: db, uid: uid) { (name) in
@@ -115,10 +115,22 @@ class RecipeDetailVC: UIViewController {
             print("got to this point")
             let v = Bundle.main.loadNibNamed("StarRatingView", owner: nil, options: nil)?.first as! StarRatingView
             v.setUI(rating: Double(ns)/Double(nr), nReviews: nr)
-            if let idx = mainStackView.subviews.firstIndex(of: tagline) {
-                mainStackView.insertArrangedSubview(v, at: idx + 1)
-            }
+            let sv = UIStackView()
+            let view = UIView()
+            view.backgroundColor = .clear
+            view.translatesAutoresizingMaskIntoConstraints = false
+            view.widthAnchor.constraint(equalToConstant: 10.0).isActive = true
+            //view.heightAnchor.constraint(equalToConstant: v.frame.height).isActive = true
+            sv.insertArrangedSubview(view, at: 0)
+            sv.insertArrangedSubview(v, at: 1)
+            mainStackView.insertArrangedSubview(sv, at: 2)
+            let gr = UITapGestureRecognizer(target: self, action: #selector(ratingTapSelector))
+            sv.addGestureRecognizer(gr)
         }
+    }
+    @objc private func ratingTapSelector() {
+        print("rating tap called")
+        #warning("need to implement feature to scroll down to/show the reviews")
     }
     private func createObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(itemAddedSelector), name: .itemAddedFromRecipe, object: nil)
