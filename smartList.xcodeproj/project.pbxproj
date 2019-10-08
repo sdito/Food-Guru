@@ -73,6 +73,9 @@
 		E2DA80CD2349957700BD7101 /* StarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA80CA2349957700BD7101 /* StarRatingView.swift */; };
 		E2DA80D02349BB6100BD7101 /* GiveRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2DA80CF2349BB6100BD7101 /* GiveRatingView.xib */; };
 		E2DA80D22349BB9000BD7101 /* GiveRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA80D12349BB9000BD7101 /* GiveRatingView.swift */; };
+		E2E29034234C3EFB00620576 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E29033234C3EFB00620576 /* RatingView.swift */; };
+		E2E29036234C3F1300620576 /* RatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E29035234C3F1300620576 /* RatingView.xib */; };
+		E2E29038234C490D00620576 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E29037234C490D00620576 /* Review.swift */; };
 		E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */; };
 		E2E529D222FA7F9100C55DA0 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D122FA7F9100C55DA0 /* List.swift */; };
 		E2E529D522FA80C400C55DA0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D422FA80C400C55DA0 /* Item.swift */; };
@@ -177,6 +180,9 @@
 		E2DA80CA2349957700BD7101 /* StarRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarRatingView.swift; sourceTree = "<group>"; };
 		E2DA80CF2349BB6100BD7101 /* GiveRatingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GiveRatingView.xib; sourceTree = "<group>"; };
 		E2DA80D12349BB9000BD7101 /* GiveRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveRatingView.swift; sourceTree = "<group>"; };
+		E2E29033234C3EFB00620576 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		E2E29035234C3F1300620576 /* RatingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingView.xib; sourceTree = "<group>"; };
+		E2E29037234C490D00620576 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-Extension.swift"; sourceTree = "<group>"; };
 		E2E529D122FA7F9100C55DA0 /* List.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		E2E529D422FA80C400C55DA0 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -417,6 +423,7 @@
 		E2B4694D22F78D23006BA77D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E2E29039234C5C9500620576 /* RatingView */,
 				E2DA80D32349BB9E00BD7101 /* GiveRatingView */,
 				E2DA80CE2349958600BD7101 /* StarRatingView */,
 				E2DA80B92347F0C700BD7101 /* SortItemView */,
@@ -448,6 +455,7 @@
 				E2E6A19A2326FF6A00477AB1 /* FoodStorage.swift */,
 				E2B4695922F7F485006BA77D /* Colors.swift */,
 				E20BC6D0232752A600F1E5E7 /* Setting.swift */,
+				E2E29037234C490D00620576 /* Review.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -494,6 +502,15 @@
 				E2DA80D12349BB9000BD7101 /* GiveRatingView.swift */,
 			);
 			path = GiveRatingView;
+			sourceTree = "<group>";
+		};
+		E2E29039234C5C9500620576 /* RatingView */ = {
+			isa = PBXGroup;
+			children = (
+				E2E29033234C3EFB00620576 /* RatingView.swift */,
+				E2E29035234C3F1300620576 /* RatingView.xib */,
+			);
+			path = RatingView;
 			sourceTree = "<group>";
 		};
 		E2E529D322FA7F9700C55DA0 /* Classes */ = {
@@ -645,6 +662,7 @@
 				E216204E22F658D20074A0DF /* Assets.xcassets in Resources */,
 				E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */,
 				E2CE480F23442F6F0045FCC0 /* LabelInstructionView.xib in Resources */,
+				E2E29036234C3F1300620576 /* RatingView.xib in Resources */,
 				E2DA80BB2347F0E400BD7101 /* SortItemView.xib in Resources */,
 				E216204C22F658D10074A0DF /* Main.storyboard in Resources */,
 				E2A54E1D2318553400BEBF39 /* InstructionView.xib in Resources */,
@@ -798,6 +816,7 @@
 				E24ADB0E233DB063008F2F9F /* SettingContactDeveloperCell.swift in Sources */,
 				E2DA80D22349BB9000BD7101 /* GiveRatingView.swift in Sources */,
 				E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */,
+				E2E29038234C490D00620576 /* Review.swift in Sources */,
 				E24ADB0A23386E69008F2F9F /* StorageNewItemVC.swift in Sources */,
 				E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */,
 				E2E6A19B2326FF6A00477AB1 /* FoodStorage.swift in Sources */,
@@ -818,6 +837,7 @@
 				E27D70C223404414009C68B3 /* DynamicHeightLayout.swift in Sources */,
 				E253AC042341B4460018274A /* RecipeDetailVC.swift in Sources */,
 				E20BC6D82328429F00F1E5E7 /* GroupNameCell.swift in Sources */,
+				E2E29034234C3EFB00620576 /* RatingView.swift in Sources */,
 				E20BC6DA232843E400F1E5E7 /* CreateGroupVC.swift in Sources */,
 				E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */,
 				E27D70B4233F24A5009C68B3 /* UISearchBar-Extension.swift in Sources */,

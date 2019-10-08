@@ -155,12 +155,20 @@ extension Recipe {
     
     func addReviewToRecipe(stars: Int, review: String?, db: Firestore) {
         let recipeID = self.imagePath?.imagePathToDocID()
+        var hasTextReview: Bool {
+            if review == nil || review == "" {
+                return false
+            } else {
+                return true
+            }
+        }
         let reference = db.collection("recipes").document(recipeID ?? " ").collection("reviews").document()
         reference.setData([
             "stars": stars,
             "review": review as Any,
             "user": Auth.auth().currentUser?.uid as Any,
-            "timeIntervalSince1970": Date().timeIntervalSince1970
+            "timeIntervalSince1970": Date().timeIntervalSince1970,
+            "hasText": hasTextReview
         ]) {err in
             if let err = err {
                 print("Error writing document: \(err)")

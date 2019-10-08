@@ -16,6 +16,7 @@ class RecipeDetailVC: UIViewController {
     var db: Firestore!
     private var itemsAddedToList: Set<String>? = [""]
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var mainStackView: UIStackView!
     @IBOutlet weak var reviewRecipeOutlet: UIButton!
     @IBOutlet weak var addAllToListOutlet: UIButton!
@@ -30,6 +31,7 @@ class RecipeDetailVC: UIViewController {
     @IBOutlet weak var calories: UILabel!
     @IBOutlet weak var ingredientsStackView: UIStackView!
     @IBOutlet weak var instructionsStackView: UIStackView!
+    @IBOutlet weak var reviewsStackView: UIStackView!
     @IBOutlet weak var notes: UILabel!
 
     var data: (image: UIImage, recipe: Recipe)?
@@ -85,6 +87,7 @@ class RecipeDetailVC: UIViewController {
     private func setUI(recipe: Recipe, image: UIImage) {
         imageView.image = data?.image
         recipeName.text = recipe.name
+        addStarRatingViewIfApplicable(recipe: recipe)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.nameAndTitleView.shadowAndRounded()
         }
@@ -104,10 +107,13 @@ class RecipeDetailVC: UIViewController {
         }
         recipe.addButtonIngredientViewsTo(stackView: ingredientsStackView, delegateVC: self)
         recipe.addInstructionsToInstructionStackView(stackView: instructionsStackView)
-        if let recipe = data?.recipe {
-            addStarRatingViewIfApplicable(recipe: recipe)
-        }
         
+        
+        Review.getReviewsFrom(recipe: recipe, db: db) { (rvws) in
+            Review.getViewsFrom(reviews: rvws).forEach { (view) in
+                self.reviewsStackView.insertArrangedSubview(view, at: 1)
+            }
+        }
         
     }
     private func addStarRatingViewIfApplicable(recipe: Recipe) {
@@ -126,11 +132,12 @@ class RecipeDetailVC: UIViewController {
             mainStackView.insertArrangedSubview(sv, at: 2)
             let gr = UITapGestureRecognizer(target: self, action: #selector(ratingTapSelector))
             sv.addGestureRecognizer(gr)
+            
         }
     }
     @objc private func ratingTapSelector() {
-        print("rating tap called")
-        #warning("need to implement feature to scroll down to/show the reviews")
+        let location = reviewsStackView.frame.minY
+        scrollView.setContentOffset(CGPoint(x: 0, y: location), animated: true)
     }
     private func createObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(itemAddedSelector), name: .itemAddedFromRecipe, object: nil)
@@ -224,3 +231,4 @@ extension RecipeDetailVC: GiveRatingViewDelegate {
         }
     }
 }
+
