@@ -42,7 +42,8 @@ class ListHomeVC: UIViewController {
         List.readAllUserLists(db: db, userID: SharedValues.shared.userID!) { (dbLists) in
             self.lists = dbLists
         }
-
+        
+        Search.searchForRecipe(db: db, item1: "salt", item2: "pepper", descriptor: nil, cuisine: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

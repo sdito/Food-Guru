@@ -42,13 +42,23 @@ struct Review {
             }
         }
     }
-    static func getViewsFrom(reviews: [Review]) -> [RatingView] {
+    static func getViewsFrom(reviews: [Review]) -> [UIView] {
         var views: [RatingView] = []
         for review in reviews {
             let view = Bundle.main.loadNibNamed("RatingView", owner: nil, options: nil)?.first as! RatingView
             view.setUI(review: review)
             views.append(view)
         }
-        return views
+        if views.isEmpty == false {
+            return views
+        } else {
+            let label = UILabel()
+            label.numberOfLines = 0
+            
+            label.text = "No written reviews yet, if you have made this recipe before write a review!"
+            label.font = UIFont(name: "futura", size: 15)
+            return [label]
+        }
+        
     }
 }

@@ -109,6 +109,7 @@ class RecipeDetailVC: UIViewController {
         recipe.addInstructionsToInstructionStackView(stackView: instructionsStackView)
         
         
+        //#error("the recipe view header is not drawing properly if there are no reviews")
         Review.getReviewsFrom(recipe: recipe, db: db) { (rvws) in
             Review.getViewsFrom(reviews: rvws).forEach { (view) in
                 self.reviewsStackView.insertArrangedSubview(view, at: 1)
