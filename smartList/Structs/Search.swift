@@ -15,8 +15,10 @@ struct Search {
     static func turnIntoSystemItem(string: String) -> GenericItem {
         let descriptors: Set<String> = ["chopped", "minced", "chunks", "cut into", "cubed", "shredded", "melted", "diced", "divided", "to taste", "or more to taste", "or more as needed", "grated", "crushed", "pounded", "boneless", "skinless", "fresh", "sliced", "thinly", "halves", "half"]
         let measurements: Set<String> = ["pound", "pounds", "envelope", "cup", "tablespoons", "packet", "ounce", "large", "small", "medium", "package", "teaspoons", "teaspoon", "tablespoon", "pinch", "t.", "ts.", "tspn", "tbsp", "tbls", "bag", "seeded", "cubes", "cube", "clove", "cloves", "can", "cans", "ounces"]
+        
+        let lower = string.lowercased()
         var words: [Substring] {
-            return string.split{ !$0.isLetter }
+            return lower.split{ !$0.isLetter }
         }
         var item = words.map { (sStr) -> String in
             return String(sStr)
@@ -36,16 +38,239 @@ struct Search {
             item = Array(splice)
         }
         
-        // second need to trim the item from the description, i.e. onions, cubed
-        item = item.filter({descriptors.contains($0) == false})
         
-        #error("left off here")
-        switch item {
-        case <#pattern#>:
-            <#code#>
-        default:
-            return .other
+        
+        // second need to trim the item from the description, i.e. cubed or grated
+        item = item.filter({descriptors.contains($0) == false})
+        if item.contains("chicken") {
+            if item.contains("soup") == false {
+                return .chicken
+            } else if item.contains("cream") {
+                return .creamOfChickenSoup
+            }
+        } else if item.contains("bread") {
+            if item.contains("crumbs") {
+                return .breadCrumbs
+            } else if item.contains("pita") {
+                return .pitaBread
+            } else {
+                return .bread
+            }
+        }
+        else if item.contains("beef") {
+            if item.contains("ground") {
+                return .groundBeef
+            } else {
+                return .beef
+            }
+        } else if item.contains("pork") {
+            return .pork
+        } else if item.contains("pasta") || item.contains("macaroni") || item.contains("spaghetti") {
+            return .pasta
+        } else if item.contains("tofu") {
+            return .tofu
+        } else if item.contains("sausage") {
+            if item.contains("breakfast") {
+                return .breakfastSausage
+            } else {
+                return .sausage
+            }
+        } else if item.contains("milk") {
+            if item.contains("coconut") {
+                return .coconutMilk
+            } else {
+                return .milk
+            }
+        } else if item.contains("crab") {
+            return .crab
+        } else if item.contains("egg") || item.contains("eggs") {
+            if item.contains("noodle") || item.contains("noodles") {
+                return .eggNoodles
+            } else {
+                return .egg
+            }
+        } else if item.contains("kale") {
+            return .kale
+        } else if item.contains("cod") {
+            return .cod
+        } else if item.contains("cilantro") {
+            return .cilantro
+        } else if item.contains("cinnamon") {
+            return .cinnamon
+        } else if item.contains("honey") {
+            return .honey
+        } else if item.contains("jam") || item.contains("jelly") || item.contains("preserves") {
+            return .jelly
+        } else if item.contains("halibut") {
+            return .halibut
+        } else if item.contains("ginger") {
+            return .ginger
+        } else if item.contains("mozzarella") {
+            return .mozzarella
+        } else if item.contains("provolone") {
+            return .provolone
+        } else if item.contains("ricotta") {
+            return .ricotta
+        } else if item.contains("cheddar") {
+            return .cheddar
+        } else if item.contains("swiss") {
+            return .swiss
+        }
+        else if item.contains("celery") {
+            return .celery
+        } else if item.contains("cauliflower") {
+            return .cauliflower
+        } else if item.contains("butter") {
+            if item.contains("peanut") {
+                return .peanutButter
+            } else if item.contains("almond") {
+                return .almondButter
+            } else if item.contains("cashew") {
+                return .cashewButter
+            } else if item.contains("apple") {
+                return .appleButter
+            } else if item.contains("sunflower") {
+                return .sunflowerButter
+            } else {
+                return .butter
+            }
+        } else if item.contains("turkey") {
+            if item.contains("ground") {
+                return .groundTurkey
+            } else {
+                return .turkey
+            }
+        } else if item.contains("tuna") {
+            return .tuna
+        } else if item.contains("trout") {
+            return .trout
+        } else if item.contains("spinach") {
+            if item.contains("baby") {
+                return .babySpinach
+            } else {
+                return .spinach
+            }
+        } else if item.contains("shrimp") {
+            return .shrimp
+        } else if item.contains("tilapia") {
+            return .tilapia
+        } else if item.contains("onion") {
+            if item.contains("powder") {
+                return .onionPowder
+            } else {
+                return .onion
+            }
+            
+        } else if item.contains("mushroom") {
+            if item.contains("cream") && item.contains("soup") {
+                return .creamOfMushroomSoup
+            } else {
+                return .mushroom
+            }
+        } else if item.contains("garlic") {
+            if item.contains("salt") {
+                return .salt
+            } else if item.contains("powder") {
+                return .garlicPowder
+            } else {
+                return .garlic
+            }
+        } else if item.contains("olive") || item.contains("olives") {
+            if item.contains("black") {
+                return .blackOlive
+            } else if item.contains("green") {
+                return .greenOlive
+            }
+        } else if item.contains("haddock") {
+            return .haddock
+        } else if item.contains("avocado") {
+            if item.contains("oil") {
+                return .avocadoOil
+            } else {
+                return .avocado
+            }
+        } else if item.contains("bacon") {
+            return .bacon
+        } else if item.contains("broccoli") {
+            return .broccoli
+        } else if item.contains("broth") {
+            return .broth
+        } else if item.contains("snapper") {
+            return .snapper
+        } else if item.contains("salmon") {
+            return .salmon
+        } else if item.contains("sole") {
+            return .sole
+        } else if item.contains("venison") {
+            return .venison
+        } else if item.contains("watermelon") {
+            return .watermelon
+        } else if item.contains("zucchini") {
+            return .zucchini
+        } else if item.contains("quinoa") {
+            return .quinoa
+        } else if item.contains("plum") || item.contains("plums") {
+            return .plum
+        } else if item.contains("salami") {
+            return .salami
+        } else if item.contains("parmesan") {
+            return .parmesan
+        } else if item.contains("lemon") || item.contains("lemons") {
+            if item.contains("juice") {
+                return .lemonJuice
+            } else {
+                return .lemon
+            }
+        } else if item.contains("lamb") {
+            return .lamb
+        } else if item.contains("orange") || item.contains("oranges") {
+            return .orange
+        } else if item.contains("oregano") {
+            return .oregano
+        } else if item.contains("mayonnaise") || item.contains("mayo") {
+            return .mayonnaise
+        } else if item.contains("margarine") {
+            return .margarine
+        } else if item.contains("parsley") {
+            return .parsley
+        } else if item.contains("turmeric") {
+            return .turmeric
+        } else if item.contains("swordfish") {
+            return .swordfish
+        } else if item.contains("syrup") {
+            return .syrup
+        } else if item.contains("cream") {
+            if item.contains("whipped") {
+                return .whippedCream
+            } else if item.contains("heavy") {
+                return .heavyCream
+            } else if item.contains("ice") {
+                return .iceCream
+            } else if item.contains("sour") {
+                return .sourCream
+            }
+        } else if item.contains("sauce") {
+            if item.contains("worcestershire") {
+                return .worcestershireSauce
+            } else if item.contains("apple") {
+                return .appleSauce
+            } else if item.contains("bbq") {
+                return .bbqSauce
+            } else if item.contains("hot") {
+                return .hotSauce
+            } else if item.contains("soy") {
+                return .soySauce
+            } else if item.contains("steak") {
+                return .steakSauce
+            }
+        } else if item.contains("apple") {
+            return .apple
         }
         
+        
+        else {
+            return .other
+        }
+        return .other
     }
 }

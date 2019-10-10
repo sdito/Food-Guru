@@ -129,11 +129,13 @@ class SetUpListVC: UIViewController {
             } else {
                 list.editListToFirestore(db: db, listID: listToEdit!.docID!)
             }
+            self.dismiss(animated: true, completion: nil)
         } else {
             let alert = UIAlertController(title: "Missing name", message: "Please enter a name to finish creating the list", preferredStyle: .alert)
             alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
+            present(alert, animated: true)
         }
-        self.dismiss(animated: true, completion: nil)
+        
     }
     
     @IBAction func dismiss(_ sender: Any) {

@@ -13,13 +13,16 @@ import Foundation
 
 enum GenericItem {
     
-    case almonds
+    case almond
+    case almondButter
     case anchovy
     case apple
-    case applesauce
+    case appleButter
+    case appleSauce
     case asiagoCheese
     case asparagus
     case avocado
+    case avocadoOil
     case babySpinach
     case bacon
     case bagel
@@ -37,11 +40,12 @@ enum GenericItem {
     case bellPepper
     case berry
     case blackBeans
-    case blacOlive
+    case blackOlive
     case blackPepper
     case bleuCheese
     case bread
     case breadCrumbs
+    case breakfastSausage
     case broccoli
     case broth
     case bun
@@ -52,6 +56,8 @@ enum GenericItem {
     case candy
     case carrot
     case catfish
+    case cashew
+    case cashewButter
     case cauliflower
     case cayenne
     case celery
@@ -118,7 +124,6 @@ enum GenericItem {
     case icing
     case italianSeasoning
     case jalapeno
-    case jam
     case jelly
     case juice
     case juiceConcentrate
@@ -144,19 +149,19 @@ enum GenericItem {
     case milk
     case mozzarella
     case muffins
-    case mushrooms
+    case mushroom
     case mussels
     case mustard
-    case nectarines
+    case nectarine
     case nutmeg
     case nuts
     case oatmeal
     case oats
     case onion
     case onionPowder
-    case oranges
+    case orange
     case oregano
-    case oysters
+    case oyster
     case pancakeMix
     case paprika
     case parmesan
@@ -165,18 +170,17 @@ enum GenericItem {
     case pastry
     case peach
     case peanutButter
-    case peanuts
+    case peanut
     case pear
     case pepper
     case pickle
     case pitaBread
     case pizza
-    case plums
+    case plum
     case popcorn
     case pork
     case potRoast
     case potato
-    case preserves
     case pretzel
     case provolone
     case quinoa
@@ -204,11 +208,11 @@ enum GenericItem {
     case soup
     case sourCream
     case soySauce
-    case spaghetti
     case spinach
     case squash
     case steakSauce
     case sugar
+    case sunflowerButter
     case swiss
     case swordfish
     case syrup
@@ -239,11 +243,5 @@ enum GenericItem {
     case zucchini
     case other
     
-    static func getGenericItem(string: String) -> GenericItem {
-        
-        
-        
-        return .other
-    }
     
 }
