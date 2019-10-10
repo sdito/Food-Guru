@@ -221,6 +221,16 @@ struct Search {
             } else {
                 return .lemon
             }
+        } else if item.contains("lime") || item.contains("limes") {
+            if item.contains("juice") {
+                return .limeJuice
+            } else {
+                return .lime
+            }
+        }
+        
+        else if item.contains("juice") {
+            return .juice
         } else if item.contains("lamb") {
             return .lamb
         } else if item.contains("orange") || item.contains("oranges") {
@@ -249,7 +259,10 @@ struct Search {
             } else if item.contains("sour") {
                 return .sourCream
             }
-        } else if item.contains("sauce") {
+        } else if item.contains("gelato") || item.contains("sorbet") {
+            return .iceCream
+        }
+        else if item.contains("sauce") {
             if item.contains("worcestershire") {
                 return .worcestershireSauce
             } else if item.contains("apple") {
@@ -265,6 +278,114 @@ struct Search {
             }
         } else if item.contains("apple") {
             return .apple
+        } else if item.contains("beans") {
+            if item.contains("baked") {
+                return .bakedBeans
+            } else if item.contains("black") {
+                return .blackBeans
+            } else if item.contains("pinto") {
+                return .pintoBeans
+            } else if item.contains("kidney") {
+                return .kidneyBeans
+            } else if item.contains("lima") {
+                return .limaBeans
+            } else if item.contains("cannellini") || item.contains("white") {
+                return .cannelliniBeans
+            } else if item.contains("fava") {
+                return .favaBeans
+            }
+        } else if item.contains("wine") {
+            if item.contains("white") {
+                return .whiteWine
+            } else {
+                return .redWine
+            }
+        } else if item.contains("sugar") {
+            if item.contains("brown") {
+                return .brownSugar
+            } else {
+                return .sugar
+            }
+        } else if item.contains("potato") || item.contains("potatos") {
+            if item.contains("sweet") {
+                return .sweetPotato
+            } else {
+                return .potato
+            }
+        } else if item.contains("yam") || item.contains("yams") {
+            return .sweetPotato
+        } else if item.contains("salsa") || (item.contains("gallo") && item.contains("pico")) {
+            return .salsa
+        } else if item.contains("rosemary") {
+            return .rosemary
+        } else if item.contains("peach") || item.contains("peaches") {
+            return .peach
+        } else if item.contains("strawberry") || item.contains("strawberries") {
+            return .strawberry
+        } else if item.contains("banana") || item.contains("bananas") {
+            return .banana
+        } else if item.contains("grapes") {
+            return .grape
+        } else if item.contains("kiwi") || item.contains("kiwis") {
+            return .kiwi
+        } else if item.contains("pear") || item.contains("pears") {
+            return .pear
+        } else if item.contains("apricot") {
+            return .apricot
+        } else if item.contains("blackberries") {
+            return .blackberry
+        } else if item.contains("blueberries") {
+            return .blueberries
+        } else if item.contains("capers") {
+            return .capers
+        } else if item.contains("cherries") || item.contains("cherry") {
+            if item.contains("tomatoes") {
+                return .tomato
+            } else {
+                return .cherries
+            }
+        } else if item.contains("cranberry") || item.contains("cranberries") {
+            if item.contains("sauce") {
+                return .cranberrySauce
+            } else {
+                return .cranberry
+            }
+        } else if item.contains("grapefruit") {
+            return .grapefruit
+        } else if item.contains("guava") {
+            return .guava
+        } else if item.contains("mango") || item.contains("mangoes") {
+            return .mango
+        } else if item.contains("melon") {
+            return .melon
+        } else if item.contains("pineapple") {
+            return .pineapple
+        } else if item.contains("pomegranate") {
+            return .pomegranate
+        } else if item.contains("raspberry") {
+            return .raspberry
+        } else if item.contains("tomato") || item.contains("tomatoes") {
+            if item.contains("paste") {
+                return .tomatoPaste
+            } else {
+                return .tomato
+            }
+        } else if item.contains("tortilla") || item.contains("tortillas") {
+            if item.contains("chips") {
+                return .chips
+            } else {
+                return .tortilla
+            }
+        } else if item.contains("duck") {
+            return .duck
+        } else if item.contains("feta") {
+            return .feta
+        } else if item.contains("flour") {
+            return .flour
+        } else if item.contains("flounder") {
+            return .flounder
+        } else if item.contains("ham") {
+            return .ham
         }
         
         

@@ -55,6 +55,8 @@ class RecipeDetailVC: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
+    
+    #warning("have a semi small not important bug, if user adds items one by one then adds all items to the list, the items that were added one by one will be added twice")
     @IBAction func addAllToList(_ sender: Any) {
         print("Add all items to list")
         let uid = Auth.auth().currentUser?.uid ?? " "
@@ -147,6 +149,7 @@ class RecipeDetailVC: UIViewController {
         addAllToListOutlet.alpha = 0.4
         addAllToListOutlet.setTitleColor(.black, for: .normal)
         addAllToListOutlet.setTitle("✓ Add all to list", for: .normal)
+        addAllToListOutlet.isUserInteractionEnabled = false
     }
     @objc func itemAddedSelector(_ notification: NSNotification) {
         if let dict = notification.userInfo as NSDictionary? {

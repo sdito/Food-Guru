@@ -25,12 +25,20 @@ class ButtonIngredientView: UIView {
     @IBOutlet weak var button: UIButton!
     @IBOutlet weak var label: UILabel!
     
+    override func awakeFromNib() {
+        let gestureRecognizer = UITapGestureRecognizer()
+        gestureRecognizer.addTarget(self, action: #selector(bAction))
+        self.addGestureRecognizer(gestureRecognizer)
+    }
+    
     func setUI(ingredient: String) {
         label.text = ingredient
         button.addTarget(self, action: #selector(bAction), for: .touchUpInside)
+        
     }
     
     @objc private func bAction() {
+        print("CALLED")
         //print(self.label.text)
         let db = Firestore.firestore()
         let userID = Auth.auth().currentUser?.uid ?? " "

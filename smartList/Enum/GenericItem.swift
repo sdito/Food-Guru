@@ -19,6 +19,7 @@ enum GenericItem {
     case apple
     case appleButter
     case appleSauce
+    case apricot
     case asiagoCheese
     case asparagus
     case avocado
@@ -38,22 +39,26 @@ enum GenericItem {
     case beef
     case beer
     case bellPepper
-    case berry
     case blackBeans
+    case blackberry
     case blackOlive
     case blackPepper
     case bleuCheese
+    case blueberries
     case bread
     case breadCrumbs
     case breakfastSausage
     case broccoli
     case broth
+    case brownSugar
     case bun
     case burrito
     case butter
     case cabbage
     case cake
     case candy
+    case cannelliniBeans
+    case capers
     case carrot
     case catfish
     case cashew
@@ -64,10 +69,11 @@ enum GenericItem {
     case cereal
     case champagne
     case cheddar
-    case cherry
+    case cherries
     case chicken
     case chili
     case chiliPowder
+    case chips
     case chocolate
     case cilantro
     case cinnamon
@@ -79,6 +85,8 @@ enum GenericItem {
     case cottageCheese
     case crab
     case cracker
+    case cranberry
+    case cranberrySauce
     case creamOfChickenSoup
     case creamOfMushroomSoup
     case cucumber
@@ -89,27 +97,27 @@ enum GenericItem {
     case duck
     case egg
     case eggNoodles
+    case favaBeans
     case fennelSeeds
     case feta
     case fishSticks
     case flounder
     case flour
     case fries
-    case fruit
     case garlic
     case garlicPowder
-    case gelato
     case gin
     case ginger
     case goatCheese
     case granola
     case granolaBars
     case grapefruit
-    case grapes
+    case grape
     case greekYogurt
     case greenOlive
     case groundBeef
     case groundTurkey
+    case guava
     case gym
     case haddock
     case halfAndHalf
@@ -126,15 +134,16 @@ enum GenericItem {
     case jalapeno
     case jelly
     case juice
-    case juiceConcentrate
     case kale
     case ketchup
+    case kidneyBeans
     case kiwi
     case lamb
     case lasagnaNoodles
     case lemon
     case lemonJuice
     case lettuce
+    case limaBeans
     case lime
     case limeJuice
     case lobster
@@ -142,10 +151,11 @@ enum GenericItem {
     case macAndCheese
     case macaroni
     case mahiMahi
+    case mango
     case margarine
     case marinara
-    case mayonnaise
     case melon
+    case mayonnaise
     case milk
     case mozzarella
     case muffins
@@ -174,9 +184,12 @@ enum GenericItem {
     case pear
     case pepper
     case pickle
+    case pineapple
+    case pintoBeans
     case pitaBread
     case pizza
     case plum
+    case pomegranate
     case popcorn
     case pork
     case potRoast
@@ -184,7 +197,9 @@ enum GenericItem {
     case pretzel
     case provolone
     case quinoa
+    case raspberry
     case redPepper
+    case redWine
     case relish
     case rice
     case ricotta
@@ -204,15 +219,16 @@ enum GenericItem {
     case snapper
     case soda
     case sole
-    case sorbet
     case soup
     case sourCream
     case soySauce
     case spinach
     case squash
     case steakSauce
+    case strawberry
     case sugar
     case sunflowerButter
+    case sweetPotato
     case swiss
     case swordfish
     case syrup
@@ -236,7 +252,7 @@ enum GenericItem {
     case watermelon
     case whippedCream
     case whiskey
-    case wine
+    case whiteWine
     case worcestershireSauce
     case yeast
     case yogurt
