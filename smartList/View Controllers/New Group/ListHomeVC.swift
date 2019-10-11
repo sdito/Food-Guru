@@ -44,14 +44,26 @@ class ListHomeVC: UIViewController {
         }
         
         
-        print(Search.turnIntoSystemItem(string: "1 (10.75 ounce) can condensed cream of mushroom soup"))
-        print(Search.turnIntoSystemItem(string: "1 teaspoon dried minced onion"))
-        print(Search.turnIntoSystemItem(string: "1 teaspoon dried parsley"))
-        print(Search.turnIntoSystemItem(string: "¼ cup white wine"))
-        print(Search.turnIntoSystemItem(string: "¼ teaspoon garlic powder"))
-        print(Search.turnIntoSystemItem(string: "1 tablespoon milk"))
-        print(Search.turnIntoSystemItem(string: "1 (4 ounce) can mushroom pieces, drained"))
-        print(Search.turnIntoSystemItem(string: "4 boneless, skinless chicken breast halves"))
+        print(Search.turnIntoSystemItem(string: "6 cups chicken broth, divided"))
+        print(Search.turnIntoSystemItem(string: "3 tablespoons olive oil, divided"))
+        print(Search.turnIntoSystemItem(string: "1 pound portobello mushrooms, thinly sliced"))
+        print(Search.turnIntoSystemItem(string: "1 pound white mushrooms, thinly sliced"))
+        print(Search.turnIntoSystemItem(string: "2 shallots, diced"))
+        print(Search.turnIntoSystemItem(string: "1 1/2 cups Arborio rice"))
+        print(Search.turnIntoSystemItem(string: "1/2 cup dry white wine"))
+        print(Search.turnIntoSystemItem(string: "3 tablespoons finely chopped chives"))
+        print(Search.turnIntoSystemItem(string: "4 tablespoons butter"))
+        print(Search.turnIntoSystemItem(string: "1/3 cup freshly grated Parmesan cheese"))
+//        print(Search.turnIntoSystemItem(string: "2 (28 ounce) cans whole peeled tomatoes"))
+//        print(Search.turnIntoSystemItem(string: "2 teaspoons salt"))
+//        print(Search.turnIntoSystemItem(string: "1 teaspoon white sugar"))
+//        print(Search.turnIntoSystemItem(string: "1 bay leaf"))
+//        print(Search.turnIntoSystemItem(string: "1 (6 ounce) can tomato paste"))
+//        print(Search.turnIntoSystemItem(string: "3/4 teaspoon dried basil"))
+//        print(Search.turnIntoSystemItem(string: "1/2 teaspoon ground black pepper"))
+//        print(Search.turnIntoSystemItem(string: "3/4 cup grated Parmesan cheese"))
+            
+        
         
     }
     
