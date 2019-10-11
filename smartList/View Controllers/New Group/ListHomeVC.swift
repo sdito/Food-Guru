@@ -44,6 +44,15 @@ class ListHomeVC: UIViewController {
         }
         
         
+        print(Search.turnIntoSystemItem(string: "1 (10.75 ounce) can condensed cream of mushroom soup"))
+        print(Search.turnIntoSystemItem(string: "1 teaspoon dried minced onion"))
+        print(Search.turnIntoSystemItem(string: "1 teaspoon dried parsley"))
+        print(Search.turnIntoSystemItem(string: "¼ cup white wine"))
+        print(Search.turnIntoSystemItem(string: "¼ teaspoon garlic powder"))
+        print(Search.turnIntoSystemItem(string: "1 tablespoon milk"))
+        print(Search.turnIntoSystemItem(string: "1 (4 ounce) can mushroom pieces, drained"))
+        print(Search.turnIntoSystemItem(string: "4 boneless, skinless chicken breast halves"))
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

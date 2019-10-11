@@ -18,6 +18,7 @@ enum GenericItem {
     case anchovy
     case apple
     case appleButter
+    case appleCiderVinegar
     case appleSauce
     case apricot
     case asiagoCheese
@@ -51,13 +52,10 @@ enum GenericItem {
     case broccoli
     case broth
     case brownSugar
-    case bun
-    case burrito
     case butter
     case cabbage
-    case cake
-    case candy
     case cannelliniBeans
+    case canolaOil
     case capers
     case carrot
     case catfish
@@ -69,6 +67,7 @@ enum GenericItem {
     case cereal
     case champagne
     case cheddar
+    case cheese
     case cherries
     case chicken
     case chili
@@ -80,7 +79,6 @@ enum GenericItem {
     case coconutMilk
     case cod
     case coffee
-    case cookie
     case corn
     case cottageCheese
     case crab
@@ -93,17 +91,15 @@ enum GenericItem {
     case cumin
     case curryPowder
     case dip
-    case donut
+    case dijonMustard
     case duck
     case egg
     case eggNoodles
     case favaBeans
     case fennelSeeds
     case feta
-    case fishSticks
     case flounder
     case flour
-    case fries
     case garlic
     case garlicPowder
     case gin
@@ -118,7 +114,6 @@ enum GenericItem {
     case groundBeef
     case groundTurkey
     case guava
-    case gym
     case haddock
     case halfAndHalf
     case halibut
@@ -147,9 +142,7 @@ enum GenericItem {
     case lime
     case limeJuice
     case lobster
-    case lunchmeat
     case macAndCheese
-    case macaroni
     case mahiMahi
     case mango
     case margarine
@@ -158,29 +151,27 @@ enum GenericItem {
     case mayonnaise
     case milk
     case mozzarella
-    case muffins
     case mushroom
     case mussels
     case mustard
     case nectarine
     case nutmeg
-    case nuts
     case oatmeal
     case oats
+    case oliveOil
     case onion
     case onionPowder
     case orange
     case oregano
     case oyster
-    case pancakeMix
     case paprika
     case parmesan
     case parsley
     case pasta
-    case pastry
     case peach
     case peanutButter
     case peanut
+    case peanutOil
     case pear
     case pepper
     case pickle
@@ -194,7 +185,6 @@ enum GenericItem {
     case pork
     case potRoast
     case potato
-    case pretzel
     case provolone
     case quinoa
     case raspberry
@@ -203,23 +193,19 @@ enum GenericItem {
     case relish
     case rice
     case ricotta
-    case roll
     case rosemary
     case rum
     case sage
-    case saladDressing
     case salami
     case salmon
     case salsa
     case salt
     case sardine
     case sausage
-    case seets
     case shrimp
     case snapper
     case soda
     case sole
-    case soup
     case sourCream
     case soySauce
     case spinach
