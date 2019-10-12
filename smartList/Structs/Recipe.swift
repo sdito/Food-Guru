@@ -64,12 +64,14 @@ struct Recipe {
         }
     }
     
+    
 }
 
 
 
 extension Recipe {
     mutating func writeToFirestore(db: Firestore!, storage: Storage) {
+        let ingredients = self.ingredients
         let doc = db.collection("recipes").document()
         self.imagePath = "recipe/\(doc.documentID).jpg"
         doc.setData([
@@ -93,6 +95,18 @@ extension Recipe {
                 print("Error writing document: \(err)")
             } else {
                 print("Document successfully written")
+                
+                // give the items their own line for easier querying
+                for item in ingredients {
+                    let systemitem = Search.turnIntoSystemItem(string: item)
+                    print(systemitem)
+                    if systemitem != .other {
+                        doc.updateData([
+                            "has_\(systemitem)": true
+                        ])
+                    }
+                    
+                }
             }
         }
         let uploadReference = Storage.storage().reference(withPath: imagePath ?? "")

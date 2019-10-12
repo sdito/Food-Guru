@@ -11,7 +11,7 @@ import Foundation
 
 #warning("not using yet")
 
-enum GenericItem {
+enum GenericItem: String {
     
     case alfredoSauce
     case almond

@@ -423,7 +423,7 @@ struct Search {
         } else if item.contains("tomato") || item.contains("tomatoes") {
             if item.contains("paste") {
                 return .tomatoPaste
-            } else if item.contains("can") || item.contains("cans") {
+            } else if item.contains("can") || item.contains("cans") || item.contains("canned") {
                 return .cannedTomato
             } else if item.contains("sun") && item.contains("dried") {
                 return .sunDriedTomato

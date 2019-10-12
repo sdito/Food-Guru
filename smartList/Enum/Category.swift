@@ -14,7 +14,7 @@ import Foundation
 
 
 
-enum Category {
+enum Category: String {
     case bakery
     case beverages
     case breakfast

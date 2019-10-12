@@ -44,43 +44,6 @@ class ListHomeVC: UIViewController {
         }
         
         
-        let i1 = Search.turnIntoSystemItem(string: "1 pound pork butt, cut into 1 inch cubes")
-        let i2 = Search.turnIntoSystemItem(string: "1 teaspoon salt")
-        let i3 = Search.turnIntoSystemItem(string: "1/4 teaspoon white sugar")
-        let i4 = Search.turnIntoSystemItem(string: "1 teaspoon soy sauce")
-        let i5 = Search.turnIntoSystemItem(string: "1 egg white")
-        let i6 = Search.turnIntoSystemItem(string: "2 green onions, chopped")
-        let i7 = Search.turnIntoSystemItem(string: "1 quart vegetable oil for frying")
-        let i8 = Search.turnIntoSystemItem(string: "1/2 cup cornstarch")
-        let i9 = Search.turnIntoSystemItem(string: "1 tablespoon vegetable oil")
-        let i10 = Search.turnIntoSystemItem(string: "3 stalks celery, cut into 1/2 inch pieces")
-        let i11 = Search.turnIntoSystemItem(string: "1 medium green bell pepper, cut into 1 inch pieces")
-        let i12 = Search.turnIntoSystemItem(string: "1/3 cup apple cider vinegar")
-        let i13 = Search.turnIntoSystemItem(string: "1/4 cup ketchup")
-        let i14 = Search.turnIntoSystemItem(string: "1/2 teaspoon soy sauce")
-        let i15 = Search.turnIntoSystemItem(string: "1 (8 ounce) can pineapple chunks, undrained")
-        let i16 = Search.turnIntoSystemItem(string: "2 tablespoons cornstarch")
-        let i17 = Search.turnIntoSystemItem(string: "1 1/2 pounds cod fillets, cubed")
-        let i18 = Search.turnIntoSystemItem(string: "3/4 cup grated Parmesan cheese")
-        print(i1, GenericItem.getCategory(item: i1, words: ["no", "words"]))
-        print(i2, GenericItem.getCategory(item: i2, words: ["no", "words"]))
-        print(i3, GenericItem.getCategory(item: i3, words: ["no", "words"]))
-        print(i4, GenericItem.getCategory(item: i4, words: ["no", "words"]))
-        print(i5, GenericItem.getCategory(item: i5, words: ["no", "words"]))
-        print(i6, GenericItem.getCategory(item: i6, words: ["no", "words"]))
-        print(i7, GenericItem.getCategory(item: i7, words: ["no", "words"]))
-        print(i8, GenericItem.getCategory(item: i8, words: ["no", "words"]))
-        print(i9, GenericItem.getCategory(item: i9, words: ["no", "words"]))
-        print(i10, GenericItem.getCategory(item: i10, words: ["no", "words"]))
-        print(i11, GenericItem.getCategory(item: i11, words: ["no", "words"]))
-        print(i12, GenericItem.getCategory(item: i12, words: ["no", "words"]))
-        print(i13, GenericItem.getCategory(item: i13, words: ["no", "words"]))
-        print(i14, GenericItem.getCategory(item: i14, words: ["no", "words"]))
-        print(i15, GenericItem.getCategory(item: i15, words: ["no", "words"]))
-        print(i16, GenericItem.getCategory(item: i16, words: ["no", "words"]))
-        print(i17, GenericItem.getCategory(item: i17, words: ["no", "words"]))
-        print(i18, GenericItem.getCategory(item: i18, words: ["no", "words"]))
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

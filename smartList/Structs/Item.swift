@@ -21,8 +21,10 @@ struct Item: Equatable {
     var timeAdded: TimeInterval?
     var timeExpires: TimeInterval?
     
+    var systemItem: GenericItem?
+    var systemCategory: Category?
     
-    init(name: String, selected: Bool, category: String?, store: String?, user: String?, ownID: String?, storageSection: FoodStorageType?, timeAdded: TimeInterval?, timeExpires: TimeInterval?) {
+    init(name: String, selected: Bool, category: String?, store: String?, user: String?, ownID: String?, storageSection: FoodStorageType?, timeAdded: TimeInterval?, timeExpires: TimeInterval?, systemItem: GenericItem?, systemCategory: Category?) {
         self.name = name
         self.selected = selected
         self.category = category
@@ -32,6 +34,8 @@ struct Item: Equatable {
         self.storageSection = storageSection
         self.timeAdded = timeAdded
         self.timeExpires = timeExpires
+        self.systemItem = systemItem
+        self.systemCategory = systemCategory
     }
     
     //correctly reads the ownID of the document of items
@@ -45,7 +49,9 @@ struct Item: Equatable {
             }
             
             for doc in documents {
-                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as! String), ownID: doc.documentID, storageSection: nil, timeAdded: nil, timeExpires: nil)
+                let systemItem = GenericItem(rawValue: doc.get("systemItem") as? String ?? "other")
+                let systemCategory = Category(rawValue: doc.get("systemCategory") as? String ?? "other")
+                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as! String), ownID: doc.documentID, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: systemCategory)
                 if listItems.isEmpty == false {
                     listItems.append(i)
                 } else {
@@ -68,7 +74,9 @@ struct Item: Equatable {
             }
             
             for doc in documents {
-                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as! String), ownID: doc.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (doc.get("storageSection") as? String ?? " ")), timeAdded: doc.get("timeAdded") as? TimeInterval, timeExpires: doc.get("timeExpires") as? TimeInterval)
+                let systemItem = GenericItem(rawValue: doc.get("systemItem") as? String ?? "other")
+                let systemCategory = Category(rawValue: doc.get("systemCategory") as? String ?? "other")
+                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as! String), ownID: doc.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (doc.get("storageSection") as? String ?? " ")), timeAdded: doc.get("timeAdded") as? TimeInterval, timeExpires: doc.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory)
                 if storageItems.isEmpty == false {
                     storageItems.append(i)
                 } else {
@@ -82,7 +90,6 @@ struct Item: Equatable {
 }
 
 extension Item {
-    #warning("renamed this")
     mutating func writeToFirestoreForList(db: Firestore!) {
         let itemRef = db.collection("lists").document("\(SharedValues.shared.listIdentifier!.documentID)").collection("items").document()
         self.ownID = itemRef.documentID
@@ -91,7 +98,9 @@ extension Item {
             "category": self.category!,
             "store": self.store!,
             "user": SharedValues.shared.userID ?? "did not write",
-            "selected": self.selected
+            "selected": self.selected,
+            "systemItem": "\(self.systemItem ?? .other)",
+            "systemCategory": "\(self.systemCategory ?? .other)"
         ]) { err in
             if let err = err {
                 print("Error writing document: \(err)")
@@ -111,7 +120,9 @@ extension Item {
             "ownID": reference.documentID,
             "storageSection": self.storageSection?.string ?? FoodStorageType.unsorted.string,
             "timeAdded": Date().timeIntervalSince1970,
-            "timeExpires": self.timeExpires as Any
+            "timeExpires": self.timeExpires as Any,
+            "systemItem": "\(self.systemItem ?? .other)",
+            "systemCategory": "\(self.systemCategory ?? .other)"
         ])
     }
     

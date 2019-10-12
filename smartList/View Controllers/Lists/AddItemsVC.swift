@@ -205,8 +205,13 @@ class AddItemsVC: UIViewController {
     
     
     private func toAddItem() {
-        
-        var item = Item(name: textField.text!, selected: false, category: SharedValues.shared.currentCategory, store: currentStore, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil)
+        let text = textField.text!
+        let words = text.split{ !$0.isLetter }.map { (sStr) -> String in
+            String(sStr)
+        }
+        let genericItem = Search.turnIntoSystemItem(string: text)
+        let category = GenericItem.getCategory(item: genericItem, words: words)
+        var item = Item(name: text, selected: false, category: SharedValues.shared.currentCategory, store: currentStore, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: genericItem, systemCategory: category)
         item.writeToFirestoreForList(db: db)
         //NEED TO HAVE THE OWNID FOR THE ITEM IN ORDER TO WRITE TO DB IN THE FUTURE ABOUT ITEM EVENTS
         

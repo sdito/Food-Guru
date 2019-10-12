@@ -55,8 +55,15 @@ class StorageNewItemVC: UIViewController {
                 return nil
             }
         }
-        print(foodCategory)
-        let item = Item(name: nameTextField.text ?? "Item", selected: false, category: "none", store: "none", user: Auth.auth().currentUser?.uid, ownID: nil, storageSection: foodCategory, timeAdded: Date().timeIntervalSince1970, timeExpires: timeExpires)
+        
+        let text = nameTextField.text ?? ""
+        let words = text.split{ !$0.isLetter }.map { (sStr) -> String in
+            String(sStr)
+        }
+        let genericItem = Search.turnIntoSystemItem(string: text)
+        let category = GenericItem.getCategory(item: genericItem, words: words)
+        
+        let item = Item(name: text, selected: false, category: "none", store: "none", user: Auth.auth().currentUser?.uid, ownID: nil, storageSection: foodCategory, timeAdded: Date().timeIntervalSince1970, timeExpires: timeExpires, systemItem: genericItem, systemCategory: category)
         item.writeToFirestoreForStorage(db: db, docID: SharedValues.shared.foodStorageID ?? " ")
         self.dismiss(animated: true, completion: nil)
     }
