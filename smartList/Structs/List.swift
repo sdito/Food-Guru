@@ -21,16 +21,16 @@ struct List {
     var timeIntervalSince1970: TimeInterval?
     var groupID: String?
     var ownID: String?
-    var categories: [String]?
+    //var categories: [String]?
     var systemCategories: [String] = Category.allCases.map { (ctgry) -> String in
         "\(ctgry)"
     }
     
-    init(name: String, isGroup: Bool?, stores: [String]?, categories: [String]?, people: [String]?, items: [Item]?, numItems: Int?, docID: String?, timeIntervalSince1970: TimeInterval?, groupID: String?, ownID: String?) {
+    init(name: String, isGroup: Bool?, stores: [String]?, /*categories: [String]?, */people: [String]?, items: [Item]?, numItems: Int?, docID: String?, timeIntervalSince1970: TimeInterval?, groupID: String?, ownID: String?) {
         self.name = name
         self.isGroup = isGroup
         self.stores = stores
-        self.categories = categories
+        //self.categories = categories
         self.people = people
         self.items = items
         self.numItems = numItems
@@ -43,7 +43,7 @@ struct List {
         var listID: List?
         db.collection("lists").whereField("shared", arrayContains: userID).order(by: "timeIntervalSince1970", descending: true).limit(to: 1).getDocuments { (querySnapshot, error) in
             if let doc = querySnapshot?.documents.first {
-                listID = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
+                listID = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
             }
             listReturned(listID)
         }
@@ -55,7 +55,7 @@ struct List {
         reference.addSnapshotListener { (docSnapshot, error) in
             if let doc = docSnapshot {
                 if doc.get("name") != nil {
-                    l = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as? [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
+                    l = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
                 }
                 
             }
@@ -72,7 +72,7 @@ struct List {
                 return
             }
             for doc in documents {
-                let l = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as? [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
+                let l = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
                 
                 if lists.isEmpty == false {
                     lists.append(l)
@@ -87,14 +87,21 @@ struct List {
         }
         //db.collection("lists").whereField("shared", arrayContains: userID)
     }
-    static func addItemToListFromRecipe(db: Firestore, listID: String, name: String, userID: String, category: String, store: String) {
+    static func addItemToListFromRecipe(db: Firestore, listID: String, name: String, userID: String, store: String) {
         let reference = db.collection("lists").document(listID).collection("items").document()
+        let genericName = Search.turnIntoSystemItem(string: name)
+        let words = name.split{ !$0.isLetter }.map { (sStr) -> String in
+            String(sStr)
+        }
+        let genericCategory = GenericItem.getCategory(item: genericName, words: words)
         reference.setData([
-            "category": category,
             "name": name,
             "selected": false,
             "store": store,
-            "user": userID
+            "user": userID,
+            "systemCategory": "\(genericCategory)",
+            "category": "\(genericCategory)",
+            "systemItem": "\(genericName)"
         ]) { err in
             if let err = err {
                 print("Error adding item from recipe to list: \(err)")
@@ -135,7 +142,6 @@ extension List {
         db.collection("lists").document(listID).updateData([
             "name": self.name,
             "stores": self.stores!,
-            "categories": self.categories!,
             "people": Array(Set(self.people!)).sorted(),
             "timeIntervalSince1970": Date().timeIntervalSince1970
         ]) { err in
@@ -169,9 +175,7 @@ extension List {
     }
     
     func sortForTableView(from store: String) -> ([String], [[Item]]) {
-        
         var categories = self.systemCategories
-        print(categories)
         var sortedItems: [[Item]] = []
         
         categories.forEach({ (category) in
@@ -195,8 +199,10 @@ extension List {
             }
 
         })
-        
-        return (categories, sortedItems)
+        let textDescription = categories.map { (str) -> String in
+            (Category(rawValue: str)?.textDescription ?? "Other")
+        }
+        return (textDescription, sortedItems)
     }
 }
 

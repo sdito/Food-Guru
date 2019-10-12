@@ -65,7 +65,6 @@ class AddItemsVC: UIViewController {
         List.listenerOnListWithDocID(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (lst) in
             //self.list = lst
             self.list?.name = lst?.name ?? "No name"
-            self.list?.categories = lst?.categories
             self.list?.people = lst?.people
             self.list?.stores = lst?.stores
             

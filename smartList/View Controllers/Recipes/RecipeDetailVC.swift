@@ -62,9 +62,10 @@ class RecipeDetailVC: UIViewController {
         let uid = Auth.auth().currentUser?.uid ?? " "
         List.getUsersCurrentList(db: db, userID: uid) { (list) in
             if let list = list {
-                if list.stores?.isEmpty == true && list.categories?.isEmpty == true {
+                if list.stores?.isEmpty == true {
                     for item in (self.data?.recipe.ingredients)! {
-                        List.addItemToListFromRecipe(db: self.db, listID: list.ownID ?? " ", name: item, userID: uid, category: "", store: "")
+                        
+                        List.addItemToListFromRecipe(db: self.db, listID: list.ownID ?? " ", name: item, userID: uid, store: "")
                     }
                     self.removeAddAllButton()
                 } else {
@@ -72,7 +73,7 @@ class RecipeDetailVC: UIViewController {
                     print(allItems)
                     allItems = allItems.filter({self.itemsAddedToList?.contains($0) == false})
                     print(allItems)
-                    self.createPickerView(itemNames: allItems, itemStores: list.stores, itemCategories: list.categories, itemListID: list.ownID ?? " ", singleItem: false, delegateVC: self)
+                    self.createPickerView(itemNames: allItems, itemStores: list.stores, itemListID: list.ownID ?? " ", singleItem: false, delegateVC: self)
                 }
             } else {
                 let alert = UIAlertController(title: "Error", message: "You first need to create a list before you can add items.", preferredStyle: .alert)
@@ -187,9 +188,9 @@ class RecipeDetailVC: UIViewController {
 }
 
 extension RecipeDetailVC: ButtonIngredientViewDelegate {
-    func haveUserSortItem(addedItemName: [String], addedItemStores: [String]?, addedItemCategories: [String]?, addedItemListID: String) {
+    func haveUserSortItem(addedItemName: [String], addedItemStores: [String]?, addedItemListID: String) {
         print("picker view added here")
-        self.createPickerView(itemNames: addedItemName, itemStores: addedItemStores, itemCategories: addedItemCategories, itemListID: addedItemListID, singleItem: true, delegateVC: self)
+        self.createPickerView(itemNames: addedItemName, itemStores: addedItemStores, itemListID: addedItemListID, singleItem: true, delegateVC: self)
     }
 }
 

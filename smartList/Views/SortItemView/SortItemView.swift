@@ -42,24 +42,22 @@ class SortItemView: UIView {
     private var stores: [String]?
     private var categories: [String]?
     
-    func setUIoneItem(name: String, stores: [String]?, categories: [String]?, listID: String) {
+    func setUIoneItem(name: String, stores: [String]?, listID: String) {
         pickerView.delegate = self
         pickerView.dataSource = self
         self.listID = listID
         self.stores = stores
-        self.categories = categories
         self.name = name
         doneButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         multipleItemStackView.subviews.forEach({$0.removeFromSuperview()})
     }
     
-    func setUIallItems(items: [String], stores: [String]?, cateogires: [String]?, listID: String) {
+    func setUIallItems(items: [String], stores: [String]?, listID: String) {
         pickerView.delegate = self
         pickerView.dataSource = self
         multipleItemStackView.subviews.forEach({$0.removeFromSuperview()})
         self.listID = listID
         self.stores = stores
-        self.categories = cateogires
         self.name = items.first
         self.items = items
         doneButton.setTitle("Next", for: .normal)
@@ -84,28 +82,26 @@ class SortItemView: UIView {
 extension SortItemView: UIPickerViewDelegate, UIPickerViewDataSource {
     @objc func buttonAction() {
         let storesIndex = pickerView.selectedRow(inComponent: 0)
-        let categoriesIndex = pickerView.selectedRow(inComponent: 1)
         
-        List.addItemToListFromRecipe(db: Firestore.firestore(), listID: listID ?? " ", name: name ?? " ", userID: Auth.auth().currentUser?.uid ?? " ", category: categories?[categoriesIndex] ?? "", store: stores?[storesIndex] ?? "")
+        List.addItemToListFromRecipe(db: Firestore.firestore(), listID: listID ?? " ", name: name ?? " ", userID: Auth.auth().currentUser?.uid ?? " ", store: stores?[storesIndex] ?? "")
         let vc = self.findViewController()
         vc?.dismiss(animated: true, completion: nil)
     }
     
     @objc func nextButtonAction() {
         let storesIndex = pickerView.selectedRow(inComponent: 0)
-        let categoriesIndex = pickerView.selectedRow(inComponent: 1)
         switch items?.count {
         case 0:
             return
         case 1:
             print("Exit this pop up view and finish adding items")
-            List.addItemToListFromRecipe(db: Firestore.firestore(), listID: listID ?? " ", name: items?.first ?? "Item", userID: uid, category: categories?[categoriesIndex] ?? "", store: stores?[storesIndex] ?? "")
+            List.addItemToListFromRecipe(db: Firestore.firestore(), listID: listID ?? " ", name: items?.first ?? "Item", userID: uid, store: stores?[storesIndex] ?? "")
             let vc = self.findViewController()
             vc?.dismiss(animated: true, completion: nil)
             // do not let add all items to list be pressed again
             delegate.disableButton()
         default:
-            List.addItemToListFromRecipe(db: Firestore.firestore(), listID: listID ?? " ", name: items?.first ?? "Item", userID: uid, category: categories?[categoriesIndex] ?? "", store: stores?[storesIndex] ?? "")
+            List.addItemToListFromRecipe(db: Firestore.firestore(), listID: listID ?? " ", name: items?.first ?? "Item", userID: uid, store: stores?[storesIndex] ?? "")
             multipleItemStackView.subviews.first?.removeFromSuperview()
             multipleItemStackView.subviews.first?.alpha = 1.0
             items?.removeFirst()
@@ -116,23 +112,14 @@ extension SortItemView: UIPickerViewDelegate, UIPickerViewDataSource {
     
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 2
+        return 1
     }
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        switch component {
-        case 0:
-            return stores?.count ?? 1
-        default:
-            return categories?.count ?? 1
-        }
+        return stores?.count ?? 1
+        
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        switch component {
-        case 0:
-            return stores?[row]
-        default:
-            return categories?[row]
-        }
+        return stores?[row]
     }
     
 }

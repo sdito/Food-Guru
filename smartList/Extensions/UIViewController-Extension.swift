@@ -48,7 +48,7 @@ extension UIViewController {
             }
         }
     }
-    func createPickerView(itemNames: [String], itemStores: [String]?, itemCategories: [String]?, itemListID: String, singleItem: Bool, delegateVC: UIViewController) {
+    func createPickerView(itemNames: [String], itemStores: [String]?, itemListID: String, singleItem: Bool, delegateVC: UIViewController) {
         let vc = UIViewController()
         //vc.view.backgroundColor = .gray
         let button = UIButton()
@@ -63,9 +63,9 @@ extension UIViewController {
         v.delegate = delegateVC as? DisableAddAllItemsDelegate
         switch singleItem {
         case true:
-            v.setUIoneItem(name: itemNames.first!, stores: itemStores, categories: itemCategories, listID: itemListID)
+            v.setUIoneItem(name: itemNames.first!, stores: itemStores, listID: itemListID)
         case false:
-            v.setUIallItems(items: itemNames, stores: itemStores, cateogires: itemCategories, listID: itemListID)
+            v.setUIallItems(items: itemNames, stores: itemStores, listID: itemListID)
         }
         
         v.center = vc.view.center
