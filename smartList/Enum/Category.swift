@@ -17,21 +17,18 @@ import Foundation
 enum Category {
     case bakery
     case beverages
-    case breakfastAndCereal
+    case breakfast
     case condimentsAndDressings
-    case cookingAndBaking
+    case cookingBakingSpices
     case dairy
     case deli
     case frozenFoods
     case grainsPastaSides
-    case healthPersonalCare
-    case householdCleaning
     case meat
     case produce
     case seafood
     case snacks
-    case soupsAndCannedGoods
-    case wineBeerSpirits
+    case canned
     case other
     
 }

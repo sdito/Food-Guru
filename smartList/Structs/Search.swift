@@ -12,6 +12,8 @@ import FirebaseFirestore
 
 #warning("not used at all for anything yet, probably dont need this function to be in here also")
 struct Search {
+    
+    #warning("see if i should delete part of string (in between brackets)")
     static func turnIntoSystemItem(string: String) -> GenericItem {
         let descriptors: Set<String> = ["chopped", "minced", "chunks", "cut into", "cubed", "shredded", "melted", "diced", "divided", "to taste", "or more to taste", "or more as needed", "grated", "crushed", "pounded", "boneless", "skinless", "fresh", "sliced", "thinly", "halves", "half", "halved", "seeded", "with", "and", "finely", "optional", "taste"]
         let measurements: Set<String> = ["pound", "pounds", "envelope", "cup", "cups", "tablespoons", "packet", "ounce", "large", "small", "medium", "package", "teaspoons", "teaspoon", "tablespoon", "pinch", "t.", "ts.", "tspn", "tbsp", "tbls", "bag", "cubes", "cube", "clove", "cloves", "ounces", "quart"]
@@ -45,7 +47,6 @@ struct Search {
         
         // second need to trim the item from the description, i.e. cubed or grated
         item = item.filter({descriptors.contains($0) == false})
-        print(item)
         if item.contains("chicken") {
             if item.contains("soup") && item.contains("cream") {
                 return .creamOfChickenSoup
@@ -67,7 +68,7 @@ struct Search {
         } else if item.contains("beef") {
             if item.contains("ground") {
                 return .groundBeef
-            } else if item.contains("broth") || item.contains("broth") {
+            } else if item.contains("broth") || item.contains("broth") || item.contains("bouillon") {
                 return .broth
             } else {
                 return .beef
@@ -95,7 +96,7 @@ struct Search {
             } else {
                 return .milk
             }
-        } else if item.contains("crab") {
+        } else if item.contains("crab") || item.contains("crabmeat") {
             return .crab
         } else if item.contains("egg") || item.contains("eggs") {
             if item.contains("noodle") || item.contains("noodles") {
@@ -118,7 +119,11 @@ struct Search {
         } else if item.contains("halibut") {
             return .halibut
         } else if item.contains("ginger") {
-            return .ginger
+            if item.contains("root") {
+                return .gingerRoot
+            } else {
+                return .ginger
+            }
         } else if item.contains("mozzarella") {
             return .mozzarella
         } else if item.contains("provolone") {
@@ -293,6 +298,8 @@ struct Search {
                 return .iceCream
             } else if item.contains("sour") {
                 return .sourCream
+            } else {
+                return .cream
             }
         } else if item.contains("gelato") || item.contains("sorbet") {
             return .iceCream
@@ -312,6 +319,12 @@ struct Search {
                 return .steakSauce
             } else if item.contains("tomato") {
                 return .tomatoSauce
+            } else if item.contains("alfredo") {
+                return .alfredoSauce
+            } else if item.contains("pesto") {
+                return .pestoSauce
+            } else if item.contains("oyster") {
+                return .oysterSauce
             }
         } else if item.contains("apple") {
             if item.contains("vinegar") {
@@ -412,7 +425,10 @@ struct Search {
                 return .tomatoPaste
             } else if item.contains("can") || item.contains("cans") {
                 return .cannedTomato
-            } else {
+            } else if item.contains("sun") && item.contains("dried") {
+                return .sunDriedTomato
+            }
+            else {
                 return .tomato
             }
         } else if item.contains("plum") || item.contains("plums") {
@@ -447,6 +463,8 @@ struct Search {
                 return .bleuCheese
             } else if item.contains("cottage") {
                 return .cottageCheese
+            } else if item.contains("romano") {
+                return .romanoCheese
             }
             else {
                 return .cheese
@@ -690,6 +708,14 @@ struct Search {
             return .chives
         } else if item.contains("shallot") || item.contains("shallots") {
             return .shallot
+        } else if item.contains("alfredo") {
+            return .alfredoSauce
+        } else if item.contains("pesto") {
+            return .pestoSauce
+        } else if item.contains("scallops") {
+            return .scallops
+        } else if item.contains("clams") {
+            return .clam
         }
         
         
