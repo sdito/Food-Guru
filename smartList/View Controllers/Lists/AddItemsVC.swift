@@ -46,12 +46,9 @@ class AddItemsVC: UIViewController {
     @IBOutlet weak var topView: UIView!
     
     @IBOutlet weak var storesView: UIView!
-    @IBOutlet weak var categoriesView: UIView!
     
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
-    @IBOutlet weak var stackView: UIStackView!
-    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableView: UITableView!
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,11 +78,7 @@ class AddItemsVC: UIViewController {
             self.list?.items = itm
             
         }
-        if let first = stackView.subviews.last as! UIButton? {
-            SharedValues.shared.currentCategory = first.titleLabel?.text ?? ""
-        } else {
-            SharedValues.shared.currentCategory = ""
-        }
+        
         
     }
     override func viewDidLoad() {
@@ -127,16 +120,16 @@ class AddItemsVC: UIViewController {
         segmentedControl.selectedSegmentIndex = 0
         
         //buttons set up
-        stackView.subviews.forEach({$0.removeFromSuperview()})
-        list.categories?.forEach({ (category) in
-            let button = UIButton()
-            button.createCategoryButton(with: category)
-            stackView.insertArrangedSubview(button, at: 0)
-        })
-        if list.categories?.isEmpty == true {
-            scrollView.isHidden = true
-            
-        }
+        //stackView.subviews.forEach({$0.removeFromSuperview()})
+//        list.categories?.forEach({ (category) in
+//            let button = UIButton()
+//            button.createCategoryButton(with: category)
+//            stackView.insertArrangedSubview(button, at: 0)
+//        })
+//        if list.categories?.isEmpty == true {
+//            scrollView.isHidden = true
+//            
+//        }
         if list.stores?.isEmpty == true {
             segmentedControl.isHidden = true
         }
@@ -211,7 +204,7 @@ class AddItemsVC: UIViewController {
         }
         let genericItem = Search.turnIntoSystemItem(string: text)
         let category = GenericItem.getCategory(item: genericItem, words: words)
-        var item = Item(name: text, selected: false, category: SharedValues.shared.currentCategory, store: currentStore, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: genericItem, systemCategory: category)
+        var item = Item(name: text, selected: false, category: category.rawValue, store: currentStore, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: genericItem, systemCategory: category)
         item.writeToFirestoreForList(db: db)
         //NEED TO HAVE THE OWNID FOR THE ITEM IN ORDER TO WRITE TO DB IN THE FUTURE ABOUT ITEM EVENTS
         

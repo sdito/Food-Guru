@@ -19,21 +19,8 @@ extension UIButton {
     func notSelected() {
         self.alpha = 0.6
     }
+
     
-    func createCategoryButton(with title: String) {
-        self.titleLabel?.font = UIFont(name: "futura", size: 16)
-        self.setTitle(title, for: .normal)
-        self.setTitleColor(.white, for: .normal)
-        self.layer.cornerRadius = 10
-        self.backgroundColor = Colors.main
-        //self.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
-        self.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-    
-    }
-    
-    @objc func buttonAction(sender: UIButton) {
-        SharedValues.shared.currentCategory = self.titleLabel?.text ?? "Other"
-    }
 }
 
 

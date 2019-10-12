@@ -80,11 +80,9 @@ class SetUpListVC: UIViewController {
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var storesTextField: UITextField!
-    @IBOutlet weak var categoriesTextField: UITextField!
     //@IBOutlet weak var peopleTextField: UITextField!
     
     @IBOutlet weak var storesStackView: UIStackView!
-    @IBOutlet weak var categoriesStackView: UIStackView!
     @IBOutlet weak var peopleStackView: UIStackView!
     
     @IBOutlet weak var finishCreatingOrEditing: UIButton!
@@ -98,11 +96,9 @@ class SetUpListVC: UIViewController {
         db = Firestore.firestore()
         nameTextField.delegate = self
         storesTextField.delegate = self
-        categoriesTextField.delegate = self
         
         nameTextField.setUpListToolbar(action: #selector(handleTextFieldForPlus), arrowAction: #selector(handleTextFieldForArrow))
         storesTextField.setUpListToolbar(action: #selector(handleTextFieldForPlus), arrowAction: #selector(handleTextFieldForArrow))
-        categoriesTextField.setUpListToolbar(action: #selector(handleTextFieldForPlus), arrowAction: #selector(handleTextFieldForArrow))
         
         nameTextField.becomeFirstResponder()
         
@@ -166,7 +162,7 @@ class SetUpListVC: UIViewController {
         name = nil; stores = nil; categories = nil; isGroup = nil; people = nil
         name = nameTextField.text ?? ""
         stores = storesStackView.extractDataFromStackView()
-        categories = categoriesStackView.extractDataFromStackView()
+        //categories = categoriesStackView.extractDataFromStackView()
         people = peopleStackView.extractDataFromStackView()
         stores = stores?.removeBlanks(); categories = categories?.removeBlanks(); people = people?.removeBlanks()
         people?.append(Auth.auth().currentUser?.email ?? "")
@@ -188,9 +184,6 @@ class SetUpListVC: UIViewController {
             if list.isGroup == false {
                 insertTextFieldIn(stackView: peopleStackView, text: person, userInteraction: true)
             }
-        })
-        list.categories?.forEach({ (category) in
-            insertTextFieldIn(stackView: categoriesStackView, text: category, userInteraction: true)
         })
         
     }
@@ -245,9 +238,6 @@ class SetUpListVC: UIViewController {
             currentTextField?.resignFirstResponder()
             storesTextField.becomeFirstResponder()
         } else if currentTextField?.superview == storesStackView {
-            currentTextField?.resignFirstResponder()
-            (categoriesStackView.subviews.last as? UITextField)?.becomeFirstResponder()
-        } else if currentTextField?.superview == categoriesStackView {
             currentTextField?.resignFirstResponder()
             (peopleStackView.subviews.last as? UITextField)?.becomeFirstResponder()
         }

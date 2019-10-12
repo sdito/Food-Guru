@@ -14,7 +14,6 @@ struct List {
     var name: String
     var isGroup: Bool?
     var stores: [String]?
-    var categories: [String]?
     var people: [String]?
     var items: [Item]?
     var numItems: Int?
@@ -22,7 +21,10 @@ struct List {
     var timeIntervalSince1970: TimeInterval?
     var groupID: String?
     var ownID: String?
-    
+    var categories: [String]?
+    var systemCategories: [String] = Category.allCases.map { (ctgry) -> String in
+        "\(ctgry)"
+    }
     
     init(name: String, isGroup: Bool?, stores: [String]?, categories: [String]?, people: [String]?, items: [Item]?, numItems: Int?, docID: String?, timeIntervalSince1970: TimeInterval?, groupID: String?, ownID: String?) {
         self.name = name
@@ -53,7 +55,7 @@ struct List {
         reference.addSnapshotListener { (docSnapshot, error) in
             if let doc = docSnapshot {
                 if doc.get("name") != nil {
-                    l = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
+                    l = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as? [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
                 }
                 
             }
@@ -70,7 +72,7 @@ struct List {
                 return
             }
             for doc in documents {
-                let l = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
+                let l = List(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), categories: (doc.get("categories") as? [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
                 
                 if lists.isEmpty == false {
                     lists.append(l)
@@ -112,7 +114,6 @@ extension List {
             "name": self.name,
             "isGroup": self.isGroup ?? false,
             "stores": self.stores!,
-            "categories": self.categories!,
             "people": Array(Set(self.people!)).sorted(),
             "user": SharedValues.shared.userID ?? "did not write",
             "timeIntervalSince1970": Date().timeIntervalSince1970,
@@ -151,13 +152,12 @@ extension List {
     
     func removeItemsThatNoLongerBelong() -> [Item] {
         let dontDelete = ""
-        var categories: Set<String> = Set(self.categories ?? [dontDelete])
         var stores: Set<String> = Set(self.stores ?? [dontDelete])
-        categories.insert(dontDelete); stores.insert(dontDelete)
+        stores.insert(dontDelete)
         var goodItems: [Item] = []
         if let items = self.items {
             for item in items {
-                if categories.contains(item.category ?? "") && stores.contains(item.store ?? "") {
+                if stores.contains(item.store ?? "") {
                     goodItems.append(item)
                 } else {
                     print("Item is being deleted: \(item.name)")
@@ -168,35 +168,33 @@ extension List {
         return goodItems
     }
     
-    func sortForTableView(from store: String) -> ([String]?, [[Item]]) {
+    func sortForTableView(from store: String) -> ([String], [[Item]]) {
         
-        var categories = self.categories?.sorted()
-        categories?.append("")
+        var categories = self.systemCategories
+        print(categories)
         var sortedItems: [[Item]] = []
         
-        if categories?.isEmpty == true {
-            // will never get called at the moment since "" is being appended to categories before this
-            categories = ["All"]
-            let itmsForValue = self.items?.sorted(by: { (i1, i2) -> Bool in
+        categories.forEach({ (category) in
+            var itms: [Item] = []
+            self.items?.forEach({ (itm) in
+                //print(store)
+                if itm.category == category && itm.store == store {
+                    itms.append(itm)
+                }
+            })
+            let itmsInOrder = itms.sorted(by: { (i1, i2) -> Bool in
                 i1.name < i2.name
             })
-            sortedItems = [itmsForValue] as! [[Item]]
-        } else {
-            categories?.forEach({ (category) in
-                var itms: [Item] = []
-                self.items?.forEach({ (itm) in
-                    //print(store)
-                    if itm.category == category && itm.store == store {
-                        itms.append(itm)
-                    }
-                })
-                let itmsInOrder = itms.sorted(by: { (i1, i2) -> Bool in
-                    i1.name < i2.name
-                })
-                
+            if itmsInOrder.isEmpty == false {
                 sortedItems.append(itmsInOrder)
-            })
-        }
+            } else {
+                if let idx = categories.firstIndex(of: category) {
+                    categories.remove(at: idx)
+                }
+                
+            }
+
+        })
         
         return (categories, sortedItems)
     }

@@ -11,7 +11,7 @@ import FirebaseCore
 import FirebaseFirestore
 
 class SharedValues {
-    var currentCategory: String = ""
+    //var currentCategory: String = ""
     var listIdentifier: DocumentReference?
     var userID: String?
     var recipeType: [String]?
