@@ -37,7 +37,7 @@ class AddItemsVC: UIViewController {
         didSet {
             if list?.items?.isEmpty == false {
                 //print(storeText)
-                (sortedCategories, arrayArrayItems) = (list?.sortForTableView(from: currentStore))! as! ([String], [[Item]])
+                (sortedCategories, arrayArrayItems) = (list?.sortForTableView(from: currentStore))!
                 tableView.reloadData()
             }
         }
@@ -104,7 +104,7 @@ class AddItemsVC: UIViewController {
     }
     
     @IBAction func segmentedControlPressed(_ sender: Any) {
-        (sortedCategories, arrayArrayItems) = (list?.sortForTableView(from: currentStore))! as! ([String], [[Item]])
+        (sortedCategories, arrayArrayItems) = (list?.sortForTableView(from: currentStore))!
         tableView.reloadData()
     }
     
@@ -117,18 +117,6 @@ class AddItemsVC: UIViewController {
         })
         
         segmentedControl.selectedSegmentIndex = 0
-        
-        //buttons set up
-        //stackView.subviews.forEach({$0.removeFromSuperview()})
-//        list.categories?.forEach({ (category) in
-//            let button = UIButton()
-//            button.createCategoryButton(with: category)
-//            stackView.insertArrangedSubview(button, at: 0)
-//        })
-//        if list.categories?.isEmpty == true {
-//            scrollView.isHidden = true
-//            
-//        }
         if list.stores?.isEmpty == true {
             segmentedControl.isHidden = true
         }

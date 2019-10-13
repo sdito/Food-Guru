@@ -13,6 +13,7 @@ import AVFoundation
 class RecipeHomeVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchHelperView: UIView!
     
     var imageCache = NSCache<NSString, UIImage>()
     
@@ -40,6 +41,8 @@ class RecipeHomeVC: UIViewController {
         collectionView.delegate = self
         searchBar.delegate = self
         searchBar.setTextProperties()
+        searchBar.setUpToolBar(action: #selector(keyboardDismissed))
+        
         db = Firestore.firestore()
         Recipe.readUserRecipes(db: db) { (recipesReturned) in
             self.recipes = recipesReturned
@@ -47,6 +50,7 @@ class RecipeHomeVC: UIViewController {
         let layout = collectionView.collectionViewLayout as! DynamicHeightLayout
         layout.numberOfColumns = 2
         layout.delegate = self
+        
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -106,5 +110,12 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
 }
 
 extension RecipeHomeVC: UISearchBarDelegate {
-    
+    @objc func keyboardDismissed() {
+        searchBar.endEditing(true)
+        searchHelperView.isHidden = true
+    }
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        print("searchBartextDidBeginEditing")
+        searchHelperView.isHidden = false
+    }
 }

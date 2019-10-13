@@ -848,13 +848,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cuisine" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qpc-Xn-9E6">
-                                                    <rect key="frame" x="4" y="227" width="191" height="22.666666666666657"/>
+                                                    <rect key="frame" x="4" y="227" width="191" height="22.333333333333343"/>
                                                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHx-NQ-Sz9">
-                                                    <rect key="frame" x="4" y="251.66666666666666" width="191" height="19.666666666666657"/>
+                                                    <rect key="frame" x="4" y="251.33333333333334" width="191" height="19.666666666666657"/>
                                                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
@@ -906,14 +906,22 @@
                                     <segue destination="Kgx-m8-jVE" kind="show" id="WQQ-sE-Hwe"/>
                                 </connections>
                             </button>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e0U-VF-pog">
+                                <rect key="frame" x="0.0" y="132" width="414" height="44"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="bmD-Dr-sbB" firstAttribute="top" secondItem="AFg-Js-omE" secondAttribute="top" id="5yK-UH-rku"/>
+                            <constraint firstItem="e0U-VF-pog" firstAttribute="leading" secondItem="AFg-Js-omE" secondAttribute="leading" id="6un-4d-Fch"/>
+                            <constraint firstItem="AFg-Js-omE" firstAttribute="trailing" secondItem="e0U-VF-pog" secondAttribute="trailing" id="HyT-mD-DTx"/>
                             <constraint firstItem="UWy-cS-cDa" firstAttribute="height" secondItem="bmD-Dr-sbB" secondAttribute="height" id="Q2f-wy-RQM"/>
                             <constraint firstItem="bmD-Dr-sbB" firstAttribute="leading" secondItem="AFg-Js-omE" secondAttribute="leading" id="RmK-QB-J57"/>
                             <constraint firstItem="5rE-ht-6sa" firstAttribute="leading" secondItem="AFg-Js-omE" secondAttribute="leading" id="TS2-8d-dFr"/>
                             <constraint firstItem="5rE-ht-6sa" firstAttribute="top" secondItem="UWy-cS-cDa" secondAttribute="bottom" id="WQy-2Y-p4X"/>
+                            <constraint firstItem="e0U-VF-pog" firstAttribute="top" secondItem="bmD-Dr-sbB" secondAttribute="bottom" id="Yd6-kQ-7yB"/>
+                            <constraint firstItem="e0U-VF-pog" firstAttribute="height" secondItem="bmD-Dr-sbB" secondAttribute="height" id="alR-d2-KRZ"/>
                             <constraint firstItem="AFg-Js-omE" firstAttribute="trailing" secondItem="UWy-cS-cDa" secondAttribute="trailing" id="bTg-Fn-msP"/>
                             <constraint firstItem="UWy-cS-cDa" firstAttribute="leading" secondItem="bmD-Dr-sbB" secondAttribute="trailing" id="bhm-M6-pry"/>
                             <constraint firstItem="AFg-Js-omE" firstAttribute="bottom" secondItem="5rE-ht-6sa" secondAttribute="bottom" id="dHY-ds-sZR"/>
@@ -927,12 +935,13 @@
                     <connections>
                         <outlet property="collectionView" destination="5rE-ht-6sa" id="oQX-9M-vSm"/>
                         <outlet property="searchBar" destination="bmD-Dr-sbB" id="jGd-49-Zzf"/>
+                        <outlet property="searchHelperView" destination="e0U-VF-pog" id="Nbt-40-fQ0"/>
                         <segue destination="hdZ-0Z-sHl" kind="show" identifier="showRecipeDetail" id="PBv-1W-whm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gfo-Iq-cR4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1204" y="6"/>
+            <point key="canvasLocation" x="-1204.3478260869565" y="5.3571428571428568"/>
         </scene>
         <!--List HomeVC-->
         <scene sceneID="oLb-1R-rGF">

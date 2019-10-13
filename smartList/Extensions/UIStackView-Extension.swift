@@ -19,4 +19,12 @@ extension UIStackView {
         }
         return items
     }
+    func setUpQuickSearchButtons() {
+        let buttonNames = ["By ingredient", "Recommended", "Breakfast", "Lunch", "Dinner", "Low calorie", "Chicken", "Pasta", "Healthy", "Dessert", "Salad", "Beef", "Seafood", "Casserole", "Vegetarian", "Vegan", "Italian", "Snack", "Healthy", "Simple", "Quick", "Slow Cooker"]
+        buttonNames.forEach { (buttonName) in
+            let b = UIButton()
+            b.setTitle(buttonName, for: .normal)
+            self.insertArrangedSubview(b, at: self.subviews.count)
+        }
+    }
 }
