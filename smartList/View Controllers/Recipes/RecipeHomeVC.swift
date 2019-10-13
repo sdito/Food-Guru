@@ -14,6 +14,7 @@ class RecipeHomeVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchHelperView: UIView!
+    @IBOutlet weak var searchButtonStackView: UIStackView!
     
     var imageCache = NSCache<NSString, UIImage>()
     
@@ -51,6 +52,7 @@ class RecipeHomeVC: UIViewController {
         layout.numberOfColumns = 2
         layout.delegate = self
         
+        searchButtonStackView.setUpQuickSearchButtons()
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -908,7 +908,41 @@
                             </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e0U-VF-pog">
                                 <rect key="frame" x="0.0" y="132" width="414" height="44"/>
+                                <subviews>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" translatesAutoresizingMaskIntoConstraints="NO" id="Yba-yO-OO1">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="EQf-BE-tEZ">
+                                                <rect key="frame" x="0.0" y="0.0" width="4.666666666666667" height="44"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JhW-9Q-d3z">
+                                                        <rect key="frame" x="0.0" y="0.0" width="4.666666666666667" height="44"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="EQf-BE-tEZ" secondAttribute="trailing" constant="20" symbolic="YES" id="LHk-x7-WNQ"/>
+                                            <constraint firstItem="EQf-BE-tEZ" firstAttribute="leading" secondItem="Yba-yO-OO1" secondAttribute="leading" id="OEt-Qa-Caa"/>
+                                            <constraint firstItem="JhW-9Q-d3z" firstAttribute="height" secondItem="Yba-yO-OO1" secondAttribute="height" id="rYP-BZ-G66"/>
+                                            <constraint firstAttribute="bottom" secondItem="EQf-BE-tEZ" secondAttribute="bottom" id="u7V-TA-trP"/>
+                                            <constraint firstItem="EQf-BE-tEZ" firstAttribute="top" secondItem="Yba-yO-OO1" secondAttribute="top" id="xFM-Rg-7JG"/>
+                                        </constraints>
+                                        <viewLayoutGuide key="contentLayoutGuide" id="bfE-gr-FBN"/>
+                                        <viewLayoutGuide key="frameLayoutGuide" id="paC-hc-xe4"/>
+                                    </scrollView>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="Yba-yO-OO1" firstAttribute="leading" secondItem="e0U-VF-pog" secondAttribute="leading" id="0di-1g-oDT"/>
+                                    <constraint firstAttribute="bottom" secondItem="Yba-yO-OO1" secondAttribute="bottom" id="69h-QC-NKL"/>
+                                    <constraint firstAttribute="height" constant="44" id="G5S-zC-QCn"/>
+                                    <constraint firstItem="Yba-yO-OO1" firstAttribute="top" secondItem="e0U-VF-pog" secondAttribute="top" id="NGo-Uw-JcI"/>
+                                    <constraint firstAttribute="trailing" secondItem="Yba-yO-OO1" secondAttribute="trailing" id="lOx-po-90R"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -921,7 +955,6 @@
                             <constraint firstItem="5rE-ht-6sa" firstAttribute="leading" secondItem="AFg-Js-omE" secondAttribute="leading" id="TS2-8d-dFr"/>
                             <constraint firstItem="5rE-ht-6sa" firstAttribute="top" secondItem="UWy-cS-cDa" secondAttribute="bottom" id="WQy-2Y-p4X"/>
                             <constraint firstItem="e0U-VF-pog" firstAttribute="top" secondItem="bmD-Dr-sbB" secondAttribute="bottom" id="Yd6-kQ-7yB"/>
-                            <constraint firstItem="e0U-VF-pog" firstAttribute="height" secondItem="bmD-Dr-sbB" secondAttribute="height" id="alR-d2-KRZ"/>
                             <constraint firstItem="AFg-Js-omE" firstAttribute="trailing" secondItem="UWy-cS-cDa" secondAttribute="trailing" id="bTg-Fn-msP"/>
                             <constraint firstItem="UWy-cS-cDa" firstAttribute="leading" secondItem="bmD-Dr-sbB" secondAttribute="trailing" id="bhm-M6-pry"/>
                             <constraint firstItem="AFg-Js-omE" firstAttribute="bottom" secondItem="5rE-ht-6sa" secondAttribute="bottom" id="dHY-ds-sZR"/>
@@ -935,6 +968,7 @@
                     <connections>
                         <outlet property="collectionView" destination="5rE-ht-6sa" id="oQX-9M-vSm"/>
                         <outlet property="searchBar" destination="bmD-Dr-sbB" id="jGd-49-Zzf"/>
+                        <outlet property="searchButtonStackView" destination="EQf-BE-tEZ" id="UlM-PM-oiK"/>
                         <outlet property="searchHelperView" destination="e0U-VF-pog" id="Nbt-40-fQ0"/>
                         <segue destination="hdZ-0Z-sHl" kind="show" identifier="showRecipeDetail" id="PBv-1W-whm"/>
                     </connections>
