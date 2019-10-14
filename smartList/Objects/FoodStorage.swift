@@ -81,5 +81,19 @@ struct FoodStorage {
             }
         }
     }
-    
+    static func deleteItemsFromStorage(db: Firestore, storageID: String) {
+        db.collection("storages").document(storageID).collection("items").getDocuments { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documents else {
+                print("Error fetching documents: \(String(describing: error))")
+                return
+            }
+            for doc in documents {
+                if let itemID = doc.get("ownID") as? String {
+                    db.collection("storages").document(storageID).collection("items").document(itemID).delete()
+                    print("Item being deleted from storage: \(doc.get("name"))")
+                }
+                
+            }
+        }
+    }
 }

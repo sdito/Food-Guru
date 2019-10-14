@@ -9,11 +9,9 @@
 import Foundation
 import FirebaseFirestore
 
-
-#warning("not used at all for anything yet, probably dont need this function to be in here also")
 struct Search {
     
-    #warning("see if i should delete part of string (in between brackets)")
+    
     static func turnIntoSystemItem(string: String) -> GenericItem {
         let descriptors: Set<String> = ["chopped", "minced", "chunks", "cut into", "cubed", "shredded", "melted", "diced", "divided", "to taste", "or more to taste", "or more as needed", "grated", "crushed", "pounded", "boneless", "skinless", "fresh", "sliced", "thinly", "halves", "half", "halved", "seeded", "with", "and", "finely", "optional", "taste"]
         let measurements: Set<String> = ["pound", "pounds", "envelope", "cup", "cups", "tablespoons", "packet", "ounce", "large", "small", "medium", "package", "teaspoons", "teaspoon", "tablespoon", "pinch", "t.", "ts.", "tspn", "tbsp", "tbls", "bag", "cubes", "cube", "clove", "cloves", "ounces", "quart"]

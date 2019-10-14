@@ -82,7 +82,8 @@ class SettingsDetailVC: UIViewController {
                     SharedValues.shared.data = (emails, date)
                 }
                 */
-                topCell.setUI(date: (SharedValues.shared.groupDate)?.dateFormatted(style: .short) ?? "", emails: SharedValues.shared.groupEmails ?? [""])
+                let top = "Created on \((SharedValues.shared.groupDate)?.dateFormatted(style: .short) ?? "")"
+                topCell.setUI(top: top, emails: SharedValues.shared.groupEmails ?? [""])
                 
                 let editGroup = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
                 editGroup.setUI(title: "Edit group")
@@ -109,7 +110,47 @@ class SettingsDetailVC: UIViewController {
         case .list:
             return [UITableViewCell()]
         case .storage:
-            return [UITableViewCell()]
+            if SharedValues.shared.foodStorageID == nil {
+                var txt: String {
+                    if SharedValues.shared.groupID == nil {
+                        return "You do not have a storage created yet. A storage will allow you to keep track of the items you have in stock, and to help you find recipes with your items. Create a group to easily share your storage with other people."
+                    } else {
+                        return "You do not have a storage created yet. A storage will allow you to keep track of the items you have in stock, and to help you find recipes with your items."
+                    }
+                }
+                let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+                cell1.setUI(str: txt)
+                let button2 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                button2.setUI(title: "Create storage without group")
+                button2.button.addTarget(self, action: #selector(createStorageIndividual), for: .touchUpInside)
+                if SharedValues.shared.groupID == nil {
+                    let button1 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                    button1.setUI(title: "Create group")
+                    button1.button.addTarget(self, action: #selector(createGroup), for: .touchUpInside)
+                    return [cell1, button1, button2]
+                } else {
+                   let button3 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                    button3.setUI(title: "Create storage with group (recommended)")
+                    button3.button.addTarget(self, action: #selector(createStorageGroup), for: .touchUpInside)
+                   return [cell1, button3, button2]
+                }
+                
+            } else {
+                let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingTwoLevelCell") as! SettingTwoLevelCell
+                FoodStorage.getEmailsfromStorageID(storageID: SharedValues.shared.foodStorageID ?? " ", db: db) { (emails) in
+                    SharedValues.shared.foodStorageEmails = emails
+                    
+                }
+                cell1.setUI(top: "Storage members", emails: SharedValues.shared.foodStorageEmails ?? [""])
+                let button1 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                button1.setUI(title: "Delete storage")
+                button1.button.addTarget(self, action: #selector(deleteStorage), for: .touchUpInside)
+                let button2 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                button2.setUI(title: "Delete all items from storage")
+                button2.button.addTarget(self, action: #selector(deleteItemsFromStorage), for: .touchUpInside)
+                return [cell1, button1, button2]
+            }
+            
         case .recipe:
             return [UITableViewCell()]
         }
@@ -151,6 +192,33 @@ class SettingsDetailVC: UIViewController {
         vc.modalPresentationStyle = .fullScreen
         vc.previousGroupID = SharedValues.shared.groupID
         present(vc, animated: true, completion: nil)
+    }
+    @objc private func createStorageIndividual() {
+        print("create individual storage")
+        let foodStorage = FoodStorage(isGroup: false, groupID: nil, peopleEmails: [Auth.auth().currentUser?.email ?? "no email"], items: nil, numberOfPeople: 1)
+        FoodStorage.createStorageToFirestoreWithPeople(db: db, foodStorage: foodStorage)
+        tableView.reloadData()
+    }
+    @objc private func createStorageGroup() {
+        print("create group storage")
+        let foodStorage = FoodStorage(isGroup: true, groupID: SharedValues.shared.groupID, peopleEmails: SharedValues.shared.groupEmails ?? ["emails didnt work"], items: nil, numberOfPeople: SharedValues.shared.groupEmails?.count)
+        FoodStorage.createStorageToFirestoreWithPeople(db: db, foodStorage: foodStorage)
+    }
+    @objc private func deleteItemsFromStorage() {
+        let alert = UIAlertController(title: "Are you sure you want to delete all items from your storage?", message: "This action can't be undone", preferredStyle: .alert)
+        alert.addAction(.init(title: "Delete", style: .destructive, handler: { (action) in
+            if let id = SharedValues.shared.foodStorageID {
+                FoodStorage.deleteItemsFromStorage(db: self.db, storageID: id)
+                self.createMessageView(color: Colors.messageGreen, text: "Items successfully deleted")
+            }
+            
+        }))
+        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        present(alert, animated: true)
+    }
+    @objc private func deleteStorage() {
+        print("Delete storage")
+        #error("need to implement")
     }
     
 }

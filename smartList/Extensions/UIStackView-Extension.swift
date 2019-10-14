@@ -20,19 +20,20 @@ extension UIStackView {
         return items
     }
     func setUpQuickSearchButtons() {
-        let buttonNames = ["By ingredient", "Recommended", "Breakfast", "Lunch", "Dinner", "Low calorie", "Chicken", "Pasta", "Healthy", "Dessert", "Salad", "Beef", "Seafood", "Casserole", "Vegetarian", "Vegan", "Italian", "Snack", "Healthy", "Simple", "Quick", "Slow Cooker"]
-        buttonNames.forEach { (buttonName) in
+        let buttons: [(name: String, action: Selector)] = [("By ingredient", #selector(noActionYet)), ("Recommended", #selector(noActionYet)), ("Breakfast", #selector(noActionYet)), ("Lunch", #selector(noActionYet)), ("Dinner", #selector(noActionYet)), ("Low calorie", #selector(noActionYet)), ("Chicken", #selector(noActionYet)), ("Pasta", #selector(noActionYet)), ("Healthy", #selector(noActionYet)), ("Dessert", #selector(noActionYet)), ("Salad", #selector(noActionYet)), ("Beef", #selector(noActionYet)), ("Seafood", #selector(noActionYet)), ("Casserole", #selector(noActionYet)), ("Vegetarian", #selector(noActionYet)), ("Vegan", #selector(noActionYet)), ("Italian", #selector(noActionYet)), ("Snack", #selector(noActionYet)), ("Healthy", #selector(noActionYet)), ("Simple", #selector(noActionYet)), ("Quick", #selector(noActionYet)), ("Slow cooker", #selector(noActionYet))]
+        buttons.forEach { (button) in
             let b = UIButton()
-            b.setTitle(buttonName, for: .normal)
+            
+            b.setTitle(button.name, for: .normal)
             b.titleLabel?.backgroundColor = Colors.main
             b.titleLabel?.font = UIFont(name: "futura", size: 17)
-            b.addTarget(self, action: #selector(buttonActions), for: .touchUpInside)
+            b.addTarget(self, action: #selector(noActionYet), for: .touchUpInside)
             
             self.insertArrangedSubview(b, at: self.subviews.count)
         }
     }
-    @objc func buttonActions() {
-        #error("left off here, need to implement the buttons for sorting")
+    @objc func noActionYet() {
+        //#error("left off here, need to implement the buttons for sorting")
         print("Search button called")
     }
 }

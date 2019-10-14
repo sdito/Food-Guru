@@ -38,7 +38,7 @@ extension UITextField {
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let done = UIBarButtonItem(barButtonSystemItem: style, target: nil, action: action)
         done.tintColor = Colors.main
-        let toolbar = UIToolbar()
+        let toolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 40))
         toolbar.autoresizingMask = .flexibleHeight
         toolbar.setItems([space, done], animated: false)
         self.inputAccessoryView = toolbar

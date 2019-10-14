@@ -294,8 +294,7 @@
 				E216204622F658D10074A0DF /* AppDelegate.swift */,
 				E216207822F660C40074A0DF /* View Controllers */,
 				E216204A22F658D10074A0DF /* Main.storyboard */,
-				E2E529D322FA7F9700C55DA0 /* Classes */,
-				E2B4695522F79748006BA77D /* Structs */,
+				E2B4695522F79748006BA77D /* Objects */,
 				E25F071523146C9A00E6738E /* Enum */,
 				E2B4694D22F78D23006BA77D /* Views */,
 				E2EB7FC122FFAD81003948A6 /* Cell */,
@@ -453,7 +452,7 @@
 			path = CreateListView;
 			sourceTree = "<group>";
 		};
-		E2B4695522F79748006BA77D /* Structs */ = {
+		E2B4695522F79748006BA77D /* Objects */ = {
 			isa = PBXGroup;
 			children = (
 				E2E529D122FA7F9100C55DA0 /* List.swift */,
@@ -465,8 +464,9 @@
 				E20BC6D0232752A600F1E5E7 /* Setting.swift */,
 				E2E29037234C490D00620576 /* Review.swift */,
 				E2A8A634234CF75400A676FA /* Search.swift */,
+				E2EB7FBD22FF5ACF003948A6 /* SharedValues.swift */,
 			);
-			path = Structs;
+			path = Objects;
 			sourceTree = "<group>";
 		};
 		E2B4695822F7F19C006BA77D /* Extensions */ = {
@@ -520,14 +520,6 @@
 				E2E29035234C3F1300620576 /* RatingView.xib */,
 			);
 			path = RatingView;
-			sourceTree = "<group>";
-		};
-		E2E529D322FA7F9700C55DA0 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				E2EB7FBD22FF5ACF003948A6 /* SharedValues.swift */,
-			);
-			path = Classes;
 			sourceTree = "<group>";
 		};
 		E2EB7FC122FFAD81003948A6 /* Cell */ = {

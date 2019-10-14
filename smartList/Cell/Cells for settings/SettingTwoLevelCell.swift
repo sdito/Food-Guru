@@ -12,8 +12,8 @@ class SettingTwoLevelCell: UITableViewCell {
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var bottomLabel: UILabel!
     
-    func setUI(date: String, emails: [String]) {
-        topLabel.text = "Created on \(date)"
+    func setUI(top: String, emails: [String]) {
+        topLabel.text = top
         bottomLabel.text = emails.joined(separator: "\n")
     }
 }
