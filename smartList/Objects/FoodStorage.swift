@@ -90,10 +90,34 @@ struct FoodStorage {
             for doc in documents {
                 if let itemID = doc.get("ownID") as? String {
                     db.collection("storages").document(storageID).collection("items").document(itemID).delete()
-                    print("Item being deleted from storage: \(doc.get("name"))")
+                    print("Item being deleted from storage: \(String(describing: doc.get("name")))")
                 }
                 
             }
         }
+    }
+    static func deleteStorage(db: Firestore, storageID: String) {
+        // need to delete the storage and also the foodStorageID from user's document
+        let reference = db.collection("storages").document(storageID)
+        FoodStorage.getEmailsfromStorageID(storageID: storageID, db: db) { (emails) in
+            emails?.forEach({ (email) in
+                User.turnEmailToUid(db: db, email: email) { (uid) in
+                    if let uid = uid {
+                      let userReference = db.collection("users").document(uid)
+                      print("Deleting from userID: \(uid)")
+                      userReference.updateData([
+                        "storageID": FieldValue.delete()
+                      ])
+                    }
+                }
+            })
+        }
+        
+        // doesnt matter when actual storage document is deleted, just need to make sure it would be deleted after the groupID is deleted from the user document
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            print("Deleting storage")
+            reference.delete()
+        }
+        
     }
 }

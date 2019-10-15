@@ -51,7 +51,7 @@ struct Recipe {
     
     static func readUserRecipes(db: Firestore, recipesReturned: @escaping (_ recipe: [Recipe]) -> Void) {
         var recipes: [Recipe] = []
-        db.collection("recipes").whereField("userID", isEqualTo: SharedValues.shared.userID ?? "").getDocuments { (querySnapshot, error) in
+        db.collection("recipes").getDocuments { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Error fetching documents: \(String(describing: error))")
                 return

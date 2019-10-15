@@ -98,11 +98,9 @@ extension UIViewController {
         messageView.clipsToBounds = true
         messageView.isUserInteractionEnabled = true
         
-        /*
-        let gestureRecognizer = UIGestureRecognizer(target: self, action: #selector(messageView.removeFromSuperview)
-        gestureRecognizer.delegate = messageView as? UIGestureRecognizerDelegate
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(messageDismissSelector))
         messageView.addGestureRecognizer(gestureRecognizer)
-        */
+        messageView.tag = 1
         
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
@@ -116,10 +114,17 @@ extension UIViewController {
         
         self.view.addSubview(messageView)
     }
+    @objc func messageDismissSelector() {
+        let v = self.view.subviews.filter({$0.tag == 1})
+        v.forEach { (view) in
+            view.removeFromSuperview()
+        }
+    }
     
     @objc func createGroupPopUp() {
         let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
+    
 }

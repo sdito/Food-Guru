@@ -209,7 +209,7 @@ class SettingsDetailVC: UIViewController {
         alert.addAction(.init(title: "Delete", style: .destructive, handler: { (action) in
             if let id = SharedValues.shared.foodStorageID {
                 FoodStorage.deleteItemsFromStorage(db: self.db, storageID: id)
-                self.createMessageView(color: Colors.messageGreen, text: "Items successfully deleted")
+                self.createMessageView(color: Colors.messageGreen, text: "Items successfully deleted from storage")
             }
             
         }))
@@ -218,7 +218,17 @@ class SettingsDetailVC: UIViewController {
     }
     @objc private func deleteStorage() {
         print("Delete storage")
-        #error("need to implement")
+        let alert = UIAlertController(title: "Are you sure you want to delete your storage?", message: "This action can't be undome", preferredStyle: .alert)
+        alert.addAction(.init(title: "Delete", style: .destructive, handler: { (action) in
+            if let id = SharedValues.shared.foodStorageID {
+                FoodStorage.deleteStorage(db: self.db, storageID: id)
+                self.createMessageView(color: Colors.messageGreen, text: "Storage successfully deleted")
+            }
+        }))
+        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        present(alert, animated: true)
+        
+        
     }
     
 }
