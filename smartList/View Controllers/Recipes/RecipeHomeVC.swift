@@ -53,12 +53,28 @@ class RecipeHomeVC: UIViewController {
         layout.delegate = self
         
         searchButtonStackView.setUpQuickSearchButtons()
+        createObserver()
         
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showRecipeDetail" {
             let destVC = segue.destination as! RecipeDetailVC
             destVC.data = sender as? (UIImage, Recipe)
+        }
+    }
+    
+    private func createObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(recipeButtonPressed), name: .recipeSearchButtonPressed, object: nil)
+    }
+    
+    @objc func recipeButtonPressed(_ notification: NSNotification) {
+        if let dict = notification.userInfo as NSDictionary? {
+            if let buttonName = dict["buttonName"] as? String {
+                Search.recipeSearchSuggested(buttonName: buttonName, db: db)
+            }
         }
     }
 }

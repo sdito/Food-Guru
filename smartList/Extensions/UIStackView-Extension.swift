@@ -20,7 +20,7 @@ extension UIStackView {
         return items
     }
     func setUpQuickSearchButtons() {
-        let buttons: [(name: String, action: Selector)] = [("By ingredient", #selector(noActionYet)), ("Recommended", #selector(noActionYet)), ("Breakfast", #selector(noActionYet)), ("Lunch", #selector(noActionYet)), ("Dinner", #selector(noActionYet)), ("Low calorie", #selector(noActionYet)), ("Chicken", #selector(noActionYet)), ("Pasta", #selector(noActionYet)), ("Healthy", #selector(noActionYet)), ("Dessert", #selector(noActionYet)), ("Salad", #selector(noActionYet)), ("Beef", #selector(noActionYet)), ("Seafood", #selector(noActionYet)), ("Casserole", #selector(noActionYet)), ("Vegetarian", #selector(noActionYet)), ("Vegan", #selector(noActionYet)), ("Italian", #selector(noActionYet)), ("Snack", #selector(noActionYet)), ("Healthy", #selector(noActionYet)), ("Simple", #selector(noActionYet)), ("Quick", #selector(noActionYet)), ("Slow cooker", #selector(noActionYet))]
+        let buttons: [(name: String, action: Selector)] = [("By ingredient", #selector(noActionYet)), ("Recommended", #selector(noActionYet)), ("Breakfast", #selector(noActionYet)), ("Lunch", #selector(noActionYet)), ("Dinner", #selector(noActionYet)), ("Low calorie", #selector(noActionYet)), ("Chicken", #selector(noActionYet)), ("Pasta", #selector(noActionYet)), ("Healthy", #selector(noActionYet)), ("Dessert", #selector(noActionYet)), ("Salad", #selector(noActionYet)), ("Beef", #selector(noActionYet)), ("Seafood", #selector(noActionYet)), ("Casserole", #selector(noActionYet)), ("Vegetarian", #selector(noActionYet)), ("Vegan", #selector(noActionYet)), ("Italian", #selector(noActionYet)), ("Snack", #selector(noActionYet)), ("Simple", #selector(noActionYet)), ("Quick", #selector(noActionYet)), ("Slow cooker", #selector(noActionYet))]
         buttons.forEach { (button) in
             let b = UIButton()
             
@@ -32,8 +32,12 @@ extension UIStackView {
             self.insertArrangedSubview(b, at: self.subviews.count)
         }
     }
-    @objc func noActionYet() {
-        //#error("left off here, need to implement the buttons for sorting")
-        print("Search button called")
+    
+    // purpose of having this sent through notification to RecipeHomeVC then to Search is to keep logic for searching in Search struct
+    @objc func noActionYet(sender: Any) {
+        let info = (sender as? UIButton)?.titleLabel?.text
+        if let info = info {
+            NotificationCenter.default.post(name: .recipeSearchButtonPressed, object: nil, userInfo: ["buttonName": info])
+        }
     }
 }

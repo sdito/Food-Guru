@@ -10,7 +10,63 @@ import Foundation
 import FirebaseFirestore
 
 struct Search {
-    
+    static func recipeSearchSuggested(buttonName: String, db: Firestore) {
+        let reference = db.collection("recipes")
+        print("search recipes with: \(buttonName)")
+        switch buttonName {
+        case "By ingredient":
+            print("by ingredient")
+        case "Recommended":
+            print("Recommended")
+        case "Breakfast":
+            print("Breakfast")
+        case "Lunch":
+            print("Lunch")
+        case "Dinner":
+            print("Dinner")
+        case "Low calorie":
+            print("Low calorie")
+        case "Chicken":
+            print("Chicken")
+            reference.whereField("has_chicken", isEqualTo: true).getDocuments { (querySnapshot, error) in
+                guard let documents = querySnapshot?.documents else {
+                    print("Error retrieving documents: \(error)")
+                    return
+                }
+                
+            }
+        case "Pasta":
+            print("Pasta")
+        case "Healthy":
+            print("Healthy")
+        case "Dessert":
+            print("Dessert")
+        case "Salad":
+            print("Salad")
+        case "Beef":
+            print("Beef")
+        case "Seafood":
+            print("Seafood")
+        case "Casserole":
+            print("Casserole")
+        case "Vegetarian":
+            print("Vegetarian")
+        case "Vegan":
+            print("Vegan")
+        case "Italian":
+            print("Italian")
+        case "Snack":
+            print("Snack")
+        case "Simple":
+            print("Simple")
+        case "Quick":
+            print("Quick")
+        case "Slow cooker":
+            print("Slow cooker")
+        default:
+            print("default")
+        }
+    }
     
     static func turnIntoSystemItem(string: String) -> GenericItem {
         let descriptors: Set<String> = ["chopped", "minced", "chunks", "cut into", "cubed", "shredded", "melted", "diced", "divided", "to taste", "or more to taste", "or more as needed", "grated", "crushed", "pounded", "boneless", "skinless", "fresh", "sliced", "thinly", "halves", "half", "halved", "seeded", "with", "and", "finely", "optional", "taste"]
