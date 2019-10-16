@@ -9,13 +9,12 @@
 import Foundation
 
 
-#warning("not using yet")
-
 enum GenericItem: String {
     
     case alfredoSauce
     case almond
     case almondButter
+    case almondMilk
     case anchovy
     case apple
     case appleButter
@@ -53,12 +52,14 @@ enum GenericItem: String {
     case blueberries
     case bread
     case breadCrumbs
+    case breadFlour
     case breakfastSausage
     case broccoli
     case broth
     case brownSugar
     case brusselsSprouts
     case butter
+    case buttermilk
     case cabbage
     case cannedTomato
     case cannelliniBeans
@@ -242,6 +243,7 @@ enum GenericItem: String {
     case soda
     case sole
     case sourCream
+    case soyMilk
     case soySauce
     case spinach
     case squash
@@ -861,6 +863,14 @@ enum GenericItem: String {
         case .other:
             return .other
         case .water:
+            return .beverages
+        case .breadFlour:
+            return .cookingBakingSpices
+        case .buttermilk:
+            return .dairy
+        case .almondMilk:
+            return .beverages
+        case .soyMilk:
             return .beverages
         }
     }

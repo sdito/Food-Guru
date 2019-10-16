@@ -10,6 +10,8 @@ import UIKit
 import FirebaseFirestore
 import FirebaseAuth
 
+
+
 class StorageHomeVC: UIViewController {
     var db: Firestore!
     lazy private var emptyCells: [UITableViewCell] = []
@@ -47,15 +49,26 @@ class StorageHomeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        db = Firestore.firestore()
+        FoodStorage.checkForUsersAlreadyInStorage(db: db, groupID: SharedValues.shared.groupID ?? " ") { (boolean) in
+            print("Is storage good to create: \(boolean)")
+        }
+        
+        
         tableView.dataSource = self
         tableView.delegate = self
         searchBar.delegate = self
-        db = Firestore.firestore()
+        
         createObserver()
         
-        Item.readItemsForStorage(db: db, storageID: SharedValues.shared.foodStorageID ?? " ") { (itms) in
-            self.items = itms
+        if let id = SharedValues.shared.foodStorageID {
+            Item.readItemsForStorage(db: db, storageID: id) { (itms) in
+                self.items = itms
+            }
+        } else {
+            self.items = []
         }
+        
         popUpView.shadow()
         pickerPopUpView.shadow()
         
@@ -201,6 +214,10 @@ class StorageHomeVC: UIViewController {
     }
     
     @objc func observerSelectorFoodStorageID() {
+        print("FOOD STORAGE ID CHANGED")
+        Item.readItemsForStorage(db: db, storageID: SharedValues.shared.foodStorageID ?? " ") { (itms) in
+            self.items = itms
+        }
         tableView.reloadData()
     }
 }

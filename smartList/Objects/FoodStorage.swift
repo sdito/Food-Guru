@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
 struct FoodStorage {
     var isGroup: Bool?
@@ -43,73 +44,71 @@ struct FoodStorage {
             emailsReturned(emails)
         }
     }
-    
-    
-    
-//    static func makeSureGroupMembersDontHaveStorage(db: Firestore, anyUsersInStorage: @escaping (_ boolean: Bool) -> Void) {
-//        var anyInStorage = false
-//        if let emails = SharedValues.shared.groupEmails {
-//            for email in emails {
-//                User.turnEmailToUid(db: db, email: email) { (uid) in
-//                    if let uid = uid {
-//                        db.collection("users").document(uid).getDocument { (docSnapshot, error) in
-//                            guard let doc = docSnapshot else {
-//                                print("Error retrieving document: \(String(describing: error))")
-//                                return
-//                            }
-//                            if doc.get("storageID") == nil || doc.get("storageID") as? String == "" {
-//                                print("User NOT in storage")
-//                            } else {
-//                                print("User IN storage")
-//                                anyInStorage = true
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//            anyUsersInStorage(anyInStorage)
-//        }
-//    }
-    
+    static func checkForUsersAlreadyInStorage(db: Firestore, groupID: String, isStorageValid: @escaping (_ boolean: Bool?) -> Void) {
+        var storageValid = true
+        let reference = db.collection("groups").document(groupID)
+        reference.getDocument { (docSnapshot, error) in
+            guard let doc = docSnapshot else { return }
+            if doc.get("ownUserStorages") as? [String] != nil && doc.get("ownUserStorages") as? [String] != [] {
+                storageValid = false
+            }
+            isStorageValid(storageValid)
+        }
+    }
     
     static func createStorageToFirestoreWithPeople(db: Firestore!, foodStorage: FoodStorage) {
-        // need to write the storage to the individuals in people, create the storage
-        let foodStorageRef = db.collection("storages").document()
-        foodStorageRef.setData([
-            "emails": foodStorage.peopleEmails as Any,
-            "isGroup": foodStorage.isGroup as Any,
-            "groupID": foodStorage.groupID as Any,
-            "numPeople": foodStorage.numberOfPeople as Any,
-            "ownID": foodStorageRef.documentID
-        ]) { err in
-            if let err = err {
-                print("Error writing document: \(err)")
+        // need to check that no users already have a storage, need to write the storage to the individuals in people, create the storage
+        //#error("need to check for ownUserStorages from group to make sure that is empty if creating a storage with group")
+        
+        checkForUsersAlreadyInStorage(db: db, groupID: SharedValues.shared.groupID ?? " ") { (boolean) in
+            if boolean == true || foodStorage.isGroup == false {
+                if foodStorage.peopleEmails?.count == 1 && foodStorage.isGroup == false {
+                    db.collection("groups").document(SharedValues.shared.groupID ?? " ").updateData([
+                        "ownUserStorages" : FieldValue.arrayUnion([foodStorage.peopleEmails?.first as Any])
+                    ])
+                }
+                let foodStorageRef = db.collection("storages").document()
+                foodStorageRef.setData([
+                    "emails": foodStorage.peopleEmails as Any,
+                    "isGroup": foodStorage.isGroup as Any,
+                    "groupID": foodStorage.groupID as Any,
+                    "numPeople": foodStorage.numberOfPeople as Any,
+                    "ownID": foodStorageRef.documentID
+                ]) { err in
+                    if let err = err {
+                        print("Error writing document: \(err)")
+                    } else {
+                        print("Document successfully written")
+                        
+                        // will handle writing to the user's file in this part
+                        var userIDs: [String] = []
+                        foodStorage.peopleEmails?.forEach({ (email) in
+                            db.collection("users").whereField("email", isEqualTo: email).getDocuments(completion: { (querySnapshot, err) in
+                                if let doc = querySnapshot?.documents.first {
+                                    if let id = doc.get("uid") as? String {
+                                        userIDs.append(id)
+                                        db.collection("users").document(id).updateData([
+                                            "storageID": foodStorageRef.documentID
+                                            ])
+                                        
+                                    }
+                                }
+                                let updateDoc = db.collection("storages").document(foodStorageRef.documentID)
+                                updateDoc.updateData([
+                                    "shared": userIDs
+                                ])
+                            })
+                        })
+                    }
+                }
             } else {
-                print("Document successfully written")
+                let alert = UIAlertController(title: "Error", message: "Unable to create storage with your group because someone in your group already is in their own storage.", preferredStyle: .alert)
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
                 
-                // will handle writing to the user's file in this part
-                var userIDs: [String] = []
-                foodStorage.peopleEmails?.forEach({ (email) in
-                    db.collection("users").whereField("email", isEqualTo: email).getDocuments(completion: { (querySnapshot, err) in
-                        if let doc = querySnapshot?.documents.first {
-                            if let id = doc.get("uid") as? String {
-                                userIDs.append(id)
-                                db.collection("users").document(id).updateData([
-                                    "storageID": foodStorageRef.documentID
-                                    ])
-                                
-                            }
-                        }
-                        let updateDoc = db.collection("storages").document(foodStorageRef.documentID)
-                        updateDoc.updateData([
-                            "shared": userIDs
-                        ])
-                    })
-                })
+                #warning("dont think this alert is going to work every time, idk")
+                UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
             }
         }
-        
-        
         
         
     }
@@ -130,6 +129,15 @@ struct FoodStorage {
     }
     static func deleteStorage(db: Firestore, storageID: String) {
         // need to delete the storage and also the foodStorageID from user's document
+        
+        if let groupID = SharedValues.shared.groupID {
+            if let email = Auth.auth().currentUser?.email {
+                db.collection("groups").document(groupID).updateData([
+                    "ownUserStorages": FieldValue.arrayRemove([email])
+                ])
+            }
+        }
+        
         let reference = db.collection("storages").document(storageID)
         FoodStorage.getEmailsfromStorageID(storageID: storageID, db: db) { (emails) in
             emails?.forEach({ (email) in
@@ -146,7 +154,7 @@ struct FoodStorage {
         }
         
         // doesnt matter when actual storage document is deleted, just need to make sure it would be deleted after the groupID is deleted from the user document
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             print("Deleting storage")
             reference.delete()
         }

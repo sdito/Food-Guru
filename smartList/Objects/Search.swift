@@ -118,9 +118,18 @@ struct Search {
                 return .breadCrumbs
             } else if item.contains("pita") {
                 return .pitaBread
+            } else if item.contains("flour") {
+                return .breadFlour
             } else {
                 return .bread
             }
+        } else if item.contains("yogurt") {
+            if item.contains("greek") {
+                return .greekYogurt
+            } else {
+                return .yogurt
+            }
+            
         } else if item.contains("salt") {
             return .salt
         } else if item.contains("beef") {
@@ -151,6 +160,10 @@ struct Search {
         } else if item.contains("milk") {
             if item.contains("coconut") {
                 return .coconutMilk
+            } else if item.contains("almond") {
+                return .almondMilk
+            } else if item.contains("soy") {
+                return .soyMilk
             } else {
                 return .milk
             }
@@ -583,13 +596,6 @@ struct Search {
             return .whiskey
         } else if item.contains("yeast") {
             return .yeast
-        } else if item.contains("yogurt") {
-            if item.contains("greek") {
-                return .greekYogurt
-            } else {
-                return .yogurt
-            }
-            
         } else if item.contains("gin") {
             return .gin
         } else if item.contains("cumin") {
@@ -776,6 +782,8 @@ struct Search {
             return .clam
         } else if item.contains("water") && (item.count == 1) {
             return .water
+        } else if item.contains("buttermilk") {
+            return .buttermilk
         }
         
         

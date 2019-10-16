@@ -145,7 +145,7 @@ enum RecipeType: CaseIterable {
         case .pasta:
             return "Pasta"
         case .pastaSalad:
-            return "Pata Salad"
+            return "Pasta Salad"
         case .pie:
             return "Pie"
         case .pizza:
