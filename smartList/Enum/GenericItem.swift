@@ -275,6 +275,7 @@ enum GenericItem: String {
     case vinegar
     case vodka
     case walnuts
+    case water
     case watermelon
     case whippedCream
     case whiskey
@@ -859,6 +860,8 @@ enum GenericItem: String {
             return .produce
         case .other:
             return .other
+        case .water:
+            return .beverages
         }
     }
 }

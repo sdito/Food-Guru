@@ -122,20 +122,11 @@ class RecipeDetailVC: UIViewController {
     }
     private func addStarRatingViewIfApplicable(recipe: Recipe) {
         if let nr = recipe.numReviews, let ns = recipe.numStars {
-            print("got to this point")
             let v = Bundle.main.loadNibNamed("StarRatingView", owner: nil, options: nil)?.first as! StarRatingView
             v.setUI(rating: Double(ns)/Double(nr), nReviews: nr)
-            let sv = UIStackView()
-            let view = UIView()
-            view.backgroundColor = .clear
-            view.translatesAutoresizingMaskIntoConstraints = false
-            view.widthAnchor.constraint(equalToConstant: 10.0).isActive = true
-            //view.heightAnchor.constraint(equalToConstant: v.frame.height).isActive = true
-            sv.insertArrangedSubview(view, at: 0)
-            sv.insertArrangedSubview(v, at: 1)
-            mainStackView.insertArrangedSubview(sv, at: 2)
+            mainStackView.insertArrangedSubview(v, at: 2)
             let gr = UITapGestureRecognizer(target: self, action: #selector(ratingTapSelector))
-            sv.addGestureRecognizer(gr)
+            v.addGestureRecognizer(gr)
             
         }
     }

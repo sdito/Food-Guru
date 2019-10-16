@@ -71,7 +71,9 @@ class CreateRecipeVC: UIViewController {
         cuisineOutlet.titleEdgeInsets.left = 7
         recipeDescriptionOutlet.titleEdgeInsets.left = 7
         
-        nameTextField.becomeFirstResponder()
+        //nameTextField.becomeFirstResponder()
+        
+        
         createRecipeOutlet.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
         createRecipeOutlet.layer.cornerRadius = 15
         createRecipeOutlet.clipsToBounds = true

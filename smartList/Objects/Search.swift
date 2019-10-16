@@ -33,7 +33,9 @@ struct Search {
                     print("Error retrieving documents: \(error)")
                     return
                 }
-                
+                for doc in documents {
+                    print(doc.get("name"))
+                }
             }
         case "Pasta":
             print("Pasta")
@@ -99,8 +101,10 @@ struct Search {
             item = Array(splice)
         }
         
-        // second need to trim the item from the description, i.e. cubed or grated
+        // second need to trim the item from the description, i.e. get rid of cubed or grated
         item = item.filter({descriptors.contains($0) == false})
+        
+        
         if item.contains("chicken") {
             if item.contains("soup") && item.contains("cream") {
                 return .creamOfChickenSoup
@@ -770,6 +774,8 @@ struct Search {
             return .scallops
         } else if item.contains("clams") {
             return .clam
+        } else if item.contains("water") && (item.count == 1) {
+            return .water
         }
         
         

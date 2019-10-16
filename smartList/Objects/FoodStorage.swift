@@ -44,6 +44,34 @@ struct FoodStorage {
         }
     }
     
+    
+    
+//    static func makeSureGroupMembersDontHaveStorage(db: Firestore, anyUsersInStorage: @escaping (_ boolean: Bool) -> Void) {
+//        var anyInStorage = false
+//        if let emails = SharedValues.shared.groupEmails {
+//            for email in emails {
+//                User.turnEmailToUid(db: db, email: email) { (uid) in
+//                    if let uid = uid {
+//                        db.collection("users").document(uid).getDocument { (docSnapshot, error) in
+//                            guard let doc = docSnapshot else {
+//                                print("Error retrieving document: \(String(describing: error))")
+//                                return
+//                            }
+//                            if doc.get("storageID") == nil || doc.get("storageID") as? String == "" {
+//                                print("User NOT in storage")
+//                            } else {
+//                                print("User IN storage")
+//                                anyInStorage = true
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            anyUsersInStorage(anyInStorage)
+//        }
+//    }
+    
+    
     static func createStorageToFirestoreWithPeople(db: Firestore!, foodStorage: FoodStorage) {
         // need to write the storage to the individuals in people, create the storage
         let foodStorageRef = db.collection("storages").document()
@@ -80,6 +108,10 @@ struct FoodStorage {
                 })
             }
         }
+        
+        
+        
+        
     }
     static func deleteItemsFromStorage(db: Firestore, storageID: String) {
         db.collection("storages").document(storageID).collection("items").getDocuments { (querySnapshot, error) in
