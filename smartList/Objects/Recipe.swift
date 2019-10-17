@@ -12,7 +12,7 @@ import FirebaseAuth
 import FirebaseStorage
 
 
-struct Recipe {
+class Recipe {
     var name: String
     var recipeType: [String]
     var cuisineType: String
@@ -70,7 +70,7 @@ struct Recipe {
 
 
 extension Recipe {
-    mutating func writeToFirestore(db: Firestore!, storage: Storage) {
+    func writeToFirestore(db: Firestore!, storage: Storage) {
         let ingredients = self.ingredients
         let doc = db.collection("recipes").document()
         self.imagePath = "recipe/\(doc.documentID).jpg"

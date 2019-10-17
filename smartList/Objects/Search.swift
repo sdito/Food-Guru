@@ -10,7 +10,8 @@ import Foundation
 import FirebaseFirestore
 
 struct Search {
-    static func recipeSearchSuggested(buttonName: String, db: Firestore) {
+    static func recipeSearchSuggested(buttonName: String, db: Firestore) -> [Recipe]? {
+        var recipes: [Recipe]? = nil
         let reference = db.collection("recipes")
         print("search recipes with: \(buttonName)")
         switch buttonName {
@@ -34,7 +35,8 @@ struct Search {
                     return
                 }
                 for doc in documents {
-                    print(doc.get("name"))
+                    recipes?.append(doc.recipe())
+                    
                 }
             }
         case "Pasta":
@@ -45,7 +47,7 @@ struct Search {
                     return
                 }
                 for doc in documents {
-                    print(doc.get("name"))
+                    recipes?.append(doc.recipe())
                 }
             }
         case "Healthy":
@@ -76,7 +78,14 @@ struct Search {
             print("Slow cooker")
         default:
             print("default")
+            
         }
+        if let recipes = recipes {
+            for r in recipes {
+                print(r.name)
+            }
+        }
+        return recipes
     }
     
     static func turnIntoSystemItem(string: String) -> GenericItem {
@@ -806,5 +815,13 @@ struct Search {
             return .other
         }
         return .other
+    }
+}
+
+
+extension QueryDocumentSnapshot {
+    func recipe() -> Recipe {
+        let recipe = Recipe(name: self.get("name") as! String, recipeType: self.get("recipeType") as! [String], cuisineType: self.get("cuisineType") as! String, cookTime: self.get("cookTime") as! Int, prepTime: self.get("prepTime") as! Int, ingredients: self.get("ingredients") as! [String], instructions: self.get("instructions") as! [String], calories: self.get("calories") as? Int, numServes: self.get("numServes") as! Int, userID: self.get("userID") as? String, numReviews: self.get("numReviews") as? Int, numStars: self.get("numStars") as? Int, notes: self.get("notes") as? String, tagline: self.get("tagling") as? String, recipeImage: nil, imagePath: self.get("path") as? String)
+        return recipe
     }
 }
