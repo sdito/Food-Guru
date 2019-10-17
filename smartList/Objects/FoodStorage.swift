@@ -44,15 +44,17 @@ struct FoodStorage {
             emailsReturned(emails)
         }
     }
-    static func checkForUsersAlreadyInStorage(db: Firestore, groupID: String, isStorageValid: @escaping (_ boolean: Bool?) -> Void) {
+    static func checkForUsersAlreadyInStorage(db: Firestore, groupID: String, isStorageValid: @escaping (_ boolean: Bool?, _ emails: [String]?) -> Void) {
         var storageValid = true
+        var emails: [String]?
         let reference = db.collection("groups").document(groupID)
         reference.getDocument { (docSnapshot, error) in
             guard let doc = docSnapshot else { return }
             if doc.get("ownUserStorages") as? [String] != nil && doc.get("ownUserStorages") as? [String] != [] {
                 storageValid = false
+                emails = doc.get("ownUserStorages") as? [String]
             }
-            isStorageValid(storageValid)
+            isStorageValid(storageValid, emails)
         }
     }
     
@@ -60,7 +62,7 @@ struct FoodStorage {
         // need to check that no users already have a storage, need to write the storage to the individuals in people, create the storage
         //#error("need to check for ownUserStorages from group to make sure that is empty if creating a storage with group")
         
-        checkForUsersAlreadyInStorage(db: db, groupID: SharedValues.shared.groupID ?? " ") { (boolean) in
+        checkForUsersAlreadyInStorage(db: db, groupID: SharedValues.shared.groupID ?? " ") { (boolean, inStorageEmails) in
             if boolean == true || foodStorage.isGroup == false {
                 if foodStorage.peopleEmails?.count == 1 && foodStorage.isGroup == false {
                     db.collection("groups").document(SharedValues.shared.groupID ?? " ").updateData([
@@ -102,7 +104,14 @@ struct FoodStorage {
                     }
                 }
             } else {
-                let alert = UIAlertController(title: "Error", message: "Unable to create storage with your group because someone in your group already is in their own storage.", preferredStyle: .alert)
+                var s: String {
+                    if inStorageEmails?.count == 1 {
+                        return ""
+                    } else {
+                        return "s"
+                    }
+                }
+                let alert = UIAlertController(title: "Error", message: "Unable to create storage with your group because someone in your group already is in their own storage. Member\(s) in storage already: \(inStorageEmails?.joined(separator: ", ") ?? "")", preferredStyle: .alert)
                 alert.addAction(.init(title: "Ok", style: .default, handler: nil))
                 
                 #warning("dont think this alert is going to work every time, idk")

@@ -30,7 +30,7 @@ struct Search {
             print("Chicken")
             reference.whereField("has_chicken", isEqualTo: true).getDocuments { (querySnapshot, error) in
                 guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(error)")
+                    print("Error retrieving documents: \(String(describing: error))")
                     return
                 }
                 for doc in documents {
@@ -39,6 +39,15 @@ struct Search {
             }
         case "Pasta":
             print("Pasta")
+            reference.whereField("has_pasta", isEqualTo: true).getDocuments { (querySnapshot, error) in
+                guard let documents = querySnapshot?.documents else {
+                    print("Error retrieving documents: \(String(describing: error))")
+                    return
+                }
+                for doc in documents {
+                    print(doc.get("name"))
+                }
+            }
         case "Healthy":
             print("Healthy")
         case "Dessert":
@@ -530,7 +539,7 @@ struct Search {
                 return .macAndCheese
             } else if item.contains("asiago") {
                 return .asiagoCheese
-            } else if item.contains("bleu") {
+            } else if item.contains("bleu") || item.contains("blue") {
                 return .bleuCheese
             } else if item.contains("cottage") {
                 return .cottageCheese
@@ -784,6 +793,12 @@ struct Search {
             return .water
         } else if item.contains("buttermilk") {
             return .buttermilk
+        } else if item.contains("vegetable") && item.contains("broth") {
+            return .broth
+        } else if item.contains("ranch") {
+            return .ranch
+        } else if item.contains("salad") && item.contains("dressing") {
+            return .saladDressing
         }
         
         

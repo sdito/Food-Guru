@@ -50,10 +50,6 @@ class StorageHomeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
-        FoodStorage.checkForUsersAlreadyInStorage(db: db, groupID: SharedValues.shared.groupID ?? " ") { (boolean) in
-            print("Is storage good to create: \(boolean)")
-        }
-        
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -279,10 +275,10 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if SharedValues.shared.foodStorageID != nil && items.isEmpty == false {
-            tableView.backgroundColor = .white
+            //tableView.backgroundColor = .white
             return nil
         } else {
-            tableView.backgroundColor = .lightGray
+            //tableView.backgroundColor = .lightGray
             let v = UIView()
             v.backgroundColor = .lightGray
             v.alpha = 0
@@ -324,11 +320,11 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if SharedValues.shared.foodStorageID != nil && items.isEmpty == false {
-            tableView.backgroundColor = .white
+            //tableView.backgroundColor = .white
             return UIView()
             
         } else {
-            tableView.backgroundColor = .lightGray
+            //tableView.backgroundColor = .lightGray
             let v = UIView()
             v.backgroundColor = .lightGray
             return v

@@ -216,6 +216,7 @@ enum GenericItem: String {
     case provolone
     case quinoa
     case raisin
+    case ranch
     case raspberry
     case ravioli
     case redPepper
@@ -227,6 +228,7 @@ enum GenericItem: String {
     case rosemary
     case rum
     case sage
+    case saladDressing
     case salami
     case salmon
     case salsa
@@ -872,6 +874,10 @@ enum GenericItem: String {
             return .beverages
         case .soyMilk:
             return .beverages
+        case .ranch:
+            return .condimentsAndDressings
+        case .saladDressing:
+            return .condimentsAndDressings
         }
     }
 }

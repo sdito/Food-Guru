@@ -81,10 +81,11 @@ class RecipeHomeVC: UIViewController {
 
 
 extension RecipeHomeVC: DynamicHeightLayoutDelegate {
+    #warning("issue with how much to subtract from the text labels, was 8 previously for title and cuisine and changed it to 10")
     func collectionView(_ collectionView: UICollectionView, heightForTextAtIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
         let textData = recipes[indexPath.item]
-        let title = heightForText(textData.name, width: width - 8, font: UIFont(name: "futura", size: 20)!)
-        let cuisine = heightForText(textData.cuisineType, width: width - 8, font: UIFont(name: "futura", size: 17)!)
+        let title = heightForText(textData.name, width: width - 10, font: UIFont(name: "futura", size: 20)!)
+        let cuisine = heightForText(textData.cuisineType, width: width - 10, font: UIFont(name: "futura", size: 17)!)
         let description = heightForText(textData.recipeType.joined(separator: ", "), width: width - 10, font: UIFont(name: "futura", size: 15)!)
         return title + cuisine + description + 8
         
