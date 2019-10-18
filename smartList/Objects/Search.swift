@@ -10,23 +10,29 @@ import Foundation
 import FirebaseFirestore
 
 struct Search {
-    static func recipeSearchSuggested(buttonName: String, db: Firestore) -> [Recipe]? {
-        var recipes: [Recipe]? = nil
+    static func recipeSearchSuggested(buttonName: String, db: Firestore, recipesReturned: @escaping(_ recipes: [Recipe]?) -> Void) {
+        var recipes: [Recipe] = []
         let reference = db.collection("recipes")
         print("search recipes with: \(buttonName)")
         switch buttonName {
         case "By ingredient":
             print("by ingredient")
+            
         case "Recommended":
             print("Recommended")
+            
         case "Breakfast":
             print("Breakfast")
+            
         case "Lunch":
             print("Lunch")
+            
         case "Dinner":
             print("Dinner")
+            
         case "Low calorie":
             print("Low calorie")
+            
         case "Chicken":
             print("Chicken")
             reference.whereField("has_chicken", isEqualTo: true).getDocuments { (querySnapshot, error) in
@@ -35,9 +41,10 @@ struct Search {
                     return
                 }
                 for doc in documents {
-                    recipes?.append(doc.recipe())
-                    
+                    recipes.append(doc.recipe())
                 }
+                recipesReturned(recipes)
+                
             }
         case "Pasta":
             print("Pasta")
@@ -47,45 +54,54 @@ struct Search {
                     return
                 }
                 for doc in documents {
-                    recipes?.append(doc.recipe())
+                    recipes.append(doc.recipe())
                 }
+                recipesReturned(recipes)
             }
+            
         case "Healthy":
             print("Healthy")
+            
         case "Dessert":
             print("Dessert")
+            
         case "Salad":
             print("Salad")
+            
         case "Beef":
             print("Beef")
+            
         case "Seafood":
             print("Seafood")
+            
         case "Casserole":
             print("Casserole")
+            
         case "Vegetarian":
             print("Vegetarian")
+            
         case "Vegan":
             print("Vegan")
+            
         case "Italian":
             print("Italian")
+            
         case "Snack":
             print("Snack")
+            
         case "Simple":
             print("Simple")
+            
         case "Quick":
             print("Quick")
+            
         case "Slow cooker":
             print("Slow cooker")
+            
         default:
             print("default")
             
         }
-        if let recipes = recipes {
-            for r in recipes {
-                print(r.name)
-            }
-        }
-        return recipes
     }
     
     static func turnIntoSystemItem(string: String) -> GenericItem {

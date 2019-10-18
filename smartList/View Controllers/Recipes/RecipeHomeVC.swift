@@ -73,7 +73,11 @@ class RecipeHomeVC: UIViewController {
     @objc func recipeButtonPressed(_ notification: NSNotification) {
         if let dict = notification.userInfo as NSDictionary? {
             if let buttonName = dict["buttonName"] as? String {
-                Search.recipeSearchSuggested(buttonName: buttonName, db: db)
+                Search.recipeSearchSuggested(buttonName: buttonName, db: db) { (recipes) in
+                    for r in recipes ?? [] {
+                        print(r.name)
+                    }
+                }
             }
         }
     }
