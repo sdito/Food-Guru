@@ -37,6 +37,7 @@ class SearchByIngredientVC: UIViewController {
     var db: Firestore!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var buttonOutlet: UIButton!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +56,12 @@ class SearchByIngredientVC: UIViewController {
     }
     
     @IBAction func addItem(_ sender: Any) {
-       // #error("maybe should have a whole screen used for every time a new item is added throughout the app")
+        #error("need to get create item vc to be proper size")
+        searchBar.isHidden = false
+        searchBar.becomeFirstResponder()
+        let vc = storyboard?.instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
+        vc.view.heightAnchor.constraint(equalToConstant: 200)
+        self.present(vc, animated: true, completion: nil)
     }
     
 }

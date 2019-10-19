@@ -741,7 +741,7 @@
                                                 </constraints>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Na1-4m-cBc">
-                                                <rect key="frame" x="0.0" y="687" width="374" height="38"/>
+                                                <rect key="frame" x="0.0" y="687" width="143" height="38"/>
                                                 <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="20"/>
                                                 <state key="normal" title="Create recipe">
@@ -1162,6 +1162,53 @@
             </objects>
             <point key="canvasLocation" x="-1204.3478260869565" y="-1169.1964285714284"/>
         </scene>
+        <!--Create New ItemVC-->
+        <scene sceneID="eyL-Xc-GCc">
+            <objects>
+                <tableViewController storyboardIdentifier="createNewItemVC" id="Yj8-Uc-rDf" customClass="CreateNewItemVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="XVD-zf-1lh">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="500"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="createNewItemCell" rowHeight="66" id="TXK-yW-1Ha" customClass="CreateNewItemCell" customModule="smartList" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="66"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TXK-yW-1Ha" id="LQE-Cl-LV7">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="66"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d4n-8c-tAw">
+                                            <rect key="frame" x="30" y="21" width="354" height="24"/>
+                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="d4n-8c-tAw" firstAttribute="leading" secondItem="LQE-Cl-LV7" secondAttribute="leadingMargin" constant="10" id="Gcm-Fa-j2H"/>
+                                        <constraint firstItem="d4n-8c-tAw" firstAttribute="top" secondItem="LQE-Cl-LV7" secondAttribute="topMargin" constant="10" id="aOQ-6t-nWQ"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="d4n-8c-tAw" secondAttribute="trailing" constant="10" id="lLt-ba-7WG"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="d4n-8c-tAw" secondAttribute="bottom" constant="10" id="t2m-CJ-wPd"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="label" destination="d4n-8c-tAw" id="MO0-6S-NXL"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Yj8-Uc-rDf" id="o2r-cb-xbW"/>
+                            <outlet property="delegate" destination="Yj8-Uc-rDf" id="pFr-6n-TKA"/>
+                        </connections>
+                    </tableView>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="414" height="500"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LWP-Mc-JSH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2084.057971014493" y="568.52678571428567"/>
+        </scene>
         <!--TabVC-->
         <scene sceneID="QDs-tw-DsW">
             <objects>
@@ -1483,7 +1530,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1M9-XC-U2d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2084" y="1068"/>
+            <point key="canvasLocation" x="-2084" y="1165"/>
         </scene>
         <!--Storage New ItemVC-->
         <scene sceneID="7ON-hg-Pl2">
@@ -1565,7 +1612,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VqP-xa-EQ7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1204" y="1068"/>
+            <point key="canvasLocation" x="-1204" y="1165"/>
         </scene>
         <!--Recipe DetailVC-->
         <scene sceneID="4zV-VX-qeO">
@@ -1916,17 +1963,25 @@
                                     <action selector="addItem:" destination="A9s-o8-Op0" eventType="touchUpInside" id="Aav-HS-XzI"/>
                                 </connections>
                             </button>
+                            <searchBar hidden="YES" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Wom-VK-P9y">
+                                <rect key="frame" x="0.0" y="54" width="414" height="58"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="qhb-kA-rJt" firstAttribute="leading" secondItem="uVn-C8-j8q" secondAttribute="leading" id="3Xz-Xv-4ZZ"/>
                             <constraint firstItem="KDw-05-oAU" firstAttribute="leading" secondItem="uVn-C8-j8q" secondAttribute="leading" constant="10" id="Ds7-jF-086"/>
+                            <constraint firstItem="Wom-VK-P9y" firstAttribute="top" secondItem="uVn-C8-j8q" secondAttribute="top" constant="10" id="IeJ-kz-xbi"/>
                             <constraint firstItem="KDw-05-oAU" firstAttribute="centerX" secondItem="Jr0-Mb-2ee" secondAttribute="centerX" id="JaL-kw-0cD"/>
                             <constraint firstItem="uVn-C8-j8q" firstAttribute="bottom" secondItem="2TQ-vH-Z5D" secondAttribute="bottom" constant="15" id="Lei-j9-eKe"/>
                             <constraint firstItem="qhb-kA-rJt" firstAttribute="top" secondItem="KDw-05-oAU" secondAttribute="bottom" constant="20" id="MQL-X7-72k"/>
                             <constraint firstItem="uVn-C8-j8q" firstAttribute="bottom" secondItem="qhb-kA-rJt" secondAttribute="bottom" id="Trt-5O-soT"/>
+                            <constraint firstItem="Wom-VK-P9y" firstAttribute="trailing" secondItem="uVn-C8-j8q" secondAttribute="trailing" id="V9z-PY-Mlr"/>
                             <constraint firstItem="KDw-05-oAU" firstAttribute="top" secondItem="uVn-C8-j8q" secondAttribute="top" constant="20" id="Ybq-5a-vbH"/>
                             <constraint firstItem="uVn-C8-j8q" firstAttribute="trailing" secondItem="KDw-05-oAU" secondAttribute="trailing" constant="10" id="e7z-uV-0Hg"/>
+                            <constraint firstItem="qhb-kA-rJt" firstAttribute="top" secondItem="Wom-VK-P9y" secondAttribute="bottom" constant="10" id="qs9-UA-XvJ"/>
+                            <constraint firstItem="Wom-VK-P9y" firstAttribute="leading" secondItem="uVn-C8-j8q" secondAttribute="leading" id="tbp-Yh-pjw"/>
                             <constraint firstItem="2TQ-vH-Z5D" firstAttribute="centerX" secondItem="Jr0-Mb-2ee" secondAttribute="centerX" id="vcl-jZ-Eqn"/>
                             <constraint firstItem="uVn-C8-j8q" firstAttribute="trailing" secondItem="qhb-kA-rJt" secondAttribute="trailing" id="xA7-5Y-xSd"/>
                         </constraints>
@@ -1934,6 +1989,7 @@
                     </view>
                     <connections>
                         <outlet property="buttonOutlet" destination="KDw-05-oAU" id="cGe-cI-R2W"/>
+                        <outlet property="searchBar" destination="Wom-VK-P9y" id="ntp-g8-fBY"/>
                         <outlet property="tableView" destination="qhb-kA-rJt" id="6yA-Jg-Ckj"/>
                     </connections>
                 </viewController>
@@ -1999,7 +2055,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lzv-J2-7IQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1204" y="1782"/>
+            <point key="canvasLocation" x="-1204" y="1898"/>
         </scene>
         <!--Settings DetailVC-->
         <scene sceneID="Y9A-h7-3i6">
@@ -2190,7 +2246,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GvI-Gh-tZh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-272" y="1782"/>
+            <point key="canvasLocation" x="-272" y="1898"/>
         </scene>
         <!--Create GroupVC-->
         <scene sceneID="gLa-pq-Kvp">
@@ -2323,7 +2379,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LMS-Ti-jl9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="648" y="1782"/>
+            <point key="canvasLocation" x="648" y="1898"/>
         </scene>
         <!--Log InVC-->
         <scene sceneID="0GH-6Y-0xw">
@@ -2429,7 +2485,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="luY-aA-Dfb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2084" y="1782"/>
+            <point key="canvasLocation" x="-2084" y="1898"/>
         </scene>
     </scenes>
     <resources>

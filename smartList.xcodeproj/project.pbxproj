@@ -23,6 +23,8 @@
 		E20BC6E0232AB39F00F1E5E7 /* SetUpListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6DF232AB39F00F1E5E7 /* SetUpListVC.swift */; };
 		E20BC6E2232AE13300F1E5E7 /* UIStackView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6E1232AE13300F1E5E7 /* UIStackView-Extension.swift */; };
 		E20F2AD823258A4B00CD907A /* StorageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F2AD723258A4B00CD907A /* StorageCell.swift */; };
+		E2149CF7235ADCAB002BF2D0 /* CreateNewItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2149CF6235ADCAB002BF2D0 /* CreateNewItemVC.swift */; };
+		E2149CF9235B9587002BF2D0 /* CreateNewItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2149CF8235B9587002BF2D0 /* CreateNewItemCell.swift */; };
 		E216204722F658D10074A0DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216204622F658D10074A0DF /* AppDelegate.swift */; };
 		E216204C22F658D10074A0DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E216204A22F658D10074A0DF /* Main.storyboard */; };
 		E216204E22F658D20074A0DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E216204D22F658D20074A0DF /* Assets.xcassets */; };
@@ -131,6 +133,8 @@
 		E20BC6DF232AB39F00F1E5E7 /* SetUpListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpListVC.swift; sourceTree = "<group>"; };
 		E20BC6E1232AE13300F1E5E7 /* UIStackView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView-Extension.swift"; sourceTree = "<group>"; };
 		E20F2AD723258A4B00CD907A /* StorageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCell.swift; sourceTree = "<group>"; };
+		E2149CF6235ADCAB002BF2D0 /* CreateNewItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewItemVC.swift; sourceTree = "<group>"; };
+		E2149CF8235B9587002BF2D0 /* CreateNewItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewItemCell.swift; sourceTree = "<group>"; };
 		E216204322F658D10074A0DF /* smartList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smartList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E216204622F658D10074A0DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E216204B22F658D10074A0DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -334,6 +338,7 @@
 			isa = PBXGroup;
 			children = (
 				E2481B7E2300B00D0036E378 /* LogInVC.swift */,
+				E2149CF6235ADCAB002BF2D0 /* CreateNewItemVC.swift */,
 				E2445CED2321D6500089582F /* TabVC.swift */,
 				E2445CF72321DD5D0089582F /* Lists */,
 				E2445CF82321DDA20089582F /* Recipes */,
@@ -533,6 +538,7 @@
 				E20BC6D423275BDC00F1E5E7 /* Cells for settings */,
 				E2EB7FBF22FFAD7C003948A6 /* ItemCell.swift */,
 				E273F212235A6E96007B54E2 /* RecipeSearchCell.swift */,
+				E2149CF8235B9587002BF2D0 /* CreateNewItemCell.swift */,
 				E27D70B52340079D009C68B3 /* RecipeCell.swift */,
 				E20F2AD723258A4B00CD907A /* StorageCell.swift */,
 				E20BC6D72328429F00F1E5E7 /* GroupNameCell.swift */,
@@ -805,6 +811,7 @@
 				E2445CEE2321D6500089582F /* TabVC.swift in Sources */,
 				E2EB7FC022FFAD7C003948A6 /* ItemCell.swift in Sources */,
 				E25F071D231490A200E6738E /* RecipeTypeCell.swift in Sources */,
+				E2149CF9235B9587002BF2D0 /* CreateNewItemCell.swift in Sources */,
 				E27D70B62340079D009C68B3 /* RecipeCell.swift in Sources */,
 				E2E529D522FA80C400C55DA0 /* Item.swift in Sources */,
 				E24ADB10233E7974008F2F9F /* UIViewController-Extension.swift in Sources */,
@@ -857,6 +864,7 @@
 				E2C49343230887F3002907C2 /* User.swift in Sources */,
 				E2A54E1E2318553400BEBF39 /* InstructionView.swift in Sources */,
 				E2F380AD2319847A003857F7 /* IngredientView.swift in Sources */,
+				E2149CF7235ADCAB002BF2D0 /* CreateNewItemVC.swift in Sources */,
 				E20BC6E2232AE13300F1E5E7 /* UIStackView-Extension.swift in Sources */,
 				E20BC6D1232752A600F1E5E7 /* Setting.swift in Sources */,
 				E2B68D6D232EBD92006A3B58 /* Notification.Name-Extension.swift in Sources */,
