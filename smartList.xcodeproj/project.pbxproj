@@ -50,6 +50,8 @@
 		E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */; };
 		E25F071D231490A200E6738E /* RecipeTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071C231490A200E6738E /* RecipeTypeCell.swift */; };
 		E26B9C50234A6F960039E9EE /* UITextView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26B9C4F234A6F960039E9EE /* UITextView-Extension.swift */; };
+		E273F211235A60F4007B54E2 /* SearchByIngredientVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E273F210235A60F4007B54E2 /* SearchByIngredientVC.swift */; };
+		E273F213235A6E96007B54E2 /* RecipeSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E273F212235A6E96007B54E2 /* RecipeSearchCell.swift */; };
 		E27D70B4233F24A5009C68B3 /* UISearchBar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */; };
 		E27D70B62340079D009C68B3 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70B52340079D009C68B3 /* RecipeCell.swift */; };
 		E27D70C223404414009C68B3 /* DynamicHeightLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70C123404414009C68B3 /* DynamicHeightLayout.swift */; };
@@ -160,6 +162,8 @@
 		E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRecipeTypeVC.swift; sourceTree = "<group>"; };
 		E25F071C231490A200E6738E /* RecipeTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTypeCell.swift; sourceTree = "<group>"; };
 		E26B9C4F234A6F960039E9EE /* UITextView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView-Extension.swift"; sourceTree = "<group>"; };
+		E273F210235A60F4007B54E2 /* SearchByIngredientVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByIngredientVC.swift; sourceTree = "<group>"; };
+		E273F212235A6E96007B54E2 /* RecipeSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchCell.swift; sourceTree = "<group>"; };
 		E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar-Extension.swift"; sourceTree = "<group>"; };
 		E27D70B52340079D009C68B3 /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		E27D70C123404414009C68B3 /* DynamicHeightLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightLayout.swift; sourceTree = "<group>"; };
@@ -356,6 +360,7 @@
 				E2C49348230B45E4002907C2 /* CreateRecipeVC.swift */,
 				E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */,
 				E253AC032341B4460018274A /* RecipeDetailVC.swift */,
+				E273F210235A60F4007B54E2 /* SearchByIngredientVC.swift */,
 			);
 			path = Recipes;
 			sourceTree = "<group>";
@@ -527,6 +532,7 @@
 			children = (
 				E20BC6D423275BDC00F1E5E7 /* Cells for settings */,
 				E2EB7FBF22FFAD7C003948A6 /* ItemCell.swift */,
+				E273F212235A6E96007B54E2 /* RecipeSearchCell.swift */,
 				E27D70B52340079D009C68B3 /* RecipeCell.swift */,
 				E20F2AD723258A4B00CD907A /* StorageCell.swift */,
 				E20BC6D72328429F00F1E5E7 /* GroupNameCell.swift */,
@@ -827,6 +833,7 @@
 				E2481B7F2300B00D0036E378 /* LogInVC.swift in Sources */,
 				E20BC6E0232AB39F00F1E5E7 /* SetUpListVC.swift in Sources */,
 				E2C4934123066012002907C2 /* UIView-Extension.swift in Sources */,
+				E273F213235A6E96007B54E2 /* RecipeSearchCell.swift in Sources */,
 				E2445CF22321D8F90089582F /* RecipeHomeVC.swift in Sources */,
 				E20F2AD823258A4B00CD907A /* StorageCell.swift in Sources */,
 				E2EB7FBE22FF5ACF003948A6 /* SharedValues.swift in Sources */,
@@ -857,6 +864,7 @@
 				E2A8A635234CF75400A676FA /* Search.swift in Sources */,
 				E2A26C3E234D953700D954C0 /* GenericItem.swift in Sources */,
 				E20AFF3C2324911300A5479A /* SettingsHomeVC.swift in Sources */,
+				E273F211235A60F4007B54E2 /* SearchByIngredientVC.swift in Sources */,
 				E2D8462D231264CD004B19C2 /* Recipe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

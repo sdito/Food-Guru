@@ -92,7 +92,7 @@ class RecipeDetailVC: UIViewController {
         recipeName.text = recipe.name
         addStarRatingViewIfApplicable(recipe: recipe)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.nameAndTitleView.shadowAndRounded()
+            self.nameAndTitleView.shadowAndRounded(cornerRadius: 25.0)
         }
         nameAndTitleView.alpha = 0.95
         tagline.text = recipe.tagline

@@ -9,7 +9,7 @@
 import Foundation
 
 
-enum GenericItem: String {
+enum GenericItem: String, CaseIterable {
     
     case alfredoSauce
     case almond
@@ -289,6 +289,569 @@ enum GenericItem: String {
     case yogurt
     case zucchini
     case other
+    
+    var description: String {
+        switch self {
+        case .alfredoSauce:
+            return "Alfredo Sauce"
+        case .almond:
+            return "Almonds"
+        case .almondButter:
+            return "Almond butter"
+        case .almondMilk:
+            return "Almond milk"
+        case .anchovy:
+            return "Anchovies"
+        case .apple:
+            return "Apples"
+        case .appleButter:
+            return "Apple butter"
+        case .appleCiderVinegar:
+            return "Apple cider vinegar"
+        case .appleJuice:
+            return "Apple juice"
+        case .appleSauce:
+            return "Apple sauce"
+        case .apricot:
+            return "Apricots"
+        case .arborioRice:
+            return "Arborio rice"
+        case .artichoke:
+            return "Artichokes"
+        case .artichokeHeart:
+            return "Artichoke Hearts"
+        case .asiagoCheese:
+            return "Asiago cheese"
+        case .asparagus:
+            return "Asparagus"
+        case .avocado:
+            return "Avocados"
+        case .avocadoOil:
+            return "Acocado oil"
+        case .babySpinach:
+            return "Baby spinach"
+        case .bacon:
+            return "Bacon"
+        case .bagel:
+            return "Bagels"
+        case .bakedBeans:
+            return "Baked beans"
+        case .bakingPowder:
+            return "Baking powder"
+        case .bakingSoda:
+            return "Baking soda"
+        case .balsamicVinegar:
+            return "Balsamic vinegar"
+        case .banana:
+            return "Bananas"
+        case .barley:
+            return "Barley"
+        case .basil:
+            return "Basil"
+        case .bayLeaf:
+            return "Bay leaf"
+        case .bbqSauce:
+            return "Barbeque Sauce"
+        case .beef:
+            return "Beef"
+        case .beer:
+            return "Beer"
+        case .bellPepper:
+            return "Bell pepper"
+        case .blackBeans:
+            return "Black beans"
+        case .blackberry:
+            return "Blackberries"
+        case .blackOlive:
+            return "Black olives"
+        case .blackPepper:
+            return "Black pepper"
+        case .bleuCheese:
+            return "Blue cheese"
+        case .blueberries:
+            return "Blueberries"
+        case .bread:
+            return "Bread"
+        case .breadCrumbs:
+            return "Bread crumbs"
+        case .breadFlour:
+            return "Bread flour"
+        case .breakfastSausage:
+            return "Breakfast sausage"
+        case .broccoli:
+            return "Broccoli"
+        case .broth:
+            return "Broth"
+        case .brownSugar:
+            return "Brown sugar"
+        case .brusselsSprouts:
+            return "Brussels sprouts"
+        case .butter:
+            return "Butter"
+        case .buttermilk:
+            return "Buttermilk"
+        case .cabbage:
+            return "Cabbage"
+        case .cannedTomato:
+            return "Canned tomato"
+        case .cannelliniBeans:
+            return "Cannellini beans"
+        case .canolaOil:
+            return "Canola oil"
+        case .capers:
+            return "Capers"
+        case .carrot:
+            return "Carrots"
+        case .catfish:
+            return "Catfish"
+        case .cashew:
+            return "Cashews"
+        case .cashewButter:
+            return "Cashew butter"
+        case .cauliflower:
+            return "Cauliflower"
+        case .cayenne:
+            return "Cayenne"
+        case .celery:
+            return "Celery"
+        case .cereal:
+            return "Cereal"
+        case .champagne:
+            return "Champagne"
+        case .cheddar:
+            return "Cheddar"
+        case .cheese:
+            return "Cheese"
+        case .cherries:
+            return "Cherries"
+        case .chicken:
+            return "Chicken"
+        case .chili:
+            return "Chili"
+        case .chiliPowder:
+            return "Chili powder"
+        case .chips:
+            return "Chips"
+        case .chives:
+            return "Chives"
+        case .chocolate:
+            return "Chocolate"
+        case .cilantro:
+            return "Cilantro"
+        case .cinnamon:
+            return "Cinnamon"
+        case .clam:
+            return "Clam"
+        case .coconutMilk:
+            return "Coconut milk"
+        case .cod:
+            return "Cod"
+        case .coffee:
+            return "Coffee"
+        case .corn:
+            return "Corn"
+        case .cornstarch:
+            return "Cornstarch"
+        case .cottageCheese:
+            return "Cottage cheese"
+        case .crab:
+            return "Crab"
+        case .cracker:
+            return "Cracker"
+        case .cranberry:
+            return "Cranberry"
+        case .cranberrySauce:
+            return "Cranberry sauce"
+        case .cream:
+            return "Cream"
+        case .creamOfChickenSoup:
+            return "Cream of chicken soup"
+        case .creamOfMushroomSoup:
+            return "Cream of mushroom soup"
+        case .cucumber:
+            return "Cucumber"
+        case .cumin:
+            return "Cumin"
+        case .curryPowder:
+            return "Curry powder"
+        case .dip:
+            return "Dip"
+        case .dijonMustard:
+            return "Dijon mustard"
+        case .dillWeed:
+            return "Dill weed"
+        case .driedBasil:
+            return "Dried basil"
+        case .driedParsley:
+            return "Dried parsley"
+        case .duck:
+            return "Duck"
+        case .egg:
+            return "Egg"
+        case .eggNoodles:
+            return "Egg noodles"
+        case .eggplant:
+            return "Eggplant"
+        case .favaBeans:
+            return "Fava beans"
+        case .fennelSeeds:
+            return "Fennel seeds"
+        case .feta:
+            return "Feta"
+        case .flounder:
+            return "Flounder"
+        case .flour:
+            return "Flour"
+        case .garlic:
+            return "Garlic"
+        case .garlicPowder:
+            return "Garlic powder"
+        case .gin:
+            return "Gin"
+        case .ginger:
+            return "Ginger"
+        case .gingerRoot:
+            return "Ginger root"
+        case .goatCheese:
+            return "Goat cheese"
+        case .granola:
+            return "Granola"
+        case .granolaBars:
+            return "Granola bars"
+        case .grapefruit:
+            return "Grapefruit"
+        case .grape:
+            return "Grapes"
+        case .greekYogurt:
+            return "Greek yogurt"
+        case .greenBeans:
+            return "Green beans"
+        case .greenOlive:
+            return "Green olives"
+        case .greenOnion:
+            return "Green onions"
+        case .groundBeef:
+            return "Ground beef"
+        case .groundTurkey:
+            return "Ground turkey"
+        case .gruyere:
+            return "Gruyere"
+        case .guava:
+            return "Guava"
+        case .haddock:
+            return "Haddock"
+        case .halfAndHalf:
+            return "Half & half"
+        case .halibut:
+            return "Halibut"
+        case .ham:
+            return "Ham"
+        case .heavyCream:
+            return "Heavy cream"
+        case .honey:
+            return "Honey"
+        case .hotDogs:
+            return "Hot dogs"
+        case .hotSauce:
+            return "Hot sauce"
+        case .hummus:
+            return "Hummus"
+        case .iceCream:
+            return "Ice cream"
+        case .icing:
+            return "Icing"
+        case .italianSeasoning:
+            return "Italian seasoning"
+        case .jalapeno:
+            return "Jalapeño"
+        case .jelly:
+            return "Jelly"
+        case .juice:
+            return "Juice"
+        case .kale:
+            return "Kale"
+        case .ketchup:
+            return "Ketchup"
+        case .kidneyBeans:
+            return "Kidney beans"
+        case .kiwi:
+            return "Kiwi"
+        case .lamb:
+            return "Lamb"
+        case .lasagnaNoodles:
+            return "Lasagna noodles"
+        case .lemon:
+            return "Lemons"
+        case .lemonJuice:
+            return "Lemon juice"
+        case .lentil:
+            return "Lentils"
+        case .lettuce:
+            return "Lettuce"
+        case .limaBeans:
+            return "Lima beans"
+        case .lime:
+            return "Limes"
+        case .limeJuice:
+            return "Lime juice"
+        case .lobster:
+            return "Lobster"
+        case .macAndCheese:
+            return "Mac and cheese"
+        case .mahiMahi:
+            return "Mahi mahi"
+        case .mango:
+            return "Mangos"
+        case .margarine:
+            return "Margarine"
+        case .marinara:
+            return "Marinara"
+        case .melon:
+            return "Melon"
+        case .mayonnaise:
+            return "Mayonnaise"
+        case .milk:
+            return "Milk"
+        case .mozzarella:
+            return "Mozzarella"
+        case .mushroom:
+            return "Mushroom"
+        case .mussels:
+            return "Mussels"
+        case .mustard:
+            return "Mustard"
+        case .nectarine:
+            return "Nectarine"
+        case .nutmeg:
+            return "Nutmeg"
+        case .oatmeal:
+            return "Oatmeal"
+        case .oats:
+            return "Oats"
+        case .oil:
+            return "Oil"
+        case .oliveOil:
+            return "Olive oil"
+        case .onion:
+            return "Onions"
+        case .onionPowder:
+            return "Onion powder"
+        case .orange:
+            return "Oranges"
+        case .oregano:
+            return "Oregano"
+        case .oyster:
+            return "Oysters"
+        case .oysterSauce:
+            return "Oyster sauce"
+        case .paprika:
+            return "Paprika"
+        case .parmesan:
+            return "Parmesan"
+        case .parsley:
+            return "Parsley"
+        case .pasta:
+            return "Pasta"
+        case .peach:
+            return "Peaches"
+        case .peanutButter:
+            return "Peanut butter"
+        case .peanut:
+            return "Peanuts"
+        case .peanutOil:
+            return "Peanut oil"
+        case .pear:
+            return "Pears"
+        case .peas:
+            return "Peas"
+        case .pecan:
+            return "Pecans"
+        case .pepper:
+            return "Pepper"
+        case .pestoSauce:
+            return "Pesto sauce"
+        case .pickle:
+            return "Pickle"
+        case .pineapple:
+            return "Pineapple"
+        case .pintoBeans:
+            return "Pinto beans"
+        case .pitaBread:
+            return "Pita bread"
+        case .pizza:
+            return "Pizza"
+        case .plum:
+            return "Plums"
+        case .pomegranate:
+            return "Pomegranate"
+        case .popcorn:
+            return "Popcorn"
+        case .poppySeed:
+            return "Popy seeds"
+        case .pork:
+            return "Pork"
+        case .portobelloMushroom:
+            return "Portobello mushrooms"
+        case .potRoast:
+            return "Pot roast"
+        case .potato:
+            return "Potato"
+        case .provolone:
+            return "Provolone"
+        case .quinoa:
+            return "Quinoa"
+        case .raisin:
+            return "Raisins"
+        case .ranch:
+            return "Ranch"
+        case .raspberry:
+            return "Raspberry"
+        case .ravioli:
+            return "Ravioli"
+        case .redPepper:
+            return "Red pepper"
+        case .redWine:
+            return "Red wine"
+        case .relish:
+            return "Relish"
+        case .rice:
+            return "Rice"
+        case .ricotta:
+            return "Ricotta"
+        case .romanoCheese:
+            return "Romano cheese"
+        case .rosemary:
+            return "Rosemary"
+        case .rum:
+            return "Rum"
+        case .sage:
+            return "Sage"
+        case .saladDressing:
+            return "Salad dressing"
+        case .salami:
+            return "Salami"
+        case .salmon:
+            return "Salmon"
+        case .salsa:
+            return "Salsa"
+        case .salt:
+            return "Salt"
+        case .sardine:
+            return "Sardines"
+        case .sausage:
+            return "Sausage"
+        case .scallops:
+            return "Scallops"
+        case .sesame:
+            return "Sesame"
+        case .sesameOil:
+            return "Sesame oil"
+        case .shallot:
+            return "Shallots"
+        case .sherry:
+            return "Sherry"
+        case .shrimp:
+            return "Shrimp"
+        case .snapper:
+            return "Snapper"
+        case .soda:
+            return "Soda"
+        case .sole:
+            return "Sole"
+        case .sourCream:
+            return "Sour cream"
+        case .soyMilk:
+            return "Soy milk"
+        case .soySauce:
+            return "Soy sauce"
+        case .spinach:
+            return "Spinach"
+        case .squash:
+            return "Squash"
+        case .steakSauce:
+            return "Steak sauce"
+        case .strawberry:
+            return "Strawberries"
+        case .sugar:
+            return "Sugar"
+        case .sunDriedTomato:
+            return "Sun dried tomatoes"
+        case .sunflowerButter:
+            return "Sunflower butter"
+        case .sunflowerSeeds:
+            return "Sunflower seeds"
+        case .sweetPotato:
+            return "Sweet potato"
+        case .swiss:
+            return "Swiss"
+        case .swordfish:
+            return "Swordfish"
+        case .syrup:
+            return "Syrup"
+        case .taterTots:
+            return "Tater tots"
+        case .tea:
+            return "Tea"
+        case .thyme:
+            return "Thyme"
+        case .tilapia:
+            return "Tilapia"
+        case .tofu:
+            return "Tofu"
+        case .tomato:
+            return "Tomatoes"
+        case .tomatoPaste:
+            return "Tomato paste"
+        case .tomatoSauce:
+            return "Tomato sauce"
+        case .tortellini:
+            return "Tortellini"
+        case .tortilla:
+            return "Tortilla"
+        case .trout:
+            return "Trout"
+        case .tuna:
+            return "Tuna"
+        case .turkey:
+            return "Turkey"
+        case .turmeric:
+            return "Turmeric"
+        case .vanilla:
+            return "Vanilla"
+        case .vegetableOil:
+            return "Vegetable oil"
+        case .venison:
+            return "Venison"
+        case .vinegar:
+            return "Vinegar"
+        case .vodka:
+            return "Vodka"
+        case .walnuts:
+            return "Walnuts"
+        case .water:
+            return "Water"
+        case .watermelon:
+            return "Watermelon"
+        case .whippedCream:
+            return "Whipped cream"
+        case .whiskey:
+            return "Whiskey"
+        case .whiteWine:
+            return "White wine"
+        case .worcestershireSauce:
+            return "Worcestershire Sauce"
+        case .yeast:
+            return "Yeast"
+        case .yogurt:
+            return "Yogurt"
+        case .zucchini:
+            return "Zucchini"
+        case .other:
+            return "Cheerios"
+        }
+    }
+    
+    static let all = GenericItem.allCases.map({$0.description})
     
     static func getCategory(item: GenericItem, words: [String]) -> Category {
         switch item {

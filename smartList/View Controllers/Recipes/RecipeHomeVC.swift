@@ -15,7 +15,9 @@ class RecipeHomeVC: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchHelperView: UIView!
     @IBOutlet weak var searchButtonStackView: UIStackView!
-    
+    @IBOutlet weak var scrollBackUpView: UIView!
+    private var lastContentOffset: CGFloat = 0
+    private var allowButtonToBeShowed = true
     var imageCache = NSCache<NSString, UIImage>()
     
     var db: Firestore!
@@ -23,12 +25,15 @@ class RecipeHomeVC: UIViewController {
     var recipes: [Recipe] = [] {
         didSet {
             collectionView.reloadData()
+            collectionView.collectionViewLayout.invalidateLayout()
+            
         }
         
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        print(GenericItem.all)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -54,8 +59,19 @@ class RecipeHomeVC: UIViewController {
         
         searchButtonStackView.setUpQuickSearchButtons()
         createObserver()
-        
+        scrollBackUpView.shadowAndRounded(cornerRadius: 10)
     }
+    
+    @IBAction func scrollBackUp(_ sender: Any) {
+        allowButtonToBeShowed = false
+        collectionView.setContentOffset(.init(x: 0, y: 0), animated: true)
+        lastContentOffset = 0
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.allowButtonToBeShowed = true
+        }
+    }
+    
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -73,9 +89,13 @@ class RecipeHomeVC: UIViewController {
     @objc func recipeButtonPressed(_ notification: NSNotification) {
         if let dict = notification.userInfo as NSDictionary? {
             if let buttonName = dict["buttonName"] as? String {
-                Search.recipeSearchSuggested(buttonName: buttonName, db: db) { (recipes) in
-                    for r in recipes ?? [] {
+                Search.recipeSearchSuggested(buttonName: buttonName, db: db) { (searchRecipes) in
+                    for r in searchRecipes ?? [] {
                         print(r.name)
+                    }
+                    if let searchRecipes = searchRecipes {
+                        self.imageCache.removeAllObjects()
+                        self.recipes = searchRecipes
                     }
                 }
             }
@@ -129,6 +149,21 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         return cell
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (self.lastContentOffset > scrollView.contentOffset.y + 10) {
+            if allowButtonToBeShowed == true && scrollView.contentOffset.y >= 0 {
+                scrollBackUpView.setIsHidden(false, animated: true)
+            }
+            
+        }
+        
+        else if (self.lastContentOffset < scrollView.contentOffset.y) {
+            scrollBackUpView.setIsHidden(true, animated: true)
+        }
+        
+        self.lastContentOffset = scrollView.contentOffset.y
     }
 }
 

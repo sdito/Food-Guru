@@ -20,8 +20,8 @@ extension UIView {
             return nil
         }
     }
-    func shadowAndRounded() {
-        self.layer.cornerRadius = 25.0
+    func shadowAndRounded(cornerRadius: CGFloat) {
+        self.layer.cornerRadius = cornerRadius
         self.layer.borderWidth = 1.0
         self.layer.borderColor = UIColor.clear.cgColor
         self.layer.masksToBounds = true

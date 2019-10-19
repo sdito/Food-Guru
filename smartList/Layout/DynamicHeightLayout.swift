@@ -31,6 +31,9 @@ class DynamicHeightLayout: UICollectionViewLayout {
         return CGSize(width: width, height: contentHeight)
     }
     override func prepare() {
+        super.prepare()
+        cache.removeAll()
+        contentHeight = 0
         if cache.isEmpty {
             let columnWidth = width / CGFloat(numberOfColumns)
             var xOffsets = [CGFloat]()
