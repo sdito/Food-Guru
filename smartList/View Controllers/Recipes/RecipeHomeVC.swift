@@ -89,10 +89,7 @@ class RecipeHomeVC: UIViewController {
     @objc func recipeButtonPressed(_ notification: NSNotification) {
         if let dict = notification.userInfo as NSDictionary? {
             if let buttonName = dict["buttonName"] as? String {
-                Search.recipeSearchSuggested(buttonName: buttonName, db: db) { (searchRecipes) in
-                    for r in searchRecipes ?? [] {
-                        print(r.name)
-                    }
+                Search.recipeSearchSuggested(buttonName: buttonName, db: db, calledFromVC: self) { (searchRecipes) in
                     if let searchRecipes = searchRecipes {
                         self.imageCache.removeAllObjects()
                         self.recipes = searchRecipes
@@ -103,6 +100,14 @@ class RecipeHomeVC: UIViewController {
     }
 }
 
+extension RecipeHomeVC: RecipesFoundFromSearchingDelegate {
+    func recipesFound(recipes: [Recipe]) {
+        self.imageCache.removeAllObjects()
+        self.recipes = recipes
+        self.dismiss(animated: true, completion: nil)
+        
+    }
+}
 
 extension RecipeHomeVC: DynamicHeightLayoutDelegate {
     #warning("issue with how much to subtract from the text labels, was 8 previously for title and cuisine and changed it to 10")

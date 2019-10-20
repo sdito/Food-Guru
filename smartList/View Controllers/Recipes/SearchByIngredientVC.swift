@@ -17,16 +17,19 @@ protocol SearchAssistantDelegate {
     func removeChildVC()
 }
 
-
+protocol RecipesFoundFromSearchingDelegate {
+    func recipesFound(recipes: [Recipe])
+}
 
 
 class SearchByIngredientVC: UIViewController {
     var delegate: SearchAssistantDelegate!
+    var recipesFoundDelegate: RecipesFoundFromSearchingDelegate!
     private var selectedItems: [Item] = [] {
         didSet {
             if self.selectedItems.isEmpty == false {
                 let display = self.selectedItems.map { (itm) -> String in itm.name}.joined(separator: ", ")
-                buttonOutlet.setTitle("Find recipe with \(display)", for: .normal)
+                buttonOutlet.setTitle("Find recipes with \(display)", for: .normal)
                 buttonOutlet.isUserInteractionEnabled = true
                 buttonOutlet.setTitleColor(Colors.main, for: .normal)
             } else {
@@ -77,8 +80,9 @@ class SearchByIngredientVC: UIViewController {
         }
         print(ingredients)
         Search.getRecipesFromIngredients(db: db, ingredients: ingredients) { (recipesReturned) in
-            for recipe in recipesReturned! {
-                print(recipe.name)
+            if let recipes = recipesReturned {
+                
+                self.recipesFoundDelegate.recipesFound(recipes: recipes)
             }
         }
     }
