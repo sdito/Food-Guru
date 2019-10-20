@@ -7,29 +7,81 @@
 //
 
 import UIKit
+#warning("need to implement this VC for every time a user is typing in an item")
+
+
+protocol CreateNewItemDelegate {
+    func itemCreated(item: Item)
+}
+
+
 
 class CreateNewItemVC: UITableViewController {
-    
+    var delegate: CreateNewItemDelegate!
+    private var searchText: String = "" {
+        didSet {
+            if self.searchText == "" {
+                tableView.isHidden = true
+            } else {
+                self.searchText = self.searchText.lowercased()
+                tableView.isHidden = false
+                searchedItems.removeAll()
+                items.forEach { (itm) in
+                    let lower = itm.lowercased()
+                    if lower.contains(self.searchText) {
+                        searchedItems.append(itm)
+                    }
+                }
+                tableView.reloadData()
+            }
+        }
+    }
+    private var searchedItems: [String] = []
     private lazy var items = GenericItem.all
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.isHidden = true
     }
 
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return items.count
+        return searchedItems.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "createNewItemCell", for: indexPath) as! CreateNewItemCell
-        cell.setUI(text: items[indexPath.row])
+        cell.setUI(text: searchedItems[indexPath.row])
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let text = searchedItems[indexPath.row]
+        let words = text.split{ !$0.isLetter }.map { (sStr) -> String in
+            String(sStr)
+        }
+        let systemItem = Search.turnIntoSystemItem(string: text)
+        let category = GenericItem.getCategory(item: systemItem, words: words)
+        let item = Item(name: text, selected: false, category: category.rawValue, store: nil, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: category)
+        delegate.itemCreated(item: item)
+        self.willMove(toParent: nil)
+        self.view.removeFromSuperview()
+        self.removeFromParent()
+    }
+    
+}
 
-
-
+extension CreateNewItemVC: SearchAssistantDelegate {
+    func removeChildVC() {
+        self.willMove(toParent: nil)
+        self.view.removeFromSuperview()
+        self.removeFromParent()
+    }
+    
+    func searchTextChanged(text: String) {
+        searchText = text
+    }
+    
+    
 }

@@ -107,6 +107,14 @@ struct Item: Equatable {
             itemsReturned(storageItems)
         }
     }
+    
+    static func createItemFrom(text: String) -> Item {
+        
+        
+        let item = Item(name: text, selected: false, category: <#T##String?#>, store: <#T##String?#>, user: <#T##String?#>, ownID: <#T##String?#>, storageSection: <#T##FoodStorageType?#>, timeAdded: nil, timeExpires: nil, systemItem: <#T##GenericItem?#>, systemCategory: <#T##Category?#>)
+        return item
+    }
+    
 }
 
 extension Item {

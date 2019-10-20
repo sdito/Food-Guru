@@ -9,7 +9,19 @@
 import UIKit
 import FirebaseFirestore
 
+
+
+
+protocol SearchAssistantDelegate {
+    func searchTextChanged(text: String)
+    func removeChildVC()
+}
+
+
+
+
 class SearchByIngredientVC: UIViewController {
+    var delegate: SearchAssistantDelegate!
     private var selectedItems: [Item] = [] {
         didSet {
             if self.selectedItems.isEmpty == false {
@@ -44,29 +56,66 @@ class SearchByIngredientVC: UIViewController {
         db = Firestore.firestore()
         tableView.dataSource = self
         tableView.delegate = self
+        searchBar.delegate = self
         buttonOutlet.isUserInteractionEnabled = false
         buttonOutlet.titleLabel?.numberOfLines = 2
         buttonOutlet.titleLabel?.textAlignment = .center
         Item.readItemsForStorageNoListener(db: db, storageID: SharedValues.shared.foodStorageID ?? " ") { (itms) in
             self.possibleItems = itms
         }
+        searchBar.setUpAddItemToolbar(cancelAction: #selector(cancelSelector), addAction: #selector(addSelector))
     }
     @IBAction func buttonAction(_ sender: Any) {
         print("Button pressed")
     }
     
     @IBAction func addItem(_ sender: Any) {
-        #error("need to get create item vc to be proper size")
+        //#error("need to get create item vc to be proper size")
         searchBar.isHidden = false
         searchBar.becomeFirstResponder()
         let vc = storyboard?.instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
-        vc.view.heightAnchor.constraint(equalToConstant: 200)
-        self.present(vc, animated: true, completion: nil)
+        self.addChild(vc)
+        self.view.addSubview(vc.tableView)
+        vc.didMove(toParent: self)
+        vc.tableView.translatesAutoresizingMaskIntoConstraints = false
+        vc.tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor).isActive = true
+        
+        #warning("need to get the actual keyboard height below")
+        vc.tableView.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - searchBar.bounds.height - 300)).isActive = true
+        vc.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        vc.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        vc.delegate = self
+        delegate = vc
     }
     
 }
 
+extension SearchByIngredientVC: CreateNewItemDelegate {
+    func itemCreated(item: Item) {
+        possibleItems.append(item)
+        selectedItems.append(item)
+        searchBar.text = ""
+        searchBar.isHidden = true
+        searchBar.setTextProperties()
+        searchBar.showsCancelButton = false
+        tableView.selectRow(at: IndexPath(row: possibleItems.count - 1, section: 0), animated: false, scrollPosition: .none)
+    }
+}
 
+extension SearchByIngredientVC: UISearchBarDelegate {
+    @objc private func cancelSelector() {
+        searchBar.endEditing(true)
+        searchBar.isHidden = true
+        delegate.removeChildVC()
+    }
+    @objc private func addSelector() {
+        print("Add")
+        #error("create the item here, and do the other stuff")
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        delegate.searchTextChanged(text: searchBar.text ?? "")
+    }
+}
 
 extension SearchByIngredientVC: UITableViewDataSource, UITableViewDelegate {
     private func handleCellSelection(indexPathRow: Int) {
@@ -98,3 +147,5 @@ extension SearchByIngredientVC: UITableViewDataSource, UITableViewDelegate {
         handleCellSelection(indexPathRow: indexPath.row)
     }
 }
+
+
