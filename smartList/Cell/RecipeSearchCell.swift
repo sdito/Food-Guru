@@ -20,6 +20,7 @@ class RecipeSearchCell: UITableViewCell {
         } else {
             label.textColor = .black
         }
+        
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

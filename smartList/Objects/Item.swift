@@ -109,9 +109,13 @@ struct Item: Equatable {
     }
     
     static func createItemFrom(text: String) -> Item {
+        let systemItem = Search.turnIntoSystemItem(string: text)
+        let words = text.split{ !$0.isLetter }.map { (sStr) -> String in
+            String(sStr)
+        }
+        let systemCategory = GenericItem.getCategory(item: systemItem, words: words)
         
-        
-        let item = Item(name: text, selected: false, category: <#T##String?#>, store: <#T##String?#>, user: <#T##String?#>, ownID: <#T##String?#>, storageSection: <#T##FoodStorageType?#>, timeAdded: nil, timeExpires: nil, systemItem: <#T##GenericItem?#>, systemCategory: <#T##Category?#>)
+        let item = Item(name: text, selected: false, category: systemCategory.rawValue, store: nil, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: systemCategory)
         return item
     }
     

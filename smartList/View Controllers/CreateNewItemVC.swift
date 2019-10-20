@@ -43,16 +43,19 @@ class CreateNewItemVC: UITableViewController {
         super.viewDidLoad()
         tableView.isHidden = true
     }
-
+    
+    
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchedItems.count
     }
-
+    
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "createNewItemCell", for: indexPath) as! CreateNewItemCell
         cell.setUI(text: searchedItems[indexPath.row])
+        
         return cell
     }
     

@@ -57,6 +57,7 @@ class SearchByIngredientVC: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         searchBar.delegate = self
+        searchBar.setTextProperties()
         buttonOutlet.isUserInteractionEnabled = false
         buttonOutlet.titleLabel?.numberOfLines = 2
         buttonOutlet.titleLabel?.textAlignment = .center
@@ -65,8 +66,21 @@ class SearchByIngredientVC: UIViewController {
         }
         searchBar.setUpAddItemToolbar(cancelAction: #selector(cancelSelector), addAction: #selector(addSelector))
     }
+    
+    
+    
     @IBAction func buttonAction(_ sender: Any) {
-        print("Button pressed")
+        let ingredients = selectedItems.map { (itm) -> GenericItem in
+            itm.systemItem!
+        }.map { (genericItem) -> String in
+            genericItem.rawValue
+        }
+        print(ingredients)
+        Search.getRecipesFromIngredients(db: db, ingredients: ingredients) { (recipesReturned) in
+            for recipe in recipesReturned! {
+                print(recipe.name)
+            }
+        }
     }
     
     @IBAction func addItem(_ sender: Any) {
@@ -96,9 +110,14 @@ extension SearchByIngredientVC: CreateNewItemDelegate {
         selectedItems.append(item)
         searchBar.text = ""
         searchBar.isHidden = true
-        searchBar.setTextProperties()
-        searchBar.showsCancelButton = false
-        tableView.selectRow(at: IndexPath(row: possibleItems.count - 1, section: 0), animated: false, scrollPosition: .none)
+        
+        
+        for item in selectedItems {
+            if let row = possibleItems.firstIndex(of: item) {
+                tableView.selectRow(at: IndexPath(row: row, section: 0), animated: false, scrollPosition: .none)
+            }
+        }
+        //tableView.selectRow(at: IndexPath(row: possibleItems.count - 1, section: 0), animated: false, scrollPosition: .none)
     }
 }
 
@@ -110,7 +129,22 @@ extension SearchByIngredientVC: UISearchBarDelegate {
     }
     @objc private func addSelector() {
         print("Add")
-        #error("create the item here, and do the other stuff")
+        //#error("create the item here, and do the other stuff")
+        let item = Item.createItemFrom(text: searchBar.text ?? " ")
+        possibleItems.append(item)
+        selectedItems.append(item)
+        searchBar.text = ""
+        searchBar.isHidden = true
+        searchBar.setTextProperties()
+        for item in selectedItems {
+            if let row = possibleItems.firstIndex(of: item) {
+                tableView.selectRow(at: IndexPath(row: row, section: 0), animated: false, scrollPosition: .none)
+            }
+        }
+        
+        searchBar.endEditing(true)
+        searchBar.isHidden = true
+        delegate.removeChildVC()
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         delegate.searchTextChanged(text: searchBar.text ?? "")

@@ -154,6 +154,26 @@ struct Search {
         }
     }
     
+    static func getRecipesFromIngredients(db: Firestore, ingredients: [String], recipesReturned: @escaping(_ recipes: [Recipe]?) -> Void) {
+        var recipes: [Recipe] = []
+        let reference = db.collection("recipes")
+        for ingredient in ingredients {
+            reference.whereField("has_\(ingredient)", isEqualTo: true)
+            
+        }
+        reference.getDocuments { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documents else {
+                print("Error retrieving documents: \(String(describing: error))")
+                return
+            }
+            
+            for doc in documents {
+                recipes.append(doc.recipe())
+            }
+            recipesReturned(recipes)
+        }
+    }
+    
     static func turnIntoSystemItem(string: String) -> GenericItem {
         let descriptors: Set<String> = ["chopped", "minced", "chunks", "cut into", "cubed", "shredded", "melted", "diced", "divided", "to taste", "or more to taste", "or more as needed", "grated", "crushed", "pounded", "boneless", "skinless", "fresh", "sliced", "thinly", "halves", "half", "halved", "seeded", "with", "and", "finely", "optional", "taste"]
         let measurements: Set<String> = ["pound", "pounds", "envelope", "cup", "cups", "tablespoons", "packet", "ounce", "large", "small", "medium", "package", "teaspoons", "teaspoon", "tablespoon", "pinch", "t.", "ts.", "tspn", "tbsp", "tbls", "bag", "cubes", "cube", "clove", "cloves", "ounces", "quart"]
