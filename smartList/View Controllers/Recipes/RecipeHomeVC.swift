@@ -158,6 +158,11 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         return cell
     }
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        <#code#>
+    }
+    
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (self.lastContentOffset > scrollView.contentOffset.y + 10) {
             if allowButtonToBeShowed == true && scrollView.contentOffset.y >= 0 {

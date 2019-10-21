@@ -73,4 +73,8 @@ class DynamicHeightLayout: UICollectionViewLayout {
         }
         return layoutAttributes
     }
+    override func register(_ viewClass: AnyClass?, forDecorationViewOfKind elementKind: String) {
+        <#code#>
+    }
+    
 }

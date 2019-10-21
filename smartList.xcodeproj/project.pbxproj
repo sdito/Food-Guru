@@ -34,6 +34,7 @@
 		E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
 		E216207622F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
 		E216207722F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
+		E23D822F235E64AA002021F0 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E23D822D235E64A9002021F0 /* HeaderView.xib */; };
 		E2445CEE2321D6500089582F /* TabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CED2321D6500089582F /* TabVC.swift */; };
 		E2445CF02321D8EA0089582F /* ListHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CEF2321D8EA0089582F /* ListHomeVC.swift */; };
 		E2445CF22321D8F90089582F /* RecipeHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CF12321D8F90089582F /* RecipeHomeVC.swift */; };
@@ -148,6 +149,7 @@
 		E216206622F658D20074A0DF /* smartListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = smartListUITests.swift; sourceTree = "<group>"; };
 		E216206822F658D20074A0DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E216207422F659860074A0DF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E23D822D235E64A9002021F0 /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HeaderView.xib; path = ../../../../HeaderView.xib; sourceTree = "<group>"; };
 		E2445CED2321D6500089582F /* TabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabVC.swift; sourceTree = "<group>"; };
 		E2445CEF2321D8EA0089582F /* ListHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListHomeVC.swift; path = "../New Group/ListHomeVC.swift"; sourceTree = "<group>"; };
 		E2445CF12321D8F90089582F /* RecipeHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeHomeVC.swift; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 		E2B4694E22F78D2B006BA77D /* CreateListView */ = {
 			isa = PBXGroup;
 			children = (
+				E23D822D235E64A9002021F0 /* HeaderView.xib */,
 				E2B4694B22F78D1C006BA77D /* CreateListView.xib */,
 				E2B4694F22F78D44006BA77D /* CreateListView.swift */,
 			);
@@ -672,6 +675,7 @@
 				E253AC06234315170018274A /* ButtonIngredientView.xib in Resources */,
 				E2F380B023198496003857F7 /* IngredientView.xib in Resources */,
 				E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */,
+				E23D822F235E64AA002021F0 /* HeaderView.xib in Resources */,
 				E216204E22F658D20074A0DF /* Assets.xcassets in Resources */,
 				E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */,
 				E2CE480F23442F6F0045FCC0 /* LabelInstructionView.xib in Resources */,
