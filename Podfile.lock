@@ -76,43 +76,43 @@ PODS:
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 6.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - FirebaseUI (8.1.0):
-    - FirebaseUI/Anonymous (= 8.1.0)
-    - FirebaseUI/Auth (= 8.1.0)
-    - FirebaseUI/Database (= 8.1.0)
-    - FirebaseUI/Email (= 8.1.0)
-    - FirebaseUI/Facebook (= 8.1.0)
-    - FirebaseUI/Firestore (= 8.1.0)
-    - FirebaseUI/Google (= 8.1.0)
-    - FirebaseUI/OAuth (= 8.1.0)
-    - FirebaseUI/Phone (= 8.1.0)
-    - FirebaseUI/Storage (= 8.1.0)
-  - FirebaseUI/Anonymous (8.1.0):
+  - FirebaseUI (8.2.0):
+    - FirebaseUI/Anonymous (= 8.2.0)
+    - FirebaseUI/Auth (= 8.2.0)
+    - FirebaseUI/Database (= 8.2.0)
+    - FirebaseUI/Email (= 8.2.0)
+    - FirebaseUI/Facebook (= 8.2.0)
+    - FirebaseUI/Firestore (= 8.2.0)
+    - FirebaseUI/Google (= 8.2.0)
+    - FirebaseUI/OAuth (= 8.2.0)
+    - FirebaseUI/Phone (= 8.2.0)
+    - FirebaseUI/Storage (= 8.2.0)
+  - FirebaseUI/Anonymous (8.2.0):
     - FirebaseUI/Auth
-  - FirebaseUI/Auth (8.1.0):
+  - FirebaseUI/Auth (8.2.0):
     - Firebase/Auth (~> 6.0)
     - GoogleUtilities/UserDefaults
-  - FirebaseUI/Database (8.1.0):
+  - FirebaseUI/Database (8.2.0):
     - Firebase/Database (~> 6.0)
-  - FirebaseUI/Email (8.1.0):
+  - FirebaseUI/Email (8.2.0):
     - FirebaseUI/Auth
-  - FirebaseUI/Facebook (8.1.0):
+  - FirebaseUI/Facebook (8.2.0):
     - FBSDKLoginKit (~> 5.0)
     - FirebaseUI/Auth
-  - FirebaseUI/Firestore (8.1.0):
+  - FirebaseUI/Firestore (8.2.0):
     - Firebase/Firestore
-  - FirebaseUI/Google (8.1.0):
+  - FirebaseUI/Google (8.2.0):
     - FirebaseUI/Auth
     - GoogleSignIn (~> 5.0)
-  - FirebaseUI/OAuth (8.1.0):
+  - FirebaseUI/OAuth (8.2.0):
     - FirebaseUI/Auth
-  - FirebaseUI/Phone (8.1.0):
+  - FirebaseUI/Phone (8.2.0):
     - FirebaseUI/Auth
-  - FirebaseUI/Storage (8.1.0):
+  - FirebaseUI/Storage (8.2.0):
     - Firebase/Storage (~> 6.0)
     - SDWebImage (~> 5.0)
-  - GoogleDataTransport (3.0.0)
-  - GoogleDataTransportCCTSupport (1.2.0):
+  - GoogleDataTransport (3.0.1)
+  - GoogleDataTransportCCTSupport (1.2.1):
     - GoogleDataTransport (~> 3.0)
     - nanopb (~> 0.3.901)
   - GoogleSignIn (5.0.1):
@@ -219,9 +219,9 @@ SPEC CHECKSUMS:
   FirebaseDatabase: 524802f7694268c79d34aeac3d67997593e1a0c9
   FirebaseFirestore: 5a9e9a14305336e8d1a4f915a45ecf0f5d6dcaec
   FirebaseStorage: b7c6d00997bc21d4465453bdcc5cc65513110fed
-  FirebaseUI: 41e06c5f7f6e34a8f430862d67637e36e4aa696c
-  GoogleDataTransport: f6fe28f43e3a300736854260961ad485b473edc5
-  GoogleDataTransportCCTSupport: 862418a8cdda520c4dd4af83a756d04efe4a6990
+  FirebaseUI: d9393ff139b2671921153c0060cf6fd154afad16
+  GoogleDataTransport: 166f9b9f82cbf60a204e8fe2daa9db3e3ec1fb15
+  GoogleDataTransportCCTSupport: f6ab1962e9dc05ab1fb938b795e5b310209edeec
   GoogleSignIn: 3a51b9bb8e48b635fd7f4272cee06ca260345b86
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
   "gRPC-C++": 9dfe7b44821e7b3e44aacad2af29d2c21f7cde83

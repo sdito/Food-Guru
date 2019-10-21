@@ -23,6 +23,9 @@ class RecipeHomeVC: UIViewController {
     var db: Firestore!
     
     var recipes: [Recipe] = [] {
+        willSet {
+            print("call the load screen here")
+        }
         didSet {
             collectionView.reloadData()
             collectionView.collectionViewLayout.invalidateLayout()
@@ -155,7 +158,6 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         return cell
     }
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (self.lastContentOffset > scrollView.contentOffset.y + 10) {
             if allowButtonToBeShowed == true && scrollView.contentOffset.y >= 0 {

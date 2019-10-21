@@ -813,10 +813,8 @@ struct Search {
             return .cereal
         } else if item.contains("champagne") {
             return .champagne
-        } else if item.contains("curry") || item.contains("powder") {
+        } else if item.contains("curry") && item.contains("powder") {
             return .curryPowder
-        } else if item.contains("jalapeno") || item.contains("jalapeño") {
-            return .jalapeno
         } else if item.contains("ketchup") {
             return .ketchup
         } else if item.contains("lobster") {
@@ -853,7 +851,7 @@ struct Search {
             return .sardine
         } else if item.contains("soda") || item.contains("pop") || item.contains("cola") || item.contains("coke") {
             return .soda
-        } else if item.contains("pot") || item.contains("roast") {
+        } else if item.contains("pot") && item.contains("roast") {
             return .potRoast
         } else if item.contains("popcorn") {
             return .popcorn
@@ -865,13 +863,13 @@ struct Search {
             return .mussels
         } else if item.contains("nectarines") {
             return .nectarine
-        } else if item.contains("italian") || item.contains("seasoning") {
+        } else if item.contains("italian") && item.contains("seasoning") {
             return .italianSeasoning
         } else if item.contains("hummus"){
             return .hummus
         } else if item.contains("dip") {
             return .dip
-        } else if item.contains("tater") || item.contains("tots") {
+        } else if item.contains("tater") && item.contains("tots") {
             return .taterTots
         } else if item.contains("hot") && (item.contains("dog") || item.contains("dogs")) {
             return .hotDogs
