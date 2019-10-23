@@ -90,6 +90,7 @@ class RecipeHomeVC: UIViewController {
     }
     
     @objc func recipeButtonPressed(_ notification: NSNotification) {
+        print("recipe button pressed, do stuff here")
         if let dict = notification.userInfo as NSDictionary? {
             if let buttonName = dict["buttonName"] as? String {
                 Search.recipeSearchSuggested(buttonName: buttonName, db: db, calledFromVC: self) { (searchRecipes) in
@@ -126,6 +127,7 @@ extension RecipeHomeVC: DynamicHeightLayoutDelegate {
         let rect = NSString(string: text).boundingRect(with: CGSize(width: width, height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
         return ceil(rect.height)
     }
+    
 }
 
 
@@ -157,9 +159,6 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         return cell
-    }
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        <#code#>
     }
     
     

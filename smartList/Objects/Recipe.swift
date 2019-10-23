@@ -80,6 +80,7 @@ extension Recipe {
             "cuisineType": self.cuisineType,
             "cookTime": self.cookTime,
             "prepTime": self.prepTime,
+            "totalTime": self.cookTime + self.prepTime,
             "ingredients": self.ingredients,
             "instructions": self.instructions,
             "calories": self.calories as Any,

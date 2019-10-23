@@ -34,7 +34,6 @@
 		E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
 		E216207622F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
 		E216207722F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
-		E23D822F235E64AA002021F0 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E23D822D235E64A9002021F0 /* HeaderView.xib */; };
 		E2445CEE2321D6500089582F /* TabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CED2321D6500089582F /* TabVC.swift */; };
 		E2445CF02321D8EA0089582F /* ListHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CEF2321D8EA0089582F /* ListHomeVC.swift */; };
 		E2445CF22321D8F90089582F /* RecipeHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CF12321D8F90089582F /* RecipeHomeVC.swift */; };
@@ -58,6 +57,7 @@
 		E27D70B4233F24A5009C68B3 /* UISearchBar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */; };
 		E27D70B62340079D009C68B3 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70B52340079D009C68B3 /* RecipeCell.swift */; };
 		E27D70C223404414009C68B3 /* DynamicHeightLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70C123404414009C68B3 /* DynamicHeightLayout.swift */; };
+		E2910FD3235FE9DC00C9E22F /* HeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2910FD2235FE9DC00C9E22F /* HeaderReusableView.swift */; };
 		E2A26C3C234D7A0200D954C0 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A26C3B234D7A0200D954C0 /* Category.swift */; };
 		E2A26C3E234D953700D954C0 /* GenericItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A26C3D234D953700D954C0 /* GenericItem.swift */; };
 		E2A54E1D2318553400BEBF39 /* InstructionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2A54E1B2318553300BEBF39 /* InstructionView.xib */; };
@@ -173,6 +173,7 @@
 		E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar-Extension.swift"; sourceTree = "<group>"; };
 		E27D70B52340079D009C68B3 /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		E27D70C123404414009C68B3 /* DynamicHeightLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightLayout.swift; sourceTree = "<group>"; };
+		E2910FD2235FE9DC00C9E22F /* HeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderReusableView.swift; sourceTree = "<group>"; };
 		E2A26C3B234D7A0200D954C0 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		E2A26C3D234D953700D954C0 /* GenericItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericItem.swift; sourceTree = "<group>"; };
 		E2A54E1B2318553300BEBF39 /* InstructionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionView.xib; sourceTree = "<group>"; };
@@ -451,6 +452,7 @@
 				E2F380AE2319847F003857F7 /* IngredientView */,
 				E2A54E1F23186DEB00BEBF39 /* InstructionView */,
 				E2B4694E22F78D2B006BA77D /* CreateListView */,
+				E2910FD2235FE9DC00C9E22F /* HeaderReusableView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -675,7 +677,6 @@
 				E253AC06234315170018274A /* ButtonIngredientView.xib in Resources */,
 				E2F380B023198496003857F7 /* IngredientView.xib in Resources */,
 				E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */,
-				E23D822F235E64AA002021F0 /* HeaderView.xib in Resources */,
 				E216204E22F658D20074A0DF /* Assets.xcassets in Resources */,
 				E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */,
 				E2CE480F23442F6F0045FCC0 /* LabelInstructionView.xib in Resources */,
@@ -838,6 +839,7 @@
 				E24ADB0A23386E69008F2F9F /* StorageNewItemVC.swift in Sources */,
 				E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */,
 				E2E6A19B2326FF6A00477AB1 /* FoodStorage.swift in Sources */,
+				E2910FD3235FE9DC00C9E22F /* HeaderReusableView.swift in Sources */,
 				E2C49349230B45E4002907C2 /* CreateRecipeVC.swift in Sources */,
 				E2445CF02321D8EA0089582F /* ListHomeVC.swift in Sources */,
 				E20BC6CB2327376000F1E5E7 /* SettingCell.swift in Sources */,
