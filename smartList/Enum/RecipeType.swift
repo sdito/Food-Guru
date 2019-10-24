@@ -59,6 +59,7 @@ enum RecipeType: CaseIterable {
     case smoothie
     case soupAndChili
     case seafood
+    case slowCooker
     
     var description: String {
         switch self {
@@ -160,6 +161,8 @@ enum RecipeType: CaseIterable {
             return "Soup and Chili"
         case .seafood:
             return "Seafood"
+        case .slowCooker:
+            return "Slow Cooker"
         }
     }
     

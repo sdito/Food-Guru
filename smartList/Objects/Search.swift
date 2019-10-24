@@ -26,7 +26,17 @@ struct Search {
             
         case "Breakfast":
             print("Breakfast")
-            
+            reference.whereField("recipeType", arrayContains: "Breakfast").getDocuments { (querySnapshot, error) in
+                guard let documents = querySnapshot?.documents else {
+                    print("Error retrieving documents: \(String(describing: error))")
+                    return
+                }
+                
+                for doc in documents {
+                    recipes.append(doc.recipe())
+                }
+                recipesReturned(recipes)
+            }
         case "Lunch":
             print("Lunch")
             reference.whereField("recipeType", arrayContains: "Lunch").getDocuments { (querySnapshot, error) in

@@ -87,6 +87,7 @@ class RecipeHomeVC: UIViewController {
     }
     
     @objc func recipeButtonPressed(_ notification: NSNotification) {
+        handleSuggestedSearchButtonBeingPressed()
         if let dict = notification.userInfo as NSDictionary? {
             if let buttonName = dict["buttonName"] as? String {
                 Search.recipeSearchSuggested(buttonName: buttonName, db: db, calledFromVC: self) { (searchRecipes) in
@@ -97,6 +98,10 @@ class RecipeHomeVC: UIViewController {
                 }
             }
         }
+    }
+    private func handleSuggestedSearchButtonBeingPressed() {
+        searchBar.endEditing(true)
+        searchHelperView.isHidden = true
     }
 }
 
