@@ -11,6 +11,7 @@ import FirebaseFirestore
 import AVFoundation
 
 class RecipeHomeVC: UIViewController {
+    @IBOutlet weak var wholeStackView: UIStackView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchHelperView: UIView!
@@ -100,6 +101,10 @@ class RecipeHomeVC: UIViewController {
         }
     }
     private func handleSuggestedSearchButtonBeingPressed() {
+        let v = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
+        v.setUI(searches: ["Chicken", "Dinner", "Quick"])
+        //v.heightAnchor.constraint(equalToConstant: (searchBar.bounds.height * 0.8)).isActive = true
+        wholeStackView.insertArrangedSubview(v, at: 1)
         searchBar.endEditing(true)
         searchHelperView.isHidden = true
     }

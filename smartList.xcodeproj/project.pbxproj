@@ -47,6 +47,8 @@
 		E253AC042341B4460018274A /* RecipeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253AC032341B4460018274A /* RecipeDetailVC.swift */; };
 		E253AC06234315170018274A /* ButtonIngredientView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E253AC05234315170018274A /* ButtonIngredientView.xib */; };
 		E253AC08234315BB0018274A /* ButtonIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253AC07234315BB0018274A /* ButtonIngredientView.swift */; };
+		E25DEC702362B4810007535C /* CurrentSearchesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E25DEC6F2362B4810007535C /* CurrentSearchesView.xib */; };
+		E25DEC722362B4BF0007535C /* CurrentSearchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25DEC712362B4BF0007535C /* CurrentSearchesView.swift */; };
 		E25F071723146CC600E6738E /* RecipeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071623146CC600E6738E /* RecipeType.swift */; };
 		E25F071923146E5E00E6738E /* CuisineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071823146E5E00E6738E /* CuisineType.swift */; };
 		E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */; };
@@ -161,6 +163,8 @@
 		E253AC032341B4460018274A /* RecipeDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailVC.swift; sourceTree = "<group>"; };
 		E253AC05234315170018274A /* ButtonIngredientView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonIngredientView.xib; sourceTree = "<group>"; };
 		E253AC07234315BB0018274A /* ButtonIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonIngredientView.swift; sourceTree = "<group>"; };
+		E25DEC6F2362B4810007535C /* CurrentSearchesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurrentSearchesView.xib; sourceTree = "<group>"; };
+		E25DEC712362B4BF0007535C /* CurrentSearchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentSearchesView.swift; sourceTree = "<group>"; };
 		E25F071623146CC600E6738E /* RecipeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeType.swift; sourceTree = "<group>"; };
 		E25F071823146E5E00E6738E /* CuisineType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuisineType.swift; sourceTree = "<group>"; };
 		E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRecipeTypeVC.swift; sourceTree = "<group>"; };
@@ -440,6 +444,8 @@
 		E2B4694D22F78D23006BA77D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E25DEC6F2362B4810007535C /* CurrentSearchesView.xib */,
+				E25DEC712362B4BF0007535C /* CurrentSearchesView.swift */,
 				E2E29039234C5C9500620576 /* RatingView */,
 				E2DA80D32349BB9E00BD7101 /* GiveRatingView */,
 				E2DA80CE2349958600BD7101 /* StarRatingView */,
@@ -670,6 +676,7 @@
 				E2DA80CC2349957700BD7101 /* StarRatingView.xib in Resources */,
 				E2DA80D02349BB6100BD7101 /* GiveRatingView.xib in Resources */,
 				E253AC06234315170018274A /* ButtonIngredientView.xib in Resources */,
+				E25DEC702362B4810007535C /* CurrentSearchesView.xib in Resources */,
 				E2F380B023198496003857F7 /* IngredientView.xib in Resources */,
 				E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */,
 				E216204E22F658D20074A0DF /* Assets.xcassets in Resources */,
@@ -819,6 +826,7 @@
 				E24ADB0C23399BD8008F2F9F /* ListHomeCell.swift in Sources */,
 				E2445CF42321DC100089582F /* StorageHomeVC.swift in Sources */,
 				E20BC6DC23288B9C00F1E5E7 /* EmailCheck.swift in Sources */,
+				E25DEC722362B4BF0007535C /* CurrentSearchesView.swift in Sources */,
 				E25F071923146E5E00E6738E /* CuisineType.swift in Sources */,
 				E26B9C50234A6F960039E9EE /* UITextView-Extension.swift in Sources */,
 				E20BC6D323275BC200F1E5E7 /* SettingBasicCell.swift in Sources */,
