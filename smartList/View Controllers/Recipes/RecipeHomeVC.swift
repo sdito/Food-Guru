@@ -11,6 +11,20 @@ import FirebaseFirestore
 import AVFoundation
 
 class RecipeHomeVC: UIViewController {
+    private let v = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
+    
+    private var activeSearches: [String] = [] {
+        didSet {
+            print(self.activeSearches)
+            if wholeStackView.subviews.contains(v) {
+                v.setUI(searches: self.activeSearches)
+            } else {
+                wholeStackView.insertArrangedSubview(v, at: 1)
+            }
+            
+        }
+    }
+    
     @IBOutlet weak var wholeStackView: UIStackView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -91,6 +105,7 @@ class RecipeHomeVC: UIViewController {
         handleSuggestedSearchButtonBeingPressed()
         if let dict = notification.userInfo as NSDictionary? {
             if let buttonName = dict["buttonName"] as? String {
+                if buttonName != "Select ingredients" {activeSearches.append(buttonName)}
                 Search.recipeSearchSuggested(buttonName: buttonName, db: db, calledFromVC: self) { (searchRecipes) in
                     if let searchRecipes = searchRecipes {
                         self.imageCache.removeAllObjects()
@@ -101,8 +116,7 @@ class RecipeHomeVC: UIViewController {
         }
     }
     private func handleSuggestedSearchButtonBeingPressed() {
-        let v = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
-        v.setUI(searches: ["Chicken", "Dinner", "Quick"])
+        
         //v.heightAnchor.constraint(equalToConstant: (searchBar.bounds.height * 0.8)).isActive = true
         wholeStackView.insertArrangedSubview(v, at: 1)
         searchBar.endEditing(true)
@@ -111,11 +125,12 @@ class RecipeHomeVC: UIViewController {
 }
 
 extension RecipeHomeVC: RecipesFoundFromSearchingDelegate {
-    func recipesFound(recipes: [Recipe]) {
+    func recipesFound(recipes: [Recipe], ingredients: [String]) {
         self.imageCache.removeAllObjects()
         self.recipes = recipes
         self.dismiss(animated: true, completion: nil)
-        
+        let displayIngredients = ingredients.map { (ing) -> GenericItem in GenericItem.init(rawValue: ing)!}.map { (gi) -> String in gi.description}
+        activeSearches += displayIngredients
     }
 }
 

@@ -15,8 +15,8 @@ struct Search {
         let reference = db.collection("recipes")
         print("search recipes with: \(buttonName)")
         switch buttonName {
-        case "By ingredient":
-            print("by ingredient")
+        case "Select ingredients":
+            print("Select ingredients")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "searchByIngredient") as! SearchByIngredientVC
             vc.recipesFoundDelegate = calledFromVC as? RecipesFoundFromSearchingDelegate
