@@ -13,6 +13,9 @@ import FirebaseAuth
 
 
 class StorageHomeVC: UIViewController {
+    private var indexes: [Int]? {
+        return tableView.indexPathsForSelectedRows?.map({$0.row})
+    }
     var db: Firestore!
     lazy private var emptyCells: [UITableViewCell] = []
     private var searchActive = false
@@ -131,10 +134,15 @@ class StorageHomeVC: UIViewController {
         tableView.reloadData()
         
     }
+    @IBAction func findRecipes(_ sender: Any) {
+        print("find recipes with selected ingredients")
+        let genericItems = sortedItems.filter{(indexes?.contains(sortedItems.firstIndex(of: $0)!) ?? false)}.map({$0.systemItem})
+        #error("left off here")
+    }
     
     
     @IBAction func deleteCells(_ sender: Any) {
-        let indexes = tableView.indexPathsForSelectedRows?.map({$0.row})
+        //let indexes = tableView.indexPathsForSelectedRows?.map({$0.row})
         for item in sortedItems {
             if let idx = sortedItems.firstIndex(of: item) {
                 if indexes?.contains(idx) ?? false {

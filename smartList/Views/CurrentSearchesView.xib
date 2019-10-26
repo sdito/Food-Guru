@@ -18,13 +18,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="403" height="94"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="WaL-zk-brs">
-                            <rect key="frame" x="0.0" y="0.0" width="10" height="94"/>
+                            <rect key="frame" x="0.0" y="0.0" width="1" height="94"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uB4-WV-ybT">
-                                    <rect key="frame" x="0.0" y="0.0" width="10" height="94"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="1" height="94"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="10" id="8td-Dy-cxc"/>
+                                        <constraint firstAttribute="width" constant="1" id="8td-Dy-cxc"/>
                                     </constraints>
                                 </view>
                             </subviews>

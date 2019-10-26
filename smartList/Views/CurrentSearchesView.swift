@@ -24,12 +24,16 @@ class CurrentSearchesView: UIView {
             b.setTitleColor(Colors.main, for: .normal)
             b.titleLabel?.font = UIFont(name: "futura", size: 15)
             b.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-            //b.setGradientBackground(colorOne: .gray, colorTwo: .darkGray)
-            //b.titleLabel?.setGradientBackground(colorOne: .gray, colorTwo: .darkGray)
             b.layer.cornerRadius = 5
+            if #available(iOS 13.0, *) {
+                b.backgroundColor = .systemGray6
+            } else {
+                b.backgroundColor = .lightGray
+            }
             b.clipsToBounds = true
-            
+
             stackView.insertArrangedSubview(b, at: stackView.subviews.count)
+            
         }
     }
     @objc func buttonAction(sender: UIButton) {

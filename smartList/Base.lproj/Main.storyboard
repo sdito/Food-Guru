@@ -1378,13 +1378,23 @@
                                 </prototypes>
                             </tableView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xf8-CJ-kAi">
-                                <rect key="frame" x="314" y="142" width="80" height="200"/>
+                                <rect key="frame" x="314" y="142" width="80" height="240"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="4bS-H3-ze1">
-                                        <rect key="frame" x="0.0" y="0.0" width="80" height="200"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="80" height="240"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5n7-7R-IyG">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRm-aF-33k">
                                                 <rect key="frame" x="0.0" y="0.0" width="80" height="36"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="11"/>
+                                                <state key="normal" title="Find recipes">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="findRecipes:" destination="TBV-k4-MLm" eventType="touchUpInside" id="Kes-zR-0OU"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5n7-7R-IyG">
+                                                <rect key="frame" x="0.0" y="41" width="80" height="35.666666666666657"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="11"/>
                                                 <state key="normal" title="Delete">
                                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1394,7 +1404,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="lMq-ml-PTa">
-                                                <rect key="frame" x="0.0" y="41" width="80" height="36"/>
+                                                <rect key="frame" x="0.0" y="81.666666666666657" width="80" height="36"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="11"/>
                                                 <state key="normal" title="Expiration date">
                                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1404,7 +1414,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kc1-1s-WSa">
-                                                <rect key="frame" x="0.0" y="82" width="80" height="36"/>
+                                                <rect key="frame" x="0.0" y="122.6666666666667" width="80" height="35.666666666666671"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="11"/>
                                                 <state key="normal" title="Put in fridge">
                                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1414,7 +1424,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R7N-tm-e24">
-                                                <rect key="frame" x="0.0" y="123" width="80" height="36"/>
+                                                <rect key="frame" x="0.0" y="163.33333333333331" width="80" height="36"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="11"/>
                                                 <state key="normal" title="Put in freezer">
                                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1424,7 +1434,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nuc-Za-uOb">
-                                                <rect key="frame" x="0.0" y="164" width="80" height="36"/>
+                                                <rect key="frame" x="0.0" y="204.33333333333331" width="80" height="35.666666666666657"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="11"/>
                                                 <state key="normal" title="Put in pantry">
                                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1441,13 +1451,13 @@
                                     <constraint firstItem="4bS-H3-ze1" firstAttribute="top" secondItem="Xf8-CJ-kAi" secondAttribute="top" id="Byw-Vq-QfK"/>
                                     <constraint firstItem="4bS-H3-ze1" firstAttribute="leading" secondItem="Xf8-CJ-kAi" secondAttribute="leading" id="Mon-6P-gQO"/>
                                     <constraint firstAttribute="bottom" secondItem="4bS-H3-ze1" secondAttribute="bottom" id="WqJ-i8-PYb"/>
-                                    <constraint firstAttribute="height" constant="200" id="X8i-N9-FhE"/>
+                                    <constraint firstAttribute="height" constant="240" id="X8i-N9-FhE"/>
                                     <constraint firstAttribute="trailing" secondItem="4bS-H3-ze1" secondAttribute="trailing" id="Yns-9V-gqu"/>
                                     <constraint firstAttribute="width" constant="80" id="fJX-5x-mFE"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z6d-S8-LRX">
-                                <rect key="frame" x="74" y="352" width="320" height="216"/>
+                                <rect key="frame" x="74" y="392" width="320" height="216"/>
                                 <subviews>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="IQu-OV-dr4">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
