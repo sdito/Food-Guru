@@ -12,7 +12,6 @@ import AVFoundation
 
 class RecipeHomeVC: UIViewController {
     private let v = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
-    
     private var activeSearches: [String] = [] {
         didSet {
             print(self.activeSearches)
@@ -68,6 +67,7 @@ class RecipeHomeVC: UIViewController {
         Recipe.readUserRecipes(db: db) { (recipesReturned) in
             self.recipes = recipesReturned
         }
+        
         let layout = collectionView.collectionViewLayout as! DynamicHeightLayout
         layout.numberOfColumns = 2
         layout.delegate = self
@@ -121,6 +121,13 @@ class RecipeHomeVC: UIViewController {
         wholeStackView.insertArrangedSubview(v, at: 1)
         searchBar.endEditing(true)
         searchHelperView.isHidden = true
+    }
+}
+
+extension RecipeHomeVC: IngredientsFromStorageDelegate {
+    func ingredientsSent(ingredients: [GenericItem?]) {
+        print("Protocol for ingredients sent from storage called")
+        
     }
 }
 
