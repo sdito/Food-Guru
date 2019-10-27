@@ -13,7 +13,7 @@ import FirebaseAuth
 
 
 protocol IngredientsFromStorageDelegate: class {
-    func ingredientsSent(ingredients: [GenericItem?])
+    func ingredientsSent(rs: [Recipe])
 }
 
 
@@ -143,10 +143,16 @@ class StorageHomeVC: UIViewController {
     }
     @IBAction func findRecipes(_ sender: Any) {
         print("find recipes with selected ingredients")
-        let genericItems = sortedItems.filter{(indexes?.contains(sortedItems.firstIndex(of: $0)!) ?? false)}.map({$0.systemItem})
-        delegate = RecipeHomeVC()
-        delegate.ingredientsSent(ingredients: genericItems)
-        tabBarController?.selectedIndex = 1
+        let genericItems = sortedItems.filter{(indexes?.contains(sortedItems.firstIndex(of: $0)!) ?? false)}.map({$0.systemItem!.rawValue})
+        print(genericItems)
+        Search.getRecipesFromIngredients(db: db, ingredients: genericItems) { (rcps) in
+            if let rcps = rcps {
+                self.delegate = vc
+                self.delegate.ingredientsSent(rs: rcps)
+                self.tabBarController?.selectedIndex = 1
+            }
+        }
+        
     }
     
     

@@ -47,7 +47,6 @@ class RecipeHomeVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        print(GenericItem.all)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -125,9 +124,9 @@ class RecipeHomeVC: UIViewController {
 }
 
 extension RecipeHomeVC: IngredientsFromStorageDelegate {
-    func ingredientsSent(ingredients: [GenericItem?]) {
-        print("Protocol for ingredients sent from storage called")
-        
+    func ingredientsSent(rs: [Recipe]) {
+        print(rs.map({$0.name}))
+        recipes = rs
     }
 }
 

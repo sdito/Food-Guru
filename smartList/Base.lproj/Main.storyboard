@@ -825,7 +825,7 @@
         <!--Recipe HomeVC-->
         <scene sceneID="nPf-Z7-HbM">
             <objects>
-                <viewController id="fFf-qk-23l" customClass="RecipeHomeVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="recipeHomeVC" id="fFf-qk-23l" customClass="RecipeHomeVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2t2-b4-sre">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
