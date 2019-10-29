@@ -37,7 +37,7 @@ class CurrentSearchesView: UIView {
         }
     }
     @objc func buttonAction(sender: UIButton) {
-        print(sender.titleLabel?.text)
+        print(sender.titleLabel?.text as Any)
     }
 
 }

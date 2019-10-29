@@ -12,14 +12,14 @@ import FirebaseAuth
 
 
 
-protocol IngredientsFromStorageDelegate: class {
-    func ingredientsSent(rs: [Recipe])
-}
+//protocol IngredientsFromStorageDelegate: class {
+//    func ingredientsSent(rs: [Recipe])
+//}
 
 
 
 class StorageHomeVC: UIViewController {
-    var delegate: IngredientsFromStorageDelegate!
+    //var delegate: IngredientsFromStorageDelegate!
     private var indexes: [Int]? {
         return tableView.indexPathsForSelectedRows?.map({$0.row})
     }
@@ -97,6 +97,7 @@ class StorageHomeVC: UIViewController {
         sortedItems = items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: "")
     }
     @IBAction func searchPressed(_ sender: Any) {
+        
         searchActive = !searchActive
         switch searchActive {
         case true:
@@ -147,9 +148,10 @@ class StorageHomeVC: UIViewController {
         print(genericItems)
         Search.getRecipesFromIngredients(db: db, ingredients: genericItems) { (rcps) in
             if let rcps = rcps {
-                self.delegate = vc
-                self.delegate.ingredientsSent(rs: rcps)
+                let displayIngredients = genericItems.map { (ing) -> GenericItem in GenericItem.init(rawValue: ing)!}.map { (gi) -> String in gi.description}
+                SharedValues.shared.sentRecipesInto = (rcps, displayIngredients)
                 self.tabBarController?.selectedIndex = 1
+                
             }
         }
         

@@ -14,7 +14,7 @@ class RecipeHomeVC: UIViewController {
     private let v = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
     private var activeSearches: [String] = [] {
         didSet {
-            print(self.activeSearches)
+            print("\(self.activeSearches) are the active searches")
             if wholeStackView.subviews.contains(v) {
                 v.setUI(searches: self.activeSearches)
             } else {
@@ -38,8 +38,8 @@ class RecipeHomeVC: UIViewController {
     
     var recipes: [Recipe] = [] {
         didSet {
-            collectionView.reloadData()
-            collectionView.collectionViewLayout.invalidateLayout()
+            collectionView?.reloadData()
+            collectionView?.collectionViewLayout.invalidateLayout()
             
         }
         
@@ -47,6 +47,7 @@ class RecipeHomeVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        handleRecipesToShow()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -63,9 +64,7 @@ class RecipeHomeVC: UIViewController {
         searchBar.setUpToolBar(action: #selector(keyboardDismissed))
         
         db = Firestore.firestore()
-        Recipe.readUserRecipes(db: db) { (recipesReturned) in
-            self.recipes = recipesReturned
-        }
+        
         
         let layout = collectionView.collectionViewLayout as! DynamicHeightLayout
         layout.numberOfColumns = 2
@@ -74,6 +73,7 @@ class RecipeHomeVC: UIViewController {
         searchButtonStackView.setUpQuickSearchButtons()
         createObserver()
         scrollBackUpView.shadowAndRounded(cornerRadius: 10)
+        
     }
     
     @IBAction func scrollBackUp(_ sender: Any) {
@@ -121,14 +121,31 @@ class RecipeHomeVC: UIViewController {
         searchBar.endEditing(true)
         searchHelperView.isHidden = true
     }
+    
+    private func handleRecipesToShow() {
+        if SharedValues.shared.sentRecipesInto == nil {
+            if recipes.isEmpty {
+                Recipe.readUserRecipes(db: db) { (recipesReturned) in
+                    self.recipes = recipesReturned
+                }
+            }
+        } else {
+            recipes = SharedValues.shared.sentRecipesInto!.recipes
+            activeSearches = SharedValues.shared.sentRecipesInto!.ingredients
+            imageCache.removeAllObjects()
+            SharedValues.shared.sentRecipesInto = nil
+            #error("first search after getting recipes and info from storage does not show properly on RecipeHomeScreen")
+        }
+    }
+    
 }
 
-extension RecipeHomeVC: IngredientsFromStorageDelegate {
-    func ingredientsSent(rs: [Recipe]) {
-        print(rs.map({$0.name}))
-        recipes = rs
-    }
-}
+//extension RecipeHomeVC: IngredientsFromStorageDelegate {
+//    func ingredientsSent(rs: [Recipe]) {
+//        print(rs.map({$0.name}))
+//        recipes = rs
+//    }
+//}
 
 extension RecipeHomeVC: RecipesFoundFromSearchingDelegate {
     func recipesFound(recipes: [Recipe], ingredients: [String]) {
