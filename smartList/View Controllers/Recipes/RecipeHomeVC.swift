@@ -14,11 +14,11 @@ class RecipeHomeVC: UIViewController {
     private let v = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
     private var activeSearches: [String] = [] {
         didSet {
-            print("\(self.activeSearches) are the active searches")
             if wholeStackView.subviews.contains(v) {
                 v.setUI(searches: self.activeSearches)
             } else {
                 wholeStackView.insertArrangedSubview(v, at: 1)
+                v.setUI(searches: self.activeSearches)
             }
             
         }
@@ -134,18 +134,13 @@ class RecipeHomeVC: UIViewController {
             activeSearches = SharedValues.shared.sentRecipesInto!.ingredients
             imageCache.removeAllObjects()
             SharedValues.shared.sentRecipesInto = nil
-            #error("first search after getting recipes and info from storage does not show properly on RecipeHomeScreen")
+            //#error("first search after getting recipes and info from storage does not show properly on RecipeHomeScreen")
         }
     }
     
 }
 
-//extension RecipeHomeVC: IngredientsFromStorageDelegate {
-//    func ingredientsSent(rs: [Recipe]) {
-//        print(rs.map({$0.name}))
-//        recipes = rs
-//    }
-//}
+
 
 extension RecipeHomeVC: RecipesFoundFromSearchingDelegate {
     func recipesFound(recipes: [Recipe], ingredients: [String]) {
@@ -228,5 +223,10 @@ extension RecipeHomeVC: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         print("searchBartextDidBeginEditing")
         searchHelperView.isHidden = false
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        print("\(Search.turnIntoSystemRecipeType(string: searchBar.text!)) is the recipeType search")
+        print("\(Search.turnIntoSystemCuisineType(string: searchBar.text!)) is the cuisineType search")
+        print("\(Search.turnIntoSystemItem(string: searchBar.text!)) is the ingredient search")
     }
 }

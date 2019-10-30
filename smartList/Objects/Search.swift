@@ -173,6 +173,7 @@ struct Search {
         case 0:
             return
         case 1:
+//            reference.whereField("has_\(ingredients.first!)", isEqualTo: true).getDocuments { (querySnapshot, error) in
             reference.whereField("has_\(ingredients.first!)", isEqualTo: true).getDocuments { (querySnapshot, error) in
                 guard let documents = querySnapshot?.documents else {
                     print("Error retrieving documents: \(String(describing: error))")
@@ -233,6 +234,166 @@ struct Search {
                 recipesReturned(recipes)
             }
         }
+    }
+    
+    static func turnIntoSystemRecipeType(string: String) -> RecipeType {
+        let lower = string.lowercased()
+        var words: [Substring] {
+            return lower.split{ !$0.isLetter }
+        }
+        
+        let item = words.map { (sStr) -> String in
+            return String(sStr)
+        }
+        
+        if item.contains("dinner") {
+            return .dinner
+        } else if item.contains("breakfast") {
+            return .breakfast
+        } else if item.contains("brunch") {
+            return .brunch
+        } else if item.contains("lunch") {
+            return .lunch
+        } else if item.contains("appetizer") || item.contains("starter") {
+            return .appetizer
+        } else if item.contains("vegan") {
+            return .vegan
+        } else if item.contains("vegetarian") {
+            return .vegetarian
+        } else if item.contains("dessert") || item.contains("desert") {
+            return .dessert
+        } else if item.contains("snack") {
+            return .snack
+        } else if item.contains("diabetic") {
+            return .diabetic
+        } else if item.contains("healthy") || item.contains("nutritious") {
+            if item.contains("heart") {
+                return .heartHealthy
+            } else {
+                return .healthy
+            }
+        } else if item.contains("casserole") {
+            return .casserole
+        } else if (item.contains("dairy") && (item.contains("free") || item.contains("no"))) || item.contains("lactose") {
+            return .dairyFree
+        } else if item.contains("pizza") {
+            return .pizza
+        } else if item.contains("pasta") && item.contains("salad") {
+            return .pastaSalad
+        } else if item.contains("seafood") {
+            return .seafood
+        } else if item.contains("low") {
+            if item.contains("calorie") || item.contains("calories") {
+                return .lowCalorie
+            } else if item.contains("carb") || item.contains("carbs") || item.contains("carbohydrates") {
+                return .lowCarb
+            } else if item.contains("fat") && item.contains("milk") == false {
+                return .lowFat
+            } else if item.contains("cholestorol") {
+                return .lowCholestorol
+            }
+        } else if (item.contains("gluten") && (item.contains("no") || item.contains("free"))) || item.contains("celiac") {
+            return .glutenFree
+        } else if item.contains("bread") {
+            return .bread
+        } else if item.contains("cake") {
+            return .cake
+        } else if item.contains("soup") || item.contains("chili") {
+            return .soupAndChili
+        } else if item.contains("sandwich") || item.contains("sandwiches") {
+            return .sandwiches
+        } else if item.contains("drink") || item.contains("beverage") {
+            return .drink
+        } else if item.contains("weight") && item.contains("loss") {
+            return .weightLoss
+        } else if item.contains("cookie") || item.contains("cookies") {
+            if item.contains("christmas") {
+                return .christmasCookies
+            } else {
+                return .cookie
+            }
+        } else if item.contains("christmas") {
+            return .christmas
+        } else if item.contains("pie") {
+            return .pie
+        } else if item.contains("main") {
+            return .mainDishes
+        } else if item.contains("thanksgiving") {
+            return .thanksgiving
+        } else if item.contains("fiber") {
+            return .highFiber
+        } else if item.contains("candy") {
+            return .candy
+        } else if item.contains("smoothie") {
+            return .smoothie
+        } else if item.contains("football") {
+            return .football
+        } else if ((item.contains("macaroni") || item.contains("mac")) && (item.contains("cheese"))) {
+            return .macAndCheese
+        } else if ((item.contains("slow") && item.contains("cooker")) || (item.contains("crock") && item.contains("pot"))) {
+            return .slowCooker
+        } else if item.contains("condiment") || item.contains("sauce") {
+            return .saucesAndCondiments
+        }
+        
+        return .other
+    }
+    
+    static func turnIntoSystemCuisineType(string: String) -> CuisineType {
+        let lower = string.lowercased()
+        var words: [Substring] {
+            return lower.split{ !$0.isLetter }
+        }
+        
+        let item = words.map { (sStr) -> String in
+            return String(sStr)
+        }
+        
+        if item.contains("italian") {
+            return .italian
+        } else if item.contains("mexican") {
+            return .mexican
+        } else if item.contains("chinese") {
+            return .chinese
+        } else if item.contains("indian") {
+            return .indian
+        } else if item.contains("thai") {
+            return .thai
+        } else if item.contains("asian") {
+            return .asian
+        } else if item.contains("american") {
+            if item.contains("latin") {
+                return .latinAmerican
+            } else {
+                return .ameircan
+            }
+        } else if item.contains("middle") && item.contains("eastern") {
+            return .middleEastern
+        } else if item.contains("african") {
+            return .african
+        } else if item.contains("european") {
+            return .european
+        } else if item.contains("australian") || item.contains("zealand") {
+            return .australianAndNZ
+        } else if item.contains("french") {
+            return .french
+        } else if item.contains("japanese") {
+            return .japanese
+        } else if item.contains("korean") {
+            return .korean
+        } else if item.contains("mediterranean") {
+            return .mediterranean
+        } else if item.contains("vietnamese") {
+            return .vietnamese
+        } else if item.contains("greek") {
+            return .greek
+        } else if item.contains("german") {
+            return .german
+        } else if item.contains("brazilian") {
+            return .brazilian
+        }
+        
+        return .other
     }
     
     static func turnIntoSystemItem(string: String) -> GenericItem {
@@ -300,7 +461,7 @@ struct Search {
         } else if item.contains("beef") {
             if item.contains("ground") {
                 return .groundBeef
-            } else if item.contains("broth") || item.contains("broth") || item.contains("bouillon") {
+            } else if item.contains("broth") || item.contains("bouillon") {
                 return .broth
             } else {
                 return .beef
@@ -441,10 +602,10 @@ struct Search {
                 return .garlic
             }
         } else if (item.contains("olive") || item.contains("olives")) && item.contains("oil") == false {
-            if item.contains("black") {
-                return .blackOlive
-            } else if item.contains("green") {
+            if item.contains("green") {
                 return .greenOlive
+            } else {
+                return .blackOlive
             }
         } else if item.contains("haddock") {
             return .haddock
@@ -646,7 +807,7 @@ struct Search {
             return .grapefruit
         } else if item.contains("guava") {
             return .guava
-        } else if item.contains("mango") || item.contains("mangoes") {
+        } else if item.contains("mango") || item.contains("mangoes") || item.contains("mangos") {
             return .mango
         } else if item.contains("melon") {
             return .melon
@@ -656,15 +817,14 @@ struct Search {
             return .pomegranate
         } else if item.contains("raspberry") {
             return .raspberry
-        } else if item.contains("tomato") || item.contains("tomatoes") {
+        } else if item.contains("tomato") || item.contains("tomatoes") || item.contains("tomatos") {
             if item.contains("paste") {
                 return .tomatoPaste
             } else if item.contains("can") || item.contains("cans") || item.contains("canned") {
                 return .cannedTomato
             } else if item.contains("sun") && item.contains("dried") {
                 return .sunDriedTomato
-            }
-            else {
+            } else {
                 return .tomato
             }
         } else if item.contains("plum") || item.contains("plums") {
@@ -823,7 +983,7 @@ struct Search {
             return .cereal
         } else if item.contains("champagne") {
             return .champagne
-        } else if item.contains("curry") || item.contains("powder") {
+        } else if item.contains("curry") && item.contains("powder") {
             return .curryPowder
         } else if item.contains("jalapeno") || item.contains("jalapeño") {
             return .jalapeno
@@ -863,7 +1023,7 @@ struct Search {
             return .sardine
         } else if item.contains("soda") || item.contains("pop") || item.contains("cola") || item.contains("coke") {
             return .soda
-        } else if item.contains("pot") || item.contains("roast") {
+        } else if item.contains("pot") && item.contains("roast") {
             return .potRoast
         } else if item.contains("popcorn") {
             return .popcorn
@@ -875,13 +1035,13 @@ struct Search {
             return .mussels
         } else if item.contains("nectarines") {
             return .nectarine
-        } else if item.contains("italian") || item.contains("seasoning") {
+        } else if item.contains("italian") && item.contains("seasoning") {
             return .italianSeasoning
         } else if item.contains("hummus"){
             return .hummus
         } else if item.contains("dip") {
             return .dip
-        } else if item.contains("tater") || item.contains("tots") {
+        } else if item.contains("tater") && item.contains("tots") {
             return .taterTots
         } else if item.contains("hot") && (item.contains("dog") || item.contains("dogs")) {
             return .hotDogs

@@ -31,18 +31,10 @@ enum RecipeType: CaseIterable {
     case lowCholestorol
     case lowFat
     case weightLoss
-    case julyFourth
-    case birthday
     case christmas
     case christmasCookies
-    case cincoDeMayo
-    case easter
     case football
-    case halloween
-    case hanukkah
-    case stPatricksDay
     case thanksgiving
-    case valentines
     case bread
     case cake
     case candy
@@ -60,6 +52,7 @@ enum RecipeType: CaseIterable {
     case soupAndChili
     case seafood
     case slowCooker
+    case other
     
     var description: String {
         switch self {
@@ -105,30 +98,14 @@ enum RecipeType: CaseIterable {
             return "Low Fat"
         case .weightLoss:
             return "Weight Loss"
-        case .julyFourth:
-            return "July 4th"
-        case .birthday:
-            return "Birthday"
         case .christmas:
             return "Christmas"
         case .christmasCookies:
             return "Christmas Cookies"
-        case .cincoDeMayo:
-            return "Cinco de Mayo"
-        case .easter:
-            return "Easter"
         case .football:
             return "Football"
-        case .halloween:
-            return "Halloween"
-        case .hanukkah:
-            return "Hanukkah"
-        case .stPatricksDay:
-            return "St. Patricks Day"
         case .thanksgiving:
             return "Thanksgiving"
-        case .valentines:
-            return "Valentine's Day"
         case .bread:
             return "Bread"
         case .cake:
@@ -163,6 +140,8 @@ enum RecipeType: CaseIterable {
             return "Seafood"
         case .slowCooker:
             return "Slow Cooker"
+        case .other:
+            return "Other"
         }
     }
     
