@@ -12,13 +12,19 @@ import AVFoundation
 
 class RecipeHomeVC: UIViewController {
     private let v = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
-    private var activeSearches: [String] = [] {
+    private var activeSearches: [(String, SearchType)] = [] {
         didSet {
+            Search.find(from: self.activeSearches, db: db) { (rcps) in
+                if let rcps = rcps {
+                    print(rcps.map({$0.name}))
+                }
+            }
+            let strings = self.activeSearches.map({$0.0})
             if wholeStackView.subviews.contains(v) {
-                v.setUI(searches: self.activeSearches)
+                v.setUI(searches: strings)
             } else {
                 wholeStackView.insertArrangedSubview(v, at: 1)
-                v.setUI(searches: self.activeSearches)
+                v.setUI(searches: strings)
             }
             
         }
@@ -103,9 +109,9 @@ class RecipeHomeVC: UIViewController {
     @objc func recipeButtonPressed(_ notification: NSNotification) {
         handleSuggestedSearchButtonBeingPressed()
         if let dict = notification.userInfo as NSDictionary? {
-            if let buttonName = dict["buttonName"] as? String {
-                if buttonName != "Select ingredients" {activeSearches.append(buttonName)}
-                Search.recipeSearchSuggested(buttonName: buttonName, db: db, calledFromVC: self) { (searchRecipes) in
+            if let buttonName = dict["buttonName"] as? (String, SearchType) {
+                if buttonName.0 != "Select ingredients" {activeSearches.append(buttonName)}
+                Search.recipeSearchSuggested(buttonName: buttonName.0, db: db, calledFromVC: self) { (searchRecipes) in
                     if let searchRecipes = searchRecipes {
                         self.imageCache.removeAllObjects()
                         self.recipes = searchRecipes
@@ -131,7 +137,7 @@ class RecipeHomeVC: UIViewController {
             }
         } else {
             recipes = SharedValues.shared.sentRecipesInto!.recipes
-            activeSearches = SharedValues.shared.sentRecipesInto!.ingredients
+            activeSearches = SharedValues.shared.sentRecipesInto!.ingredients.map({($0, .ingredient)})
             imageCache.removeAllObjects()
             SharedValues.shared.sentRecipesInto = nil
             //#error("first search after getting recipes and info from storage does not show properly on RecipeHomeScreen")
@@ -148,7 +154,7 @@ extension RecipeHomeVC: RecipesFoundFromSearchingDelegate {
         self.recipes = recipes
         self.dismiss(animated: true, completion: nil)
         let displayIngredients = ingredients.map { (ing) -> GenericItem in GenericItem.init(rawValue: ing)!}.map { (gi) -> String in gi.description}
-        activeSearches += displayIngredients
+        activeSearches += displayIngredients.map({($0, .ingredient)})
     }
 }
 
@@ -225,8 +231,7 @@ extension RecipeHomeVC: UISearchBarDelegate {
         searchHelperView.isHidden = false
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        print("\(Search.turnIntoSystemRecipeType(string: searchBar.text!)) is the recipeType search")
-        print("\(Search.turnIntoSystemCuisineType(string: searchBar.text!)) is the cuisineType search")
-        print("\(Search.turnIntoSystemItem(string: searchBar.text!)) is the ingredient search")
+        let s = Search.searchFromSearchBar(string: searchBar.text!)
+        activeSearches += s
     }
 }

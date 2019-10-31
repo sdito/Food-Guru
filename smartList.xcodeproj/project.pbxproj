@@ -10,6 +10,7 @@
 		165FE4DEEA11885B398FFCAE /* Pods_smartListTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7F488B427C9EA1D0083454 /* Pods_smartListTests.framework */; };
 		251D01FED1353E46E29BB939 /* Pods_smartList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F30C0C4898D5DF1DF11A7E59 /* Pods_smartList.framework */; };
 		D30C8AF1B700C4D5D1E2F1B9 /* Pods_smartListUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DF0F0395060F9BE10E20E39 /* Pods_smartListUITests.framework */; };
+		E2088BD22369EF9000370D09 /* SearchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2088BD12369EF9000370D09 /* SearchType.swift */; };
 		E20AFF3C2324911300A5479A /* SettingsHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AFF3B2324911300A5479A /* SettingsHomeVC.swift */; };
 		E20BC6CB2327376000F1E5E7 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6CA2327376000F1E5E7 /* SettingCell.swift */; };
 		E20BC6CF2327430C00F1E5E7 /* SettingsDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6CE2327430C00F1E5E7 /* SettingsDetailVC.swift */; };
@@ -122,6 +123,7 @@
 		808C86907637F132A742D4A5 /* Pods-smartListUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartListUITests.debug.xcconfig"; path = "Target Support Files/Pods-smartListUITests/Pods-smartListUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BB7F488B427C9EA1D0083454 /* Pods_smartListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_smartListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA8BD7215F29012C997B584 /* Pods-smartListTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartListTests.release.xcconfig"; path = "Target Support Files/Pods-smartListTests/Pods-smartListTests.release.xcconfig"; sourceTree = "<group>"; };
+		E2088BD12369EF9000370D09 /* SearchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchType.swift; sourceTree = "<group>"; };
 		E20AFF3B2324911300A5479A /* SettingsHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsHomeVC.swift; path = smartList/Views/SettingsHomeVC.swift; sourceTree = SOURCE_ROOT; };
 		E20BC6CA2327376000F1E5E7 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		E20BC6CE2327430C00F1E5E7 /* SettingsDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsDetailVC.swift; path = "smartList/View Controllers/SettingsDetailVC.swift"; sourceTree = SOURCE_ROOT; };
@@ -418,6 +420,7 @@
 				E2A26C3D234D953700D954C0 /* GenericItem.swift */,
 				E25F071623146CC600E6738E /* RecipeType.swift */,
 				E2B68D7423305877006A3B58 /* FoodStorageType.swift */,
+				E2088BD12369EF9000370D09 /* SearchType.swift */,
 				E20BC6DB23288B9C00F1E5E7 /* EmailCheck.swift */,
 				E25F071823146E5E00E6738E /* CuisineType.swift */,
 			);
@@ -846,6 +849,7 @@
 				E2445CF02321D8EA0089582F /* ListHomeVC.swift in Sources */,
 				E20BC6CB2327376000F1E5E7 /* SettingCell.swift in Sources */,
 				E2481B7F2300B00D0036E378 /* LogInVC.swift in Sources */,
+				E2088BD22369EF9000370D09 /* SearchType.swift in Sources */,
 				E20BC6E0232AB39F00F1E5E7 /* SetUpListVC.swift in Sources */,
 				E2C4934123066012002907C2 /* UIView-Extension.swift in Sources */,
 				E273F213235A6E96007B54E2 /* RecipeSearchCell.swift in Sources */,
