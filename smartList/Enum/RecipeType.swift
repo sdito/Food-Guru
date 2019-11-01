@@ -52,6 +52,7 @@ enum RecipeType: CaseIterable {
     case soupAndChili
     case seafood
     case slowCooker
+    case salad
     case other
     
     var description: String {
@@ -140,6 +141,8 @@ enum RecipeType: CaseIterable {
             return "Seafood"
         case .slowCooker:
             return "Slow Cooker"
+        case .salad:
+            return "Salad"
         case .other:
             return "Other"
         }

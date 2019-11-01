@@ -8,8 +8,18 @@
 
 import UIKit
 
-class CurrentSearchesView: UIView {
 
+#warning("do i need class here idk")
+protocol CurrentSearchesViewDelegate: class {
+    func buttonPressedToDeleteSearch(name: String)
+}
+
+
+
+class CurrentSearchesView: UIView {
+    
+    weak var delegate: CurrentSearchesViewDelegate!
+    
     @IBOutlet weak var stackView: UIStackView!
     
     func setUI(searches: [String]) {
@@ -21,14 +31,16 @@ class CurrentSearchesView: UIView {
         for search in searches {
             let b = UIButton()
             b.setTitle(search, for: .normal)
-            b.setTitleColor(Colors.main, for: .normal)
+            //b.setTitleColor(Colors.main, for: .normal)
             b.titleLabel?.font = UIFont(name: "futura", size: 15)
             b.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
             b.layer.cornerRadius = 5
             if #available(iOS 13.0, *) {
                 b.backgroundColor = .systemGray6
+                b.setTitleColor(.systemGray, for: .normal)
             } else {
                 b.backgroundColor = .lightGray
+                b.setTitleColor(Colors.main, for: .normal)
             }
             b.clipsToBounds = true
 
@@ -38,6 +50,10 @@ class CurrentSearchesView: UIView {
     }
     @objc func buttonAction(sender: UIButton) {
         print(sender.titleLabel?.text as Any)
+        if let text = sender.titleLabel?.text {
+            delegate.buttonPressedToDeleteSearch(name: text)
+        }
+        
     }
 
 }

@@ -142,6 +142,8 @@ class StorageHomeVC: UIViewController {
         tableView.reloadData()
         
     }
+    
+    
     @IBAction func findRecipes(_ sender: Any) {
         print("find recipes with selected ingredients")
         let genericItems = sortedItems.filter{(indexes?.contains(sortedItems.firstIndex(of: $0)!) ?? false)}.map({$0.systemItem!.rawValue})

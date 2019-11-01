@@ -35,8 +35,17 @@ extension UIStackView {
     
     // purpose of having this sent through notification to RecipeHomeVC then to Search is to keep logic for searching in Search struct
     @objc func noActionYet(sender: Any) {
-        let info = (sender as? UIButton)?.titleLabel?.text
+        var info = (sender as? UIButton)?.titleLabel?.text
         let type = info?.buttonNameSearchType() ?? .other
+        
+        if info == "Chicken" {
+            info = "chicken"
+        } else if info == "Beef" {
+            info = "beef"
+        } else if info == "Pasta" {
+            info = "pasta"
+        }
+        
         if let info = info {
             NotificationCenter.default.post(name: .recipeSearchButtonPressed, object: nil, userInfo: ["buttonName": (name: info, type: type)])
         }

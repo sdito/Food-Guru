@@ -16,18 +16,25 @@ class RecipeHomeVC: UIViewController {
         didSet {
             Search.find(from: self.activeSearches, db: db) { (rcps) in
                 if let rcps = rcps {
-                    print(rcps.map({$0.name}))
+                    self.recipes = rcps
+                } else {
+                    for _ in 1...10 {
+                        print("Recipes not found")
+                    }
                 }
             }
             let strings = self.activeSearches.map({$0.0})
             if wholeStackView.subviews.contains(v) {
                 v.setUI(searches: strings)
             } else {
+                
                 wholeStackView.insertArrangedSubview(v, at: 1)
                 v.setUI(searches: strings)
             }
             
         }
+        
+        
     }
     
     @IBOutlet weak var wholeStackView: UIStackView!
@@ -44,9 +51,11 @@ class RecipeHomeVC: UIViewController {
     
     var recipes: [Recipe] = [] {
         didSet {
+            imageCache.removeAllObjects()
             collectionView?.reloadData()
             collectionView?.collectionViewLayout.invalidateLayout()
             
+            print(self.recipes)
         }
         
     }
@@ -71,7 +80,7 @@ class RecipeHomeVC: UIViewController {
         
         db = Firestore.firestore()
         
-        
+        v.delegate = self
         let layout = collectionView.collectionViewLayout as! DynamicHeightLayout
         layout.numberOfColumns = 2
         layout.delegate = self
@@ -90,11 +99,11 @@ class RecipeHomeVC: UIViewController {
             self.allowButtonToBeShowed = true
         }
     }
-    
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showRecipeDetail" {
             let destVC = segue.destination as! RecipeDetailVC
@@ -110,19 +119,18 @@ class RecipeHomeVC: UIViewController {
         handleSuggestedSearchButtonBeingPressed()
         if let dict = notification.userInfo as NSDictionary? {
             if let buttonName = dict["buttonName"] as? (String, SearchType) {
-                if buttonName.0 != "Select ingredients" {activeSearches.append(buttonName)}
-                Search.recipeSearchSuggested(buttonName: buttonName.0, db: db, calledFromVC: self) { (searchRecipes) in
-                    if let searchRecipes = searchRecipes {
-                        self.imageCache.removeAllObjects()
-                        self.recipes = searchRecipes
-                    }
+                if buttonName.0 != "Select ingredients" {
+                    activeSearches.append(buttonName)
+                } else {
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "searchByIngredient") as! SearchByIngredientVC
+                    vc.recipesFoundDelegate = self
+                    UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
                 }
             }
         }
     }
     private func handleSuggestedSearchButtonBeingPressed() {
-        
-        //v.heightAnchor.constraint(equalToConstant: (searchBar.bounds.height * 0.8)).isActive = true
         wholeStackView.insertArrangedSubview(v, at: 1)
         searchBar.endEditing(true)
         searchHelperView.isHidden = true
@@ -149,12 +157,17 @@ class RecipeHomeVC: UIViewController {
 
 
 extension RecipeHomeVC: RecipesFoundFromSearchingDelegate {
-    func recipesFound(recipes: [Recipe], ingredients: [String]) {
+    func recipesFound(ingredients: [String]) {
         self.imageCache.removeAllObjects()
-        self.recipes = recipes
         self.dismiss(animated: true, completion: nil)
-        let displayIngredients = ingredients.map { (ing) -> GenericItem in GenericItem.init(rawValue: ing)!}.map { (gi) -> String in gi.description}
-        activeSearches += displayIngredients.map({($0, .ingredient)})
+        activeSearches += ingredients.map({($0, .ingredient)})
+    }
+}
+
+extension RecipeHomeVC: CurrentSearchesViewDelegate {
+    func buttonPressedToDeleteSearch(name: String) {
+        print("From RecipeHomeVC: \(name)")
+        activeSearches = activeSearches.filter({$0.0 != name})
     }
 }
 

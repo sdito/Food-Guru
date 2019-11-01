@@ -18,7 +18,7 @@ protocol SearchAssistantDelegate {
 }
 
 protocol RecipesFoundFromSearchingDelegate {
-    func recipesFound(recipes: [Recipe], ingredients: [String])
+    func recipesFound(ingredients: [String])
 }
 
 
@@ -78,13 +78,10 @@ class SearchByIngredientVC: UIViewController {
         }.map { (genericItem) -> String in
             genericItem.rawValue
         }
-        print(ingredients)
-        Search.getRecipesFromIngredients(db: db, ingredients: ingredients) { (recipesReturned) in
-            if let recipes = recipesReturned {
-                
-                self.recipesFoundDelegate.recipesFound(recipes: recipes, ingredients: ingredients)
-            }
-        }
+        
+        
+        self.recipesFoundDelegate.recipesFound(ingredients: ingredients)
+        
     }
     
     @IBAction func addItem(_ sender: Any) {

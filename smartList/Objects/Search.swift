@@ -27,10 +27,14 @@ struct Search {
         let otherText = info.filter({$0.1 == .other}).map({$0.0})
         
         
+        for _ in 1...10 {
+            print(ingredientText)
+        }
         switch (ingredientCount, recipeCount, cuisineCount) {
         case (0, 0, 0):
             return
         case (1, 0, 0):
+            print("has_\(ingredientText[0])")
             reference.whereField("has_\(ingredientText[0])", isEqualTo: true).getDocuments { (querySnapshot, error) in
                 guard let documents = querySnapshot?.documents else {
                     print("Error retrieving documents: \(String(describing: error))")
@@ -40,6 +44,7 @@ struct Search {
                 for doc in documents {
                     recipes.append(doc.recipe())
                 }
+                print(recipes.map({$0.name}))
                 recipesReturned(recipes)
             }
         case (2, 0, 0):
@@ -329,161 +334,65 @@ struct Search {
         
     }
     
-    #warning("will eventually not need this to find the actual recipes, but to just add the search peramaters to current searches")
-    static func recipeSearchSuggested(buttonName: String, db: Firestore, calledFromVC: UIViewController, recipesReturned: @escaping(_ recipes: [Recipe]?) -> Void) {
-        var recipes: [Recipe] = []
-        let reference = db.collection("recipes")
-        print("search recipes with: \(buttonName)")
-        switch buttonName {
-        case "Select ingredients":
-            #warning("will need to rework how this will add the ingredients, similar to how the whole function needs to be reworked")
-            print("Select ingredients")
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "searchByIngredient") as! SearchByIngredientVC
-            vc.recipesFoundDelegate = calledFromVC as? RecipesFoundFromSearchingDelegate
-            UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
-        case "Recommended":
-            print("Recommended")
-            
-        case "Breakfast":
-            print("Breakfast")
-            reference.whereField("recipeType", arrayContains: "Breakfast").getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case "Lunch":
-            print("Lunch")
-            reference.whereField("recipeType", arrayContains: "Lunch").getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case "Dinner":
-            print("Dinner")
-            reference.whereField("recipeType", arrayContains: "Dinner").getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case "Low calorie":
-            print("Low calorie")
-            
-        case "Chicken":
-            reference.whereField("has_chicken", isEqualTo: true).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-                
-            }
-        case "Pasta":
-            reference.whereField("has_pasta", isEqualTo: true).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-            
-        case "Healthy":
-            print("Healthy")
-            
-        case "Dessert":
-            print("Dessert")
-            reference.whereField("recipeType", arrayContains: "Dessert").getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case "Salad":
-            print("Salad")
-            
-        case "Beef":
-            print("Beef")
-            #warning("maybe should also put has_groundBeef in query")
-            reference.whereField("has_beef", isEqualTo: true).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-                
-            }
-        case "Seafood":
-            print("Seafood")
-            
-        case "Casserole":
-            print("Casserole")
-            
-        case "Vegetarian":
-            print("Vegetarian")
-            
-        case "Vegan":
-            print("Vegan")
-            
-        case "Italian":
-            reference.whereField("cuisineType", isEqualTo: "Italian").getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case "Snack":
-            print("Snack")
-            
-        case "Simple":
-            print("Simple")
-            
-        case "Quick":
-            print("Quick")
-            
-        case "Slow cooker":
-            print("Slow cooker")
-            
-        default:
-            print("default")
-            
-        }
-    }
+//    static func recipeSearchSuggested(buttonName: String, db: Firestore, calledFromVC: UIViewController) -> (String, SearchType) {
+//        switch buttonName {
+//        case "Select ingredients":
+//            print("Select ingredients")
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let vc = storyboard.instantiateViewController(withIdentifier: "searchByIngredient") as! SearchByIngredientVC
+//            vc.recipesFoundDelegate = calledFromVC as? RecipesFoundFromSearchingDelegate
+//            UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
+//        case "Recommended":
+//            print("Recommended")
+//            
+//        case "Breakfast":
+//            return ("Breakfast", .recipe)
+//        case "Lunch":
+//            return ("Lunch", .recipe)
+//        case "Dinner":
+//            return ("Dinner", .recipe)
+//        case "Low calorie":
+//            #warning("need to do other")
+//            return("Low calorie", .other)
+//        case "Chicken":
+//            return ("chicken", .ingredient)
+//        case "Pasta":
+//            return ("pasta", .ingredient)
+//        case "Healthy":
+//            return ("Healthy", .recipe)
+//        case "Dessert":
+//            return ("Dessert", .recipe)
+//        case "Salad":
+//            return ("Salad", .recipe)
+//        case "Beef":
+//            return ("beef", .ingredient)
+//        case "Seafood":
+//            print("Seafood")
+//            return ("Seafood", .recipe)
+//        case "Casserole":
+//            return ("Casserole", .recipe)
+//        case "Vegetarian":
+//            return ("Vegetarian", .recipe)
+//        case "Vegan":
+//            return ("Vegan", .recipe)
+//        case "Italian":
+//            return ("Italian", .cuisine)
+//        case "Snack":
+//            return ("Snack", .recipe)
+//        case "Simple":
+//            #warning("need to do other")
+//            return("Simple", .other)
+//        case "Quick":
+//            #warning("need to do other")
+//            return("Quick", .other)
+//        case "Slow cooker":
+//            return ("Slow cooker", .recipe)
+//        default:
+//            return ("other", .other)
+//            
+//        }
+//        return ("other", .other)
+//    }
     
     static func getRecipesFromIngredients(db: Firestore, ingredients: [String], recipesReturned: @escaping(_ recipes: [Recipe]?) -> Void) {
         var recipes: [Recipe] = []
@@ -493,7 +402,6 @@ struct Search {
         case 0:
             return
         case 1:
-//            reference.whereField("has_\(ingredients.first!)", isEqualTo: true).getDocuments { (querySnapshot, error) in
             reference.whereField("has_\(ingredients.first!)", isEqualTo: true).getDocuments { (querySnapshot, error) in
                 guard let documents = querySnapshot?.documents else {
                     print("Error retrieving documents: \(String(describing: error))")
