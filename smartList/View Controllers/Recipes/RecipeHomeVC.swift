@@ -17,6 +17,7 @@ class RecipeHomeVC: UIViewController {
             Search.find(from: self.activeSearches, db: db) { (rcps) in
                 if let rcps = rcps {
                     self.recipes = rcps
+                    
                 } else {
                     for _ in 1...10 {
                         print("Recipes not found")
@@ -30,10 +31,12 @@ class RecipeHomeVC: UIViewController {
                 wholeStackView.insertArrangedSubview(v, at: 1)
                 v.setUI(searches: self.activeSearches)
             }
-            
+            if self.activeSearches.isEmpty {
+                searchBar.placeholder = "Search recipes"
+            } else {
+                searchBar.placeholder = "Add another search"
+            }
         }
-        
-        
     }
     
     @IBOutlet weak var wholeStackView: UIStackView!
@@ -53,8 +56,6 @@ class RecipeHomeVC: UIViewController {
             imageCache.removeAllObjects()
             collectionView?.reloadData()
             collectionView?.collectionViewLayout.invalidateLayout()
-            
-            print(self.recipes)
         }
         
     }
@@ -84,10 +85,10 @@ class RecipeHomeVC: UIViewController {
         layout.numberOfColumns = 2
         layout.delegate = self
         
+        
         searchButtonStackView.setUpQuickSearchButtons()
         createObserver()
         scrollBackUpView.shadowAndRounded(cornerRadius: 10)
-        
     }
     
     @IBAction func scrollBackUp(_ sender: Any) {
@@ -119,8 +120,8 @@ class RecipeHomeVC: UIViewController {
         if let dict = notification.userInfo as NSDictionary? {
             if let buttonName = dict["buttonName"] as? (String, SearchType) {
                 if buttonName.0 != "Select ingredients" {
-                    handleDuplicateSearches(newSearches: [buttonName])
-                    activeSearches.append(buttonName)
+                    handleDuplicateSearchesAndAddNew(newSearches: [buttonName])
+                    //activeSearches.append(buttonName)
                 } else {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewController(withIdentifier: "searchByIngredient") as! SearchByIngredientVC
@@ -151,19 +152,28 @@ class RecipeHomeVC: UIViewController {
         }
     }
     
-    private func handleDuplicateSearches(newSearches: [(String, SearchType)]) {
+    private func handleDuplicateSearchesAndAddNew(newSearches: [(String, SearchType)]) {
+        var temp: [(String, SearchType)] = activeSearches
         for newSearch in newSearches{
             switch newSearch.1 {
             case .cuisine:
-                activeSearches = activeSearches.filter({$0.1 != .cuisine})
+                temp = temp.filter({$0.1 != .cuisine})
+                temp = temp.filter({$0.1 != .other})
+                temp += newSearches
+                activeSearches = temp
             case .recipe:
-                activeSearches = activeSearches.filter({$0.1 != .recipe})
+                temp = temp.filter({$0.1 != .recipe})
+                temp = temp.filter({$0.1 != .other})
+                
+                temp += newSearches
+                activeSearches = temp
             case .ingredient:
-                return
+                temp = temp.filter({$0.1 != .other})
+                
+                temp += newSearches
+                activeSearches = temp
             case .other:
-                activeSearches.removeAll()
-            @unknown default:
-                return
+                activeSearches = newSearches
             }
         }
     }
@@ -232,6 +242,14 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         return cell
     }
     
+//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//        if kind == UICollectionView.elementKindSectionHeader {
+//            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "recipeReusableView", for: indexPath)
+//            return header
+//        }
+//        fatalError()
+//    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (self.lastContentOffset > scrollView.contentOffset.y + 10) {
             if allowButtonToBeShowed == true && scrollView.contentOffset.y >= 0 {
@@ -259,7 +277,9 @@ extension RecipeHomeVC: UISearchBarDelegate {
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let s = Search.searchFromSearchBar(string: searchBar.text!)
-        handleDuplicateSearches(newSearches: s)
-        activeSearches += s
+        handleDuplicateSearchesAndAddNew(newSearches: s)
+        searchBar.endEditing(true)
+        searchHelperView.isHidden = true
+        searchBar.text = ""
     }
 }

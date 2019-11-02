@@ -969,27 +969,50 @@
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uGf-6c-fMe">
-                                <rect key="frame" x="187" y="763" width="40" height="40"/>
+                                <rect key="frame" x="105" y="763" width="204" height="40"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eic-QH-FIa">
-                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
-                                        <color key="tintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                        <state key="normal" image="arrow.up.circle.fill" catalog="system">
-                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="black"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="scrollBackUp:" destination="fFf-qk-23l" eventType="touchUpInside" id="kFk-rG-RLT"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="Fi2-ny-4bM">
+                                        <rect key="frame" x="10" y="0.0" width="184" height="40"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dar-Wz-q7g">
+                                                <rect key="frame" x="0.0" y="0.0" width="72" height="40"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                                <state key="normal" title="All recipes">
+                                                    <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eic-QH-FIa">
+                                                <rect key="frame" x="79" y="0.0" width="26" height="40"/>
+                                                <color key="tintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <state key="normal" image="arrow.up.circle.fill" catalog="system">
+                                                    <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="black"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="scrollBackUp:" destination="fFf-qk-23l" eventType="touchUpInside" id="kFk-rG-RLT"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5UA-5d-TOv">
+                                                <rect key="frame" x="112" y="0.0" width="72" height="40"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                                <state key="normal" title="Cookbook">
+                                                    <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="Dar-Wz-q7g" firstAttribute="width" secondItem="5UA-5d-TOv" secondAttribute="width" id="epW-as-Uwg"/>
+                                        </constraints>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="40" id="Hyt-6D-BGn"/>
+                                    <constraint firstItem="Fi2-ny-4bM" firstAttribute="leading" secondItem="uGf-6c-fMe" secondAttribute="leading" constant="10" id="5Mk-9R-hsH"/>
+                                    <constraint firstAttribute="trailing" secondItem="Fi2-ny-4bM" secondAttribute="trailing" constant="10" id="AzU-8A-eot"/>
                                     <constraint firstAttribute="height" constant="40" id="PAJ-2W-v6q"/>
-                                    <constraint firstAttribute="bottom" secondItem="eic-QH-FIa" secondAttribute="bottom" id="Psw-GK-bw1"/>
-                                    <constraint firstItem="eic-QH-FIa" firstAttribute="top" secondItem="uGf-6c-fMe" secondAttribute="top" id="aT1-rl-DCr"/>
-                                    <constraint firstAttribute="trailing" secondItem="eic-QH-FIa" secondAttribute="trailing" id="s2D-Sj-eRO"/>
-                                    <constraint firstItem="eic-QH-FIa" firstAttribute="leading" secondItem="uGf-6c-fMe" secondAttribute="leading" id="slj-xL-oJr"/>
+                                    <constraint firstAttribute="width" secondItem="Fi2-ny-4bM" secondAttribute="width" constant="20" id="WfV-fr-WJO"/>
+                                    <constraint firstAttribute="bottom" secondItem="Fi2-ny-4bM" secondAttribute="bottom" id="X7M-Im-6rs"/>
+                                    <constraint firstItem="Fi2-ny-4bM" firstAttribute="top" secondItem="uGf-6c-fMe" secondAttribute="top" id="txi-VI-dAP"/>
                                 </constraints>
                             </view>
                         </subviews>

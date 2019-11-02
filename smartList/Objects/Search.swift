@@ -11,7 +11,7 @@ import FirebaseFirestore
 
 struct Search {
     
-    static func find(from info: [(String, SearchType)], db: Firestore, recipesReturned: @escaping(_ recipes: [Recipe]?) -> Void) {
+    static func find(from info: [(String, SearchType)], db: Firestore, recipesReturned: @escaping(_ rs: [Recipe]?) -> Void) {
         var recipes: [Recipe] = []
         let reference = db.collection("recipes")
         let types = info.map({$0.1})
@@ -26,12 +26,34 @@ struct Search {
         let cuisineText = info.filter({$0.1 == .cuisine}).map({$0.0})
         let otherText = info.filter({$0.1 == .other}).map({$0.0})
         
+        if otherCount != 0 {
+            switch otherText.first {
+            case "Quick":
+                reference.whereField("totalTime", isLessThanOrEqualTo: 25).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    print(recipes.map({$0.name}))
+                    recipesReturned(recipes)
+                }
+
+            default:
+                return
+            }
+        }
         
         switch (ingredientCount, recipeCount, cuisineCount) {
         case (0, 0, 0):
             return
         case (1, 0, 0):
-            print("has_\(ingredientText[0])")
+            for _ in 1...1000 {
+                print("When is this being called")
+            }
             reference.whereField("has_\(ingredientText[0])", isEqualTo: true).getDocuments { (querySnapshot, error) in
                 guard let documents = querySnapshot?.documents else {
                     print("Error retrieving documents: \(String(describing: error))")
@@ -41,18 +63,20 @@ struct Search {
                 for doc in documents {
                     recipes.append(doc.recipe())
                 }
-                print(recipes.map({$0.name}))
                 recipesReturned(recipes)
             }
         case (2, 0, 0):
+            
             reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).getDocuments { (querySnapshot, error) in
                 guard let documents = querySnapshot?.documents else {
                     print("Error retrieving documents: \(String(describing: error))")
                     return
                 }
-                
                 for doc in documents {
                     recipes.append(doc.recipe())
+                }
+                for _ in 1...100 {
+                    print(recipes.map({$0.name}))
                 }
                 recipesReturned(recipes)
             }

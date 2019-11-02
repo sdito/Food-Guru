@@ -18,6 +18,7 @@ class DynamicHeightLayout: UICollectionViewLayout {
     var delegate: DynamicHeightLayoutDelegate!
     var numberOfColumns = 2
     var cellPadding: CGFloat = 2
+    var headerHeight: CGFloat = 50 //not really used yet probbaly delete
     
     var cache = [UICollectionViewLayoutAttributes]()
     fileprivate var contentHeight: CGFloat = 0
@@ -65,6 +66,7 @@ class DynamicHeightLayout: UICollectionViewLayout {
     }
     
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+        
         var layoutAttributes = [UICollectionViewLayoutAttributes]()
         for attributes in cache {
             if attributes.frame.intersects(rect) {
@@ -73,4 +75,16 @@ class DynamicHeightLayout: UICollectionViewLayout {
         }
         return layoutAttributes
     }
+    
+//    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+//        let layoutAttributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: elementKind, with: indexPath)
+//
+//        if elementKind == UICollectionView.elementKindSectionHeader {
+//            layoutAttributes.frame = CGRect(x: 0.0, y: 0.0, width: width, height: headerHeight)
+//            layoutAttributes.zIndex = Int.max - 3
+//        }
+//
+//        return layoutAttributes
+//    }
+    
 }
