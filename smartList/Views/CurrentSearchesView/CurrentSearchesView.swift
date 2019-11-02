@@ -11,7 +11,7 @@ import UIKit
 
 #warning("do i need class here idk")
 protocol CurrentSearchesViewDelegate: class {
-    func buttonPressedToDeleteSearch(name: String)
+    func buttonPressedToDeleteSearch(index: Int)
 }
 
 
@@ -22,7 +22,7 @@ class CurrentSearchesView: UIView {
     
     @IBOutlet weak var stackView: UIStackView!
     
-    func setUI(searches: [String]) {
+    func setUI(searches: [(String, SearchType)]) {
         stackView.subviews.forEach { (v) in
             if type(of: v) == UIButton.self {
                 v.removeFromSuperview()
@@ -30,9 +30,17 @@ class CurrentSearchesView: UIView {
         }
         for search in searches {
             let b = UIButton()
-            b.setTitle(search, for: .normal)
+            var buttonText: String {
+                if search.1 == .ingredient {
+                    return GenericItem(rawValue: search.0)?.description ?? "Search"
+                } else {
+                    return search.0
+                }
+            }
+            
+            b.setTitle(" X  \(buttonText) ", for: .normal)
             //b.setTitleColor(Colors.main, for: .normal)
-            b.titleLabel?.font = UIFont(name: "futura", size: 15)
+            b.titleLabel?.font = UIFont(name: "futura", size: 13)
             b.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
             b.layer.cornerRadius = 5
             if #available(iOS 13.0, *) {
@@ -50,10 +58,10 @@ class CurrentSearchesView: UIView {
     }
     @objc func buttonAction(sender: UIButton) {
         print(sender.titleLabel?.text as Any)
-        if let text = sender.titleLabel?.text {
-            delegate.buttonPressedToDeleteSearch(name: text)
+        print()
+        if let idx = (sender.superview as? UIStackView)?.subviews.firstIndex(of: sender) {
+            delegate.buttonPressedToDeleteSearch(index: idx - 1)
         }
-        
     }
 
 }

@@ -27,9 +27,6 @@ struct Search {
         let otherText = info.filter({$0.1 == .other}).map({$0.0})
         
         
-        for _ in 1...10 {
-            print(ingredientText)
-        }
         switch (ingredientCount, recipeCount, cuisineCount) {
         case (0, 0, 0):
             return
@@ -334,65 +331,6 @@ struct Search {
         
     }
     
-//    static func recipeSearchSuggested(buttonName: String, db: Firestore, calledFromVC: UIViewController) -> (String, SearchType) {
-//        switch buttonName {
-//        case "Select ingredients":
-//            print("Select ingredients")
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let vc = storyboard.instantiateViewController(withIdentifier: "searchByIngredient") as! SearchByIngredientVC
-//            vc.recipesFoundDelegate = calledFromVC as? RecipesFoundFromSearchingDelegate
-//            UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
-//        case "Recommended":
-//            print("Recommended")
-//            
-//        case "Breakfast":
-//            return ("Breakfast", .recipe)
-//        case "Lunch":
-//            return ("Lunch", .recipe)
-//        case "Dinner":
-//            return ("Dinner", .recipe)
-//        case "Low calorie":
-//            #warning("need to do other")
-//            return("Low calorie", .other)
-//        case "Chicken":
-//            return ("chicken", .ingredient)
-//        case "Pasta":
-//            return ("pasta", .ingredient)
-//        case "Healthy":
-//            return ("Healthy", .recipe)
-//        case "Dessert":
-//            return ("Dessert", .recipe)
-//        case "Salad":
-//            return ("Salad", .recipe)
-//        case "Beef":
-//            return ("beef", .ingredient)
-//        case "Seafood":
-//            print("Seafood")
-//            return ("Seafood", .recipe)
-//        case "Casserole":
-//            return ("Casserole", .recipe)
-//        case "Vegetarian":
-//            return ("Vegetarian", .recipe)
-//        case "Vegan":
-//            return ("Vegan", .recipe)
-//        case "Italian":
-//            return ("Italian", .cuisine)
-//        case "Snack":
-//            return ("Snack", .recipe)
-//        case "Simple":
-//            #warning("need to do other")
-//            return("Simple", .other)
-//        case "Quick":
-//            #warning("need to do other")
-//            return("Quick", .other)
-//        case "Slow cooker":
-//            return ("Slow cooker", .recipe)
-//        default:
-//            return ("other", .other)
-//            
-//        }
-//        return ("other", .other)
-//    }
     
     static func getRecipesFromIngredients(db: Firestore, ingredients: [String], recipesReturned: @escaping(_ recipes: [Recipe]?) -> Void) {
         var recipes: [Recipe] = []

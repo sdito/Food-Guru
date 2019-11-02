@@ -23,13 +23,12 @@ class RecipeHomeVC: UIViewController {
                     }
                 }
             }
-            let strings = self.activeSearches.map({$0.0})
             if wholeStackView.subviews.contains(v) {
-                v.setUI(searches: strings)
+                v.setUI(searches: self.activeSearches)
             } else {
                 
                 wholeStackView.insertArrangedSubview(v, at: 1)
-                v.setUI(searches: strings)
+                v.setUI(searches: self.activeSearches)
             }
             
         }
@@ -120,6 +119,7 @@ class RecipeHomeVC: UIViewController {
         if let dict = notification.userInfo as NSDictionary? {
             if let buttonName = dict["buttonName"] as? (String, SearchType) {
                 if buttonName.0 != "Select ingredients" {
+                    handleDuplicateSearches(newSearches: [buttonName])
                     activeSearches.append(buttonName)
                 } else {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -148,10 +148,25 @@ class RecipeHomeVC: UIViewController {
             activeSearches = SharedValues.shared.sentRecipesInto!.ingredients.map({($0, .ingredient)})
             imageCache.removeAllObjects()
             SharedValues.shared.sentRecipesInto = nil
-            //#error("first search after getting recipes and info from storage does not show properly on RecipeHomeScreen")
         }
     }
     
+    private func handleDuplicateSearches(newSearches: [(String, SearchType)]) {
+        for newSearch in newSearches{
+            switch newSearch.1 {
+            case .cuisine:
+                activeSearches = activeSearches.filter({$0.1 != .cuisine})
+            case .recipe:
+                activeSearches = activeSearches.filter({$0.1 != .recipe})
+            case .ingredient:
+                return
+            case .other:
+                activeSearches.removeAll()
+            @unknown default:
+                return
+            }
+        }
+    }
 }
 
 
@@ -165,9 +180,8 @@ extension RecipeHomeVC: RecipesFoundFromSearchingDelegate {
 }
 
 extension RecipeHomeVC: CurrentSearchesViewDelegate {
-    func buttonPressedToDeleteSearch(name: String) {
-        print("From RecipeHomeVC: \(name)")
-        activeSearches = activeSearches.filter({$0.0 != name})
+    func buttonPressedToDeleteSearch(index: Int) {
+        activeSearches.remove(at: index)
     }
 }
 
@@ -245,6 +259,7 @@ extension RecipeHomeVC: UISearchBarDelegate {
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let s = Search.searchFromSearchBar(string: searchBar.text!)
+        handleDuplicateSearches(newSearches: s)
         activeSearches += s
     }
 }
