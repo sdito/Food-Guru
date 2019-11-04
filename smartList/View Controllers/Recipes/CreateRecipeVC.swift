@@ -17,6 +17,10 @@ class CreateRecipeVC: UIViewController {
     var storage: Storage!
     let imagePicker = UIImagePickerController()
     var image: Data?
+    private var forCookbook = false
+    
+    @IBOutlet var stackViewsToHide: [UIStackView]!
+    
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var servingsTextField: UITextField!
@@ -87,9 +91,7 @@ class CreateRecipeVC: UIViewController {
         self.createNavigationBarTextAttributes()
         
         
-//        for _ in 1...50 {
-//            print(self.navigationController?.viewControllers.first)
-//        }
+        handleUI()
         
     }
     
@@ -107,9 +109,15 @@ class CreateRecipeVC: UIViewController {
     }
     
     @IBAction func createRecipePressed(_ sender: Any) {
-        var recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, userID: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text, tagline: taglineTextView.text, recipeImage: image, imagePath: nil)
-        recipe.writeToFirestore(db: db, storage: storage)
-        navigationController?.popToRootViewController(animated: true)
+        switch forCookbook {
+        case false:
+            var recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, userID: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text, tagline: taglineTextView.text, recipeImage: image, imagePath: nil)
+            recipe.writeToFirestore(db: db, storage: storage)
+            navigationController?.popToRootViewController(animated: true)
+        case true:
+            print("Add the item to the cookbook in realm here")
+        }
+        
 
     }
     
@@ -125,6 +133,15 @@ class CreateRecipeVC: UIViewController {
     @IBAction func selectDescriptions(_ sender: Any) {
         pushToPopUp()
         
+    }
+    
+    private func handleUI() {
+        if (self.navigationController?.viewControllers.first as? CookbookVC) != nil {
+            forCookbook = true
+            stackViewsToHide.forEach { (sv) in
+                sv.removeFromSuperview()
+            }
+        }
     }
     
     private func insert() {

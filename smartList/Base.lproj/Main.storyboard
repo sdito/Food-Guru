@@ -815,6 +815,10 @@
                         <outlet property="selectimageOutlet" destination="ZIs-mM-MMw" id="TuW-r0-Hqb"/>
                         <outlet property="servingsTextField" destination="JVQ-tX-F7f" id="nuo-Bq-QMs"/>
                         <outlet property="taglineTextView" destination="Twy-0P-6LR" id="Gk0-FI-ZPZ"/>
+                        <outletCollection property="stackViewsToHide" destination="3L2-Jp-E8n" collectionClass="NSMutableArray" id="4HJ-X7-lus"/>
+                        <outletCollection property="stackViewsToHide" destination="77M-Rc-xlY" collectionClass="NSMutableArray" id="PL9-bv-jof"/>
+                        <outletCollection property="stackViewsToHide" destination="90S-Z1-IYK" collectionClass="NSMutableArray" id="1wN-EG-2UX"/>
+                        <outletCollection property="stackViewsToHide" destination="ha0-Wf-xTl" collectionClass="NSMutableArray" id="H30-nc-nyZ"/>
                         <segue destination="IUK-Ph-7gP" kind="show" identifier="recipeDetailSelection" id="VEA-1C-1vw"/>
                     </connections>
                 </viewController>
