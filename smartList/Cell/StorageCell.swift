@@ -50,11 +50,7 @@ class StorageCell: UITableViewCell {
                expires.textColor = .lightGray
                viewForCircle.circularPercentageView(endStrokeAt: CGFloat(pct), color: Colors.getRGBcolorFromPercentage(double: pct).cgColor)
             }
-            
-            
-            
-            
-            
+ 
         } else {
             expires.text = ""
         }

@@ -49,6 +49,7 @@ class RecipeHomeVC: UIViewController {
     private var allowButtonToBeShowed = true
     var imageCache = NSCache<NSString, UIImage>()
     
+    
     var db: Firestore!
     
     var recipes: [Recipe] = [] {
@@ -99,6 +100,13 @@ class RecipeHomeVC: UIViewController {
             self.allowButtonToBeShowed = true
         }
     }
+    @IBAction func savedRecipes(_ sender: Any) {
+        print("Saved recipes pressed")
+        
+    }
+    
+    
+    
 
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -195,6 +203,18 @@ extension RecipeHomeVC: CurrentSearchesViewDelegate {
     }
 }
 
+extension RecipeHomeVC: RecipeCellDelegate {
+    func removeFromFavorites(recipe: Recipe?) {
+        print("removeFromFavorites called")
+        #warning("having reusable cell issues")
+    }
+    
+    func addToFavorites(recipe: Recipe?) {
+        print("addToFavorites called")
+        #warning("having reusable cell issues")
+    }
+}
+
 extension RecipeHomeVC: DynamicHeightLayoutDelegate {
     #warning("issue with how much to subtract from the text labels, was 8 previously for title and cuisine and changed it to 10")
     func collectionView(_ collectionView: UICollectionView, heightForTextAtIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
@@ -226,6 +246,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let recipe = recipes[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCell
         cell.setUI(recipe: recipe)
+        cell.delegate = self as RecipeCellDelegate
         
         // pull the image from the cache if possible, if not pull from cloud storage
         if let cachedImage = imageCache.object(forKey: "\(indexPath.row)" as NSString) {
@@ -242,13 +263,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         return cell
     }
     
-//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        if kind == UICollectionView.elementKindSectionHeader {
-//            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "recipeReusableView", for: indexPath)
-//            return header
-//        }
-//        fatalError()
-//    }
+
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (self.lastContentOffset > scrollView.contentOffset.y + 10) {

@@ -10,6 +10,7 @@
 		165FE4DEEA11885B398FFCAE /* Pods_smartListTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB7F488B427C9EA1D0083454 /* Pods_smartListTests.framework */; };
 		251D01FED1353E46E29BB939 /* Pods_smartList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F30C0C4898D5DF1DF11A7E59 /* Pods_smartList.framework */; };
 		D30C8AF1B700C4D5D1E2F1B9 /* Pods_smartListUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DF0F0395060F9BE10E20E39 /* Pods_smartListUITests.framework */; };
+		E206E15F236FA4D4005C3422 /* CookbookVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E206E15E236FA4D4005C3422 /* CookbookVC.swift */; };
 		E2088BD22369EF9000370D09 /* SearchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2088BD12369EF9000370D09 /* SearchType.swift */; };
 		E20AFF3C2324911300A5479A /* SettingsHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20AFF3B2324911300A5479A /* SettingsHomeVC.swift */; };
 		E20BC6CB2327376000F1E5E7 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6CA2327376000F1E5E7 /* SettingCell.swift */; };
@@ -123,6 +124,7 @@
 		808C86907637F132A742D4A5 /* Pods-smartListUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartListUITests.debug.xcconfig"; path = "Target Support Files/Pods-smartListUITests/Pods-smartListUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		BB7F488B427C9EA1D0083454 /* Pods_smartListTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_smartListTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDA8BD7215F29012C997B584 /* Pods-smartListTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartListTests.release.xcconfig"; path = "Target Support Files/Pods-smartListTests/Pods-smartListTests.release.xcconfig"; sourceTree = "<group>"; };
+		E206E15E236FA4D4005C3422 /* CookbookVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookbookVC.swift; sourceTree = "<group>"; };
 		E2088BD12369EF9000370D09 /* SearchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchType.swift; sourceTree = "<group>"; };
 		E20AFF3B2324911300A5479A /* SettingsHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsHomeVC.swift; path = smartList/Views/SettingsHomeVC.swift; sourceTree = SOURCE_ROOT; };
 		E20BC6CA2327376000F1E5E7 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				E2445CF12321D8F90089582F /* RecipeHomeVC.swift */,
+				E206E15E236FA4D4005C3422 /* CookbookVC.swift */,
 				E2C49348230B45E4002907C2 /* CreateRecipeVC.swift */,
 				E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */,
 				E253AC032341B4460018274A /* RecipeDetailVC.swift */,
@@ -845,6 +848,7 @@
 				E2DA80CD2349957700BD7101 /* StarRatingView.swift in Sources */,
 				E2B4695A22F7F485006BA77D /* Colors.swift in Sources */,
 				E253AC08234315BB0018274A /* ButtonIngredientView.swift in Sources */,
+				E206E15F236FA4D4005C3422 /* CookbookVC.swift in Sources */,
 				E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */,
 				E24ADB0E233DB063008F2F9F /* SettingContactDeveloperCell.swift in Sources */,
 				E2DA80D22349BB9000BD7101 /* GiveRatingView.swift in Sources */,

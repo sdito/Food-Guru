@@ -85,6 +85,12 @@ class CreateRecipeVC: UIViewController {
         notesTextView.border()
         taglineTextView.border()
         self.createNavigationBarTextAttributes()
+        
+        
+//        for _ in 1...50 {
+//            print(self.navigationController?.viewControllers.first)
+//        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
