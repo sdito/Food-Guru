@@ -34,8 +34,11 @@ class RecipeDetailVC: UIViewController {
     @IBOutlet weak var reviewsStackView: UIStackView!
     @IBOutlet weak var notes: UILabel!
 
-    var data: (image: UIImage, recipe: Recipe)?
+    @IBOutlet var viewsToRemoveForCookbook: [UIView]!
     
+    
+    var data: (image: UIImage, recipe: Recipe)?
+    var cookbookRecipe: CookbookRecipe?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +46,8 @@ class RecipeDetailVC: UIViewController {
         //set the image twice so that there will be something there while the better quality picture is loading, rather than a loading circle
         if let data = data {
             setUI(recipe: data.recipe, image: data.image)
+        } else if let cookbook = cookbookRecipe {
+            setUI(cookbookRecipe: cookbook)
         }
         data?.recipe.getImageFromStorage(thumb: false, imageReturned: { (img) in
             self.imageView.image = img
@@ -60,12 +65,12 @@ class RecipeDetailVC: UIViewController {
     @IBAction func addAllToList(_ sender: Any) {
         print("Add all items to list")
         let uid = Auth.auth().currentUser?.uid ?? " "
-        List.getUsersCurrentList(db: db, userID: uid) { (list) in
+        GroceryList.getUsersCurrentList(db: db, userID: uid) { (list) in
             if let list = list {
                 if list.stores?.isEmpty == true {
                     for item in (self.data?.recipe.ingredients)! {
                         
-                        List.addItemToListFromRecipe(db: self.db, listID: list.ownID ?? " ", name: item, userID: uid, store: "")
+                        GroceryList.addItemToListFromRecipe(db: self.db, listID: list.ownID ?? " ", name: item, userID: uid, store: "")
                     }
                     self.removeAddAllButton()
                 } else {
@@ -87,6 +92,15 @@ class RecipeDetailVC: UIViewController {
     @IBAction func reviewRecipe(_ sender: Any) {
         self.createRatingView(delegateVC: self)
     }
+    
+    private func setUI(cookbookRecipe: CookbookRecipe) {
+        viewsToRemoveForCookbook.forEach { (v) in
+            v.removeFromSuperview()
+        }
+        
+        
+    }
+    
     private func setUI(recipe: Recipe, image: UIImage) {
         imageView.image = data?.image
         recipeName.text = recipe.name

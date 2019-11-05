@@ -33,7 +33,7 @@ class AddItemsVC: UIViewController {
     
     var db: Firestore!
     
-    var list: List? {
+    var list: GroceryList? {
         didSet {
             if list?.items?.isEmpty == false {
                 //print(storeText)
@@ -62,7 +62,7 @@ class AddItemsVC: UIViewController {
         setUIfrom(list: list!)
         
         view.setGradientBackground(colorOne: .lightGray, colorTwo: .gray)
-        List.listenerOnListWithDocID(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (lst) in
+        GroceryList.listenerOnListWithDocID(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (lst) in
             //self.list = lst
             self.list?.name = lst?.name ?? "No name"
             self.list?.people = lst?.people
@@ -108,7 +108,7 @@ class AddItemsVC: UIViewController {
         tableView.reloadData()
     }
     
-    private func setUIfrom(list: List) {
+    private func setUIfrom(list: GroceryList) {
         //segmented control set up
         segmentedControl.removeAllSegments()
         
@@ -270,7 +270,7 @@ extension AddItemsVC {
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
-    func addItemsToStorageIfPossible(sendList: List, foodStorageEmails: [String]?) {
+    func addItemsToStorageIfPossible(sendList: GroceryList, foodStorageEmails: [String]?) {
         
         var isEqual: Bool = false
         var difference: [String]?

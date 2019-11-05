@@ -14,12 +14,12 @@ class ListHomeVC: UIViewController {
     
     var db: Firestore!
     var sections: [String]?
-    var listsForSections: [[List]]?
+    var listsForSections: [[GroceryList]]?
     
     lazy private var emptyCells: [UITableViewCell] = createEmptyListCells()
     
     private var items: [Item] = []
-    private var lists: [List]? {
+    private var lists: [GroceryList]? {
         didSet {
             (sections, listsForSections) = self.lists?.organizeTableViewForListHome() ?? (nil, nil)
             tableView.reloadData()
@@ -39,7 +39,7 @@ class ListHomeVC: UIViewController {
         tableView.delegate = self
         createObserver()
         db = Firestore.firestore()
-        List.readAllUserLists(db: db, userID: SharedValues.shared.userID!) { (dbLists) in
+        GroceryList.readAllUserLists(db: db, userID: SharedValues.shared.userID!) { (dbLists) in
             self.lists = dbLists
         }
         
@@ -50,7 +50,7 @@ class ListHomeVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "listSelected" {
             let destVC = segue.destination as! AddItemsVC
-            destVC.list = sender as? List
+            destVC.list = sender as? GroceryList
         }
     }
     

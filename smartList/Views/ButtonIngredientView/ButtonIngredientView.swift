@@ -44,10 +44,10 @@ class ButtonIngredientView: UIView {
         let userID = Auth.auth().currentUser?.uid ?? " "
         guard let name = label.text else { return print("Name did not set property from ButtonIngredientView") }
         
-        List.getUsersCurrentList(db: db, userID: userID) { (list) in
+        GroceryList.getUsersCurrentList(db: db, userID: userID) { (list) in
             if let list = list {
                 if list.stores?.isEmpty == true {
-                    List.addItemToListFromRecipe(db: db, listID: list.ownID ?? " ", name: name, userID: userID, store: "")
+                    GroceryList.addItemToListFromRecipe(db: db, listID: list.ownID ?? " ", name: name, userID: userID, store: "")
                 } else {
                     print("stores and or categories is not empty, have picker view")
                     self.delegate.haveUserSortItem(addedItemName: [name], addedItemStores: list.stores, addedItemListID: list.ownID ?? " ")

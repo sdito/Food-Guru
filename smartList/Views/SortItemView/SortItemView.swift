@@ -83,7 +83,7 @@ extension SortItemView: UIPickerViewDelegate, UIPickerViewDataSource {
     @objc func buttonAction() {
         let storesIndex = pickerView.selectedRow(inComponent: 0)
         
-        List.addItemToListFromRecipe(db: Firestore.firestore(), listID: listID ?? " ", name: name ?? " ", userID: Auth.auth().currentUser?.uid ?? " ", store: stores?[storesIndex] ?? "")
+        GroceryList.addItemToListFromRecipe(db: Firestore.firestore(), listID: listID ?? " ", name: name ?? " ", userID: Auth.auth().currentUser?.uid ?? " ", store: stores?[storesIndex] ?? "")
         let vc = self.findViewController()
         vc?.dismiss(animated: true, completion: nil)
     }
@@ -95,13 +95,13 @@ extension SortItemView: UIPickerViewDelegate, UIPickerViewDataSource {
             return
         case 1:
             print("Exit this pop up view and finish adding items")
-            List.addItemToListFromRecipe(db: Firestore.firestore(), listID: listID ?? " ", name: items?.first ?? "Item", userID: uid, store: stores?[storesIndex] ?? "")
+            GroceryList.addItemToListFromRecipe(db: Firestore.firestore(), listID: listID ?? " ", name: items?.first ?? "Item", userID: uid, store: stores?[storesIndex] ?? "")
             let vc = self.findViewController()
             vc?.dismiss(animated: true, completion: nil)
             // do not let add all items to list be pressed again
             delegate.disableButton()
         default:
-            List.addItemToListFromRecipe(db: Firestore.firestore(), listID: listID ?? " ", name: items?.first ?? "Item", userID: uid, store: stores?[storesIndex] ?? "")
+            GroceryList.addItemToListFromRecipe(db: Firestore.firestore(), listID: listID ?? " ", name: items?.first ?? "Item", userID: uid, store: stores?[storesIndex] ?? "")
             multipleItemStackView.subviews.first?.removeFromSuperview()
             multipleItemStackView.subviews.first?.alpha = 1.0
             items?.removeFirst()

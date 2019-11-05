@@ -56,7 +56,7 @@ class SetUpListVC: UIViewController {
     }
     
     
-    var listToEdit: List?
+    var listToEdit: GroceryList?
     private var db: Firestore!
     
     //start list data
@@ -117,7 +117,7 @@ class SetUpListVC: UIViewController {
     
     @IBAction func writeToFirestoreIfValid() {
         gatherListData()
-        let list = List(name: name ?? "", isGroup: usingGroup, stores: stores, people: people, items: nil, numItems: nil, docID: nil, timeIntervalSince1970: Date().timeIntervalSince1970, groupID: returnGroupID, ownID: "")
+        let list = GroceryList(name: name ?? "", isGroup: usingGroup, stores: stores, people: people, items: nil, numItems: nil, docID: nil, timeIntervalSince1970: Date().timeIntervalSince1970, groupID: returnGroupID, ownID: "")
         
         if name != "" {
             if listToEdit == nil {
@@ -172,7 +172,7 @@ class SetUpListVC: UIViewController {
     }
     
     
-    private func setUIifListIsBeingEdited(list: List) {
+    private func setUIifListIsBeingEdited(list: GroceryList) {
         nameTextField.text = list.name
         finishCreatingOrEditing.setTitle("Done editing", for: .normal)
         

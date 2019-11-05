@@ -20,7 +20,7 @@ struct User {
             namereturned(name)
         }
     }
-    static func comparePeopleIn(list: List, foodStorageEmails: [String]?) -> (isEqual: Bool, emailsDifferent: [String]?) {
+    static func comparePeopleIn(list: GroceryList, foodStorageEmails: [String]?) -> (isEqual: Bool, emailsDifferent: [String]?) {
         var listPeople = Set(list.people ?? [])
         var foodStoragePeople = Set(foodStorageEmails ?? [])
         

@@ -39,6 +39,7 @@ class RecipeHomeVC: UIViewController {
         }
     }
     
+    @IBOutlet weak var backUpOutlet: UIButton!
     @IBOutlet weak var wholeStackView: UIStackView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -90,6 +91,7 @@ class RecipeHomeVC: UIViewController {
         searchButtonStackView.setUpQuickSearchButtons()
         createObserver()
         scrollBackUpView.shadowAndRounded(cornerRadius: 10)
+        backUpOutlet.alpha = 0
     }
     
     @IBAction func scrollBackUp(_ sender: Any) {
@@ -266,11 +268,14 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
 
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (self.lastContentOffset > scrollView.contentOffset.y + 10) {
+        if (self.lastContentOffset > scrollView.contentOffset.y) {
             if allowButtonToBeShowed == true && scrollView.contentOffset.y >= 0 {
                 scrollBackUpView.setIsHidden(false, animated: true)
             }
-            
+            backUpOutlet.alpha = 1
+        }
+        else if scrollView.contentOffset.y <= 0 {
+            backUpOutlet.alpha = 0
         }
         
         else if (self.lastContentOffset < scrollView.contentOffset.y) {

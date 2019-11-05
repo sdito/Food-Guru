@@ -14,7 +14,7 @@ class ListHomeCell: UITableViewCell {
     @IBOutlet weak var numberItems: UILabel!
     @IBOutlet weak var createdAgo: UILabel!
     
-    func setUI(list: List) {
+    func setUI(list: GroceryList) {
         name.text = list.name
         createdAgo.text = list.timeIntervalSince1970?.timeSince()
         switch list.numItems {

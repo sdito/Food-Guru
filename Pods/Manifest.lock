@@ -166,6 +166,11 @@ PODS:
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
   - Protobuf (3.10.0)
+  - Realm (3.20.0):
+    - Realm/Headers (= 3.20.0)
+  - Realm/Headers (3.20.0)
+  - RealmSwift (3.20.0):
+    - Realm (= 3.20.0)
   - SDWebImage (5.2.3):
     - SDWebImage/Core (= 5.2.3)
   - SDWebImage/Core (5.2.3)
@@ -175,6 +180,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Storage
   - FirebaseUI
+  - RealmSwift
 
 SPEC REPOS:
   trunk:
@@ -203,6 +209,8 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - Protobuf
+    - Realm
+    - RealmSwift
     - SDWebImage
 
 SPEC CHECKSUMS:
@@ -231,8 +239,10 @@ SPEC CHECKSUMS:
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
+  Realm: 8b2ca5bc6479a91f379b6b42b5922e396cd5ba5a
+  RealmSwift: 1949ef26a279e1845bd51d591b9103adfcd121df
   SDWebImage: 46a7f73228f84ce80990c786e4372cf4db5875ce
 
-PODFILE CHECKSUM: fd2931579cbc62b5a5512a81f455373f98e2ab40
+PODFILE CHECKSUM: 9ddbab14c30448164d6c50209be9d72cb180fe37
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.8.4

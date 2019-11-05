@@ -10,6 +10,7 @@ import UIKit
 import FirebaseFirestore
 import FirebaseAuth
 import FirebaseStorage
+import RealmSwift
 
 
 class CreateRecipeVC: UIViewController {
@@ -115,7 +116,28 @@ class CreateRecipeVC: UIViewController {
             recipe.writeToFirestore(db: db, storage: storage)
             navigationController?.popToRootViewController(animated: true)
         case true:
+            print(Realm.Configuration.defaultConfiguration.fileURL!)
+            let realm = try! Realm()
             print("Add the item to the cookbook in realm here")
+            let ingredients: List<String> = List.init()
+            let instructions: List<String> = List.init()
+            IngredientView.getIngredients(stack: ingredientsStackView).forEach { (str) in
+                ingredients.append(str)
+            }
+            InstructionView.getInstructions(stack: instructionsListStackView).forEach { (str) in
+                instructions.append(str)
+            }
+            
+            let cookbookRecipe = CookbookRecipe()
+            cookbookRecipe.setUp(name: nameTextField.text!, servings: RealmOptional(servingsTextField.toInt()), cookTime: RealmOptional(cookTimeTextField.toInt()), prepTime: RealmOptional(prepTimeTextField.toInt()), calories: RealmOptional(caloriesTextField.toInt()), ingredients: ingredients, instructions: instructions, notes: notesTextView.text)
+            
+            
+            try! realm.write {
+                realm.add(cookbookRecipe)
+            }
+            
+            navigationController?.popToRootViewController(animated: true)
+            
         }
         
 
@@ -130,9 +152,9 @@ class CreateRecipeVC: UIViewController {
     @IBAction func selectCuisine(_ sender: Any) {
         pushToPopUp()
     }
+    
     @IBAction func selectDescriptions(_ sender: Any) {
         pushToPopUp()
-        
     }
     
     private func handleUI() {
@@ -237,11 +259,7 @@ extension CreateRecipeVC: UIImagePickerControllerDelegate, UINavigationControlle
             selectimageOutlet.setTitle("", for: .normal)
             image = pickedImage.jpegData(compressionQuality: 0.75)
             print(pickedImage.size.height, pickedImage.size.width)
-        
-//            #error("have something working with the below three lines of code, need to get it so that the edited image gets written to firestore")
-//            let url = info[UIImagePickerController.InfoKey.imageURL] as! URL
-//            let uploadReference = Storage.storage().reference(withPath: "testImagePath")
-//            uploadReference.putFile(from: url)
+            
         }
         
         dismiss(animated: true, completion: nil)

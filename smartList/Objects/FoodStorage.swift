@@ -26,7 +26,7 @@ struct FoodStorage {
     }
     
     
-    static func addItemsFromListintoFoodStorage(sendList: List, storageID: String, db: Firestore) {
+    static func addItemsFromListintoFoodStorage(sendList: GroceryList, storageID: String, db: Firestore) {
         for item in sendList.items ?? [] {
             print(item.selected)
             if item.selected == true {
