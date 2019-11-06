@@ -19,7 +19,7 @@ extension String {
     
     func buttonNameSearchType() -> SearchType {
         switch self {
-        case "Select ingredients":
+        case "Select Ingredients":
             return .ingredient
         case "Recommended":
             return .other
@@ -29,7 +29,7 @@ extension String {
             return .recipe
         case "Dinner":
             return .recipe
-        case "Low calorie":
+        case "Low Calorie":
             return .recipe
         case "Chicken":
             return .ingredient
@@ -59,7 +59,7 @@ extension String {
             return .other
         case "Quick":
             return .other
-        case "Slow cooker":
+        case "Slow Cooker":
             return .recipe
         default:
             return .other

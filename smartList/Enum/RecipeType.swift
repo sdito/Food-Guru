@@ -148,6 +148,38 @@ enum RecipeType: CaseIterable {
         }
     }
     
+    static func turnIntoEnumString(string: String) -> RecipeType {
+        switch string {
+        case "Breakfast":
+            return .breakfast
+        case "Lunch":
+            return .lunch
+        case "Dinner":
+            return .dinner
+        case "Snack":
+            return .snack
+        case "Appetizer":
+            return .appetizer
+        case "Healthy":
+            return .healthy
+        case "Dessert":
+            return .dessert
+        case "Salad":
+            return .salad
+        case "Seafood":
+            return .seafood
+        case "Casserole":
+            return .casserole
+        case "Vegan":
+            return .vegan
+        case "Vegetarian":
+            return .vegetarian
+        case "Slow cooker":
+            return .slowCooker
+        default:
+            return .other
+        }
+    }
     
     
     // all the cases in the enum represented in their clean string format

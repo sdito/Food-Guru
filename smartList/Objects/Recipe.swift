@@ -51,7 +51,7 @@ struct Recipe {
     
     static func readUserRecipes(db: Firestore, recipesReturned: @escaping (_ recipe: [Recipe]) -> Void) {
         var recipes: [Recipe] = []
-        db.collection("recipes").getDocuments { (querySnapshot, error) in
+        db.collection("recipes").limit(to: 50).getDocuments { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Error fetching documents: \(String(describing: error))")
                 return

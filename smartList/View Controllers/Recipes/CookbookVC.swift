@@ -56,7 +56,8 @@ class CookbookVC: UIViewController {
     }
     @IBAction func allRecipes(_ sender: Any) {
         print("All recipes")
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: false, completion: nil)
+        
     }
     
 }

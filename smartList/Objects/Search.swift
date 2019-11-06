@@ -10,8 +10,8 @@ import Foundation
 import FirebaseFirestore
 
 struct Search {
-    
     static func find(from info: [(String, SearchType)], db: Firestore, recipesReturned: @escaping(_ rs: [Recipe]?) -> Void) {
+        print(info.map({$0.0}))
         var recipes: [Recipe] = []
         let reference = db.collection("recipes")
         let types = info.map({$0.1})

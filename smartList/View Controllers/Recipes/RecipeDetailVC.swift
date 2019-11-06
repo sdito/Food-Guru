@@ -47,7 +47,7 @@ class RecipeDetailVC: UIViewController {
         if let data = data {
             setUI(recipe: data.recipe, image: data.image)
         } else if let cookbook = cookbookRecipe {
-            setUI(cookbookRecipe: cookbook)
+            setUI(cbRecipe: cookbook)
         }
         data?.recipe.getImageFromStorage(thumb: false, imageReturned: { (img) in
             self.imageView.image = img
@@ -93,11 +93,16 @@ class RecipeDetailVC: UIViewController {
         self.createRatingView(delegateVC: self)
     }
     
-    private func setUI(cookbookRecipe: CookbookRecipe) {
+    private func setUI(cbRecipe: CookbookRecipe) {
         viewsToRemoveForCookbook.forEach { (v) in
             v.removeFromSuperview()
         }
         
+        print(cbRecipe.cookTime.value)
+        
+        if let cookTime = cbRecipe.cookTime.value {
+            print(cookTime)
+        }
         
     }
     

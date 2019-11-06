@@ -10,6 +10,7 @@ import UIKit
 import FirebaseFirestore
 import AVFoundation
 
+
 class RecipeHomeVC: UIViewController {
     private let v = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
     private var activeSearches: [(String, SearchType)] = [] {
@@ -129,7 +130,8 @@ class RecipeHomeVC: UIViewController {
         handleSuggestedSearchButtonBeingPressed()
         if let dict = notification.userInfo as NSDictionary? {
             if let buttonName = dict["buttonName"] as? (String, SearchType) {
-                if buttonName.0 != "Select ingredients" {
+                if buttonName.0 != "Select Ingredients" {
+                    
                     handleDuplicateSearchesAndAddNew(newSearches: [buttonName])
                     //activeSearches.append(buttonName)
                 } else {

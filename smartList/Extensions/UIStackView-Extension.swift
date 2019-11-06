@@ -20,21 +20,21 @@ extension UIStackView {
         return items
     }
     func setUpQuickSearchButtons() {
-        let buttons: [(name: String, action: Selector)] = [("Select ingredients", #selector(noActionYet)), ("Recommended", #selector(noActionYet)), ("Breakfast", #selector(noActionYet)), ("Lunch", #selector(noActionYet)), ("Dinner", #selector(noActionYet)), ("Low calorie", #selector(noActionYet)), ("Chicken", #selector(noActionYet)), ("Pasta", #selector(noActionYet)), ("Healthy", #selector(noActionYet)), ("Dessert", #selector(noActionYet)), ("Salad", #selector(noActionYet)), ("Beef", #selector(noActionYet)), ("Seafood", #selector(noActionYet)), ("Casserole", #selector(noActionYet)), ("Vegetarian", #selector(noActionYet)), ("Vegan", #selector(noActionYet)), ("Italian", #selector(noActionYet)), ("Snack", #selector(noActionYet)), ("Simple", #selector(noActionYet)), ("Quick", #selector(noActionYet)), ("Slow cooker", #selector(noActionYet))]
+        let buttons: [(name: String, action: Selector)] = [("Select Ingredients", #selector(recipePressed)), ("Recommended", #selector(recipePressed)), ("Breakfast", #selector(recipePressed)), ("Lunch", #selector(recipePressed)), ("Dinner", #selector(recipePressed)), ("Low Calorie", #selector(recipePressed)), ("Chicken", #selector(recipePressed)), ("Pasta", #selector(recipePressed)), ("Healthy", #selector(recipePressed)), ("Dessert", #selector(recipePressed)), ("Salad", #selector(recipePressed)), ("Beef", #selector(recipePressed)), ("Seafood", #selector(recipePressed)), ("Casserole", #selector(recipePressed)), ("Vegetarian", #selector(recipePressed)), ("Vegan", #selector(recipePressed)), ("Italian", #selector(recipePressed)), ("Snack", #selector(recipePressed)), ("Simple", #selector(recipePressed)), ("Quick", #selector(recipePressed)), ("Slow Cooker", #selector(recipePressed))]
         buttons.forEach { (button) in
             let b = UIButton()
             
             b.setTitle(button.name, for: .normal)
             b.titleLabel?.backgroundColor = Colors.main
             b.titleLabel?.font = UIFont(name: "futura", size: 17)
-            b.addTarget(self, action: #selector(noActionYet), for: .touchUpInside)
+            b.addTarget(self, action: #selector(recipePressed), for: .touchUpInside)
             
             self.insertArrangedSubview(b, at: self.subviews.count)
         }
     }
     
     // purpose of having this sent through notification to RecipeHomeVC then to Search is to keep logic for searching in Search struct
-    @objc func noActionYet(sender: Any) {
+    @objc func recipePressed(sender: Any) {
         var info = (sender as? UIButton)?.titleLabel?.text
         let type = info?.buttonNameSearchType() ?? .other
         
