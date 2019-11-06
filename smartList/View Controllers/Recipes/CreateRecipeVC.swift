@@ -7,9 +7,7 @@
 //
 
 import UIKit
-import FirebaseFirestore
-import FirebaseAuth
-import FirebaseStorage
+import Firebase
 import RealmSwift
 
 
@@ -17,6 +15,7 @@ class CreateRecipeVC: UIViewController {
     var db: Firestore!
     var storage: Storage!
     let imagePicker = UIImagePickerController()
+    let imageToTextRecipe = UIImagePickerController()
     var image: Data?
     private var forCookbook = false
     
@@ -107,6 +106,14 @@ class CreateRecipeVC: UIViewController {
             cuisineOutlet.setTitleColor(Colors.main, for: .normal)
             recipeDescriptionOutlet.setTitleColor(Colors.main, for: .normal)
         }
+    }
+    
+    @IBAction func imageToRecipe(_ sender: Any) {
+        print("Image to recipe")
+        imageToTextRecipe.sourceType = .photoLibrary
+        imageToTextRecipe.delegate = self
+        present(imageToTextRecipe, animated: true)
+        
     }
     
     @IBAction func createRecipePressed(_ sender: Any) {
@@ -253,14 +260,35 @@ extension CreateRecipeVC: UITextViewDelegate {
 
 extension CreateRecipeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            selectimageOutlet.contentMode = .scaleAspectFit
-            selectimageOutlet.setBackgroundImage(pickedImage, for: .normal)
-            selectimageOutlet.setTitle("", for: .normal)
-            image = pickedImage.jpegData(compressionQuality: 0.75)
-            print(pickedImage.size.height, pickedImage.size.width)
-            
+        if picker == imagePicker {
+            if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+                selectimageOutlet.contentMode = .scaleAspectFit
+                selectimageOutlet.setBackgroundImage(pickedImage, for: .normal)
+                selectimageOutlet.setTitle("", for: .normal)
+                image = pickedImage.jpegData(compressionQuality: 0.75)
+                print(pickedImage.size.height, pickedImage.size.width)
+                
+            }
+        } else if picker == imageToTextRecipe {
+            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                let vision = Vision.vision()
+                let textRecognizer = vision.cloudDocumentTextRecognizer()
+                let visionImage = VisionImage(image: image)
+                textRecognizer.process(visionImage) { (result, error) in
+                    guard error == nil, let result = result else {
+                        print("Error reading text: \(String(describing: error))")
+                        return
+                    }
+                    
+                    let alert = UIAlertController(title: "Text from image", message: "blocks: \(result.blocks.map({$0.text}))", preferredStyle: .alert)
+                    alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                    
+                    print(result.text)
+                }
+            }
         }
+        
         
         dismiss(animated: true, completion: nil)
     }

@@ -20,28 +20,31 @@ PODS:
     - FBSDKLoginKit/Login (= 5.8.0)
   - FBSDKLoginKit/Login (5.8.0):
     - FBSDKCoreKit (~> 5.0)
-  - Firebase/Auth (6.10.0):
+  - Firebase/Auth (6.11.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 6.3.0)
-  - Firebase/CoreOnly (6.10.0):
-    - FirebaseCore (= 6.3.1)
-  - Firebase/Database (6.10.0):
+    - FirebaseAuth (~> 6.3.1)
+  - Firebase/CoreOnly (6.11.0):
+    - FirebaseCore (= 6.3.2)
+  - Firebase/Database (6.11.0):
     - Firebase/CoreOnly
     - FirebaseDatabase (~> 6.1.1)
-  - Firebase/Firestore (6.10.0):
+  - Firebase/Firestore (6.11.0):
     - Firebase/CoreOnly
-    - FirebaseFirestore (~> 1.6.0)
-  - Firebase/Storage (6.10.0):
+    - FirebaseFirestore (~> 1.6.1)
+  - Firebase/MLVision (6.11.0):
+    - Firebase/CoreOnly
+    - FirebaseMLVision (~> 0.19.0)
+  - Firebase/Storage (6.11.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 3.4.1)
-  - FirebaseAuth (6.3.0):
+  - FirebaseAuth (6.3.1):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 6.2)
     - GoogleUtilities/AppDelegateSwizzler (~> 6.2)
     - GoogleUtilities/Environment (~> 6.2)
     - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseAuthInterop (1.0.0)
-  - FirebaseCore (6.3.1):
+  - FirebaseCore (6.3.2):
     - FirebaseCoreDiagnostics (~> 1.0)
     - FirebaseCoreDiagnosticsInterop (~> 1.0)
     - GoogleUtilities/Environment (~> 6.2)
@@ -57,21 +60,43 @@ PODS:
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 6.0)
     - leveldb-library (~> 1.22)
-  - FirebaseFirestore (1.6.0):
+  - FirebaseFirestore (1.6.1):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 6.2)
-    - FirebaseFirestore/abseil-cpp (= 1.6.0)
+    - FirebaseFirestore/abseil-cpp (= 1.6.1)
     - "gRPC-C++ (= 0.0.9)"
     - leveldb-library (~> 1.22)
     - nanopb (~> 0.3.901)
     - Protobuf (>= 3.9.2, ~> 3.9)
-  - FirebaseFirestore/abseil-cpp (1.6.0):
+  - FirebaseFirestore/abseil-cpp (1.6.1):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 6.2)
     - "gRPC-C++ (= 0.0.9)"
     - leveldb-library (~> 1.22)
     - nanopb (~> 0.3.901)
     - Protobuf (>= 3.9.2, ~> 3.9)
+  - FirebaseInstanceID (4.2.6):
+    - FirebaseCore (~> 6.0)
+    - GoogleUtilities/Environment (~> 6.0)
+    - GoogleUtilities/UserDefaults (~> 6.0)
+  - FirebaseMLCommon (0.19.0):
+    - FirebaseCore (~> 6.3)
+    - FirebaseInstanceID (~> 4.2)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
+    - GoogleUtilities/UserDefaults (~> 6.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+    - Protobuf (~> 3.5)
+  - FirebaseMLVision (0.19.0):
+    - FirebaseCore (~> 6.3)
+    - FirebaseMLCommon (~> 0.19)
+    - GoogleAPIClientForREST/Core (~> 1.3)
+    - GoogleAPIClientForREST/Vision (~> 1.3)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
+    - GTMSessionFetcher/Core (~> 1.1)
+    - Protobuf (~> 3.5)
   - FirebaseStorage (3.4.1):
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 6.0)
@@ -111,14 +136,31 @@ PODS:
   - FirebaseUI/Storage (8.1.0):
     - Firebase/Storage (~> 6.0)
     - SDWebImage (~> 5.0)
-  - GoogleDataTransport (3.0.0)
-  - GoogleDataTransportCCTSupport (1.2.0):
+  - GoogleAPIClientForREST/Core (1.3.10):
+    - GTMSessionFetcher (>= 1.1.7)
+  - GoogleAPIClientForREST/Vision (1.3.10):
+    - GoogleAPIClientForREST/Core
+    - GTMSessionFetcher (>= 1.1.7)
+  - GoogleDataTransport (3.0.1)
+  - GoogleDataTransportCCTSupport (1.2.1):
     - GoogleDataTransport (~> 3.0)
     - nanopb (~> 0.3.901)
   - GoogleSignIn (5.0.1):
     - AppAuth (~> 1.2)
     - GTMAppAuth (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
+  - GoogleToolboxForMac/DebugUtils (2.2.2):
+    - GoogleToolboxForMac/Defines (= 2.2.2)
+  - GoogleToolboxForMac/Defines (2.2.2)
+  - GoogleToolboxForMac/Logger (2.2.2):
+    - GoogleToolboxForMac/Defines (= 2.2.2)
+  - "GoogleToolboxForMac/NSData+zlib (2.2.2)":
+    - GoogleToolboxForMac/Defines (= 2.2.2)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.2.2)":
+    - GoogleToolboxForMac/DebugUtils (= 2.2.2)
+    - GoogleToolboxForMac/Defines (= 2.2.2)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.2)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.2.2)"
   - GoogleUtilities/AppDelegateSwizzler (6.3.1):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -160,11 +202,11 @@ PODS:
   - GTMSessionFetcher/Full (1.2.2):
     - GTMSessionFetcher/Core (= 1.2.2)
   - leveldb-library (1.22)
-  - nanopb (0.3.901):
-    - nanopb/decode (= 0.3.901)
-    - nanopb/encode (= 0.3.901)
-  - nanopb/decode (0.3.901)
-  - nanopb/encode (0.3.901)
+  - nanopb (0.3.9011):
+    - nanopb/decode (= 0.3.9011)
+    - nanopb/encode (= 0.3.9011)
+  - nanopb/decode (0.3.9011)
+  - nanopb/encode (0.3.9011)
   - Protobuf (3.10.0)
   - Realm (3.20.0):
     - Realm/Headers (= 3.20.0)
@@ -178,6 +220,7 @@ PODS:
 DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Firestore
+  - Firebase/MLVision
   - Firebase/Storage
   - FirebaseUI
   - RealmSwift
@@ -196,11 +239,16 @@ SPEC REPOS:
     - FirebaseCoreDiagnosticsInterop
     - FirebaseDatabase
     - FirebaseFirestore
+    - FirebaseInstanceID
+    - FirebaseMLCommon
+    - FirebaseMLVision
     - FirebaseStorage
     - FirebaseUI
+    - GoogleAPIClientForREST
     - GoogleDataTransport
     - GoogleDataTransportCCTSupport
     - GoogleSignIn
+    - GoogleToolboxForMac
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
@@ -218,31 +266,36 @@ SPEC CHECKSUMS:
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   FBSDKCoreKit: e7dcac0aabcfb09d0166998edd95fe3b05a0ce5d
   FBSDKLoginKit: 1b0cf04df0370b37404213157b060d6666ede814
-  Firebase: 5e6b7b12bf9adb90986688edc06b156c37e109cd
-  FirebaseAuth: c66e990f79d1d3429165391f6cd70ace6143c25e
+  Firebase: bc9cfc7a96c73268656d5aaab453ff1b4b530e0e
+  FirebaseAuth: b401a012cc33b04df3b52bb308b04e8766f2693e
   FirebaseAuthInterop: 0ffa57668be100582bb7643d4fcb7615496c41fc
-  FirebaseCore: 064c2dd92a8ca5974bbdcb080df9921e46bd34cd
+  FirebaseCore: beeff42c07c30ea94702471d99db2089b594fbbd
   FirebaseCoreDiagnostics: af29e43048607588c050889d19204f4d7b758c9f
   FirebaseCoreDiagnosticsInterop: 6829da2b8d1fc795ff1bd99df751d3788035d2cb
   FirebaseDatabase: 524802f7694268c79d34aeac3d67997593e1a0c9
-  FirebaseFirestore: 5a9e9a14305336e8d1a4f915a45ecf0f5d6dcaec
+  FirebaseFirestore: bb8315fa13a15ea8977e940496b74ba6ad9071f2
+  FirebaseInstanceID: d0eafcd8bdbd3447cd694594734078c3e3e77d8b
+  FirebaseMLCommon: 074a67e05122b1c9f6401a4e33b2cea3b4efd224
+  FirebaseMLVision: 7a456009787690e3b53436092ae9b635563de8f3
   FirebaseStorage: b7c6d00997bc21d4465453bdcc5cc65513110fed
   FirebaseUI: 41e06c5f7f6e34a8f430862d67637e36e4aa696c
-  GoogleDataTransport: f6fe28f43e3a300736854260961ad485b473edc5
-  GoogleDataTransportCCTSupport: 862418a8cdda520c4dd4af83a756d04efe4a6990
+  GoogleAPIClientForREST: 4acfffd77f1c3c8741b6be9eaed0e603278efbde
+  GoogleDataTransport: 166f9b9f82cbf60a204e8fe2daa9db3e3ec1fb15
+  GoogleDataTransportCCTSupport: f6ab1962e9dc05ab1fb938b795e5b310209edeec
   GoogleSignIn: 3a51b9bb8e48b635fd7f4272cee06ca260345b86
+  GoogleToolboxForMac: 800648f8b3127618c1b59c7f97684427630c5ea3
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
   "gRPC-C++": 9dfe7b44821e7b3e44aacad2af29d2c21f7cde83
   gRPC-Core: c9aef9a261a1247e881b18059b84d597293c9947
   GTMAppAuth: 4deac854479704f348309e7b66189e604cf5e01e
   GTMSessionFetcher: 61bb0f61a4cb560030f1222021178008a5727a23
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
-  nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   Protobuf: a4dc852ad69c027ca2166ed287b856697814375b
   Realm: 8b2ca5bc6479a91f379b6b42b5922e396cd5ba5a
   RealmSwift: 1949ef26a279e1845bd51d591b9103adfcd121df
   SDWebImage: 46a7f73228f84ce80990c786e4372cf4db5875ce
 
-PODFILE CHECKSUM: 9ddbab14c30448164d6c50209be9d72cb180fe37
+PODFILE CHECKSUM: e182d84657a43471bba85866e5dd9f2fd3ce24b4
 
 COCOAPODS: 1.8.4
