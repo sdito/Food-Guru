@@ -193,9 +193,7 @@ class AddItemsVC: UIViewController {
         let category = GenericItem.getCategory(item: genericItem, words: words)
         var item = Item(name: text, selected: false, category: category.rawValue, store: currentStore, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: genericItem, systemCategory: category)
         item.writeToFirestoreForList(db: db)
-        //NEED TO HAVE THE OWNID FOR THE ITEM IN ORDER TO WRITE TO DB IN THE FUTURE ABOUT ITEM EVENTS
         
-        //print("\(item.ownID) is the item id")
         if list?.items?.isEmpty == false {
             list?.items!.append(item)
         } else {

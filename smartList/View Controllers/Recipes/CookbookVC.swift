@@ -37,6 +37,8 @@ class CookbookVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        let realm = try! Realm()
+        recipes = Array(realm.objects(CookbookRecipe.self))
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -64,19 +66,53 @@ class CookbookVC: UIViewController {
 
 extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recipes.count
+        if recipes.count != 0 {
+            return recipes.count
+        } else {
+            return 1
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cookbookCell") as! CookbookCell
-        let recipe = recipes[indexPath.row]
-        cell.setUI(recipe: recipe)
-        return cell
+        if recipes.count != 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cookbookCell") as! CookbookCell
+            let recipe = recipes[indexPath.row]
+            cell.setUI(recipe: recipe)
+            return cell
+        } else {
+            let cell: UITableViewCell = .init(style: .default, reuseIdentifier: nil)
+            cell.textLabel?.font = UIFont(name: "futura", size: 17)
+            cell.textLabel?.text = "No recipes saved to your cookbook! Add a recipe to your cookbook to always have your recipes, even without an internet connection."
+            cell.textLabel?.numberOfLines = 0
+            return cell
+        }
+        
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let recipe = recipes[indexPath.row]
         performSegue(withIdentifier: "showFromCookbook", sender: recipe)
     }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if recipes.count != 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if recipes.count != 0 {
+            let item = recipes[indexPath.row]
+            let alert = UIAlertController(title: "Are you sure you want to delete \"\(item.name)\"", message: nil, preferredStyle: .alert)
+            alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(.init(title: "Delete", style: .destructive, handler: {_ in self.deleteSelectedRecipe(recipe: item, idx: indexPath.row)}))
+            self.present(alert, animated: true)
+        }
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         print("Scrollviewdidscroll")
         if (self.lastContentOffset > scrollView.contentOffset.y) {
@@ -90,6 +126,14 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
             }
             self.lastContentOffset = scrollView.contentOffset.y
         }
+    }
+    private func deleteSelectedRecipe(recipe: CookbookRecipe, idx: Int) {
+        let realm = try! Realm()
+        try? realm.write {
+            realm.delete(recipe)
+        }
+        
+        recipes = Array(realm.objects(CookbookRecipe.self))
     }
 }
 

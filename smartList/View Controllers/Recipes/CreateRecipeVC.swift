@@ -280,6 +280,8 @@ extension CreateRecipeVC: UIImagePickerControllerDelegate, UINavigationControlle
                         return
                     }
                     
+                    result.tryToGetRecipeInfo()
+                    
                     let alert = UIAlertController(title: "Text from image", message: "blocks: \(result.blocks.map({$0.text}))", preferredStyle: .alert)
                     alert.addAction(.init(title: "Ok", style: .default, handler: nil))
                     self.present(alert, animated: true)
@@ -293,4 +295,27 @@ extension CreateRecipeVC: UIImagePickerControllerDelegate, UINavigationControlle
         dismiss(animated: true, completion: nil)
     }
     
+}
+
+
+extension VisionDocumentText {
+    func tryToGetRecipeInfo() {
+        let wordsForIngredients = ["ingredients", "you will need"]
+        let wordsForInstructions = ["instruction", "method", "directions", "to prepare"]
+        
+        /*
+         - could look for the word "serves" for the number in it
+         - some recipes might have the instruction number and the ingredient in a different block
+         - some recipes might have all the instructions or ingredients in the same block
+        */
+        for block in self.blocks {
+            if block.text.lowercased().contains("ingredients") {
+                print("Ingredients")
+            } else if block.text.lowercased().contains("method") {
+                print("Method")
+            } else {
+                print("Text")
+            }
+        }
+    }
 }
