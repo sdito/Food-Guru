@@ -12,6 +12,7 @@ import AVFoundation
 
 
 class RecipeHomeVC: UIViewController {
+    private var selectedCache: [IndexPath] = []
     private let v = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
     private var activeSearches: [(String, SearchType)] = [] {
         didSet {
@@ -210,12 +211,13 @@ extension RecipeHomeVC: CurrentSearchesViewDelegate {
 extension RecipeHomeVC: RecipeCellDelegate {
     func removeFromFavorites(recipe: Recipe?) {
         print("removeFromFavorites called")
-        #warning("having reusable cell issues")
+        
     }
     
     func addToFavorites(recipe: Recipe?) {
         print("addToFavorites called")
-        #warning("having reusable cell issues")
+        
+        
     }
 }
 

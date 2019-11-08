@@ -741,7 +741,7 @@
                                                 </constraints>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Na1-4m-cBc">
-                                                <rect key="frame" x="0.0" y="687" width="374" height="38"/>
+                                                <rect key="frame" x="0.0" y="687" width="143" height="38"/>
                                                 <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="20"/>
                                                 <state key="normal" title="Create recipe">
@@ -1676,17 +1676,49 @@
                                     <action selector="searchPressed:" destination="TBV-k4-MLm" eventType="touchUpInside" id="9D5-MI-bSg"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAQ-iX-8P3">
-                                <rect key="frame" x="187" y="758" width="40" height="40"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c6i-fk-vry">
+                                <rect key="frame" x="163.66666666666666" y="763" width="87" height="40"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="0do-Vn-5X5">
+                                        <rect key="frame" x="0.0" y="0.0" width="87" height="40"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAQ-iX-8P3">
+                                                <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="MAQ-iX-8P3" secondAttribute="height" multiplier="1:1" id="2zM-WU-EPf"/>
+                                                </constraints>
+                                                <color key="tintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <state key="normal" image="plus.circle.fill" catalog="system">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="plusWasPressed:" destination="TBV-k4-MLm" eventType="touchUpInside" id="rHx-yq-CVW"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fzs-aI-a7s">
+                                                <rect key="frame" x="47" y="0.0" width="40" height="40"/>
+                                                <color key="tintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <state key="normal" image="barcode.viewfinder" catalog="system">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="barcodeScanPressed:" destination="TBV-k4-MLm" eventType="touchUpInside" id="ABR-Vf-pwh"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="Rad-15-73b"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="8lu-jb-lHs"/>
-                                    <constraint firstAttribute="width" constant="40" id="Fhb-A6-2F5"/>
+                                    <constraint firstAttribute="trailing" secondItem="0do-Vn-5X5" secondAttribute="trailing" id="5ZA-kU-pjL"/>
+                                    <constraint firstAttribute="bottom" secondItem="0do-Vn-5X5" secondAttribute="bottom" id="KYJ-VB-XeZ"/>
+                                    <constraint firstItem="0do-Vn-5X5" firstAttribute="leading" secondItem="c6i-fk-vry" secondAttribute="leading" id="VQH-w6-fwG"/>
+                                    <constraint firstItem="0do-Vn-5X5" firstAttribute="top" secondItem="c6i-fk-vry" secondAttribute="top" id="aq9-2j-bex"/>
                                 </constraints>
-                                <state key="normal" image="plus-6-xl"/>
-                                <connections>
-                                    <action selector="plusWasPressed:" destination="TBV-k4-MLm" eventType="touchUpInside" id="rHx-yq-CVW"/>
-                                </connections>
-                            </button>
+                            </view>
                             <searchBar hidden="YES" contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="k1z-zh-Gs7">
                                 <rect key="frame" x="40" y="50" width="334" height="56"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -1694,14 +1726,14 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="Zhw-h2-rb1" firstAttribute="bottom" secondItem="MAQ-iX-8P3" secondAttribute="bottom" constant="15" id="3KZ-4M-RPB"/>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="bottom" secondItem="UVb-sG-vZ1" secondAttribute="bottom" id="9ze-vj-bhl"/>
                             <constraint firstItem="k1z-zh-Gs7" firstAttribute="centerY" secondItem="2pe-Jw-8cP" secondAttribute="centerY" id="AMZ-1G-e3S"/>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="trailing" secondItem="z6d-S8-LRX" secondAttribute="trailing" constant="20" id="AUF-gp-ZLy"/>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="trailing" secondItem="UVb-sG-vZ1" secondAttribute="trailing" id="Awn-Uu-fVG"/>
-                            <constraint firstItem="MAQ-iX-8P3" firstAttribute="centerX" secondItem="XIK-7e-dU1" secondAttribute="centerX" id="CrQ-N9-gQ0"/>
                             <constraint firstItem="k1z-zh-Gs7" firstAttribute="centerX" secondItem="XIK-7e-dU1" secondAttribute="centerX" id="DUS-wy-jWf"/>
+                            <constraint firstItem="c6i-fk-vry" firstAttribute="centerX" secondItem="XIK-7e-dU1" secondAttribute="centerX" id="Hez-Yy-3Gg"/>
                             <constraint firstItem="2pe-Jw-8cP" firstAttribute="top" secondItem="Zhw-h2-rb1" secondAttribute="top" constant="20" id="OlS-yf-jQ2"/>
+                            <constraint firstItem="Zhw-h2-rb1" firstAttribute="bottom" secondItem="c6i-fk-vry" secondAttribute="bottom" constant="10" id="TPr-tv-jjc"/>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="trailing" secondItem="Xf8-CJ-kAi" secondAttribute="trailing" constant="20" id="UAa-1I-Fhy"/>
                             <constraint firstItem="Xf8-CJ-kAi" firstAttribute="top" secondItem="2pe-Jw-8cP" secondAttribute="bottom" constant="50" id="UoE-IT-dWG"/>
                             <constraint firstItem="yIr-eq-aLA" firstAttribute="leading" secondItem="2pe-Jw-8cP" secondAttribute="trailing" constant="5" id="YMp-f1-0LX"/>
@@ -1719,6 +1751,7 @@
                     <tabBarItem key="tabBarItem" title="Storage" image="shopping_cart" id="Pb6-n5-sA7"/>
                     <connections>
                         <outlet property="expirationDateOutlet" destination="lMq-ml-PTa" id="Q7z-PA-Lcp"/>
+                        <outlet property="helperView" destination="c6i-fk-vry" id="uHW-91-3Ip"/>
                         <outlet property="pickerPopUpView" destination="z6d-S8-LRX" id="Uxl-uC-5ii"/>
                         <outlet property="pickerView" destination="IQu-OV-dr4" id="NJR-OB-vj2"/>
                         <outlet property="popUpView" destination="Xf8-CJ-kAi" id="LCP-RS-EdU"/>
@@ -2717,6 +2750,7 @@
     </scenes>
     <resources>
         <image name="arrow.up.circle.fill" catalog="system" width="64" height="60"/>
+        <image name="barcode.viewfinder" catalog="system" width="64" height="56"/>
         <image name="book" width="30" height="30"/>
         <image name="checked-checkbox-xl-green" width="64" height="64"/>
         <image name="checked-checkbox-xxl" width="64" height="64"/>
@@ -2724,6 +2758,7 @@
         <image name="heart.circle.fill" catalog="system" width="64" height="60"/>
         <image name="order" width="30" height="30"/>
         <image name="plus-6-xl" width="64" height="64"/>
+        <image name="plus.circle.fill" catalog="system" width="64" height="60"/>
         <image name="plus.square.on.square" catalog="system" width="64" height="56"/>
         <image name="search-3-xl" width="64" height="64"/>
         <image name="services" width="30" height="30"/>

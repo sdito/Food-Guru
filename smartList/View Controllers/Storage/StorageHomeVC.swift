@@ -36,6 +36,7 @@ class StorageHomeVC: UIViewController {
     @IBOutlet weak var pickerPopUpView: UIView!
     @IBOutlet weak var expirationDateOutlet: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var helperView: UIView!
     
     var items: [Item] = [] {
         didSet {
@@ -81,6 +82,7 @@ class StorageHomeVC: UIViewController {
         searchBar.placeholder = ""
         searchBar.setTextProperties()
         searchOutlet.setImage(UIImage(named: "search-3-xl"), for: .normal)
+        helperView.shadowAndRounded(cornerRadius: 10)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -122,6 +124,16 @@ class StorageHomeVC: UIViewController {
         print("Plus was pressed")
         let vc = storyboard?.instantiateViewController(withIdentifier: "storageNewItem") as! StorageNewItemVC
         present(vc, animated: true, completion: nil)
+        
+    }
+    
+    @IBAction func barcodeScanPressed(_ sender: Any) {
+        print("barcode scanner pressed")
+        // not gonna work on the simulator
+        let cameraPicker = UIImagePickerController()
+        cameraPicker.sourceType = .camera
+        cameraPicker.cameraCaptureMode = .photo
+        present(cameraPicker, animated: true, completion: nil)
         
     }
     
@@ -365,3 +377,6 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
+extension StorageHomeVC: UIImagePickerControllerDelegate {
+    
+}

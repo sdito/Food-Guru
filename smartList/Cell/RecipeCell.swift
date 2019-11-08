@@ -80,42 +80,17 @@ class RecipeCell: UICollectionViewCell {
         
         
         favoriteButton.addTarget(self, action: #selector(favoriteButtonPressed), for: .touchUpInside)
-        
-        
-        
-        if selectionState == false {
-            if #available(iOS 13.0, *) {
-                favoriteButton.tintColor = .systemBackground
-            } else {
-                favoriteButton.tintColor = .black
-            }
-        } else {
-            if #available(iOS 13.0, *) {
-                favoriteButton.tintColor = Colors.main
-            } else {
-                favoriteButton.tintColor = .white
-            }
-        }
+
         
     }
     
     
     @objc func favoriteButtonPressed() {
-        selectionState = !selectionState
-        switch self.selectionState {
-            case true:
-                if #available(iOS 13.0, *) {
-                    favoriteButton.tintColor = Colors.main
-                } else {
-                    favoriteButton.tintColor = .white
-                }
-            case false:
-                if #available(iOS 13.0, *) {
-                    favoriteButton.tintColor = .systemBackground
-                } else {
-                    favoriteButton.tintColor = .black
-                }
-        }
+        
+        // use shared values to store the saved recipes (image path) for the user (with a listener)
+        // if the image path is in shared recipes, then it is selected, else it is not selected
+        // only way the selection state of the button changes is from if it is in shared values
+        
     }
     
 }
