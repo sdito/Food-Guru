@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import FirebaseFirestore
+import FirebaseAuth
 
 
 protocol RecipeCellDelegate {
@@ -80,16 +81,31 @@ class RecipeCell: UICollectionViewCell {
         
         
         favoriteButton.addTarget(self, action: #selector(favoriteButtonPressed), for: .touchUpInside)
-
+        
+        
+        if SharedValues.shared.savedRecipes?.contains(recipe.imagePath ?? " ") ?? false {
+            self.favoriteButton.tintColor = Colors.main
+        } else {
+            if #available(iOS 13.0, *) {
+                self.favoriteButton.tintColor = .systemBackground
+            } else {
+                self.favoriteButton.tintColor = .white
+            }
+        }
         
     }
     
     
     @objc func favoriteButtonPressed() {
-        
-        // use shared values to store the saved recipes (image path) for the user (with a listener)
-        // if the image path is in shared recipes, then it is selected, else it is not selected
-        // only way the selection state of the button changes is from if it is in shared values
+        let db = Firestore.firestore()
+        let path = self.recipe?.imagePath ?? " "
+        if SharedValues.shared.savedRecipes?.contains(self.recipe?.imagePath ?? " ") ?? false {
+            Recipe.removeRecipeFromSavedRecipes(db: db, str: path)
+            self.recipe?.removeRecipeDocumentFromUserProfile(db: db)
+        } else {
+            Recipe.addRecipeToSavedRecipes(db: db, str: path)
+            self.recipe?.addRecipeDocumentToUserProfile(db: db)
+        }
         
     }
     

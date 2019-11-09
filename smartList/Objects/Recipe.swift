@@ -64,6 +64,20 @@ struct Recipe {
         }
     }
     
+    static func addRecipeToSavedRecipes(db: Firestore, str: String) {
+        let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ")
+        reference.updateData([
+            "savedRecipes": FieldValue.arrayUnion([str])
+        ])
+    }
+    static func removeRecipeFromSavedRecipes(db: Firestore, str: String) {
+        let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ")
+        reference.updateData([
+            "savedRecipes": FieldValue.arrayRemove([str])
+        ])
+    }
+    
+    
     
 }
 
@@ -168,6 +182,9 @@ extension Recipe {
         }
     }
     
+    
+    
+    
     func addReviewToRecipe(stars: Int, review: String?, db: Firestore) {
         let recipeID = self.imagePath?.imagePathToDocID()
         var hasTextReview: Bool {
@@ -220,6 +237,42 @@ extension Recipe {
             stackView.insertArrangedSubview(v, at: stackView.subviews.count)
             counter += 1
         }
+    }
+    
+    
+    func addRecipeDocumentToUserProfile(db: Firestore) {
+        guard let id = self.imagePath?.imagePathToDocID() else { return }
+        let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").collection("savedRecipes").document(id)
+        reference.setData([
+            "name": self.name,
+            "recipeType": self.recipeType,
+            "cuisineType": self.cuisineType,
+            "cookTime": self.cookTime,
+            "prepTime": self.prepTime,
+            "totalTime": self.cookTime + self.prepTime,
+            "ingredients": self.ingredients,
+            "instructions": self.instructions,
+            "calories": self.calories as Any,
+            "numServes": self.numServes,
+            "userID": self.userID as Any,
+            "numReviews": self.numReviews as Any,
+            "numStars": self.numStars as Any,
+            "notes": self.notes as Any,
+            "path": self.imagePath as Any,
+            "tagline": self.tagline as Any
+        ]) { err in
+        if let err = err {
+            print("Error writing document: \(err)")
+        } else {
+            print("Document successfully written")
+            }
+        }
+    }
+    
+    func removeRecipeDocumentFromUserProfile(db: Firestore) {
+        guard let id = self.imagePath?.imagePathToDocID() else { return }
+        let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").collection("savedRecipes").document(id)
+        reference.delete()
     }
     
 }

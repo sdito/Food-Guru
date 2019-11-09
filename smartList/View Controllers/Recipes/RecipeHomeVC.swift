@@ -123,8 +123,11 @@ class RecipeHomeVC: UIViewController {
         }
     }
     
+    
+    
     private func createObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(recipeButtonPressed), name: .recipeSearchButtonPressed, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(savedRecipesChanged), name: .savedRecipesChanged, object: nil)
     }
     
     @objc func recipeButtonPressed(_ notification: NSNotification) {
@@ -144,6 +147,12 @@ class RecipeHomeVC: UIViewController {
             }
         }
     }
+    
+    @objc func savedRecipesChanged() {
+        print("saved recipes changed")
+        collectionView.reloadData()
+    }
+    
     private func handleSuggestedSearchButtonBeingPressed() {
         wholeStackView.insertArrangedSubview(v, at: 1)
         searchBar.endEditing(true)

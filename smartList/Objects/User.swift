@@ -232,10 +232,19 @@ struct User {
                     SharedValues.shared.groupEmails = nil
                     SharedValues.shared.groupDate = nil
                 }
+                
+                
                 if let storageID = docSnapshot.get("storageID") as? String {
                     SharedValues.shared.foodStorageID = storageID
                 } else {
                     SharedValues.shared.foodStorageID = nil
+                }
+                
+                
+                if let savedRecipes = docSnapshot.get("savedRecipes") as? [String] {
+                    SharedValues.shared.savedRecipes = savedRecipes
+                } else {
+                    SharedValues.shared.savedRecipes = nil
                 }
             }
         }

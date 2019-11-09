@@ -26,6 +26,11 @@ class SharedValues {
     var groupEmails: [String]?
     var groupDate: TimeInterval?
     var foodStorageEmails: [String]?
+    var savedRecipes: [String]? {
+        didSet {
+            NotificationCenter.default.post(name: .savedRecipesChanged, object: nil)
+        }
+    }
     var foodStorageID: String? {
         didSet {
             NotificationCenter.default.post(name: .foodStorageIDchanged, object: nil)
@@ -33,6 +38,7 @@ class SharedValues {
     }
     
     var sentRecipesInto: (recipes: [Recipe], ingredients: [String])?
+    
     
     static let shared = SharedValues()
     private init() {}

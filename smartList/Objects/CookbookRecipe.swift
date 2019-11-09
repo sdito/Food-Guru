@@ -42,18 +42,7 @@ class CookbookRecipe: Object {
         self.instructions = instructions
         self.notes = notes
     }
-    
-//    required init() {
-//        fatalError("init() has not been implemented")
-//    }
-//
-//    required init(realm: RLMRealm, schema: RLMObjectSchema) {
-//        fatalError("init(realm:schema:) has not been implemented")
-//    }
-//
-//    required init(value: Any, schema: RLMSchema) {
-//        fatalError("init(value:schema:) has not been implemented")
-//    }
+
     
    
     
