@@ -846,7 +846,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j6b-vx-pQN">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                         <subviews>
-                                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search recipes" translatesAutoresizingMaskIntoConstraints="NO" id="bmD-Dr-sbB">
+                                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search all recipes" translatesAutoresizingMaskIntoConstraints="NO" id="bmD-Dr-sbB">
                                                 <rect key="frame" x="0.0" y="0.0" width="370" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="Jee-9z-SYA"/>
@@ -1061,6 +1061,7 @@
                     <connections>
                         <outlet property="backUpOutlet" destination="eic-QH-FIa" id="x4p-jh-luI"/>
                         <outlet property="collectionView" destination="5rE-ht-6sa" id="oQX-9M-vSm"/>
+                        <outlet property="savedAndAllRecipesOutlet" destination="Dar-Wz-q7g" id="KHp-eD-DVG"/>
                         <outlet property="scrollBackUpView" destination="uGf-6c-fMe" id="hGd-lL-uWv"/>
                         <outlet property="searchBar" destination="bmD-Dr-sbB" id="jGd-49-Zzf"/>
                         <outlet property="searchButtonStackView" destination="EQf-BE-tEZ" id="UlM-PM-oiK"/>
@@ -1859,7 +1860,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="wTA-f7-bDw">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="802.66666666666663"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="857.66666666666663"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0KN-1p-7uW">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="449"/>
@@ -1900,6 +1901,11 @@
                                                             <constraint firstItem="qV2-Kw-PWF" firstAttribute="leading" secondItem="91a-0m-cqb" secondAttribute="leading" constant="25" id="tcX-7U-wuj"/>
                                                         </constraints>
                                                     </view>
+                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eLg-DN-Rf0">
+                                                        <rect key="frame" x="366" y="12" width="19" height="22"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <state key="normal" image="square.and.arrow.down" catalog="system"/>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
@@ -2037,8 +2043,37 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Mlh-DJ-Bs1">
+                                                <rect key="frame" x="0.0" y="752.66666666666663" width="414" height="32"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17p-LM-7PH">
+                                                        <rect key="frame" x="0.0" y="0.0" width="138" height="32"/>
+                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                                        <state key="normal" title="Print"/>
+                                                        <connections>
+                                                            <action selector="printRecipe:" destination="hdZ-0Z-sHl" eventType="touchUpInside" id="har-MG-AVV"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c4P-PH-JBd">
+                                                        <rect key="frame" x="138" y="0.0" width="138" height="32"/>
+                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                                        <state key="normal" title="Download"/>
+                                                        <connections>
+                                                            <action selector="downloadRecipe:" destination="hdZ-0Z-sHl" eventType="touchUpInside" id="Ux2-bR-tIl"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9fj-eN-Mhu">
+                                                        <rect key="frame" x="276" y="0.0" width="138" height="32"/>
+                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                                        <state key="normal" title="Save"/>
+                                                        <connections>
+                                                            <action selector="saveRecipe:" destination="hdZ-0Z-sHl" eventType="touchUpInside" id="esd-Nd-g2S"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="hbk-zr-lXp">
-                                                <rect key="frame" x="0.0" y="752.66666666666663" width="414" height="50"/>
+                                                <rect key="frame" x="0.0" y="807.66666666666663" width="414" height="50"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oPF-af-Iv5">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -2084,6 +2119,7 @@
                                             <constraint firstItem="Ytl-qP-e7p" firstAttribute="leading" secondItem="wTA-f7-bDw" secondAttribute="leading" id="H7S-1B-Fae"/>
                                             <constraint firstItem="0KN-1p-7uW" firstAttribute="leading" secondItem="wTA-f7-bDw" secondAttribute="leading" id="IO3-XY-fFn"/>
                                             <constraint firstAttribute="trailing" secondItem="0KN-1p-7uW" secondAttribute="trailing" id="Nq7-3k-7pM"/>
+                                            <constraint firstAttribute="trailing" secondItem="Mlh-DJ-Bs1" secondAttribute="trailing" id="SZx-xs-Tcz"/>
                                             <constraint firstItem="QdG-nx-MYu" firstAttribute="leading" secondItem="wTA-f7-bDw" secondAttribute="leading" id="cuC-fS-5gF"/>
                                             <constraint firstItem="0KN-1p-7uW" firstAttribute="top" secondItem="wTA-f7-bDw" secondAttribute="top" id="fac-ht-2xi"/>
                                             <constraint firstItem="7Qu-Xn-5os" firstAttribute="leading" secondItem="wTA-f7-bDw" secondAttribute="leading" id="gpb-JZ-x8V"/>
@@ -2118,6 +2154,7 @@
                         <outlet property="author" destination="wEc-D5-fh0" id="s5w-dT-rKi"/>
                         <outlet property="calories" destination="XHC-LS-82E" id="4Qf-Um-Qvk"/>
                         <outlet property="cookTime" destination="cf8-dz-xR8" id="YtS-AK-hcf"/>
+                        <outlet property="downloadRecipeOutlet" destination="c4P-PH-JBd" id="5XK-ib-uhR"/>
                         <outlet property="imageView" destination="az9-sO-Pm8" id="iyz-OW-F62"/>
                         <outlet property="ingredientsStackView" destination="QdG-nx-MYu" id="Lxk-lu-40V"/>
                         <outlet property="instructionsStackView" destination="Iag-iD-isv" id="IEK-Ko-fkB"/>
@@ -2125,9 +2162,11 @@
                         <outlet property="nameAndTitleView" destination="91a-0m-cqb" id="KvP-u7-4gS"/>
                         <outlet property="notes" destination="Ytl-qP-e7p" id="orC-a3-aqc"/>
                         <outlet property="prepTime" destination="Jq3-0H-7Qc" id="t5a-jD-MiG"/>
+                        <outlet property="printRecipeOutlet" destination="17p-LM-7PH" id="E76-N4-abm"/>
                         <outlet property="recipeName" destination="FHD-D8-LRU" id="KLx-Ca-yL2"/>
                         <outlet property="reviewRecipeOutlet" destination="WS9-3S-E6p" id="cA0-tw-3ai"/>
                         <outlet property="reviewsStackView" destination="hbk-zr-lXp" id="O8j-Hn-wl3"/>
+                        <outlet property="saveRecipeOutlet" destination="9fj-eN-Mhu" id="FyP-lL-3mK"/>
                         <outlet property="scrollView" destination="iel-HH-e8j" id="EPb-dr-Zv6"/>
                         <outlet property="servings" destination="fQX-he-V1G" id="4dG-Ej-MU0"/>
                         <outlet property="tagline" destination="5pj-tg-s8d" id="Wh3-Ie-OuG"/>
@@ -2135,6 +2174,7 @@
                         <outletCollection property="viewsToRemoveForCookbook" destination="5pj-tg-s8d" collectionClass="NSMutableArray" id="bfx-Ko-7KH"/>
                         <outletCollection property="viewsToRemoveForCookbook" destination="hbk-zr-lXp" collectionClass="NSMutableArray" id="UWW-8G-k3R"/>
                         <outletCollection property="viewsToRemoveForCookbook" destination="91a-0m-cqb" collectionClass="NSMutableArray" id="TTZ-m1-K4m"/>
+                        <outletCollection property="viewsToRemoveForCookbook" destination="Mlh-DJ-Bs1" collectionClass="NSMutableArray" id="K5H-4Z-Pvt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XZc-8I-7S2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2763,6 +2803,7 @@
         <image name="search-3-xl" width="64" height="64"/>
         <image name="services" width="30" height="30"/>
         <image name="shopping_cart" width="30" height="30"/>
+        <image name="square.and.arrow.down" catalog="system" width="60" height="64"/>
         <image name="trash-10-xxl" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>

@@ -20,18 +20,7 @@ class CookbookRecipe: Object {
     var instructions = List<String>()
     @objc dynamic var notes: String? = nil
     
-//    convenience init(name: String, servings: RealmOptional<Int>, cookTime: RealmOptional<Int>, prepTime: RealmOptional<Int>, calories: RealmOptional<Int>, ingredients: List<String>, instructions: List<String>, notes: String?) {
-//        self.init()
-//        self.name = name
-//        self.servings = servings
-//        self.cookTime = cookTime
-//        self.prepTime = prepTime
-//        self.calories = calories
-//        self.ingredients = ingredients
-//        self.instructions = instructions
-//        self.notes = notes
-//    }
-    
+
     func setUp(name: String, servings: RealmOptional<Int>, cookTime: RealmOptional<Int>, prepTime: RealmOptional<Int>, calories: RealmOptional<Int>, ingredients: List<String>, instructions: List<String>, notes: String?) {
         self.name = name
         self.servings = servings
@@ -42,8 +31,21 @@ class CookbookRecipe: Object {
         self.instructions = instructions
         self.notes = notes
     }
-
-    
-   
-    
 }
+
+extension CookbookRecipe {
+    func write() {
+        let realm = try! Realm()
+        try! realm.write {
+            realm.add(self)
+        }
+    }
+    func delete() {
+        let realm = try! Realm()
+        try? realm.write {
+            realm.delete(self)
+        }
+    }
+}
+
+

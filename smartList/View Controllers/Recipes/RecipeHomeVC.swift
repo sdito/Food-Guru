@@ -12,8 +12,26 @@ import AVFoundation
 
 
 class RecipeHomeVC: UIViewController {
+    private var savedRecipesActive = false {
+        didSet {
+            imageCache.removeAllObjects()
+            collectionView?.collectionViewLayout.invalidateLayout()
+            collectionView?.reloadData()
+            
+            switch self.savedRecipesActive {
+            case true:
+                searchBar.placeholder = "Filter saved recipes"
+                savedAndAllRecipesOutlet.setTitle("All recipes", for: .normal)
+                currentSearchesView.isHidden = true
+            case false:
+                searchBar.placeholder = "Search all recipes"
+                savedAndAllRecipesOutlet.setTitle("Saved", for: .normal)
+                currentSearchesView.isHidden = false
+            }
+        }
+    }
     private var selectedCache: [IndexPath] = []
-    private let v = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
+    private let currentSearchesView = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
     private var activeSearches: [(String, SearchType)] = [] {
         didSet {
             Search.find(from: self.activeSearches, db: db) { (rcps) in
@@ -26,12 +44,12 @@ class RecipeHomeVC: UIViewController {
                     }
                 }
             }
-            if wholeStackView.subviews.contains(v) {
-                v.setUI(searches: self.activeSearches)
+            if wholeStackView.subviews.contains(currentSearchesView) {
+                currentSearchesView.setUI(searches: self.activeSearches)
             } else {
                 
-                wholeStackView.insertArrangedSubview(v, at: 1)
-                v.setUI(searches: self.activeSearches)
+                wholeStackView.insertArrangedSubview(currentSearchesView, at: 1)
+                currentSearchesView.setUI(searches: self.activeSearches)
             }
             if self.activeSearches.isEmpty {
                 searchBar.placeholder = "Search recipes"
@@ -41,6 +59,7 @@ class RecipeHomeVC: UIViewController {
         }
     }
     
+    @IBOutlet weak var savedAndAllRecipesOutlet: UIButton!
     @IBOutlet weak var backUpOutlet: UIButton!
     @IBOutlet weak var wholeStackView: UIStackView!
     @IBOutlet weak var collectionView: UICollectionView!
@@ -61,8 +80,18 @@ class RecipeHomeVC: UIViewController {
             collectionView?.reloadData()
             collectionView?.collectionViewLayout.invalidateLayout()
         }
-        
     }
+    
+    private var savedRecipes: [Recipe] = [] {
+        didSet {
+            imageCache.removeAllObjects()
+            
+            collectionView?.collectionViewLayout.invalidateLayout()
+            collectionView?.reloadData()
+        }
+    }
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -84,7 +113,7 @@ class RecipeHomeVC: UIViewController {
         
         db = Firestore.firestore()
         
-        v.delegate = self
+        currentSearchesView.delegate = self
         let layout = collectionView.collectionViewLayout as! DynamicHeightLayout
         layout.numberOfColumns = 2
         layout.delegate = self
@@ -105,8 +134,13 @@ class RecipeHomeVC: UIViewController {
         }
     }
     @IBAction func savedRecipes(_ sender: Any) {
-        print("Saved recipes pressed")
-        
+        savedRecipesActive = !savedRecipesActive
+        print("SavedRecipesActive?: \(savedRecipesActive)")
+        if savedRecipesActive == true {
+            Recipe.readUserSavedRecipes(db: db) { (rcps) in
+                self.savedRecipes = rcps
+            }
+        }
     }
     
     
@@ -154,7 +188,7 @@ class RecipeHomeVC: UIViewController {
     }
     
     private func handleSuggestedSearchButtonBeingPressed() {
-        wholeStackView.insertArrangedSubview(v, at: 1)
+        wholeStackView.insertArrangedSubview(currentSearchesView, at: 1)
         searchBar.endEditing(true)
         searchHelperView.isHidden = true
     }
@@ -233,11 +267,20 @@ extension RecipeHomeVC: RecipeCellDelegate {
 extension RecipeHomeVC: DynamicHeightLayoutDelegate {
     #warning("issue with how much to subtract from the text labels, was 8 previously for title and cuisine and changed it to 10")
     func collectionView(_ collectionView: UICollectionView, heightForTextAtIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
-        let textData = recipes[indexPath.item]
-        let title = heightForText(textData.name, width: width - 10, font: UIFont(name: "futura", size: 20)!)
-        let cuisine = heightForText(textData.cuisineType, width: width - 10, font: UIFont(name: "futura", size: 17)!)
-        let description = heightForText(textData.recipeType.joined(separator: ", "), width: width - 10, font: UIFont(name: "futura", size: 15)!)
-        return title + cuisine + description + 8
+        switch savedRecipesActive {
+        case true:
+            let textData = savedRecipes[indexPath.item]
+            let title = heightForText(textData.name, width: width - 10, font: UIFont(name: "futura", size: 20)!)
+            let cuisine = heightForText(textData.cuisineType, width: width - 10, font: UIFont(name: "futura", size: 17)!)
+            let description = heightForText(textData.recipeType.joined(separator: ", "), width: width - 10, font: UIFont(name: "futura", size: 15)!)
+            return title + cuisine + description + 8
+        case false:
+            let textData = recipes[indexPath.item]
+            let title = heightForText(textData.name, width: width - 10, font: UIFont(name: "futura", size: 20)!)
+            let cuisine = heightForText(textData.cuisineType, width: width - 10, font: UIFont(name: "futura", size: 17)!)
+            let description = heightForText(textData.recipeType.joined(separator: ", "), width: width - 10, font: UIFont(name: "futura", size: 15)!)
+            return title + cuisine + description + 8
+        }
         
     }
     func heightForText(_ text: String, width: CGFloat, font: UIFont) -> CGFloat {
@@ -249,33 +292,69 @@ extension RecipeHomeVC: DynamicHeightLayoutDelegate {
 
 extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return recipes.count
+        switch savedRecipesActive {
+        case true:
+            return savedRecipes.count
+        case false:
+            return recipes.count
+        }
+        
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selected = recipes[indexPath.item]
-        print(selected.name)
-        performSegue(withIdentifier: "showRecipeDetail", sender: (imageCache.object(forKey: "\(indexPath.row)" as NSString), selected))
+        switch savedRecipesActive {
+        case true:
+            let selected = savedRecipes[indexPath.item]
+            performSegue(withIdentifier: "showRecipeDetail", sender: (imageCache.object(forKey: "\(indexPath.row)" as NSString), selected))
+        case false:
+            let selected = recipes[indexPath.item]
+            performSegue(withIdentifier: "showRecipeDetail", sender: (imageCache.object(forKey: "\(indexPath.row)" as NSString), selected))
+        }
+        
+        
+        
         
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let recipe = recipes[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCell
-        cell.setUI(recipe: recipe)
-        cell.delegate = self as RecipeCellDelegate
-        
-        // pull the image from the cache if possible, if not pull from cloud storage
-        if let cachedImage = imageCache.object(forKey: "\(indexPath.row)" as NSString) {
-            cell.recipeImage.image = cachedImage
-            print("Cache for \(indexPath.row)")
-        } else {
-            recipe.getImageFromStorage(thumb: true) { (img) in
-                cell.recipeImage.image = img
-                self.imageCache.setObject(img!, forKey: "\(indexPath.row)" as NSString)
-                print("Read for \(indexPath.row)")
+        switch savedRecipesActive {
+        case true:
+            let recipe = savedRecipes[indexPath.row]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCell
+            cell.setUI(recipe: recipe)
+            cell.delegate = self as RecipeCellDelegate
+            if let cachedImage = imageCache.object(forKey: "\(indexPath.row)" as NSString) {
+                cell.recipeImage.image = cachedImage
+                print("Cache for \(indexPath.row)")
+            } else {
+                recipe.getImageFromStorage(thumb: true) { (img) in
+                    cell.recipeImage.image = img
+                    self.imageCache.setObject(img!, forKey: "\(indexPath.row)" as NSString)
+                    print("Read for \(indexPath.row)")
+                }
             }
+            
+            return cell
+        case false:
+            let recipe = recipes[indexPath.row]
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCell
+            cell.setUI(recipe: recipe)
+            cell.delegate = self as RecipeCellDelegate
+            if let cachedImage = imageCache.object(forKey: "\(indexPath.row)" as NSString) {
+                cell.recipeImage.image = cachedImage
+                print("Cache for \(indexPath.row)")
+            } else {
+                recipe.getImageFromStorage(thumb: true) { (img) in
+                    cell.recipeImage.image = img
+                    self.imageCache.setObject(img!, forKey: "\(indexPath.row)" as NSString)
+                    print("Read for \(indexPath.row)")
+                }
+            }
+            
+            return cell
         }
         
-        return cell
+        
+        // pull the image from the cache if possible, if not pull from cloud storage
+        
     }
     
 

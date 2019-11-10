@@ -10,6 +10,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseAuth
 import FirebaseStorage
+import RealmSwift
 
 
 struct Recipe {
@@ -77,7 +78,21 @@ struct Recipe {
         ])
     }
     
-    
+    static func readUserSavedRecipes(db: Firestore, recipesReturned: @escaping (_ recipe: [Recipe]) -> Void) {
+        var recipes: [Recipe] = []
+        let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").collection("savedRecipes")
+        reference.getDocuments { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documents else {
+                print("Error fetching documents: \(String(describing: error))")
+                return
+            }
+            for doc in documents {
+                let r = Recipe(name: doc.get("name") as! String, recipeType: doc.get("recipeType") as! [String], cuisineType: doc.get("cuisineType") as! String, cookTime: doc.get("cookTime") as! Int, prepTime: doc.get("prepTime") as! Int, ingredients: doc.get("ingredients") as! [String], instructions: doc.get("instructions") as! [String], calories: doc.get("calories") as? Int, numServes: doc.get("numServes") as! Int, userID: doc.get("userID") as? String, numReviews: doc.get("numReviews") as? Int, numStars: doc.get("numStars") as? Int, notes: doc.get("notes") as? String, tagline: doc.get("tagline") as? String, recipeImage: nil, imagePath: doc.get("path") as? String)
+                recipes.append(r)
+            }
+            recipesReturned(recipes)
+        }
+    }
     
 }
 
@@ -273,6 +288,16 @@ extension Recipe {
         guard let id = self.imagePath?.imagePathToDocID() else { return }
         let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").collection("savedRecipes").document(id)
         reference.delete()
+    }
+    
+    func turnRecipeIntoCookbookRecipe() -> CookbookRecipe {
+        let cbr = CookbookRecipe()
+        let ingredients = List<String>.init()
+        let instructions = List<String>.init()
+        self.ingredients.forEach({ingredients.append($0)})
+        self.instructions.forEach({instructions.append($0)})
+        cbr.setUp(name: self.name, servings: RealmOptional(self.numServes), cookTime: RealmOptional(self.cookTime), prepTime: RealmOptional(self.prepTime), calories: RealmOptional(self.calories), ingredients: ingredients, instructions: instructions, notes: self.notes)
+        return cbr
     }
     
 }

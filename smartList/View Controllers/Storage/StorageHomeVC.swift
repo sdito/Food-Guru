@@ -133,6 +133,7 @@ class StorageHomeVC: UIViewController {
         let cameraPicker = UIImagePickerController()
         cameraPicker.sourceType = .camera
         cameraPicker.cameraCaptureMode = .photo
+        
         present(cameraPicker, animated: true, completion: nil)
         
     }

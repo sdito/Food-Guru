@@ -123,9 +123,6 @@ class CreateRecipeVC: UIViewController {
             recipe.writeToFirestore(db: db, storage: storage)
             navigationController?.popToRootViewController(animated: true)
         case true:
-            print(Realm.Configuration.defaultConfiguration.fileURL!)
-            let realm = try! Realm()
-            print("Add the item to the cookbook in realm here")
             let ingredients: List<String> = List.init()
             let instructions: List<String> = List.init()
             IngredientView.getIngredients(stack: ingredientsStackView).forEach { (str) in
@@ -137,11 +134,7 @@ class CreateRecipeVC: UIViewController {
             
             let cookbookRecipe = CookbookRecipe()
             cookbookRecipe.setUp(name: nameTextField.text!, servings: RealmOptional(servingsTextField.toInt()), cookTime: RealmOptional(cookTimeTextField.toInt()), prepTime: RealmOptional(prepTimeTextField.toInt()), calories: RealmOptional(caloriesTextField.toInt()), ingredients: ingredients, instructions: instructions, notes: notesTextView.text)
-            
-            
-            try! realm.write {
-                realm.add(cookbookRecipe)
-            }
+            cookbookRecipe.write()
             
             navigationController?.popToRootViewController(animated: true)
             
@@ -308,6 +301,7 @@ extension VisionDocumentText {
          - some recipes might have the instruction number and the ingredient in a different block
          - some recipes might have all the instructions or ingredients in the same block
         */
+        
         for block in self.blocks {
             if block.text.lowercased().contains("ingredients") {
                 print("Ingredients")

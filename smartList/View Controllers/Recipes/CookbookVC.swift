@@ -90,8 +90,10 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
         
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let recipe = recipes[indexPath.row]
-        performSegue(withIdentifier: "showFromCookbook", sender: recipe)
+        if recipes.count != 0 {
+            let recipe = recipes[indexPath.row]
+            performSegue(withIdentifier: "showFromCookbook", sender: recipe)
+        }
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -129,10 +131,7 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
     }
     private func deleteSelectedRecipe(recipe: CookbookRecipe, idx: Int) {
         let realm = try! Realm()
-        try? realm.write {
-            realm.delete(recipe)
-        }
-        
+        recipe.delete()
         recipes = Array(realm.objects(CookbookRecipe.self))
     }
 }

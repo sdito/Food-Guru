@@ -33,7 +33,12 @@ class RecipeDetailVC: UIViewController {
     @IBOutlet weak var instructionsStackView: UIStackView!
     @IBOutlet weak var reviewsStackView: UIStackView!
     @IBOutlet weak var notes: UILabel!
-
+    
+    @IBOutlet weak var printRecipeOutlet: UIButton!
+    @IBOutlet weak var downloadRecipeOutlet: UIButton!
+    @IBOutlet weak var saveRecipeOutlet: UIButton!
+    
+    
     @IBOutlet var viewsToRemoveForCookbook: [UIView]!
     
     
@@ -106,6 +111,44 @@ class RecipeDetailVC: UIViewController {
         
     }
     
+    @IBAction func printRecipe(_ sender: Any) {
+        print("Print recipe")
+        #warning("not implemented")
+    }
+    @IBAction func downloadRecipe(_ sender: Any) {
+        print("Download recipe")
+        
+        let cbr = data?.recipe.turnRecipeIntoCookbookRecipe()
+        cbr?.write()
+        self.createMessageView(color: Colors.messageGreen, text: "Recipe added to cookbook")
+        downloadRecipeOutlet.isUserInteractionEnabled = false
+        downloadRecipeOutlet.alpha = 0.5
+        downloadRecipeOutlet.setTitle("✓ Download", for: .normal)
+        
+    }
+    @IBAction func saveRecipe(_ sender: Any) {
+        print("Save recipe")
+        #warning("not implemented")
+        if let recipe = data?.recipe {
+            let db = Firestore.firestore()
+            let path = recipe.imagePath ?? " "
+            if SharedValues.shared.savedRecipes?.contains(path ) ?? false {
+                Recipe.removeRecipeFromSavedRecipes(db: db, str: path)
+                recipe.removeRecipeDocumentFromUserProfile(db: db)
+            } else {
+                Recipe.addRecipeToSavedRecipes(db: db, str: path)
+                recipe.addRecipeDocumentToUserProfile(db: db)
+                self.createMessageView(color: Colors.messageGreen, text: "Recipe saved")
+            }
+        }
+        
+        saveRecipeOutlet.isUserInteractionEnabled = false
+        saveRecipeOutlet.alpha = 0.5
+        saveRecipeOutlet.setTitle("✓ Save", for: .normal)
+        
+    }
+    
+    
     private func setUI(recipe: Recipe, image: UIImage) {
         imageView.image = data?.image
         recipeName.text = recipe.name
@@ -137,7 +180,12 @@ class RecipeDetailVC: UIViewController {
                 self.reviewsStackView.insertArrangedSubview(view, at: 1)
             }
         }
-        
+        let path = recipe.imagePath ?? " "
+        if SharedValues.shared.savedRecipes?.contains(path ) ?? false {
+            saveRecipeOutlet.isUserInteractionEnabled = false
+            saveRecipeOutlet.alpha = 0.5
+            saveRecipeOutlet.setTitle("✓ Save", for: .normal)
+        }
     }
     private func addStarRatingViewIfApplicable(recipe: Recipe) {
         if let nr = recipe.numReviews, let ns = recipe.numStars {
