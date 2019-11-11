@@ -114,6 +114,9 @@ class RecipeDetailVC: UIViewController {
     @IBAction func printRecipe(_ sender: Any) {
         print("Print recipe")
         #warning("not implemented")
+        
+        
+        
     }
     @IBAction func downloadRecipe(_ sender: Any) {
         print("Download recipe")
@@ -128,7 +131,6 @@ class RecipeDetailVC: UIViewController {
     }
     @IBAction func saveRecipe(_ sender: Any) {
         print("Save recipe")
-        #warning("not implemented")
         if let recipe = data?.recipe {
             let db = Firestore.firestore()
             let path = recipe.imagePath ?? " "
