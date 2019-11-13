@@ -1901,11 +1901,6 @@
                                                             <constraint firstItem="qV2-Kw-PWF" firstAttribute="leading" secondItem="91a-0m-cqb" secondAttribute="leading" constant="25" id="tcX-7U-wuj"/>
                                                         </constraints>
                                                     </view>
-                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eLg-DN-Rf0">
-                                                        <rect key="frame" x="366" y="12" width="19" height="22"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <state key="normal" image="square.and.arrow.down" catalog="system"/>
-                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
@@ -2803,7 +2798,6 @@
         <image name="search-3-xl" width="64" height="64"/>
         <image name="services" width="30" height="30"/>
         <image name="shopping_cart" width="30" height="30"/>
-        <image name="square.and.arrow.down" catalog="system" width="60" height="64"/>
         <image name="trash-10-xxl" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>

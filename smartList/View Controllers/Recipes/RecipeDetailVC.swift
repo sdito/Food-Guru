@@ -103,7 +103,6 @@ class RecipeDetailVC: UIViewController {
             v.removeFromSuperview()
         }
         
-        print(cbRecipe.cookTime.value)
         
         if let cookTime = cbRecipe.cookTime.value {
             print(cookTime)
@@ -116,8 +115,17 @@ class RecipeDetailVC: UIViewController {
         #warning("not implemented")
         
         
+    
+        
+        
         
     }
+    
+    
+    
+    
+    
+    
     @IBAction func downloadRecipe(_ sender: Any) {
         print("Download recipe")
         
