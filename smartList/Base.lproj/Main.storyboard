@@ -1291,20 +1291,33 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ms-0H-eo8">
-                                                    <rect key="frame" x="30" y="21" width="354" height="35"/>
+                                                    <rect key="frame" x="30" y="21" width="259" height="35"/>
                                                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RrC-er-5bE">
+                                                    <rect key="frame" x="309" y="21" width="75" height="35"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="75" id="hva-2Z-qvu"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                                    <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="RrC-er-5bE" secondAttribute="trailing" constant="10" id="1XF-nN-7C2"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="0ms-0H-eo8" secondAttribute="bottom" constant="10" id="9TP-bF-Fgg"/>
+                                                <constraint firstItem="RrC-er-5bE" firstAttribute="top" secondItem="ixI-BC-vyK" secondAttribute="topMargin" constant="10" id="CHX-uj-Tfh"/>
                                                 <constraint firstItem="0ms-0H-eo8" firstAttribute="top" secondItem="ixI-BC-vyK" secondAttribute="topMargin" constant="10" id="KAg-if-FOy"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="0ms-0H-eo8" secondAttribute="trailing" constant="10" id="OKS-9f-Fqk"/>
+                                                <constraint firstItem="RrC-er-5bE" firstAttribute="leading" secondItem="0ms-0H-eo8" secondAttribute="trailing" constant="20" id="MTD-g2-gyB"/>
                                                 <constraint firstItem="0ms-0H-eo8" firstAttribute="leading" secondItem="ixI-BC-vyK" secondAttribute="leadingMargin" constant="10" id="eYT-q4-0fh"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="RrC-er-5bE" secondAttribute="bottom" constant="10" id="kXI-BQ-WEL"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="amountIngredients" destination="RrC-er-5bE" id="dJX-6n-Prg"/>
                                             <outlet property="nameLabel" destination="0ms-0H-eo8" id="BBO-Bl-x3t"/>
                                         </connections>
                                     </tableViewCell>
@@ -2832,15 +2845,15 @@
         <image name="order" width="30" height="30"/>
         <image name="plus-6-xl" width="64" height="64"/>
         <image name="plus.circle.fill" catalog="system" width="64" height="60"/>
-        <image name="plus.square.on.square" catalog="system" width="64" height="56"/>
+        <image name="plus.square.on.square" catalog="system" width="32" height="32"/>
         <image name="search-3-xl" width="64" height="64"/>
         <image name="services" width="30" height="30"/>
         <image name="shopping_cart" width="30" height="30"/>
         <image name="trash-10-xxl" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PBv-1W-whm"/>
-        <segue reference="WQQ-sE-Hwe"/>
+        <segue reference="NVq-p9-Ttp"/>
+        <segue reference="BPH-jV-ufh"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

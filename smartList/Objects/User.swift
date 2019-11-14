@@ -236,6 +236,7 @@ struct User {
                 
                 if let storageID = docSnapshot.get("storageID") as? String {
                     SharedValues.shared.foodStorageID = storageID
+                    
                 } else {
                     SharedValues.shared.foodStorageID = nil
                 }

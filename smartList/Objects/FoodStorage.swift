@@ -171,7 +171,7 @@ struct FoodStorage {
     }
     
     
-    static func readSystemItemsFromUserStorage(db: Firestore, storageID: String, systemItemsReturned: @escaping (_ items: [String]?) -> Void) {
+    static func readSystemItemsFromUserStorage(db: Firestore, storageID: String, systemItemsReturned: @escaping (_ items: [String]) -> Void) {
         
         var items: [String] = []
         let reference = db.collection("storages").document(storageID).collection("items")
@@ -184,8 +184,7 @@ struct FoodStorage {
                 let systemItem = doc.get("systemItem") as? String ?? "other"
                 items.append(systemItem)
             }
-            #error("This isnt working properly")
-            print(items)
+            //#error("This isnt working properly")
             systemItemsReturned(items)
         }
         

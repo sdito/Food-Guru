@@ -40,6 +40,7 @@ class SharedValues {
     var sentRecipesInto: (recipes: [Recipe], ingredients: [String])?
     
     
+    
     static let shared = SharedValues()
     private init() {}
 }

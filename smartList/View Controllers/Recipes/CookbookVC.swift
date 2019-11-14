@@ -11,7 +11,11 @@ import RealmSwift
 import FirebaseFirestore
 
 class CookbookVC: UIViewController {
-    
+    private var sysItems: [String] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     private var lastContentOffset: CGFloat = 0
     private var recipes: [CookbookRecipe] = [] {
         didSet {
@@ -33,12 +37,18 @@ class CookbookVC: UIViewController {
         tableView.dataSource = self
         recipes = Array(realm.objects(CookbookRecipe.self))
         scrollBackUpView.shadowAndRounded(cornerRadius: 10)
+        
+        FoodStorage.readSystemItemsFromUserStorage(db: Firestore.firestore(), storageID: SharedValues.shared.foodStorageID ?? " ") { (sysItems) in
+            self.sysItems = sysItems
+        }
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         let realm = try! Realm()
         recipes = Array(realm.objects(CookbookRecipe.self))
+        
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -81,20 +91,6 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if recipes.count != 0 {
-            
-            
-            var sysItems: [String] = []
-            if let id = SharedValues.shared.foodStorageID {
-                FoodStorage.readSystemItemsFromUserStorage(db: Firestore.firestore(), storageID: id) { (itms) in
-                    if let i = itms {
-                        sysItems = i
-                    }
-                }
-            }
-            
-            
-            
-            
             let cell = tableView.dequeueReusableCell(withIdentifier: "cookbookCell") as! CookbookCell
             let recipe = recipes[indexPath.row]
             cell.setUI(recipe: recipe, systemItems: sysItems)

@@ -15,6 +15,9 @@ class TabVC: UITabBarController {
         super.viewDidLoad()
         db = Firestore.firestore()
         User.setAndPersistGroupDataInSharedValues(db: db)
+        
+        
+        
     }
 }
 
