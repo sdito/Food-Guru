@@ -12,8 +12,9 @@ class CookbookCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
     
-    func setUI(recipe: CookbookRecipe) {
+    func setUI(recipe: CookbookRecipe, systemItems: [String]) {
         nameLabel.text = recipe.name
+        print(systemItems)
     }
 
 }

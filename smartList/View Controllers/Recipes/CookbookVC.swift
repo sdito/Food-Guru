@@ -8,7 +8,7 @@
 
 import UIKit
 import RealmSwift
-
+import FirebaseFirestore
 
 class CookbookVC: UIViewController {
     
@@ -55,6 +55,8 @@ class CookbookVC: UIViewController {
     
     @IBAction func savedRecipes(_ sender: Any) {
         print("Saved recipes")
+        self.dismiss(animated: false, completion: nil)
+        NotificationCenter.default.post(name: .haveSavedRecipesAppear, object: nil)
         
     }
     
@@ -79,9 +81,23 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if recipes.count != 0 {
+            
+            
+            var sysItems: [String] = []
+            if let id = SharedValues.shared.foodStorageID {
+                FoodStorage.readSystemItemsFromUserStorage(db: Firestore.firestore(), storageID: id) { (itms) in
+                    if let i = itms {
+                        sysItems = i
+                    }
+                }
+            }
+            
+            
+            
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: "cookbookCell") as! CookbookCell
             let recipe = recipes[indexPath.row]
-            cell.setUI(recipe: recipe)
+            cell.setUI(recipe: recipe, systemItems: sysItems)
             return cell
         } else {
             let cell: UITableViewCell = .init(style: .default, reuseIdentifier: nil)

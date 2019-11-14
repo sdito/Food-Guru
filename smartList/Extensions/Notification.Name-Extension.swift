@@ -15,4 +15,5 @@ extension Notification.Name {
     static let itemAddedFromRecipe = Notification.Name("stevenDito.itemAddedFromRecipe")
     static let recipeSearchButtonPressed = Notification.Name("stevenDito.recipeSearchButtonPressed")
     static let savedRecipesChanged = Notification.Name("stevenDito.savedRecipesChanged")
+    static let haveSavedRecipesAppear = Notification.Name("stevenDito.haveSavedRecipesAppear")
 }

@@ -169,4 +169,26 @@ struct FoodStorage {
         }
         
     }
+    
+    
+    static func readSystemItemsFromUserStorage(db: Firestore, storageID: String, systemItemsReturned: @escaping (_ items: [String]?) -> Void) {
+        
+        var items: [String] = []
+        let reference = db.collection("storages").document(storageID).collection("items")
+        reference.getDocuments { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documents else {
+                print("Error retrieving documents: \(String(describing: error))")
+                return
+            }
+            for doc in documents {
+                let systemItem = doc.get("systemItem") as? String ?? "other"
+                items.append(systemItem)
+            }
+            #error("This isnt working properly")
+            print(items)
+            systemItemsReturned(items)
+        }
+        
+    }
+    
 }
