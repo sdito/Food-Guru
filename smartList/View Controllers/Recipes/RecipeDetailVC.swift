@@ -15,6 +15,7 @@ import FirebaseAuth
 class RecipeDetailVC: UIViewController {
     var db: Firestore!
     private var itemsAddedToList: Set<String>? = [""]
+    @IBOutlet weak var wholeSV: UIStackView!
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var mainStackView: UIStackView!
@@ -39,6 +40,12 @@ class RecipeDetailVC: UIViewController {
     @IBOutlet weak var saveRecipeOutlet: UIButton!
     
     
+    @IBOutlet weak var optionalInfoStackView: UIStackView!
+    @IBOutlet weak var prepSV: UIStackView!
+    @IBOutlet weak var cookSV: UIStackView!
+    @IBOutlet weak var servingsSV: UIStackView!
+    @IBOutlet weak var caloriesSV: UIStackView!
+    
     @IBOutlet var viewsToRemoveForCookbook: [UIView]!
     
     
@@ -52,13 +59,21 @@ class RecipeDetailVC: UIViewController {
         if let data = data {
             setUI(recipe: data.recipe, image: data.image)
         } else if let cookbook = cookbookRecipe {
-            setUI(cbRecipe: cookbook)
+            setUI(recipe: cookbook)
         }
         data?.recipe.getImageFromStorage(thumb: false, imageReturned: { (img) in
             self.imageView.image = img
         })
         //addAllToListOutlet.isUserInteractionEnabled = true
         createObserver()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "viewPDV" {
+            guard let vc = segue.destination as? RecipePDFVC else { return }
+            let pdfCreator = PDFCreator()
+            vc.documentData = pdfCreator.createFlyer()
+        }
     }
     
     deinit {
@@ -98,26 +113,10 @@ class RecipeDetailVC: UIViewController {
         self.createRatingView(delegateVC: self)
     }
     
-    private func setUI(cbRecipe: CookbookRecipe) {
-        viewsToRemoveForCookbook.forEach { (v) in
-            v.removeFromSuperview()
-        }
-        
-        
-        if let cookTime = cbRecipe.cookTime.value {
-            print(cookTime)
-        }
-        
-    }
+    
     
     @IBAction func printRecipe(_ sender: Any) {
         print("Print recipe")
-        #warning("not implemented")
-        
-        
-    
-        
-        
         
     }
     
@@ -158,6 +157,69 @@ class RecipeDetailVC: UIViewController {
         
     }
     
+    private func setUI(recipe: CookbookRecipe) {
+        viewsToRemoveForCookbook.forEach { (v) in
+            v.removeFromSuperview()
+        }
+        
+//        let label = UILabel()
+//        label.text = recipe.name
+//        label.font = UIFont(name: "futura", size: 25)
+//        label.numberOfLines = 2
+//        label.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        
+        self.title = recipe.name
+        
+        let v = UIView()
+        v.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        //wholeSV.insertArrangedSubview(label, at: 0)
+        wholeSV.insertArrangedSubview(v, at: 0)
+        
+        
+        
+        recipe.addButtonIngredientViewsTo(stackView: ingredientsStackView, delegateVC: self)
+        recipe.addInstructionsToInstructionStackView(stackView: instructionsStackView)
+        
+        
+        if let ct = recipe.cookTime.value {
+            cookTime.text = "\(ct) m"
+        } else {
+            cookSV.removeFromSuperview()
+        }
+        
+        if let pt = recipe.prepTime.value {
+            prepTime.text = "\(pt) m"
+        } else {
+            prepSV.removeFromSuperview()
+        }
+        
+        if let s = recipe.servings.value {
+            servings.text = "\(s)"
+        } else {
+            servingsSV.removeFromSuperview()
+        }
+        
+        if let c = recipe.calories.value {
+            calories.text = "\(c)"
+        } else {
+            caloriesSV.removeFromSuperview()
+        }
+        
+        if optionalInfoStackView.subviews.count == 0 {
+            optionalInfoStackView.removeFromSuperview()
+        }
+        
+        if let n = recipe.notes {
+            if n != "" {
+                notes.text = "Notes: \(n)"
+            } else {
+                notes.removeFromSuperview()
+            }
+        } else {
+            notes.removeFromSuperview()
+        }
+        
+    }
     
     private func setUI(recipe: Recipe, image: UIImage) {
         imageView.image = data?.image
@@ -173,7 +235,13 @@ class RecipeDetailVC: UIViewController {
         servings.text = "\(recipe.numServes)"
         calories.text = "\(recipe.calories!)"
         if let n = recipe.notes {
-            notes.text = "Notes: \(n)" 
+            if n != "" {
+                notes.text = "Notes: \(n)"
+            } else {
+                notes.removeFromSuperview()
+            }
+        } else {
+            notes.removeFromSuperview()
         }
         if let uid = recipe.userID {
             User.getNameFromUid(db: db, uid: uid) { (name) in

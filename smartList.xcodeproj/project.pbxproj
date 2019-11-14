@@ -73,6 +73,8 @@
 		E2B4695A22F7F485006BA77D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4695922F7F485006BA77D /* Colors.swift */; };
 		E2B68D6D232EBD92006A3B58 /* Notification.Name-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B68D6C232EBD92006A3B58 /* Notification.Name-Extension.swift */; };
 		E2B68D7523305877006A3B58 /* FoodStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B68D7423305877006A3B58 /* FoodStorageType.swift */; };
+		E2B8E943237C81160051B07D /* RecipePDFVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B8E942237C81160051B07D /* RecipePDFVC.swift */; };
+		E2B8E947237C865D0051B07D /* PDFCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B8E946237C865D0051B07D /* PDFCreator.swift */; };
 		E2C4934123066012002907C2 /* UIView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C4934023066012002907C2 /* UIView-Extension.swift */; };
 		E2C49343230887F3002907C2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C49342230887F3002907C2 /* User.swift */; };
 		E2C49349230B45E4002907C2 /* CreateRecipeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C49348230B45E4002907C2 /* CreateRecipeVC.swift */; };
@@ -193,6 +195,8 @@
 		E2B4695922F7F485006BA77D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E2B68D6C232EBD92006A3B58 /* Notification.Name-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name-Extension.swift"; sourceTree = "<group>"; };
 		E2B68D7423305877006A3B58 /* FoodStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodStorageType.swift; sourceTree = "<group>"; };
+		E2B8E942237C81160051B07D /* RecipePDFVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePDFVC.swift; sourceTree = "<group>"; };
+		E2B8E946237C865D0051B07D /* PDFCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFCreator.swift; sourceTree = "<group>"; };
 		E2C4934023066012002907C2 /* UIView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView-Extension.swift"; sourceTree = "<group>"; };
 		E2C49342230887F3002907C2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E2C49348230B45E4002907C2 /* CreateRecipeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecipeVC.swift; sourceTree = "<group>"; };
@@ -379,6 +383,7 @@
 				E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */,
 				E253AC032341B4460018274A /* RecipeDetailVC.swift */,
 				E273F210235A60F4007B54E2 /* SearchByIngredientVC.swift */,
+				E2B8E942237C81160051B07D /* RecipePDFVC.swift */,
 			);
 			path = Recipes;
 			sourceTree = "<group>";
@@ -491,6 +496,7 @@
 				E2E29037234C490D00620576 /* Review.swift */,
 				E2A8A634234CF75400A676FA /* Search.swift */,
 				E2EB7FBD22FF5ACF003948A6 /* SharedValues.swift */,
+				E2B8E946237C865D0051B07D /* PDFCreator.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -866,6 +872,7 @@
 				E2E6A19B2326FF6A00477AB1 /* FoodStorage.swift in Sources */,
 				E2C49349230B45E4002907C2 /* CreateRecipeVC.swift in Sources */,
 				E2445CF02321D8EA0089582F /* ListHomeVC.swift in Sources */,
+				E2B8E943237C81160051B07D /* RecipePDFVC.swift in Sources */,
 				E20BC6CB2327376000F1E5E7 /* SettingCell.swift in Sources */,
 				E2481B7F2300B00D0036E378 /* LogInVC.swift in Sources */,
 				E2088BD22369EF9000370D09 /* SearchType.swift in Sources */,
@@ -893,6 +900,7 @@
 				E2EB7FC322FFB29A003948A6 /* String-Extension.swift in Sources */,
 				E2E529D222FA7F9100C55DA0 /* GroceryList.swift in Sources */,
 				E2C49343230887F3002907C2 /* User.swift in Sources */,
+				E2B8E947237C865D0051B07D /* PDFCreator.swift in Sources */,
 				E2A54E1E2318553400BEBF39 /* InstructionView.swift in Sources */,
 				E2F380AD2319847A003857F7 /* IngredientView.swift in Sources */,
 				E2149CF7235ADCAB002BF2D0 /* CreateNewItemVC.swift in Sources */,

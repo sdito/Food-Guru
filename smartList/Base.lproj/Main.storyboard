@@ -2044,9 +2044,10 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="17p-LM-7PH">
                                                         <rect key="frame" x="0.0" y="0.0" width="138" height="32"/>
                                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                                        <state key="normal" title="Print"/>
+                                                        <state key="normal" title="PDF"/>
                                                         <connections>
                                                             <action selector="printRecipe:" destination="hdZ-0Z-sHl" eventType="touchUpInside" id="har-MG-AVV"/>
+                                                            <segue destination="FcJ-xj-1cM" kind="show" identifier="viewPDV" id="ueP-wD-X4Q"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c4P-PH-JBd">
@@ -2148,6 +2149,8 @@
                         <outlet property="addAllToListOutlet" destination="JwD-NG-POb" id="rTa-Zy-IEN"/>
                         <outlet property="author" destination="wEc-D5-fh0" id="s5w-dT-rKi"/>
                         <outlet property="calories" destination="XHC-LS-82E" id="4Qf-Um-Qvk"/>
+                        <outlet property="caloriesSV" destination="U25-R4-LX2" id="Kdw-pd-2e2"/>
+                        <outlet property="cookSV" destination="Eb0-sa-WSP" id="PSY-Ee-Zke"/>
                         <outlet property="cookTime" destination="cf8-dz-xR8" id="YtS-AK-hcf"/>
                         <outlet property="downloadRecipeOutlet" destination="c4P-PH-JBd" id="5XK-ib-uhR"/>
                         <outlet property="imageView" destination="az9-sO-Pm8" id="iyz-OW-F62"/>
@@ -2156,6 +2159,8 @@
                         <outlet property="mainStackView" destination="qV2-Kw-PWF" id="XDF-bg-cEa"/>
                         <outlet property="nameAndTitleView" destination="91a-0m-cqb" id="KvP-u7-4gS"/>
                         <outlet property="notes" destination="Ytl-qP-e7p" id="orC-a3-aqc"/>
+                        <outlet property="optionalInfoStackView" destination="7Qu-Xn-5os" id="WAi-7X-woS"/>
+                        <outlet property="prepSV" destination="T1A-cA-Xg6" id="oSO-3X-5ZK"/>
                         <outlet property="prepTime" destination="Jq3-0H-7Qc" id="t5a-jD-MiG"/>
                         <outlet property="printRecipeOutlet" destination="17p-LM-7PH" id="E76-N4-abm"/>
                         <outlet property="recipeName" destination="FHD-D8-LRU" id="KLx-Ca-yL2"/>
@@ -2164,7 +2169,9 @@
                         <outlet property="saveRecipeOutlet" destination="9fj-eN-Mhu" id="FyP-lL-3mK"/>
                         <outlet property="scrollView" destination="iel-HH-e8j" id="EPb-dr-Zv6"/>
                         <outlet property="servings" destination="fQX-he-V1G" id="4dG-Ej-MU0"/>
+                        <outlet property="servingsSV" destination="cut-xP-r4X" id="8mJ-4W-ibt"/>
                         <outlet property="tagline" destination="5pj-tg-s8d" id="Wh3-Ie-OuG"/>
+                        <outlet property="wholeSV" destination="wTA-f7-bDw" id="qGh-rm-RaF"/>
                         <outletCollection property="viewsToRemoveForCookbook" destination="0KN-1p-7uW" collectionClass="NSMutableArray" id="533-An-8hK"/>
                         <outletCollection property="viewsToRemoveForCookbook" destination="5pj-tg-s8d" collectionClass="NSMutableArray" id="bfx-Ko-7KH"/>
                         <outletCollection property="viewsToRemoveForCookbook" destination="hbk-zr-lXp" collectionClass="NSMutableArray" id="UWW-8G-k3R"/>
@@ -2175,6 +2182,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XZc-8I-7S2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-272" y="392"/>
+        </scene>
+        <!--RecipePDFVC-->
+        <scene sceneID="6bF-wj-8Rl">
+            <objects>
+                <viewController id="FcJ-xj-1cM" customClass="RecipePDFVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Mb2-FU-fn3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9bU-Hy-Cyc" customClass="PDFView">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="9bU-Hy-Cyc" firstAttribute="top" secondItem="qty-wZ-izZ" secondAttribute="top" id="2FB-tk-c7I"/>
+                            <constraint firstItem="qty-wZ-izZ" firstAttribute="bottom" secondItem="9bU-Hy-Cyc" secondAttribute="bottom" id="Lh0-fw-vao"/>
+                            <constraint firstItem="9bU-Hy-Cyc" firstAttribute="leading" secondItem="qty-wZ-izZ" secondAttribute="leading" id="YJe-T4-Yqk"/>
+                            <constraint firstItem="qty-wZ-izZ" firstAttribute="trailing" secondItem="9bU-Hy-Cyc" secondAttribute="trailing" id="teo-mM-Twb"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qty-wZ-izZ"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="FCG-gf-e2R"/>
+                    <connections>
+                        <outlet property="pdfView" destination="9bU-Hy-Cyc" id="QFP-4V-3PS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YCI-Yj-9Yz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="675" y="396"/>
         </scene>
         <!--Search By IngredientVC-->
         <scene sceneID="tuP-tI-EFY">
@@ -2271,7 +2309,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9MR-lt-eDW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="648" y="392"/>
+            <point key="canvasLocation" x="1564" y="-321"/>
         </scene>
         <!--Settings HomeVC-->
         <scene sceneID="0Hb-nF-PrK">
