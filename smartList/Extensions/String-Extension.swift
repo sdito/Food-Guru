@@ -16,7 +16,10 @@ extension String {
         str.removeFirst()
         return String(str)
     }
-    
+    func seperateByNewLine() -> [String] {
+        let lines = self.split {$0.isNewline}
+        return lines.map({String($0)})
+    }
     func buttonNameSearchType() -> SearchType {
         switch self {
         case "Select Ingredients":

@@ -22,6 +22,11 @@ class RecipePDFVC: UIViewController {
         if let data = documentData {
             pdfView.document = PDFDocument(data: data)
             pdfView.autoScales = true
+            let vc = UIActivityViewController(
+              activityItems: [data],
+              applicationActivities: []
+            )
+            present(vc, animated: true, completion: nil)
         }
     }
 

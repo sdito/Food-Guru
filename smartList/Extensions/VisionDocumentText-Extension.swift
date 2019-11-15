@@ -36,6 +36,7 @@ extension VisionDocumentText {
                         firstRunIngredients.append(block)
                         ingredientsSeen = true
                     } else {
+                        // nothing yet
                     }
                 }
             case (true, false):
@@ -54,19 +55,18 @@ extension VisionDocumentText {
             }
         }
         
-        
-        var secondRunIngredients: [String] {
-            for block in firstRunIngredients {
-                //let split = block.split by \n
-            }
+        var secondRunIngredients: [String] = []
+        for block in firstRunIngredients {
+            let split = block.seperateByNewLine()
+            secondRunIngredients += split
         }
         
         
         
-        
+        // getting a little closer, obviously still a long way to go
         print()
         print()
-        print("Ingredient blocks: \(firstRunIngredients)")
+        print("Ingredient blocks: \(secondRunIngredients)")
         print()
         print("Instruction blocks: \(firstRunInstructions)")
         print()

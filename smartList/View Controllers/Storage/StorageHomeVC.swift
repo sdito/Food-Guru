@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseFirestore
 import FirebaseAuth
-
+import Firebase
 
 
 //protocol IngredientsFromStorageDelegate: class {
@@ -133,8 +133,10 @@ class StorageHomeVC: UIViewController {
         let cameraPicker = UIImagePickerController()
         cameraPicker.sourceType = .camera
         cameraPicker.cameraCaptureMode = .photo
-        
+        cameraPicker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
         present(cameraPicker, animated: true, completion: nil)
+        
+        
         
     }
     
@@ -378,6 +380,42 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension StorageHomeVC: UIImagePickerControllerDelegate {
-    
+extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        print("Got to this point dumbass")
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            let format = VisionBarcodeFormat.all
+            let barcodeOptions = VisionBarcodeDetectorOptions(formats: format)
+            var vision = Vision.vision()
+            let barcodeDetector = vision.barcodeDetector(options: barcodeOptions)
+            let visionImage = VisionImage(image: image)
+            
+            let imageMetadata = VisionImageMetadata()
+            imageMetadata.orientation = .topLeft
+            visionImage.metadata = imageMetadata
+            
+            barcodeDetector.detect(in: visionImage) { (visionBarcode, error) in
+                guard let barcodeData = visionBarcode else {
+                    print("Error retrieving data: \(String(describing: error))")
+                    picker.dismiss(animated: true, completion: nil)
+                    return
+                }
+                
+                print(barcodeData.first?.displayValue)
+                picker.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
 }
+
+
+/*
+ if let pickedImage = info[UIImagePickerController.InfoKey.] as? UIImage {
+     selectimageOutlet.contentMode = .scaleAspectFit
+     selectimageOutlet.setBackgroundImage(pickedImage, for: .normal)
+     selectimageOutlet.setTitle("", for: .normal)
+     image = pickedImage.jpegData(compressionQuality: 0.75)
+     print(pickedImage.size.height, pickedImage.size.width)
+     
+ }
+ */
