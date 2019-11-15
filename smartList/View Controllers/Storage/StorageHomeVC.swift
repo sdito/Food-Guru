@@ -382,11 +382,11 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
 
 extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        print("Got to this point dumbass")
+        
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             let format = VisionBarcodeFormat.all
             let barcodeOptions = VisionBarcodeDetectorOptions(formats: format)
-            var vision = Vision.vision()
+            let vision = Vision.vision()
             let barcodeDetector = vision.barcodeDetector(options: barcodeOptions)
             let visionImage = VisionImage(image: image)
             
@@ -396,13 +396,17 @@ extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationController
             
             barcodeDetector.detect(in: visionImage) { (visionBarcode, error) in
                 guard let barcodeData = visionBarcode else {
-                    print("Error retrieving data: \(String(describing: error))")
+                    for _ in 1...100 {
+                        print("Error retrieving data: \(String(describing: error))")
+                    }
                     picker.dismiss(animated: true, completion: nil)
                     return
                 }
-                
-                print(barcodeData.first?.displayValue)
+            
                 picker.dismiss(animated: true, completion: nil)
+                let alert = UIAlertController(title: "Barcode returned", message: barcodeData.first?.displayValue, preferredStyle: .alert)
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true)
             }
         }
     }
