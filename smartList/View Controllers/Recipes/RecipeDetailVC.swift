@@ -69,9 +69,30 @@ class RecipeDetailVC: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        var pdfData: String {
+            if data?.recipe != nil {
+                return data!.recipe.name
+            } else {
+                return cookbookRecipe?.name ?? ""
+            }
+        }
+        var ingredients: [String] {
+            if data?.recipe != nil {
+                return data!.recipe.ingredients
+            } else {
+                return Array(cookbookRecipe!.ingredients)
+            }
+        }
+        var instructions: [String] {
+            if data?.recipe != nil {
+                return data!.recipe.instructions
+            } else {
+                return Array(cookbookRecipe!.instructions)
+            }
+        }
         if segue.identifier == "viewPDV" {
             guard let vc = segue.destination as? RecipePDFVC else { return }
-            let pdfCreator = PDFCreator()
+            let pdfCreator = PDFCreator(title: pdfData, ingredients: ingredients, instructions: instructions)
             vc.documentData = pdfCreator.createFlyer()
         }
     }

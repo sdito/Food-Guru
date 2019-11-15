@@ -55,6 +55,7 @@
 		E25F071923146E5E00E6738E /* CuisineType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071823146E5E00E6738E /* CuisineType.swift */; };
 		E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */; };
 		E25F071D231490A200E6738E /* RecipeTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25F071C231490A200E6738E /* RecipeTypeCell.swift */; };
+		E2654C46237E654400BE7130 /* VisionDocumentText-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2654C45237E654400BE7130 /* VisionDocumentText-Extension.swift */; };
 		E26B9C50234A6F960039E9EE /* UITextView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26B9C4F234A6F960039E9EE /* UITextView-Extension.swift */; };
 		E273F211235A60F4007B54E2 /* SearchByIngredientVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E273F210235A60F4007B54E2 /* SearchByIngredientVC.swift */; };
 		E273F213235A6E96007B54E2 /* RecipeSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E273F212235A6E96007B54E2 /* RecipeSearchCell.swift */; };
@@ -177,6 +178,7 @@
 		E25F071823146E5E00E6738E /* CuisineType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CuisineType.swift; sourceTree = "<group>"; };
 		E25F071A23148F8C00E6738E /* SelectRecipeTypeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRecipeTypeVC.swift; sourceTree = "<group>"; };
 		E25F071C231490A200E6738E /* RecipeTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTypeCell.swift; sourceTree = "<group>"; };
+		E2654C45237E654400BE7130 /* VisionDocumentText-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VisionDocumentText-Extension.swift"; sourceTree = "<group>"; };
 		E26B9C4F234A6F960039E9EE /* UITextView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView-Extension.swift"; sourceTree = "<group>"; };
 		E273F210235A60F4007B54E2 /* SearchByIngredientVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByIngredientVC.swift; sourceTree = "<group>"; };
 		E273F212235A6E96007B54E2 /* RecipeSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchCell.swift; sourceTree = "<group>"; };
@@ -505,6 +507,7 @@
 			isa = PBXGroup;
 			children = (
 				E2B4695622F7F18E006BA77D /* UITextField-Extension.swift */,
+				E2654C45237E654400BE7130 /* VisionDocumentText-Extension.swift */,
 				E26B9C4F234A6F960039E9EE /* UITextView-Extension.swift */,
 				E2EB7FC222FFB29A003948A6 /* String-Extension.swift */,
 				E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */,
@@ -872,6 +875,7 @@
 				E2E6A19B2326FF6A00477AB1 /* FoodStorage.swift in Sources */,
 				E2C49349230B45E4002907C2 /* CreateRecipeVC.swift in Sources */,
 				E2445CF02321D8EA0089582F /* ListHomeVC.swift in Sources */,
+				E2654C46237E654400BE7130 /* VisionDocumentText-Extension.swift in Sources */,
 				E2B8E943237C81160051B07D /* RecipePDFVC.swift in Sources */,
 				E20BC6CB2327376000F1E5E7 /* SettingCell.swift in Sources */,
 				E2481B7F2300B00D0036E378 /* LogInVC.swift in Sources */,

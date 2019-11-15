@@ -291,25 +291,4 @@ extension CreateRecipeVC: UIImagePickerControllerDelegate, UINavigationControlle
 }
 
 
-extension VisionDocumentText {
-    func tryToGetRecipeInfo() {
-        let wordsForIngredients = ["ingredients", "you will need"]
-        let wordsForInstructions = ["instruction", "method", "directions", "to prepare"]
-        
-        /*
-         - could look for the word "serves" for the number in it
-         - some recipes might have the instruction number and the ingredient in a different block
-         - some recipes might have all the instructions or ingredients in the same block
-        */
-        
-        for block in self.blocks {
-            if block.text.lowercased().contains("ingredients") {
-                print("Ingredients")
-            } else if block.text.lowercased().contains("method") {
-                print("Method")
-            } else {
-                print("Text")
-            }
-        }
-    }
-}
+
