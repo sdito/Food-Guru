@@ -15,7 +15,6 @@ pod 'Firebase/Auth', :inhibit_warnings => true
 pod 'Firebase/Storage', :inhibit_warnings => true
 pod 'Firebase/MLVision'
 
-
 pod 'RealmSwift'
 
   target 'smartListTests' do
