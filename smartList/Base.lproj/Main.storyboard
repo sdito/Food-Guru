@@ -3,7 +3,7 @@
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -801,11 +801,18 @@
                         <viewLayoutGuide key="safeArea" id="C2d-ST-4bV"/>
                     </view>
                     <navigationItem key="navigationItem" title="Create recipe" id="3qt-l8-exu">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="camera" id="UK6-sr-BBL">
-                            <connections>
-                                <action selector="imageToRecipe:" destination="Kgx-m8-jVE" id="o7k-rz-pVm"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem style="plain" systemItem="camera" id="UK6-sr-BBL">
+                                <connections>
+                                    <action selector="imageToRecipe:" destination="Kgx-m8-jVE" id="o7k-rz-pVm"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="link" catalog="system" style="plain" id="Ail-wj-d5I">
+                                <connections>
+                                    <action selector="linkToRecipe:" destination="Kgx-m8-jVE" id="Dwi-mU-bcJ"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="caloriesTextField" destination="KAK-ZQ-zso" id="0IX-d4-uWb"/>
@@ -1873,7 +1880,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="wTA-f7-bDw">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="857.66666666666663"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="930.66666666666663"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0KN-1p-7uW">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="449"/>
@@ -2119,6 +2126,14 @@
                                                     </view>
                                                 </subviews>
                                             </stackView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m0j-bk-8JG">
+                                                <rect key="frame" x="0.0" y="880.66666666666663" width="10" height="50"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="GIX-ge-gFu"/>
+                                                    <constraint firstAttribute="width" constant="10" id="f1p-KP-gW1"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="7Qu-Xn-5os" secondAttribute="trailing" id="0x9-Th-YIm"/>
@@ -2189,7 +2204,8 @@
                         <outletCollection property="viewsToRemoveForCookbook" destination="5pj-tg-s8d" collectionClass="NSMutableArray" id="bfx-Ko-7KH"/>
                         <outletCollection property="viewsToRemoveForCookbook" destination="hbk-zr-lXp" collectionClass="NSMutableArray" id="UWW-8G-k3R"/>
                         <outletCollection property="viewsToRemoveForCookbook" destination="91a-0m-cqb" collectionClass="NSMutableArray" id="TTZ-m1-K4m"/>
-                        <outletCollection property="viewsToRemoveForCookbook" destination="Mlh-DJ-Bs1" collectionClass="NSMutableArray" id="K5H-4Z-Pvt"/>
+                        <outletCollection property="viewsToRemoveForCookbook" destination="c4P-PH-JBd" collectionClass="NSMutableArray" id="Ai1-jW-2yt"/>
+                        <outletCollection property="viewsToRemoveForCookbook" destination="9fj-eN-Mhu" collectionClass="NSMutableArray" id="d19-GH-DcH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XZc-8I-7S2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2842,10 +2858,11 @@
         <image name="checked-checkbox-xxl" width="64" height="64"/>
         <image name="edit-2-xl" width="64" height="64"/>
         <image name="heart.circle.fill" catalog="system" width="64" height="60"/>
+        <image name="link" catalog="system" width="64" height="58"/>
         <image name="order" width="30" height="30"/>
         <image name="plus-6-xl" width="64" height="64"/>
         <image name="plus.circle.fill" catalog="system" width="64" height="60"/>
-        <image name="plus.square.on.square" catalog="system" width="32" height="32"/>
+        <image name="plus.square.on.square" catalog="system" width="64" height="56"/>
         <image name="search-3-xl" width="64" height="64"/>
         <image name="services" width="30" height="30"/>
         <image name="shopping_cart" width="30" height="30"/>

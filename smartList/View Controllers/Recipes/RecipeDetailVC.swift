@@ -93,7 +93,7 @@ class RecipeDetailVC: UIViewController {
         if segue.identifier == "viewPDV" {
             guard let vc = segue.destination as? RecipePDFVC else { return }
             let pdfCreator = PDFCreator(title: pdfData, ingredients: ingredients, instructions: instructions)
-            vc.documentData = pdfCreator.createFlyer()
+            vc.documentData = pdfCreator.createPDF()
         }
     }
     

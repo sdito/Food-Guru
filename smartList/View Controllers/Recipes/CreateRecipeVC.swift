@@ -108,6 +108,13 @@ class CreateRecipeVC: UIViewController {
         }
     }
     
+    @IBAction func linkToRecipe(_ sender: Any) {
+        print("Link to recipe")
+        
+        
+        
+    }
+    
     @IBAction func imageToRecipe(_ sender: Any) {
         print("Image to recipe")
         imageToTextRecipe.sourceType = .photoLibrary
