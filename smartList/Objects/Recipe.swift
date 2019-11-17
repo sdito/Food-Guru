@@ -94,6 +94,91 @@ struct Recipe {
         }
     }
     
+    
+    
+    
+    
+    static func getRecipeInfoFromURL(recipeURL: String) {
+        guard let url = URL(string: recipeURL) else {
+            print("No URL entered")
+            return
+        }
+
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let data = data else {
+                print("data was nil")
+                return
+            }
+            guard let htmlString = String(data: data, encoding: .utf8) else {
+                print("couldn't cast data into String")
+                return
+            }
+            
+            guard let leftSideIngredients = htmlString.range(of: "=\"lst_ingredients_1\">") else {
+                print("Trouble finding left side -- ingredients")
+                return
+            }
+            guard let rightSideIngredients = htmlString.range(of: ">Add all ingredients to list</span>") else {
+                print("Trouble finding right side -- ingredients")
+                return
+            }
+            
+            guard let leftSideDirections = htmlString.range(of: "<div class=\"directions--section\">") else {
+                print("Trouble finding left side -- directions")
+                return
+            }
+            
+            guard let rightSideDirections = htmlString.range(of: "<div class=\"directions--section__right-side\">") else {
+                print("Trouble finding right side -- directions")
+                return
+            }
+            
+            
+            
+            
+            let rangeOfIngredientText = leftSideIngredients.upperBound..<rightSideIngredients.lowerBound
+            let ingredientText = String(htmlString[rangeOfIngredientText])
+            let finalIngredients = ingredientText.getIngredientsFromString(ingredients: [])
+            
+            
+            let rangeOfDirectionText = leftSideDirections.upperBound..<rightSideDirections.lowerBound
+            let instructionText = String(htmlString[rangeOfDirectionText])
+            let finalInstructions = instructionText.getInstructionsFromString(instructions: [])
+            
+            
+            let (cookTime, prepTime) = instructionText.getCookAndPrepTime()
+            
+            let title = htmlString.getTitleFromHTML()
+            
+            let calories = htmlString.getCaloriesFromHTML()
+            
+            let servings = htmlString.getServingsFromHTML()
+            
+            
+            
+            print(title)
+            print()
+            print(finalIngredients)
+            print()
+            print(finalInstructions)
+            print()
+            print(cookTime, prepTime)
+            print()
+            print(calories)
+            print()
+            print(servings)
+        }
+
+
+
+        task.resume()
+    }
+    
+    
+    
+    
+    
+    
 }
 
 
@@ -299,5 +384,7 @@ extension Recipe {
         cbr.setUp(name: self.name, servings: RealmOptional(self.numServes), cookTime: RealmOptional(self.cookTime), prepTime: RealmOptional(self.prepTime), calories: RealmOptional(self.calories), ingredients: ingredients, instructions: instructions, notes: self.notes)
         return cbr
     }
-    
+
 }
+
+

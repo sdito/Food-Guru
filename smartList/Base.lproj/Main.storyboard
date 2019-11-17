@@ -789,14 +789,50 @@
                                     <constraint firstAttribute="trailing" secondItem="zrW-m1-glA" secondAttribute="trailing" constant="20" id="rrf-Bw-c0J"/>
                                 </constraints>
                             </scrollView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ged-NJ-k1m">
+                                <rect key="frame" x="0.0" y="88" width="414" height="50"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Copy Recipe URL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wAt-Gc-BD3">
+                                        <rect key="frame" x="5" y="5" width="364" height="40"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6WG-Af-woE">
+                                        <rect key="frame" x="374" y="5" width="35" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="35" id="J0x-7H-hta"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                        <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <state key="normal" title="Find"/>
+                                        <connections>
+                                            <action selector="findUrlRecipe:" destination="Kgx-m8-jVE" eventType="touchUpInside" id="QMF-KL-rFu"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="6WG-Af-woE" secondAttribute="bottom" constant="5" id="9ZW-xu-xdc"/>
+                                    <constraint firstAttribute="trailing" secondItem="6WG-Af-woE" secondAttribute="trailing" constant="5" id="Coc-p1-hBP"/>
+                                    <constraint firstAttribute="height" constant="50" id="DW9-4k-1Ij"/>
+                                    <constraint firstItem="wAt-Gc-BD3" firstAttribute="leading" secondItem="ged-NJ-k1m" secondAttribute="leading" constant="5" id="OGh-MP-LiG"/>
+                                    <constraint firstItem="wAt-Gc-BD3" firstAttribute="top" secondItem="ged-NJ-k1m" secondAttribute="top" constant="5" id="To0-qO-TAw"/>
+                                    <constraint firstAttribute="bottom" secondItem="wAt-Gc-BD3" secondAttribute="bottom" constant="5" id="mz3-cS-7aG"/>
+                                    <constraint firstItem="6WG-Af-woE" firstAttribute="leading" secondItem="wAt-Gc-BD3" secondAttribute="trailing" constant="5" id="uE4-y2-tTG"/>
+                                    <constraint firstItem="6WG-Af-woE" firstAttribute="top" secondItem="ged-NJ-k1m" secondAttribute="top" constant="5" id="wNq-PX-NWQ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="lCK-vk-sjN" firstAttribute="top" secondItem="C2d-ST-4bV" secondAttribute="top" id="6sm-Ld-tIf"/>
                             <constraint firstItem="C2d-ST-4bV" firstAttribute="trailing" secondItem="lCK-vk-sjN" secondAttribute="trailing" id="E6i-E2-Hkf"/>
+                            <constraint firstItem="ged-NJ-k1m" firstAttribute="leading" secondItem="C2d-ST-4bV" secondAttribute="leading" id="FIw-gT-UPz"/>
                             <constraint firstItem="atZ-0P-Ikl" firstAttribute="width" secondItem="1B5-Xf-Wcl" secondAttribute="width" multiplier="1:5" id="R05-k6-93F"/>
                             <constraint firstItem="C2d-ST-4bV" firstAttribute="bottom" secondItem="lCK-vk-sjN" secondAttribute="bottom" id="VHf-RO-i9R"/>
+                            <constraint firstItem="ged-NJ-k1m" firstAttribute="top" secondItem="C2d-ST-4bV" secondAttribute="top" id="Wod-wD-ZWJ"/>
                             <constraint firstItem="lCK-vk-sjN" firstAttribute="leading" secondItem="C2d-ST-4bV" secondAttribute="leading" id="zCN-tf-zTV"/>
+                            <constraint firstItem="ged-NJ-k1m" firstAttribute="trailing" secondItem="C2d-ST-4bV" secondAttribute="trailing" id="zEQ-gT-uEs"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="C2d-ST-4bV"/>
                     </view>
@@ -828,6 +864,8 @@
                         <outlet property="selectimageOutlet" destination="ZIs-mM-MMw" id="TuW-r0-Hqb"/>
                         <outlet property="servingsTextField" destination="JVQ-tX-F7f" id="nuo-Bq-QMs"/>
                         <outlet property="taglineTextView" destination="Twy-0P-6LR" id="Gk0-FI-ZPZ"/>
+                        <outlet property="urlTextField" destination="wAt-Gc-BD3" id="umV-RS-ShK"/>
+                        <outlet property="urlView" destination="ged-NJ-k1m" id="baz-47-zr9"/>
                         <outletCollection property="stackViewsToHide" destination="3L2-Jp-E8n" collectionClass="NSMutableArray" id="4HJ-X7-lus"/>
                         <outletCollection property="stackViewsToHide" destination="77M-Rc-xlY" collectionClass="NSMutableArray" id="PL9-bv-jof"/>
                         <outletCollection property="stackViewsToHide" destination="90S-Z1-IYK" collectionClass="NSMutableArray" id="1wN-EG-2UX"/>

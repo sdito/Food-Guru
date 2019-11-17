@@ -40,6 +40,8 @@ class CreateRecipeVC: UIViewController {
     @IBOutlet weak var ingredientsStackView: UIStackView!
     
     
+    @IBOutlet weak var urlView: UIView!
+    @IBOutlet weak var urlTextField: UITextField!
     //var currTextField: UIView?
     
     var cuisineType: String? {
@@ -69,7 +71,7 @@ class CreateRecipeVC: UIViewController {
         caloriesTextField.delegate = self
         notesTextView.delegate = self
         taglineTextView.delegate = self
-        
+        urlTextField.delegate = self
         cuisineOutlet.border()
         recipeDescriptionOutlet.border()
         cuisineOutlet.titleEdgeInsets.left = 7
@@ -110,9 +112,13 @@ class CreateRecipeVC: UIViewController {
     
     @IBAction func linkToRecipe(_ sender: Any) {
         print("Link to recipe")
+        urlView.isHidden = !urlView.isHidden
         
-        
-        
+    }
+    
+    @IBAction func findUrlRecipe(_ sender: Any) {
+        print("Find recipe")
+        Recipe.getRecipeInfoFromURL(recipeURL: urlTextField.text!)
     }
     
     @IBAction func imageToRecipe(_ sender: Any) {
@@ -245,8 +251,14 @@ extension CreateRecipeVC: UITextFieldDelegate {
         return true
     }
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        SharedValues.shared.currText = textField
+        if textField != urlTextField {
+            SharedValues.shared.currText = textField
+        }
+        
     }
+    
+    
+    
 }
 
 
