@@ -68,7 +68,7 @@ extension String {
         return newString.getInstructionsFromString(instructions: instructionsToReturn)
     }
     
-    
+    //, one with hours and minutes to test
     func getCookAndPrepTime() -> (cookTime: Int?, prepTime: Int?) {
         let leftPrepTimeRange = self.range(of: "aria-label=\"Prep time")!.upperBound
         let stringToFindRightSidePREP = String(self[leftPrepTimeRange...])
@@ -79,7 +79,11 @@ extension String {
         let prepTimeNums = prepTimeString.getNumbers()
         var prepTimeMinutes: Int? {
             if prepTimeNums.count == 1 {
-                return prepTimeNums.first!
+                if prepTimeString.contains("H") {
+                    return prepTimeNums.first! * 60
+                } else {
+                    return prepTimeNums.first!
+                }
             } else if prepTimeNums.count == 2 {
                 return (prepTimeNums[0] * 60) + prepTimeNums[1]
             } else {
@@ -97,7 +101,12 @@ extension String {
         let cookTimeNums = cookTimeString.getNumbers()
         var cookTimeMinutes: Int? {
             if cookTimeNums.count == 1 {
-                return cookTimeNums.first!
+                if cookTimeString.contains("H") {
+                    return cookTimeNums.first! * 60
+                } else {
+                    return cookTimeNums.first!
+                }
+                
             } else if cookTimeNums.count == 2 {
                 return (cookTimeNums[0] * 60) + cookTimeNums[1]
             } else {
@@ -146,6 +155,106 @@ extension String {
         let range = leftSide..<rightSide
         return Int(String(self[range]))
     }
+    func getIngredientsFromHTML_ARTWO() -> [String] {
+        var ingredients: [String] = []
+        var ingredientBeingAddedNow = false
+        var currentIngredient: String = ""
+        for char in self {
+            switch ingredientBeingAddedNow {
+            case true:
+                if char == "\"" {
+                    ingredients.append(currentIngredient)
+                    currentIngredient = ""
+                    ingredientBeingAddedNow = false
+                } else {
+                    currentIngredient.append(char)
+                }
+            case false:
+                if char == "\"" {
+                    ingredientBeingAddedNow = true
+                }
+            }
+        }
+        return ingredients
+    }
+
+    func getInstructionsFromHTML_ARTWO(_ currInstructions: [String] = []) -> [String]? {
+        guard let leftStartIndex = self.range(of: "\"HowToStep\",\"text\":\"")?.upperBound else {
+            return currInstructions
+        }
+        let newStringRange = leftStartIndex...
+        let newString = String(self[newStringRange])
+        var instruction: String = ""
+        for char in newString {
+            if char != "\"" {
+                instruction.append(char)
+            } else {
+                let rangeOfNewInstruction = newString.range(of: instruction)!.upperBound
+                let returnString = String(newString[rangeOfNewInstruction...])
+                return returnString.getInstructionsFromHTML_ARTWO(currInstructions + [instruction])
+            }
+        }
+        return nil
+    }
+    
+    func getServingsFromHTML_ARTWO() -> Int? {
+        let leftSide = self.range(of: "serving\">Original recipe")!.upperBound
+        let rightSide = self.range(of: "servings</div>")!.lowerBound
+        let range = leftSide..<rightSide
+        let text = String(self[range])
+        let nums = text.getNumbers()
+        return nums.first
+    }
+    //        ","prepTime":"PT15M","cookTime":"PT7H","totalTime":"PT7H15M","
+    func getCookAndPrepTimeFromHTML_ARTWO() -> (cook: Int, prep: Int) {
+        let cookLeftSide = self.range(of: "\"cookTime\":\"")!.upperBound
+        let cookRightSide = self.range(of: "\",\"totalTime\":")!.lowerBound
+        let cookRange = cookLeftSide..<cookRightSide
+        let cookText = String(self[cookRange])
+        
+        
+        let prepLeftSide = self.range(of: "\"prepTime\":\"")!.upperBound
+        let prepRightSide = self.range(of: "\",\"cookTime\":")!.lowerBound
+        let prepRange = prepLeftSide..<prepRightSide
+        let prepText = String(self[prepRange])
+        
+        
+        return (cookText.getMinutesFromString_ARTWO(), prepText.getMinutesFromString_ARTWO())
+    }
+    
+    func getMinutesFromString_ARTWO() -> Int {
+        let hasHours = self.contains("H")
+        let nums = self.getNumbers()
+        
+        if nums.count == 1 {
+            if hasHours == true {
+                return nums.first! * 60
+            } else {
+                return nums.first!
+            }
+        } else {
+            return (nums[0] * 60) + nums[1]
+        }
+    }
+    
+    func getCaloriesFromHTML_ARTWO() -> Int? {
+        let left = self.range(of: "\"calories\":\"")!.upperBound
+        let right = self.range(of: "calories\",\"carbohydrateContent")!.lowerBound
+        let range = left..<right
+        let str = String(self[range])
+        return Int(str.filter({$0.isNumber}))
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     func imagePathToDocID() -> String {
         let slashIndex = self.firstIndex(of: "/")!
         let periodIndex: String.Index = self.firstIndex(of: ".") ?? self.endIndex

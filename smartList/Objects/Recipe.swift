@@ -13,6 +13,8 @@ import FirebaseStorage
 import RealmSwift
 
 
+
+
 struct Recipe {
     var name: String
     var recipeType: [String]
@@ -49,6 +51,8 @@ struct Recipe {
         self.recipeImage = recipeImage
         self.imagePath = imagePath
     }
+    
+    
     
     static func readUserRecipes(db: Firestore, recipesReturned: @escaping (_ recipe: [Recipe]) -> Void) {
         var recipes: [Recipe] = []
@@ -103,8 +107,6 @@ struct Recipe {
             print("No URL entered")
             return
         }
-
-        
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else {
                 print("data was nil")
@@ -117,7 +119,7 @@ struct Recipe {
             
             guard let leftSideIngredients = htmlString.range(of: "=\"lst_ingredients_1\">") else {
                 print("Trouble finding left side -- ingredients")
-                #error("DO THE OTHER ALL Recipes version here")
+                Recipe.getRecipeInfoFromURL_allRecipesTwo(recipeURL: recipeURL)
                 return
             }
             guard let rightSideIngredients = htmlString.range(of: ">Add all ingredients to list</span>") else {
@@ -134,9 +136,6 @@ struct Recipe {
                 print("Trouble finding right side -- directions")
                 return
             }
-            
-            
-            
             
             let rangeOfIngredientText = leftSideIngredients.upperBound..<rightSideIngredients.lowerBound
             let ingredientText = String(htmlString[rangeOfIngredientText])
@@ -157,7 +156,9 @@ struct Recipe {
             let servings = htmlString.getServingsFromHTML()
             
             
-            
+            print()
+            print()
+            print()
             print(title)
             print()
             print(finalIngredients)
@@ -176,6 +177,79 @@ struct Recipe {
         task.resume()
     }
     
+    
+    static func getRecipeInfoFromURL_allRecipesTwo(recipeURL: String) {
+        let url = URL(string: recipeURL)!
+
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let data = data else {
+                print("data was nil")
+                return
+            }
+            guard let htmlString = String(data: data, encoding: .utf8) else {
+                print("couldn't cast data into String")
+                return
+            }
+            //print(htmlString)
+            
+            let leftSideString = "[{\"@context\""
+            
+            let rightSideString = "[{\"@type\":\"Review\""
+            
+            guard let leftSideRange = htmlString.range(of: leftSideString) else {
+                print("couldn't find left range")
+                return
+            }
+            
+            guard let rightSideRange = htmlString.range(of: rightSideString) else {
+                print("couldn't find right range")
+                return
+            }
+            
+            let rangeOfTheData = leftSideRange.upperBound..<rightSideRange.lowerBound
+            let textToGrab = String(htmlString[rangeOfTheData])
+            //print(textToGrab)
+            
+            
+            guard let leftSideIngredients = textToGrab.range(of: "\"recipeIngredient\":") else { return }
+            guard let rightSideIngredients = textToGrab.range(of: ",\"recipeInstructions\"") else { return }
+            let ingredientRange = leftSideIngredients.upperBound..<rightSideIngredients.lowerBound
+            let ingredientText = String(textToGrab[ingredientRange])
+            let finalIngredients = ingredientText.getIngredientsFromHTML_ARTWO()
+            
+            
+            guard let leftSideInstructions = textToGrab.range(of: "\"recipeInstructions\":") else { return }
+            guard let rightSideInstructions = textToGrab.range(of: ",\"recipeCategory\":") else { return }
+            let instructionRange = leftSideInstructions.upperBound..<rightSideInstructions.lowerBound
+            let instructionText = String(textToGrab[instructionRange])
+            let finalInstructions = instructionText.getInstructionsFromHTML_ARTWO([])
+            
+            let finalServings = htmlString.getServingsFromHTML_ARTWO()
+            
+            let finalTitle = htmlString.getTitleFromHTML()
+            
+            let (finalCookTime, finalPrepTime) = htmlString.getCookAndPrepTimeFromHTML_ARTWO()
+            
+            let finalCalories = htmlString.getCaloriesFromHTML_ARTWO()
+            
+            
+            print()
+            print()
+            print()
+            print(finalTitle)
+            print()
+            print(finalIngredients)
+            print()
+            print(finalInstructions ?? "Instructions didnt work")
+            print()
+            print(finalServings ?? 6969696969)
+            print()
+            print(finalCookTime, finalPrepTime)
+            print()
+            print(finalCalories ?? 6969696969)
+        }
+        task.resume()
+    }
     
     
     
