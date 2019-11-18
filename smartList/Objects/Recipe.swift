@@ -98,12 +98,13 @@ struct Recipe {
     
     
     
-    static func getRecipeInfoFromURL(recipeURL: String) {
+    static func getRecipeInfoFromURLallRecipes(recipeURL: String) {
         guard let url = URL(string: recipeURL) else {
             print("No URL entered")
             return
         }
 
+        
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else {
                 print("data was nil")
@@ -116,6 +117,7 @@ struct Recipe {
             
             guard let leftSideIngredients = htmlString.range(of: "=\"lst_ingredients_1\">") else {
                 print("Trouble finding left side -- ingredients")
+                #error("DO THE OTHER ALL Recipes version here")
                 return
             }
             guard let rightSideIngredients = htmlString.range(of: ">Add all ingredients to list</span>") else {

@@ -118,7 +118,9 @@ class CreateRecipeVC: UIViewController {
     
     @IBAction func findUrlRecipe(_ sender: Any) {
         print("Find recipe")
-        Recipe.getRecipeInfoFromURL(recipeURL: urlTextField.text!)
+        Recipe.getRecipeInfoFromURLallRecipes(recipeURL: urlTextField.text!)
+        
+        
     }
     
     @IBAction func imageToRecipe(_ sender: Any) {
