@@ -146,9 +146,16 @@ extension String {
         let up = str.range(of: "Recipe - Allrecipes.com")
         let lower = str.startIndex
         let r = lower..<up!.lowerBound
-        return String(str[r])
+        
+        var finalRdOne = String(str[r])
+        if !finalRdOne.contains("&#x27;") {
+            return finalRdOne
+        } else {
+            finalRdOne = finalRdOne.replacingOccurrences(of: "&#x27;", with: "'")
+            return finalRdOne
+        }
+        
     }
-    
     func getCaloriesFromHTML() -> Int? {
         let leftSide = self.range(of: "<span itemprop=\"calories\">")!.upperBound
         let rightSide = self.range(of: " calories;</span>")!.lowerBound

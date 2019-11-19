@@ -14,7 +14,6 @@ import RealmSwift
 
 
 
-
 struct Recipe {
     var name: String
     var recipeType: [String]
@@ -156,20 +155,18 @@ struct Recipe {
             let servings = htmlString.getServingsFromHTML()
             
             
-            print()
-            print()
-            print()
-            print(title)
-            print()
-            print(finalIngredients)
-            print()
-            print(finalInstructions)
-            print()
-            print(cookTime, prepTime)
-            print()
-            print(calories)
-            print()
-            print(servings)
+            let dict: [String:Any] = [
+                "title": title,
+                "ingredients": finalIngredients,
+                "instructions": finalInstructions,
+                "cookTime": cookTime as Any,
+                "prepTime": prepTime as Any,
+                "calories": calories as Any,
+                "servings": servings as Any
+            ]
+            
+            NotificationCenter.default.post(name: .recipeDataFromURLReceived, object: nil, userInfo: dict)
+
         }
 
 
@@ -228,25 +225,22 @@ struct Recipe {
             
             let finalTitle = htmlString.getTitleFromHTML()
             
-            let (finalCookTime, finalPrepTime) = htmlString.getCookAndPrepTimeFromHTML_ARTWO()
+            let (finalCookTime, finalPrepTime) = textToGrab.getCookAndPrepTimeFromHTML_ARTWO()
             
-            let finalCalories = htmlString.getCaloriesFromHTML_ARTWO()
+            let finalCalories = textToGrab.getCaloriesFromHTML_ARTWO()
             
             
-            print()
-            print()
-            print()
-            print(finalTitle)
-            print()
-            print(finalIngredients)
-            print()
-            print(finalInstructions ?? "Instructions didnt work")
-            print()
-            print(finalServings ?? 6969696969)
-            print()
-            print(finalCookTime, finalPrepTime)
-            print()
-            print(finalCalories ?? 6969696969)
+            let dict: [String:Any] = [
+                "title": finalTitle,
+                "ingredients": finalIngredients,
+                "instructions": finalInstructions as Any,
+                "cookTime": finalCookTime as Any,
+                "prepTime": finalPrepTime as Any,
+                "calories": finalCalories as Any,
+                "servings": finalServings as Any
+            ]
+            
+            NotificationCenter.default.post(name: .recipeDataFromURLReceived, object: nil, userInfo: dict)
         }
         task.resume()
     }

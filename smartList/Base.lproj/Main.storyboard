@@ -2104,7 +2104,6 @@
                                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                                         <state key="normal" title="PDF"/>
                                                         <connections>
-                                                            <action selector="printRecipe:" destination="hdZ-0Z-sHl" eventType="touchUpInside" id="har-MG-AVV"/>
                                                             <segue destination="FcJ-xj-1cM" kind="show" identifier="viewPDV" id="ueP-wD-X4Q"/>
                                                         </connections>
                                                     </button>

@@ -51,9 +51,6 @@ struct Search {
         case (0, 0, 0):
             return
         case (1, 0, 0):
-            for _ in 1...1000 {
-                print("When is this being called")
-            }
             reference.whereField("has_\(ingredientText[0])", isEqualTo: true).getDocuments { (querySnapshot, error) in
                 guard let documents = querySnapshot?.documents else {
                     print("Error retrieving documents: \(String(describing: error))")

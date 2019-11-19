@@ -162,11 +162,13 @@ class StorageHomeVC: UIViewController {
     @IBAction func findRecipes(_ sender: Any) {
         print("find recipes with selected ingredients")
         let genericItems = sortedItems.filter{(indexes?.contains(sortedItems.firstIndex(of: $0)!) ?? false)}.map({$0.systemItem!.rawValue})
-        print(genericItems)
+        for _ in 1...100 {
+            print(genericItems)
+        }
         Search.getRecipesFromIngredients(db: db, ingredients: genericItems) { (rcps) in
             if let rcps = rcps {
-                let displayIngredients = genericItems.map { (ing) -> GenericItem in GenericItem.init(rawValue: ing)!}.map { (gi) -> String in gi.description}
-                SharedValues.shared.sentRecipesInto = (rcps, displayIngredients)
+                //let displayIngredients = genericItems.map { (ing) -> GenericItem in GenericItem.init(rawValue: ing)!}.map { (gi) -> String in gi.description}
+                SharedValues.shared.sentRecipesInto = (rcps, genericItems)
                 self.tabBarController?.selectedIndex = 1
                 
             }

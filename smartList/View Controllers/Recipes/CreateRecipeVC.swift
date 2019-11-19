@@ -94,7 +94,7 @@ class CreateRecipeVC: UIViewController {
         
         
         handleUI()
-        
+        createObserver()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -107,6 +107,50 @@ class CreateRecipeVC: UIViewController {
             
             cuisineOutlet.setTitleColor(Colors.main, for: .normal)
             recipeDescriptionOutlet.setTitleColor(Colors.main, for: .normal)
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func createObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(recipeDataReceivedFromURL), name: .recipeDataFromURLReceived, object: nil)
+    }
+    
+    @objc private func recipeDataReceivedFromURL(_ notification: NSNotification) {
+        if let data = notification.userInfo as NSDictionary? {
+            //#error("now just need to change the values on the fields, thread issue")
+            DispatchQueue.main.async {
+                if let title = data["title"] as? String {
+                    print(title)
+                    
+                    self.nameTextField.text = title
+                }
+                if let calories = data["calories"] as? Int {
+                    print(calories)
+                    self.caloriesTextField.text = "\(calories)"
+                }
+                if let cookTime = data["cookTime"] as? Int {
+                    print(cookTime)
+                    self.cookTimeTextField.text = "\(cookTime)"
+                }
+                if let prepTime = data["prepTime"] as? Int {
+                    print(prepTime)
+                    self.prepTimeTextField.text = "\(prepTime)"
+                }
+                if let ingredients = data["ingredients"] as? [String] {
+                    print(ingredients)
+                }
+                if let instructions = data["instructions"] as? [String] {
+                    print(instructions)
+                }
+                if let servings = data["servings"] as? Int {
+                    print(servings)
+                    self.servingsTextField.text = "\(servings)"
+                }
+            }
+            
         }
     }
     

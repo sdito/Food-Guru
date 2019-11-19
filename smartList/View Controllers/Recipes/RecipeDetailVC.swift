@@ -136,15 +136,6 @@ class RecipeDetailVC: UIViewController {
     
     
     
-    @IBAction func printRecipe(_ sender: Any) {
-        print("Print recipe")
-        
-    }
-    
-    
-    
-    
-    
     
     @IBAction func downloadRecipe(_ sender: Any) {
         print("Download recipe")
@@ -183,11 +174,6 @@ class RecipeDetailVC: UIViewController {
             v.removeFromSuperview()
         }
         
-//        let label = UILabel()
-//        label.text = recipe.name
-//        label.font = UIFont(name: "futura", size: 25)
-//        label.numberOfLines = 2
-//        label.widthAnchor.constraint(equalToConstant: 300).isActive = true
         
         self.title = recipe.name
         

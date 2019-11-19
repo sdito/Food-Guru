@@ -34,15 +34,18 @@ class RecipeHomeVC: UIViewController {
     private let currentSearchesView = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
     private var activeSearches: [(String, SearchType)] = [] {
         didSet {
-            Search.find(from: self.activeSearches, db: db) { (rcps) in
-                if let rcps = rcps {
-                    self.recipes = rcps
-                    
-                } else {
-                    for _ in 1...10 {
-                        print("Recipes not found")
+            if SharedValues.shared.sentRecipesInto == nil {
+                Search.find(from: self.activeSearches, db: db) { (rcps) in
+                    if let rcps = rcps {
+                        self.recipes = rcps
+                        
+                    } else {
+                        for _ in 1...10 {
+                            print("Recipes not found")
+                        }
                     }
                 }
+                
             }
             if wholeStackView.subviews.contains(currentSearchesView) {
                 currentSearchesView.setUI(searches: self.activeSearches)
@@ -204,7 +207,9 @@ class RecipeHomeVC: UIViewController {
                 }
             }
         } else {
+            
             recipes = SharedValues.shared.sentRecipesInto!.recipes
+            print(recipes)
             activeSearches = SharedValues.shared.sentRecipesInto!.ingredients.map({($0, .ingredient)})
             imageCache.removeAllObjects()
             SharedValues.shared.sentRecipesInto = nil
