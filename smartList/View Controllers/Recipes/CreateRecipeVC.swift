@@ -95,6 +95,7 @@ class CreateRecipeVC: UIViewController {
         
         handleUI()
         createObserver()
+        //urlTextField.pasteDelegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -120,8 +121,9 @@ class CreateRecipeVC: UIViewController {
     
     @objc private func recipeDataReceivedFromURL(_ notification: NSNotification) {
         if let data = notification.userInfo as NSDictionary? {
-            //#error("now just need to change the values on the fields, thread issue")
             DispatchQueue.main.async {
+                self.resetDataForNewRecipeFromURL()
+                self.urlView.isHidden = true
                 if let title = data["title"] as? String {
                     print(title)
                     
@@ -141,9 +143,45 @@ class CreateRecipeVC: UIViewController {
                 }
                 if let ingredients = data["ingredients"] as? [String] {
                     print(ingredients)
+                    
+                    let numIngredientViewsToAdd = Int((Double(ingredients.count) / 2.0).rounded(.up)) - 2
+                    for _ in 1...numIngredientViewsToAdd {
+                        let v = Bundle.main.loadNibNamed("IngredientView", owner: nil, options: nil)?.first as! IngredientView
+                        self.ingredientsStackView.insertArrangedSubview(v, at: self.ingredientsStackView.subviews.count - 1)
+                    }
+                    
+                    var idx = 1
+                    for ingredient in ingredients {
+                        let currentView = self.ingredientsStackView.subviews[idx] as? IngredientView
+                        if currentView?.left.text == "" {
+                            currentView?.left.text = ingredient
+                        } else {
+                            currentView?.right.text = ingredient
+                            idx += 1
+                        }
+                    }
+                    
                 }
                 if let instructions = data["instructions"] as? [String] {
                     print(instructions)
+                    if instructions.count > 1 {
+                        for _ in 1...instructions.count - 1 {
+                            self.insert()
+                        }
+                    }
+                    
+                    
+                    var idx = 1
+                    if instructions.count > 1 {
+                        for i in instructions {
+                            (self.instructionsListStackView.subviews[idx] as? InstructionView)?.tv.text = i
+                            idx += 1
+                        }
+                    } else {
+                        (self.instructionsListStackView?.subviews[1] as? InstructionView)?.tv.text = instructions.first
+                    }
+                    
+                    
                 }
                 if let servings = data["servings"] as? Int {
                     print(servings)
@@ -157,7 +195,6 @@ class CreateRecipeVC: UIViewController {
     @IBAction func linkToRecipe(_ sender: Any) {
         print("Link to recipe")
         urlView.isHidden = !urlView.isHidden
-        
     }
     
     @IBAction func findUrlRecipe(_ sender: Any) {
@@ -270,8 +307,22 @@ class CreateRecipeVC: UIViewController {
     @objc private func buttonAction(sender: UIButton) {
         insert()
     }
+    
+    private func resetDataForNewRecipeFromURL() {
+        instructionsListStackView.subviews.forEach { (v) in
+            if type(of: v) == InstructionView.self {
+                v.removeFromSuperview()
+            }
+        }
+        
+        ingredientsStackView.subviews.forEach { (v) in
+            if type(of: v) == IngredientView.self {
+                v.removeFromSuperview()
+            }
+        }
+        initialInstructionSetUp()
+    }
 }
-
 
 
 
@@ -302,9 +353,6 @@ extension CreateRecipeVC: UITextFieldDelegate {
         }
         
     }
-    
-    
-    
 }
 
 
@@ -314,6 +362,7 @@ extension CreateRecipeVC: UITextViewDelegate {
         return true
     }
 }
+
 
 
 extension CreateRecipeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

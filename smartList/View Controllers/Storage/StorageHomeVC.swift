@@ -168,7 +168,7 @@ class StorageHomeVC: UIViewController {
         Search.getRecipesFromIngredients(db: db, ingredients: genericItems) { (rcps) in
             if let rcps = rcps {
                 //let displayIngredients = genericItems.map { (ing) -> GenericItem in GenericItem.init(rawValue: ing)!}.map { (gi) -> String in gi.description}
-                SharedValues.shared.sentRecipesInto = (rcps, genericItems)
+                SharedValues.shared.sentRecipesInfo = (rcps, genericItems)
                 self.tabBarController?.selectedIndex = 1
                 
             }

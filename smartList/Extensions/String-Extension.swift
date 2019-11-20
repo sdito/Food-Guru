@@ -70,6 +70,10 @@ extension String {
     
     //, one with hours and minutes to test
     func getCookAndPrepTime() -> (cookTime: Int?, prepTime: Int?) {
+        #error("There might not be a cook time (and i guess prep time), just need to use optionals or guard statements for all this stuff ON ALL THE FUNCTIONS WITH HTML PULLING, when there is an odd amount of ingredients there is a gap in the wrong area, and instructions (and probably other stuff) with parentheses goes wrong from html, below commented recipe is an example of the last two things wrong")
+//https://www.allrecipes.com/recipe/228296/garlic-brussels-sprouts-with-crispy-bacon/?internalSource=previously%20viewed&referringContentType=Homepage
+        
+        
         let leftPrepTimeRange = self.range(of: "aria-label=\"Prep time")!.upperBound
         let stringToFindRightSidePREP = String(self[leftPrepTimeRange...])
         let rightPrepTimeRange = stringToFindRightSidePREP.range(of: "\">")?.lowerBound

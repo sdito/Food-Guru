@@ -37,7 +37,7 @@ class SharedValues {
         }
     }
     
-    var sentRecipesInto: (recipes: [Recipe], ingredients: [String])?
+    var sentRecipesInfo: (recipes: [Recipe], ingredients: [String])?
     
     
     
