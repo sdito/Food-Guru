@@ -12,8 +12,9 @@ import FirebaseFirestore
 
 
 class AddItemsVC: UIViewController {
+    private var delegate: SearchAssistantDelegate!
     private var storeText: String = "none"
-    
+    private var textAssistantViewActive = false
     private var currentStore: String {
         if segmentedControl.numberOfSegments == 0 {
             return ""
@@ -100,7 +101,7 @@ class AddItemsVC: UIViewController {
 
     
     @IBAction func addItem(_ sender: Any) {
-        if textField.text != "" {toAddItem()}
+        if textField.text != "" {toAddItem(text: textField.text!)}
     }
     
     @IBAction func segmentedControlPressed(_ sender: Any) {
@@ -147,9 +148,6 @@ class AddItemsVC: UIViewController {
     }
     
     @IBAction func doneWithList(_ sender: Any) {
-        
-        
-        
         if SharedValues.shared.foodStorageID != nil {
             var gottenEmails: [String]?
             FoodStorage.getEmailsfromStorageID(storageID: SharedValues.shared.foodStorageID ?? " ", db: db) { (emails) in
@@ -184,8 +182,7 @@ class AddItemsVC: UIViewController {
     }
     
     
-    private func toAddItem() {
-        let text = textField.text!
+    private func toAddItem(text: String) {
         let words = text.split{ !$0.isLetter }.map { (sStr) -> String in
             String(sStr)
         }
@@ -202,7 +199,43 @@ class AddItemsVC: UIViewController {
         
         textField.text = ""
     }
+    
+    @IBAction func textDidChange(_ sender: Any) {
+        if textAssistantViewActive == false {
+            // add the view here
+            let vc = storyboard?.instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
+            self.addChild(vc)
+            self.view.addSubview(vc.tableView)
+            vc.didMove(toParent: self)
+            vc.tableView.translatesAutoresizingMaskIntoConstraints = false
+            vc.tableView.topAnchor.constraint(equalTo: textField.bottomAnchor).isActive = true
+            
+            
+            #warning("need to get the actual keyboard height below")
+            vc.tableView.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - textField.bounds.height - 300)).isActive = true
+            vc.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+            vc.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+            vc.delegate = self as CreateNewItemDelegate
+            delegate = vc
+            
+            delegate.searchTextChanged(text: textField.text!)
+            textAssistantViewActive = true
+        } else {
+            delegate.searchTextChanged(text: textField.text!)
+        }
+    }
 }
+
+
+extension AddItemsVC: CreateNewItemDelegate {
+    func itemCreated(item: Item) {
+        toAddItem(text: item.name)
+        textField.text = ""
+        textAssistantViewActive = false
+    }
+    
+}
+
 
 // have the cells organized by
 extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
@@ -253,7 +286,7 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
 
 extension AddItemsVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        toAddItem()
+        toAddItem(text: textField.text!)
         return true
     }
 }

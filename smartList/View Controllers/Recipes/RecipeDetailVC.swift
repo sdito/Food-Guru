@@ -327,8 +327,6 @@ class RecipeDetailVC: UIViewController {
             }
         }
     }
-    
-
 }
 
 extension RecipeDetailVC: ButtonIngredientViewDelegate {

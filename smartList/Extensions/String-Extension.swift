@@ -47,6 +47,7 @@ extension String {
                 let newInstruction = String(instruct[...r])
                 toReturn.append(newInstruction.filter({!$0.isNewline}))
             }
+            toReturn = toReturn.map({$0.replacingOccurrences(of: "&#39;", with: "'")})
             return toReturn
         }
         let instructionStartRange = range.upperBound
@@ -64,17 +65,10 @@ extension String {
                 return instructions + [instruction]
             }
         }
-        
         return newString.getInstructionsFromString(instructions: instructionsToReturn)
     }
-    
-    //, one with hours and minutes to test
-    func getCookAndPrepTime() -> (cookTime: Int?, prepTime: Int?) {
-        #error("There might not be a cook time (and i guess prep time), just need to use optionals or guard statements for all this stuff ON ALL THE FUNCTIONS WITH HTML PULLING, when there is an odd amount of ingredients there is a gap in the wrong area, and instructions (and probably other stuff) with parentheses goes wrong from html, below commented recipe is an example of the last two things wrong")
-//https://www.allrecipes.com/recipe/228296/garlic-brussels-sprouts-with-crispy-bacon/?internalSource=previously%20viewed&referringContentType=Homepage
-        
-        
-        let leftPrepTimeRange = self.range(of: "aria-label=\"Prep time")!.upperBound
+    func getPrepTime() -> Int? {
+        guard let leftPrepTimeRange = self.range(of: "aria-label=\"Prep time")?.upperBound else { return nil}
         let stringToFindRightSidePREP = String(self[leftPrepTimeRange...])
         let rightPrepTimeRange = stringToFindRightSidePREP.range(of: "\">")?.lowerBound
         let firstForNewString = stringToFindRightSidePREP.firstIndex(of: stringToFindRightSidePREP.first!)
@@ -94,9 +88,12 @@ extension String {
                 return nil
             }
         }
-        
-        
-        let leftCookPrepTimeRange = self.range(of: "aria-label=\"Cook time:")!.upperBound
+        return prepTimeMinutes
+    }
+    //, one with hours and minutes to test
+    func getCookTime() -> Int? {
+
+        guard let leftCookPrepTimeRange = self.range(of: "aria-label=\"Cook time:")?.upperBound else { return nil }
         let stringToFindRightSideCOOK = String(self[leftCookPrepTimeRange...])
         let rightCookTimeRange = stringToFindRightSideCOOK.range(of: "\">")?.lowerBound
         let firstForNewStringCook = stringToFindRightSideCOOK.firstIndex(of: stringToFindRightSideCOOK.first!)
@@ -118,7 +115,7 @@ extension String {
             }
         }
         
-        return (cookTimeMinutes, prepTimeMinutes)
+        return cookTimeMinutes
     }
     
     func getServingsFromHTML() -> Int? {
@@ -130,16 +127,6 @@ extension String {
         
         let nums = text.getNumbers()
         return nums.first
-//        let secondLeftSide = text.range(of: "yields ")!.upperBound
-//        let newStringForManipulation = text[secondLeftSide...]
-//
-//        let firstOfNewString = newStringForManipulation.firstIndex(of: newStringForManipulation.first!)!
-//        let endOfServingNumber = newStringForManipulation.firstIndex(of: " ")!
-//
-//        let secondRange = firstOfNewString..<endOfServingNumber
-//        let secondText = String(text[secondRange])
-//
-//        return secondText.filter({$0.isNumber})
     }
     
     func getTitleFromHTML() -> String {
@@ -217,21 +204,22 @@ extension String {
         return nums.first
     }
     //        ","prepTime":"PT15M","cookTime":"PT7H","totalTime":"PT7H15M","
-    func getCookAndPrepTimeFromHTML_ARTWO() -> (cook: Int, prep: Int) {
-        let cookLeftSide = self.range(of: "\"cookTime\":\"")!.upperBound
-        let cookRightSide = self.range(of: "\",\"totalTime\":")!.lowerBound
+    
+    func getCookTimeARTWO() -> Int? {
+        guard let cookLeftSide = self.range(of: "\"cookTime\":\"")?.upperBound else { return nil }
+        guard let cookRightSide = self.range(of: "\",\"totalTime\":")?.lowerBound else { return nil }
         let cookRange = cookLeftSide..<cookRightSide
         let cookText = String(self[cookRange])
-        
-        
-        let prepLeftSide = self.range(of: "\"prepTime\":\"")!.upperBound
-        let prepRightSide = self.range(of: "\",\"cookTime\":")!.lowerBound
+        return cookText.getMinutesFromString_ARTWO()
+    }
+    func getPrepTimeARTWO() -> Int? {
+        guard let prepLeftSide = self.range(of: "\"prepTime\":\"")?.upperBound else { return nil }
+        guard let prepRightSide = self.range(of: "\",\"cookTime\":")?.lowerBound else { return nil }
         let prepRange = prepLeftSide..<prepRightSide
         let prepText = String(self[prepRange])
-        
-        
-        return (cookText.getMinutesFromString_ARTWO(), prepText.getMinutesFromString_ARTWO())
+        return prepText.getMinutesFromString_ARTWO()
     }
+    
     
     func getMinutesFromString_ARTWO() -> Int {
         let hasHours = self.contains("H")

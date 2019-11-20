@@ -95,7 +95,6 @@ class CreateRecipeVC: UIViewController {
         
         handleUI()
         createObserver()
-        //urlTextField.pasteDelegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -170,7 +169,6 @@ class CreateRecipeVC: UIViewController {
                         }
                     }
                     
-                    
                     var idx = 1
                     if instructions.count > 1 {
                         for i in instructions {
@@ -180,15 +178,12 @@ class CreateRecipeVC: UIViewController {
                     } else {
                         (self.instructionsListStackView?.subviews[1] as? InstructionView)?.tv.text = instructions.first
                     }
-                    
-                    
                 }
                 if let servings = data["servings"] as? Int {
                     print(servings)
                     self.servingsTextField.text = "\(servings)"
                 }
             }
-            
         }
     }
     
@@ -233,10 +228,7 @@ class CreateRecipeVC: UIViewController {
             cookbookRecipe.write()
             
             navigationController?.popToRootViewController(animated: true)
-            
         }
-        
-
     }
     
     @IBAction func selectImage(_ sender: Any) {
@@ -397,8 +389,6 @@ extension CreateRecipeVC: UIImagePickerControllerDelegate, UINavigationControlle
                 }
             }
         }
-        
-        
         dismiss(animated: true, completion: nil)
     }
     

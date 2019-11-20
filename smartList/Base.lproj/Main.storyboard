@@ -199,6 +199,9 @@
                                                 <color key="textColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="22"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <action selector="textDidChange:" destination="AVh-qM-Vlx" eventType="editingChanged" id="b9P-J3-quj"/>
+                                                </connections>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Osh-oq-mtD">
                                                 <rect key="frame" x="315.66666666666669" y="7.3333333333333304" width="35.666666666666686" height="30.666666666666671"/>
@@ -838,12 +841,12 @@
                     </view>
                     <navigationItem key="navigationItem" title="Create recipe" id="3qt-l8-exu">
                         <rightBarButtonItems>
-                            <barButtonItem style="plain" systemItem="camera" id="UK6-sr-BBL">
+                            <barButtonItem systemItem="camera" id="UK6-sr-BBL">
                                 <connections>
                                     <action selector="imageToRecipe:" destination="Kgx-m8-jVE" id="o7k-rz-pVm"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem image="link" catalog="system" style="plain" id="Ail-wj-d5I">
+                            <barButtonItem image="link" catalog="system" id="Ail-wj-d5I">
                                 <connections>
                                     <action selector="linkToRecipe:" destination="Kgx-m8-jVE" id="Dwi-mU-bcJ"/>
                                 </connections>
@@ -964,15 +967,12 @@
                                                     <constraints>
                                                         <constraint firstItem="ijY-2V-GdO" firstAttribute="top" secondItem="cgr-RJ-2Cj" secondAttribute="bottom" constant="2" id="33S-Xl-C5b"/>
                                                         <constraint firstItem="EHx-NQ-Sz9" firstAttribute="top" secondItem="qpc-Xn-9E6" secondAttribute="bottom" constant="2" id="9pX-5s-mbw"/>
-                                                        <constraint firstItem="ijY-2V-GdO" firstAttribute="centerX" secondItem="cr7-Kg-hOZ" secondAttribute="centerX" id="Dws-LU-bVk"/>
                                                         <constraint firstAttribute="trailing" secondItem="1lb-jo-YZq" secondAttribute="trailing" constant="10" id="FcK-xS-dmF"/>
                                                         <constraint firstItem="cgr-RJ-2Cj" firstAttribute="leading" secondItem="cr7-Kg-hOZ" secondAttribute="leading" constant="2" id="JtG-8f-tRO"/>
                                                         <constraint firstAttribute="trailing" secondItem="EHx-NQ-Sz9" secondAttribute="trailing" constant="4" id="QiB-6Q-vMC"/>
-                                                        <constraint firstItem="EHx-NQ-Sz9" firstAttribute="centerX" secondItem="cr7-Kg-hOZ" secondAttribute="centerX" id="Tje-jB-Cv1"/>
                                                         <constraint firstItem="1lb-jo-YZq" firstAttribute="top" secondItem="cr7-Kg-hOZ" secondAttribute="top" constant="10" id="bIZ-IL-bgk"/>
                                                         <constraint firstItem="cgr-RJ-2Cj" firstAttribute="top" secondItem="cr7-Kg-hOZ" secondAttribute="top" constant="2" id="ekC-hy-tZz"/>
                                                         <constraint firstAttribute="trailing" secondItem="qpc-Xn-9E6" secondAttribute="trailing" constant="4" id="emQ-S8-DoI"/>
-                                                        <constraint firstItem="qpc-Xn-9E6" firstAttribute="centerX" secondItem="cr7-Kg-hOZ" secondAttribute="centerX" id="hHP-aK-fvz"/>
                                                         <constraint firstItem="ijY-2V-GdO" firstAttribute="leading" secondItem="cr7-Kg-hOZ" secondAttribute="leading" constant="4" id="hpn-rm-hLZ"/>
                                                         <constraint firstItem="EHx-NQ-Sz9" firstAttribute="leading" secondItem="cr7-Kg-hOZ" secondAttribute="leading" constant="4" id="jH7-eS-rko"/>
                                                         <constraint firstAttribute="trailing" secondItem="ijY-2V-GdO" secondAttribute="trailing" constant="4" id="pJI-cc-kjJ"/>
@@ -1879,6 +1879,7 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="oPt-C8-S0c" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8L4-IS-eEL" secondAttribute="leading" constant="30" id="07u-mF-VmB"/>
                             <constraint firstItem="8L4-IS-eEL" firstAttribute="trailing" secondItem="xHK-eQ-tEv" secondAttribute="trailing" constant="20" id="2UQ-Zr-eTs"/>
                             <constraint firstItem="afB-rc-PAn" firstAttribute="top" secondItem="8L4-IS-eEL" secondAttribute="top" constant="50" id="5U7-eq-d4G"/>
                             <constraint firstItem="xHK-eQ-tEv" firstAttribute="leading" secondItem="8L4-IS-eEL" secondAttribute="leading" constant="20" id="8bj-js-jWx"/>
@@ -1887,7 +1888,6 @@
                             <constraint firstItem="afB-rc-PAn" firstAttribute="leading" secondItem="8L4-IS-eEL" secondAttribute="leading" constant="20" id="HOU-qv-8jU"/>
                             <constraint firstItem="8L4-IS-eEL" firstAttribute="trailing" secondItem="oPt-C8-S0c" secondAttribute="trailing" constant="10" id="OUh-gs-nAM"/>
                             <constraint firstItem="8L4-IS-eEL" firstAttribute="trailing" secondItem="afB-rc-PAn" secondAttribute="trailing" constant="20" id="SNY-GK-5s6"/>
-                            <constraint firstItem="afB-rc-PAn" firstAttribute="centerX" secondItem="Jv4-YR-rIY" secondAttribute="centerX" id="TxW-Fr-rKY"/>
                             <constraint firstItem="eQ3-1Q-PC5" firstAttribute="centerX" secondItem="Jv4-YR-rIY" secondAttribute="centerX" id="VTS-vH-4ec"/>
                             <constraint firstItem="eQ3-1Q-PC5" firstAttribute="top" secondItem="xHK-eQ-tEv" secondAttribute="bottom" constant="40" id="Vx1-TG-FzD"/>
                             <constraint firstItem="afB-rc-PAn" firstAttribute="top" secondItem="oPt-C8-S0c" secondAttribute="bottom" constant="10" id="YRH-KX-BCq"/>
@@ -2353,7 +2353,6 @@
                             <constraint firstItem="qhb-kA-rJt" firstAttribute="leading" secondItem="uVn-C8-j8q" secondAttribute="leading" id="3Xz-Xv-4ZZ"/>
                             <constraint firstItem="KDw-05-oAU" firstAttribute="leading" secondItem="uVn-C8-j8q" secondAttribute="leading" constant="10" id="Ds7-jF-086"/>
                             <constraint firstItem="Wom-VK-P9y" firstAttribute="top" secondItem="uVn-C8-j8q" secondAttribute="top" constant="10" id="IeJ-kz-xbi"/>
-                            <constraint firstItem="KDw-05-oAU" firstAttribute="centerX" secondItem="Jr0-Mb-2ee" secondAttribute="centerX" id="JaL-kw-0cD"/>
                             <constraint firstItem="uVn-C8-j8q" firstAttribute="trailing" secondItem="Wom-VK-P9y" secondAttribute="trailing" id="Kdk-fN-2zL"/>
                             <constraint firstItem="uVn-C8-j8q" firstAttribute="bottom" secondItem="2TQ-vH-Z5D" secondAttribute="bottom" constant="15" id="Lei-j9-eKe"/>
                             <constraint firstItem="qhb-kA-rJt" firstAttribute="top" secondItem="KDw-05-oAU" secondAttribute="bottom" constant="20" id="MQL-X7-72k"/>

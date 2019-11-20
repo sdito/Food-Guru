@@ -10,10 +10,6 @@ import Foundation
 
 
 
-#warning("not using yet")
-
-
-
 enum Category: String, CaseIterable {
     case bakery
     case beverages

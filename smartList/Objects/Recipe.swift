@@ -146,7 +146,8 @@ struct Recipe {
             let finalInstructions = instructionText.getInstructionsFromString(instructions: [])
             
             
-            let (cookTime, prepTime) = instructionText.getCookAndPrepTime()
+            let cookTime = instructionText.getCookTime()
+            let prepTime = instructionText.getPrepTime()
             
             let title = htmlString.getTitleFromHTML()
             
@@ -225,7 +226,8 @@ struct Recipe {
             
             let finalTitle = htmlString.getTitleFromHTML()
             
-            let (finalCookTime, finalPrepTime) = textToGrab.getCookAndPrepTimeFromHTML_ARTWO()
+            let finalCookTime = textToGrab.getCookTimeARTWO()
+            let finalPrepTime = textToGrab.getPrepTimeARTWO()
             
             let finalCalories = textToGrab.getCaloriesFromHTML_ARTWO()
             
