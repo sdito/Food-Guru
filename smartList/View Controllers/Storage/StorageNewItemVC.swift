@@ -11,6 +11,8 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class StorageNewItemVC: UIViewController {
+    private var delegate: SearchAssistantDelegate!
+    private var textAssistantViewActive = false
     var db: Firestore!
     private var foodCategory: FoodStorageType {
         switch segmentedControl.selectedSegmentIndex {
@@ -47,6 +49,31 @@ class StorageNewItemVC: UIViewController {
         }
     }
     
+    @IBAction func textDidChange(_ sender: Any) {
+        print(nameTextField.text!)
+        if textAssistantViewActive == false {
+            let vc = storyboard?.instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
+            self.addChild(vc)
+            self.view.addSubview(vc.tableView)
+            vc.didMove(toParent: self)
+            vc.tableView.translatesAutoresizingMaskIntoConstraints = false
+            vc.tableView.topAnchor.constraint(equalTo: nameTextField.bottomAnchor).isActive = true
+            
+            
+            #warning("need to get the actual keyboard height below")
+            vc.tableView.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - nameTextField.bounds.height - 300)).isActive = true
+            vc.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+            vc.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+            vc.delegate = self as CreateNewItemDelegate
+            delegate = vc
+            
+            delegate.searchTextChanged(text: nameTextField.text!)
+            textAssistantViewActive = true
+        } else {
+            delegate.searchTextChanged(text: nameTextField.text!)
+        }
+    }
+    
     @IBAction func itemCreated(_ sender: Any) {
         var timeExpires: TimeInterval? {
             if switchOutlet.isOn {
@@ -73,6 +100,14 @@ class StorageNewItemVC: UIViewController {
         nameTextField.resignFirstResponder()
     }
 
+}
+
+extension StorageNewItemVC: CreateNewItemDelegate {
+    func itemCreated(item: Item) {
+        print("Item to add to storage: \(item.name)")
+        nameTextField.text = item.name
+        textAssistantViewActive = false
+    }
 }
 
 extension StorageNewItemVC: UITextFieldDelegate {}

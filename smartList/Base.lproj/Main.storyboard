@@ -147,7 +147,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="X1s-Cy-spr" firstAttribute="leading" secondItem="Yjf-Qb-Cy3" secondAttribute="leading" id="GE4-gL-2O8"/>
                             <constraint firstItem="Tyn-g6-cFs" firstAttribute="top" secondItem="Yjf-Qb-Cy3" secondAttribute="top" id="JB9-dE-x1J"/>
@@ -826,7 +826,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="lCK-vk-sjN" firstAttribute="top" secondItem="C2d-ST-4bV" secondAttribute="top" id="6sm-Ld-tIf"/>
                             <constraint firstItem="C2d-ST-4bV" firstAttribute="trailing" secondItem="lCK-vk-sjN" secondAttribute="trailing" id="E6i-E2-Hkf"/>
@@ -1275,7 +1275,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="XVD-zf-1lh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="createNewItemCell" rowHeight="66" id="TXK-yW-1Ha" customClass="CreateNewItemCell" customModule="smartList" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="66"/>
@@ -1287,7 +1287,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d4n-8c-tAw">
                                             <rect key="frame" x="30" y="21" width="354" height="24"/>
                                             <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                            <nil key="textColor"/>
+                                            <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -1299,6 +1299,7 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="d4n-8c-tAw" secondAttribute="bottom" constant="10" id="t2m-CJ-wPd"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
                                     <outlet property="label" destination="d4n-8c-tAw" id="MO0-6S-NXL"/>
                                 </connections>
@@ -1685,7 +1686,7 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="4bS-H3-ze1" firstAttribute="top" secondItem="Xf8-CJ-kAi" secondAttribute="top" id="Byw-Vq-QfK"/>
                                     <constraint firstItem="4bS-H3-ze1" firstAttribute="leading" secondItem="Xf8-CJ-kAi" secondAttribute="leading" id="Mon-6P-gQO"/>
@@ -1713,7 +1714,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="IQu-OV-dr4" firstAttribute="top" secondItem="z6d-S8-LRX" secondAttribute="top" id="3PN-hO-7J3"/>
                                     <constraint firstAttribute="height" secondItem="IQu-OV-dr4" secondAttribute="height" id="8Dz-7N-OAG"/>
@@ -1837,6 +1838,9 @@
                                 <color key="textColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="30"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="textDidChange:" destination="s3e-O6-k2W" eventType="editingChanged" id="73c-8t-gTM"/>
+                                </connections>
                             </textField>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="xHK-eQ-tEv">
                                 <rect key="frame" x="20" y="151" width="374" height="32"/>
@@ -1950,7 +1954,7 @@
                                                                 </subviews>
                                                             </stackView>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         <constraints>
                                                             <constraint firstItem="qV2-Kw-PWF" firstAttribute="top" secondItem="91a-0m-cqb" secondAttribute="top" id="A5g-SU-FRy"/>
                                                             <constraint firstAttribute="bottom" secondItem="qV2-Kw-PWF" secondAttribute="bottom" constant="5" id="P2g-hY-WfD"/>
@@ -2417,7 +2421,7 @@
                                 </prototypes>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="yfI-hY-3ah" firstAttribute="leading" secondItem="XBS-93-btv" secondAttribute="leading" id="BLp-hk-agC"/>
                             <constraint firstItem="XBS-93-btv" firstAttribute="bottom" secondItem="yfI-hY-3ah" secondAttribute="bottom" id="GNC-6n-7W2"/>

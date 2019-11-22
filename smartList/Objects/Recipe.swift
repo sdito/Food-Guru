@@ -169,9 +169,6 @@ struct Recipe {
             NotificationCenter.default.post(name: .recipeDataFromURLReceived, object: nil, userInfo: dict)
 
         }
-
-
-
         task.resume()
     }
     
@@ -188,7 +185,7 @@ struct Recipe {
                 print("couldn't cast data into String")
                 return
             }
-            //print(htmlString)
+            print(htmlString)
             
             let leftSideString = "[{\"@context\""
             

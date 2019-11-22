@@ -124,7 +124,7 @@ class RecipeHomeVC: UIViewController {
         
         searchButtonStackView.setUpQuickSearchButtons()
         createObserver()
-        scrollBackUpView.shadowAndRounded(cornerRadius: 10)
+        scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
         backUpOutlet.alpha = 0
     }
     

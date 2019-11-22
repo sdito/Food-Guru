@@ -36,12 +36,16 @@ class CookbookVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         recipes = Array(realm.objects(CookbookRecipe.self))
-        scrollBackUpView.shadowAndRounded(cornerRadius: 10)
+        scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
         
         FoodStorage.readSystemItemsFromUserStorage(db: Firestore.firestore(), storageID: SharedValues.shared.foodStorageID ?? " ") { (sysItems) in
             self.sysItems = sysItems
         }
-        
+        if #available(iOS 13.0, *) {
+            self.view.backgroundColor = .systemBackground
+        } else {
+            // Fallback on earlier versions
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

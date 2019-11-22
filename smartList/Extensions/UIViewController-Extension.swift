@@ -39,7 +39,7 @@ extension UIViewController {
         
         vc.view.insertSubview(v, at: 2)
         v.alpha = 0
-        v.shadowAndRounded(cornerRadius: 25.0)
+        v.shadowAndRounded(cornerRadius: 25.0, border: false)
         vc.modalPresentationStyle = .overFullScreen
         
         self.present(vc, animated: false) {
@@ -71,7 +71,7 @@ extension UIViewController {
         v.center = vc.view.center
         vc.view.insertSubview(v, at: 2)
         v.alpha = 0
-        v.shadowAndRounded(cornerRadius: 25.0)
+        v.shadowAndRounded(cornerRadius: 25.0, border: false)
         vc.modalPresentationStyle = .overFullScreen
         
         self.present(vc, animated: false) {

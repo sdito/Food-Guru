@@ -144,9 +144,11 @@ class CreateRecipeVC: UIViewController {
                     print(ingredients)
                     
                     let numIngredientViewsToAdd = Int((Double(ingredients.count) / 2.0).rounded(.up)) - 2
-                    for _ in 1...numIngredientViewsToAdd {
-                        let v = Bundle.main.loadNibNamed("IngredientView", owner: nil, options: nil)?.first as! IngredientView
-                        self.ingredientsStackView.insertArrangedSubview(v, at: self.ingredientsStackView.subviews.count - 1)
+                    if numIngredientViewsToAdd >= 1 {
+                        for _ in 1...numIngredientViewsToAdd {
+                            let v = Bundle.main.loadNibNamed("IngredientView", owner: nil, options: nil)?.first as! IngredientView
+                            self.ingredientsStackView.insertArrangedSubview(v, at: self.ingredientsStackView.subviews.count - 1)
+                        }
                     }
                     
                     var idx = 1

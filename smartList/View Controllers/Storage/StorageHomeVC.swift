@@ -82,7 +82,7 @@ class StorageHomeVC: UIViewController {
         searchBar.placeholder = ""
         searchBar.setTextProperties()
         searchOutlet.setImage(UIImage(named: "search-3-xl"), for: .normal)
-        helperView.shadowAndRounded(cornerRadius: 10)
+        helperView.shadowAndRounded(cornerRadius: 10, border: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -413,15 +413,3 @@ extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationController
         }
     }
 }
-
-
-/*
- if let pickedImage = info[UIImagePickerController.InfoKey.] as? UIImage {
-     selectimageOutlet.contentMode = .scaleAspectFit
-     selectimageOutlet.setBackgroundImage(pickedImage, for: .normal)
-     selectimageOutlet.setTitle("", for: .normal)
-     image = pickedImage.jpegData(compressionQuality: 0.75)
-     print(pickedImage.size.height, pickedImage.size.width)
-     
- }
- */

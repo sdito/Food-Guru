@@ -199,7 +199,8 @@ extension Sequence where Element == Item {
         }
         if searchText != "" {
             returnSorted = returnSorted.filter({ (itm) -> Bool in
-                itm.name.lowercased().starts(with: searchText.lowercased())
+                //itm.name.lowercased().starts(with: searchText.lowercased())
+                itm.name.lowercased().contains(searchText.lowercased())
             })
         }
         return returnSorted
