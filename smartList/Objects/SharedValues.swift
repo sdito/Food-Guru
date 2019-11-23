@@ -39,7 +39,11 @@ class SharedValues {
     
     var sentRecipesInfo: (recipes: [Recipe], ingredients: [String])?
     
-    
+    var currentItemsInStorage: [String]? {
+        didSet {
+            print(self.currentItemsInStorage as Any)
+        }
+    }
     
     static let shared = SharedValues()
     private init() {}

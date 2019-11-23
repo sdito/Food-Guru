@@ -11,19 +11,19 @@ import FirebaseFirestore
 import FirebaseAuth
 
 
-protocol RecipeCellDelegate {
-    func addToFavorites(recipe: Recipe?)
-    func removeFromFavorites(recipe: Recipe?)
-}
+//protocol RecipeCellDelegate {
+//    func addToFavorites(recipe: Recipe?)
+//    func removeFromFavorites(recipe: Recipe?)
+//}
 
 
 
 
 class RecipeCell: UICollectionViewCell {
     
-    var delegate: RecipeCellDelegate!
+//    var delegate: RecipeCellDelegate!
     
-    var selectionState: Bool = false {
+    var selectionState: Bool = false /*{
         didSet {
             switch self.selectionState {
             case true:
@@ -32,7 +32,7 @@ class RecipeCell: UICollectionViewCell {
                 delegate.removeFromFavorites(recipe: recipe)
             }
         }
-    }
+    }*/
     
     private var recipe: Recipe?
     @IBOutlet weak var recipeImage: UIImageView!

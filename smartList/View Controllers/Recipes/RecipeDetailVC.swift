@@ -104,7 +104,7 @@ class RecipeDetailVC: UIViewController {
     
     #warning("have a semi small not important bug, if user adds items one by one then adds all items to the list, the items that were added one by one will be added twice")
     @IBAction func addAllToList(_ sender: Any) {
-        print("Add all items to list")
+        print("Add all items to list")        
         let uid = Auth.auth().currentUser?.uid ?? " "
         GroceryList.getUsersCurrentList(db: db, userID: uid) { (list) in
             if let list = list {
@@ -128,6 +128,7 @@ class RecipeDetailVC: UIViewController {
                 
             }
         }
+        
     }
     
     @IBAction func reviewRecipe(_ sender: Any) {

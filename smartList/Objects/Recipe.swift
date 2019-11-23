@@ -51,22 +51,7 @@ struct Recipe {
         self.imagePath = imagePath
     }
     
-    
-    
-    static func readUserRecipes(db: Firestore, recipesReturned: @escaping (_ recipe: [Recipe]) -> Void) {
-        var recipes: [Recipe] = []
-        db.collection("recipes").limit(to: 50).getDocuments { (querySnapshot, error) in
-            guard let documents = querySnapshot?.documents else {
-                print("Error fetching documents: \(String(describing: error))")
-                return
-            }
-            for doc in documents {
-                let r = Recipe(name: doc.get("name") as! String, recipeType: doc.get("recipeType") as! [String], cuisineType: doc.get("cuisineType") as! String, cookTime: doc.get("cookTime") as! Int, prepTime: doc.get("prepTime") as! Int, ingredients: doc.get("ingredients") as! [String], instructions: doc.get("instructions") as! [String], calories: doc.get("calories") as? Int, numServes: doc.get("numServes") as! Int, userID: doc.get("userID") as? String, numReviews: doc.get("numReviews") as? Int, numStars: doc.get("numStars") as? Int, notes: doc.get("notes") as? String, tagline: doc.get("tagline") as? String, recipeImage: nil, imagePath: doc.get("path") as? String)
-                recipes.append(r)
-            }
-            recipesReturned(recipes)
-        }
-    }
+
     
     static func addRecipeToSavedRecipes(db: Firestore, str: String) {
         let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ")

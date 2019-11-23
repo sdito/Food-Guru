@@ -11,11 +11,7 @@ import RealmSwift
 import FirebaseFirestore
 
 class CookbookVC: UIViewController {
-    private var sysItems: [String] = [] {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    
     private var lastContentOffset: CGFloat = 0
     private var recipes: [CookbookRecipe] = [] {
         didSet {
@@ -38,9 +34,7 @@ class CookbookVC: UIViewController {
         recipes = Array(realm.objects(CookbookRecipe.self))
         scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
         
-        FoodStorage.readSystemItemsFromUserStorage(db: Firestore.firestore(), storageID: SharedValues.shared.foodStorageID ?? " ") { (sysItems) in
-            self.sysItems = sysItems
-        }
+        
         if #available(iOS 13.0, *) {
             self.view.backgroundColor = .systemBackground
         } else {
@@ -97,7 +91,7 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
         if recipes.count != 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cookbookCell") as! CookbookCell
             let recipe = recipes[indexPath.row]
-            cell.setUI(recipe: recipe, systemItems: sysItems)
+            cell.setUI(recipe: recipe, systemItems: SharedValues.shared.currentItemsInStorage ?? [])
             return cell
         } else {
             let cell: UITableViewCell = .init(style: .default, reuseIdentifier: nil)

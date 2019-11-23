@@ -34,7 +34,10 @@ class ButtonIngredientView: UIView {
     func setUI(ingredient: String) {
         label.text = ingredient
         button.addTarget(self, action: #selector(bAction), for: .touchUpInside)
-        
+        let systemIngredient = "\(Search.turnIntoSystemItem(string: ingredient))"
+        if SharedValues.shared.currentItemsInStorage?.contains(systemIngredient) ?? false {
+            label.textColor = .systemGreen
+        }
     }
     
     @objc private func bAction() {

@@ -170,24 +170,24 @@ struct FoodStorage {
         
     }
     
-    
-    static func readSystemItemsFromUserStorage(db: Firestore, storageID: String, systemItemsReturned: @escaping (_ items: [String]) -> Void) {
-        
-        var items: [String] = []
+    static func readAndPersistSystemItemsFromStorageWithListener(db: Firestore, storageID: String) {
         let reference = db.collection("storages").document(storageID).collection("items")
-        reference.getDocuments { (querySnapshot, error) in
+        reference.addSnapshotListener { (querySnapshot, error) in
+            var items: [String] = []
             guard let documents = querySnapshot?.documents else {
                 print("Error retrieving documents: \(String(describing: error))")
                 return
             }
+            
             for doc in documents {
                 let systemItem = doc.get("systemItem") as? String ?? "other"
                 items.append(systemItem)
+                
             }
-            //#error("This isnt working properly")
-            systemItemsReturned(items)
+            SharedValues.shared.currentItemsInStorage?.removeAll()
+            SharedValues.shared.currentItemsInStorage = items
         }
-        
     }
+    
     
 }

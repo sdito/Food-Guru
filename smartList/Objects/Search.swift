@@ -49,7 +49,16 @@ struct Search {
         
         switch (ingredientCount, recipeCount, cuisineCount) {
         case (0, 0, 0):
-            return
+            reference.limit(to: 50).getDocuments { (querySnapshot, error) in
+                guard let documents = querySnapshot?.documents else {
+                    print("Error retrieving documents: \(String(describing: error))")
+                    return
+                }
+                for doc in documents {
+                    recipes.append(doc.recipe())
+                }
+                recipesReturned(recipes)
+            }
         case (1, 0, 0):
             reference.whereField("has_\(ingredientText[0])", isEqualTo: true).getDocuments { (querySnapshot, error) in
                 guard let documents = querySnapshot?.documents else {

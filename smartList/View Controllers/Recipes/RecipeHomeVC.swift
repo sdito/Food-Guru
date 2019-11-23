@@ -10,6 +10,7 @@ import UIKit
 import FirebaseFirestore
 import AVFoundation
 
+#error("problem when all searches are removed, no recipes show up. Search function is working correctly and giving back the recipes so idk whats happening")
 
 class RecipeHomeVC: UIViewController {
     private var savedRecipesActive = false {
@@ -126,6 +127,9 @@ class RecipeHomeVC: UIViewController {
         createObserver()
         scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
         backUpOutlet.alpha = 0
+        
+        
+        FoodStorage.readAndPersistSystemItemsFromStorageWithListener(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
     }
     
     @IBAction func scrollBackUp(_ sender: Any) {
@@ -202,12 +206,13 @@ class RecipeHomeVC: UIViewController {
     private func handleRecipesToShow() {
         if SharedValues.shared.sentRecipesInfo == nil {
             if recipes.isEmpty {
-                Recipe.readUserRecipes(db: db) { (recipesReturned) in
-                    self.recipes = recipesReturned
+                Search.find(from: activeSearches, db: db) { (rcps) in
+                    if let rs = rcps {
+                        self.recipes = rs
+                    }
                 }
             }
         } else {
-            
             recipes = SharedValues.shared.sentRecipesInfo!.recipes
             print(recipes)
             activeSearches = SharedValues.shared.sentRecipesInfo!.ingredients.map({($0, .ingredient)})
@@ -259,18 +264,6 @@ extension RecipeHomeVC: CurrentSearchesViewDelegate {
     }
 }
 
-extension RecipeHomeVC: RecipeCellDelegate {
-    func removeFromFavorites(recipe: Recipe?) {
-        print("removeFromFavorites called")
-        
-    }
-    
-    func addToFavorites(recipe: Recipe?) {
-        print("addToFavorites called")
-        
-        
-    }
-}
 
 extension RecipeHomeVC: DynamicHeightLayoutDelegate {
     #warning("issue with how much to subtract from the text labels, was 8 previously for title and cuisine and changed it to 10")
@@ -328,7 +321,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             let recipe = savedRecipes[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCell
             cell.setUI(recipe: recipe)
-            cell.delegate = self as RecipeCellDelegate
+            //cell.delegate = self as RecipeCellDelegate
             if let cachedImage = imageCache.object(forKey: "\(indexPath.row)" as NSString) {
                 cell.recipeImage.image = cachedImage
                 print("Cache for \(indexPath.row)")
@@ -345,7 +338,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             let recipe = recipes[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCell
             cell.setUI(recipe: recipe)
-            cell.delegate = self as RecipeCellDelegate
+            //cell.delegate = self as RecipeCellDelegate
             if let cachedImage = imageCache.object(forKey: "\(indexPath.row)" as NSString) {
                 cell.recipeImage.image = cachedImage
                 print("Cache for \(indexPath.row)")
