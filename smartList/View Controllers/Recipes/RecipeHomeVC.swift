@@ -10,7 +10,7 @@ import UIKit
 import FirebaseFirestore
 import AVFoundation
 
-#error("problem when all searches are removed, no recipes show up. Search function is working correctly and giving back the recipes so idk whats happening")
+
 
 class RecipeHomeVC: UIViewController {
     private var savedRecipesActive = false {
@@ -31,7 +31,7 @@ class RecipeHomeVC: UIViewController {
             }
         }
     }
-    private var selectedCache: [IndexPath] = []
+    //private var selectedCache: [IndexPath] = []
     private let currentSearchesView = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
     private var activeSearches: [(String, SearchType)] = [] {
         didSet {
@@ -39,7 +39,6 @@ class RecipeHomeVC: UIViewController {
                 Search.find(from: self.activeSearches, db: db) { (rcps) in
                     if let rcps = rcps {
                         self.recipes = rcps
-                        
                     } else {
                         for _ in 1...10 {
                             print("Recipes not found")
@@ -51,7 +50,6 @@ class RecipeHomeVC: UIViewController {
             if wholeStackView.subviews.contains(currentSearchesView) {
                 currentSearchesView.setUI(searches: self.activeSearches)
             } else {
-                
                 wholeStackView.insertArrangedSubview(currentSearchesView, at: 1)
                 currentSearchesView.setUI(searches: self.activeSearches)
             }
@@ -81,15 +79,15 @@ class RecipeHomeVC: UIViewController {
     var recipes: [Recipe] = [] {
         didSet {
             imageCache.removeAllObjects()
-            collectionView?.reloadData()
+            
             collectionView?.collectionViewLayout.invalidateLayout()
+            collectionView?.reloadData()
         }
     }
     
     private var savedRecipes: [Recipe] = [] {
         didSet {
             imageCache.removeAllObjects()
-            
             collectionView?.collectionViewLayout.invalidateLayout()
             collectionView?.reloadData()
         }
@@ -179,7 +177,6 @@ class RecipeHomeVC: UIViewController {
                 if buttonName.0 != "Select Ingredients" {
                     
                     handleDuplicateSearchesAndAddNew(newSearches: [buttonName])
-                    //activeSearches.append(buttonName)
                 } else {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewController(withIdentifier: "searchByIngredient") as! SearchByIngredientVC
@@ -223,7 +220,7 @@ class RecipeHomeVC: UIViewController {
     
     private func handleDuplicateSearchesAndAddNew(newSearches: [(String, SearchType)]) {
         var temp: [(String, SearchType)] = activeSearches
-        for newSearch in newSearches{
+        for newSearch in newSearches {
             switch newSearch.1 {
             case .cuisine:
                 temp = temp.filter({$0.1 != .cuisine})
@@ -245,6 +242,7 @@ class RecipeHomeVC: UIViewController {
                 activeSearches = newSearches
             }
         }
+        
     }
 }
 
@@ -261,6 +259,10 @@ extension RecipeHomeVC: RecipesFoundFromSearchingDelegate {
 extension RecipeHomeVC: CurrentSearchesViewDelegate {
     func buttonPressedToDeleteSearch(index: Int) {
         activeSearches.remove(at: index)
+        
+        #error("problem when all searches are removed, no recipes show up. Search function is working correctly and giving back the recipes so idk whats happening WHY DOES BELOW FIX IT THIS IS SO WEIRD")
+        currentSearchesView.isHidden = true
+        currentSearchesView.isHidden = false
     }
 }
 
@@ -310,11 +312,8 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             let selected = recipes[indexPath.item]
             performSegue(withIdentifier: "showRecipeDetail", sender: (imageCache.object(forKey: "\(indexPath.row)" as NSString), selected))
         }
-        
-        
-        
-        
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch savedRecipesActive {
         case true:
@@ -336,6 +335,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             return cell
         case false:
             let recipe = recipes[indexPath.row]
+            print("The recipe from the cell screen: \(recipe.name)")
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCell
             cell.setUI(recipe: recipe)
             //cell.delegate = self as RecipeCellDelegate
@@ -352,10 +352,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             
             return cell
         }
-        
-        
-        // pull the image from the cache if possible, if not pull from cloud storage
-        
+
     }
     
 

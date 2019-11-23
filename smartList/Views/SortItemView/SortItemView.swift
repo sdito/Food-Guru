@@ -65,7 +65,11 @@ class SortItemView: UIView {
             let label = UILabel()
             label.text = item
             label.font = UIFont(name: "futura", size: 13)
-            label.textColor = .black
+            if #available(iOS 13.0, *) {
+                label.textColor = .label
+            } else {
+                label.textColor = .black
+            }
             if multipleItemStackView.subviews.isEmpty == true {
                 label.alpha = 1.0
             } else {

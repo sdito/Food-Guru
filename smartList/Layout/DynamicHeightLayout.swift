@@ -75,16 +75,6 @@ class DynamicHeightLayout: UICollectionViewLayout {
         }
         return layoutAttributes
     }
-    
-//    override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
-//        let layoutAttributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: elementKind, with: indexPath)
-//
-//        if elementKind == UICollectionView.elementKindSectionHeader {
-//            layoutAttributes.frame = CGRect(x: 0.0, y: 0.0, width: width, height: headerHeight)
-//            layoutAttributes.zIndex = Int.max - 3
-//        }
-//
-//        return layoutAttributes
-//    }
+
     
 }
