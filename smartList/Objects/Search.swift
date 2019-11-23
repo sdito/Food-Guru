@@ -41,303 +41,325 @@ struct Search {
                     print(recipes.map({$0.name}))
                     recipesReturned(recipes)
                 }
-
+            case "Recommended":
+                print("Recommended time for recipes")
+                var systemItemsExpiring: [String] = []
+                let timeIntervalForSearch = Date().timeIntervalSince1970 + (86_400 * 2)
+                let foodStorageReference = db.collection("storages").document(SharedValues.shared.foodStorageID ?? " ").collection("items").whereField("timeExpires", isLessThan: timeIntervalForSearch)
+                foodStorageReference.getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retreiving documents: \(String(describing: error))")
+                        return
+                    }
+                    for doc in documents {
+                        let itm = doc.get("systemItem") as? String
+                        if let itm = itm {
+                            systemItemsExpiring.append(itm)
+                        }
+                    }
+                    print(systemItemsExpiring)
+                    #error("find recipes about the items expiring here")
+                }
+                
+                
+            default:
+                return
+            }
+        } else {
+            switch (ingredientCount, recipeCount, cuisineCount) {
+            case (0, 0, 0):
+                reference.limit(to: 50).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (1, 0, 0):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (2, 0, 0):
+                
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    for _ in 1...100 {
+                        print(recipes.map({$0.name}))
+                    }
+                    recipesReturned(recipes)
+                }
+            case (3, 0, 0):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (4, 0, 0):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("has_\(ingredientText[3])", isEqualTo: true).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (5, 0, 0):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("has_\(ingredientText[3])", isEqualTo: true).whereField("has_\(ingredientText[4])", isEqualTo: true).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (0, 1, 0):
+                reference.whereField("recipeType", arrayContains: recipeText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (1, 1, 0):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (2, 1, 0):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+                
+                
+                
+                
+            case (3, 1, 0):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (4, 1, 0):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("has_\(ingredientText[3])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (5, 1, 0):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("has_\(ingredientText[3])", isEqualTo: true).whereField("has_\(ingredientText[4])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (0, 0, 1):
+                reference.whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (1, 0, 1):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (2, 0, 1):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (3, 0, 1):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (4, 0, 1):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("has_\(ingredientText[3])", isEqualTo: true).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (5, 0, 1):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("has_\(ingredientText[3])", isEqualTo: true).whereField("has_\(ingredientText[4])", isEqualTo: true).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (0, 1, 1):
+                reference.whereField("recipeType", arrayContains: recipeText[0]).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (1, 1, 1):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (2, 1, 1):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (3, 1, 1):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (4, 1, 1):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("has_\(ingredientText[3])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
+            case (5, 1, 1):
+                reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("has_\(ingredientText[3])", isEqualTo: true).whereField("has_\(ingredientText[4])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    recipesReturned(recipes)
+                }
             default:
                 return
             }
         }
         
-        switch (ingredientCount, recipeCount, cuisineCount) {
-        case (0, 0, 0):
-            reference.limit(to: 50).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (1, 0, 0):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (2, 0, 0):
-            
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                for _ in 1...100 {
-                    print(recipes.map({$0.name}))
-                }
-                recipesReturned(recipes)
-            }
-        case (3, 0, 0):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (4, 0, 0):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("has_\(ingredientText[3])", isEqualTo: true).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (5, 0, 0):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("has_\(ingredientText[3])", isEqualTo: true).whereField("has_\(ingredientText[4])", isEqualTo: true).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (0, 1, 0):
-            reference.whereField("recipeType", arrayContains: recipeText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (1, 1, 0):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (2, 1, 0):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-            
-            
-            
-            
-        case (3, 1, 0):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (4, 1, 0):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("has_\(ingredientText[3])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (5, 1, 0):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("has_\(ingredientText[3])", isEqualTo: true).whereField("has_\(ingredientText[4])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (0, 0, 1):
-            reference.whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (1, 0, 1):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (2, 0, 1):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (3, 0, 1):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (4, 0, 1):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("has_\(ingredientText[3])", isEqualTo: true).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (5, 0, 1):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("has_\(ingredientText[3])", isEqualTo: true).whereField("has_\(ingredientText[4])", isEqualTo: true).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (0, 1, 1):
-            reference.whereField("recipeType", arrayContains: recipeText[0]).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (1, 1, 1):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (2, 1, 1):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (3, 1, 1):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (4, 1, 1):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("has_\(ingredientText[3])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        case (5, 1, 1):
-            reference.whereField("has_\(ingredientText[0])", isEqualTo: true).whereField("has_\(ingredientText[1])", isEqualTo: true).whereField("has_\(ingredientText[2])", isEqualTo: true).whereField("has_\(ingredientText[3])", isEqualTo: true).whereField("has_\(ingredientText[4])", isEqualTo: true).whereField("recipeType", arrayContains: recipeText[0]).whereField("cuisineType", isEqualTo: cuisineText[0]).getDocuments { (querySnapshot, error) in
-                guard let documents = querySnapshot?.documents else {
-                    print("Error retrieving documents: \(String(describing: error))")
-                    return
-                }
-                for doc in documents {
-                    recipes.append(doc.recipe())
-                }
-                recipesReturned(recipes)
-            }
-        default:
-            return
-        }
+        
         
     }
     
@@ -593,7 +615,7 @@ struct Search {
     }
     
     static func turnIntoSystemItem(string: String) -> GenericItem {
-        let descriptors: Set<String> = ["chopped", "minced", "chunks", "cut into", "cubed", "shredded", "melted", "diced", "divided", "to taste", "or more to taste", "or more as needed", "grated", "crushed", "pounded", "boneless", "skinless", "fresh", "sliced", "thinly", "halves", "half", "halved", "seeded", "with", "and", "finely", "optional", "taste"]
+        let descriptors: Set<String> = ["chopped", "minced", "chunks", "cut into", "cubed", "shredded", "melted", "diced", "divided", "to taste", "or more to taste", "or more as needed", "grated", "crushed", "pounded", "boneless", "skinless", "fresh", "sliced", "thinly", "halves", "halved", "seeded", "with", "and", "finely", "optional", "taste"]
         let measurements: Set<String> = ["pound", "pounds", "envelope", "cup", "cups", "tablespoons", "packet", "ounce", "large", "small", "medium", "package", "teaspoons", "teaspoon", "tablespoon", "pinch", "t.", "ts.", "tspn", "tbsp", "tbls", "bag", "cubes", "cube", "clove", "cloves", "ounces", "quart"]
         
         let lower = string.lowercased()
