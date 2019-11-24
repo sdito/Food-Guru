@@ -260,7 +260,8 @@ extension RecipeHomeVC: CurrentSearchesViewDelegate {
     func buttonPressedToDeleteSearch(index: Int) {
         activeSearches.remove(at: index)
         
-        #error("problem when all searches are removed, no recipes show up. Search function is working correctly and giving back the recipes so idk whats happening WHY DOES BELOW FIX IT THIS IS SO WEIRD")
+        #warning("problem when all searches are removed, no recipes show up. Search function is working correctly and giving back the recipes so idk whats happening WHY DOES BELOW FIX IT THIS IS SO WEIRD")
+        
         currentSearchesView.isHidden = true
         currentSearchesView.isHidden = false
     }
@@ -335,7 +336,6 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             return cell
         case false:
             let recipe = recipes[indexPath.row]
-            print("The recipe from the cell screen: \(recipe.name)")
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCell
             cell.setUI(recipe: recipe)
             //cell.delegate = self as RecipeCellDelegate

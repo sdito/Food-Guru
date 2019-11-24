@@ -19,7 +19,11 @@ class RecipeTypeCell: UITableViewCell {
             typeLabel.textColor = Colors.main
             self.accessoryType = .checkmark
         } else {
-            typeLabel.textColor = .black
+            if #available(iOS 13.0, *) {
+                typeLabel.textColor = .label
+            } else {
+                typeLabel.textColor = .black
+            }
             self.accessoryType = .none
         }
     }

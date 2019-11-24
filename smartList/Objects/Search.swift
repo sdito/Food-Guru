@@ -41,7 +41,7 @@ struct Search {
                     print(recipes.map({$0.name}))
                     recipesReturned(recipes)
                 }
-            case "Recommended":
+            case "Expiring":
                 print("Recommended time for recipes")
                 var systemItemsExpiring: [String] = []
                 let timeIntervalForSearch = Date().timeIntervalSince1970 + (86_400 * 2)
@@ -58,7 +58,59 @@ struct Search {
                         }
                     }
                     print(systemItemsExpiring)
-                    #error("find recipes about the items expiring here")
+                    
+                    switch systemItemsExpiring.count {
+                    case 0:
+                        print("No items expiring")
+                        let alert = UIAlertController(title: "No items expiring soon!", message: nil, preferredStyle: .alert)
+                        alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+                    case 1:
+                        print("One item expiring")
+                        reference.whereField("has_\(systemItemsExpiring[0])", isEqualTo: true).getDocuments { (querySnapshot, error) in
+                            guard let documents = querySnapshot?.documents else {
+                                print("Error retrieving documents: \(String(describing: error))")
+                                return
+                            }
+                            
+                            for doc in documents {
+                                recipes.append(doc.recipe())
+                            }
+                            recipesReturned(recipes)
+                        }
+                    case 2:
+                        print("Two items expiring")
+                        reference.whereField("has_\(systemItemsExpiring[0])", isEqualTo: true).whereField("has_\(systemItemsExpiring[1])", isEqualTo: true).getDocuments { (querySnapshot, error) in
+                            guard let documents = querySnapshot?.documents else {
+                                print("Error retrieving documents: \(String(describing: error))")
+                                return
+                            }
+                            
+                            for doc in documents {
+                                recipes.append(doc.recipe())
+                            }
+                            recipesReturned(recipes)
+                        }
+                    case 3:
+                        print("Three items expiring")
+                        reference.whereField("has_\(systemItemsExpiring[0])", isEqualTo: true).whereField("has_\(systemItemsExpiring[1])", isEqualTo: true).whereField("has_\(systemItemsExpiring[2])", isEqualTo: true).getDocuments { (querySnapshot, error) in
+                            guard let documents = querySnapshot?.documents else {
+                                print("Error retrieving documents: \(String(describing: error))")
+                                return
+                            }
+                            
+                            for doc in documents {
+                                recipes.append(doc.recipe())
+                            }
+                            recipesReturned(recipes)
+                        }
+                        
+                    default:
+                        print("Default")
+                        #warning("need to figure out how i want to handle this case")
+                        
+                    }
+                    
                 }
                 
                 

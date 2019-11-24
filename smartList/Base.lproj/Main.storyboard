@@ -380,10 +380,10 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vU-Vm-RBW">
                                                     <rect key="frame" x="20" y="21" width="374" height="22.333333333333329"/>
                                                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                                    <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="0vU-Vm-RBW" secondAttribute="trailing" id="1LQ-yY-4ch"/>
                                                 <constraint firstItem="0vU-Vm-RBW" firstAttribute="leading" secondItem="yR9-Im-e1V" secondAttribute="leading" constant="20" id="OdM-1R-8ut"/>
@@ -455,7 +455,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="cYn-GZ-FqD" firstAttribute="bottom" secondItem="FlF-QT-6lf" secondAttribute="bottom" id="1kJ-hV-wzm"/>
                             <constraint firstItem="FlF-QT-6lf" firstAttribute="trailing" secondItem="3aL-7Z-msc" secondAttribute="trailing" id="2zg-lD-9Gf"/>
@@ -864,6 +864,7 @@
                         <outlet property="notesTextView" destination="xI1-Pl-Dsb" id="wUm-jZ-4sa"/>
                         <outlet property="prepTimeTextField" destination="Zhd-ic-1Q6" id="UgD-k0-MaO"/>
                         <outlet property="recipeDescriptionOutlet" destination="u7f-Sc-OcV" id="ZsZ-5c-w3U"/>
+                        <outlet property="scrollView" destination="lCK-vk-sjN" id="uEn-jz-sDt"/>
                         <outlet property="selectimageOutlet" destination="ZIs-mM-MMw" id="TuW-r0-Hqb"/>
                         <outlet property="servingsTextField" destination="JVQ-tX-F7f" id="nuo-Bq-QMs"/>
                         <outlet property="taglineTextView" destination="Twy-0P-6LR" id="Gk0-FI-ZPZ"/>
@@ -1127,15 +1128,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yUM-Gc-lue">
-                                <rect key="frame" x="172" y="120" width="70" height="30"/>
-                                <state key="normal" title="Create list"/>
-                                <connections>
-                                    <action selector="setUpList:" destination="5n7-mD-jxg" eventType="touchUpInside" id="Lvb-o3-7XX"/>
-                                </connections>
-                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QfI-YM-Ogh">
-                                <rect key="frame" x="0.0" y="170" width="414" height="643"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="SoO-Hs-KGy">
                                     <rect key="frame" x="0.0" y="292" width="414" height="44"/>
@@ -1246,20 +1240,45 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WBx-bz-H8R">
+                                <rect key="frame" x="169.66666666666666" y="763" width="75" height="40"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yUM-Gc-lue">
+                                        <rect key="frame" x="10" y="0.0" width="55" height="40"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                        <state key="normal" title="New list">
+                                            <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setUpList:" destination="5n7-mD-jxg" eventType="touchUpInside" id="Lvb-o3-7XX"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="yUM-Gc-lue" secondAttribute="trailing" constant="10" id="7tE-xh-bFB"/>
+                                    <constraint firstItem="yUM-Gc-lue" firstAttribute="top" secondItem="WBx-bz-H8R" secondAttribute="top" id="E5F-Jj-US9"/>
+                                    <constraint firstItem="yUM-Gc-lue" firstAttribute="centerX" secondItem="WBx-bz-H8R" secondAttribute="centerX" id="HQc-eP-vdQ"/>
+                                    <constraint firstAttribute="height" constant="40" id="Mfr-Sp-hCs"/>
+                                    <constraint firstAttribute="bottom" secondItem="yUM-Gc-lue" secondAttribute="bottom" id="UB5-Lf-bjc"/>
+                                    <constraint firstItem="yUM-Gc-lue" firstAttribute="leading" secondItem="WBx-bz-H8R" secondAttribute="leading" constant="10" id="XY9-jH-z0u"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="WBx-bz-H8R" firstAttribute="centerX" secondItem="x2o-Ez-ptL" secondAttribute="centerX" id="2CA-Bl-UqA"/>
                             <constraint firstItem="QfI-YM-Ogh" firstAttribute="leading" secondItem="d6f-tp-SYw" secondAttribute="leading" id="CjK-qs-wCy"/>
-                            <constraint firstItem="yUM-Gc-lue" firstAttribute="top" secondItem="d6f-tp-SYw" secondAttribute="top" constant="32" id="F8z-Dh-uQI"/>
-                            <constraint firstItem="yUM-Gc-lue" firstAttribute="centerX" secondItem="x2o-Ez-ptL" secondAttribute="centerX" id="LQo-df-bwj"/>
                             <constraint firstItem="d6f-tp-SYw" firstAttribute="trailing" secondItem="QfI-YM-Ogh" secondAttribute="trailing" id="QiP-dy-BBX"/>
+                            <constraint firstItem="QfI-YM-Ogh" firstAttribute="top" secondItem="d6f-tp-SYw" secondAttribute="top" id="U1h-xT-yJn"/>
+                            <constraint firstItem="d6f-tp-SYw" firstAttribute="bottom" secondItem="WBx-bz-H8R" secondAttribute="bottom" constant="10" id="Xoz-3a-UlP"/>
                             <constraint firstItem="d6f-tp-SYw" firstAttribute="bottom" secondItem="QfI-YM-Ogh" secondAttribute="bottom" id="qem-wI-ctb"/>
-                            <constraint firstItem="QfI-YM-Ogh" firstAttribute="top" secondItem="yUM-Gc-lue" secondAttribute="bottom" constant="20" id="yFt-Bu-BOi"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="d6f-tp-SYw"/>
                     </view>
                     <navigationItem key="navigationItem" id="bxo-oU-zHF"/>
                     <connections>
+                        <outlet property="bottomView" destination="WBx-bz-H8R" id="2z0-ys-b5P"/>
                         <outlet property="tableView" destination="QfI-YM-Ogh" id="ZUP-63-TuK"/>
                         <segue destination="AVh-qM-Vlx" kind="show" identifier="listSelected" id="7km-XK-mWe"/>
                     </connections>

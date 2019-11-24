@@ -269,7 +269,7 @@ extension String {
         switch self {
         case "Select Ingredients":
             return .ingredient
-        case "Recommended":
+        case "Expiring":
             return .other
         case "Breakfast":
             return .recipe

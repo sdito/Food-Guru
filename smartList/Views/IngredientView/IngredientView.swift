@@ -14,9 +14,15 @@ class IngredientView: UIView, UITextFieldDelegate {
     @IBOutlet weak var left: UITextField!
     @IBOutlet weak var right: UITextField!
     
+    @objc func doneSelector() {
+        SharedValues.shared.currText?.resignFirstResponder()
+    }
+    
     override func awakeFromNib() {
         left.delegate = self
         right.delegate = self
+        left.setUpDoneToolbar(action: #selector(doneSelector), style: .done)
+        right.setUpDoneToolbar(action: #selector(doneSelector), style: .done)
     }
     
     // to get the ingredients from each ingredient view in [String] format
@@ -57,9 +63,8 @@ class IngredientView: UIView, UITextFieldDelegate {
         return true
     }
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-//        delegate = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
-//        delegate.setCurrent(from: textField)
         SharedValues.shared.currText = textField
+        
         return true
     }
 }

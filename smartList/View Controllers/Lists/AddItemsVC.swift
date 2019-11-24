@@ -30,7 +30,7 @@ class AddItemsVC: UIViewController {
     
     #warning("check")
     // check if this variable is being used for anything
-    private var sendHome = true
+    //private var sendHome = true
     
     var db: Firestore!
     
@@ -93,9 +93,9 @@ class AddItemsVC: UIViewController {
         SharedValues.shared.listIdentifier?.updateData([
             "numItems": list?.items?.count as Any
         ])
-        if sendHome == true {
-            navigationController?.popToRootViewController(animated: true)
-        }
+//        if sendHome == true {
+//            navigationController?.popToRootViewController(animated: true)
+//        }
         
     }
 
@@ -123,7 +123,7 @@ class AddItemsVC: UIViewController {
         }
     }
     @IBAction func editList(_ sender: Any) {
-        sendHome = false
+        //sendHome = false
         let vc = storyboard?.instantiateViewController(withIdentifier: "setUpList") as! SetUpListVC
         if list?.docID == nil {
             list?.docID = SharedValues.shared.listIdentifier?.documentID

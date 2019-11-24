@@ -10,6 +10,7 @@ import UIKit
 import FirebaseFirestore
 
 class ListHomeVC: UIViewController {
+    @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
     var db: Firestore!
@@ -43,7 +44,7 @@ class ListHomeVC: UIViewController {
             self.lists = dbLists
         }
         
-    
+        bottomView.shadowAndRounded(cornerRadius: 10, border: false)
         
     }
     

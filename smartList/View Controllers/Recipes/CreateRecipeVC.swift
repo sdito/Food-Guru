@@ -21,7 +21,7 @@ class CreateRecipeVC: UIViewController {
     
     @IBOutlet var stackViewsToHide: [UIStackView]!
     
-    
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var servingsTextField: UITextField!
     @IBOutlet weak var cookTimeTextField: UITextField!
@@ -95,6 +95,14 @@ class CreateRecipeVC: UIViewController {
         
         handleUI()
         createObserver()
+        
+        notesTextView.setUpDoneToolbar(action: #selector(removeFirstResponder), style: .done)
+        taglineTextView.setUpDoneToolbar(action: #selector(removeFirstResponder), style: .done)
+        nameTextField.setUpDoneToolbar(action: #selector(removeFirstResponder), style: .done)
+        servingsTextField.setUpDoneToolbar(action: #selector(removeFirstResponder), style: .done)
+        cookTimeTextField.setUpDoneToolbar(action: #selector(removeFirstResponder), style: .done)
+        prepTimeTextField.setUpDoneToolbar(action: #selector(removeFirstResponder), style: .done)
+        caloriesTextField.setUpDoneToolbar(action: #selector(removeFirstResponder), style: .done)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -112,10 +120,34 @@ class CreateRecipeVC: UIViewController {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
     private func createObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(recipeDataReceivedFromURL), name: .recipeDataFromURLReceived, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    @objc private func removeFirstResponder() {
+        SharedValues.shared.currText?.resignFirstResponder()
+    }
+    
+    @objc private func keyboardChange(notification: Notification) {
+        #error("left off here")
+        guard let keyboardRect = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        if let view = SharedValues.shared.currText {
+            let frame = view.convert(view.frame, to: UIApplication.shared.keyWindow)
+            if frame.origin.y > keyboardRect.height {
+                print("Needs to move")
+            } else {
+                print("All is bueno")
+            }
+        }
     }
     
     @objc private func recipeDataReceivedFromURL(_ notification: NSNotification) {
@@ -123,6 +155,7 @@ class CreateRecipeVC: UIViewController {
             DispatchQueue.main.async {
                 self.resetDataForNewRecipeFromURL()
                 self.urlView.isHidden = true
+                self.urlTextField.resignFirstResponder()
                 if let title = data["title"] as? String {
                     print(title)
                     
@@ -329,7 +362,9 @@ extension CreateRecipeVC: UITextFieldDelegate {
         } else if textField == servingsTextField {
             textField.resignFirstResponder()
             cookTimeTextField.becomeFirstResponder()
-            performSegue(withIdentifier: "recipeDetailSelection", sender: nil)
+            if forCookbook == false {
+                performSegue(withIdentifier: "recipeDetailSelection", sender: nil)
+            }
         } else if textField == cookTimeTextField {
             textField.resignFirstResponder()
             prepTimeTextField.becomeFirstResponder()
@@ -338,6 +373,10 @@ extension CreateRecipeVC: UITextFieldDelegate {
             caloriesTextField.becomeFirstResponder()
         } else if textField == caloriesTextField {
             textField.resignFirstResponder()
+            print("Got to this point")
+            if let tf = ingredientsStackView.subviews[1] as? IngredientView {
+                tf.left.becomeFirstResponder()
+            }
         }
         return true
     }
@@ -354,6 +393,13 @@ extension CreateRecipeVC: UITextViewDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         SharedValues.shared.currText = textView
         return true
+    }
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        textView.setUpDoneToolbar(action: #selector(removeTextViewKeyboard), style: .done)
+    }
+    
+    @objc func removeTextViewKeyboard() {
+        SharedValues.shared.currText?.resignFirstResponder()
     }
 }
 
@@ -395,6 +441,4 @@ extension CreateRecipeVC: UIImagePickerControllerDelegate, UINavigationControlle
     }
     
 }
-
-
 

@@ -28,6 +28,7 @@ extension UITextField {
         self.inputAccessoryView = toolbar
     }
     
+    
     func setUpStandardFormat(text: String) {
         self.font = UIFont(name: "futura", size: 15)
         self.textColor = Colors.main

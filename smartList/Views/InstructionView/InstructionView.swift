@@ -13,6 +13,15 @@ class InstructionView: UIView {
     @IBOutlet weak var tv: UITextView!
     @IBOutlet weak var button: UIButton!
     
+    
+    override func awakeFromNib() {
+        tv.setUpDoneToolbar(action: #selector(doneAction), style: .done)
+    }
+    
+    @objc func doneAction() {
+        self.tv.resignFirstResponder()
+    }
+    
     class func getInstructions(stack: UIStackView) -> [String] {
         var instructions: [String] = []
         for view in stack.subviews {
@@ -33,3 +42,10 @@ class InstructionView: UIView {
         
     }
 }
+
+//
+//extension InstructionView: UITextViewDelegate {
+//    func textViewDidBeginEditing(_ textView: UITextView) {
+//        SharedValues.shared.currText = textView
+//    }
+//}
