@@ -346,6 +346,12 @@ extension RecipeDetailVC: DisableAddAllItemsDelegate {
 }
 
 extension RecipeDetailVC: GiveRatingViewDelegate {
+    func writeImageForReview(image: UIImage) {
+        print("Write the image from here")
+        #error("left off here/need to write this function, should probably not all have the code inside this VC")
+    }
+    
+    
     func publishRating(stars: Int, rating: String?) {
         reviewRecipeOutlet.isUserInteractionEnabled = false
         reviewRecipeOutlet.alpha = 0.4

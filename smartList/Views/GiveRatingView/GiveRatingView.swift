@@ -11,15 +11,20 @@ import UIKit
 
 protocol GiveRatingViewDelegate {
     func publishRating(stars: Int, rating: String?)
+    func writeImageForReview(image: UIImage)
 }
 
 
 class GiveRatingView: UIView {
+    private var imageForReview: UIImage?
+    var imagePicker = UIImagePickerController()
     var delegate: GiveRatingViewDelegate!
     private var rating: Int?
     private let placeholder = "How was the recipe? Did you have any cooking tips, or make any substitutions?"
     @IBOutlet weak var ratingButton: UIButton!
     @IBOutlet weak var textView: UITextView!
+    
+    @IBOutlet weak var imageSelectOutlet: UIButton!
     @IBOutlet var starButtons: [UIButton]!
     
     
@@ -31,7 +36,7 @@ class GiveRatingView: UIView {
         textView.text = placeholder
         textView.alpha = 0.5
         ratingButton.isUserInteractionEnabled = false
-        
+        imagePicker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
     }
     
     
@@ -50,24 +55,61 @@ class GiveRatingView: UIView {
     }
     
     
+    @IBAction func addPhoto(_ sender: Any) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(.init(title: "Camera", style: .default, handler: {(alert: UIAlertAction!) in self.cameraOption()}))
+        actionSheet.addAction(.init(title: "Photo library", style: .default, handler: {(alert: UIAlertAction!) in self.photoLibraryOption()}))
+        actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        self.findViewController()?.present(actionSheet, animated: true)
+    }
     
+    private func cameraOption() {
+        #warning("Need to test on device")
+        print("Camera option")
+        imagePicker.sourceType = .camera
+        self.findViewController()?.present(imagePicker, animated: true, completion: nil)
+    }
     
+    private func photoLibraryOption() {
+        print("Photo library option")
+        imagePicker.sourceType = .photoLibrary
+        self.findViewController()?.present(imagePicker, animated: true, completion: nil)
+    }
     
     
     @IBAction func enterRating(_ sender: Any) {
         print("Publish the review here")
         let reviewText = (textView.text != placeholder) ? textView.text : ""
         delegate.publishRating(stars: rating ?? 0, rating: reviewText)
-        
+        if let image = imageForReview {
+            delegate.writeImageForReview(image: image)
+        }
     }
     
 }
 
+extension GiveRatingView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if picker == imagePicker {
+            if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+                imageForReview = pickedImage
+                imageSelectOutlet.setBackgroundImage(pickedImage, for: .normal)
+                imageSelectOutlet.tintColor = .clear
+                imagePicker.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        print("Cancel time happened")
+        imageForReview = nil
+        imageSelectOutlet.setBackgroundImage(nil, for: .normal)
+        imageSelectOutlet.tintColor = Colors.main
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
+}
+
 
 extension GiveRatingView: UITextViewDelegate {
-    @objc func gestureSelector() {
-        print("called")
-    }
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.alpha = 1.0
         textView.text = ""
