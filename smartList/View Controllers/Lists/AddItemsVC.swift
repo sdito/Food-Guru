@@ -246,8 +246,14 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
         let l = UILabel()
         l.text = sortedCategories[section]
         l.font = UIFont(name: "futura", size: 15)
-        l.textColor = .white
-        l.backgroundColor = .lightGray
+        
+        if #available(iOS 13.0, *) {
+            l.backgroundColor = .secondarySystemBackground
+            l.textColor = .label
+        } else {
+            l.backgroundColor = .lightGray
+            l.textColor = .white
+        }
         l.alpha = 0.9
         l.textAlignment = .center
         return l

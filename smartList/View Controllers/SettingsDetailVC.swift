@@ -21,7 +21,6 @@ class SettingsDetailVC: UIViewController {
         tableView.delegate = self
         createObserver()
         db = Firestore.firestore()
-        tableView.backgroundColor = .lightGray
         self.createNavigationBarTextAttributes()
         self.title = setting?.description()
     }
@@ -244,17 +243,17 @@ extension SettingsDetailVC: UpdateScreenDelegate {
 
 
 extension SettingsDetailVC: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let v = UIView()
-        v.backgroundColor = .lightGray
-        return v
-    }
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let v = UIView()
-        v.backgroundColor = .lightGray
-        v.alpha = 0
-        return v
-    }
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        let v = UIView()
+//        v.backgroundColor = .lightGray
+//        return v
+//    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let v = UIView()
+//        v.backgroundColor = .lightGray
+//        v.alpha = 0
+//        return v
+//    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return returnCells(setting: setting!, db: db).count
     }

@@ -126,22 +126,15 @@ extension ListHomeVC: UITableViewDataSource, UITableViewDelegate {
             return listsForSections?[section].count ?? 0
         }
     }
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        switch lists?.count {
-        case 0:
-            let view = UIView()
-            view.alpha = 0
-            return view
-        default:
-            let label = UILabel()
-            label.text = sections?[section]
-            label.font = UIFont(name: "futura", size: 15)
-            label.backgroundColor = .lightGray
-            label.textColor = .white
-            label.alpha = 0.8
-            return label
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if lists?.count != 0 {
+            return sections?[section]
+        } else {
+            return nil
         }
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch lists?.count {

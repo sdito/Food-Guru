@@ -62,10 +62,14 @@ class IngredientView: UIView, UITextFieldDelegate {
         }
         return true
     }
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+//        SharedValues.shared.currText = textField
+//
+//        return true
+//    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         SharedValues.shared.currText = textField
         
-        return true
     }
 }
 

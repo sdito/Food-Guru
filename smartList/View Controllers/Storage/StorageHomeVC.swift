@@ -317,18 +317,17 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if SharedValues.shared.foodStorageID != nil && items.isEmpty == false {
-            //tableView.backgroundColor = .white
-            return nil
-        } else {
-            //tableView.backgroundColor = .lightGray
-            let v = UIView()
-            v.backgroundColor = .lightGray
-            v.alpha = 0
-            return v
-        }
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        if SharedValues.shared.foodStorageID != nil && items.isEmpty == false {
+//            //tableView.backgroundColor = .white
+//            return nil
+//        } else {
+//            //tableView.backgroundColor = .lightGray
+//            let v = UIView()
+//            v.backgroundColor = .clear
+//            return v
+//        }
+//    }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -363,16 +362,19 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         
     }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if SharedValues.shared.foodStorageID != nil && items.isEmpty == false {
-            //tableView.backgroundColor = .white
-            return UIView()
-            
-        } else {
-            //tableView.backgroundColor = .lightGray
-            let v = UIView()
-            v.backgroundColor = .lightGray
-            return v
-        }
+//        if SharedValues.shared.foodStorageID != nil && items.isEmpty == false {
+//            //tableView.backgroundColor = .white
+//
+//
+//        } else {
+//            //tableView.backgroundColor = .lightGray
+//            let v = UIView()
+//            v.backgroundColor = .lightGray
+//            return v
+//        }
+        let v = UIView()
+        v.backgroundColor = .clear
+        return v
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         handlePopUpView()

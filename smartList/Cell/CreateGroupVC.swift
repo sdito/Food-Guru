@@ -19,8 +19,9 @@ class CreateGroupVC: UIViewController {
         }
     }
     
-    @IBOutlet weak var exitOutlet: UIButton!
     
+    @IBOutlet weak var exitOutlet: UIButton!
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneCreatingOutlet: UIButton!
@@ -38,7 +39,6 @@ class CreateGroupVC: UIViewController {
         db = Firestore.firestore()
         collectionView.dataSource = self
         collectionView.delegate = self
-        
         textField.delegate = self
         textField.becomeFirstResponder()
         textField.setUpDoneToolbar(action: #selector(addItem), style: .add)
@@ -48,6 +48,7 @@ class CreateGroupVC: UIViewController {
         } else if previousGroupID != nil {
             doneCreatingOutlet.setTitle("Done editing", for: .normal)
         }
+        topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
     }
     @IBAction func exit(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)

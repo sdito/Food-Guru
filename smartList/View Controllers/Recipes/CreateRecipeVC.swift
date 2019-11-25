@@ -138,14 +138,21 @@ class CreateRecipeVC: UIViewController {
     }
     
     @objc private func keyboardChange(notification: Notification) {
-        #error("left off here")
+        //#error("left off here")
         guard let keyboardRect = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        let toolbarHeight: CGFloat = 40.0
+        
         if let view = SharedValues.shared.currText {
             let frame = view.convert(view.frame, to: UIApplication.shared.keyWindow)
-            if frame.origin.y > keyboardRect.height {
-                print("Needs to move")
+            let viewPosition = (UIApplication.shared.keyWindow?.bounds.height)! - frame.origin.y
+            let keyboardPosition = keyboardRect.height + toolbarHeight
+            
+            if viewPosition > keyboardPosition {
+                print("All is good")
             } else {
-                print("All is bueno")
+                let difference = keyboardPosition - viewPosition
+                print("Need to move: \(difference)")
+                #warning("need to scroll down the scroll view by the difference here")
             }
         }
     }

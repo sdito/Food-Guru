@@ -174,7 +174,7 @@ class SetUpListVC: UIViewController {
     
     private func setUIifListIsBeingEdited(list: GroceryList) {
         nameTextField.text = list.name
-        finishCreatingOrEditing.setTitle("Done editing", for: .normal)
+        finishCreatingOrEditing.setTitle("Save changes", for: .normal)
         
         
         list.stores?.forEach({ (store) in
