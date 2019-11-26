@@ -71,7 +71,7 @@ extension LogInVC: FUIAuthDelegate {
                     ])
             }
         }
-        
+        SharedValues.shared.anonymousUser = false
         SharedValues.shared.userID = authDataResult?.user.uid
         performSegue(withIdentifier: "logInComplete", sender: self)
     }

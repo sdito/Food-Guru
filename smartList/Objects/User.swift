@@ -21,18 +21,23 @@ struct User {
         }
     }
     static func comparePeopleIn(list: GroceryList, foodStorageEmails: [String]?) -> (isEqual: Bool, emailsDifferent: [String]?) {
-        var listPeople = Set(list.people ?? [])
-        var foodStoragePeople = Set(foodStorageEmails ?? [])
-        
-        if listPeople == foodStoragePeople {
-            return (true, nil)
-        } else {
-            listPeople.subtract(Set(foodStorageEmails ?? []))
-            foodStoragePeople.subtract(Set(list.people ?? []))
+        if SharedValues.shared.anonymousUser != true {
+            var listPeople = Set(list.people ?? [])
+            var foodStoragePeople = Set(foodStorageEmails ?? [])
             
-            let both = listPeople.union(foodStoragePeople)
-            return (false, Array(both).sorted())
+            if listPeople == foodStoragePeople {
+                return (true, nil)
+            } else {
+                listPeople.subtract(Set(foodStorageEmails ?? []))
+                foodStoragePeople.subtract(Set(list.people ?? []))
+                
+                let both = listPeople.union(foodStoragePeople)
+                return (false, Array(both).sorted())
+            }
+        } else {
+            return (true, nil)
         }
+        
     }
     
     

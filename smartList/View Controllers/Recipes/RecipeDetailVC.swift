@@ -131,7 +131,14 @@ class RecipeDetailVC: UIViewController {
     }
     
     @IBAction func reviewRecipe(_ sender: Any) {
-        self.createRatingView(delegateVC: self)
+        if SharedValues.shared.anonymousUser != true {
+            self.createRatingView(delegateVC: self)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "Create a free account to be able to leave reviews on recipes.", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+        }
+        
     }
     
     

@@ -170,7 +170,7 @@ class SettingsDetailVC: UIViewController {
     
     
     @objc private func createAccountFromAnonymous() {
-        print("Create account form anonymous")
+        print("Create account from anonymous")
         #error("need to implement this function/need to figure out how to do the linking of the account")
         
         

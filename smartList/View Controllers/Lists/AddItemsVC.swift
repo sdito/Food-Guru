@@ -153,12 +153,13 @@ class AddItemsVC: UIViewController {
             FoodStorage.getEmailsfromStorageID(storageID: SharedValues.shared.foodStorageID ?? " ", db: db) { (emails) in
                 gottenEmails = emails
             }
+            
             let alert = UIAlertController(title: "Are you done with the list?", message: "The selected items from this list will be added to your storage, where you can keep track of your items.", preferredStyle: .actionSheet)
             alert.addAction(.init(title: "Add items to storage", style: .default, handler: {(alert: UIAlertAction!) in self.addItemsToStorageIfPossible(sendList: self.list!, foodStorageEmails: gottenEmails)}))
             alert.addAction(.init(title: "Back", style: .default, handler: nil))
             present(alert, animated: true)
         } else {
-            let userFS = FoodStorage(isGroup: false, groupID: nil, peopleEmails: [Auth.auth().currentUser?.email ?? ""], items: nil, numberOfPeople: 1)
+            let userFS = FoodStorage(isGroup: false, groupID: nil, peopleEmails: [Auth.auth().currentUser?.email ?? "no email"], items: nil, numberOfPeople: 1)
             if SharedValues.shared.groupID == nil {
                 let alert = UIAlertController(title: "Error - can't add items to storage", message: "In order to have a shared storage where multiple people can view the items, first create a group.", preferredStyle: .actionSheet)
                 alert.addAction(.init(title: "Create group", style: .default, handler: {(alert: UIAlertAction!) in self.pushToCreateGroupVC()}))
@@ -172,8 +173,6 @@ class AddItemsVC: UIViewController {
                 alert.addAction(.init(title: "Create own storage without group", style: .default, handler: {(alert: UIAlertAction!) in FoodStorage.createStorageToFirestoreWithPeople(db: self.db, foodStorage: userFS)}))
                 alert.addAction(.init(title: "Back", style: .default, handler: nil))
                 present(alert, animated: true)
-                
-                
             }
             
         }
@@ -303,9 +302,16 @@ extension AddItemsVC: UITextFieldDelegate {
 // handlers
 extension AddItemsVC {
     func pushToCreateGroupVC() {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+        if SharedValues.shared.anonymousUser != true {
+            let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "Create a free account to be able to create groups.", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+        }
+        
     }
     func addItemsToStorageIfPossible(sendList: GroceryList, foodStorageEmails: [String]?) {
         
