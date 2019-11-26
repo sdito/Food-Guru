@@ -122,9 +122,16 @@ extension UIViewController {
     }
     
     @objc func createGroupPopUp() {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+        if SharedValues.shared.anonymousUser == false {
+            let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "Need to create a free account in order to access all the features", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+        }
+        
     }
     
 }

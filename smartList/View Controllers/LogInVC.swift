@@ -34,10 +34,26 @@ class LogInVC: UIViewController {
         authViewController.modalPresentationStyle = .fullScreen
         present(authViewController, animated: true, completion: nil)
     }
+    @IBAction func continueWithoutAccount(_ sender: Any) {
+        print("Contine without account")
+        Auth.auth().signInAnonymously { (authResult, error) in
+            guard let user = authResult?.user else {
+                print("Error signing in anonymously: \(String(describing: error))")
+                return
+            }
+            
+            SharedValues.shared.userID = user.uid
+            User.writeAnonymousUser(db: self.db, userID: user.uid)
+            self.performSegue(withIdentifier: "logInComplete", sender: self)
+        }
+    }
+    
+    
 }
 
 
 extension LogInVC: FUIAuthDelegate {
+    
     func authUI(_ authUI: FUIAuth, didSignInWith authDataResult: AuthDataResult?, error: Error?) {
         guard error == nil else {
             //log the error
@@ -51,7 +67,7 @@ extension LogInVC: FUIAuthDelegate {
         docRef.getDocument { (document, error) in
             if document?.exists == false {
                 self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")").setData([
-                    "email": authDataResult?.user.email! as Any,
+                    "email": authDataResult?.user.email as Any,
                     "uid": authDataResult?.user.uid as Any,
                     "name": authDataResult?.user.displayName as Any
                     ])
@@ -61,5 +77,6 @@ extension LogInVC: FUIAuthDelegate {
         SharedValues.shared.userID = authDataResult?.user.uid
         performSegue(withIdentifier: "logInComplete", sender: self)
     }
+
 }
 

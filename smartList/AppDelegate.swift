@@ -29,6 +29,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = vc
             self.window?.makeKeyAndVisible()
             SharedValues.shared.userID = Auth.auth().currentUser?.uid
+            
+            if Auth.auth().currentUser?.isAnonymous == true {
+                SharedValues.shared.anonymousUser = true
+            } else {
+                SharedValues.shared.anonymousUser = false
+            }
+            
         }
         return true
     }

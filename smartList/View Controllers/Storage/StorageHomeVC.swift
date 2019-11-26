@@ -88,6 +88,13 @@ class StorageHomeVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         emptyCells = createEmptyStorageCells()
         tableView.reloadData()
+        
+        if SharedValues.shared.foodStorageID == nil {
+            helperView.isHidden = true
+        } else {
+            helperView.isHidden = false
+        }
+        
     }
     override func viewDidDisappear(_ animated: Bool) {
         searchBar.isHidden = true
@@ -145,9 +152,16 @@ class StorageHomeVC: UIViewController {
     }
     
     @objc func createGroupSelector() {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
+        if SharedValues.shared.anonymousUser == false {
+            let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "Create a free account in order to share your storage with other people.", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+        }
+        
         
     }
     @objc func createIndividualStorage() {
@@ -155,7 +169,7 @@ class StorageHomeVC: UIViewController {
         let foodStorage = FoodStorage(isGroup: false, groupID: nil, peopleEmails: [Auth.auth().currentUser?.email ?? "no email"], items: nil, numberOfPeople: 1)
         FoodStorage.createStorageToFirestoreWithPeople(db: db, foodStorage: foodStorage)
         tableView.reloadData()
-        
+        helperView.isHidden = false
     }
     
     
@@ -246,7 +260,7 @@ class StorageHomeVC: UIViewController {
         FoodStorage.createStorageToFirestoreWithPeople(db: db, foodStorage: foodStorage)
         
         tableView.reloadData()
-        
+        helperView.isHidden = false
     }
     
     private func createObserver() {
@@ -288,13 +302,13 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         var oneText: String {
             if SharedValues.shared.groupID == nil {
                 createGroup = true
-                return " Create a group to share storage with other users, or start a storage with only yourself."
+                return "Create a group to share storage with other users, or start a storage with only yourself."
             } else {
                 createGroup = false
                 return ""
             }
         }
-        one.setUI(str: "You do not yes have your storage set up. The storage will help you keep track of your purchased food, and can help you find recipes to cook.\(oneText)")
+        one.setUI(str: "You do not have your storage set up. The storage will help you keep track of your purchased food, and can help you find recipes to cook.\(oneText)")
         
         let two = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
         two.setUI(title: "Create a storage with group (recommended)")
@@ -316,18 +330,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         
         
     }
-    
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        if SharedValues.shared.foodStorageID != nil && items.isEmpty == false {
-//            //tableView.backgroundColor = .white
-//            return nil
-//        } else {
-//            //tableView.backgroundColor = .lightGray
-//            let v = UIView()
-//            v.backgroundColor = .clear
-//            return v
-//        }
-//    }
+
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -362,16 +365,6 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         
     }
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        if SharedValues.shared.foodStorageID != nil && items.isEmpty == false {
-//            //tableView.backgroundColor = .white
-//
-//
-//        } else {
-//            //tableView.backgroundColor = .lightGray
-//            let v = UIView()
-//            v.backgroundColor = .lightGray
-//            return v
-//        }
         let v = UIView()
         v.backgroundColor = .clear
         return v

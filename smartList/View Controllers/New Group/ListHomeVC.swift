@@ -31,6 +31,7 @@ class ListHomeVC: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         //super.viewWillAppear(animated)
         
+        
     }
     
     

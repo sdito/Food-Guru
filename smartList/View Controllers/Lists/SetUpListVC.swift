@@ -74,6 +74,7 @@ class SetUpListVC: UIViewController {
     private var people: [String]?
     // end list data
     
+    #warning("need to handle moving screen with this textField variable")
     private var currentTextField: UITextField?
     
     @IBOutlet weak var topView: UIView!
@@ -113,6 +114,10 @@ class SetUpListVC: UIViewController {
             usingGroup = true
         }
         
+        
+        if SharedValues.shared.anonymousUser == true {
+            switchOutlet.isUserInteractionEnabled = false
+        }
     }
     
     @IBAction func writeToFirestoreIfValid() {
@@ -140,6 +145,7 @@ class SetUpListVC: UIViewController {
     }
     
     @IBAction func switchAction(_ sender: Any) {
+        
         if SharedValues.shared.groupID != nil {
             if switchOutlet.isOn == true {
                 usingGroup = true
@@ -258,5 +264,18 @@ extension SetUpListVC: UITextFieldDelegate {
     }
     func textFieldDidBeginEditing(_ textField: UITextField) {
         currentTextField = textField
+        
+        
+        if SharedValues.shared.anonymousUser == true && textField.superview == peopleStackView {
+            textField.resignFirstResponder()
+            currentTextField = nil
+            let alert = UIAlertController(title: "Error", message: "Need to create a free account in order share your list with others.", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+            
+        }
+        
     }
+    
+    
 }

@@ -37,6 +37,8 @@ class GiveRatingView: UIView {
         textView.alpha = 0.5
         ratingButton.isUserInteractionEnabled = false
         imagePicker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+        imageSelectOutlet.layer.cornerRadius = 5
+        imageSelectOutlet.clipsToBounds = true
     }
     
     

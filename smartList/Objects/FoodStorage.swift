@@ -82,26 +82,47 @@ struct FoodStorage {
                     } else {
                         print("Document successfully written")
                         
-                        // will handle writing to the user's file in this part
-                        var userIDs: [String] = []
-                        foodStorage.peopleEmails?.forEach({ (email) in
-                            db.collection("users").whereField("email", isEqualTo: email).getDocuments(completion: { (querySnapshot, err) in
-                                if let doc = querySnapshot?.documents.first {
-                                    if let id = doc.get("uid") as? String {
-                                        userIDs.append(id)
-                                        db.collection("users").document(id).updateData([
-                                            "storageID": foodStorageRef.documentID
-                                            ])
-                                        
+                        if SharedValues.shared.anonymousUser == false {
+                            // will handle writing to the user's file in this part
+                            var userIDs: [String] = []
+                            foodStorage.peopleEmails?.forEach({ (email) in
+                                db.collection("users").whereField("email", isEqualTo: email).getDocuments(completion: { (querySnapshot, err) in
+                                    if let doc = querySnapshot?.documents.first {
+                                        if let id = doc.get("uid") as? String {
+                                            userIDs.append(id)
+                                            db.collection("users").document(id).updateData([
+                                                "storageID": foodStorageRef.documentID
+                                                ])
+                                            
+                                        }
                                     }
-                                }
-                                let updateDoc = db.collection("storages").document(foodStorageRef.documentID)
-                                updateDoc.updateData([
-                                    "shared": userIDs
-                                ])
+                                    let updateDoc = db.collection("storages").document(foodStorageRef.documentID)
+                                    updateDoc.updateData([
+                                        "shared": userIDs
+                                    ])
+                                })
                             })
-                        })
+                        } else {
+                            let updateDoc = db.collection("storages").document(foodStorageRef.documentID)
+                            if let uid = Auth.auth().currentUser?.uid {
+                                updateDoc.updateData([
+                                    "shared": [uid]
+                                ])
+                                let userReference = db.collection("users").document(uid)
+                                userReference.updateData([
+                                    "storageID": foodStorageRef.documentID
+                                ])
+                            }
+                            
+                            
+                        }
+                        
+                        
                     }
+                    
+                    
+                    
+                    
                 }
             } else {
                 var s: String {
@@ -160,6 +181,12 @@ struct FoodStorage {
                     }
                 }
             })
+        }
+        
+        if SharedValues.shared.anonymousUser == true {
+            db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").updateData([
+                "storageID": FieldValue.delete()
+            ])
         }
         
         // doesnt matter when actual storage document is deleted, just need to make sure it would be deleted after the groupID is deleted from the user document

@@ -11,7 +11,6 @@ import FirebaseFirestore
 import FirebaseAuth
 
 
-
 class RecipeDetailVC: UIViewController {
     var db: Firestore!
     private var itemsAddedToList: Set<String>? = [""]
@@ -348,7 +347,9 @@ extension RecipeDetailVC: DisableAddAllItemsDelegate {
 extension RecipeDetailVC: GiveRatingViewDelegate {
     func writeImageForReview(image: UIImage) {
         print("Write the image from here")
-        #error("left off here/need to write this function, should probably not all have the code inside this VC")
+        #warning("left off here/need to write this function, should probably not all have the code inside this VC")
+        // have a new collection in the recipe document with images and the associated stuff, have the image path in both the image document and the review document
+        
     }
     
     

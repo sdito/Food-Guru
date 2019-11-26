@@ -45,6 +45,8 @@ class SharedValues {
         }
     }
     
+    var anonymousUser: Bool?
+    
     static let shared = SharedValues()
     private init() {}
 }

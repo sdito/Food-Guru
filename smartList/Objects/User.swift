@@ -129,21 +129,34 @@ struct User {
     
     static func emailToUid(emails: [String]?, db: Firestore, listID: String) {
         var userIDs: [String] = []
-        emails?.forEach({ (email) in
-            db.collection("users").whereField("email", isEqualTo: email).getDocuments { (querySnapshot, err) in
-                //print(querySnapshot?.documents.first?.data())
-                if let doc = querySnapshot?.documents.first {
-                    //print(doc.get("uid"))
-                    if let id = doc.get("uid") as? String {
-                        userIDs.append(id)
+        
+        if SharedValues.shared.anonymousUser == false {
+            emails?.forEach({ (email) in
+                db.collection("users").whereField("email", isEqualTo: email).getDocuments { (querySnapshot, err) in
+                    //print(querySnapshot?.documents.first?.data())
+                    if let doc = querySnapshot?.documents.first {
+                        //print(doc.get("uid"))
+                        if let id = doc.get("uid") as? String {
+                            userIDs.append(id)
+                        }
                     }
+                    let updateDoc = db.collection("lists").document(listID)
+                    updateDoc.updateData([
+                        "shared": userIDs
+                    ])
                 }
+            })
+        } else {
+            if let uid = Auth.auth().currentUser?.uid {
                 let updateDoc = db.collection("lists").document(listID)
                 updateDoc.updateData([
-                    "shared": userIDs
+                    "shared": [uid]
                 ])
             }
-        })
+            
+        }
+        
+        
     }
     
 //    }
@@ -298,4 +311,13 @@ struct User {
             }
         }
     }
+    
+    static func writeAnonymousUser(db: Firestore, userID: String) {        
+        let reference = db.collection("users").document(userID)
+        reference.setData([
+            "uid": userID
+        ])
+        
+    }
+    
 }
