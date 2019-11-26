@@ -36,15 +36,24 @@ class SettingsDetailVC: UIViewController {
     private func returnCells(setting: Setting.SettingName, db: Firestore!) -> [UITableViewCell] {
         switch setting {
         case .account:
-            let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
-            cell1.setUI(str: Auth.auth().currentUser?.email ?? "No user email")
-            let cell2 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
-            cell2.setUI(str: Auth.auth().currentUser?.displayName ?? "No display name")
-            let cell3 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
-            cell3.setUI(title: "Log out of account")
-            cell3.button.addTarget(self, action: #selector(logOut), for: .touchUpInside)
+            if SharedValues.shared.anonymousUser == false {
+                let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+                cell1.setUI(str: Auth.auth().currentUser?.email ?? "No user email")
+                let cell2 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+                cell2.setUI(str: Auth.auth().currentUser?.displayName ?? "No display name")
+                let cell3 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                cell3.setUI(title: "Log out of account")
+                cell3.button.addTarget(self, action: #selector(logOut), for: .touchUpInside)
+                return [cell1, cell2, cell3]
+            } else {
+                let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+                cell1.setUI(str: "Create a free account to unlock all the features in the application and to secure your data.")
+                let cell2 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                cell2.setUI(title: "Create account")
+                cell2.button.addTarget(self, action: #selector(createAccountFromAnonymous), for: .touchUpInside)
+                return [cell1, cell2]
+            }
             
-            return [cell1, cell2, cell3]
             
             
             
@@ -52,51 +61,47 @@ class SettingsDetailVC: UIViewController {
             let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
             cell1.setUI(str: "This is for the about cell")
             return [cell1]
-        
 
             
         case .contact:
             let cell = tableView.dequeueReusableCell(withIdentifier: "settingContactDeveloperCell") as! SettingContactDeveloperCell
             cell.delegate = self
             return [cell]
+            
+            
         case .darkMode:
             return [UITableViewCell()]
             
-          
-            
         case .group:
-            //case: not in a group -> need to create a group
-            if SharedValues.shared.groupID == nil {
-                let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
-                cell1.setUI(str: "Not in a group, create or join a group to easily share lists and storage with other members in your group.")
-                let cell2 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
-                cell2.setUI(title: "Create a group")
-                cell2.button.addTarget(self, action: #selector(createGroup), for: .touchUpInside)
-                return [cell1, cell2]
-            } else {
-                
-                let topCell = tableView.dequeueReusableCell(withIdentifier: "settingTwoLevelCell") as! SettingTwoLevelCell
-                /*
-                User.getGroupInfo(db: db) { (emails, date) in
-                    SharedValues.shared.data = (emails, date)
+            if SharedValues.shared.anonymousUser == false {
+                if SharedValues.shared.groupID == nil {
+                    let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+                    cell1.setUI(str: "Not in a group, create or join a group to easily share lists and storage with other members in your group.")
+                    let cell2 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                    cell2.setUI(title: "Create a group")
+                    cell2.button.addTarget(self, action: #selector(createGroup), for: .touchUpInside)
+                    return [cell1, cell2]
+                } else {
+                    let topCell = tableView.dequeueReusableCell(withIdentifier: "settingTwoLevelCell") as! SettingTwoLevelCell
+                    let top = "Created on \((SharedValues.shared.groupDate)?.dateFormatted(style: .short) ?? "")"
+                    topCell.setUI(top: top, emails: SharedValues.shared.groupEmails ?? [""])
+                    let editGroup = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                    editGroup.setUI(title: "Edit group")
+                    editGroup.button.addTarget(self, action: #selector(editGroupAction), for: .touchUpInside)
+                    let leaveGroup = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                    leaveGroup.setUI(title: "Leave current group")
+                    leaveGroup.button.addTarget(self, action: #selector(leaveGroupAction), for: .touchUpInside)
+                    return [topCell, editGroup, leaveGroup]
                 }
-                */
-                let top = "Created on \((SharedValues.shared.groupDate)?.dateFormatted(style: .short) ?? "")"
-                topCell.setUI(top: top, emails: SharedValues.shared.groupEmails ?? [""])
-                
-                let editGroup = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
-                editGroup.setUI(title: "Edit group")
-                editGroup.button.addTarget(self, action: #selector(editGroupAction), for: .touchUpInside)
-                
-                let leaveGroup = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
-                leaveGroup.setUI(title: "Leave current group")
-                leaveGroup.button.addTarget(self, action: #selector(leaveGroupAction), for: .touchUpInside)
-                
-                return [topCell, editGroup, leaveGroup]
+            } else {
+                let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+                cell1.setUI(str: "Groups allow you to share your lists, recipes, and storage with other people. Create a free account to unlock all the features in the application and to secure your data.")
+                let cell2 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                cell2.setUI(title: "Create account")
+                cell2.button.addTarget(self, action: #selector(createAccountFromAnonymous), for: .touchUpInside)
+                return [cell1, cell2]
             }
-            
-            
-            
+ 
             
         case .textSize:
             return [UITableViewCell()]
@@ -138,7 +143,6 @@ class SettingsDetailVC: UIViewController {
                 let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingTwoLevelCell") as! SettingTwoLevelCell
                 FoodStorage.getEmailsfromStorageID(storageID: SharedValues.shared.foodStorageID ?? " ", db: db) { (emails) in
                     SharedValues.shared.foodStorageEmails = emails
-                    
                 }
                 cell1.setUI(top: "Storage members", emails: SharedValues.shared.foodStorageEmails ?? [""])
                 let button1 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
@@ -163,6 +167,15 @@ class SettingsDetailVC: UIViewController {
         tableView.reloadData()
     }
     
+    
+    
+    @objc private func createAccountFromAnonymous() {
+        print("Create account form anonymous")
+        #error("need to implement this function/need to figure out how to do the linking of the account")
+        
+        
+    }
+    
     @objc private func logOut() {
         let alert = UIAlertController(title: "Are you sure you want to log out of your account?", message: nil, preferredStyle: .alert)
         alert.addAction(.init(title: "Log out", style: .destructive, handler: {(alert: UIAlertAction!) in
@@ -174,10 +187,15 @@ class SettingsDetailVC: UIViewController {
         present(alert, animated: true)
     }
     @objc private func createGroup() {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
-        vc.modalPresentationStyle = .fullScreen
-        present(vc, animated: true, completion: nil)
-        
+        if SharedValues.shared.anonymousUser == false {
+            let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "You must create a free account to create a group. Create a free account to access all the features.", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+        }
     }
     @objc private func leaveGroupAction() {
         let alert = UIAlertController(title: "Are you sure you want to leave your group?", message: nil, preferredStyle: .alert)
@@ -243,17 +261,7 @@ extension SettingsDetailVC: UpdateScreenDelegate {
 
 
 extension SettingsDetailVC: UITableViewDataSource, UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        let v = UIView()
-//        v.backgroundColor = .lightGray
-//        return v
-//    }
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let v = UIView()
-//        v.backgroundColor = .lightGray
-//        v.alpha = 0
-//        return v
-//    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return returnCells(setting: setting!, db: db).count
     }

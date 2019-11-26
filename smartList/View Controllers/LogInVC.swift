@@ -19,17 +19,14 @@ class LogInVC: UIViewController {
     }
 
     @IBAction func logInStart(_ sender: Any) {
-    
         let authUI = FUIAuth.defaultAuthUI()
         guard authUI != nil else {
             return
         }
-        
         authUI?.delegate = self
         authUI?.providers = [FUIEmailAuth(), FUIGoogleAuth()]
-        
         let authViewController = authUI!.authViewController()
-        
+
         #warning("somewhere around here probably, when a user logs in with iOS 13 the screen gets messed up")
         authViewController.modalPresentationStyle = .fullScreen
         present(authViewController, animated: true, completion: nil)
@@ -44,6 +41,7 @@ class LogInVC: UIViewController {
             
             SharedValues.shared.userID = user.uid
             User.writeAnonymousUser(db: self.db, userID: user.uid)
+            SharedValues.shared.anonymousUser = true
             self.performSegue(withIdentifier: "logInComplete", sender: self)
         }
     }

@@ -26,6 +26,8 @@ class SettingContactDeveloperCell: UITableViewCell {
     weak var delegate: UpdateScreenDelegate?
     
     override func awakeFromNib() {
+        textField.delegate = self
+        textView.delegate = self
         textField.becomeFirstResponder()
         textView.border()
     }
@@ -61,7 +63,7 @@ class SettingContactDeveloperCell: UITableViewCell {
 }
 
 
-extension SettingContactDeveloperCell: UITextFieldDelegate {
+extension SettingContactDeveloperCell: UITextFieldDelegate, UITextViewDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         textView.becomeFirstResponder()

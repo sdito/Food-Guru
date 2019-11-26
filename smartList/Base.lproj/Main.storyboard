@@ -233,9 +233,11 @@
                                                     <action selector="deleteList:" destination="AVh-qM-Vlx" eventType="touchUpInside" id="0z7-6f-E1s"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wkh-k7-0uM">
-                                                <rect key="frame" x="359" y="7" width="30" height="31"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wkh-k7-0uM">
+                                                <rect key="frame" x="357.33333333333331" y="4.6666666666666732" width="29.666666666666686" height="30.666666666666671"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="wkh-k7-0uM" secondAttribute="height" multiplier="30:31" id="mLK-1L-mDL"/>
+                                                </constraints>
                                                 <state key="normal" image="checked-checkbox-xxl"/>
                                                 <connections>
                                                     <action selector="doneWithList:" destination="AVh-qM-Vlx" eventType="touchUpInside" id="56P-Te-Znd"/>
@@ -245,16 +247,19 @@
                                         <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="gQu-vJ-fku" firstAttribute="height" secondItem="4Ll-rd-7AG" secondAttribute="height" id="0UA-EX-qe4"/>
+                                            <constraint firstItem="wkh-k7-0uM" firstAttribute="leading" secondItem="Osh-oq-mtD" secondAttribute="trailing" constant="10" id="6O7-ow-PoQ"/>
                                             <constraint firstItem="n5a-Xg-DgK" firstAttribute="height" secondItem="4Ll-rd-7AG" secondAttribute="height" id="B0s-L4-fYi"/>
                                             <constraint firstItem="4Ll-rd-7AG" firstAttribute="centerY" secondItem="l3v-xn-fS2" secondAttribute="centerY" id="CUg-Zd-Qq7"/>
                                             <constraint firstAttribute="height" constant="40" id="Lfv-ea-ulf"/>
                                             <constraint firstItem="4Ll-rd-7AG" firstAttribute="centerX" secondItem="l3v-xn-fS2" secondAttribute="centerX" id="UD3-ow-cV9"/>
+                                            <constraint firstItem="wkh-k7-0uM" firstAttribute="centerY" secondItem="l3v-xn-fS2" secondAttribute="centerY" id="WX7-5C-QY6"/>
                                             <constraint firstItem="4Ll-rd-7AG" firstAttribute="width" secondItem="l3v-xn-fS2" secondAttribute="width" multiplier="1:2" id="XJM-6v-9F8"/>
                                             <constraint firstItem="Osh-oq-mtD" firstAttribute="leading" secondItem="4Ll-rd-7AG" secondAttribute="trailing" constant="5" id="Yx6-2s-cXM"/>
                                             <constraint firstItem="gQu-vJ-fku" firstAttribute="centerY" secondItem="l3v-xn-fS2" secondAttribute="centerY" id="axo-vY-juK"/>
                                             <constraint firstItem="n5a-Xg-DgK" firstAttribute="centerY" secondItem="l3v-xn-fS2" secondAttribute="centerY" id="f9H-Vt-VGO"/>
                                             <constraint firstItem="Osh-oq-mtD" firstAttribute="height" secondItem="4Ll-rd-7AG" secondAttribute="height" id="hV9-cE-SAV"/>
                                             <constraint firstItem="n5a-Xg-DgK" firstAttribute="width" secondItem="gQu-vJ-fku" secondAttribute="width" id="idX-nk-JyE"/>
+                                            <constraint firstItem="wkh-k7-0uM" firstAttribute="height" secondItem="Osh-oq-mtD" secondAttribute="height" multiplier="1.13415" id="rYw-6z-noo"/>
                                             <constraint firstItem="4Ll-rd-7AG" firstAttribute="leading" secondItem="gQu-vJ-fku" secondAttribute="trailing" constant="5" id="ugC-qD-5pq"/>
                                             <constraint firstItem="gQu-vJ-fku" firstAttribute="leading" secondItem="n5a-Xg-DgK" secondAttribute="trailing" constant="10" id="vJM-eg-bAl"/>
                                             <constraint firstItem="4Ll-rd-7AG" firstAttribute="height" secondItem="l3v-xn-fS2" secondAttribute="height" multiplier="33:48.5" id="vgM-bi-g4L"/>
@@ -790,7 +795,7 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ged-NJ-k1m">
                                 <rect key="frame" x="0.0" y="88" width="414" height="50"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Copy Recipe URL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wAt-Gc-BD3">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Paste Recipe URL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wAt-Gc-BD3">
                                         <rect key="frame" x="5" y="5" width="364" height="40"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -904,7 +909,7 @@
                                                 </constraints>
                                                 <state key="normal" title="+" image="plus.square.on.square" catalog="system"/>
                                                 <connections>
-                                                    <segue destination="Kgx-m8-jVE" kind="show" id="WQQ-sE-Hwe"/>
+                                                    <action selector="createRecipePressed:" destination="fFf-qk-23l" eventType="touchUpInside" id="O8d-wN-SOl"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1109,6 +1114,7 @@
                         <outlet property="searchHelperView" destination="e0U-VF-pog" id="Nbt-40-fQ0"/>
                         <outlet property="wholeStackView" destination="dLU-nb-1Ri" id="32v-f6-udU"/>
                         <segue destination="hdZ-0Z-sHl" kind="show" identifier="showRecipeDetail" id="PBv-1W-whm"/>
+                        <segue destination="Kgx-m8-jVE" kind="show" identifier="toCreateRecipe" id="cIs-qE-ptf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gfo-Iq-cR4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2585,7 +2591,7 @@
                                                             <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <color key="textColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                                            <textInputTraits key="textInputTraits"/>
+                                                            <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                                         </textField>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's your question, problem, concern, or feedback?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qs2-ty-bL5">
                                                             <rect key="frame" x="0.0" y="98.333333333333329" width="374" height="18.333333333333329"/>
@@ -2938,8 +2944,8 @@
         <image name="trash-10-xxl" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="NVq-p9-Ttp"/>
-        <segue reference="BPH-jV-ufh"/>
+        <segue reference="PBv-1W-whm"/>
+        <segue reference="cIs-qE-ptf"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

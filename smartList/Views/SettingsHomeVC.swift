@@ -42,23 +42,7 @@ extension SettingsHomeVC: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//
-//        let label = UILabel()
-//        label.text = sections[section]
-//        label.font = UIFont(name: "futura", size: 15)
-//        if #available(iOS 13.0, *) {
-//            label.backgroundColor = .secondarySystemBackground
-//            label.textColor = .label
-//        } else {
-//            label.backgroundColor = .lightGray
-//            label.textColor = .white
-//        }
-//
-//        label.alpha = 0.8
-//
-//        return label
-//    }
+
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return sections[section]

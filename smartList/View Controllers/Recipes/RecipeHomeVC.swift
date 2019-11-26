@@ -130,6 +130,16 @@ class RecipeHomeVC: UIViewController {
         FoodStorage.readAndPersistSystemItemsFromStorageWithListener(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
     }
     
+    @IBAction func createRecipePressed(_ sender: Any) {
+        if SharedValues.shared.anonymousUser == false {
+            performSegue(withIdentifier: "toCreateRecipe", sender: nil)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "Create a free account in order to publish recipes.", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+        }
+    }
+    
     @IBAction func scrollBackUp(_ sender: Any) {
         allowButtonToBeShowed = false
         collectionView.setContentOffset(.init(x: 0, y: 0), animated: true)
