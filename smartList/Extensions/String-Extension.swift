@@ -9,6 +9,18 @@
 import Foundation
 
 extension String {
+    static func randomString(length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        return String((0..<length).map{ _ in letters.randomElement()! })
+    }
+    
+    func resizedTo(_ size: String) -> String {
+        var tempStr = self
+        tempStr.removeLast(4)
+        tempStr.append(contentsOf: "_\(size).jpg")
+        return tempStr
+    }
+    
     func getNumbers() -> [Int] {
         var numbers: [Int] = []
         var currNumber: String = ""

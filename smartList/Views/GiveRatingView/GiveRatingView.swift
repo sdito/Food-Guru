@@ -69,12 +69,14 @@ class GiveRatingView: UIView {
         #warning("Need to test on device")
         print("Camera option")
         imagePicker.sourceType = .camera
+        imagePicker.allowsEditing = true
         self.findViewController()?.present(imagePicker, animated: true, completion: nil)
     }
     
     private func photoLibraryOption() {
         print("Photo library option")
         imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
         self.findViewController()?.present(imagePicker, animated: true, completion: nil)
     }
     
@@ -93,7 +95,7 @@ class GiveRatingView: UIView {
 extension GiveRatingView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if picker == imagePicker {
-            if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
                 imageForReview = pickedImage
                 imageSelectOutlet.setBackgroundImage(pickedImage, for: .normal)
                 imageSelectOutlet.tintColor = .clear
@@ -114,6 +116,9 @@ extension GiveRatingView: UIImagePickerControllerDelegate, UINavigationControlle
 extension GiveRatingView: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.alpha = 1.0
-        textView.text = ""
+        //textView.text = ""
+        if textView.text == placeholder {
+            textView.text = ""
+        }
     }
 }

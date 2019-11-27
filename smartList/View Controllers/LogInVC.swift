@@ -26,8 +26,6 @@ class LogInVC: UIViewController {
         authUI?.delegate = self
         authUI?.providers = [FUIEmailAuth(), FUIGoogleAuth()]
         let authViewController = authUI!.authViewController()
-
-        #warning("somewhere around here probably, when a user logs in with iOS 13 the screen gets messed up")
         authViewController.modalPresentationStyle = .fullScreen
         present(authViewController, animated: true, completion: nil)
     }

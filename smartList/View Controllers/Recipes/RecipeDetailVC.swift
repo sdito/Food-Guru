@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseFirestore
 import FirebaseAuth
-
+import FirebaseStorage
 
 class RecipeDetailVC: UIViewController {
     var db: Firestore!
@@ -65,6 +65,10 @@ class RecipeDetailVC: UIViewController {
         })
         //addAllToListOutlet.isUserInteractionEnabled = true
         createObserver()
+        
+        
+        
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -278,6 +282,15 @@ class RecipeDetailVC: UIViewController {
             saveRecipeOutlet.alpha = 0.5
             saveRecipeOutlet.setTitle("✓ Save", for: .normal)
         }
+        
+        
+        if let imagePaths = data?.recipe.reviewImagePaths {
+            let v = Bundle.main.loadNibNamed("ReviewImagesView", owner: nil, options: nil)?.first! as! ReviewImagesView
+            v.setUI(imagePaths: imagePaths)
+            v.widthAnchor.constraint(equalToConstant: self.view.bounds.width).isActive = true
+            wholeSV.insertArrangedSubview(v, at: 2)
+        }
+        
     }
     private func addStarRatingViewIfApplicable(recipe: Recipe) {
         if let nr = recipe.numReviews, let ns = recipe.numStars {
@@ -356,6 +369,45 @@ extension RecipeDetailVC: GiveRatingViewDelegate {
         print("Write the image from here")
         #warning("left off here/need to write this function, should probably not all have the code inside this VC")
         // have a new collection in the recipe document with images and the associated stuff, have the image path in both the image document and the review document
+        
+        
+        guard let recipeID = data?.recipe.imagePath?.imagePathToDocID() else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let imageData: Data = image.jpegData(compressionQuality: 0.75) else { return }
+        let random = String.randomString(length: 8)
+        let uploadReference = Storage.storage().reference(withPath: "review/\(recipeID)/\(uid)/\(random).jpg")
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        uploadReference.putData(imageData, metadata: metadata)
+        let fullPath = uploadReference.fullPath
+        //#error("after the image is written to this path, need to add the image information to the review document (will need to get the review document id), need to figure out how i want to configure it in the database")
+        
+        
+        
+
+        // add the path to the recipe document
+        let recipeReference = db.collection("recipes").document(recipeID)
+        recipeReference.updateData([
+            "reviewImagePaths": FieldValue.arrayUnion([fullPath])
+        ])
+        
+        
+        // delay to make sure the document is updated, how fast this data is updated is not important
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.db.collection("recipes").document(recipeID).collection("reviews").whereField("user", isEqualTo: uid).getDocuments { (querySnapshot, error) in
+                guard let document = querySnapshot?.documents.first else {
+                    print("Error retrieving document: \(String(describing: error))")
+                    return
+                }
+                
+                let id = document.documentID
+                self.db.collection("recipes").document(recipeID).collection("reviews").document(id).updateData([
+                    "imagePath": fullPath
+                ])
+                
+            }
+        }
+        
         
     }
     
