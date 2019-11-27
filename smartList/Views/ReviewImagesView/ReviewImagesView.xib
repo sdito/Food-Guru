@@ -20,13 +20,13 @@
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="14e-fv-MZY">
                             <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                             <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="GTN-KW-66p">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rFu-hD-OLx">
                                     <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="100" id="0fN-OQ-mSe"/>
-                                        <constraint firstAttribute="height" constant="100" id="TwM-25-UbE"/>
+                                        <constraint firstAttribute="width" constant="100" id="8Zh-V6-Gbd"/>
+                                        <constraint firstAttribute="height" constant="100" id="zjO-Io-5lH"/>
                                     </constraints>
-                                </imageView>
+                                </button>
                             </subviews>
                         </stackView>
                     </subviews>
@@ -61,7 +61,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
-                <outlet property="imageView" destination="GTN-KW-66p" id="XLi-tM-hjX"/>
+                <outlet property="imageButton" destination="rFu-hD-OLx" id="kTd-ce-TtT"/>
                 <outlet property="stackView" destination="14e-fv-MZY" id="wNH-lC-WBF"/>
             </connections>
             <point key="canvasLocation" x="257.24637681159425" y="353.90625"/>

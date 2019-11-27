@@ -289,6 +289,7 @@ class RecipeDetailVC: UIViewController {
             v.setUI(imagePaths: imagePaths)
             v.widthAnchor.constraint(equalToConstant: self.view.bounds.width).isActive = true
             wholeSV.insertArrangedSubview(v, at: 2)
+            v.delegate = self
         }
         
     }
@@ -361,7 +362,15 @@ extension RecipeDetailVC: DisableAddAllItemsDelegate {
     func disableButton() {
         removeAddAllButton()
     }
-    
+}
+
+extension RecipeDetailVC: ReviewImagesViewDelegate {
+    func showDetailedImage(path: String?, initialImage: UIImage?) {
+        //print("Path called from delegate: \(path)")
+        //#error("left off here, need to create this view the same way that the rating view is created, with the dimmed background")
+        self.createImageDetailView(imagePath: path, initialImage: initialImage)
+        
+    }
 }
 
 extension RecipeDetailVC: GiveRatingViewDelegate {

@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+import FirebaseStorage
 
 
 extension UIViewController {
@@ -48,6 +48,59 @@ extension UIViewController {
             }
         }
     }
+    
+    func createImageDetailView(imagePath: String?, initialImage: UIImage?) {
+        //#error("image not centered")
+        print("Image path \(String(describing: imagePath)) will be used here for the big grand detail view yay")
+        let vc = UIViewController()
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
+        button.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
+        button.addTarget(self, action: #selector(removeFromSuperViewSelector), for: .touchUpInside)
+        button.backgroundColor = .black
+        button.alpha = 0.7
+        vc.view.insertSubview(button, at: 1)
+        
+        let v = UIImageView()
+        v.alpha = 0
+        v.image = initialImage
+        v.translatesAutoresizingMaskIntoConstraints = false
+        let constant = self.view.bounds.width - 20
+        v.widthAnchor.constraint(equalToConstant: constant).isActive = true
+        v.heightAnchor.constraint(equalToConstant: constant).isActive = true
+        v.shadowAndRounded(cornerRadius: 25, border: false)
+        v.clipsToBounds = true
+        
+        
+        vc.view.insertSubview(v, at: 2)
+        
+        if let superView = v.superview {
+            v.centerXAnchor.constraint(equalTo: superView.centerXAnchor).isActive = true
+            v.centerYAnchor.constraint(equalTo: superView.centerYAnchor).isActive = true
+        }
+        
+        
+        guard let iPath = imagePath else { return }
+        let imageReference = Storage.storage().reference(withPath: iPath)
+        imageReference.getData(maxSize: 2 * 1024 * 1024) { (data, error) in
+            guard let data = data else {
+                print("Error downloading image: \(String(describing: error))")
+                return
+            }
+            let finalImage = UIImage(data: data)
+            v.image = finalImage
+            
+        }
+        
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: false) {
+            UIView.animate(withDuration: 0.3) {
+                v.alpha = 1.0
+            }
+        }
+    }
+    
     func createPickerView(itemNames: [String], itemStores: [String]?, itemListID: String, singleItem: Bool, delegateVC: UIViewController) {
         let vc = UIViewController()
         //vc.view.backgroundColor = .gray

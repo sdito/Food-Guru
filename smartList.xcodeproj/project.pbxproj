@@ -465,8 +465,7 @@
 		E2B4694D22F78D23006BA77D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E2E980CD238E3A5600FAD549 /* ReviewImagesView.xib */,
-				E2E980CF238E3A6D00FAD549 /* ReviewImagesView.swift */,
+				E2E980D1238F36E900FAD549 /* ReviewImagesView */,
 				E2E409C9236B629A0082A84D /* CurrentSearchesView */,
 				E2E29039234C5C9500620576 /* RatingView */,
 				E2DA80D32349BB9E00BD7101 /* GiveRatingView */,
@@ -570,6 +569,15 @@
 				E25DEC712362B4BF0007535C /* CurrentSearchesView.swift */,
 			);
 			path = CurrentSearchesView;
+			sourceTree = "<group>";
+		};
+		E2E980D1238F36E900FAD549 /* ReviewImagesView */ = {
+			isa = PBXGroup;
+			children = (
+				E2E980CD238E3A5600FAD549 /* ReviewImagesView.xib */,
+				E2E980CF238E3A6D00FAD549 /* ReviewImagesView.swift */,
+			);
+			path = ReviewImagesView;
 			sourceTree = "<group>";
 		};
 		E2EB7FC122FFAD81003948A6 /* Cell */ = {
