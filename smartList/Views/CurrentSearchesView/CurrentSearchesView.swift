@@ -24,37 +24,43 @@ class CurrentSearchesView: UIView {
     
     func setUI(searches: [(String, SearchType)]) {
         stackView.subviews.forEach { (v) in
-            if type(of: v) == UIButton.self {
+            if type(of: v) == UIButton.self || type(of: v) == UILabel.self {
                 v.removeFromSuperview()
             }
         }
-        for search in searches {
-            let b = UIButton()
-            var buttonText: String {
-                if search.1 == .ingredient {
-                    return GenericItem(rawValue: search.0)?.description ?? "Search"
-                } else {
-                    return search.0
+        
+        if !searches.isEmpty {
+            for search in searches {
+                let b = UIButton()
+                var buttonText: String {
+                    if search.1 == .ingredient {
+                        return GenericItem(rawValue: search.0)?.description ?? "Search"
+                    } else {
+                        return search.0
+                    }
                 }
+                
+                b.setTitle(" X  \(buttonText) ", for: .normal)
+                //b.setTitleColor(Colors.main, for: .normal)
+                b.titleLabel?.font = UIFont(name: "futura", size: 13)
+                b.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+                b.layer.cornerRadius = 5
+                if #available(iOS 13.0, *) {
+                    b.backgroundColor = .systemGray6
+                    b.setTitleColor(.systemGray, for: .normal)
+                } else {
+                    b.backgroundColor = .lightGray
+                    b.setTitleColor(Colors.main, for: .normal)
+                }
+                b.clipsToBounds = true
+                
+                stackView.insertArrangedSubview(b, at: stackView.subviews.count)
+                
             }
-            
-            b.setTitle(" X  \(buttonText) ", for: .normal)
-            //b.setTitleColor(Colors.main, for: .normal)
-            b.titleLabel?.font = UIFont(name: "futura", size: 13)
-            b.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-            b.layer.cornerRadius = 5
-            if #available(iOS 13.0, *) {
-                b.backgroundColor = .systemGray6
-                b.setTitleColor(.systemGray, for: .normal)
-            } else {
-                b.backgroundColor = .lightGray
-                b.setTitleColor(Colors.main, for: .normal)
-            }
-            b.clipsToBounds = true
-
-            stackView.insertArrangedSubview(b, at: stackView.subviews.count)
-            
+        } else {
+            stackView.addArrangedSubview(UILabel())
         }
+        
     }
     @objc func buttonAction(sender: UIButton) {
         print(sender.titleLabel?.text as Any)

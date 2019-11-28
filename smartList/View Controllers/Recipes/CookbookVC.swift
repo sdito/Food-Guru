@@ -11,17 +11,34 @@ import RealmSwift
 import FirebaseFirestore
 
 class CookbookVC: UIViewController {
-    
+    private let currentSearchesView = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
     private var lastContentOffset: CGFloat = 0
+    
+    #error("need to actually implement this stuff")
     private var recipes: [CookbookRecipe] = [] {
         didSet {
             print(self.recipes.map({$0.name}))
             tableView.reloadData()
         }
     }
+    private var currentSearches: [(String, SearchType)] = [] {
+        didSet {
+            print("Current searches set: \(self.currentSearches)")
+            
+            if self.view.subviews.contains(currentSearchesView) {
+                print("Already contains")
+                currentSearchesView.setUI(searches: self.currentSearches)
+            } else {
+                // add the view
+                wholeStackView.insertArrangedSubview(currentSearchesView, at: 1)
+                currentSearchesView.setUI(searches: self.currentSearches)
+            }
+        }
+    }
     
     @IBOutlet weak var searchHelperView: UIView!
     @IBOutlet weak var searchHelperSV: UIStackView!
+    @IBOutlet weak var wholeStackView: UIStackView!
     
     
     @IBOutlet weak var searchBar: UISearchBar!
@@ -47,6 +64,7 @@ class CookbookVC: UIViewController {
         searchHelperView.isHidden = true
         searchHelperSV.setUpQuickSearchButtonsForCookbook()
         addSelectors(sv: searchHelperSV)
+        currentSearchesView.delegate = self
         searchBar.setUpAddItemToolbar(cancelAction: #selector(cancelSelector), addAction: #selector(addSelector))
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -93,8 +111,16 @@ class CookbookVC: UIViewController {
     
     @objc private func searchPressed(sender: UIButton) {
         print(sender.titleLabel?.text)
+        
         #warning("this works, need to implement it so that it actually searches the recipes")
-        #error("need to use CurrentSearchesView to manage the current views as in the other method")
+        //#error("need to use CurrentSearchesView to manage the current views as in the other method")
+        if let text = sender.titleLabel?.text {
+            let search = Search.searchFromSearchBar(string: text)
+            currentSearches += search
+        }
+        
+        searchHelperView.isHidden = true
+        searchBar.endEditing(true)
     }
     
     private func addSelectors(sv: UIStackView) {
@@ -103,6 +129,12 @@ class CookbookVC: UIViewController {
                 (v as! UIButton).addTarget(self, action: #selector(searchPressed), for: .touchUpInside)
             }
         }
+    }
+}
+
+extension CookbookVC: CurrentSearchesViewDelegate {
+    func buttonPressedToDeleteSearch(index: Int) {
+        currentSearches.remove(at: index)
     }
 }
 

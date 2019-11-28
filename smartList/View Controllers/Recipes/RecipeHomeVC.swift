@@ -269,11 +269,6 @@ extension RecipeHomeVC: RecipesFoundFromSearchingDelegate {
 extension RecipeHomeVC: CurrentSearchesViewDelegate {
     func buttonPressedToDeleteSearch(index: Int) {
         activeSearches.remove(at: index)
-        
-        #warning("problem when all searches are removed, no recipes show up. Search function is working correctly and giving back the recipes so idk whats happening WHY DOES BELOW FIX IT THIS IS SO WEIRD")
-        
-        currentSearchesView.isHidden = true
-        currentSearchesView.isHidden = false
     }
 }
 
