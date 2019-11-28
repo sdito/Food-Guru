@@ -20,6 +20,10 @@ class CookbookVC: UIViewController {
         }
     }
     
+    @IBOutlet weak var searchHelperView: UIView!
+    @IBOutlet weak var searchHelperSV: UIStackView!
+    
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var scrollBackUpView: UIView!
@@ -38,8 +42,12 @@ class CookbookVC: UIViewController {
         if #available(iOS 13.0, *) {
             self.view.backgroundColor = .systemBackground
         } else {
-            // Fallback on earlier versions
+            self.view.backgroundColor = .white
         }
+        searchHelperView.isHidden = true
+        searchHelperSV.setUpQuickSearchButtonsForCookbook()
+        addSelectors(sv: searchHelperSV)
+        searchBar.setUpAddItemToolbar(cancelAction: #selector(cancelSelector), addAction: #selector(addSelector))
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -74,7 +82,28 @@ class CookbookVC: UIViewController {
         self.dismiss(animated: false, completion: nil)
         
     }
+    @objc private func cancelSelector() {
+        searchBar.text = ""
+        searchBar.endEditing(true)
+    }
+    @objc private func addSelector() {
+        print("add selector")
+        search()
+    }
     
+    @objc private func searchPressed(sender: UIButton) {
+        print(sender.titleLabel?.text)
+        #warning("this works, need to implement it so that it actually searches the recipes")
+        #error("need to use CurrentSearchesView to manage the current views as in the other method")
+    }
+    
+    private func addSelectors(sv: UIStackView) {
+        sv.subviews.forEach { (v) in
+            if type(of: v) == UIButton.self {
+                (v as! UIButton).addTarget(self, action: #selector(searchPressed), for: .touchUpInside)
+            }
+        }
+    }
 }
 
 extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
@@ -102,6 +131,8 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
         }
         
     }
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if recipes.count != 0 {
             let recipe = recipes[indexPath.row]
@@ -129,7 +160,6 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print("Scrollviewdidscroll")
         if (self.lastContentOffset > scrollView.contentOffset.y) {
             if scrollView.contentOffset.y >= 0 {
                 scrollBackUpView.setIsHidden(false, animated: true)
@@ -142,6 +172,7 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
             self.lastContentOffset = scrollView.contentOffset.y
         }
     }
+    
     private func deleteSelectedRecipe(recipe: CookbookRecipe, idx: Int) {
         let realm = try! Realm()
         recipe.delete()
@@ -151,5 +182,17 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
 
 
 extension CookbookVC: UISearchBarDelegate {
-    
+    func search() {
+        print(searchBar.text!)
+        searchBar.text = ""
+        searchBar.endEditing(true)
+        searchHelperView.isHidden = true
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        search()
+    }
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        print("Search bar did begin editing")
+        searchHelperView.isHidden = false
+    }
 }

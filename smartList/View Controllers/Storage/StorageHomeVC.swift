@@ -12,12 +12,6 @@ import FirebaseAuth
 import Firebase
 
 
-//protocol IngredientsFromStorageDelegate: class {
-//    func ingredientsSent(rs: [Recipe])
-//}
-
-
-
 class StorageHomeVC: UIViewController {
     //var delegate: IngredientsFromStorageDelegate!
     private var indexes: [Int]? {
@@ -236,7 +230,7 @@ class StorageHomeVC: UIViewController {
         for item in sortedItems {
             if let idx = sortedItems.firstIndex(of: item) {
                 if indexes?.contains(idx) ?? false {
-                    item.switchItemToSegment(named: segment, db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
+                    item.switchItemToSegment(named: segment, db: db/*, storageID: SharedValues.shared.foodStorageID ?? " "*/)
                 }
             }
         }

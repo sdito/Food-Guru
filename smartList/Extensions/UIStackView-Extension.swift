@@ -40,6 +40,29 @@ extension UIStackView {
         }
     }
     
+    func setUpQuickSearchButtonsForCookbook() {
+        let font = UIFont(name: "futura", size: 17)!
+        
+        #warning("pull these ingredients from the storage")
+        let ingredients = ["Beef", "Chicken", "Salmon", "Broccoli", "Apples", "Garlic", "Pepper", "Mushrooms", "Lemons"]
+        ingredients.forEach { (ingredient) in
+            let b = UIButton()
+            
+            b.setTitle(ingredient, for: .normal)
+            b.titleLabel?.backgroundColor = Colors.main
+            b.titleLabel?.font = font
+            
+            
+            // to get the width of the text by itself in order to add padding to the title
+            let textArea = NSString(string: ingredient).boundingRect(with: CGSize(width: CGFloat(MAXFLOAT), height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+            let width = ceil(textArea.width)
+            b.titleLabel?.widthAnchor.constraint(equalToConstant: width + 20).isActive = true
+            b.titleLabel?.textAlignment = .center
+            self.addArrangedSubview(b)
+        }
+        
+    }
+    
     // purpose of having this sent through notification to RecipeHomeVC then to Search is to keep logic for searching in Search struct
     @objc func recipePressed(sender: Any) {
         var info = (sender as? UIButton)?.titleLabel?.text

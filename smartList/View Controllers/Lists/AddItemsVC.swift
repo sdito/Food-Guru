@@ -12,6 +12,8 @@ import FirebaseFirestore
 
 
 class AddItemsVC: UIViewController {
+    private var arrayArrayItems: [[Item]] = []
+    private var sortedCategories: [String] = []
     private var delegate: SearchAssistantDelegate!
     private var storeText: String = "none"
     private var textAssistantViewActive = false
@@ -24,16 +26,8 @@ class AddItemsVC: UIViewController {
         
     }
     
-    private var arrayArrayItems: [[Item]] = []
-    private var sortedCategories: [String] = []
-    
-    
-    #warning("check")
-    // check if this variable is being used for anything
-    //private var sendHome = true
     
     var db: Firestore!
-    
     var list: GroceryList? {
         didSet {
             if list?.items?.isEmpty == false {
@@ -45,9 +39,7 @@ class AddItemsVC: UIViewController {
     }
     
     @IBOutlet weak var topView: UIView!
-    
     @IBOutlet weak var storesView: UIView!
-    
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!

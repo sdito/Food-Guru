@@ -36,7 +36,7 @@ class GiveRatingView: UIView {
         textView.text = placeholder
         textView.alpha = 0.5
         ratingButton.isUserInteractionEnabled = false
-        imagePicker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+        imagePicker.delegate = self //as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
         imageSelectOutlet.layer.cornerRadius = 5
         imageSelectOutlet.clipsToBounds = true
     }
@@ -66,7 +66,6 @@ class GiveRatingView: UIView {
     }
     
     private func cameraOption() {
-        #warning("Need to test on device")
         print("Camera option")
         imagePicker.sourceType = .camera
         imagePicker.allowsEditing = true

@@ -107,7 +107,7 @@ struct Search {
                         
                     default:
                         print("Default")
-                        #warning("need to figure out how i want to handle this case")
+                        #warning("need to figure out how i want to handle this case, maybe a screen asking the user what ingredients they want to use")
                         
                     }
                     

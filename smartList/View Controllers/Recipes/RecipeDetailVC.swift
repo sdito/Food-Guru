@@ -105,7 +105,6 @@ class RecipeDetailVC: UIViewController {
     }
     
     
-    #warning("have a semi small not important bug, if user adds items one by one then adds all items to the list, the items that were added one by one will be added twice")
     @IBAction func addAllToList(_ sender: Any) {
         print("Add all items to list")        
         let uid = Auth.auth().currentUser?.uid ?? " "
@@ -376,9 +375,6 @@ extension RecipeDetailVC: ReviewImagesViewDelegate {
 extension RecipeDetailVC: GiveRatingViewDelegate {
     func writeImageForReview(image: UIImage) {
         print("Write the image from here")
-        #warning("left off here/need to write this function, should probably not all have the code inside this VC")
-        // have a new collection in the recipe document with images and the associated stuff, have the image path in both the image document and the review document
-        
         
         guard let recipeID = data?.recipe.imagePath?.imagePathToDocID() else { return }
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -389,9 +385,6 @@ extension RecipeDetailVC: GiveRatingViewDelegate {
         metadata.contentType = "image/jpeg"
         uploadReference.putData(imageData, metadata: metadata)
         let fullPath = uploadReference.fullPath
-        //#error("after the image is written to this path, need to add the image information to the review document (will need to get the review document id), need to figure out how i want to configure it in the database")
-        
-        
         
 
         // add the path to the recipe document
@@ -399,7 +392,6 @@ extension RecipeDetailVC: GiveRatingViewDelegate {
         recipeReference.updateData([
             "reviewImagePaths": FieldValue.arrayUnion([fullPath])
         ])
-        
         
         // delay to make sure the document is updated, how fast this data is updated is not important
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {

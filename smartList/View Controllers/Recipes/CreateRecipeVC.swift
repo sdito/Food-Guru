@@ -153,6 +153,7 @@ class CreateRecipeVC: UIViewController {
                 let difference = keyboardPosition - viewPosition
                 print("Need to move: \(difference)")
                 #warning("need to scroll down the scroll view by the difference here")
+                //scrollView.contentOffset = CGPoint(x: 0, y: difference)
             }
         }
     }
@@ -187,7 +188,7 @@ class CreateRecipeVC: UIViewController {
                     if numIngredientViewsToAdd >= 1 {
                         for _ in 1...numIngredientViewsToAdd {
                             let v = Bundle.main.loadNibNamed("IngredientView", owner: nil, options: nil)?.first as! IngredientView
-                            self.ingredientsStackView.insertArrangedSubview(v, at: self.ingredientsStackView.subviews.count - 1)
+                            self.ingredientsStackView.addArrangedSubview(v)
                         }
                     }
                     
@@ -402,6 +403,7 @@ extension CreateRecipeVC: UITextViewDelegate {
         return true
     }
     func textViewDidBeginEditing(_ textView: UITextView) {
+        
         textView.setUpDoneToolbar(action: #selector(removeTextViewKeyboard), style: .done)
     }
     

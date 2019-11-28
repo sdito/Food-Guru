@@ -7,7 +7,6 @@
 //
 
 import UIKit
-#warning("need to implement this VC for every time a user is typing in an item")
 
 
 protocol CreateNewItemDelegate {

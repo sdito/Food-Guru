@@ -164,8 +164,8 @@ extension Item {
         ])
     }
     
-    #warning("dont think i need storageID here and on deleteItemFromStorage in same file")
-    func switchItemToSegment(named: String, db: Firestore, storageID: String) {
+    
+    func switchItemToSegment(named: String, db: Firestore/*, storageID: String*/) {
         let documentRef = db.collection("storages").document(SharedValues.shared.foodStorageID ?? " ").collection("items").document(self.ownID ?? " ")
         documentRef.updateData([
             "storageSection": named

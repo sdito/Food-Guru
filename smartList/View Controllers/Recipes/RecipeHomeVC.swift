@@ -279,7 +279,6 @@ extension RecipeHomeVC: CurrentSearchesViewDelegate {
 
 
 extension RecipeHomeVC: DynamicHeightLayoutDelegate {
-    #warning("issue with how much to subtract from the text labels, was 8 previously for title and cuisine and changed it to 10")
     func collectionView(_ collectionView: UICollectionView, heightForTextAtIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
         switch savedRecipesActive {
         case true:

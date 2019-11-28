@@ -134,8 +134,6 @@ struct FoodStorage {
                 }
                 let alert = UIAlertController(title: "Error", message: "Unable to create storage with your group because someone in your group already is in their own storage. Member\(s) in storage already: \(inStorageEmails?.joined(separator: ", ") ?? "")", preferredStyle: .alert)
                 alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                
-                #warning("dont think this alert is going to work every time, idk")
                 UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
             }
         }
