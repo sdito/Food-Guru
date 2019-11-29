@@ -43,9 +43,12 @@ extension UIStackView {
     func setUpQuickSearchButtonsForCookbook() {
         let font = UIFont(name: "futura", size: 17)!
         
-        #warning("pull these ingredients from the storage")
-        let ingredients = ["Beef", "Chicken", "Salmon", "Broccoli", "Apples", "Garlic", "Pepper", "Mushrooms", "Lemons"]
-        ingredients.forEach { (ingredient) in
+        guard let ingredients = SharedValues.shared.currentItemsInStorage else { return }
+        let forDisplay = ingredients.map { (i) -> String in
+            (GenericItem.init(rawValue: i)?.description ?? "other")
+        }.filter({$0 != "other"})
+        //let ingredients = ["Beef", "Chicken", "Salmon", "Broccoli", "Apples", "Garlic", "Pepper", "Mushrooms", "Lemons"]
+        forDisplay.forEach { (ingredient) in
             let b = UIButton()
             
             b.setTitle(ingredient, for: .normal)

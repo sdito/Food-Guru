@@ -79,9 +79,11 @@ class RecipeHomeVC: UIViewController {
     var recipes: [Recipe] = [] {
         didSet {
             imageCache.removeAllObjects()
-            
             collectionView?.collectionViewLayout.invalidateLayout()
             collectionView?.reloadData()
+            if self.recipes.isEmpty {
+                self.createMessageView(color: .red, text: "No recipes found")
+            }
         }
     }
     

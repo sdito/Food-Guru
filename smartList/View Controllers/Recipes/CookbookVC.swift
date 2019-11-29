@@ -14,17 +14,24 @@ class CookbookVC: UIViewController {
     private let currentSearchesView = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
     private var lastContentOffset: CGFloat = 0
     
-    #error("need to actually implement this stuff")
+    
+    private var filteredRecipes: [CookbookRecipe] = [] {
+        didSet {
+            print(currentSearches.map({$0.0}))
+            tableView.reloadData()
+        }
+    }
     private var recipes: [CookbookRecipe] = [] {
         didSet {
             print(self.recipes.map({$0.name}))
             tableView.reloadData()
         }
     }
+    
     private var currentSearches: [(String, SearchType)] = [] {
         didSet {
             print("Current searches set: \(self.currentSearches)")
-            
+            filteredRecipes = recipes.filterRecipes(from: self.currentSearches.map({$0.0}))
             if self.view.subviews.contains(currentSearchesView) {
                 print("Already contains")
                 currentSearchesView.setUI(searches: self.currentSearches)
@@ -32,6 +39,12 @@ class CookbookVC: UIViewController {
                 // add the view
                 wholeStackView.insertArrangedSubview(currentSearchesView, at: 1)
                 currentSearchesView.setUI(searches: self.currentSearches)
+            }
+            
+            if self.currentSearches.isEmpty {
+                searchBar.placeholder = "Filter recipes"
+            } else {
+                searchBar.placeholder = "Add another search"
             }
         }
     }
@@ -53,6 +66,7 @@ class CookbookVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         recipes = Array(realm.objects(CookbookRecipe.self))
+        filteredRecipes = recipes
         scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
         
         
@@ -110,10 +124,8 @@ class CookbookVC: UIViewController {
     }
     
     @objc private func searchPressed(sender: UIButton) {
-        print(sender.titleLabel?.text)
+        print(sender.titleLabel?.text as Any)
         
-        #warning("this works, need to implement it so that it actually searches the recipes")
-        //#error("need to use CurrentSearchesView to manage the current views as in the other method")
         if let text = sender.titleLabel?.text {
             let search = Search.searchFromSearchBar(string: text)
             currentSearches += search
@@ -141,7 +153,7 @@ extension CookbookVC: CurrentSearchesViewDelegate {
 extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if recipes.count != 0 {
-            return recipes.count
+            return filteredRecipes.count
         } else {
             return 1
         }
@@ -151,7 +163,7 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if recipes.count != 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cookbookCell") as! CookbookCell
-            let recipe = recipes[indexPath.row]
+            let recipe = filteredRecipes[indexPath.row]
             cell.setUI(recipe: recipe, systemItems: SharedValues.shared.currentItemsInStorage ?? [])
             return cell
         } else {
@@ -167,7 +179,7 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if recipes.count != 0 {
-            let recipe = recipes[indexPath.row]
+            let recipe = filteredRecipes[indexPath.row]
             performSegue(withIdentifier: "showFromCookbook", sender: recipe)
         }
     }
@@ -180,10 +192,15 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let v = UIView()
+        v.backgroundColor = .clear
+        return v
+    }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if recipes.count != 0 {
-            let item = recipes[indexPath.row]
+            let item = filteredRecipes[indexPath.row]
             let alert = UIAlertController(title: "Are you sure you want to delete \"\(item.name)\"", message: nil, preferredStyle: .alert)
             alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
             alert.addAction(.init(title: "Delete", style: .destructive, handler: {_ in self.deleteSelectedRecipe(recipe: item, idx: indexPath.row)}))
@@ -220,8 +237,9 @@ extension CookbookVC: UISearchBarDelegate {
         searchBar.endEditing(true)
         searchHelperView.isHidden = true
     }
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        search()
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
+        #error("need to decide how i want to handle the search bar for the cookbookVC")
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         print("Search bar did begin editing")

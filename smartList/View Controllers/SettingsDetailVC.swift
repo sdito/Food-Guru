@@ -67,10 +67,16 @@ class SettingsDetailVC: UIViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "settingContactDeveloperCell") as! SettingContactDeveloperCell
             cell.delegate = self
             return [cell]
-            
-            
         case .darkMode:
-            return [UITableViewCell()]
+            let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+            cell1.setUI(str: "1. Make sure iOS 13 or a newer version of iOS is downloaded on your phone.")
+            let cell2 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+            cell2.setUI(str: "2. Swipe up from the bottom of your screen to access the control center.")
+            let cell3 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+            cell3.setUI(str: "3. Press and hold on the brightness displayed in the control center.")
+            let cell4 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+            cell4.setUI(str: "4. Select 'Dark Mode'")
+            return [cell1, cell2, cell3, cell4]
             
         case .group:
             if SharedValues.shared.anonymousUser == false {
@@ -108,10 +114,12 @@ class SettingsDetailVC: UIViewController {
         case .notifications:
             return [UITableViewCell()]
         case .licences:
+            self.title = "Software licences"
             return [UITableViewCell()]
             
         
         case .list:
+            self.title = "Lists"
             return [UITableViewCell()]
         case .storage:
             if SharedValues.shared.foodStorageID == nil {
@@ -155,6 +163,7 @@ class SettingsDetailVC: UIViewController {
             }
             
         case .recipe:
+            self.title = "Recipes"
             return [UITableViewCell()]
         }
     }

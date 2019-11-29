@@ -993,7 +993,7 @@ struct Search {
             } else if item.contains("oyster") {
                 return .oysterSauce
             }
-        } else if item.contains("apple") {
+        } else if item.contains("apple") || item.contains("apples") {
             if item.contains("vinegar") {
                 return .appleCiderVinegar
             } else {
