@@ -1,6 +1,0 @@
-framework module Pods_smartList {
-  umbrella header "Pods-smartList-umbrella.h"
-
-  export *
-  module * { export * }
-}
