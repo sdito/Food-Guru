@@ -239,7 +239,7 @@ extension CookbookVC: UISearchBarDelegate {
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print(searchText)
-        #error("need to decide how i want to handle the search bar for the cookbookVC")
+        #warning("need to decide how i want to handle the search bar for the cookbookVC")
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         print("Search bar did begin editing")
