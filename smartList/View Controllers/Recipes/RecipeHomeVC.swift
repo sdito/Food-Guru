@@ -13,6 +13,8 @@ import AVFoundation
 
 
 class RecipeHomeVC: UIViewController {
+    private var previousContentOffset: CGPoint?
+    private var timer: Timer?
     private var savedRecipesActive = false {
         didSet {
             imageCache.removeAllObjects()
@@ -31,7 +33,7 @@ class RecipeHomeVC: UIViewController {
             }
         }
     }
-    //private var selectedCache: [IndexPath] = []
+    
     private let currentSearchesView = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
     private var activeSearches: [(String, SearchType)] = [] {
         didSet {
@@ -100,11 +102,15 @@ class RecipeHomeVC: UIViewController {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         handleRecipesToShow()
+        timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in self.handleTimer()}
+        timer?.tolerance = 0.2
+        
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
+        timer?.invalidate()
     }
     
     override func viewDidLoad() {
@@ -130,8 +136,11 @@ class RecipeHomeVC: UIViewController {
         
         
         FoodStorage.readAndPersistSystemItemsFromStorageWithListener(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
+        
     }
-    
+    @objc func fireTimer() {
+        print("Timer fired!")
+    }
     @IBAction func createRecipePressed(_ sender: Any) {
         if SharedValues.shared.anonymousUser == false {
             performSegue(withIdentifier: "toCreateRecipe", sender: nil)
@@ -228,6 +237,16 @@ class RecipeHomeVC: UIViewController {
             imageCache.removeAllObjects()
             SharedValues.shared.sentRecipesInfo = nil
         }
+    }
+    private func handleTimer() {
+        #warning("might need to do some more work on this")
+        let currentContentOffset = collectionView.contentOffset
+        if currentContentOffset == previousContentOffset {
+            if scrollBackUpView.isHidden {
+                scrollBackUpView.setIsHidden(false, animated: true)
+            }
+        }
+        previousContentOffset = currentContentOffset
     }
     
     private func handleDuplicateSearchesAndAddNew(newSearches: [(String, SearchType)]) {
@@ -364,6 +383,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
 
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
         if (self.lastContentOffset > scrollView.contentOffset.y) {
             if allowButtonToBeShowed == true && scrollView.contentOffset.y >= 0 {
                 scrollBackUpView.setIsHidden(false, animated: true)
@@ -380,6 +400,8 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         self.lastContentOffset = scrollView.contentOffset.y
     }
+    
+    
 }
 
 extension RecipeHomeVC: UISearchBarDelegate {

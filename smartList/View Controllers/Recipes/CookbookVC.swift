@@ -239,7 +239,17 @@ extension CookbookVC: UISearchBarDelegate {
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         print(searchText)
+        if searchText == "" {
+            searchHelperView.isHidden = false
+        } else {
+            searchHelperView.isHidden = true
+        }
         #warning("need to decide how i want to handle the search bar for the cookbookVC")
+//        if searchText != "" {
+//            currentSearches.removeAll()
+//            filteredRecipes = recipes.filter({$0.name.lowercased().contains(searchText.lowercased())})
+//        }
+        
     }
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         print("Search bar did begin editing")
