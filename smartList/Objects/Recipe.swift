@@ -264,10 +264,10 @@ extension Recipe {
             "reviewImagePaths": self.reviewImagePaths as Any
         ]) { err in
             if let err = err {
-                print("Error writing document: \(err)")
+                UIApplication.shared.keyWindow?.rootViewController?.createMessageView(color: .red, text: "Failed creating recipe")
             } else {
                 print("Document successfully written")
-                
+                UIApplication.shared.keyWindow?.rootViewController?.createMessageView(color: Colors.messageGreen, text: "Recipe successfully created")
                 // give the items their own line for easier querying
                 for item in ingredients {
                     let systemitem = Search.turnIntoSystemItem(string: item)

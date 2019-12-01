@@ -706,6 +706,8 @@ struct Search {
                 return .creamOfChickenSoup
             } else if  item.contains("stock") || item.contains("broth") || item.contains("bouillon") {
                 return .broth
+            } else if item.contains("sausage") {
+                return .sausage
             } else {
                 return .chicken
             }
@@ -737,7 +739,11 @@ struct Search {
                 return .beef
             }
         } else if item.contains("pork") {
-            return .pork
+            if item.contains("sausage") {
+                return .sausage
+            } else {
+                return .pork
+            }
         } else if item.contains("pasta") || item.contains("macaroni") || item.contains("spaghetti") {
             if item.contains("sauce") {
                 return .marinara
@@ -1234,7 +1240,11 @@ struct Search {
         } else if item.contains("bay") && (item.contains("leaf") || item.contains("leaves")) {
             return .bayLeaf
         } else if item.contains("beer") {
-            return .beer
+            if item.contains("root") {
+                return .soda
+            } else {
+                return .beer
+            }
         } else if item.contains("asparagus") {
             return .asparagus
         } else if item.contains("anchovy") || item.contains("anchovies") {

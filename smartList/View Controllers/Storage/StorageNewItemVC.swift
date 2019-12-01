@@ -38,6 +38,7 @@ class StorageNewItemVC: UIViewController {
         nameTextField.delegate = self
         nameTextField.becomeFirstResponder()
         nameTextField.setUpDoneToolbar(action: #selector(doneAction), style: .done)
+        
     }
     
     @IBAction func switchAction(_ sender: Any) {

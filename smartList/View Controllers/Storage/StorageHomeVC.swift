@@ -395,9 +395,13 @@ extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationController
                 }
             
                 picker.dismiss(animated: true, completion: nil)
+                
                 let alert = UIAlertController(title: "Barcode returned", message: barcodeData.first?.displayValue, preferredStyle: .alert)
                 alert.addAction(.init(title: "Ok", style: .default, handler: nil))
                 self.present(alert, animated: true)
+                
+                #warning("use the API here")
+                
             }
         }
     }
