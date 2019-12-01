@@ -37,7 +37,6 @@ class RecipeCell: UICollectionViewCell {
     private var recipe: Recipe?
     @IBOutlet weak var recipeImage: UIImageView!
     @IBOutlet weak var title: UILabel!
-    @IBOutlet weak var cuisine: UILabel!
     @IBOutlet weak var tagline: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
     
@@ -48,8 +47,8 @@ class RecipeCell: UICollectionViewCell {
         }
         
         title.text = recipe.name
-        cuisine.text = recipe.cuisineType
-        tagline.text = recipe.recipeType.joined(separator: ", ")
+        //tagline.text = recipe.recipeType.joined(separator: ", ")
+        tagline.text = recipe.tagline
         recipeImage.layer.cornerRadius = 4.0
         recipeImage.clipsToBounds = true
         favoriteButton.layer.cornerRadius = favoriteButton.frame.size.height/2

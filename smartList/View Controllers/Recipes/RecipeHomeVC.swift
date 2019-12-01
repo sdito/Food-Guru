@@ -296,19 +296,20 @@ extension RecipeHomeVC: CurrentSearchesViewDelegate {
 
 extension RecipeHomeVC: DynamicHeightLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForTextAtIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
+        let minForDescription = heightForText("str", width: CGFloat(MAXFLOAT), font: UIFont(name: "futura", size: 13)!) * 5.0
         switch savedRecipesActive {
         case true:
             let textData = savedRecipes[indexPath.item]
-            let title = heightForText(textData.name, width: width - 10, font: UIFont(name: "futura", size: 20)!)
-            let cuisine = heightForText(textData.cuisineType, width: width - 10, font: UIFont(name: "futura", size: 17)!)
-            let description = heightForText(textData.recipeType.joined(separator: ", "), width: width - 10, font: UIFont(name: "futura", size: 15)!)
-            return title + cuisine + description + 8
+            let title = heightForText(textData.name, width: width - 12, font: UIFont(name: "futura", size: 20)!)
+            let description = heightForText(textData.tagline ?? "", width: width - 12, font: UIFont(name: "futura", size: 13)!)
+            let actualDescription = min(minForDescription, description)
+            return title + actualDescription + 8
         case false:
             let textData = recipes[indexPath.item]
-            let title = heightForText(textData.name, width: width - 10, font: UIFont(name: "futura", size: 20)!)
-            let cuisine = heightForText(textData.cuisineType, width: width - 10, font: UIFont(name: "futura", size: 17)!)
-            let description = heightForText(textData.recipeType.joined(separator: ", "), width: width - 10, font: UIFont(name: "futura", size: 15)!)
-            return title + cuisine + description + 8
+            let title = heightForText(textData.name, width: width - 12, font: UIFont(name: "futura", size: 20)!)
+            let description = heightForText(textData.tagline ?? "", width: width - 12, font: UIFont(name: "futura", size: 13)!)
+            let actualDescription = min(minForDescription, description)
+            return title + actualDescription + 8
         }
         
     }

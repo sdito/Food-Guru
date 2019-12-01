@@ -943,15 +943,9 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cuisine" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qpc-Xn-9E6">
-                                                            <rect key="frame" x="4" y="227" width="191" height="22.333333333333343"/>
-                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHx-NQ-Sz9">
-                                                            <rect key="frame" x="4" y="251.33333333333334" width="191" height="19.666666666666657"/>
-                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHx-NQ-Sz9">
+                                                            <rect key="frame" x="4" y="227" width="191" height="17"/>
+                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                                                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -967,24 +961,20 @@
                                                     <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="ijY-2V-GdO" firstAttribute="top" secondItem="cgr-RJ-2Cj" secondAttribute="bottom" constant="2" id="33S-Xl-C5b"/>
-                                                        <constraint firstItem="EHx-NQ-Sz9" firstAttribute="top" secondItem="qpc-Xn-9E6" secondAttribute="bottom" constant="2" id="9pX-5s-mbw"/>
+                                                        <constraint firstItem="EHx-NQ-Sz9" firstAttribute="top" secondItem="ijY-2V-GdO" secondAttribute="bottom" constant="2" id="8uh-YA-x9g"/>
                                                         <constraint firstAttribute="trailing" secondItem="1lb-jo-YZq" secondAttribute="trailing" constant="10" id="FcK-xS-dmF"/>
                                                         <constraint firstItem="cgr-RJ-2Cj" firstAttribute="leading" secondItem="cr7-Kg-hOZ" secondAttribute="leading" constant="2" id="JtG-8f-tRO"/>
                                                         <constraint firstAttribute="trailing" secondItem="EHx-NQ-Sz9" secondAttribute="trailing" constant="4" id="QiB-6Q-vMC"/>
                                                         <constraint firstItem="1lb-jo-YZq" firstAttribute="top" secondItem="cr7-Kg-hOZ" secondAttribute="top" constant="10" id="bIZ-IL-bgk"/>
                                                         <constraint firstItem="cgr-RJ-2Cj" firstAttribute="top" secondItem="cr7-Kg-hOZ" secondAttribute="top" constant="2" id="ekC-hy-tZz"/>
-                                                        <constraint firstAttribute="trailing" secondItem="qpc-Xn-9E6" secondAttribute="trailing" constant="4" id="emQ-S8-DoI"/>
                                                         <constraint firstItem="ijY-2V-GdO" firstAttribute="leading" secondItem="cr7-Kg-hOZ" secondAttribute="leading" constant="4" id="hpn-rm-hLZ"/>
                                                         <constraint firstItem="EHx-NQ-Sz9" firstAttribute="leading" secondItem="cr7-Kg-hOZ" secondAttribute="leading" constant="4" id="jH7-eS-rko"/>
                                                         <constraint firstAttribute="trailing" secondItem="ijY-2V-GdO" secondAttribute="trailing" constant="4" id="pJI-cc-kjJ"/>
-                                                        <constraint firstItem="qpc-Xn-9E6" firstAttribute="top" secondItem="ijY-2V-GdO" secondAttribute="bottom" constant="2" id="v0z-Cw-6WW"/>
-                                                        <constraint firstItem="qpc-Xn-9E6" firstAttribute="leading" secondItem="cr7-Kg-hOZ" secondAttribute="leading" constant="4" id="z6J-La-tlr"/>
                                                         <constraint firstAttribute="trailing" secondItem="cgr-RJ-2Cj" secondAttribute="trailing" constant="2" id="zAF-S1-odr"/>
                                                     </constraints>
                                                 </collectionViewCellContentView>
                                                 <size key="customSize" width="199" height="304"/>
                                                 <connections>
-                                                    <outlet property="cuisine" destination="qpc-Xn-9E6" id="vod-MH-tDN"/>
                                                     <outlet property="favoriteButton" destination="1lb-jo-YZq" id="vbg-59-UgC"/>
                                                     <outlet property="recipeImage" destination="cgr-RJ-2Cj" id="TDm-Kt-Pjr"/>
                                                     <outlet property="tagline" destination="EHx-NQ-Sz9" id="tw3-Xq-uN8"/>
