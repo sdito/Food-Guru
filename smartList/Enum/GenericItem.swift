@@ -138,9 +138,12 @@ enum GenericItem: String, CaseIterable {
     case halfAndHalf
     case halibut
     case ham
+    case hamburgerBuns
+    case hamburgerPatties
     case heavyCream
     case honey
     case hotDogs
+    case hotDogBuns
     case hotSauce
     case hummus
     case iceCream
@@ -848,6 +851,12 @@ enum GenericItem: String, CaseIterable {
             return "Zucchini"
         case .other:
             return "Cheerios"
+        case .hotDogBuns:
+            return "Hot dog buns"
+        case .hamburgerPatties:
+            return "Hamburger patties"
+        case .hamburgerBuns:
+            return "Hamburger buns"
         }
     }
     
@@ -1441,6 +1450,12 @@ enum GenericItem: String, CaseIterable {
             return .condimentsAndDressings
         case .saladDressing:
             return .condimentsAndDressings
+        case .hotDogBuns:
+            return .bakery
+        case .hamburgerPatties:
+            return .meat
+        case .hamburgerBuns:
+            return .bakery
         }
     }
 }

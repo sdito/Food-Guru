@@ -982,7 +982,7 @@ struct Search {
                 return .worcestershireSauce
             } else if item.contains("apple") {
                 return .appleSauce
-            } else if item.contains("bbq") || item.contains("barbeque") {
+            } else if item.contains("bbq") || item.contains("barbecue") {
                 return .bbqSauce
             } else if item.contains("hot") {
                 return .hotSauce
@@ -1324,7 +1324,17 @@ struct Search {
         } else if item.contains("tater") && item.contains("tots") {
             return .taterTots
         } else if item.contains("hot") && (item.contains("dog") || item.contains("dogs")) {
-            return .hotDogs
+            if item.contains("bun") || item.contains("buns") {
+                return .hotDogBuns
+            } else {
+                return .hotDogs
+            }
+        } else if item.contains("hamburger") || item.contains("hamburgers") {
+            if item.contains("bun") || item.contains("buns") {
+                return .hamburgerBuns
+            } else {
+                return .hamburgerPatties
+            }
         } else if item.contains("icing") {
             return .icing
         } else if item.contains("crackers") {

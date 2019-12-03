@@ -93,7 +93,10 @@ class AddItemsVC: UIViewController {
 
     
     @IBAction func addItem(_ sender: Any) {
-        if textField.text != "" {toAddItem(text: textField.text!)}
+        if textField.text != "" {
+            toAddItem(text: textField.text!)
+            delegate.searchTextChanged(text: "")
+        }
     }
     
     @IBAction func segmentedControlPressed(_ sender: Any) {
