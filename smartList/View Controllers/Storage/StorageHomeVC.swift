@@ -175,10 +175,12 @@ class StorageHomeVC: UIViewController {
         }
         Search.getRecipesFromIngredients(db: db, ingredients: genericItems) { (rcps) in
             if let rcps = rcps {
-                //let displayIngredients = genericItems.map { (ing) -> GenericItem in GenericItem.init(rawValue: ing)!}.map { (gi) -> String in gi.description}
                 SharedValues.shared.sentRecipesInfo = (rcps, genericItems)
                 self.tabBarController?.selectedIndex = 1
                 
+                
+                // to make sure that the recipe home page is visible when sent over there
+                (self.tabBarController!.selectedViewController! as? UINavigationController)?.popToRootViewController(animated: true)
             }
         }
         

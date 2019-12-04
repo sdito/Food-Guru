@@ -850,7 +850,7 @@ enum GenericItem: String, CaseIterable {
         case .zucchini:
             return "Zucchini"
         case .other:
-            return "Cheerios"
+            return "Other"
         case .hotDogBuns:
             return "Hot dog buns"
         case .hamburgerPatties:
