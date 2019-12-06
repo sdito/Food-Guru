@@ -181,8 +181,10 @@ class SettingsDetailVC: UIViewController {
     @objc private func createAccountFromAnonymous() {
         print("Create account from anonymous")
         #warning("need to implement this function/need to figure out how to do the linking of the account")
-        
-        
+        let sb: UIStoryboard = UIStoryboard(name: "LogIn", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "initialLogInVC") as! InitialLogInVC
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
     
     @objc private func logOut() {
