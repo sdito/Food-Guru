@@ -397,13 +397,22 @@ extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationController
                 }
             
                 picker.dismiss(animated: true, completion: nil)
-                
+                let barcode = barcodeData.first?.displayValue ?? ""
                 let alert = UIAlertController(title: "Barcode returned", message: barcodeData.first?.displayValue, preferredStyle: .alert)
                 alert.addAction(.init(title: "Ok", style: .default, handler: nil))
                 self.present(alert, animated: true)
                 
-                #warning("use the API here")
-                
+                #warning("need to fix all of this stuff below and maybe use a different API")
+                guard let url = URL(string: "https://world.openfoodfacts.org/api/v0/product/\(barcode).json") else { return }
+                let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+                    guard let data = data else {
+                        print("Data was nil")
+                        return
+                    }
+                    guard let htmlString = String(data: data, encoding: .utf8) else { return }
+                    print(htmlString)
+                }
+                task.resume()
             }
         }
     }

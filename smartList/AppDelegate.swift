@@ -20,14 +20,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
         // Override point for customization after application launch.
         FirebaseApp.configure()
         //let db = Firestore.firestore()
         if Auth.auth().currentUser != nil {
-            let vc: TabVC = storyboard.instantiateViewController(withIdentifier: "tabVC") as! TabVC
-            self.window?.rootViewController = vc
-            self.window?.makeKeyAndVisible()
+//            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//            let vc: TabVC = storyboard.instantiateViewController(withIdentifier: "tabVC") as! TabVC
+//            self.window?.rootViewController = vc
+//            self.window?.makeKeyAndVisible()
             SharedValues.shared.userID = Auth.auth().currentUser?.uid
             
             if Auth.auth().currentUser?.isAnonymous == true {
@@ -36,6 +37,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 SharedValues.shared.anonymousUser = false
             }
             
+        } else {
+            let sb: UIStoryboard = UIStoryboard(name: "LogIn", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "initialLogInVC") as! InitialLogInVC
+            self.window?.rootViewController = vc
+            self.window?.makeKeyAndVisible()
         }
         return true
     }

@@ -76,6 +76,7 @@
 		E2B68D7523305877006A3B58 /* FoodStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B68D7423305877006A3B58 /* FoodStorageType.swift */; };
 		E2B8E943237C81160051B07D /* RecipePDFVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B8E942237C81160051B07D /* RecipePDFVC.swift */; };
 		E2B8E947237C865D0051B07D /* PDFCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B8E946237C865D0051B07D /* PDFCreator.swift */; };
+		E2BB81A5239A14C20038269F /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BB81A4239A14C20038269F /* ForgotPasswordVC.swift */; };
 		E2C4934123066012002907C2 /* UIView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C4934023066012002907C2 /* UIView-Extension.swift */; };
 		E2C49343230887F3002907C2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C49342230887F3002907C2 /* User.swift */; };
 		E2C49349230B45E4002907C2 /* CreateRecipeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C49348230B45E4002907C2 /* CreateRecipeVC.swift */; };
@@ -205,6 +206,7 @@
 		E2B68D7423305877006A3B58 /* FoodStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodStorageType.swift; sourceTree = "<group>"; };
 		E2B8E942237C81160051B07D /* RecipePDFVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePDFVC.swift; sourceTree = "<group>"; };
 		E2B8E946237C865D0051B07D /* PDFCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFCreator.swift; sourceTree = "<group>"; };
+		E2BB81A4239A14C20038269F /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		E2C4934023066012002907C2 /* UIView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView-Extension.swift"; sourceTree = "<group>"; };
 		E2C49342230887F3002907C2 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E2C49348230B45E4002907C2 /* CreateRecipeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRecipeVC.swift; sourceTree = "<group>"; };
@@ -542,6 +544,7 @@
 				E2C5EC3C239A0B280030E3CD /* InitialLogInVC.swift */,
 				E2C5EC38239A0A400030E3CD /* SignUpVC.swift */,
 				E2C5EC3A239A0A4B0030E3CD /* SignInVC.swift */,
+				E2BB81A4239A14C20038269F /* ForgotPasswordVC.swift */,
 			);
 			path = "Log in";
 			sourceTree = "<group>";
@@ -938,6 +941,7 @@
 				E20BC6DA232843E400F1E5E7 /* CreateGroupVC.swift in Sources */,
 				E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */,
 				E27D70B4233F24A5009C68B3 /* UISearchBar-Extension.swift in Sources */,
+				E2BB81A5239A14C20038269F /* ForgotPasswordVC.swift in Sources */,
 				E20BC6DE2329A43300F1E5E7 /* SettingTwoLevelCell.swift in Sources */,
 				E2A26C3C234D7A0200D954C0 /* Category.swift in Sources */,
 				E20BC6D62328326600F1E5E7 /* SettingButtonCell.swift in Sources */,

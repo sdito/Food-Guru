@@ -7,15 +7,21 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class SignUpVC: UIViewController {
-
+    
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var usernameTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
     }
     
     @IBAction func emailCreateAccount(_ sender: Any) {
+        print(passwordTextField.text)
     }
     
     @IBAction func googleCreateAccount(_ sender: Any) {
@@ -23,6 +29,7 @@ class SignUpVC: UIViewController {
     
     @IBAction func continueAsGuest(_ sender: Any) {
     }
+    
     @IBAction func signInAlreadyHaveAccount(_ sender: Any) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "signInVC") as! SignInVC
         vc.modalPresentationStyle = .fullScreen
