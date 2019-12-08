@@ -36,7 +36,7 @@ class InstructionView: UIView {
     }
     
     func setUI(num: String) {
-        tv.border()
+        tv.border(cornerRadius: 5.0)
         button.setTitle("\(num)", for: .normal)
         self.alpha = 0.4
         

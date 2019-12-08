@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 import FirebaseAuth
 
 class SignUpVC: UIViewController {
@@ -14,14 +15,42 @@ class SignUpVC: UIViewController {
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
+    var db: Firestore!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        db = Firestore.firestore()
     }
     
     @IBAction func emailCreateAccount(_ sender: Any) {
-        print(passwordTextField.text)
+        print("This is being pressed")
+        #warning("none of this works even a little bit yet")
+        Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { (authDataResult, error) in
+            guard error == nil else {
+                print("Account not created")
+                return
+                
+                
+            }
+            
+            let docRef = self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")")
+            
+            docRef.getDocument { (document, error) in
+                self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")").setData([
+                "email": authDataResult?.user.email as Any,
+                "uid": authDataResult?.user.uid as Any,
+                "name": authDataResult?.user.displayName as Any
+                ])
+            }
+            SharedValues.shared.anonymousUser = false
+            SharedValues.shared.userID = authDataResult?.user.uid
+            
+            let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "tabVC") as! TabVC
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            self.present(vc, animated: true, completion: nil)
+        }
     }
     
     @IBAction func googleCreateAccount(_ sender: Any) {

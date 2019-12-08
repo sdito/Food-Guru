@@ -43,6 +43,7 @@ extension UIView {
             self.layer.borderColor = UIColor.clear.cgColor
         }
     }
+    
     func setGradientBackground(colorOne: UIColor, colorTwo: UIColor) {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = bounds
@@ -53,8 +54,8 @@ extension UIView {
         self.layer.insertSublayer(gradientLayer, at: 0)
     }
     
-    func border() {
-        self.layer.cornerRadius = 5
+    func border(cornerRadius: CGFloat) {
+        self.layer.cornerRadius = cornerRadius
         self.layer.borderWidth = 0.5
         self.layer.borderColor = Colors.lightGray.cgColor
         self.clipsToBounds = true

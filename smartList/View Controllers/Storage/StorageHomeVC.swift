@@ -402,7 +402,7 @@ extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationController
                 alert.addAction(.init(title: "Ok", style: .default, handler: nil))
                 self.present(alert, animated: true)
                 
-                #warning("need to fix all of this stuff below and maybe use a different API")
+                #warning("need to fix all of this stuff below and maybe (probably) use a different API")
                 guard let url = URL(string: "https://world.openfoodfacts.org/api/v0/product/\(barcode).json") else { return }
                 let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                     guard let data = data else {

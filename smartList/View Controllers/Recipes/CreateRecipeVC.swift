@@ -62,7 +62,7 @@ class CreateRecipeVC: UIViewController {
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         imagePicker.allowsEditing = true
-        selectimageOutlet.border()
+        selectimageOutlet.border(cornerRadius: 5.0)
         
         nameTextField.delegate = self
         servingsTextField.delegate = self
@@ -72,8 +72,8 @@ class CreateRecipeVC: UIViewController {
         notesTextView.delegate = self
         taglineTextView.delegate = self
         urlTextField.delegate = self
-        cuisineOutlet.border()
-        recipeDescriptionOutlet.border()
+        cuisineOutlet.border(cornerRadius: 5.0)
+        recipeDescriptionOutlet.border(cornerRadius: 5.0)
         cuisineOutlet.titleEdgeInsets.left = 7
         recipeDescriptionOutlet.titleEdgeInsets.left = 7
         
@@ -88,8 +88,8 @@ class CreateRecipeVC: UIViewController {
         SharedValues.shared.currText = nameTextField
         
         initialInstructionSetUp()
-        notesTextView.border()
-        taglineTextView.border()
+        notesTextView.border(cornerRadius: 5.0)
+        taglineTextView.border(cornerRadius: 5.0)
         self.createNavigationBarTextAttributes()
         
         

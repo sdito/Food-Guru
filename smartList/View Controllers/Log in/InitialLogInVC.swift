@@ -10,10 +10,11 @@ import UIKit
 
 class InitialLogInVC: UIViewController {
 
+    @IBOutlet weak var createAccountOutlet: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        createAccountOutlet.border(cornerRadius: 20.0)
     }
  
     @IBAction func createAccount(_ sender: Any) {

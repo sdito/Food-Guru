@@ -31,7 +31,7 @@ class GiveRatingView: UIView {
     
     override func awakeFromNib() {
         textView.delegate = self
-        textView.border()
+        textView.border(cornerRadius: 5.0)
         textView.tintColor = Colors.main
         textView.text = placeholder
         textView.alpha = 0.5

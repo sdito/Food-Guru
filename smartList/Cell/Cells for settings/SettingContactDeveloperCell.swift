@@ -29,7 +29,7 @@ class SettingContactDeveloperCell: UITableViewCell {
         textField.delegate = self
         textView.delegate = self
         textField.becomeFirstResponder()
-        textView.border()
+        textView.border(cornerRadius: 5.0)
     }
     
     @IBAction func sendFeedback(_ sender: Any) {
