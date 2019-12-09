@@ -90,31 +90,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iMk-1D-VL5">
-                                <rect key="frame" x="20" y="104" width="374" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jbz-gH-b1u">
-                                <rect key="frame" x="20" y="146" width="374" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
-                            </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sign up" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iHa-6e-VJB">
-                                <rect key="frame" x="186" y="75" width="58" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pja-Ch-czq">
-                                <rect key="frame" x="20" y="188" width="374" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" textContentType="username"/>
-                            </textField>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ZNh-I2-QYM">
+                                <rect key="frame" x="20" y="94" width="374" height="118"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iMk-1D-VL5">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="34"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jbz-gH-b1u">
+                                        <rect key="frame" x="0.0" y="42" width="374" height="34"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pja-Ch-czq">
+                                        <rect key="frame" x="0.0" y="84" width="374" height="34"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" textContentType="username"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8YH-Ko-Gjj">
                                 <rect key="frame" x="100" y="349" width="218" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -124,11 +119,13 @@
                                     <action selector="googleCreateAccount:" destination="ESS-79-oPP" eventType="touchUpInside" id="nSk-8O-EPA"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqM-uy-biH">
-                                <rect key="frame" x="150" y="229" width="118" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqM-uy-biH">
+                                <rect key="frame" x="113.5" y="222" width="187" height="35"/>
+                                <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                <state key="normal" title="Create account"/>
+                                <state key="normal" title="Create account">
+                                    <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                </state>
                                 <connections>
                                     <action selector="emailCreateAccount:" destination="ESS-79-oPP" eventType="touchUpInside" id="x0u-KX-RGe"/>
                                 </connections>
@@ -140,16 +137,16 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8kQ-G8-9Fz">
-                                <rect key="frame" x="151" y="674" width="124" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8kQ-G8-9Fz">
+                                <rect key="frame" x="138.5" y="752" width="137" height="35"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <state key="normal" title="Continue as guest"/>
                                 <connections>
                                     <action selector="continueAsGuest:" destination="ESS-79-oPP" eventType="touchUpInside" id="jRt-ja-bJS"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="XXQ-4M-Yx5">
-                                <rect key="frame" x="76" y="797" width="262" height="35"/>
+                                <rect key="frame" x="79" y="797" width="256" height="35"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CWT-fH-30K">
                                         <rect key="frame" x="0.0" y="0.0" width="203" height="35"/>
@@ -158,9 +155,9 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jvu-cz-ZKy">
-                                        <rect key="frame" x="209" y="0.0" width="53" height="35"/>
+                                        <rect key="frame" x="209" y="0.0" width="47" height="35"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                        <state key="normal" title="Sign in"/>
+                                        <state key="normal" title="Log in"/>
                                         <connections>
                                             <action selector="signInAlreadyHaveAccount:" destination="ESS-79-oPP" eventType="touchUpInside" id="bfQ-0A-t9o"/>
                                         </connections>
@@ -170,12 +167,21 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="zqM-uy-biH" firstAttribute="top" secondItem="ZNh-I2-QYM" secondAttribute="bottom" constant="10" id="2QL-VV-zBj"/>
+                            <constraint firstItem="ZNh-I2-QYM" firstAttribute="leading" secondItem="KsI-8C-uNV" secondAttribute="leading" constant="20" id="7ii-FS-A5B"/>
+                            <constraint firstItem="zqM-uy-biH" firstAttribute="width" secondItem="ZNh-I2-QYM" secondAttribute="width" multiplier="1:2" id="9ty-Ts-v8H"/>
+                            <constraint firstItem="zqM-uy-biH" firstAttribute="centerX" secondItem="KLl-UG-GbU" secondAttribute="centerX" id="HpH-HP-O5U"/>
                             <constraint firstItem="XXQ-4M-Yx5" firstAttribute="centerX" secondItem="KLl-UG-GbU" secondAttribute="centerX" id="OT4-nv-Xra"/>
+                            <constraint firstItem="KsI-8C-uNV" firstAttribute="trailing" secondItem="ZNh-I2-QYM" secondAttribute="trailing" constant="20" id="b5V-dd-v4j"/>
+                            <constraint firstItem="8kQ-G8-9Fz" firstAttribute="centerX" secondItem="KLl-UG-GbU" secondAttribute="centerX" id="ceP-xl-bKk"/>
+                            <constraint firstItem="ZNh-I2-QYM" firstAttribute="top" secondItem="KsI-8C-uNV" secondAttribute="top" constant="50" id="nFD-sY-DZq"/>
+                            <constraint firstItem="XXQ-4M-Yx5" firstAttribute="top" secondItem="8kQ-G8-9Fz" secondAttribute="bottom" constant="10" id="pFh-Vh-3xr"/>
                             <constraint firstItem="KsI-8C-uNV" firstAttribute="bottom" secondItem="XXQ-4M-Yx5" secondAttribute="bottom" constant="30" id="umW-fF-cGq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="KsI-8C-uNV"/>
                     </view>
                     <connections>
+                        <outlet property="createAccountOutlet" destination="zqM-uy-biH" id="Ln6-qH-OrC"/>
                         <outlet property="emailTextField" destination="iMk-1D-VL5" id="s7l-2v-iUG"/>
                         <outlet property="passwordTextField" destination="Jbz-gH-b1u" id="Lni-Ww-nbg"/>
                         <outlet property="usernameTextField" destination="pja-Ch-czq" id="4JB-EC-rhi"/>
@@ -183,7 +189,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TW3-Ty-tXg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5421.739130434783" y="1399.5535714285713"/>
+            <point key="canvasLocation" x="-5477" y="1400"/>
         </scene>
         <!--Sign InVC-->
         <scene sceneID="Uu8-vr-JIP">
@@ -193,22 +199,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bdm-iq-AL8">
-                                <rect key="frame" x="159" y="176" width="97" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lrf-6o-Rml">
-                                <rect key="frame" x="159" y="218" width="97" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTV-Mb-3Vp">
-                                <rect key="frame" x="186" y="286" width="42" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Log in"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="n1c-ff-ugb">
+                                <rect key="frame" x="20" y="94" width="374" height="76"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bdm-iq-AL8">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="34"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lrf-6o-Rml">
+                                        <rect key="frame" x="0.0" y="42" width="374" height="34"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTV-Mb-3Vp">
+                                <rect key="frame" x="113.5" y="180" width="187" height="35"/>
+                                <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                <state key="normal" title="Log in">
+                                    <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                </state>
                                 <connections>
                                     <action selector="logIn:" destination="Jw5-xX-Z5i" eventType="touchUpInside" id="esh-6V-MP2"/>
                                 </connections>
@@ -222,28 +234,13 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TsM-yl-Mh4">
-                                <rect key="frame" x="138" y="752" width="138" height="35"/>
+                                <rect key="frame" x="138" y="707" width="138" height="35"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <state key="normal" title="Forgot password?"/>
                                 <connections>
                                     <action selector="forgotPassword:" destination="Jw5-xX-Z5i" eventType="touchUpInside" id="eEL-dq-0x7"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8nk-Yy-OJl">
-                                <rect key="frame" x="145" y="492" width="124" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Continue as guest"/>
-                                <connections>
-                                    <action selector="continueAsGuest:" destination="Jw5-xX-Z5i" eventType="touchUpInside" id="UHe-sS-yqj"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sign in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tAZ-6f-zBp">
-                                <rect key="frame" x="131" y="71" width="52" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="mPc-dW-ty2">
                                 <rect key="frame" x="84" y="797" width="246.5" height="35"/>
                                 <subviews>
@@ -263,20 +260,39 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8nk-Yy-OJl">
+                                <rect key="frame" x="138.5" y="752" width="137" height="35"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                <state key="normal" title="Continue as guest"/>
+                                <connections>
+                                    <action selector="continueAsGuest:" destination="Jw5-xX-Z5i" eventType="touchUpInside" id="UHe-sS-yqj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="Fc7-Kz-sbO" firstAttribute="bottom" secondItem="mPc-dW-ty2" secondAttribute="bottom" constant="30" id="Anz-jr-5o5"/>
+                            <constraint firstItem="n1c-ff-ugb" firstAttribute="leading" secondItem="Fc7-Kz-sbO" secondAttribute="leading" constant="20" id="FHW-vV-uUy"/>
+                            <constraint firstItem="eTV-Mb-3Vp" firstAttribute="centerX" secondItem="22t-jT-QIM" secondAttribute="centerX" id="I27-Ov-8nl"/>
+                            <constraint firstItem="mPc-dW-ty2" firstAttribute="top" secondItem="8nk-Yy-OJl" secondAttribute="bottom" constant="10" id="IGj-Np-5Di"/>
+                            <constraint firstItem="Fc7-Kz-sbO" firstAttribute="trailing" secondItem="n1c-ff-ugb" secondAttribute="trailing" constant="20" id="KXc-Hv-qmr"/>
                             <constraint firstItem="TsM-yl-Mh4" firstAttribute="centerX" secondItem="22t-jT-QIM" secondAttribute="centerX" id="Kgv-8b-ceU"/>
                             <constraint firstItem="mPc-dW-ty2" firstAttribute="centerX" secondItem="22t-jT-QIM" secondAttribute="centerX" id="Ncd-vV-ygu"/>
-                            <constraint firstItem="mPc-dW-ty2" firstAttribute="top" secondItem="TsM-yl-Mh4" secondAttribute="bottom" constant="10" id="o2N-8B-16B"/>
+                            <constraint firstItem="eTV-Mb-3Vp" firstAttribute="top" secondItem="n1c-ff-ugb" secondAttribute="bottom" constant="10" id="WHY-Ga-atq"/>
+                            <constraint firstItem="8nk-Yy-OJl" firstAttribute="centerX" secondItem="22t-jT-QIM" secondAttribute="centerX" id="aCn-7n-A1n"/>
+                            <constraint firstItem="eTV-Mb-3Vp" firstAttribute="width" secondItem="n1c-ff-ugb" secondAttribute="width" multiplier="1:2" id="bz2-1I-Yk2"/>
+                            <constraint firstItem="n1c-ff-ugb" firstAttribute="top" secondItem="Fc7-Kz-sbO" secondAttribute="top" constant="50" id="n3j-4c-QlR"/>
+                            <constraint firstItem="8nk-Yy-OJl" firstAttribute="top" secondItem="TsM-yl-Mh4" secondAttribute="bottom" constant="10" id="wC4-Cc-DI8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Fc7-Kz-sbO"/>
                     </view>
+                    <connections>
+                        <outlet property="logInOutlet" destination="eTV-Mb-3Vp" id="lyH-3X-Exj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zwy-7T-Rzv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4684" y="1412"/>
+            <point key="canvasLocation" x="-4654" y="1400"/>
         </scene>
         <!--Forgot PasswordVC-->
         <scene sceneID="h1k-Kb-3Id">
@@ -322,7 +338,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZzU-5S-rvH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3904.347826086957" y="1408.9285714285713"/>
+            <point key="canvasLocation" x="-3796" y="1400"/>
         </scene>
     </scenes>
     <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

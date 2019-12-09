@@ -9,11 +9,11 @@
 import UIKit
 
 class SignInVC: UIViewController {
-
+    @IBOutlet weak var logInOutlet: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        logInOutlet.border(cornerRadius: 15.0)
     }
     @IBAction func logIn(_ sender: Any) {
         // with email and password
