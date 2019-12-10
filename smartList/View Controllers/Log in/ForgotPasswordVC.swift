@@ -10,11 +10,13 @@ import UIKit
 
 class ForgotPasswordVC: UIViewController {
 
+    @IBOutlet weak var getPasswordOutlet: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        
+        getPasswordOutlet.border(cornerRadius: 15.0)
     }
+    
     @IBAction func back(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }

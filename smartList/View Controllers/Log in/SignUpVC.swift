@@ -12,6 +12,7 @@ import FirebaseAuth
 
 class SignUpVC: UIViewController {
     
+    @IBOutlet weak var googleCreateAccountOutlet: UIButton!
     @IBOutlet weak var createAccountOutlet: UIButton!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -22,6 +23,7 @@ class SignUpVC: UIViewController {
         super.viewDidLoad()
         db = Firestore.firestore()
         createAccountOutlet.border(cornerRadius: 15.0)
+        googleCreateAccountOutlet.border(cornerRadius: 15.0)
     }
     
     @IBAction func emailCreateAccount(_ sender: Any) {
