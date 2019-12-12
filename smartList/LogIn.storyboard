@@ -339,9 +339,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYC-xK-CJO">
-                                <rect key="frame" x="20" y="64" width="47" height="32"/>
+                                <rect key="frame" x="20" y="64" width="33" height="32"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                <state key="normal" title="Cancel">
+                                <state key="normal" title="Back">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -352,7 +352,7 @@
                                 <rect key="frame" x="20" y="106" width="374" height="34"/>
                                 <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -369,6 +369,7 @@
                         <viewLayoutGuide key="safeArea" id="l3L-rM-Czu"/>
                     </view>
                     <connections>
+                        <outlet property="emailTextField" destination="Y2i-db-Kcw" id="WP7-pd-cms"/>
                         <outlet property="getPasswordOutlet" destination="es2-sW-ce6" id="9JU-TE-Yzf"/>
                     </connections>
                 </viewController>

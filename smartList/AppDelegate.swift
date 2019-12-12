@@ -25,10 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         //let db = Firestore.firestore()
         if Auth.auth().currentUser != nil {
-//            let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//            let vc: TabVC = storyboard.instantiateViewController(withIdentifier: "tabVC") as! TabVC
-//            self.window?.rootViewController = vc
-//            self.window?.makeKeyAndVisible()
             SharedValues.shared.userID = Auth.auth().currentUser?.uid
             
             if Auth.auth().currentUser?.isAnonymous == true {
@@ -42,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let vc = sb.instantiateViewController(withIdentifier: "initialLogInVC") as! InitialLogInVC
             self.window?.rootViewController = vc
             self.window?.makeKeyAndVisible()
+            
         }
         return true
     }

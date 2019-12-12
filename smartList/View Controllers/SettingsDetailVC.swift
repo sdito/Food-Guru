@@ -190,9 +190,20 @@ class SettingsDetailVC: UIViewController {
     @objc private func logOut() {
         let alert = UIAlertController(title: "Are you sure you want to log out of your account?", message: nil, preferredStyle: .alert)
         alert.addAction(.init(title: "Log out", style: .destructive, handler: {(alert: UIAlertAction!) in
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "logIn") as! LogInVC
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
+//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "logIn") as! LogInVC
+//            vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: true, completion: nil)
+            do {
+                try Auth.auth().signOut()
+                let sb: UIStoryboard = UIStoryboard(name: "LogIn", bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: "initialLogInVC") as! InitialLogInVC
+                vc.modalPresentationStyle = .fullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                self.present(vc, animated: true, completion: nil)
+            } catch {
+                print(error)
+            }
+             
         }))
         alert.addAction(.init(title: "Back", style: .cancel, handler: nil))
         present(alert, animated: true)

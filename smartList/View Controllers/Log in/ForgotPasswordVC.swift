@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ForgotPasswordVC: UIViewController {
 
+    @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var getPasswordOutlet: UIButton!
     
     override func viewDidLoad() {
@@ -22,7 +24,23 @@ class ForgotPasswordVC: UIViewController {
     }
     
     @IBAction func initiatePasswordRecovery(_ sender: Any) {
-        print("Get the password back here")
+        getPasswordOutlet.isUserInteractionEnabled = false
+        print(emailTextField.text as Any)
+        if let email = emailTextField.text {
+            Auth.auth().sendPasswordReset(withEmail: email) { error in
+                if error == nil {
+                    self.dismiss(animated: true, completion: nil)
+                    self.getPasswordOutlet.isUserInteractionEnabled = true
+                    self.presentingViewController?.createMessageView(color: Colors.messageGreen, text: "Check your email!")
+                } else {
+                    print(error as Any)
+                    self.getPasswordOutlet.isUserInteractionEnabled = true
+                }
+            }
+        } else {
+            getPasswordOutlet.isUserInteractionEnabled = true
+        }
+        
     }
     
 
