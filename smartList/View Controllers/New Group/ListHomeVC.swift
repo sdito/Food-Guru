@@ -41,7 +41,7 @@ class ListHomeVC: UIViewController {
         tableView.delegate = self
         createObserver()
         db = Firestore.firestore()
-        GroceryList.readAllUserLists(db: db, userID: SharedValues.shared.userID!) { (dbLists) in
+        GroceryList.readAllUserLists(db: db, userID: SharedValues.shared.userID ?? " ") { (dbLists) in
             self.lists = dbLists
         }
         

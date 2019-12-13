@@ -46,6 +46,7 @@
 		E24ADB0C23399BD8008F2F9F /* ListHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADB0B23399BD8008F2F9F /* ListHomeCell.swift */; };
 		E24ADB0E233DB063008F2F9F /* SettingContactDeveloperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADB0D233DB063008F2F9F /* SettingContactDeveloperCell.swift */; };
 		E24ADB10233E7974008F2F9F /* UIViewController-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADB0F233E7974008F2F9F /* UIViewController-Extension.swift */; };
+		E252283223A34B220036F604 /* CreateDisplayNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E252283123A34B220036F604 /* CreateDisplayNameVC.swift */; };
 		E253AC042341B4460018274A /* RecipeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253AC032341B4460018274A /* RecipeDetailVC.swift */; };
 		E253AC06234315170018274A /* ButtonIngredientView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E253AC05234315170018274A /* ButtonIngredientView.xib */; };
 		E253AC08234315BB0018274A /* ButtonIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E253AC07234315BB0018274A /* ButtonIngredientView.swift */; };
@@ -176,6 +177,7 @@
 		E24ADB0B23399BD8008F2F9F /* ListHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHomeCell.swift; sourceTree = "<group>"; };
 		E24ADB0D233DB063008F2F9F /* SettingContactDeveloperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContactDeveloperCell.swift; sourceTree = "<group>"; };
 		E24ADB0F233E7974008F2F9F /* UIViewController-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController-Extension.swift"; sourceTree = "<group>"; };
+		E252283123A34B220036F604 /* CreateDisplayNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateDisplayNameVC.swift; sourceTree = "<group>"; };
 		E253AC032341B4460018274A /* RecipeDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailVC.swift; sourceTree = "<group>"; };
 		E253AC05234315170018274A /* ButtonIngredientView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ButtonIngredientView.xib; sourceTree = "<group>"; };
 		E253AC07234315BB0018274A /* ButtonIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonIngredientView.swift; sourceTree = "<group>"; };
@@ -545,6 +547,7 @@
 				E2C5EC38239A0A400030E3CD /* SignUpVC.swift */,
 				E2C5EC3A239A0A4B0030E3CD /* SignInVC.swift */,
 				E2BB81A4239A14C20038269F /* ForgotPasswordVC.swift */,
+				E252283123A34B220036F604 /* CreateDisplayNameVC.swift */,
 			);
 			path = "Log in";
 			sourceTree = "<group>";
@@ -913,6 +916,7 @@
 				E24ADB0A23386E69008F2F9F /* StorageNewItemVC.swift in Sources */,
 				E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */,
 				E2E6A19B2326FF6A00477AB1 /* FoodStorage.swift in Sources */,
+				E252283223A34B220036F604 /* CreateDisplayNameVC.swift in Sources */,
 				E2C49349230B45E4002907C2 /* CreateRecipeVC.swift in Sources */,
 				E2445CF02321D8EA0089582F /* ListHomeVC.swift in Sources */,
 				E2654C46237E654400BE7130 /* VisionDocumentText-Extension.swift in Sources */,

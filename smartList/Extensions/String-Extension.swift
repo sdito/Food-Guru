@@ -9,6 +9,14 @@
 import Foundation
 
 extension String {
+    
+    func getBeginningAddress() -> String {
+        guard let index = self.firstIndex(of: "@") else { return self }
+        let range = self.startIndex..<index
+        let str = String(self[range])
+        return str
+    }
+    
     static func randomString(length: Int) -> String {
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         return String((0..<length).map{ _ in letters.randomElement()! })

@@ -186,7 +186,7 @@ extension UIViewController {
         messageView.textColor = .white
         messageView.font = UIFont(name: "futura", size: 20)
         messageView.textAlignment = .center
-        messageView.frame = CGRect(x: 10, y: self.view.safeAreaInsets.top + 20, width: self.view.bounds.width - 20, height: 70)
+        messageView.frame = CGRect(x: 10, y: self.view.safeAreaInsets.top + 50, width: self.view.bounds.width - 20, height: 70)
         messageView.layer.cornerRadius = 15
         messageView.clipsToBounds = true
         messageView.isUserInteractionEnabled = true

@@ -16,7 +16,6 @@ class SignUpVC: UIViewController {
     @IBOutlet weak var createAccountOutlet: UIButton!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var usernameTextField: UITextField!
     var db: Firestore!
     
     override func viewDidLoad() {
@@ -36,8 +35,6 @@ class SignUpVC: UIViewController {
             guard error == nil else {
                 print("Account not created")
                 return
-                
-                
             }
             
             let docRef = self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")")
@@ -45,15 +42,13 @@ class SignUpVC: UIViewController {
             docRef.getDocument { (document, error) in
                 self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")").setData([
                 "email": authDataResult?.user.email as Any,
-                "uid": authDataResult?.user.uid as Any,
-                "name": authDataResult?.user.displayName as Any
+                "uid": authDataResult?.user.uid as Any
                 ])
             }
             SharedValues.shared.anonymousUser = false
             SharedValues.shared.userID = authDataResult?.user.uid
             
-            let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: "tabVC") as! TabVC
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "createUsernameVC") as! CreateDisplayNameVC
             vc.modalPresentationStyle = .fullScreen
             vc.modalTransitionStyle = .crossDissolve
             self.present(vc, animated: true, completion: nil)
@@ -65,6 +60,7 @@ class SignUpVC: UIViewController {
     }
     
     @IBAction func continueAsGuest(_ sender: Any) {
+        
     }
     
     @IBAction func signInAlreadyHaveAccount(_ sender: Any) {

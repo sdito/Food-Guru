@@ -11,6 +11,17 @@ import FirebaseFirestore
 import FirebaseAuth
 
 struct User {
+    
+    static func setDisplayNameInFirebaseDocument(db: Firestore, displayName: String) {
+        #warning("not tested yet")
+        if let uid = Auth.auth().currentUser?.uid {
+            let reference = db.collection("users").document(uid)
+            reference.updateData([
+                "name": displayName
+            ])
+        }
+    }
+    
     static func getNameFromUid(db: Firestore, uid: String, namereturned: @escaping (_ name: String?) -> Void) {
         var name: String?
         db.collection("users").document(uid).getDocument { (docSnapshot, error) in
