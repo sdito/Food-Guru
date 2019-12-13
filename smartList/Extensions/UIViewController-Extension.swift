@@ -20,6 +20,46 @@ extension UIViewController {
         }
         
     }
+    
+    func createLoadingView(cancelAction: Selector) {
+        #warning("not being used yet")
+        let vc = UIViewController()
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
+        view.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
+        view.backgroundColor = .black
+        view.alpha = 0.9
+        vc.view.insertSubview(view, at: 1)
+        
+        
+        let spinner = UIActivityIndicatorView(style: .whiteLarge)
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.startAnimating()
+        view.addSubview(spinner)
+        spinner.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor).isActive = true
+        spinner.centerYAnchor.constraint(equalTo: vc.view.centerYAnchor).isActive = true
+        
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Cancel", for: .normal)
+        button.setTitleColor(.red, for: .normal)
+        button.titleLabel?.font = UIFont(name: "futura", size: 17)
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            view.addSubview(button)
+            button.topAnchor.constraint(equalToSystemSpacingBelow: spinner.bottomAnchor, multiplier: 1.0).isActive = true
+            button.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor).isActive = true
+            button.addTarget(self, action: cancelAction, for: .touchUpInside)
+        }
+        
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: false)
+        
+        
+    }
+    
     func createRatingView(delegateVC: UIViewController) {
         let vc = UIViewController()
         let button = UIButton()
@@ -162,7 +202,6 @@ extension UIViewController {
             }) { (true) in
                 messageView.removeFromSuperview()
             }
-            
         }
         
         self.view.addSubview(messageView)

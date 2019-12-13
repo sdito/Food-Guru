@@ -29,11 +29,23 @@ class InitialLogInVC: UIViewController {
         #warning("would just log in right here")
     }
     @IBAction func logIn(_ sender: Any) {
-        print("Log in")
-        let vc = storyboard?.instantiateViewController(withIdentifier: "signInVC") as! SignInVC
-        vc.modalPresentationStyle = .fullScreen
-        vc.modalTransitionStyle = .crossDissolve
-        self.present(vc, animated: true, completion: nil)
+//        print("Log in")
+//        let vc = storyboard?.instantiateViewController(withIdentifier: "signInVC") as! SignInVC
+//        vc.modalPresentationStyle = .fullScreen
+//        vc.modalTransitionStyle = .crossDissolve
+//        self.present(vc, animated: true, completion: nil)
+        #warning("this was just for testing, put it back to the commented out code below")
+        self.createLoadingView(cancelAction: #selector(cancelTestRun))
+    }
+    
+    @objc func cancelTestRun() {
+        print("Cancel butotn pressed")
+        UIView.animate(withDuration: 0.3, animations: {
+            self.presentedViewController?.view.alpha = 0.0
+        }) { (true) in
+            self.dismiss(animated: false, completion: nil)
+        }
+        
     }
     
 }

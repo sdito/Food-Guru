@@ -27,8 +27,11 @@ class SignUpVC: UIViewController {
     }
     
     @IBAction func emailCreateAccount(_ sender: Any) {
+        
+        self.createLoadingView(cancelAction: #selector(cancelLoadingPopUp))
+        
         print("This is being pressed")
-        #warning("none of this works even a little bit yet")
+        #warning("none of this works yet")
         Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { (authDataResult, error) in
             guard error == nil else {
                 print("Account not created")
@@ -58,6 +61,7 @@ class SignUpVC: UIViewController {
     }
     
     @IBAction func googleCreateAccount(_ sender: Any) {
+        print("Google create account time")
     }
     
     @IBAction func continueAsGuest(_ sender: Any) {
@@ -68,5 +72,9 @@ class SignUpVC: UIViewController {
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc func cancelLoadingPopUp() {
+        print("cancel pressed")
     }
 }
