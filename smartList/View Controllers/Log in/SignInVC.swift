@@ -65,6 +65,32 @@ class SignInVC: UIViewController {
     
     @IBAction func continueAsGuest(_ sender: Any) {
         
+        print("CONTINUE FROM GUEST HERE")
+        
+        self.createLoadingView(cancelAction: #selector(cancelSelector))
+        Auth.auth().signInAnonymously { (authDataResult, error) in
+            if error == nil {
+                let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: "tabVC") as! TabVC
+                vc.modalPresentationStyle = .fullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                
+                if Auth.auth().currentUser != nil {
+                    SharedValues.shared.userID = Auth.auth().currentUser?.uid
+                    
+                    if Auth.auth().currentUser?.isAnonymous == true {
+                        SharedValues.shared.anonymousUser = true
+                    } else {
+                        SharedValues.shared.anonymousUser = false
+                    }
+                    
+                }
+                self.dismiss(animated: false, completion: nil)
+                self.present(vc, animated: true, completion: nil)
+            } else {
+                self.dismiss(animated: false, completion: nil)
+            }
+        }
     }
     
     @IBAction func forgotPassword(_ sender: Any) {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class InitialLogInVC: UIViewController {
 
@@ -25,8 +26,33 @@ class InitialLogInVC: UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
     @IBAction func continueAsGuest(_ sender: Any) {
-        print("Continue as guest")
-        #warning("would just log in right here")
+        #warning("need to test this code, also in other places")
+        self.createLoadingView(cancelAction: #selector(cancelLoadingPopUp))
+        Auth.auth().signInAnonymously { (authDataResult, error) in
+            if error == nil {
+                let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: "tabVC") as! TabVC
+                vc.modalPresentationStyle = .fullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                if Auth.auth().currentUser != nil {
+                    SharedValues.shared.userID = Auth.auth().currentUser?.uid
+                    
+                    if Auth.auth().currentUser?.isAnonymous == true {
+                        SharedValues.shared.anonymousUser = true
+                    } else {
+                        SharedValues.shared.anonymousUser = false
+                    }
+                    
+                }
+                self.dismiss(animated: false, completion: nil)
+                self.present(vc, animated: true, completion: nil)
+            } else {
+                self.dismiss(animated: false, completion: nil)
+                let alert = UIAlertController(title: "Error", message: "Unable to sign in anonymously", preferredStyle: .alert)
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true)
+            }
+        }
     }
     @IBAction func logIn(_ sender: Any) {
         print("Log in")
@@ -36,6 +62,9 @@ class InitialLogInVC: UIViewController {
         self.present(vc, animated: true, completion: nil)
         
     }
-
+    
+    @objc func cancelLoadingPopUp() {
+        print("cancel pressed")
+    }
     
 }

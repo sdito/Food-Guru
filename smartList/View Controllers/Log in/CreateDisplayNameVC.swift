@@ -22,19 +22,24 @@ class CreateDisplayNameVC: UIViewController {
         usernameTextField.text = Auth.auth().currentUser?.email?.getBeginningAddress()
     }
     
-    @IBAction func createUsername(_ sender: Any) {
-        self.createLoadingView(cancelAction: #selector(cancelSelector))
+    @IBAction func createUsername(_ sendrer: Any) {
         if let name = usernameTextField.text {
-            Auth.auth().currentUser?.createProfileChangeRequest().displayName = name
+            
+            let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+            changeRequest?.displayName = name
+            changeRequest?.commitChanges(completion: { (error) in
+                if let error = error {
+                    print(error)
+                }
+            })
+            
+            
             User.setDisplayNameInFirebaseDocument(db: db, displayName: name)
             let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "tabVC") as! TabVC
             vc.modalPresentationStyle = .fullScreen
             vc.modalTransitionStyle = .crossDissolve
-            self.dismiss(animated: false, completion: nil)
             self.present(vc, animated: true, completion: nil)
-        } else {
-            self.dismiss(animated: false, completion: nil)
         }
         
     }

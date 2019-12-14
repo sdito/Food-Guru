@@ -34,6 +34,12 @@ class SignUpVC: UIViewController {
         Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { (authDataResult, error) in
             guard error == nil else {
                 print("Account not created")
+                self.dismiss(animated: false, completion: nil)
+                
+                let alert = UIAlertController(title: "Error", message: error!.localizedDescription, preferredStyle: .alert)
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true)
+                
                 return
             }
             
@@ -48,9 +54,12 @@ class SignUpVC: UIViewController {
             SharedValues.shared.anonymousUser = false
             SharedValues.shared.userID = authDataResult?.user.uid
             
+            
+            
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "createUsernameVC") as! CreateDisplayNameVC
             vc.modalPresentationStyle = .fullScreen
             vc.modalTransitionStyle = .crossDissolve
+            self.dismiss(animated: false, completion: nil)
             self.present(vc, animated: true, completion: nil)
         }
     }
@@ -60,7 +69,32 @@ class SignUpVC: UIViewController {
     }
     
     @IBAction func continueAsGuest(_ sender: Any) {
-        
+        self.createLoadingView(cancelAction: #selector(cancelLoadingPopUp))
+        Auth.auth().signInAnonymously { (authDataResult, error) in
+            if error == nil {
+                let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = sb.instantiateViewController(withIdentifier: "tabVC") as! TabVC
+                vc.modalPresentationStyle = .fullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                if Auth.auth().currentUser != nil {
+                    SharedValues.shared.userID = Auth.auth().currentUser?.uid
+                    
+                    if Auth.auth().currentUser?.isAnonymous == true {
+                        SharedValues.shared.anonymousUser = true
+                    } else {
+                        SharedValues.shared.anonymousUser = false
+                    }
+                    
+                }
+                self.dismiss(animated: false, completion: nil)
+                self.present(vc, animated: true, completion: nil)
+            } else {
+                self.dismiss(animated: false, completion: nil)
+                let alert = UIAlertController(title: "Error", message: "Unable to sign in anonymously", preferredStyle: .alert)
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true)
+            }
+        }
     }
     
     @IBAction func signInAlreadyHaveAccount(_ sender: Any) {
@@ -69,6 +103,8 @@ class SignUpVC: UIViewController {
         vc.modalTransitionStyle = .crossDissolve
         self.present(vc, animated: true, completion: nil)
     }
+    
+    
     
     @objc func cancelLoadingPopUp() {
         print("cancel pressed")
