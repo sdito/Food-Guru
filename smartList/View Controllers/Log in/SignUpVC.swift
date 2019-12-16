@@ -25,46 +25,49 @@ class SignUpVC: UIViewController {
         createAccountOutlet.border(cornerRadius: 15.0)
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance()?.presentingViewController = self
+        User.resetSharedValues()
+        
+        
+        print("\(String(describing: Auth.auth().currentUser?.isAnonymous)) is if the current user is anonymous")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         GIDSignIn.sharedInstance()?.delegate = nil
     }
     
+    
     @IBAction func emailCreateAccount(_ sender: Any) {
-        
+        let isAnonymousAccount = Auth.auth().currentUser?.isAnonymous
         self.createLoadingView(cancelAction: #selector(cancelLoadingPopUp))
-        Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { (authDataResult, error) in
-            guard error == nil else {
-                print("Account not created")
-                self.dismiss(animated: false, completion: nil)
+        if isAnonymousAccount != true {
+            Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { (authDataResult, error) in
+                guard error == nil else {
+                    print("Account not created")
+                    self.dismiss(animated: false, completion: nil)
+                    
+                    let alert = UIAlertController(title: "Error", message: error!.localizedDescription, preferredStyle: .alert)
+                    alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                    
+                    return
+                }
                 
-                let alert = UIAlertController(title: "Error", message: error!.localizedDescription, preferredStyle: .alert)
-                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true)
-                
-                return
+                self.handleNewEmailAccount(authDataResult: authDataResult)
             }
-            
-            let docRef = self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")")
-            
-            docRef.getDocument { (document, error) in
-                self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")").setData([
-                "email": authDataResult?.user.email as Any,
-                "uid": authDataResult?.user.uid as Any
-                ])
-            }
-            SharedValues.shared.anonymousUser = false
-            SharedValues.shared.userID = authDataResult?.user.uid
-            
-            
-            
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "createUsernameVC") as! CreateDisplayNameVC
-            vc.modalPresentationStyle = .fullScreen
-            vc.modalTransitionStyle = .crossDissolve
-            self.dismiss(animated: false, completion: nil)
-            self.present(vc, animated: true, completion: nil)
+        } else {
+            //Need to handle the linking of the accounts (for emails here), can guarantee that this is a new account unlike for google sign in
+            #error("need to handle google account linking")
+            let emailCredential = EmailAuthProvider.credential(withEmail: emailTextField.text!, password: passwordTextField.text!)
+            Auth.auth().currentUser?.link(with: emailCredential, completion: { (authDataResult, error) in
+                if error == nil {
+                    self.handleNewEmailAccount(authDataResult: authDataResult)
+                } else {
+                    self.dismiss(animated: false, completion: nil)
+                    print(error?.localizedDescription as Any)
+                }
+            })
         }
+        
     }
     
     
@@ -108,6 +111,26 @@ class SignUpVC: UIViewController {
     
     @objc func cancelLoadingPopUp() {
         print("cancel pressed")
+    }
+    
+    private func handleNewEmailAccount(authDataResult: AuthDataResult?) {
+        let docRef = self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")")
+        docRef.getDocument { (document, error) in
+            self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")").setData([
+            "email": authDataResult?.user.email as Any,
+            "uid": authDataResult?.user.uid as Any
+            ])
+        }
+        SharedValues.shared.anonymousUser = false
+        SharedValues.shared.userID = authDataResult?.user.uid
+        
+        
+        
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "createUsernameVC") as! CreateDisplayNameVC
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        self.dismiss(animated: false, completion: nil)
+        self.present(vc, animated: true, completion: nil)
     }
     
 }

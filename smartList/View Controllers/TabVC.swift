@@ -8,14 +8,16 @@
 
 import UIKit
 import FirebaseFirestore
+import FirebaseAuth
+
 
 class TabVC: UITabBarController {
     var db: Firestore!
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
+        User.writeNewUserDocumentIfApplicable(db: db)
         User.setAndPersistGroupDataInSharedValues(db: db)
-        
         
         
     }

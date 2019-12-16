@@ -20,7 +20,7 @@ class SignInVC: UIViewController {
         logInOutlet.border(cornerRadius: 15.0)
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance()?.presentingViewController = self
-        
+        User.resetSharedValues()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -121,10 +121,11 @@ class SignInVC: UIViewController {
 }
 
 
+
+
 extension SignInVC: GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
         self.createLoadingView(cancelAction: #selector(cancelSelector))
-        // ...
         if let error = error {
             print("Error signing in with google account: \(error.localizedDescription)")
             self.dismiss(animated: false, completion: nil)

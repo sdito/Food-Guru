@@ -10,6 +10,16 @@ import Foundation
 import FirebaseCore
 import FirebaseFirestore
 
+
+
+
+
+/// Each time a value is added, need to set it to nil in User.resetSharedValues()
+
+
+
+
+
 class SharedValues {
     //var currentCategory: String = ""
     var listIdentifier: DocumentReference?
@@ -48,5 +58,8 @@ class SharedValues {
     var anonymousUser: Bool?
     
     static let shared = SharedValues()
+    
+    
+    
     private init() {}
 }

@@ -180,9 +180,8 @@ class SettingsDetailVC: UIViewController {
     
     @objc private func createAccountFromAnonymous() {
         print("Create account from anonymous")
-        #warning("need to implement this function/need to figure out how to do the linking of the account")
         let sb: UIStoryboard = UIStoryboard(name: "LogIn", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "initialLogInVC") as! InitialLogInVC
+        let vc = sb.instantiateViewController(withIdentifier: "signUpVC") as! SignUpVC
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
@@ -190,9 +189,6 @@ class SettingsDetailVC: UIViewController {
     @objc private func logOut() {
         let alert = UIAlertController(title: "Are you sure you want to log out of your account?", message: nil, preferredStyle: .alert)
         alert.addAction(.init(title: "Log out", style: .destructive, handler: {(alert: UIAlertAction!) in
-//            let vc = self.storyboard?.instantiateViewController(withIdentifier: "logIn") as! LogInVC
-//            vc.modalPresentationStyle = .fullScreen
-//            self.present(vc, animated: true, completion: nil)
             do {
                 try Auth.auth().signOut()
                 let sb: UIStoryboard = UIStoryboard(name: "LogIn", bundle: nil)
@@ -200,6 +196,7 @@ class SettingsDetailVC: UIViewController {
                 vc.modalPresentationStyle = .fullScreen
                 vc.modalTransitionStyle = .crossDissolve
                 self.present(vc, animated: true, completion: nil)
+                
             } catch {
                 print(error)
             }

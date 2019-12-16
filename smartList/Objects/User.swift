@@ -12,6 +12,21 @@ import FirebaseAuth
 
 struct User {
     
+    static func writeNewUserDocumentIfApplicable(db: Firestore) {
+        if let uid = Auth.auth().currentUser?.uid {
+            let reference = db.collection("users").document(uid)
+            reference.getDocument { (documentSnapshot, error) in
+                if documentSnapshot?.exists == false {
+                    reference.setData([
+                        "uid": uid,
+                        "email": Auth.auth().currentUser?.email as Any,
+                        "name": Auth.auth().currentUser?.displayName as Any
+                    ])
+                }
+            }
+        }
+    }
+    
     static func setDisplayNameInFirebaseDocument(db: Firestore, displayName: String) {
         #warning("not tested yet")
         if let uid = Auth.auth().currentUser?.uid {
@@ -328,7 +343,7 @@ struct User {
         }
     }
     
-    static func writeAnonymousUser(db: Firestore, userID: String) {        
+    static func writeAnonymousUser(db: Firestore, userID: String) {
         let reference = db.collection("users").document(userID)
         reference.setData([
             "uid": userID
@@ -336,7 +351,23 @@ struct User {
         
     }
     
-    
+    static func resetSharedValues() {
+        SharedValues.shared.listIdentifier = nil
+        SharedValues.shared.userID = nil
+        SharedValues.shared.recipeType = nil
+        SharedValues.shared.cuisineType = nil
+        SharedValues.shared.currText = nil
+        SharedValues.shared.groupID = nil
+        SharedValues.shared.groupEmails = nil
+        SharedValues.shared.groupDate = nil
+        SharedValues.shared.foodStorageEmails = nil
+        SharedValues.shared.savedRecipes = nil
+        SharedValues.shared.foodStorageID = nil
+        SharedValues.shared.sentRecipesInfo = nil
+        SharedValues.shared.currentItemsInStorage = nil
+        SharedValues.shared.anonymousUser = nil
+        
+    }
     
     
     
