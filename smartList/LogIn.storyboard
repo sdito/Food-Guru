@@ -111,17 +111,6 @@
                                     </textField>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8YH-Ko-Gjj">
-                                <rect key="frame" x="43.5" y="315" width="327" height="35"/>
-                                <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                <state key="normal" title="Create account with Google">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="googleCreateAccount:" destination="ESS-79-oPP" eventType="touchUpInside" id="nSk-8O-EPA"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqM-uy-biH">
                                 <rect key="frame" x="43.5" y="180" width="327" height="35"/>
                                 <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -164,6 +153,14 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="APV-2Z-Ybd" customClass="GIDSignInButton">
+                                <rect key="frame" x="157" y="315" width="100" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="JtX-4v-vah"/>
+                                    <constraint firstAttribute="height" constant="50" id="ZAW-fq-hyN"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -171,22 +168,20 @@
                             <constraint firstItem="ZNh-I2-QYM" firstAttribute="leading" secondItem="KsI-8C-uNV" secondAttribute="leading" constant="20" id="7ii-FS-A5B"/>
                             <constraint firstItem="zqM-uy-biH" firstAttribute="width" secondItem="ZNh-I2-QYM" secondAttribute="width" multiplier="7:8" id="9ty-Ts-v8H"/>
                             <constraint firstItem="zqM-uy-biH" firstAttribute="centerX" secondItem="KLl-UG-GbU" secondAttribute="centerX" id="HpH-HP-O5U"/>
-                            <constraint firstItem="8YH-Ko-Gjj" firstAttribute="width" secondItem="ZNh-I2-QYM" secondAttribute="width" multiplier="7:8" id="JVd-VR-s1m"/>
-                            <constraint firstItem="8YH-Ko-Gjj" firstAttribute="centerX" secondItem="KLl-UG-GbU" secondAttribute="centerX" id="MtK-Xc-zPI"/>
-                            <constraint firstItem="8YH-Ko-Gjj" firstAttribute="top" secondItem="zqM-uy-biH" secondAttribute="bottom" constant="100" id="NOD-d9-C2U"/>
                             <constraint firstItem="XXQ-4M-Yx5" firstAttribute="centerX" secondItem="KLl-UG-GbU" secondAttribute="centerX" id="OT4-nv-Xra"/>
+                            <constraint firstItem="APV-2Z-Ybd" firstAttribute="centerX" secondItem="KLl-UG-GbU" secondAttribute="centerX" id="Pf5-mA-Yps"/>
                             <constraint firstItem="KsI-8C-uNV" firstAttribute="trailing" secondItem="ZNh-I2-QYM" secondAttribute="trailing" constant="20" id="b5V-dd-v4j"/>
                             <constraint firstItem="8kQ-G8-9Fz" firstAttribute="centerX" secondItem="KLl-UG-GbU" secondAttribute="centerX" id="ceP-xl-bKk"/>
                             <constraint firstItem="ZNh-I2-QYM" firstAttribute="top" secondItem="KsI-8C-uNV" secondAttribute="top" constant="50" id="nFD-sY-DZq"/>
                             <constraint firstItem="XXQ-4M-Yx5" firstAttribute="top" secondItem="8kQ-G8-9Fz" secondAttribute="bottom" constant="10" id="pFh-Vh-3xr"/>
                             <constraint firstItem="KsI-8C-uNV" firstAttribute="bottom" secondItem="XXQ-4M-Yx5" secondAttribute="bottom" constant="30" id="umW-fF-cGq"/>
+                            <constraint firstItem="APV-2Z-Ybd" firstAttribute="top" secondItem="zqM-uy-biH" secondAttribute="bottom" constant="100" id="yMn-Zg-cH3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="KsI-8C-uNV"/>
                     </view>
                     <connections>
                         <outlet property="createAccountOutlet" destination="zqM-uy-biH" id="Ln6-qH-OrC"/>
                         <outlet property="emailTextField" destination="iMk-1D-VL5" id="s7l-2v-iUG"/>
-                        <outlet property="googleCreateAccountOutlet" destination="8YH-Ko-Gjj" id="KUx-dK-sOU"/>
                         <outlet property="passwordTextField" destination="Jbz-gH-b1u" id="Lni-Ww-nbg"/>
                     </connections>
                 </viewController>
@@ -276,17 +271,6 @@
                                     <action selector="logIn:" destination="Jw5-xX-Z5i" eventType="touchUpInside" id="esh-6V-MP2"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="891-4a-TKy">
-                                <rect key="frame" x="43.5" y="315" width="327" height="35"/>
-                                <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                <state key="normal" title="Log in with Google">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="logInWithGoogle:" destination="Jw5-xX-Z5i" eventType="touchUpInside" id="jUL-Rw-bIF"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TsM-yl-Mh4">
                                 <rect key="frame" x="146" y="716" width="122" height="32"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
@@ -328,10 +312,18 @@
                                     <action selector="continueAsGuest:" destination="Jw5-xX-Z5i" eventType="touchUpInside" id="UHe-sS-yqj"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DkX-Bh-D4m" customClass="GIDSignInButton">
+                                <rect key="frame" x="157" y="315" width="100" height="50"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="3hE-58-DeU"/>
+                                    <constraint firstAttribute="width" constant="100" id="T0a-UO-9cY"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="891-4a-TKy" firstAttribute="top" secondItem="eTV-Mb-3Vp" secondAttribute="bottom" constant="100" id="6lH-Ji-egs"/>
+                            <constraint firstItem="DkX-Bh-D4m" firstAttribute="centerX" secondItem="22t-jT-QIM" secondAttribute="centerX" id="0lA-ng-Rqe"/>
                             <constraint firstItem="Fc7-Kz-sbO" firstAttribute="bottom" secondItem="mPc-dW-ty2" secondAttribute="bottom" constant="30" id="Anz-jr-5o5"/>
                             <constraint firstItem="n1c-ff-ugb" firstAttribute="leading" secondItem="Fc7-Kz-sbO" secondAttribute="leading" constant="20" id="FHW-vV-uUy"/>
                             <constraint firstItem="eTV-Mb-3Vp" firstAttribute="centerX" secondItem="22t-jT-QIM" secondAttribute="centerX" id="I27-Ov-8nl"/>
@@ -341,9 +333,8 @@
                             <constraint firstItem="mPc-dW-ty2" firstAttribute="centerX" secondItem="22t-jT-QIM" secondAttribute="centerX" id="Ncd-vV-ygu"/>
                             <constraint firstItem="eTV-Mb-3Vp" firstAttribute="top" secondItem="n1c-ff-ugb" secondAttribute="bottom" constant="10" id="WHY-Ga-atq"/>
                             <constraint firstItem="8nk-Yy-OJl" firstAttribute="centerX" secondItem="22t-jT-QIM" secondAttribute="centerX" id="aCn-7n-A1n"/>
+                            <constraint firstItem="DkX-Bh-D4m" firstAttribute="top" secondItem="eTV-Mb-3Vp" secondAttribute="bottom" constant="100" id="bKw-Q1-rxT"/>
                             <constraint firstItem="eTV-Mb-3Vp" firstAttribute="width" secondItem="n1c-ff-ugb" secondAttribute="width" multiplier="7:8" id="bz2-1I-Yk2"/>
-                            <constraint firstItem="891-4a-TKy" firstAttribute="centerX" secondItem="22t-jT-QIM" secondAttribute="centerX" id="iTY-F7-3C6"/>
-                            <constraint firstItem="891-4a-TKy" firstAttribute="width" secondItem="n1c-ff-ugb" secondAttribute="width" multiplier="7:8" id="kyt-KO-1Mx"/>
                             <constraint firstItem="n1c-ff-ugb" firstAttribute="top" secondItem="Fc7-Kz-sbO" secondAttribute="top" constant="50" id="n3j-4c-QlR"/>
                             <constraint firstItem="8nk-Yy-OJl" firstAttribute="top" secondItem="TsM-yl-Mh4" secondAttribute="bottom" constant="10" id="wC4-Cc-DI8"/>
                         </constraints>
@@ -351,7 +342,6 @@
                     </view>
                     <connections>
                         <outlet property="emailTextField" destination="Bdm-iq-AL8" id="EUq-ja-eR2"/>
-                        <outlet property="googleLogInOutlet" destination="891-4a-TKy" id="lR6-2e-Hcd"/>
                         <outlet property="logInOutlet" destination="eTV-Mb-3Vp" id="lyH-3X-Exj"/>
                         <outlet property="passwordTextField" destination="lrf-6o-Rml" id="Vmr-tn-Pmz"/>
                     </connections>

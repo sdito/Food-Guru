@@ -12,6 +12,7 @@ import UIKit
 import FirebaseFirestore
 import FirebaseUI
 import Firebase
+import GoogleSignIn
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+//        GIDSignIn.sharedInstance().delegate = self as? GIDSignInDelegate
         //let db = Firestore.firestore()
         if Auth.auth().currentUser != nil {
             SharedValues.shared.userID = Auth.auth().currentUser?.uid
