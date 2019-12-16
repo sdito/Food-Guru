@@ -28,7 +28,6 @@ struct User {
     }
     
     static func setDisplayNameInFirebaseDocument(db: Firestore, displayName: String) {
-        #warning("not tested yet")
         if let uid = Auth.auth().currentUser?.uid {
             let reference = db.collection("users").document(uid)
             reference.updateData([

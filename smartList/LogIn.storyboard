@@ -198,13 +198,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Create display name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pad-dE-wlg">
-                                <rect key="frame" x="20" y="94" width="374" height="34"/>
+                                <rect key="frame" x="20" y="106" width="374" height="34"/>
                                 <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UMd-XY-U9h">
-                                <rect key="frame" x="43.5" y="158" width="327" height="35"/>
+                                <rect key="frame" x="43.5" y="170" width="327" height="35"/>
                                 <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <state key="normal" title="Create username">
@@ -214,19 +214,32 @@
                                     <action selector="createUsername:" destination="irE-Pg-TQa" eventType="touchUpInside" id="e5G-6S-nJW"/>
                                 </connections>
                             </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iIV-3P-PX4">
+                                <rect key="frame" x="20" y="64" width="47" height="32"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="backPressed:" destination="irE-Pg-TQa" eventType="touchUpInside" id="oQG-4J-os8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Sml-6h-eQ4" firstAttribute="trailing" secondItem="Pad-dE-wlg" secondAttribute="trailing" constant="20" id="FZr-9y-0OF"/>
                             <constraint firstItem="UMd-XY-U9h" firstAttribute="centerX" secondItem="Ica-KC-aec" secondAttribute="centerX" id="Iu1-tN-6ev"/>
-                            <constraint firstItem="Pad-dE-wlg" firstAttribute="top" secondItem="Sml-6h-eQ4" secondAttribute="top" constant="50" id="Mh6-R4-YmL"/>
                             <constraint firstItem="UMd-XY-U9h" firstAttribute="top" secondItem="Pad-dE-wlg" secondAttribute="bottom" constant="30" id="NKt-vK-BgA"/>
                             <constraint firstItem="Pad-dE-wlg" firstAttribute="leading" secondItem="Sml-6h-eQ4" secondAttribute="leading" constant="20" id="XUc-E5-18U"/>
+                            <constraint firstItem="iIV-3P-PX4" firstAttribute="leading" secondItem="Sml-6h-eQ4" secondAttribute="leading" constant="20" id="gph-OX-VoI"/>
+                            <constraint firstItem="iIV-3P-PX4" firstAttribute="top" secondItem="Sml-6h-eQ4" secondAttribute="top" constant="20" id="l4n-ex-FHf"/>
                             <constraint firstItem="UMd-XY-U9h" firstAttribute="width" secondItem="Pad-dE-wlg" secondAttribute="width" multiplier="7:8" id="qNw-u1-B0W"/>
+                            <constraint firstItem="Pad-dE-wlg" firstAttribute="top" secondItem="iIV-3P-PX4" secondAttribute="bottom" constant="10" id="yBZ-y0-7CT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Sml-6h-eQ4"/>
                     </view>
                     <connections>
+                        <outlet property="backOutlet" destination="iIV-3P-PX4" id="A9c-G5-Gxs"/>
                         <outlet property="createUsernameOutlet" destination="UMd-XY-U9h" id="UAJ-rN-MOJ"/>
                         <outlet property="usernameTextField" destination="Pad-dE-wlg" id="DQa-OL-yPr"/>
                     </connections>

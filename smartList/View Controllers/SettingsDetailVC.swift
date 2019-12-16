@@ -25,6 +25,7 @@ class SettingsDetailVC: UIViewController {
         self.title = setting?.description()
     }
     
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -38,13 +39,17 @@ class SettingsDetailVC: UIViewController {
         case .account:
             if SharedValues.shared.anonymousUser == false {
                 let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
-                cell1.setUI(str: Auth.auth().currentUser?.email ?? "No user email")
+                cell1.setUI(str: "Email: \(Auth.auth().currentUser?.email ?? "N/A")" )
                 let cell2 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
-                cell2.setUI(str: Auth.auth().currentUser?.displayName ?? "No display name")
+                cell2.setUI(str: "Name: \(Auth.auth().currentUser?.displayName ?? "N/A")" )
                 let cell3 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
                 cell3.setUI(title: "Log out of account")
                 cell3.button.addTarget(self, action: #selector(logOut), for: .touchUpInside)
-                return [cell1, cell2, cell3]
+                let cell4 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                cell4.button.addTarget(self, action: #selector(changeUsername), for: .touchUpInside)
+                cell4.setUI(title: "Change display name")
+                
+                return [cell1, cell2, cell3, cell4]
             } else {
                 let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
                 cell1.setUI(str: "Create a free account to unlock all the features in the application and to secure your data.")
@@ -184,6 +189,17 @@ class SettingsDetailVC: UIViewController {
         let vc = sb.instantiateViewController(withIdentifier: "signUpVC") as! SignUpVC
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
+    }
+    @objc private func changeUsername() {
+        print("Change the username from here")
+        let sb: UIStoryboard = UIStoryboard(name: "LogIn", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "createUsernameVC") as! CreateDisplayNameVC
+//        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+        vc.backOutlet.isHidden = false
+        vc.forChange = true
+        vc.createUsernameOutlet.setTitle("Change username", for: .normal)
+//        #error("need to reload the table view once the display name is changed")
     }
     
     @objc private func logOut() {
