@@ -32,6 +32,13 @@ class SettingsDetailVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         tableView.reloadData()
+        
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        print("View did dissapear")
+        SharedValues.shared.newUsername = nil
     }
     
     private func returnCells(setting: Setting.SettingName, db: Firestore!) -> [UITableViewCell] {
@@ -41,7 +48,14 @@ class SettingsDetailVC: UIViewController {
                 let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
                 cell1.setUI(str: "Email: \(Auth.auth().currentUser?.email ?? "N/A")" )
                 let cell2 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
-                cell2.setUI(str: "Name: \(Auth.auth().currentUser?.displayName ?? "N/A")" )
+                var name: String {
+                    if SharedValues.shared.newUsername != nil {
+                        return SharedValues.shared.newUsername!
+                    } else {
+                        return Auth.auth().currentUser?.displayName ?? "N/A"
+                    }
+                }
+                cell2.setUI(str: "Name: \(name)")
                 let cell3 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
                 cell3.setUI(title: "Log out of account")
                 cell3.button.addTarget(self, action: #selector(logOut), for: .touchUpInside)
@@ -180,8 +194,6 @@ class SettingsDetailVC: UIViewController {
     @objc func observerSelectorGroupID() {
         tableView.reloadData()
     }
-    
-    
     
     @objc private func createAccountFromAnonymous() {
         print("Create account from anonymous")

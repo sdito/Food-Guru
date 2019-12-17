@@ -57,6 +57,8 @@ class SharedValues {
     
     var anonymousUser: Bool?
     
+    var newUsername: String?
+    
     static let shared = SharedValues()
     
     

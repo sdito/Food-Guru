@@ -49,9 +49,12 @@ class CreateDisplayNameVC: UIViewController {
                 vc.modalTransitionStyle = .crossDissolve
                 self.present(vc, animated: true, completion: nil)
             } else {
+                SharedValues.shared.newUsername = name
                 self.dismiss(animated: true, completion: nil)
-                self.presentingViewController?.createMessageView(color: Colors.messageGreen, text: "Welcome \(name)")
-                #error("left off here, need to reload settings when display name is changed")
+                //self.presentingViewController?.createMessageView(color: Colors.messageGreen, text: "Welcome \(name)")
+                //NotificationCenter.default.post(name: .needToUpdateSettingsDetailUI, object: nil)
+                
+//                #error("left off here, need to reload settings when display name is changed")
             }
             
         }
