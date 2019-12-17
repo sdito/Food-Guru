@@ -340,7 +340,91 @@ extension Sequence where Element == String {
         return self.filter({$0 != ""})
     }
     
-
+    mutating func changeRecipeIngredientScale(ratio: (Int, Int)) -> [String] {
+        var newItems: [String] = []
+        for item in self {
+            var runningAmount: (Int, Int) = (0,0)
+            // need to isolate the number part
+            
+            let idx = item.firstIndex{$0.isLetter || $0 == "("}
+            if let idx = idx {
+                let str = String(item[item.startIndex..<idx])
+                let nums = str.split(separator: " ").map({String($0)})
+                for num in nums {
+                    if num.contains("/") {
+                        let parts = num.split(separator: "/").map({String($0)})
+                        if parts.count != 2 {
+                            print("Too many numbers")
+                        } else {
+                            if let n = Int(parts[0]), let d = Int(parts[1]) {
+                                
+                                if runningAmount == (0,0) {
+                                    runningAmount.0 = n
+                                    runningAmount.1 = d
+                                } else {
+                                    let newDenominator = d * runningAmount.1
+                                    let oldToNew = runningAmount.0 * d
+                                    let newToNew = n * runningAmount.1
+                                    let newNumerator = oldToNew + newToNew
+                                    runningAmount.0 = newNumerator
+                                    runningAmount.1 = newDenominator
+                                }
+                            }
+                        }
+                    } else {
+                        if let number = Int(String(num)) {
+                            if runningAmount == (0,0) {
+                                runningAmount.0 = number
+                                runningAmount.1 = 1
+                            } else {
+                                runningAmount.0 += (number * runningAmount.1)
+                            }
+                        } else {
+                            print("Unable to cast to number")
+                        }
+                    }
+                }
+                
+                var newRatio = (runningAmount.0 * ratio.0, runningAmount.1 * ratio.1)
+                
+                for n in (2...10).reversed() {
+                    if (newRatio.0 % n == 0) && (newRatio.1 % n == 0) {
+                        newRatio.0 = newRatio.0 / n
+                        newRatio.1 = newRatio.1 / n
+                    }
+                }
+                // now with the new ratio, need to have the number in the string format
+                // parts would be the whole number, and the remainder in a fraction
+                var measurement: String {
+                    if newRatio.1 == 1 {
+                        return "\(newRatio.0)"
+                    } else if newRatio.0 == newRatio.1 {
+                        return "1"
+                    } else if newRatio.0 > newRatio.1 {
+                        let whole = newRatio.0 / newRatio.1
+                        let remainder = newRatio.0 % newRatio.1
+                        if remainder == 0 {
+                            return "\(whole)"
+                        } else {
+                            return "\(whole) \(remainder)/\(newRatio.1)"
+                        }
+                    } else if newRatio.0 < newRatio.1 {
+                        return "\(newRatio.0)/\(newRatio.1)"
+                    } else {
+                        return ""
+                    }
+                }
+                
+                
+                
+                let range = item.startIndex..<idx
+                let newString = item.replacingCharacters(in: range, with: "\(measurement) ")
+                newItems.append(newString)
+                
+            }
+        }
+        return newItems
+    }
 }
 
 

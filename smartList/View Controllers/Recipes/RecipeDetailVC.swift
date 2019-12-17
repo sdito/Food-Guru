@@ -14,6 +14,8 @@ import FirebaseStorage
 class RecipeDetailVC: UIViewController {
     var db: Firestore!
     private var itemsAddedToList: Set<String>? = [""]
+    private var recipeSliderScaleMax = 4
+    
     @IBOutlet weak var wholeSV: UIStackView!
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -44,9 +46,12 @@ class RecipeDetailVC: UIViewController {
     @IBOutlet weak var cookSV: UIStackView!
     @IBOutlet weak var servingsSV: UIStackView!
     @IBOutlet weak var caloriesSV: UIStackView!
+    @IBOutlet weak var scaleSV: UIStackView!
     
     @IBOutlet var viewsToRemoveForCookbook: [UIView]!
     
+    #warning("just added slider, make sure its being used")
+    @IBOutlet weak var scaleSlider: UISlider!
     
     var data: (image: UIImage, recipe: Recipe)?
     var cookbookRecipe: CookbookRecipe?
@@ -144,7 +149,29 @@ class RecipeDetailVC: UIViewController {
         
     }
     
+    #warning("make sure this is being used")
+    @IBAction func scaleSlider(_ sender: Any) {
+        let value = scaleSlider.value.rounded()
+        print(value)
+        #error("left off around here, slider doesnt work properly")
+        //let newIngredients = data?.recipe.ingredients.changeRecipeIngredientScale(ratio: (Int(value), data?.recipe.numServes ?? 1))
+        //print(newIngredients)
+//        if let ings = newIngredients {
+//            ingredientsStackView.subviews.forEach { (vw) in
+//                if type(of: vw) == ButtonIngredientView.self {
+//                    vw.removeFromSuperview()
+//                }
+//            }
+//            data?.recipe.ingredients = ings
+//            data?.recipe.addButtonIngredientViewsTo(stackView: ingredientsStackView, delegateVC: self)
+//        }
+        
+        
+    }
     
+    @IBAction func editingOnSliderDone(_ sender: Any) {
+        print("Editing on slider done")
+    }
     
     
     @IBAction func downloadRecipe(_ sender: Any) {
@@ -212,8 +239,12 @@ class RecipeDetailVC: UIViewController {
         
         if let s = recipe.servings.value {
             servings.text = "\(s)"
+            scaleSlider.minimumValue = 1.0
+            scaleSlider.maximumValue = Float(s * recipeSliderScaleMax)
+            scaleSlider.value = Float(s)
         } else {
             servingsSV.removeFromSuperview()
+            scaleSV.removeFromSuperview()
         }
         
         if let c = recipe.calories.value {
@@ -251,6 +282,11 @@ class RecipeDetailVC: UIViewController {
         cookTime.text = "\(recipe.cookTime) m"
         servings.text = "\(recipe.numServes)"
         calories.text = "\(recipe.calories!)"
+        
+        scaleSlider.minimumValue = 1
+        scaleSlider.maximumValue = Float(recipe.numServes * recipeSliderScaleMax)
+        scaleSlider.value = Float(recipe.numServes)
+        
         if let n = recipe.notes {
             if n != "" {
                 notes.text = "Notes: \(n)"
