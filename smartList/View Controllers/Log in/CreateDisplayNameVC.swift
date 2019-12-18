@@ -69,7 +69,4 @@ class CreateDisplayNameVC: UIViewController {
         }
     }
     
-    @objc func cancelSelector() {
-        #warning("not implemented")
-    }
 }

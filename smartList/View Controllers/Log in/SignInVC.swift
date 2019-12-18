@@ -33,7 +33,7 @@ class SignInVC: UIViewController {
         
         if let email = emailTextField.text, let password = passwordTextField.text {
             if email != "" && password != "" {
-                self.createLoadingView(cancelAction: #selector(cancelSelector))
+                self.createLoadingView()
                 Auth.auth().signIn(withEmail: email, password: password) { (authDataResult, error) in
                     if error != nil {
                         print("There is an error: \(error?.localizedDescription ?? "unknown error")")
@@ -75,7 +75,7 @@ class SignInVC: UIViewController {
         
         print("CONTINUE FROM GUEST HERE")
         
-        self.createLoadingView(cancelAction: #selector(cancelSelector))
+        self.createLoadingView()
         Auth.auth().signInAnonymously { (authDataResult, error) in
             if error == nil {
                 let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -113,10 +113,6 @@ class SignInVC: UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
     
-    @objc func cancelSelector() {
-        #warning("need to implement")
-        print("Cancel log in process now")
-    }
 
 }
 
@@ -125,7 +121,7 @@ class SignInVC: UIViewController {
 
 extension SignInVC: GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
-        self.createLoadingView(cancelAction: #selector(cancelSelector))
+        self.createLoadingView()
         if let error = error {
             print("Error signing in with google account: \(error.localizedDescription)")
             self.dismiss(animated: false, completion: nil)

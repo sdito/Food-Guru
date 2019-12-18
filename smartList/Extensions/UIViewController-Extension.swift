@@ -22,7 +22,7 @@ extension UIViewController {
     }
     
     
-    func createLoadingView(cancelAction: Selector) {
+    func createLoadingView() {
         let vc = UIViewController()
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -51,7 +51,6 @@ extension UIViewController {
             view.addSubview(button)
             button.topAnchor.constraint(equalToSystemSpacingBelow: spinner.bottomAnchor, multiplier: 1.0).isActive = true
             button.centerXAnchor.constraint(equalTo: vc.view.centerXAnchor).isActive = true
-            button.addTarget(self, action: cancelAction, for: .touchUpInside)
         }
         
         vc.modalPresentationStyle = .overFullScreen

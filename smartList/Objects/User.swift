@@ -45,26 +45,7 @@ struct User {
             namereturned(name)
         }
     }
-    static func comparePeopleIn(list: GroceryList, foodStorageEmails: [String]?) -> (isEqual: Bool, emailsDifferent: [String]?) {
-        #warning("check this is still being used, may have deleted the uses for it")
-        if SharedValues.shared.anonymousUser != true {
-            var listPeople = Set(list.people ?? [])
-            var foodStoragePeople = Set(foodStorageEmails ?? [])
-            
-            if listPeople == foodStoragePeople {
-                return (true, nil)
-            } else {
-                listPeople.subtract(Set(foodStorageEmails ?? []))
-                foodStoragePeople.subtract(Set(list.people ?? []))
-                
-                let both = listPeople.union(foodStoragePeople)
-                return (false, Array(both).sorted())
-            }
-        } else {
-            return (true, nil)
-        }
-        
-    }
+
     
     
     static func editedGroupInfo(db: Firestore, initialEmails: [String], updatedEmails: [String], groupID: String, storageID: String) {
@@ -163,10 +144,8 @@ struct User {
         
         if SharedValues.shared.anonymousUser == false {
             emails?.forEach({ (email) in
-                db.collection("users").whereField("email", isEqualTo: email).getDocuments { (querySnapshot, err) in
-                    //print(querySnapshot?.documents.first?.data())
+                db.collection("users").whereField("email", isEqualTo: email.lowercased()).getDocuments { (querySnapshot, err) in
                     if let doc = querySnapshot?.documents.first {
-                        //print(doc.get("uid"))
                         if let id = doc.get("uid") as? String {
                             userIDs.append(id)
                         }
@@ -184,13 +163,8 @@ struct User {
                     "shared": [uid]
                 ])
             }
-            
         }
-        
-        
     }
-    
-//    }
     
     
     static func turnEmailToUid(db: Firestore, email: String, uidReturned: @escaping (_ userID: String?) -> Void) {
@@ -222,7 +196,6 @@ struct User {
     }
     
     static func writeGroupToFirestoreAndAddToUsers(db: Firestore, emails: [String]) {
-        #warning("NEED TO CHECK EACH USER AGAIN BEFORE FINALLY WRITING, THEY COULD BE ADDED INTO A GROUP AT THE SAME TIME FROM TWO DIFFERENT DEVICES, OR WRITE A PLACEHOLDER GROUPID VALUE IN THEIR FILE")
         // write the group to firestore first
         let groupRef = db.collection("groups").document()
         let groupDocID = groupRef.documentID

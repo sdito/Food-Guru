@@ -260,7 +260,7 @@ extension Recipe {
             "tagline": self.tagline as Any,
             "reviewImagePaths": self.reviewImagePaths as Any
         ]) { err in
-            if let err = err {
+            if err != nil {
                 UIApplication.shared.keyWindow?.rootViewController?.createMessageView(color: .red, text: "Failed creating recipe")
             } else {
                 print("Document successfully written")

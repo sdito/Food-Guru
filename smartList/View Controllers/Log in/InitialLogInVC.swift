@@ -27,7 +27,7 @@ class InitialLogInVC: UIViewController {
     }
     @IBAction func continueAsGuest(_ sender: Any) {
         #warning("need to test this code, also in other places")
-        self.createLoadingView(cancelAction: #selector(cancelLoadingPopUp))
+        self.createLoadingView()
         Auth.auth().signInAnonymously { (authDataResult, error) in
             if error == nil {
                 let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

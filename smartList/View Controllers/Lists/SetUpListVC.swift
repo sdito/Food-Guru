@@ -23,6 +23,11 @@ class SetUpListVC: UIViewController {
             }
             switch self.usingGroup {
             case true:
+                peopleStackView.subviews.forEach { (view) in
+                    if peopleStackView.subviews.firstIndex(of: view)! > 0 {
+                        view.removeFromSuperview()
+                    }
+                }
                 groupOrNotLabel.text = "Using group"
                 for person in SharedValues.shared.groupEmails ?? [""] {
                     print(person)
@@ -36,7 +41,7 @@ class SetUpListVC: UIViewController {
             default:
                 groupOrNotLabel.text = "Not using group"
                 peopleStackView.subviews.forEach { (view) in
-                    if peopleStackView.subviews.firstIndex(of: view)! > 1 {
+                    if peopleStackView.subviews.firstIndex(of: view)! > 0 {
                         view.removeFromSuperview()
                         
                     } else {
@@ -47,10 +52,14 @@ class SetUpListVC: UIViewController {
                         }
                         
                     }
-                    if peopleStackView.subviews.count == 1 {
-                        insertTextFieldIn(stackView: peopleStackView, text: "", userInteraction: true)
-                    }
+//                    if peopleStackView.subviews.count == 1 {
+//                        insertTextFieldIn(stackView: peopleStackView, text: "", userInteraction: true)
+//                    }
                 }
+                for person in listToEdit?.people ?? [] {
+                    insertTextFieldIn(stackView: peopleStackView, text: person, userInteraction: true)
+                }
+                insertTextFieldIn(stackView: peopleStackView, text: "", userInteraction: true)
             }
         }
     }
@@ -185,15 +194,16 @@ class SetUpListVC: UIViewController {
         
         
         list.stores?.forEach({ (store) in
-            insertTextFieldIn(stackView: storesStackView, text: store, userInteraction: true)
-        })
-        list.people?.forEach({ (person) in
-            if list.isGroup == false {
-                insertTextFieldIn(stackView: peopleStackView, text: person, userInteraction: true)
+            if storesTextField.text == "" {
+                storesTextField.text = store
+            } else {
+                insertTextFieldIn(stackView: storesStackView, text: store, userInteraction: true)
             }
+
         })
         
     }
+    
     
     private func insertTextFieldIn(stackView: UIStackView, text: String, userInteraction: Bool) {
         let textField = UITextField()
@@ -202,8 +212,10 @@ class SetUpListVC: UIViewController {
         textField.textColor = Colors.main
         textField.delegate = self
         textField.text = text
-        stackView.insertArrangedSubview(textField, at: 1)
+//        stackView.insertArrangedSubview(textField, at: 1)
+        stackView.addArrangedSubview(textField)
         textField.isUserInteractionEnabled = userInteraction
+        textField.setUpListToolbar(action: #selector(handleTextFieldForPlus), arrowAction: #selector(handleTextFieldForArrow))
     }
     
     

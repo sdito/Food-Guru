@@ -38,7 +38,7 @@ class SignUpVC: UIViewController {
     
     @IBAction func emailCreateAccount(_ sender: Any) {
         let isAnonymousAccount = Auth.auth().currentUser?.isAnonymous
-        self.createLoadingView(cancelAction: #selector(cancelLoadingPopUp))
+        self.createLoadingView()
         if isAnonymousAccount != true {
             Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { (authDataResult, error) in
                 guard error == nil else {
@@ -72,7 +72,7 @@ class SignUpVC: UIViewController {
     
     
     @IBAction func continueAsGuest(_ sender: Any) {
-        self.createLoadingView(cancelAction: #selector(cancelLoadingPopUp))
+        self.createLoadingView()
         Auth.auth().signInAnonymously { (authDataResult, error) in
             if error == nil {
                 let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -108,10 +108,6 @@ class SignUpVC: UIViewController {
     }
     
     
-    
-    @objc func cancelLoadingPopUp() {
-        print("cancel pressed")
-    }
     
     private func handleNewEmailAccount(authDataResult: AuthDataResult?) {
         let docRef = self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")")
@@ -194,7 +190,7 @@ class SignUpVC: UIViewController {
 
 extension SignUpVC: GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
-        self.createLoadingView(cancelAction: #selector(cancelLoadingPopUp))
+        self.createLoadingView()
         if let error = error {
             print("Error signing in with google account: \(error.localizedDescription)")
             self.dismiss(animated: false, completion: nil)

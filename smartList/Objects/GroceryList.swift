@@ -187,10 +187,15 @@ extension GroceryList {
             }
         }
     }
+    
+    
     func deleteListToFirestore(db: Firestore!) {
         db.collection("lists").document(self.docID ?? " ").delete()
     }
+    
+    
     func editListToFirestore(db: Firestore!, listID: String) {
+        
         db.collection("lists").document(listID).updateData([
             "name": self.name,
             "stores": self.stores!,
@@ -201,7 +206,35 @@ extension GroceryList {
                 print("Error updating document: \(err)")
             } else {
                 print("Document sucessfully updated")
-                //#error("list UI is updated on the tableView, but the buttons do not update at the to the new categories and also stores probably, need to delete the items from the list below currently returns nil for both so thats a lot of fun")
+                User.emailToUid(emails: self.people, db: db, listID: listID)
+                if self.stores?.isEmpty == false {
+                    // Need to get the items that do not have a store associated with them, from there make the user either sort all those items or just move them all to one store
+                    let itemsReference = db.collection("lists").document(listID).collection("items").whereField("store", isEqualTo: "")
+                    
+                    itemsReference.getDocuments { (querySnapshot, error) in
+                        guard let documents = querySnapshot?.documents else {
+                            print("Error reading documents: \(error?.localizedDescription ?? "error")")
+                            return
+                        }
+                        
+                        // documents are the items that have no store
+                        for doc in documents {
+                            let id = doc.documentID
+                            if let store = self.stores?.last {
+                                let specificItemReference = db.collection("lists").document(listID).collection("items").document(id)
+                                specificItemReference.updateData([
+                                    "store" : store
+                                ])
+                            }
+                        }
+                        
+//                        #error("need to update the UI to reflect that there are stores now")
+                        
+                    }
+                }
+                
+                
+                
                 
                 
             }

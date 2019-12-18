@@ -73,6 +73,8 @@ class AddItemsVC: UIViewController {
         
         
     }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
@@ -115,6 +117,8 @@ class AddItemsVC: UIViewController {
         segmentedControl.selectedSegmentIndex = 0
         if list.stores?.isEmpty == true {
             segmentedControl.isHidden = true
+        } else {
+            segmentedControl.isHidden = false
         }
     }
     @IBAction func editList(_ sender: Any) {
@@ -309,34 +313,18 @@ extension AddItemsVC {
         
     }
     func addItemsToStorageIfPossible(sendList: GroceryList, foodStorageEmails: [String]?) {
-        #error("should fix so that it just adds the items to the storage even if the emails do not match")
-        var isEqual: Bool = false
-        var difference: [String]?
-        (isEqual, difference) = User.comparePeopleIn(list: sendList, foodStorageEmails: foodStorageEmails)
-        
-        if isEqual == true {
-            
-            
-            /// Maybe just need the stuff between comments
-            if list != nil && list?.items?.isEmpty == false {
-                if let id = SharedValues.shared.foodStorageID {
-                    FoodStorage.addItemsFromListintoFoodStorage(sendList: list!, storageID: id, db: db)
-                    
-                    // to set all the items in the list to not selected
-                    for index in (list?.items!.indices)! {
-                        list?.items?[index].selected = false
-                    }
+        if list != nil && list?.items?.isEmpty == false {
+            if let id = SharedValues.shared.foodStorageID {
+                FoodStorage.addItemsFromListintoFoodStorage(sendList: list!, storageID: id, db: db)
+                // to set all the items in the list to not selected
+                for index in (list?.items!.indices)! {
+                    list?.items?[index].selected = false
                 }
-            } else {
-                let alert = UIAlertController(title: "Error - there are no items in your list", message: nil, preferredStyle: .alert)
-                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                present(alert, animated: true)
+                
+                self.createMessageView(color: Colors.messageGreen, text: "Items added to storage")
             }
-            /// Maybe only need stuff inbetween the above comment, to get rid of the previously implemented thing of making the emails match in both the list and the storage
-            
-            
         } else {
-            let alert = UIAlertController(title: "Error - users in your list do not match the users in your storage", message: "Emails not in both your list and storage are: \(difference?.joined(separator: ", ") ?? ""), unable to add to your storage", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Error", message: "There are no selected from your list. Only selected items will be sent to your storage.", preferredStyle: .alert)
             alert.addAction(.init(title: "Ok", style: .default, handler: nil))
             present(alert, animated: true)
         }
