@@ -136,6 +136,7 @@ class RecipeDetailVC: UIViewController {
                         GroceryList.addItemToListFromRecipe(db: self.db, listID: list.ownID ?? " ", name: item, userID: uid, store: "")
                     }
                     self.removeAddAllButton()
+                    self.createMessageView(color: Colors.messageGreen, text: "Items added to list!")
                 } else {
                     var allItems = ingredientsToAddToList
                     print(allItems)
@@ -145,10 +146,9 @@ class RecipeDetailVC: UIViewController {
                     self.createPickerView(itemNames: allItems, itemStores: list.stores, itemListID: list.ownID ?? " ", singleItem: false, delegateVC: self)
                 }
             } else {
-                let alert = UIAlertController(title: "Error", message: "You first need to create a list before you can add items.", preferredStyle: .alert)
-                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true)
-                #warning("maybe automatically create a list right here")
+//                #error("List created successfully with items, but goes into black hole for some reason")
+                GroceryList.handleProcessForAutomaticallyGeneratedListFromRecipe(db: self.db, items: ingredientsToAddToList)
+                self.createMessageView(color: Colors.messageGreen, text: "List created and items added!")
             }
         }
         

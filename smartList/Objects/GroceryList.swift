@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
 struct GroceryList {
     var name: String
@@ -38,6 +39,8 @@ struct GroceryList {
         self.groupID = groupID
         self.ownID = ownID
     }
+    
+    
     static func getUsersCurrentList(db: Firestore, userID: String, listReturned: @escaping (_ list: GroceryList?) -> Void) {
         var listID: GroceryList?
         db.collection("lists").whereField("shared", arrayContains: userID).order(by: "timeIntervalSince1970", descending: true).limit(to: 1).getDocuments { (querySnapshot, error) in
@@ -84,8 +87,8 @@ struct GroceryList {
             })
             listsChanged(lists)
         }
-        //db.collection("lists").whereField("shared", arrayContains: userID)
     }
+    
     static func addItemToListFromRecipe(db: Firestore, listID: String, name: String, userID: String, store: String) {
         let reference = db.collection("lists").document(listID).collection("items").document()
         let genericName = Search.turnIntoSystemItem(string: name)
@@ -110,6 +113,56 @@ struct GroceryList {
             }
         }
     }
+    
+    static func handleProcessForAutomaticallyGeneratedListFromRecipe(db: Firestore, items: [String]) {
+        #warning("this should work, probbaly need to test it a few more times just to make sure")
+        let reference = db.collection("lists").document()
+        let uid = Auth.auth().currentUser?.uid
+        SharedValues.shared.listIdentifier = reference
+        
+        reference.setData([
+            "name": "Grocery List",
+            "isGroup": false,
+            "stores": [],
+            "people": [""],
+            "shared": [Auth.auth().currentUser!.uid] as Any,
+            "user": uid as Any,
+            "timeIntervalSince1970": Date().timeIntervalSince1970,
+            "ownID": SharedValues.shared.listIdentifier?.documentID as Any
+        ]) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                for i in items {
+                    let words = i.split{ !$0.isLetter }.map { (sStr) -> String in
+                        String(sStr)
+                    }
+                    let genericItem = Search.turnIntoSystemItem(string: i)
+                    let category = GenericItem.getCategory(item: genericItem, words: words)
+                    
+                    let item = Item(name: i, selected: false, category: category.rawValue, store: "", user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: genericItem, systemCategory: category)
+                    let ref = db.collection("lists").document(SharedValues.shared.listIdentifier!.documentID).collection("items").document()
+                    ref.setData([
+                        "name": item.name,
+                        "category": item.category!,
+                        "store": item.store!,
+                        "user": SharedValues.shared.userID ?? "did not write",
+                        "selected": item.selected,
+                        "systemItem": "\(item.systemItem ?? .other)",
+                        "systemCategory": "\(item.systemCategory ?? .other)"
+                    ]) { err in
+                        if let err = err {
+                            print("Error writing document for new list from recipe: \(err)")
+                        } else {
+                            print("Document successfully written")
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+    
 }
 
 
@@ -119,7 +172,7 @@ extension GroceryList {
         SharedValues.shared.listIdentifier?.setData([
             "name": self.name,
             "isGroup": self.isGroup ?? false,
-            "stores": self.stores!,
+            "stores": self.stores as Any,
             "people": Array(Set(self.people!)).sorted(),
             "user": SharedValues.shared.userID ?? "did not write",
             "timeIntervalSince1970": Date().timeIntervalSince1970,

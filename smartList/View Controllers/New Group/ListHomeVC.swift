@@ -97,7 +97,7 @@ extension ListHomeVC: UITableViewDataSource, UITableViewDelegate {
             }
         }
         
-        one.setUI(str: "You do not have any lists created or shared with you yet.\(groupText)")
+        one.setUI(str: "You do not have any lists created or shared with you yet. \(groupText)")
         
         switch hasGroup {
         case true:

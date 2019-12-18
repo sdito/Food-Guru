@@ -42,7 +42,6 @@ class ButtonIngredientView: UIView {
     
     @objc private func bAction() {
         print("CALLED")
-        //print(self.label.text)
         let db = Firestore.firestore()
         let userID = Auth.auth().currentUser?.uid ?? " "
         guard let name = label.text else { return print("Name did not set property from ButtonIngredientView") }
@@ -57,6 +56,7 @@ class ButtonIngredientView: UIView {
                     
                 }
             } else {
+                #warning("should just create a list from here, similar to the action from recipe detail of creating a list from addAllItemsToList when there is no list")
                 let alert = UIAlertController(title: "Error", message: "You first need to create a list before you can add items.", preferredStyle: .alert)
                 alert.addAction(.init(title: "Ok", style: .default, handler: nil))
                 UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)

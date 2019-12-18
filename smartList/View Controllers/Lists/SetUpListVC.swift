@@ -118,6 +118,7 @@ class SetUpListVC: UIViewController {
         if SharedValues.shared.anonymousUser == true {
             switchOutlet.isUserInteractionEnabled = false
         }
+        topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
     }
     
     @IBAction func writeToFirestoreIfValid() {
@@ -141,7 +142,7 @@ class SetUpListVC: UIViewController {
     
     @IBAction func dismiss(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
-        topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
+        
     }
     
     @IBAction func switchAction(_ sender: Any) {

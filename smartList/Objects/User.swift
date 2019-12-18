@@ -46,6 +46,7 @@ struct User {
         }
     }
     static func comparePeopleIn(list: GroceryList, foodStorageEmails: [String]?) -> (isEqual: Bool, emailsDifferent: [String]?) {
+        #warning("check this is still being used, may have deleted the uses for it")
         if SharedValues.shared.anonymousUser != true {
             var listPeople = Set(list.people ?? [])
             var foodStoragePeople = Set(foodStorageEmails ?? [])

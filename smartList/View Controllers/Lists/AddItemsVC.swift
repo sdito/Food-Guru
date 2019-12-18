@@ -309,18 +309,17 @@ extension AddItemsVC {
         
     }
     func addItemsToStorageIfPossible(sendList: GroceryList, foodStorageEmails: [String]?) {
-        
+        #error("should fix so that it just adds the items to the storage even if the emails do not match")
         var isEqual: Bool = false
         var difference: [String]?
         (isEqual, difference) = User.comparePeopleIn(list: sendList, foodStorageEmails: foodStorageEmails)
         
         if isEqual == true {
             
+            
+            /// Maybe just need the stuff between comments
             if list != nil && list?.items?.isEmpty == false {
                 if let id = SharedValues.shared.foodStorageID {
-                    
-                    
-                    //successfully gotten to this point
                     FoodStorage.addItemsFromListintoFoodStorage(sendList: list!, storageID: id, db: db)
                     
                     // to set all the items in the list to not selected
@@ -333,6 +332,9 @@ extension AddItemsVC {
                 alert.addAction(.init(title: "Ok", style: .default, handler: nil))
                 present(alert, animated: true)
             }
+            /// Maybe only need stuff inbetween the above comment, to get rid of the previously implemented thing of making the emails match in both the list and the storage
+            
+            
         } else {
             let alert = UIAlertController(title: "Error - users in your list do not match the users in your storage", message: "Emails not in both your list and storage are: \(difference?.joined(separator: ", ") ?? ""), unable to add to your storage", preferredStyle: .alert)
             alert.addAction(.init(title: "Ok", style: .default, handler: nil))

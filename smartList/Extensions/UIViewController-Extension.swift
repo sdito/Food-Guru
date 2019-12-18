@@ -12,7 +12,7 @@ import FirebaseStorage
 
 
 extension UIViewController {
-    @objc func removeFromSuperViewSelector() {
+    @objc func removeFromSuperViewSelector(forItemsToStores: Bool) {
         UIView.animate(withDuration: 0.3, animations: {
             self.presentedViewController?.view.alpha = 0.0
         }) { (true) in
@@ -23,7 +23,6 @@ extension UIViewController {
     
     
     func createLoadingView(cancelAction: Selector) {
-        #warning("not being used yet")
         let vc = UIViewController()
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -152,7 +151,6 @@ extension UIViewController {
         button.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
         button.addTarget(self, action: #selector(removeFromSuperViewSelector), for: .touchUpInside)
         vc.view.insertSubview(button, at: 1)
-        
         
         let v = Bundle.main.loadNibNamed("SortItemView", owner: nil, options: nil)?.first as! SortItemView
         v.delegate = delegateVC as? DisableAddAllItemsDelegate
