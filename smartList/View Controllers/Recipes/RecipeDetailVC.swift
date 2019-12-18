@@ -10,13 +10,21 @@ import UIKit
 import FirebaseFirestore
 import FirebaseAuth
 import FirebaseStorage
+import RealmSwift
 
 class RecipeDetailVC: UIViewController {
     var db: Firestore!
     private var itemsAddedToList: Set<String>? = [""]
     private var recipeSliderScaleMax = 4
     
+    
+    
+    private var originalIngredients: [String]?
+    private var originalServings: Int?
+    private var newServingsValue: Int?
+    
     @IBOutlet weak var wholeSV: UIStackView!
+    @IBOutlet weak var servingsFromSliderLabel: UILabel!
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var mainStackView: UIStackView!
@@ -50,7 +58,6 @@ class RecipeDetailVC: UIViewController {
     
     @IBOutlet var viewsToRemoveForCookbook: [UIView]!
     
-    #warning("just added slider, make sure its being used")
     @IBOutlet weak var scaleSlider: UISlider!
     
     var data: (image: UIImage, recipe: Recipe)?
@@ -111,28 +118,37 @@ class RecipeDetailVC: UIViewController {
     
     
     @IBAction func addAllToList(_ sender: Any) {
-        print("Add all items to list")        
+        print("Add all items to list")
+        
+        var ingredientsToAddToList: [String] {
+            if data?.recipe != nil {
+                return data!.recipe.ingredients
+            } else {
+                return Array(cookbookRecipe!.ingredients)
+            }
+        }
+        
         let uid = Auth.auth().currentUser?.uid ?? " "
         GroceryList.getUsersCurrentList(db: db, userID: uid) { (list) in
             if let list = list {
                 if list.stores?.isEmpty == true {
-                    for item in (self.data?.recipe.ingredients)! {
-                        
+                    for item in ingredientsToAddToList {
                         GroceryList.addItemToListFromRecipe(db: self.db, listID: list.ownID ?? " ", name: item, userID: uid, store: "")
                     }
                     self.removeAddAllButton()
                 } else {
-                    var allItems = self.data?.recipe.ingredients ?? [""]
+                    var allItems = ingredientsToAddToList
                     print(allItems)
                     allItems = allItems.filter({self.itemsAddedToList?.contains($0) == false})
                     print(allItems)
+                    
                     self.createPickerView(itemNames: allItems, itemStores: list.stores, itemListID: list.ownID ?? " ", singleItem: false, delegateVC: self)
                 }
             } else {
                 let alert = UIAlertController(title: "Error", message: "You first need to create a list before you can add items.", preferredStyle: .alert)
                 alert.addAction(.init(title: "Ok", style: .default, handler: nil))
                 self.present(alert, animated: true)
-                
+                #warning("maybe automatically create a list right here")
             }
         }
         
@@ -149,28 +165,43 @@ class RecipeDetailVC: UIViewController {
         
     }
     
-    #warning("make sure this is being used")
     @IBAction func scaleSlider(_ sender: Any) {
-        let value = scaleSlider.value.rounded()
-        print(value)
-        #error("left off around here, slider doesnt work properly")
-        //let newIngredients = data?.recipe.ingredients.changeRecipeIngredientScale(ratio: (Int(value), data?.recipe.numServes ?? 1))
-        //print(newIngredients)
-//        if let ings = newIngredients {
-//            ingredientsStackView.subviews.forEach { (vw) in
-//                if type(of: vw) == ButtonIngredientView.self {
-//                    vw.removeFromSuperview()
-//                }
-//            }
-//            data?.recipe.ingredients = ings
-//            data?.recipe.addButtonIngredientViewsTo(stackView: ingredientsStackView, delegateVC: self)
-//        }
+        newServingsValue = Int(scaleSlider.value.rounded())
+        if let value = newServingsValue {
+            servingsFromSliderLabel.text = "Servings: \(value)"
+        }
+        
         
         
     }
     
     @IBAction func editingOnSliderDone(_ sender: Any) {
         print("Editing on slider done")
+        
+        if let i = originalIngredients, let os = originalServings, let ns = newServingsValue {
+            let newIngredients = i.changeRecipeIngredientScale(ratio: (ns, os))
+            ingredientsStackView.subviews.forEach { (view) in
+                if type(of: view) == ButtonIngredientView.self {
+                    view.removeFromSuperview()
+                }
+            }
+            
+            if cookbookRecipe != nil {
+                let realmIngredients = List<String>()
+                newIngredients.forEach({realmIngredients.append($0)})
+                let realmServings = RealmOptional(ns)
+                
+                cookbookRecipe?.ingredients = realmIngredients
+                cookbookRecipe?.servings = realmServings
+                cookbookRecipe?.addButtonIngredientViewsTo(stackView: ingredientsStackView, delegateVC: self)
+            } else {
+                data?.recipe.ingredients = newIngredients
+                data?.recipe.numServes = ns
+                data?.recipe.addButtonIngredientViewsTo(stackView: ingredientsStackView, delegateVC: self)
+            }
+            
+            
+        }
     }
     
     
@@ -242,6 +273,11 @@ class RecipeDetailVC: UIViewController {
             scaleSlider.minimumValue = 1.0
             scaleSlider.maximumValue = Float(s * recipeSliderScaleMax)
             scaleSlider.value = Float(s)
+            
+            originalServings = s
+            originalIngredients = Array(recipe.ingredients)
+            servingsFromSliderLabel.text = "Servings: \(s)"
+            
         } else {
             servingsSV.removeFromSuperview()
             scaleSV.removeFromSuperview()
@@ -286,6 +322,10 @@ class RecipeDetailVC: UIViewController {
         scaleSlider.minimumValue = 1
         scaleSlider.maximumValue = Float(recipe.numServes * recipeSliderScaleMax)
         scaleSlider.value = Float(recipe.numServes)
+        
+        originalServings = recipe.numServes
+        originalIngredients = recipe.ingredients
+        servingsFromSliderLabel.text = "Servings: \(recipe.numServes)"
         
         if let n = recipe.notes {
             if n != "" {

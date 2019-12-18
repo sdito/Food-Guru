@@ -340,12 +340,11 @@ extension Sequence where Element == String {
         return self.filter({$0 != ""})
     }
     
-    mutating func changeRecipeIngredientScale(ratio: (Int, Int)) -> [String] {
+    func changeRecipeIngredientScale(ratio: (Int, Int)) -> [String] {
         var newItems: [String] = []
         for item in self {
             var runningAmount: (Int, Int) = (0,0)
             // need to isolate the number part
-            
             let idx = item.firstIndex{$0.isLetter || $0 == "("}
             if let idx = idx {
                 let str = String(item[item.startIndex..<idx])
@@ -399,7 +398,7 @@ extension Sequence where Element == String {
                     if newRatio.1 == 1 {
                         return "\(newRatio.0)"
                     } else if newRatio.0 == newRatio.1 {
-                        return "1"
+                        return ""
                     } else if newRatio.0 > newRatio.1 {
                         let whole = newRatio.0 / newRatio.1
                         let remainder = newRatio.0 % newRatio.1
@@ -415,10 +414,16 @@ extension Sequence where Element == String {
                     }
                 }
                 
-                
-                
                 let range = item.startIndex..<idx
-                let newString = item.replacingCharacters(in: range, with: "\(measurement) ")
+                
+                var newString: String {
+                    if measurement != "" {
+                        return item.replacingCharacters(in: range, with: "\(measurement) ")
+                    } else {
+                        return item
+                    }
+                }
+                
                 newItems.append(newString)
                 
             }
