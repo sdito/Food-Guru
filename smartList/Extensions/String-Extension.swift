@@ -10,6 +10,10 @@ import Foundation
 
 extension String {
     
+    func trim() -> String {
+          return self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+    }
+    
     func getBeginningAddress() -> String {
         guard let index = self.firstIndex(of: "@") else { return self }
         let range = self.startIndex..<index

@@ -34,9 +34,14 @@ class RecipeHomeVC: UIViewController {
         }
     }
     
+    private var contentSizeHeight: CGFloat {
+        return collectionView.contentSize.height
+    }
+    
     private let currentSearchesView = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
     private var activeSearches: [(String, SearchType)] = [] {
         didSet {
+            moreRecipesView.isHidden = false
             if SharedValues.shared.sentRecipesInfo == nil {
                 Search.find(from: self.activeSearches, db: db) { (rcps) in
                     if let rcps = rcps {
@@ -61,12 +66,6 @@ class RecipeHomeVC: UIViewController {
                 searchBar.placeholder = "Add another search"
             }
             
-            
-            Recipe.getPuppyRecipesFromSearches(activeSearches: self.activeSearches) { (puppyRecipes) in
-                print(puppyRecipes)
-                #error("THIS IS THE CORRECT PUPPY RECIPES HERE, STILL MIGHT NEED TO CLEAN THEM UP BUT I AM ON THE RIGHT TRACK")
-            }
-            
         }
     }
     
@@ -78,6 +77,8 @@ class RecipeHomeVC: UIViewController {
     @IBOutlet weak var searchHelperView: UIView!
     @IBOutlet weak var searchButtonStackView: UIStackView!
     @IBOutlet weak var scrollBackUpView: UIView!
+    @IBOutlet weak var moreRecipesView: UIView!
+    
     private var lastContentOffset: CGFloat = 0
     private var allowButtonToBeShowed = true
     var imageCache = NSCache<NSString, UIImage>()
@@ -139,6 +140,7 @@ class RecipeHomeVC: UIViewController {
         searchButtonStackView.setUpQuickSearchButtons()
         createObserver()
         scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
+        moreRecipesView.shadowAndRounded(cornerRadius: 10, border: false)
         backUpOutlet.alpha = 0
         
         
@@ -177,6 +179,14 @@ class RecipeHomeVC: UIViewController {
     }
     
     
+    @IBAction func moreRecipesPressed(_ sender: Any) {
+        print("Bring up the puppy recipes now")
+        Recipe.getPuppyRecipesFromSearches(activeSearches: self.activeSearches) { (puppyRecipes) in
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "outsideRecipesVC") as! OutsideRecipesVC
+            vc.puppyRecipes = puppyRecipes
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
     
 
     deinit {
@@ -389,10 +399,8 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
 
     }
     
-
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         if (self.lastContentOffset > scrollView.contentOffset.y) {
             if allowButtonToBeShowed == true && scrollView.contentOffset.y >= 0 {
                 scrollBackUpView.setIsHidden(false, animated: true)
@@ -408,8 +416,24 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         self.lastContentOffset = scrollView.contentOffset.y
+        
+        
+        if scrollView.contentOffset.y > (contentSizeHeight - self.view.bounds.height - 700) {
+            print("Show the more reicpes pop up now")
+            #warning("good to use this to show the pop up to push to the more recipes screen")
+            moreRecipesView.isHidden = false
+            if moreRecipesView.isHidden == true {
+                moreRecipesView.setIsHidden(false, animated: true)
+            }
+        } else {
+            if moreRecipesView.isHidden == false {
+                moreRecipesView.setIsHidden(true, animated: true)
+            }
+        }
+        
+        
     }
-    
+
     
 }
 

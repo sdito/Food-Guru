@@ -160,13 +160,20 @@ struct Recipe {
     }
     
     static func getPuppyRecipesFromSearches(activeSearches: [(String, SearchType)], recipesFound: @escaping (_ recipes: [Recipe.Puppy]) -> Void) {
-        #warning("make sure this is actually being used")
         var puppyRecipes: [Recipe.Puppy] = []
+        for _ in 1...100 {
+            print(activeSearches)
+        }
+        
+        #error("need to handle 'Expiring' items through new function written in FoodStorage")
+        
+        
         let ingredientText = activeSearches.filter({$0.1 == .ingredient}).map { (str) -> String in
             (GenericItem(rawValue: str.0)?.description ?? "")
         }.filter({$0 != ""}).map { (str) -> String in
             str.replacingOccurrences(of: " ", with: "%20")
         }.joined(separator: ",")
+        
         
         
         guard let url = URL(string: "http://www.recipepuppy.com/api/?i=\(ingredientText)") else {
@@ -191,9 +198,10 @@ struct Recipe {
                             let recipeDataDict = recipeData as? [String:Any]
                             if let recipeDataDict = recipeDataDict {
                                 let title = recipeDataDict["title"] as? String
+                                let trimTitle = title?.trim()
                                 let ingredients = recipeDataDict["ingredients"] as? String
                                 let url = recipeDataDict["href"] as? String
-                                let puppyRecipe = Recipe.Puppy(title: title, ingredients: ingredients, url: URL(string: url ?? ""))
+                                let puppyRecipe = Recipe.Puppy(title: trimTitle, ingredients: ingredients, url: URL(string: url ?? ""))
                                 puppyRecipes.append(puppyRecipe)
                                 
                             }
