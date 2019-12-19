@@ -147,7 +147,7 @@ extension Item {
             "name": self.name,
             "selected": false,
             "category": self.category!,
-            "store": self.store!,
+            "store": self.store as Any,
             "user": self.user ?? "",
             "ownID": reference.documentID,
             "storageSection": self.storageSection?.string ?? FoodStorageType.unsorted.string,

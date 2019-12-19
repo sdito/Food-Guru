@@ -15,7 +15,6 @@ class CreateRecipeVC: UIViewController {
     var db: Firestore!
     var storage: Storage!
     let imagePicker = UIImagePickerController()
-    let imageToTextRecipe = UIImagePickerController()
     var image: Data?
     private var forCookbook = false
     
@@ -241,14 +240,7 @@ class CreateRecipeVC: UIViewController {
         
         
     }
-    
-    @IBAction func imageToRecipe(_ sender: Any) {
-        print("Image to recipe")
-        imageToTextRecipe.sourceType = .photoLibrary
-        imageToTextRecipe.delegate = self
-        present(imageToTextRecipe, animated: true)
-        
-    }
+
     
     @IBAction func createRecipePressed(_ sender: Any) {
         switch forCookbook {
@@ -424,26 +416,6 @@ extension CreateRecipeVC: UIImagePickerControllerDelegate, UINavigationControlle
                 image = pickedImage.jpegData(compressionQuality: 0.75)
                 print(pickedImage.size.height, pickedImage.size.width)
                 
-            }
-        } else if picker == imageToTextRecipe {
-            if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-                let vision = Vision.vision()
-                let textRecognizer = vision.cloudDocumentTextRecognizer()
-                let visionImage = VisionImage(image: image)
-                textRecognizer.process(visionImage) { (result, error) in
-                    guard error == nil, let result = result else {
-                        print("Error reading text: \(String(describing: error))")
-                        return
-                    }
-                    
-                    result.tryToGetRecipeInfo()
-                    
-                    let alert = UIAlertController(title: "Text from image", message: "blocks: \(result.blocks.map({$0.text}))", preferredStyle: .alert)
-                    alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                    self.present(alert, animated: true)
-                    
-                    print(result.text)
-                }
             }
         }
         dismiss(animated: true, completion: nil)

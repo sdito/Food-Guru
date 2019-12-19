@@ -422,7 +422,7 @@ enum GenericItem: String, CaseIterable {
         case .champagne:
             return "Champagne"
         case .cheddar:
-            return "Cheddar"
+            return "Cheddar cheese"
         case .cheese:
             return "Cheese"
         case .cherries:
@@ -1458,4 +1458,7 @@ enum GenericItem: String, CaseIterable {
             return .bakery
         }
     }
+    
+    
+    
 }

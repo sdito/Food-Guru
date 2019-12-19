@@ -159,6 +159,54 @@ struct Recipe {
         task.resume()
     }
     
+    static func getPuppyRecipesFromSearches(activeSearches: [(String, SearchType)], recipesFound: @escaping (_ recipes: [Recipe.Puppy]) -> Void) {
+        #warning("make sure this is actually being used")
+        var puppyRecipes: [Recipe.Puppy] = []
+        let ingredientText = activeSearches.filter({$0.1 == .ingredient}).map { (str) -> String in
+            (GenericItem(rawValue: str.0)?.description ?? "")
+        }.filter({$0 != ""}).map { (str) -> String in
+            str.replacingOccurrences(of: " ", with: "%20")
+        }.joined(separator: ",")
+        
+        
+        guard let url = URL(string: "http://www.recipepuppy.com/api/?i=\(ingredientText)") else {
+            for _ in 1...100 {
+                print("This didnt work for some reason")
+            }
+            return
+        }
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            DispatchQueue.main.async {
+                guard let data = data else {
+                    print("Data was nil")
+                    return
+                }
+                
+                let json = try? JSONSerialization.jsonObject(with: data, options: [])
+                if let dictionary = json as? [String:Any] {
+                    let newData = dictionary["results"] as? [Any]
+                    
+                    if let newData = newData {
+                        for recipeData in newData {
+                            let recipeDataDict = recipeData as? [String:Any]
+                            if let recipeDataDict = recipeDataDict {
+                                let title = recipeDataDict["title"] as? String
+                                let ingredients = recipeDataDict["ingredients"] as? String
+                                let url = recipeDataDict["href"] as? String
+                                let puppyRecipe = Recipe.Puppy(title: title, ingredients: ingredients, url: URL(string: url ?? ""))
+                                puppyRecipes.append(puppyRecipe)
+                                
+                            }
+                            
+                        }
+                        recipesFound(puppyRecipes)
+                    }
+                }
+            }
+        }
+        task.resume()
+        
+    }
     
     static func getRecipeInfoFromURL_allRecipesTwo(recipeURL: String) {
         let url = URL(string: recipeURL)!
@@ -443,3 +491,19 @@ extension Recipe {
 }
 
 
+
+
+#warning("make sure this is actually being used and not forgotten about and lost forever")
+extension Recipe {
+    struct Puppy {
+        var title: String?
+        var ingredients: String?
+        var url: URL?
+        
+        init(title: String?, ingredients: String?, url: URL?) {
+            self.title = title
+            self.ingredients = ingredients
+            self.url = url
+        }
+    }
+}

@@ -152,9 +152,6 @@ struct Search {
                     for doc in documents {
                         recipes.append(doc.recipe())
                     }
-                    for _ in 1...100 {
-                        print(recipes.map({$0.name}))
-                    }
                     recipesReturned(recipes)
                 }
             case (3, 0, 0):

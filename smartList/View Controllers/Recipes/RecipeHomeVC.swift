@@ -60,6 +60,13 @@ class RecipeHomeVC: UIViewController {
             } else {
                 searchBar.placeholder = "Add another search"
             }
+            
+            
+            Recipe.getPuppyRecipesFromSearches(activeSearches: self.activeSearches) { (puppyRecipes) in
+                print(puppyRecipes)
+                #error("THIS IS THE CORRECT PUPPY RECIPES HERE, STILL MIGHT NEED TO CLEAN THEM UP BUT I AM ON THE RIGHT TRACK")
+            }
+            
         }
     }
     
@@ -423,3 +430,7 @@ extension RecipeHomeVC: UISearchBarDelegate {
         searchBar.text = ""
     }
 }
+
+
+
+

@@ -389,29 +389,60 @@ extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationController
             
             barcodeDetector.detect(in: visionImage) { (visionBarcode, error) in
                 guard let barcodeData = visionBarcode else {
-                    for _ in 1...100 {
-                        print("Error retrieving data: \(String(describing: error))")
-                    }
+                    self.createMessageView(color: .red, text: "Unable to read barcode")
                     picker.dismiss(animated: true, completion: nil)
                     return
                 }
             
                 picker.dismiss(animated: true, completion: nil)
-                let barcode = barcodeData.first?.displayValue ?? ""
-                let alert = UIAlertController(title: "Barcode returned", message: barcodeData.first?.displayValue, preferredStyle: .alert)
-                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true)
+                guard let barcode = barcodeData.first?.displayValue else {
+                    self.createMessageView(color: .red, text: "Barcode not found")
+                    return
+                }
                 
-                #warning("need to fix all of this stuff below and maybe (probably) use a different API")
+                
                 guard let url = URL(string: "https://world.openfoodfacts.org/api/v0/product/\(barcode).json") else { return }
                 let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-                    guard let data = data else {
-                        print("Data was nil")
-                        return
+                    DispatchQueue.main.async {
+                        guard let data = data else {
+                            print("Data was nil")
+                            return
+                        }
+                        
+                        
+                        let json = try? JSONSerialization.jsonObject(with: data, options: [])
+                        if let dictionary = json as? [String:Any] {
+                            if let nestedDict = dictionary["product"] as? [String:Any] {
+                                if let name = nestedDict["product_name_en"] as? String {
+                                    self.createMessageView(color: Colors.messageGreen, text: "Added: \(name)")
+//                                    #error("need to add the item to the storage here")
+                                    var item = Item.createItemFrom(text: name)
+                                    item.store = ""
+                                    item.writeToFirestoreForStorage(db: self.db, docID: SharedValues.shared.foodStorageID ?? " ")
+                                } else {
+                                    self.createMessageView(color: .red, text: "Item not found")
+                                }
+                                
+                            } else {
+                                self.createMessageView(color: .red, text: "Barcode '\(barcode)' not found")
+                            }
+                        } else {
+                            self.createMessageView(color: .red, text: "Item not found")
+                        }
+                        
+                        
+//
+//                        guard let htmlString = String(data: data, encoding: .utf8) else { return }
+//                        print(htmlString)
+//
+//                        #error("have the correct htmlString here, just need to extract the data from it")
+//                        let alert = UIAlertController(title: nil, message: htmlString, preferredStyle: .alert)
+//                        alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+//                        self.present(alert, animated: true)
                     }
-                    guard let htmlString = String(data: data, encoding: .utf8) else { return }
-                    print(htmlString)
+                    
                 }
+                
                 task.resume()
             }
         }
