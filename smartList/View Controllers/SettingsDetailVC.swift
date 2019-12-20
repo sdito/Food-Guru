@@ -78,19 +78,19 @@ class SettingsDetailVC: UIViewController {
             
         case .about:
             let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
-            cell1.setUI(str: "This is for the about cell")
+            cell1.setUI(str: "Hopefully this application is useful for you, if you have any feedback or difficulties with the app, please do not hesitate to contact the developer!")
             return [cell1]
 
-            
         case .contact:
             let cell = tableView.dequeueReusableCell(withIdentifier: "settingContactDeveloperCell") as! SettingContactDeveloperCell
             cell.delegate = self
             return [cell]
+            
         case .darkMode:
             let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
             cell1.setUI(str: "1. Make sure iOS 13 or a newer version of iOS is downloaded on your phone.")
             let cell2 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
-            cell2.setUI(str: "2. Swipe up from the bottom of your screen to access the control center.")
+            cell2.setUI(str: "2. Access the control center.")
             let cell3 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
             cell3.setUI(str: "3. Press and hold on the brightness displayed in the control center.")
             let cell4 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
@@ -181,8 +181,11 @@ class SettingsDetailVC: UIViewController {
                 return [cell1, button1, button2]
             }
             
-        case .recipe:
-            self.title = "Recipes"
+        case .recentlyViewedRecipes:
+            self.title = "Recently viewed recipes"
+            Recipe.readPreviouslyViewedRecipes(db: db) { (data) in
+                #error("need to create the cells here, still need to handle deleting the excess of recently viewed recipes")
+            }
             return [UITableViewCell()]
         }
     }

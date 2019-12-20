@@ -27,6 +27,7 @@ class RecipeHomeVC: UIViewController {
                 searchBar.placeholder = "Filter saved recipes"
                 savedAndAllRecipesOutlet.setTitle("All recipes", for: .normal)
                 currentSearchesView.isHidden = true
+                searchHelperView.isHidden = true
             case false:
                 searchBar.placeholder = "Search all recipes"
                 savedAndAllRecipesOutlet.setTitle("Saved", for: .normal)
@@ -104,6 +105,16 @@ class RecipeHomeVC: UIViewController {
     }
     
     private var savedRecipes: [Recipe] = [] {
+        didSet {
+//            imageCache.removeAllObjects()
+//            collectionView?.collectionViewLayout.invalidateLayout()
+//            collectionView?.reloadData()
+            
+            filteredSavedRecipes = self.savedRecipes
+        }
+    }
+    
+    private var filteredSavedRecipes: [Recipe] = [] {
         didSet {
             imageCache.removeAllObjects()
             collectionView?.collectionViewLayout.invalidateLayout()
@@ -333,7 +344,7 @@ extension RecipeHomeVC: DynamicHeightLayoutDelegate {
         let minForDescription = heightForText("str", width: CGFloat(MAXFLOAT), font: UIFont(name: "futura", size: 13)!) * 5.0
         switch savedRecipesActive {
         case true:
-            let textData = savedRecipes[indexPath.item]
+            let textData = filteredSavedRecipes[indexPath.item]
             let title = heightForText(textData.name, width: width - 12, font: UIFont(name: "futura", size: 20)!)
             let description = heightForText(textData.tagline ?? "", width: width - 12, font: UIFont(name: "futura", size: 13)!)
             let actualDescription = min(minForDescription, description)
@@ -359,7 +370,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch savedRecipesActive {
         case true:
-            return savedRecipes.count
+            return filteredSavedRecipes.count
         case false:
             return recipes.count
         }
@@ -368,7 +379,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch savedRecipesActive {
         case true:
-            let selected = savedRecipes[indexPath.item]
+            let selected = filteredSavedRecipes[indexPath.item]
             performSegue(withIdentifier: "showRecipeDetail", sender: (imageCache.object(forKey: "\(indexPath.row)" as NSString), selected))
         case false:
             let selected = recipes[indexPath.item]
@@ -377,22 +388,27 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row == 1 {
-            if collectionView.contentSize.height < collectionView.bounds.height {
-                print("Need to make the view visible")
-                moreRecipesView.isHidden = false
-            } else {
-                print("Need to make the view hidden")
-                moreRecipesView.isHidden = true
+        if savedRecipesActive == false {
+            if indexPath.row == 1 {
+                if collectionView.contentSize.height < collectionView.bounds.height {
+                    print("Need to make the view visible")
+                    moreRecipesView.isHidden = false
+                } else {
+                    print("Need to make the view hidden")
+                    moreRecipesView.isHidden = true
+                }
+    //            print(collectionView.contentSize.height, collectionView.bounds.height)
             }
-//            print(collectionView.contentSize.height, collectionView.bounds.height)
+        } else {
+            moreRecipesView.isHidden = true
         }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch savedRecipesActive {
         case true:
-            let recipe = savedRecipes[indexPath.row]
+            let recipe = filteredSavedRecipes[indexPath.row]
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCell
             cell.setUI(recipe: recipe)
             //cell.delegate = self as RecipeCellDelegate
@@ -431,6 +447,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
         if (self.lastContentOffset > scrollView.contentOffset.y) {
             if allowButtonToBeShowed == true && scrollView.contentOffset.y >= 0 {
                 scrollBackUpView.setIsHidden(false, animated: true)
@@ -447,23 +464,26 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         self.lastContentOffset = scrollView.contentOffset.y
         
-        
-        let svContentOffset = scrollView.contentOffset.y
-        let bottonOfSV = contentSizeHeight-scrollView.bounds.height
-        
-        if svContentOffset > bottonOfSV - 500 {
-//            moreRecipesView.isHidden = false
-            if moreRecipesView.isHidden == true {
-                moreRecipesView.setIsHidden(false, animated: true)
-            }
-        } else {
-//            moreRecipesView.isHidden = true
-            if moreRecipesView.isHidden == false {
-                moreRecipesView.setIsHidden(true, animated: true)
-            }
+        if self.lastContentOffset < 400 {
+            backUpOutlet.alpha = 0.0
         }
         
-        
+        if savedRecipesActive == false {
+            let svContentOffset = scrollView.contentOffset.y
+            let bottonOfSV = contentSizeHeight-scrollView.bounds.height
+            
+            if svContentOffset > bottonOfSV - 500 {
+                if moreRecipesView.isHidden == true {
+                    moreRecipesView.setIsHidden(false, animated: true)
+                }
+            } else {
+                if moreRecipesView.isHidden == false {
+                    moreRecipesView.setIsHidden(true, animated: true)
+                }
+            }
+        } else {
+            moreRecipesView.isHidden = true
+        }
     }
 
     
@@ -474,17 +494,33 @@ extension RecipeHomeVC: UISearchBarDelegate {
         searchBar.endEditing(true)
         searchHelperView.isHidden = true
     }
+    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        print("searchBartextDidBeginEditing")
-        searchHelperView.isHidden = false
+        if savedRecipesActive == false {
+            searchHelperView.isHidden = false
+        }
+        
     }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        let s = Search.searchFromSearchBar(string: searchBar.text!)
-        handleDuplicateSearchesAndAddNew(newSearches: s)
-        searchBar.endEditing(true)
-        searchHelperView.isHidden = true
-        searchBar.text = ""
+        if savedRecipesActive == false {
+            let s = Search.searchFromSearchBar(string: searchBar.text!)
+            handleDuplicateSearchesAndAddNew(newSearches: s)
+            searchBar.endEditing(true)
+            searchHelperView.isHidden = true
+            searchBar.text = ""
+        } else {
+            print("Need different search, saved recipes is active")
+        }
+        
     }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if savedRecipesActive == true {
+            filteredSavedRecipes = Recipe.filterSavedRecipesFrom(text: searchText, savedRecipes: savedRecipes)
+        }
+    }
+    
 }
 
 

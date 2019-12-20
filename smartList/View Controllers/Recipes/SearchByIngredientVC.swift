@@ -130,23 +130,29 @@ extension SearchByIngredientVC: UISearchBarDelegate {
     }
     @objc private func addSelector() {
         print("Add")
-        //#error("create the item here, and do the other stuff")
-        let item = Item.createItemFrom(text: searchBar.text ?? " ")
-        possibleItems.append(item)
-        selectedItems.append(item)
-        searchBar.text = ""
-        searchBar.isHidden = true
-        searchBar.setTextProperties()
-        for item in selectedItems {
-            if let row = possibleItems.firstIndex(of: item) {
-                tableView.selectRow(at: IndexPath(row: row, section: 0), animated: false, scrollPosition: .none)
+        
+        if searchBar.text != "" {
+            let item = Item.createItemFrom(text: searchBar.text ?? " ")
+            possibleItems.append(item)
+            selectedItems.append(item)
+            searchBar.text = ""
+            searchBar.isHidden = true
+            searchBar.setTextProperties()
+            for item in selectedItems {
+                if let row = possibleItems.firstIndex(of: item) {
+                    tableView.selectRow(at: IndexPath(row: row, section: 0), animated: false, scrollPosition: .none)
+                }
             }
         }
+        
+        
         
         searchBar.endEditing(true)
         searchBar.isHidden = true
         delegate.removeChildVC()
     }
+    
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         delegate.searchTextChanged(text: searchBar.text ?? "")
     }

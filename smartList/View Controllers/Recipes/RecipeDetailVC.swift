@@ -373,6 +373,8 @@ class RecipeDetailVC: UIViewController {
             v.delegate = self
         }
         
+        recipe.addRecipeToRecentlyViewedRecipes(db: db)
+        
     }
     private func addStarRatingViewIfApplicable(recipe: Recipe) {
         if let nr = recipe.numReviews, let ns = recipe.numStars {

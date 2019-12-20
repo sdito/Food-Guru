@@ -13,27 +13,13 @@ import FirebaseStorage
 
 extension UIViewController {
     
-    @objc func removeFromSuperviewForPickerView() {
-        if self.presentedViewController?.view.tag == 111 {
-            UIView.animate(withDuration: 0.3, animations: {
-                self.presentedViewController?.view.alpha = 0.0
-            }) { (true) in
-                self.dismiss(animated: false, completion: nil)
-            }
-        } else {
-            print("The tag is not 111")
-            #error("need to be able to get rid of the VC from here")
+    @objc func removeFromSuperviewForPickerView(_ sender: UIButton) {
+        let vc = sender.findViewController()
+        UIView.animate(withDuration: 0.3, animations: {
+            vc?.view.alpha = 0.0
+        }) { (true) in
+            vc?.dismiss(animated: false, completion: nil)
         }
-//        for vc in vcs {
-//            if vc.view.tag == 111 {
-//                UIView.animate(withDuration: 0.3, animations: {
-//                    vc.view.alpha = 0.0
-//                }) { (true) in
-//                    vc.removeFromParent()
-//                    vc.view.removeFromSuperview()
-//                }
-//            }
-//        }
     }
     
     @objc func removeFromSuperViewSelector() {
@@ -166,7 +152,7 @@ extension UIViewController {
         let vc = UIViewController()
         
         //vc.view.backgroundColor = .gray
-        vc.view.tag = 111
+//        vc.view.tag = 111
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true

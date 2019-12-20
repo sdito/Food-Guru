@@ -22,7 +22,7 @@ struct Setting {
         case account
         case group
         case list
-        case recipe
+        case recentlyViewedRecipes
         case storage
         case textSize
         case darkMode
@@ -36,7 +36,7 @@ struct Setting {
         let account_ = Setting(name: "Account", settingName: .account)
         let group = Setting(name: "Group", settingName: .group)
         let list = Setting(name: "Lists", settingName: .list)
-        let recipe = Setting(name: "Recipes", settingName: .recipe)
+        let recentlyViewedRecipes = Setting(name: "Recently viewed recipes", settingName: .recentlyViewedRecipes)
         let storage = Setting(name: "Storage", settingName: .storage)
         let textSize = Setting(name: "Text size", settingName: .textSize)
         let darkMode = Setting(name: "Dark mode", settingName: .darkMode)
@@ -46,7 +46,7 @@ struct Setting {
         let about = Setting(name: "About", settingName: .about)
         
         
-        return (["Users & Accounts", "Application", "Settings", "Support & About"], [[account_, group], [list, recipe, storage], [textSize, darkMode, notifications], [contact, licences, about]])
+        return (["Users & Accounts", "Application", "Settings", "Support & About"], [[account_, group], [list, recentlyViewedRecipes, storage], [textSize, darkMode, notifications], [contact, licences, about]])
     }
     
     
@@ -61,8 +61,8 @@ extension Setting.SettingName {
             return "Group"
         case .list:
             return "List"
-        case .recipe:
-            return "Recipe"
+        case .recentlyViewedRecipes:
+            return "Recently viewed recipes"
         case .storage:
             return "Storage"
         case .textSize:

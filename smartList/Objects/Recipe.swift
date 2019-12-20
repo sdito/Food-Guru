@@ -85,7 +85,31 @@ struct Recipe {
     }
     
     
+    static func filterSavedRecipesFrom(text: String, savedRecipes: [Recipe]) -> [Recipe] {
+        
+        if text == "" {
+            return savedRecipes
+        } else {
+            var recipes: [Recipe] = []
+            for recipe in savedRecipes {
+                if recipe.name.lowercased().contains(text.lowercased()) {
+                    recipes.append(recipe)
+                }
+            }
+            return recipes
+        }
+    }
     
+    static func readPreviouslyViewedRecipes(db: Firestore, dataReturned: @escaping (_ data: [String:[String:Any]]) -> Void) {
+        if let uid = Auth.auth().currentUser?.uid {
+            let reference = db.collection("users").document(uid)
+            reference.getDocument { (documentSnapshot, error) in
+                guard let document = documentSnapshot else { return }
+                guard let field = document.get("recentlyViewedRecipes") as? [String:[String:Any]] else { return }
+                dataReturned(field)
+            }
+        }
+    }
     
     
     static func getRecipeInfoFromURLallRecipes(recipeURL: String) {
@@ -172,14 +196,9 @@ struct Recipe {
             }
         }
         
-        
-        
-        
         let ingredientText = itemsToSearch.map { (str) -> String in
             str.replacingOccurrences(of: " ", with: "%20")
         }.joined(separator: ",")
-        
-        
         
         var searchURL: URL? {
             if ingredientText != "" {
@@ -195,8 +214,6 @@ struct Recipe {
         guard let url = searchURL else {
             return
         }
-        
-        
         
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             DispatchQueue.main.async {
@@ -511,13 +528,38 @@ extension Recipe {
         cbr.setUp(name: self.name, servings: RealmOptional(self.numServes), cookTime: RealmOptional(self.cookTime), prepTime: RealmOptional(self.prepTime), calories: RealmOptional(self.calories), ingredients: ingredients, instructions: instructions, notes: self.notes)
         return cbr
     }
-
+    
+    func addRecipeToRecentlyViewedRecipes(db: Firestore) {
+        #warning("need to limit the total number of items in this field in firebase")
+        if let uid = Auth.auth().currentUser?.uid {
+            let reference = db.collection("users").document(uid)
+            reference.getDocument { (documentSnapshot, error) in
+                guard let doc = documentSnapshot else { return }
+                guard let data = doc.data() else { return }
+                
+                if var dict = data["recentlyViewedRecipes"] as? [String:[String:Any]] {
+                    // update the data, already have saved recipes
+                    dict["\(Date().timeIntervalSince1970)"] = ["name": self.name, "path": self.imagePath as Any, "tagline": self.tagline as Any ]
+                    // should have the dict, just would need to write over the previous dict with this new dict, also might need to delete the oldest entry
+                    
+                    
+                    reference.updateData([
+                        "recentlyViewedRecipes" : dict
+                    ])
+                } else {
+                    // no saved recipes, need to create the dictionary
+                    let dict: [String:[String:Any]] = ["\(Date().timeIntervalSince1970)":["name": self.name, "path": self.imagePath as Any, "tagline": self.tagline as Any]]
+                    reference.updateData([
+                        "recentlyViewedRecipes" : dict
+                    ])
+                }
+            }
+        }
+    }
+    
 }
 
 
-
-
-#warning("make sure this is actually being used and not forgotten about and lost forever")
 extension Recipe {
     struct Puppy {
         var title: String?
@@ -531,3 +573,4 @@ extension Recipe {
         }
     }
 }
+
