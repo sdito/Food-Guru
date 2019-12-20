@@ -116,7 +116,9 @@ struct Search {
                 
                 
             default:
-                return
+                print("getting to this point")
+                #warning("maybe do something here that automatically brings up the recipe puppy recipes")
+                recipesReturned(recipes)
             }
         } else {
             switch (ingredientCount, recipeCount, cuisineCount) {
@@ -429,7 +431,11 @@ struct Search {
             currentSearches.append(("\(ingredient)", .ingredient))
         }
         
-        return currentSearches
+        if currentSearches.isEmpty {
+            return [(string, .other)]
+        } else {
+            return currentSearches
+        }
         
     }
     
@@ -969,7 +975,10 @@ struct Search {
                 return .iceCream
             } else if item.contains("sour") {
                 return .sourCream
-            } else {
+            } else if item.contains("cheese") {
+                return .creamCheese
+            }
+            else {
                 return .cream
             }
         } else if item.contains("gelato") || item.contains("sorbet") {
@@ -1135,8 +1144,9 @@ struct Search {
                 return .cottageCheese
             } else if item.contains("romano") {
                 return .romanoCheese
-            }
-            else {
+            } else if item.contains("cream") {
+                return .creamCheese
+            } else {
                 return .cheese
             }
         } else if item.contains("pizza") {

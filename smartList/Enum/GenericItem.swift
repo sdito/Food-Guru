@@ -10,7 +10,6 @@ import Foundation
 
 
 enum GenericItem: String, CaseIterable {
-    
     case alfredoSauce
     case almond
     case almondButter
@@ -97,6 +96,7 @@ enum GenericItem: String, CaseIterable {
     case cranberry
     case cranberrySauce
     case cream
+    case creamCheese
     case creamOfChickenSoup
     case creamOfMushroomSoup
     case cucumber
@@ -584,7 +584,7 @@ enum GenericItem: String, CaseIterable {
         case .lasagnaNoodles:
             return "Lasagna noodles"
         case .lemon:
-            return "Lemons"
+            return "Lemon"
         case .lemonJuice:
             return "Lemon juice"
         case .lentil:
@@ -640,7 +640,7 @@ enum GenericItem: String, CaseIterable {
         case .onionPowder:
             return "Onion powder"
         case .orange:
-            return "Oranges"
+            return "Orange"
         case .oregano:
             return "Oregano"
         case .oyster:
@@ -690,7 +690,7 @@ enum GenericItem: String, CaseIterable {
         case .popcorn:
             return "Popcorn"
         case .poppySeed:
-            return "Popy seeds"
+            return "Poppy seeds"
         case .pork:
             return "Pork"
         case .portobelloMushroom:
@@ -857,6 +857,8 @@ enum GenericItem: String, CaseIterable {
             return "Hamburger patties"
         case .hamburgerBuns:
             return "Hamburger buns"
+        case .creamCheese:
+            return "Cream cheese"
         }
     }
     
@@ -1456,6 +1458,8 @@ enum GenericItem: String, CaseIterable {
             return .meat
         case .hamburgerBuns:
             return .bakery
+        case .creamCheese:
+            return .dairy
         }
     }
     

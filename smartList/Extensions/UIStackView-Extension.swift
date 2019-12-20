@@ -47,7 +47,6 @@ extension UIStackView {
         let forDisplay = ingredients.map { (i) -> String in
             (GenericItem.init(rawValue: i)?.description ?? "other")
         }.filter({$0 != "other"})
-        //let ingredients = ["Beef", "Chicken", "Salmon", "Broccoli", "Apples", "Garlic", "Pepper", "Mushrooms", "Lemons"]
         forDisplay.forEach { (ingredient) in
             let b = UIButton()
             

@@ -173,20 +173,31 @@ struct Recipe {
         }
         
         
+        
+        
         let ingredientText = itemsToSearch.map { (str) -> String in
             str.replacingOccurrences(of: " ", with: "%20")
         }.joined(separator: ",")
         
-        for _ in 1...100 {
-            print(ingredientText)
+        
+        
+        var searchURL: URL? {
+            if ingredientText != "" {
+                #warning("if just ingredients, then can just return ingredient text, but need to see if there are also any other searches, watch out for expiring though")
+                return URL(string: "http://www.recipepuppy.com/api/?i=\(ingredientText)")
+            } else {
+                print("Doing general query")
+                let txt = (activeSearches.first?.0)?.replacingOccurrences(of: " ", with: "%20")
+                return URL(string: "http://www.recipepuppy.com/api/?q=\(txt ?? "\(GenericItem.all.randomElement() ?? "")")")
+            }
         }
         
-        guard let url = URL(string: "http://www.recipepuppy.com/api/?i=\(ingredientText)") else {
-            for _ in 1...100 {
-                print("This didnt work for some reason")
-            }
+        guard let url = searchURL else {
             return
         }
+        
+        
+        
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             DispatchQueue.main.async {
                 guard let data = data else {

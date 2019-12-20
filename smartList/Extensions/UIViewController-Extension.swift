@@ -12,7 +12,31 @@ import FirebaseStorage
 
 
 extension UIViewController {
-    @objc func removeFromSuperViewSelector(forItemsToStores: Bool) {
+    
+    @objc func removeFromSuperviewForPickerView() {
+        if self.presentedViewController?.view.tag == 111 {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.presentedViewController?.view.alpha = 0.0
+            }) { (true) in
+                self.dismiss(animated: false, completion: nil)
+            }
+        } else {
+            print("The tag is not 111")
+            #error("need to be able to get rid of the VC from here")
+        }
+//        for vc in vcs {
+//            if vc.view.tag == 111 {
+//                UIView.animate(withDuration: 0.3, animations: {
+//                    vc.view.alpha = 0.0
+//                }) { (true) in
+//                    vc.removeFromParent()
+//                    vc.view.removeFromSuperview()
+//                }
+//            }
+//        }
+    }
+    
+    @objc func removeFromSuperViewSelector() {
         UIView.animate(withDuration: 0.3, animations: {
             self.presentedViewController?.view.alpha = 0.0
         }) { (true) in
@@ -75,7 +99,6 @@ extension UIViewController {
         v.center.x = vc.view.center.x
         v.center.y = vc.view.center.y - 100
         
-        
         vc.view.insertSubview(v, at: 2)
         v.alpha = 0
         v.shadowAndRounded(cornerRadius: 25.0, border: false)
@@ -89,7 +112,6 @@ extension UIViewController {
     }
     
     func createImageDetailView(imagePath: String?, initialImage: UIImage?) {
-        //#error("image not centered")
         print("Image path \(String(describing: imagePath)) will be used here for the big grand detail view yay")
         let vc = UIViewController()
         let button = UIButton()
@@ -142,14 +164,17 @@ extension UIViewController {
     
     func createPickerView(itemNames: [String], itemStores: [String]?, itemListID: String, singleItem: Bool, delegateVC: UIViewController) {
         let vc = UIViewController()
-        //vc.view.backgroundColor = .gray
         
+        //vc.view.backgroundColor = .gray
+        vc.view.tag = 111
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
         button.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
-        button.addTarget(self, action: #selector(removeFromSuperViewSelector), for: .touchUpInside)
+        button.addTarget(self, action: #selector(removeFromSuperviewForPickerView), for: .touchUpInside)
         vc.view.insertSubview(button, at: 1)
+        
+        
         
         let v = Bundle.main.loadNibNamed("SortItemView", owner: nil, options: nil)?.first as! SortItemView
         v.delegate = delegateVC as? DisableAddAllItemsDelegate
@@ -171,7 +196,7 @@ extension UIViewController {
                 v.alpha = 1.0
                 
             }
-            
+
         }
     }
     func createNavigationBarTextAttributes() {

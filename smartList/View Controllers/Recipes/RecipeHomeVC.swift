@@ -42,7 +42,6 @@ class RecipeHomeVC: UIViewController {
     private let currentSearchesView = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
     private var activeSearches: [(String, SearchType)] = [] {
         didSet {
-            moreRecipesView.isHidden = false
             if SharedValues.shared.sentRecipesInfo == nil {
                 Search.find(from: self.activeSearches, db: db) { (rcps) in
                     if let rcps = rcps {
@@ -94,6 +93,12 @@ class RecipeHomeVC: UIViewController {
             collectionView?.reloadData()
             if self.recipes.isEmpty {
                 self.createMessageView(color: .red, text: "No recipes found")
+                #warning("should i have the function below that automatically calles the recipe puppy recipes?")
+                handleNeedingMoreRecipes()
+            }
+            
+            if self.recipes.count < 2 {
+                moreRecipesView.isHidden = false
             }
         }
     }
@@ -181,11 +186,7 @@ class RecipeHomeVC: UIViewController {
     
     
     @IBAction func moreRecipesPressed(_ sender: Any) {
-        Recipe.getPuppyRecipesFromSearches(activeSearches: self.activeSearches, expiringItems: expiringItems) { (puppyRecipes) in
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "outsideRecipesVC") as! OutsideRecipesVC
-            vc.puppyRecipes = puppyRecipes
-            self.present(vc, animated: true, completion: nil)
-        }
+        handleNeedingMoreRecipes()
     }
     
 
@@ -200,7 +201,13 @@ class RecipeHomeVC: UIViewController {
         }
     }
     
-    
+    private func handleNeedingMoreRecipes() {
+        Recipe.getPuppyRecipesFromSearches(activeSearches: self.activeSearches, expiringItems: expiringItems) { (puppyRecipes) in
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "outsideRecipesVC") as! OutsideRecipesVC
+            vc.puppyRecipes = puppyRecipes
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
     
     private func createObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(recipeButtonPressed), name: .recipeSearchButtonPressed, object: nil)
@@ -290,12 +297,10 @@ class RecipeHomeVC: UIViewController {
             case .recipe:
                 temp = temp.filter({$0.1 != .recipe})
                 temp = temp.filter({$0.1 != .other})
-                
                 temp += newSearches
                 activeSearches = temp
             case .ingredient:
                 temp = temp.filter({$0.1 != .other})
-                
                 temp += newSearches
                 activeSearches = temp
             case .other:
@@ -350,6 +355,7 @@ extension RecipeHomeVC: DynamicHeightLayoutDelegate {
 
 
 extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch savedRecipesActive {
         case true:
@@ -367,6 +373,19 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         case false:
             let selected = recipes[indexPath.item]
             performSegue(withIdentifier: "showRecipeDetail", sender: (imageCache.object(forKey: "\(indexPath.row)" as NSString), selected))
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == 1 {
+            if collectionView.contentSize.height < collectionView.bounds.height {
+                print("Need to make the view visible")
+                moreRecipesView.isHidden = false
+            } else {
+                print("Need to make the view hidden")
+                moreRecipesView.isHidden = true
+            }
+//            print(collectionView.contentSize.height, collectionView.bounds.height)
         }
     }
     
@@ -429,14 +448,16 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         self.lastContentOffset = scrollView.contentOffset.y
         
         
-        if scrollView.contentOffset.y > (contentSizeHeight - self.view.bounds.height - 700) {
-            print("Show the more reicpes pop up now")
-            #warning("good to use this to show the pop up to push to the more recipes screen")
-            moreRecipesView.isHidden = false
+        let svContentOffset = scrollView.contentOffset.y
+        let bottonOfSV = contentSizeHeight-scrollView.bounds.height
+        
+        if svContentOffset > bottonOfSV - 500 {
+//            moreRecipesView.isHidden = false
             if moreRecipesView.isHidden == true {
                 moreRecipesView.setIsHidden(false, animated: true)
             }
         } else {
+//            moreRecipesView.isHidden = true
             if moreRecipesView.isHidden == false {
                 moreRecipesView.setIsHidden(true, animated: true)
             }

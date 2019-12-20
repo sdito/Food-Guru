@@ -137,6 +137,12 @@ class RecipeDetailVC: UIViewController {
                     }
                     self.removeAddAllButton()
                     self.createMessageView(color: Colors.messageGreen, text: "Items added to list!")
+                } else if list.stores?.count == 1 {
+                    for item in ingredientsToAddToList {
+                        GroceryList.addItemToListFromRecipe(db: self.db, listID: list.ownID ?? " ", name: item, userID: uid, store: list.stores!.first!)
+                    }
+                    self.removeAddAllButton()
+                    self.createMessageView(color: Colors.messageGreen, text: "Items added to list!")
                 } else {
                     var allItems = ingredientsToAddToList
                     print(allItems)
