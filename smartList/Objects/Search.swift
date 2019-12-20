@@ -58,6 +58,7 @@ struct Search {
                         }
                     }
                     print(systemItemsExpiring)
+                    NotificationCenter.default.post(name: .expiringItemsFromFoodStorage, object: nil, userInfo: ["items":systemItemsExpiring])
                     
                     switch systemItemsExpiring.count {
                     case 0:

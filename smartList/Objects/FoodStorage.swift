@@ -204,27 +204,27 @@ struct FoodStorage {
         }
     }
     
-    static func getIngredientsThatAreExpiring(db: Firestore, itemNamesReturned: @escaping (_ names: [String]) -> Void) {
-        #warning("maks sure this is being used")
-        var displayNamesExpiring: [String] = []
-        let timeIntervalForSearch = Date().timeIntervalSince1970 + (86_400 * 2)
-        let foodStorageReference = db.collection("storages").document(SharedValues.shared.foodStorageID ?? " ").collection("items").whereField("timeExpires", isLessThan: timeIntervalForSearch)
-        foodStorageReference.getDocuments { (querySnapshot, error) in
-            guard let documents = querySnapshot?.documents else {
-                print("Error retreiving documents: \(String(describing: error))")
-                return
-            }
-            
-            for doc in documents {
-                let name = doc.get("systemItem") as? String
-                if let name = name {
-                    let displayName = GenericItem(rawValue: name)?.description
-                    if let displayName = displayName {
-                        displayNamesExpiring.append(displayName)
-                    }
-                }
-            }
-           itemNamesReturned(displayNamesExpiring)
-        }
-    }
+//    static func getIngredientsThatAreExpiring(db: Firestore, itemNamesReturned: @escaping (_ names: [String]) -> Void) {
+//        #warning("maks sure this is being used")
+//        var displayNamesExpiring: [String] = []
+//        let timeIntervalForSearch = Date().timeIntervalSince1970 + (86_400 * 2)
+//        let foodStorageReference = db.collection("storages").document(SharedValues.shared.foodStorageID ?? " ").collection("items").whereField("timeExpires", isLessThan: timeIntervalForSearch)
+//        foodStorageReference.getDocuments { (querySnapshot, error) in
+//            guard let documents = querySnapshot?.documents else {
+//                print("Error retreiving documents: \(String(describing: error))")
+//                return
+//            }
+//            
+//            for doc in documents {
+//                let name = doc.get("systemItem") as? String
+//                if let name = name {
+//                    let displayName = GenericItem(rawValue: name)?.description
+//                    if let displayName = displayName {
+//                        displayNamesExpiring.append(displayName)
+//                    }
+//                }
+//            }
+//           itemNamesReturned(displayNamesExpiring)
+//        }
+//    }
 }

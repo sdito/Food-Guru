@@ -13,6 +13,7 @@ import AVFoundation
 
 
 class RecipeHomeVC: UIViewController {
+    private var expiringItems: [String] = []
     private var previousContentOffset: CGPoint?
     private var timer: Timer?
     private var savedRecipesActive = false {
@@ -180,8 +181,7 @@ class RecipeHomeVC: UIViewController {
     
     
     @IBAction func moreRecipesPressed(_ sender: Any) {
-        print("Bring up the puppy recipes now")
-        Recipe.getPuppyRecipesFromSearches(activeSearches: self.activeSearches) { (puppyRecipes) in
+        Recipe.getPuppyRecipesFromSearches(activeSearches: self.activeSearches, expiringItems: expiringItems) { (puppyRecipes) in
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "outsideRecipesVC") as! OutsideRecipesVC
             vc.puppyRecipes = puppyRecipes
             self.present(vc, animated: true, completion: nil)
@@ -207,6 +207,18 @@ class RecipeHomeVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionView), name: .savedRecipesChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(haveSavedRecipesShow), name: .haveSavedRecipesAppear, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionView), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(expiringIngredientsReceived), name: .expiringItemsFromFoodStorage, object: nil)
+    }
+    
+    @objc func expiringIngredientsReceived(_ notification: NSNotification) {
+        if let dict = notification.userInfo as NSDictionary? {
+            if let items = dict["items"] as? [String] {
+                let displayItems = items.map { (str) -> String in
+                    (GenericItem.init(rawValue: str)?.description ?? "")
+                }.filter({$0 != ""})
+                expiringItems = displayItems
+            }
+        }
     }
     
     @objc func recipeButtonPressed(_ notification: NSNotification) {
@@ -214,7 +226,6 @@ class RecipeHomeVC: UIViewController {
         if let dict = notification.userInfo as NSDictionary? {
             if let buttonName = dict["buttonName"] as? (String, SearchType) {
                 if buttonName.0 != "Select Ingredients" {
-                    
                     handleDuplicateSearchesAndAddNew(newSearches: [buttonName])
                 } else {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)

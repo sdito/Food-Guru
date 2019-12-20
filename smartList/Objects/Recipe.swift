@@ -159,22 +159,27 @@ struct Recipe {
         task.resume()
     }
     
-    static func getPuppyRecipesFromSearches(activeSearches: [(String, SearchType)], recipesFound: @escaping (_ recipes: [Recipe.Puppy]) -> Void) {
+    static func getPuppyRecipesFromSearches(activeSearches: [(String, SearchType)], expiringItems: [String], recipesFound: @escaping (_ recipes: [Recipe.Puppy]) -> Void) {
         var puppyRecipes: [Recipe.Puppy] = []
-        for _ in 1...100 {
-            print(activeSearches)
+        
+        var itemsToSearch: [String] {
+            if activeSearches.contains(where: {$0 == ("Expiring", .other)}) {
+                return expiringItems
+            } else {
+                return activeSearches.filter({$0.1 == .ingredient}).map { (str) -> String in
+                    (GenericItem(rawValue: str.0)?.description ?? "")
+                }.filter({$0 != ""})
+            }
         }
         
-        #error("need to handle 'Expiring' items through new function written in FoodStorage")
         
-        
-        let ingredientText = activeSearches.filter({$0.1 == .ingredient}).map { (str) -> String in
-            (GenericItem(rawValue: str.0)?.description ?? "")
-        }.filter({$0 != ""}).map { (str) -> String in
+        let ingredientText = itemsToSearch.map { (str) -> String in
             str.replacingOccurrences(of: " ", with: "%20")
         }.joined(separator: ",")
         
-        
+        for _ in 1...100 {
+            print(ingredientText)
+        }
         
         guard let url = URL(string: "http://www.recipepuppy.com/api/?i=\(ingredientText)") else {
             for _ in 1...100 {
