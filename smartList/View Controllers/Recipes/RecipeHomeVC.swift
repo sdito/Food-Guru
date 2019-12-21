@@ -256,6 +256,9 @@ class RecipeHomeVC: UIViewController {
     }
     @objc func haveSavedRecipesShow() {
         savedRecipesActive = true
+        Recipe.readUserSavedRecipes(db: db) { (rcps) in
+            self.savedRecipes = rcps
+        }
     }
     @objc func reloadCollectionView() {
         print("Collection view should be reloaded")

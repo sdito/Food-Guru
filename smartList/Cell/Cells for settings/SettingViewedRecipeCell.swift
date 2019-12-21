@@ -8,13 +8,25 @@
 
 import UIKit
 
+
+
+protocol SettingViewedRecipeCellDelegate {
+    func recipeDocumentIdPressed(id: String)
+}
+
+
+
 class SettingViewedRecipeCell: UITableViewCell {
+    var path: String?
+    var delegate: SettingViewedRecipeCellDelegate!
+    
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var time: UILabel!
     
     func setUIfromData(data: [String:Any]) {
         name.text = data["name"] as? String
         time.text = (data["timeIntervalSince1970"] as? TimeInterval)?.timeSince()
+        path = data["path"] as? String
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recognizer))
         
@@ -23,7 +35,9 @@ class SettingViewedRecipeCell: UITableViewCell {
     }
     
     @objc func recognizer() {
-        #warning("need to implement to show recipe or something like that")
-        print(self.name.text)
+        if let path = path?.imagePathToDocID() {
+            delegate.recipeDocumentIdPressed(id: path)
+        }
+        
     }
 }

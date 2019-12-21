@@ -77,10 +77,7 @@ class RecipeDetailVC: UIViewController {
         })
         //addAllToListOutlet.isUserInteractionEnabled = true
         createObserver()
-        
-        
-        
-        
+    
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -351,7 +348,6 @@ class RecipeDetailVC: UIViewController {
         recipe.addInstructionsToInstructionStackView(stackView: instructionsStackView)
         
         
-        //#error("the recipe view header is not drawing properly if there are no reviews")
         Review.getReviewsFrom(recipe: recipe, db: db) { (rvws) in
             Review.getViewsFrom(reviews: rvws).forEach { (view) in
                 self.reviewsStackView.insertArrangedSubview(view, at: 1)
@@ -365,9 +361,9 @@ class RecipeDetailVC: UIViewController {
         }
         
         
-        if let imagePaths = data?.recipe.reviewImagePaths {
+        if let imagePaths = data?.recipe.reviewImagePaths?.shuffled().prefix(8) {
             let v = Bundle.main.loadNibNamed("ReviewImagesView", owner: nil, options: nil)?.first! as! ReviewImagesView
-            v.setUI(imagePaths: imagePaths)
+            v.setUI(imagePaths: Array(imagePaths))
             v.widthAnchor.constraint(equalToConstant: self.view.bounds.width).isActive = true
             wholeSV.insertArrangedSubview(v, at: 2)
             v.delegate = self

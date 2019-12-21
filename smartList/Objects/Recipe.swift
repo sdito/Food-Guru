@@ -249,6 +249,15 @@ struct Recipe {
         
     }
     
+    static func readOneRecipeFrom(id: String, db: Firestore, recipeReturned: @escaping(_ recipe: Recipe) -> Void) {
+        let reference = db.collection("recipes").document(id)
+        reference.getDocument { (documentSnapshot, error) in
+            guard let doc = documentSnapshot else { return }
+            let recipe = Recipe(name: doc.get("name") as! String, recipeType: doc.get("recipeType") as! [String], cuisineType: doc.get("cuisineType") as! String, cookTime: doc.get("cookTime") as! Int, prepTime: doc.get("prepTime") as! Int, ingredients: doc.get("ingredients") as! [String], instructions: doc.get("instructions") as! [String], calories: doc.get("calories") as? Int, numServes: doc.get("numServes") as! Int, userID: doc.get("userID") as? String, numReviews: doc.get("numReviews") as? Int, numStars: doc.get("numStars") as? Int, notes: doc.get("notes") as? String, tagline: doc.get("tagline") as? String, recipeImage: nil, imagePath: doc.get("path") as? String, reviewImagePaths: doc.get("reviewImagePaths") as? [String])
+            recipeReturned(recipe)
+        }
+    }
+    
     static func getRecipeInfoFromURL_allRecipesTwo(recipeURL: String) {
         let url = URL(string: recipeURL)!
 
@@ -530,7 +539,6 @@ extension Recipe {
     }
     
     func addRecipeToRecentlyViewedRecipes(db: Firestore) {
-        #warning("need to limit the total number of items in this field in firebase")
         #warning("does dispatchQueue do anything here, ask")
         DispatchQueue.main.async {
             if let uid = Auth.auth().currentUser?.uid {
@@ -544,6 +552,12 @@ extension Recipe {
                         dict["\(Date().timeIntervalSince1970)"] = ["name": self.name, "path": self.imagePath as Any, "timeIntervalSince1970": Date().timeIntervalSince1970]
                         // should have the dict, just would need to write over the previous dict with this new dict, also might need to delete the oldest entry
                         
+                        #warning("double check deleting the item after 20 works again")
+                        if dict.keys.count > 20 {
+                            let key = dict.keys.sorted().first
+                            dict.removeValue(forKey: key!)
+                            
+                        }
                         
                         reference.updateData([
                             "recentlyViewedRecipes" : dict

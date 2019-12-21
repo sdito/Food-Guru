@@ -243,9 +243,14 @@ class CreateRecipeVC: UIViewController {
 
     
     @IBAction func createRecipePressed(_ sender: Any) {
+        // handles both creating a cookbook recipe and creating a normal recipe
         switch forCookbook {
         case false:
-            var recipe = Recipe(name: nameTextField.text!, recipeType: recipeType!, cuisineType: cuisineType!, cookTime: cookTimeTextField.toInt()!, prepTime: prepTimeTextField.toInt()!, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servingsTextField.toInt()!, userID: Auth.auth().currentUser?.uid, numReviews: nil, numStars: nil, notes: notesTextView.text, tagline: taglineTextView.text, recipeImage: image, imagePath: nil, reviewImagePaths: nil)
+            #warning("still need to handle (1) ingredients, (2) taglineTextView, (3) image, (4) instructions")
+            guard let rType = recipeType, let cType = cuisineType, let cookTime = cookTimeTextField.toInt(), let prepTime = prepTimeTextField.toInt(), let servings = servingsTextField.toInt(), let uid = Auth.auth().currentUser?.uid else { return }
+            
+            
+            var recipe = Recipe(name: nameTextField.text!, recipeType: rType, cuisineType: cType, cookTime: cookTime, prepTime: prepTime, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servings, userID: uid, numReviews: nil, numStars: nil, notes: notesTextView.text, tagline: taglineTextView.text, recipeImage: image, imagePath: nil, reviewImagePaths: nil)
             recipe.writeToFirestore(db: db, storage: storage)
             navigationController?.popToRootViewController(animated: true)
         case true:

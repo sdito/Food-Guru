@@ -23,7 +23,8 @@ class ReviewImagesView: UIView {
     lazy var storage = Storage.storage()
     private var paths: [String] = []
     var delegate: ReviewImagesViewDelegate!
-    //#error("path being sent is not the correct path for the image")
+    
+    
     func setUI(imagePaths: [String]) {
         paths = imagePaths
         for path in imagePaths {

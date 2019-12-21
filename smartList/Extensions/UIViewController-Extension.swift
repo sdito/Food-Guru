@@ -53,7 +53,7 @@ extension UIViewController {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Cancel", for: .normal)
-        button.setTitleColor(.red, for: .normal)
+        button.setTitleColor(.clear, for: .normal)
         button.titleLabel?.font = UIFont(name: "futura", size: 17)
         
         

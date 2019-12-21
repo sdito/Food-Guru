@@ -190,6 +190,7 @@ class SettingsDetailVC: UIViewController {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "settingViewedRecipeCell") as! SettingViewedRecipeCell
                     let recipe = data[item]
                     cell.setUIfromData(data: recipe!)
+                    cell.delegate = self
                     cells.append(cell)
                 }
             }
@@ -317,6 +318,19 @@ extension SettingsDetailVC: UpdateScreenDelegate {
 }
 
 
+extension SettingsDetailVC: SettingViewedRecipeCellDelegate {
+    func recipeDocumentIdPressed(id: String) {
+        Recipe.readOneRecipeFrom(id: id, db: db) { (rcp) in
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC
+            let data = (UIImage(), rcp)
+            vc.data = data
+            #warning("probably need a dismiss button or something, and also on the pdf screen to dismiss it")
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+}
+
+
 extension SettingsDetailVC: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -327,3 +341,5 @@ extension SettingsDetailVC: UITableViewDataSource, UITableViewDelegate {
     }
     
 }
+
+

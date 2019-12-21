@@ -744,7 +744,7 @@
                                                 </constraints>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Na1-4m-cBc">
-                                                <rect key="frame" x="0.0" y="687" width="143" height="38"/>
+                                                <rect key="frame" x="0.0" y="687" width="374" height="38"/>
                                                 <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="20"/>
                                                 <state key="normal" title="Create recipe">
@@ -2003,7 +2003,7 @@
         <!--Recipe DetailVC-->
         <scene sceneID="4zV-VX-qeO">
             <objects>
-                <viewController id="hdZ-0Z-sHl" customClass="RecipeDetailVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="recipeDetailVC" id="hdZ-0Z-sHl" customClass="RecipeDetailVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hG4-yT-I2T">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3186,8 +3186,8 @@
         <image name="trash-10-xxl" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="PBv-1W-whm"/>
-        <segue reference="cIs-qE-ptf"/>
+        <segue reference="NVq-p9-Ttp"/>
+        <segue reference="BPH-jV-ufh"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
