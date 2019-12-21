@@ -115,13 +115,20 @@ struct GroceryList {
     }
     
     static func handleProcessForAutomaticallyGeneratedListFromRecipe(db: Firestore, items: [String]) {
-        #warning("this should work, probbaly need to test it a few more times just to make sure")
         let reference = db.collection("lists").document()
         let uid = Auth.auth().currentUser?.uid
         SharedValues.shared.listIdentifier = reference
         
+        var listName: String {
+            if let name = Auth.auth().currentUser?.displayName {
+                return "\(name)'s grocery list"
+            } else {
+                return "Grocery list"
+            }
+        }
+        
         reference.setData([
-            "name": "Grocery List",
+            "name": listName,
             "isGroup": false,
             "stores": [],
             "people": [""],
@@ -155,6 +162,7 @@ struct GroceryList {
                             print("Error writing document for new list from recipe: \(err)")
                         } else {
                             print("Document successfully written")
+                            NotificationCenter.default.post(name: .itemAddedFromRecipe, object: nil, userInfo: ["itemName": i])
                         }
                     }
                 }

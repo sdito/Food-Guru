@@ -19,7 +19,6 @@ class TabVC: UITabBarController {
         User.writeNewUserDocumentIfApplicable(db: db)
         User.setAndPersistGroupDataInSharedValues(db: db)
         
-        
     }
 }
 

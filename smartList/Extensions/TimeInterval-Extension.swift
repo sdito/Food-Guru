@@ -42,9 +42,9 @@ extension TimeInterval {
             let num = Int(difference/60)
             switch num {
             case 1:
-                return "1 minute ago"
+                return "1 min ago"
             default:
-                return "\(num) minutes ago"
+                return "\(num) mins ago"
             }
             
         // return in hours

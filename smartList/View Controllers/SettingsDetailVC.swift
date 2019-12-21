@@ -324,8 +324,7 @@ extension SettingsDetailVC: SettingViewedRecipeCellDelegate {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC
             let data = (UIImage(), rcp)
             vc.data = data
-            #warning("probably need a dismiss button or something, and also on the pdf screen to dismiss it")
-            self.present(vc, animated: true, completion: nil)
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
 }

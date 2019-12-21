@@ -106,10 +106,6 @@ class RecipeHomeVC: UIViewController {
     
     private var savedRecipes: [Recipe] = [] {
         didSet {
-//            imageCache.removeAllObjects()
-//            collectionView?.collectionViewLayout.invalidateLayout()
-//            collectionView?.reloadData()
-            
             filteredSavedRecipes = self.savedRecipes
         }
     }
@@ -289,7 +285,6 @@ class RecipeHomeVC: UIViewController {
         }
     }
     private func handleTimer() {
-        #warning("might need to do some more work on this")
         let currentContentOffset = collectionView.contentOffset
         if currentContentOffset == previousContentOffset {
             if scrollBackUpView.isHidden {
@@ -301,6 +296,7 @@ class RecipeHomeVC: UIViewController {
     
     private func handleDuplicateSearchesAndAddNew(newSearches: [(String, SearchType)]) {
         var temp: [(String, SearchType)] = activeSearches
+        print("\(newSearches) are the newSearches")
         for newSearch in newSearches {
             switch newSearch.1 {
             case .cuisine:
@@ -321,7 +317,6 @@ class RecipeHomeVC: UIViewController {
                 activeSearches = newSearches
             }
         }
-        
     }
 }
 

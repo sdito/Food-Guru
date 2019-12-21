@@ -25,8 +25,8 @@ class InitialLogInVC: UIViewController {
         vc.modalTransitionStyle = .crossDissolve
         self.present(vc, animated: true, completion: nil)
     }
+    
     @IBAction func continueAsGuest(_ sender: Any) {
-        #warning("need to test this code, also in other places")
         self.createLoadingView()
         Auth.auth().signInAnonymously { (authDataResult, error) in
             if error == nil {

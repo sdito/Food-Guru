@@ -17,6 +17,7 @@ class AddItemsVC: UIViewController {
     private var delegate: SearchAssistantDelegate!
     private var storeText: String = "none"
     private var textAssistantViewActive = false
+    private var keyboardHeight: CGFloat?
     private var currentStore: String {
         if segmentedControl.numberOfSegments == 0 {
             return ""
@@ -78,7 +79,20 @@ class AddItemsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
-        //#error("left off here, need to decide where i want the button to go and to set up the screen, also need to set the action on the button about adding all the items from the recipe")
+        textField.setUpDoneToolbar(action: #selector(dismissKeyboardPressed), style: .cancel)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            keyboardHeight = keyboardRectangle.height
+            print("KeyboardHeight is \(keyboardHeight)")
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -87,9 +101,6 @@ class AddItemsVC: UIViewController {
         SharedValues.shared.listIdentifier?.updateData([
             "numItems": list?.items?.count as Any
         ])
-//        if sendHome == true {
-//            navigationController?.popToRootViewController(animated: true)
-//        }
         
     }
 
@@ -209,8 +220,9 @@ class AddItemsVC: UIViewController {
             vc.tableView.topAnchor.constraint(equalTo: textField.bottomAnchor).isActive = true
             
             
-            #warning("need to get the actual keyboard height below")
-            vc.tableView.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - textField.bounds.height - 300)).isActive = true
+            #error("amount on keyboard is a little off first time opened for some reason")
+            vc.tableView.topAnchor.constraint(equalTo: textField.bottomAnchor).isActive = true
+            vc.tableView.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - textField.bounds.height - (keyboardHeight ?? 0.0))).isActive = true
             vc.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
             vc.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
             vc.delegate = self as CreateNewItemDelegate
@@ -218,9 +230,16 @@ class AddItemsVC: UIViewController {
             
             delegate.searchTextChanged(text: textField.text!)
             textAssistantViewActive = true
+            vc.tableView.reloadData()
         } else {
             delegate.searchTextChanged(text: textField.text!)
         }
+    }
+    
+    @objc func dismissKeyboardPressed() {
+        textField.resignFirstResponder()
+        textField.text = ""
+        delegate.searchTextChanged(text: "")
     }
 }
 
@@ -290,7 +309,10 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
 
 extension AddItemsVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        toAddItem(text: textField.text!)
+        if textField.text != "" {
+            toAddItem(text: textField.text!)
+            delegate.searchTextChanged(text: "")
+        }
         return true
     }
 }

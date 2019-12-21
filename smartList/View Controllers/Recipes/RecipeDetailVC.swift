@@ -149,8 +149,8 @@ class RecipeDetailVC: UIViewController {
                     self.createPickerView(itemNames: allItems, itemStores: list.stores, itemListID: list.ownID ?? " ", singleItem: false, delegateVC: self)
                 }
             } else {
-//                #error("List created successfully with items, but goes into black hole for some reason")
                 GroceryList.handleProcessForAutomaticallyGeneratedListFromRecipe(db: self.db, items: ingredientsToAddToList)
+                
                 self.createMessageView(color: Colors.messageGreen, text: "List created and items added!")
             }
         }
@@ -445,8 +445,6 @@ extension RecipeDetailVC: DisableAddAllItemsDelegate {
 
 extension RecipeDetailVC: ReviewImagesViewDelegate {
     func showDetailedImage(path: String?, initialImage: UIImage?) {
-        //print("Path called from delegate: \(path)")
-        //#error("left off here, need to create this view the same way that the rating view is created, with the dimmed background")
         self.createImageDetailView(imagePath: path, initialImage: initialImage)
         
     }

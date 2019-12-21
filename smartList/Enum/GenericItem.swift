@@ -14,6 +14,7 @@ enum GenericItem: String, CaseIterable {
     case almond
     case almondButter
     case almondMilk
+    case americanCheese
     case anchovy
     case apple
     case appleButter
@@ -859,6 +860,8 @@ enum GenericItem: String, CaseIterable {
             return "Hamburger buns"
         case .creamCheese:
             return "Cream cheese"
+        case .americanCheese:
+            return "American cheese"
         }
     }
     
@@ -1459,6 +1462,8 @@ enum GenericItem: String, CaseIterable {
         case .hamburgerBuns:
             return .bakery
         case .creamCheese:
+            return .dairy
+        case .americanCheese:
             return .dairy
         }
     }

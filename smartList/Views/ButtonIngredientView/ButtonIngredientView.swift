@@ -51,15 +51,15 @@ class ButtonIngredientView: UIView {
                 if list.stores?.isEmpty == true {
                     GroceryList.addItemToListFromRecipe(db: db, listID: list.ownID ?? " ", name: name, userID: userID, store: "")
                 } else {
-                    print("stores and or categories is not empty, have picker view")
+                    print("stores is not empty, have picker view for user to decide")
                     self.delegate.haveUserSortItem(addedItemName: [name], addedItemStores: list.stores, addedItemListID: list.ownID ?? " ")
                     
                 }
             } else {
-                #warning("should just create a list from here, similar to the action from recipe detail of creating a list from addAllItemsToList when there is no list")
-                let alert = UIAlertController(title: "Error", message: "You first need to create a list before you can add items.", preferredStyle: .alert)
-                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
+                // To create and add the item to a list if the user does not currently have a list
+                GroceryList.handleProcessForAutomaticallyGeneratedListFromRecipe(db: db, items: [name])
+                self.findViewController()?.createMessageView(color: Colors.messageGreen, text: "List created and item added!")
+                
             }
         }
     }

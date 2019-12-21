@@ -186,6 +186,7 @@ struct Recipe {
     static func getPuppyRecipesFromSearches(activeSearches: [(String, SearchType)], expiringItems: [String], recipesFound: @escaping (_ recipes: [Recipe.Puppy]) -> Void) {
         var puppyRecipes: [Recipe.Puppy] = []
         
+        
         var itemsToSearch: [String] {
             if activeSearches.contains(where: {$0 == ("Expiring", .other)}) {
                 return expiringItems
@@ -200,10 +201,19 @@ struct Recipe {
             str.replacingOccurrences(of: " ", with: "%20")
         }.joined(separator: ",")
         
+        
+        var potentialOtherThanIngredientText: String {
+            let otherSearches = activeSearches.filter({$0.1 != .ingredient})
+            if otherSearches.isEmpty == false {
+                return "&q=\(otherSearches.first!.0)"
+            } else {
+                return ""
+            }
+        }
+        
         var searchURL: URL? {
             if ingredientText != "" {
-                #warning("if just ingredients, then can just return ingredient text, but need to see if there are also any other searches, watch out for expiring though")
-                return URL(string: "http://www.recipepuppy.com/api/?i=\(ingredientText)")
+                return URL(string: "http://www.recipepuppy.com/api/?i=\(ingredientText)\(potentialOtherThanIngredientText)")
             } else {
                 print("Doing general query")
                 let txt = (activeSearches.first?.0)?.replacingOccurrences(of: " ", with: "%20")
@@ -549,16 +559,17 @@ extension Recipe {
                     
                     if var dict = data["recentlyViewedRecipes"] as? [String:[String:Any]] {
                         // update the data, already have saved recipes
+                        print(dict.keys.count)
                         dict["\(Date().timeIntervalSince1970)"] = ["name": self.name, "path": self.imagePath as Any, "timeIntervalSince1970": Date().timeIntervalSince1970]
                         // should have the dict, just would need to write over the previous dict with this new dict, also might need to delete the oldest entry
                         
-                        #warning("double check deleting the item after 20 works again")
+                        print(dict.keys.count)
                         if dict.keys.count > 20 {
                             let key = dict.keys.sorted().first
                             dict.removeValue(forKey: key!)
                             
                         }
-                        
+                        print(dict.keys.count)
                         reference.updateData([
                             "recentlyViewedRecipes" : dict
                         ])

@@ -107,8 +107,21 @@ struct Search {
                         }
                         
                     default:
-                        print("Default")
-                        #warning("need to figure out how i want to handle this case, maybe a screen asking the user what ingredients they want to use")
+                        print("many items expiring, just take a random 3")
+                        if systemItemsExpiring.count >= 4 {
+                            let threeRandom = systemItemsExpiring.shuffled().prefix(3)
+                            reference.whereField("has_\(threeRandom[0])", isEqualTo: true).whereField("has_\(threeRandom[1])", isEqualTo: true).whereField("has_\(threeRandom[2])", isEqualTo: true).getDocuments { (querySnapshot, error) in
+                                guard let documents = querySnapshot?.documents else {
+                                    print("Error retrieving documents: \(String(describing: error))")
+                                    return
+                                }
+                                
+                                for doc in documents {
+                                    recipes.append(doc.recipe())
+                                }
+                                recipesReturned(recipes)
+                            }
+                        }
                         
                     }
                     
@@ -117,7 +130,6 @@ struct Search {
                 
             default:
                 print("getting to this point")
-                #warning("maybe do something here that automatically brings up the recipe puppy recipes")
                 recipesReturned(recipes)
             }
         } else {
@@ -421,19 +433,20 @@ struct Search {
         let recipe = Search.turnIntoSystemRecipeType(string: string)
         let ingredient = Search.turnIntoSystemItem(string: string)
         
-        if cuisine != .other {
-            currentSearches.append(("\(cuisine.description)", .cuisine))
-        }
         if recipe != .other {
             currentSearches.append(("\(recipe.description)", .recipe))
-        }
-        if ingredient != .other {
+        } else if ingredient != .other {
             currentSearches.append(("\(ingredient)", .ingredient))
+        } else if cuisine != .other {
+            currentSearches.append(("\(cuisine.description)", .cuisine))
         }
+        
         
         if currentSearches.isEmpty {
             return [(string, .other)]
-        } else {
+        }
+        
+        else {
             return currentSearches
         }
         
@@ -1146,6 +1159,8 @@ struct Search {
                 return .romanoCheese
             } else if item.contains("cream") {
                 return .creamCheese
+            } else if item.contains("american") {
+                return .americanCheese
             } else {
                 return .cheese
             }
