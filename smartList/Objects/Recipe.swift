@@ -100,13 +100,13 @@ struct Recipe {
         }
     }
     
-    static func readPreviouslyViewedRecipes(db: Firestore, dataReturned: @escaping (_ data: [String:[String:Any]]) -> Void) {
+    static func readPreviouslyViewedRecipes(db: Firestore) {
         if let uid = Auth.auth().currentUser?.uid {
             let reference = db.collection("users").document(uid)
             reference.getDocument { (documentSnapshot, error) in
                 guard let document = documentSnapshot else { return }
                 guard let field = document.get("recentlyViewedRecipes") as? [String:[String:Any]] else { return }
-                dataReturned(field)
+                SharedValues.shared.previouslyViewedRecipes = field
             }
         }
     }
@@ -531,27 +531,30 @@ extension Recipe {
     
     func addRecipeToRecentlyViewedRecipes(db: Firestore) {
         #warning("need to limit the total number of items in this field in firebase")
-        if let uid = Auth.auth().currentUser?.uid {
-            let reference = db.collection("users").document(uid)
-            reference.getDocument { (documentSnapshot, error) in
-                guard let doc = documentSnapshot else { return }
-                guard let data = doc.data() else { return }
-                
-                if var dict = data["recentlyViewedRecipes"] as? [String:[String:Any]] {
-                    // update the data, already have saved recipes
-                    dict["\(Date().timeIntervalSince1970)"] = ["name": self.name, "path": self.imagePath as Any, "tagline": self.tagline as Any ]
-                    // should have the dict, just would need to write over the previous dict with this new dict, also might need to delete the oldest entry
+        #warning("does dispatchQueue do anything here, ask")
+        DispatchQueue.main.async {
+            if let uid = Auth.auth().currentUser?.uid {
+                let reference = db.collection("users").document(uid)
+                reference.getDocument { (documentSnapshot, error) in
+                    guard let doc = documentSnapshot else { return }
+                    guard let data = doc.data() else { return }
                     
-                    
-                    reference.updateData([
-                        "recentlyViewedRecipes" : dict
-                    ])
-                } else {
-                    // no saved recipes, need to create the dictionary
-                    let dict: [String:[String:Any]] = ["\(Date().timeIntervalSince1970)":["name": self.name, "path": self.imagePath as Any, "tagline": self.tagline as Any]]
-                    reference.updateData([
-                        "recentlyViewedRecipes" : dict
-                    ])
+                    if var dict = data["recentlyViewedRecipes"] as? [String:[String:Any]] {
+                        // update the data, already have saved recipes
+                        dict["\(Date().timeIntervalSince1970)"] = ["name": self.name, "path": self.imagePath as Any, "timeIntervalSince1970": Date().timeIntervalSince1970]
+                        // should have the dict, just would need to write over the previous dict with this new dict, also might need to delete the oldest entry
+                        
+                        
+                        reference.updateData([
+                            "recentlyViewedRecipes" : dict
+                        ])
+                    } else {
+                        // no saved recipes, need to create the dictionary
+                        let dict: [String:[String:Any]] = ["\(Date().timeIntervalSince1970)":["name": self.name, "path": self.imagePath as Any, "timeIntervalSince1970": Date().timeIntervalSince1970]]
+                        reference.updateData([
+                            "recentlyViewedRecipes" : dict
+                        ])
+                    }
                 }
             }
         }

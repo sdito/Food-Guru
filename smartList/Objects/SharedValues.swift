@@ -59,6 +59,8 @@ class SharedValues {
     
     var newUsername: String?
     
+    var previouslyViewedRecipes: [String:[String:Any]]?
+    
     static let shared = SharedValues()
     
     

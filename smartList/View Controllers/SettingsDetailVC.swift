@@ -23,6 +23,7 @@ class SettingsDetailVC: UIViewController {
         db = Firestore.firestore()
         self.createNavigationBarTextAttributes()
         self.title = setting?.description()
+        Recipe.readPreviouslyViewedRecipes(db: db)
     }
     
     
@@ -183,10 +184,16 @@ class SettingsDetailVC: UIViewController {
             
         case .recentlyViewedRecipes:
             self.title = "Recently viewed recipes"
-            Recipe.readPreviouslyViewedRecipes(db: db) { (data) in
-                #error("need to create the cells here, still need to handle deleting the excess of recently viewed recipes")
+            var cells: [UITableViewCell] = []
+            if let data = SharedValues.shared.previouslyViewedRecipes {
+                for item in data.keys.sorted().reversed() {
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "settingViewedRecipeCell") as! SettingViewedRecipeCell
+                    let recipe = data[item]
+                    cell.setUIfromData(data: recipe!)
+                    cells.append(cell)
+                }
             }
-            return [UITableViewCell()]
+            return cells
         }
     }
     

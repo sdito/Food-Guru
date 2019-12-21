@@ -35,7 +35,7 @@ extension TimeInterval {
         
         // seconds, just created
         case 0...60:
-            return "Created now"
+            return "Now"
             
         // return in minutes
         case 60...3600:

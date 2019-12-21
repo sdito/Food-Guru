@@ -340,6 +340,7 @@ struct User {
         SharedValues.shared.currentItemsInStorage = nil
         SharedValues.shared.anonymousUser = nil
         SharedValues.shared.newUsername = nil
+        SharedValues.shared.previouslyViewedRecipes = nil
     }
     
     
