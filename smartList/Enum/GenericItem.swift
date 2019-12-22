@@ -44,6 +44,7 @@ enum GenericItem: String, CaseIterable {
     case beef
     case beer
     case bellPepper
+    case bison
     case blackBeans
     case blackberry
     case blackOlive
@@ -90,6 +91,7 @@ enum GenericItem: String, CaseIterable {
     case cod
     case coffee
     case corn
+    case cornedBeef
     case cornstarch
     case cottageCheese
     case crab
@@ -195,6 +197,7 @@ enum GenericItem: String, CaseIterable {
     case parmesan
     case parsley
     case pasta
+    case pastrami
     case peach
     case peanutButter
     case peanut
@@ -203,6 +206,7 @@ enum GenericItem: String, CaseIterable {
     case peas
     case pecan
     case pepper
+    case pepperoni
     case pestoSauce
     case pickle
     case pineapple
@@ -264,7 +268,9 @@ enum GenericItem: String, CaseIterable {
     case swordfish
     case syrup
     case taterTots
+    case tartarSauce
     case tea
+    case teriyakiSauce
     case thyme
     case tilapia
     case tofu
@@ -862,6 +868,18 @@ enum GenericItem: String, CaseIterable {
             return "Cream cheese"
         case .americanCheese:
             return "American cheese"
+        case .pastrami:
+            return "Pastrami"
+        case .pepperoni:
+            return "Pepperoni"
+        case .tartarSauce:
+            return "Tartar sauce"
+        case .teriyakiSauce:
+            return "Teriyaki sauce"
+        case .bison:
+            return "Bison"
+        case .cornedBeef:
+            return "Corned beef"
         }
     }
     
@@ -1465,6 +1483,18 @@ enum GenericItem: String, CaseIterable {
             return .dairy
         case .americanCheese:
             return .dairy
+        case .pastrami:
+            return .deli
+        case .pepperoni:
+            return .deli
+        case .tartarSauce:
+            return .condimentsAndDressings
+        case .teriyakiSauce:
+            return .condimentsAndDressings
+        case .bison:
+            return .meat
+        case .cornedBeef:
+            return .deli
         }
     }
     

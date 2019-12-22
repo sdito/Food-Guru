@@ -22,7 +22,7 @@ extension UITextField {
         let three = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: action)
         one.tintColor = Colors.main
         three.tintColor = Colors.main
-        let toolbar = UIToolbar()
+        let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 40))
         toolbar.autoresizingMask = .flexibleHeight
         toolbar.setItems([one, two, three], animated: false)
         self.inputAccessoryView = toolbar

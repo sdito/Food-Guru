@@ -50,10 +50,11 @@ class ButtonIngredientView: UIView {
             if let list = list {
                 if list.stores?.isEmpty == true {
                     GroceryList.addItemToListFromRecipe(db: db, listID: list.ownID ?? " ", name: name, userID: userID, store: "")
+                } else if list.stores?.count == 1 {
+                    GroceryList.addItemToListFromRecipe(db: db, listID: list.ownID ?? " ", name: name, userID: userID, store: list.stores!.first!)
                 } else {
                     print("stores is not empty, have picker view for user to decide")
                     self.delegate.haveUserSortItem(addedItemName: [name], addedItemStores: list.stores, addedItemListID: list.ownID ?? " ")
-                    
                 }
             } else {
                 // To create and add the item to a list if the user does not currently have a list

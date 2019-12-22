@@ -66,7 +66,7 @@ class CookbookVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         recipes = Array(realm.objects(CookbookRecipe.self))
-        filteredRecipes = recipes
+        
         scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
         
         
@@ -86,14 +86,13 @@ class CookbookVC: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
         let realm = try! Realm()
         recipes = Array(realm.objects(CookbookRecipe.self))
-        
+        filteredRecipes = recipes
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showFromCookbook" {
             let destVC = segue.destination as! RecipeDetailVC
@@ -103,15 +102,16 @@ class CookbookVC: UIViewController {
     
     @IBAction func savedRecipes(_ sender: Any) {
         print("Saved recipes")
-        self.dismiss(animated: false, completion: nil)
+//        self.dismiss(animated: false, completion: nil)
+        tabBarController?.selectedIndex = 0
         NotificationCenter.default.post(name: .haveSavedRecipesAppear, object: nil)
         
     }
     
     
     @IBAction func allRecipes(_ sender: Any) {
-        print("All recipes")
-        self.dismiss(animated: false, completion: nil)
+        tabBarController?.selectedIndex = 0
+//        self.dismiss(animated: false, completion: nil)
         
     }
     @objc private func cancelSelector() {

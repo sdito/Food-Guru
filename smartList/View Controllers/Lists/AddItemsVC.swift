@@ -56,7 +56,6 @@ class AddItemsVC: UIViewController {
         
         setUIfrom(list: list!)
         
-        view.setGradientBackground(colorOne: .lightGray, colorTwo: .gray)
         GroceryList.listenerOnListWithDocID(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (lst) in
             //self.list = lst
             self.list?.name = lst?.name ?? "No name"

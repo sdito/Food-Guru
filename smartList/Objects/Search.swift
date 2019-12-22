@@ -752,6 +752,8 @@ struct Search {
                 return .groundBeef
             } else if item.contains("broth") || item.contains("bouillon") {
                 return .broth
+            } else if item.contains("corned") {
+                return .cornedBeef
             } else {
                 return .beef
             }
@@ -1018,6 +1020,10 @@ struct Search {
                 return .pestoSauce
             } else if item.contains("oyster") {
                 return .oysterSauce
+            } else if item.contains("tartar") {
+                return .tartarSauce
+            } else if item.contains("teriyaki") {
+                return .teriyakiSauce
             }
         } else if item.contains("apple") || item.contains("apples") {
             if item.contains("vinegar") {
@@ -1428,6 +1434,12 @@ struct Search {
             return .ranch
         } else if item.contains("salad") && item.contains("dressing") {
             return .saladDressing
+        } else if item.contains("pastrami") {
+            return .pastrami
+        } else if item.contains("pepperoni") {
+            return .pepperoni
+        } else if item.contains("bison") {
+            return .bison
         }
         
         

@@ -50,22 +50,26 @@ class CreateGroupVC: UIViewController {
         }
         topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
     }
+    
     @IBAction func exit(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func createGroup(_ sender: Any) {
-        
+        doneCreatingOutlet.isUserInteractionEnabled = false
+        doneCreatingOutlet.alpha = 0.4
         if previousGroupID == nil {
             // create a new group, nothing to do with editing
             User.writeGroupToFirestoreAndAddToUsers(db: db, emails: emails)
             self.dismiss(animated: true, completion: nil)
         } else {
+            // need to edit the group
             User.editedGroupInfo(db: db, initialEmails: SharedValues.shared.groupEmails ?? [""], updatedEmails: emails, groupID: SharedValues.shared.groupID ?? " ", storageID: SharedValues.shared.foodStorageID ?? " ")
             self.dismiss(animated: true, completion: nil)
         }
         
     }
+    
     @objc private func addItem() {
         if emails.contains(textField.text!) == false {
             User.checkIfEmailIsValid(db: db, email: textField.text!) { (ec) in

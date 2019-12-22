@@ -13,6 +13,9 @@ import FirebaseAuth
 class SetUpListVC: UIViewController {
     
     var returnGroupID: String?
+//
+//    #warning("make sure this is being used")
+//    private var keyboardHeight: CGFloat?
     
     private var usingGroup: Bool? {
         didSet {
@@ -52,9 +55,6 @@ class SetUpListVC: UIViewController {
                         }
                         
                     }
-//                    if peopleStackView.subviews.count == 1 {
-//                        insertTextFieldIn(stackView: peopleStackView, text: "", userInteraction: true)
-//                    }
                 }
                 for person in listToEdit?.people ?? [] {
                     insertTextFieldIn(stackView: peopleStackView, text: person, userInteraction: true)
@@ -67,6 +67,7 @@ class SetUpListVC: UIViewController {
     
     var listToEdit: GroceryList?
     private var db: Firestore!
+    private var currentOffset: CGFloat?
     
     //start list data
     private var name: String?
@@ -82,9 +83,14 @@ class SetUpListVC: UIViewController {
     }
     private var people: [String]?
     // end list data
-    
-    #warning("need to handle moving screen with this textField variable")
-    private var currentTextField: UITextField?
+
+    #warning("need to handle moving screen with this textField variable or with something else idk")
+    private var currentTextField: UITextField? /*{
+        didSet {
+            currentOffset = self.currentTextField?.superview?.frame.minY
+            self.view.frame.origin.y = -(currentOffset ?? 0)
+        }
+    }*/
     
     @IBOutlet weak var topView: UIView!
     
@@ -128,7 +134,27 @@ class SetUpListVC: UIViewController {
             switchOutlet.isUserInteractionEnabled = false
         }
         topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+//
+//    deinit {
+//        NotificationCenter.default.removeObserver(self)
+//    }
+//
+//    @objc func keyboardWillHide() {
+//        print("keyBoard will hide")
+//        self.view.frame.origin.y = 0
+//    }
+//
+//    @objc func keyboardWillShow(_ notification: Notification) {
+//        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+//            let keyboardRectangle = keyboardFrame.cgRectValue
+//            keyboardHeight = keyboardRectangle.height
+//        }
+//    }
+    
     
     @IBAction func writeToFirestoreIfValid() {
         gatherListData()
@@ -226,11 +252,12 @@ class SetUpListVC: UIViewController {
         textField.textColor = Colors.main
         textField.delegate = self
         textField.borderStyle = .roundedRect
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        
         textField.setUpListToolbar(action: #selector(handleTextFieldForPlus), arrowAction: #selector(handleTextFieldForArrow))
         
         if let stackView = (currentTextField.superview as? UIStackView), currentTextField != nameTextField {
             if currentTextField == stackView.subviews.last {
-                print("got to this point")
                 print(stackView.subviews.count)
                 stackView.insertArrangedSubview(textField, at: stackView.subviews.count)
                 currentTextField.resignFirstResponder()
@@ -277,8 +304,6 @@ extension SetUpListVC: UITextFieldDelegate {
     }
     func textFieldDidBeginEditing(_ textField: UITextField) {
         currentTextField = textField
-        
-        
         if SharedValues.shared.anonymousUser == true && textField.superview == peopleStackView {
             textField.resignFirstResponder()
             currentTextField = nil

@@ -31,9 +31,6 @@ class CreateNewItemVC: UITableViewController {
                         searchedItems.append(itm)
                     }
                 }
-                
-                
-                
                 if searchedItems.isEmpty {
                     tableView.isHidden = true
                 } else {

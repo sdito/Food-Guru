@@ -158,6 +158,7 @@ class RecipeHomeVC: UIViewController {
         
         
         FoodStorage.readAndPersistSystemItemsFromStorageWithListener(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
+//        tabBarController?.tabBar.isHidden = true
         
     }
     @objc func fireTimer() {
@@ -196,7 +197,7 @@ class RecipeHomeVC: UIViewController {
         handleNeedingMoreRecipes()
     }
     
-
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -233,6 +234,10 @@ class RecipeHomeVC: UIViewController {
                 expiringItems = displayItems
             }
         }
+    }
+    
+    @IBAction func goToCookbook(_ sender: Any) {
+        tabBarController?.selectedIndex = 1
     }
     
     @objc func recipeButtonPressed(_ notification: NSNotification) {
