@@ -119,7 +119,6 @@ class CookbookVC: UIViewController {
         searchBar.endEditing(true)
     }
     @objc private func addSelector() {
-        print("add selector")
         search()
     }
     
@@ -203,7 +202,7 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
             let item = filteredRecipes[indexPath.row]
             let alert = UIAlertController(title: "Are you sure you want to delete \"\(item.name)\"", message: nil, preferredStyle: .alert)
             alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
-            alert.addAction(.init(title: "Delete", style: .destructive, handler: {_ in self.deleteSelectedRecipe(recipe: item, idx: indexPath.row)}))
+            alert.addAction(.init(title: "Delete", style: .destructive, handler: {_ in self.deleteSelectedRecipe(recipe: item, idx: indexPath)}))
             self.present(alert, animated: true)
         }
     }
@@ -222,10 +221,16 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    private func deleteSelectedRecipe(recipe: CookbookRecipe, idx: Int) {
-        let realm = try! Realm()
+    private func deleteSelectedRecipe(recipe: CookbookRecipe, idx: IndexPath) {
+//        let realm = try! Realm()
         recipe.delete()
-        recipes = Array(realm.objects(CookbookRecipe.self))
+        tableView.cellForRow(at: idx)?.isHidden = true
+//        tableView.reloadData()
+//        tableView.beginUpdates()
+//        tableView.deleteRows(at: [idx], with: .automatic)
+////        recipes = Array(realm.objects(CookbookRecipe.self))
+//        tableView.endUpdates()
+        
     }
 }
 

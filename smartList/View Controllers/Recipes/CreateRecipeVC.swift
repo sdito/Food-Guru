@@ -240,26 +240,71 @@ class CreateRecipeVC: UIViewController {
         
         
     }
-
+    
     
     @IBAction func createRecipePressed(_ sender: Any) {
         // handles both creating a cookbook recipe and creating a normal recipe
+        
+        // Can't be nil for both cookbook and normal recipes
+        guard nameTextField.text != "" else {
+            let alert = UIAlertController(title: "Error", message: "Missing recipe name", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
+            return
+        }
+        
+        guard InstructionView.getInstructions(stack: instructionsListStackView) != [] else {
+            let alert = UIAlertController(title: "Error", message: "Missing recipe instructions", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
+            return
+        }
+        
+        guard IngredientView.getIngredients(stack: ingredientsStackView) != [] else {
+            let alert = UIAlertController(title: "Error", message: "Missing recipe ingredients", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
+            return
+        }
+        // end
+        
         switch forCookbook {
         case false:
-            #warning("still need to handle (1) ingredients, (2) taglineTextView, (3) image, (4) instructions")
-            guard let rType = recipeType, let cType = cuisineType, let cookTime = cookTimeTextField.toInt(), let prepTime = prepTimeTextField.toInt(), let servings = servingsTextField.toInt(), let uid = Auth.auth().currentUser?.uid else {
-                let alert = UIAlertController(title: "Error", message: "Incomplete recipe data.", preferredStyle: .alert)
+            #warning("check to make sure this is blocking in complete recipes correctly")
+            
+            
+            
+            guard let img = image else {
+                let alert = UIAlertController(title: "Error", message: "Missing recipe image", preferredStyle: .alert)
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                present(alert, animated: true)
+                return
+            }
+            
+            guard taglineTextView.text != "" else {
+                print("Missing tagline")
+                let alert = UIAlertController(title: "Error", message: "Missing recipe tagline data", preferredStyle: .alert)
                 alert.addAction(.init(title: "Ok", style: .default, handler: nil))
                 present(alert, animated: true)
                 return
             }
             
             
-            var recipe = Recipe(name: nameTextField.text!, recipeType: rType, cuisineType: cType, cookTime: cookTime, prepTime: prepTime, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servings, userID: uid, numReviews: nil, numStars: nil, notes: notesTextView.text, tagline: taglineTextView.text, recipeImage: image, imagePath: nil, reviewImagePaths: nil)
+            
+            
+            guard let rType = recipeType, let cType = cuisineType, let cookTime = cookTimeTextField.toInt(), let prepTime = prepTimeTextField.toInt(), let servings = servingsTextField.toInt(), let uid = Auth.auth().currentUser?.uid else {
+                let alert = UIAlertController(title: "Error", message: "Incomplete recipe data", preferredStyle: .alert)
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                present(alert, animated: true)
+                return
+            }
+            
+            var recipe = Recipe(name: nameTextField.text!, recipeType: rType, cuisineType: cType, cookTime: cookTime, prepTime: prepTime, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servings, userID: uid, numReviews: nil, numStars: nil, notes: notesTextView.text, tagline: taglineTextView.text, recipeImage: img, imagePath: nil, reviewImagePaths: nil)
             recipe.writeToFirestore(db: db, storage: storage)
             navigationController?.popToRootViewController(animated: true)
+            
         case true:
-            #warning("need to handle incomplete data here too")
+            #warning("need to handle incomplete data here too, make sure is working properly as before")
             let ingredients: List<String> = List.init()
             let instructions: List<String> = List.init()
             IngredientView.getIngredients(stack: ingredientsStackView).forEach { (str) in

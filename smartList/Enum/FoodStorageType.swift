@@ -45,15 +45,28 @@ enum FoodStorageType {
     }
     
     static func selectedSegment(segmentedControl: UISegmentedControl) -> FoodStorageType {
-        let index = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)
-        switch index {
-        case "Unsorted":
+//        let index = segmentedControl.titleForSegment(at: segmentedControl.selectedSegmentIndex)
+//        switch index {
+//        case "Unsorted":
+//            return .unsorted
+//        case "Fridge":
+//            return .fridge
+//        case "Freezer":
+//            return .freezer
+//        case "Pantry":
+//            return .pantry
+//        default:
+//            return .unsorted
+//        }
+        
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
             return .unsorted
-        case "Fridge":
+        case 1:
             return .fridge
-        case "Freezer":
+        case 2:
             return .freezer
-        case "Pantry":
+        case 3:
             return .pantry
         default:
             return .unsorted

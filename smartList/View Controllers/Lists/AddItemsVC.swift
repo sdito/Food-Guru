@@ -341,7 +341,6 @@ extension AddItemsVC {
         if list != nil && list?.items?.isEmpty == false {
             if let id = SharedValues.shared.foodStorageID {
                 FoodStorage.addItemsFromListintoFoodStorage(sendList: list!, storageID: id, db: db)
-                // to set all the items in the list to not selected
                 for index in (list?.items!.indices)! {
                     list?.items?[index].selected = false
                 }

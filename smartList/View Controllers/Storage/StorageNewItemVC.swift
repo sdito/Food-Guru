@@ -15,6 +15,7 @@ class StorageNewItemVC: UIViewController {
     private var delegate: SearchAssistantDelegate!
     private var textAssistantViewActive = false
     var db: Firestore!
+    
     private var foodCategory: FoodStorageType {
         switch segmentedControl.selectedSegmentIndex {
         case 0:

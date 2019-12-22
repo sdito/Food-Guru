@@ -83,12 +83,12 @@ class RecipeCell: UICollectionViewCell {
         
         
         if SharedValues.shared.savedRecipes?.contains(recipe.imagePath ?? " ") ?? false {
-            self.favoriteButton.tintColor = Colors.main
+            self.favoriteButton.backgroundColor = Colors.main
         } else {
             if #available(iOS 13.0, *) {
-                self.favoriteButton.tintColor = .systemBackground
+                self.favoriteButton.backgroundColor = .systemGray
             } else {
-                self.favoriteButton.tintColor = .white
+                self.favoriteButton.backgroundColor = .gray
             }
         }
         

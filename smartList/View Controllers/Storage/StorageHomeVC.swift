@@ -34,6 +34,10 @@ class StorageHomeVC: UIViewController {
     
     var items: [Item] = [] {
         didSet {
+            segmentedControl.setTitle("None \(self.items.filter({$0.storageSection == .unsorted}).count)", forSegmentAt: 0)
+            segmentedControl.setTitle("Fridge \(self.items.filter({$0.storageSection == .fridge}).count)", forSegmentAt: 1)
+            segmentedControl.setTitle("Freezer \(self.items.filter({$0.storageSection == .freezer}).count)", forSegmentAt: 2)
+            segmentedControl.setTitle("Pantry \(self.items.filter({$0.storageSection == .pantry}).count)", forSegmentAt: 3)
             let itms = self.items.map({$0.storageSection})
             let boolean = FoodStorageType.isUnsortedSegmentNeeded(types: itms as! [FoodStorageType])
             haveNeededSectionsInSegmentedControl(unsortedNeeded: boolean, segmentedControl: segmentedControl)
@@ -124,13 +128,26 @@ class StorageHomeVC: UIViewController {
     @IBAction func plusWasPressed(_ sender: Any) {
         print("Plus was pressed")
         let vc = storyboard?.instantiateViewController(withIdentifier: "storageNewItem") as! StorageNewItemVC
+        var idx: Int {
+            switch segmentedControl.selectedSegmentIndex {
+            case 0:
+                return 0
+            case 1:
+                return 0
+            case 2:
+                return 1
+            case 3:
+                return 2
+            default:
+                return 0
+            }
+        }
         present(vc, animated: true, completion: nil)
-        
+        vc.segmentedControl.selectedSegmentIndex = idx
     }
     
     @IBAction func barcodeScanPressed(_ sender: Any) {
         print("barcode scanner pressed")
-        // not gonna work on the simulator
         let cameraPicker = UIImagePickerController()
         cameraPicker.sourceType = .camera
         cameraPicker.cameraCaptureMode = .photo
@@ -431,14 +448,6 @@ extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationController
                         }
                         
                         
-//
-//                        guard let htmlString = String(data: data, encoding: .utf8) else { return }
-//                        print(htmlString)
-//
-//                        #error("have the correct htmlString here, just need to extract the data from it")
-//                        let alert = UIAlertController(title: nil, message: htmlString, preferredStyle: .alert)
-//                        alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-//                        self.present(alert, animated: true)
                     }
                     
                 }
