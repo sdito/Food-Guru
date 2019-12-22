@@ -25,6 +25,7 @@ protocol RecipesFoundFromSearchingDelegate {
 class SearchByIngredientVC: UIViewController {
     var delegate: SearchAssistantDelegate!
     var recipesFoundDelegate: RecipesFoundFromSearchingDelegate!
+    private var keyboardHeight: CGFloat?
     private var selectedItems: [Item] = [] {
         didSet {
             if self.selectedItems.isEmpty == false {
@@ -68,9 +69,15 @@ class SearchByIngredientVC: UIViewController {
             self.possibleItems = itms
         }
         searchBar.setUpAddItemToolbar(cancelAction: #selector(cancelSelector), addAction: #selector(addSelector))
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
     
-    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            keyboardHeight = keyboardRectangle.height
+        }
+    }
     
     @IBAction func buttonAction(_ sender: Any) {
         let ingredients = selectedItems.map { (itm) -> GenericItem in
@@ -95,8 +102,9 @@ class SearchByIngredientVC: UIViewController {
         vc.tableView.translatesAutoresizingMaskIntoConstraints = false
         vc.tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor).isActive = true
         
-        #warning("need to get the actual keyboard height below")
-        vc.tableView.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - searchBar.bounds.height - 300)).isActive = true
+        
+        let distance = (self.view.bounds.height) - (searchBar.bounds.height) - (keyboardHeight ?? 0.0)
+        vc.tableView.heightAnchor.constraint(equalToConstant: distance).isActive = true
         vc.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         vc.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         vc.delegate = self

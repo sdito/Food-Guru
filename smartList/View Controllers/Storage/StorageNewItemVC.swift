@@ -11,6 +11,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class StorageNewItemVC: UIViewController {
+    private var keyboardHeight: CGFloat?
     private var delegate: SearchAssistantDelegate!
     private var textAssistantViewActive = false
     var db: Firestore!
@@ -38,7 +39,14 @@ class StorageNewItemVC: UIViewController {
         nameTextField.delegate = self
         nameTextField.becomeFirstResponder()
         nameTextField.setUpDoneToolbar(action: #selector(doneAction), style: .done)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            keyboardHeight = keyboardRectangle.height
+        }
     }
     
     @IBAction func switchAction(_ sender: Any) {
@@ -61,8 +69,8 @@ class StorageNewItemVC: UIViewController {
             vc.tableView.topAnchor.constraint(equalTo: nameTextField.bottomAnchor).isActive = true
             
             
-            #warning("need to get the actual keyboard height below")
-            vc.tableView.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - nameTextField.bounds.height - 300)).isActive = true
+            let distance = (view.frame.height) - (keyboardHeight ?? 0.0) - 50.0 - (nameTextField.frame.height)
+            vc.tableView.heightAnchor.constraint(equalToConstant: distance).isActive = true
             vc.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
             vc.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
             vc.delegate = self as CreateNewItemDelegate

@@ -39,6 +39,7 @@ class AddItemsVC: UIViewController {
         }
     }
     
+    @IBOutlet weak var backView: UIView!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var storesView: UIView!
     @IBOutlet weak var textField: UITextField!
@@ -91,7 +92,6 @@ class AddItemsVC: UIViewController {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             keyboardHeight = keyboardRectangle.height
-            print("KeyboardHeight is \(keyboardHeight)")
         }
     }
     
@@ -217,20 +217,21 @@ class AddItemsVC: UIViewController {
             self.view.addSubview(vc.tableView)
             vc.didMove(toParent: self)
             vc.tableView.translatesAutoresizingMaskIntoConstraints = false
-            vc.tableView.topAnchor.constraint(equalTo: textField.bottomAnchor).isActive = true
             
-            
-            #error("amount on keyboard is a little off first time opened for some reason")
-            vc.tableView.topAnchor.constraint(equalTo: textField.bottomAnchor).isActive = true
-            vc.tableView.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - textField.bounds.height - (keyboardHeight ?? 0.0))).isActive = true
             vc.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
             vc.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+            vc.tableView.topAnchor.constraint(equalTo: topView.bottomAnchor).isActive = true
+            
+            let tb = (tabBarController?.tabBar.frame.height ?? 0.0)
+            let distance = (backView.frame.height) - (keyboardHeight ?? 0.0) - (topView.frame.height) + tb
+            
+            vc.tableView.heightAnchor.constraint(equalToConstant: distance).isActive = true
+//            vc.tableView.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - textField.bounds.height - (keyboardHeight ?? 0.0))).isActive = true
+            
             vc.delegate = self as CreateNewItemDelegate
             delegate = vc
-            
             delegate.searchTextChanged(text: textField.text!)
             textAssistantViewActive = true
-            vc.tableView.reloadData()
         } else {
             delegate.searchTextChanged(text: textField.text!)
         }
@@ -238,8 +239,11 @@ class AddItemsVC: UIViewController {
     
     @objc func dismissKeyboardPressed() {
         textField.resignFirstResponder()
-        textField.text = ""
-        delegate.searchTextChanged(text: "")
+        if textField.text != "" {
+            textField.text = ""
+            delegate.searchTextChanged(text: "")
+        }
+        
     }
 }
 

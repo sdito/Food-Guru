@@ -58,7 +58,6 @@ class CreateNewItemVC: UITableViewController {
     }
     
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "createNewItemCell", for: indexPath) as! CreateNewItemCell
         cell.setUI(text: searchedItems[indexPath.row])

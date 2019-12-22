@@ -351,6 +351,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="ZjQ-0G-uSO"/>
                     <connections>
+                        <outlet property="backView" destination="EUV-NV-fy5" id="v01-Ex-Ffc"/>
                         <outlet property="segmentedControl" destination="FyL-B2-6cH" id="e3B-7z-VGz"/>
                         <outlet property="storesView" destination="RvJ-JD-oBH" id="wAQ-39-lC0"/>
                         <outlet property="tableView" destination="Eeu-xt-zJT" id="ELF-Vq-RDG"/>
@@ -748,7 +749,7 @@
                                                 </constraints>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Na1-4m-cBc">
-                                                <rect key="frame" x="0.0" y="687" width="143" height="38"/>
+                                                <rect key="frame" x="0.0" y="687" width="374" height="38"/>
                                                 <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="20"/>
                                                 <state key="normal" title="Create recipe">
