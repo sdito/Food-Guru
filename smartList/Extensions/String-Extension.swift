@@ -48,19 +48,23 @@ extension String {
         }
         return numbers
     }
+    
     func getIngredientsFromString(ingredients: [String]) -> [String] {
         guard let range = self.range(of: "title=\"") else {
-            return Array(Set(ingredients))
+            let ridOfTitleIngredients = ingredients.filter({$0.last != ":"})
+            return Array(Set(ridOfTitleIngredients))
         }
         let ingredientStartRange = range.upperBound
         let textAfterIngredientStart = String(self[ingredientStartRange...])
         let idx = textAfterIngredientStart.firstIndex(of: "\"")!
-        let rightIndex = textAfterIngredientStart.range(of: "\"")
-        let ingredient = String(textAfterIngredientStart[..<idx])
-        let newStringRange = rightIndex!.upperBound...
-        let newString = String(self[newStringRange])
-        return newString.getIngredientsFromString(ingredients: ingredients + [ingredient])
+        var ingredient = String(textAfterIngredientStart[..<idx])
+        ingredient = ingredient.replacingOccurrences(of: "&#39;", with: "'")
+        let returnIngredients = ingredients + [ingredient]
+        let returnText = String(textAfterIngredientStart[idx...])
+        #warning("can still improve this")
+        return returnText.getIngredientsFromString(ingredients: returnIngredients)
     }
+
     
     
     func getInstructionsFromString(instructions: [String]) -> [String] {
@@ -227,7 +231,6 @@ extension String {
         let nums = text.getNumbers()
         return nums.first
     }
-    //        ","prepTime":"PT15M","cookTime":"PT7H","totalTime":"PT7H15M","
     
     func getCookTimeARTWO() -> Int? {
         guard let cookLeftSide = self.range(of: "\"cookTime\":\"")?.upperBound else { return nil }
@@ -268,15 +271,7 @@ extension String {
         return Int(str.filter({$0.isNumber}))
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     func imagePathToDocID() -> String {
         let slashIndex = self.firstIndex(of: "/")!

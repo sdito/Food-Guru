@@ -135,9 +135,15 @@ class SettingsDetailVC: UIViewController {
             return [UITableViewCell()]
         case .licences:
             self.title = "Software licences"
-            return [UITableViewCell()]
-            
-        
+            let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+            cell1.setUI(str: "recipepuppy.com")
+            let cell2 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+            cell2.setUI(str: "iconsdb.com")
+            let cell3 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+            cell3.setUI(str: "icons8.com")
+            let cell4 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+            cell4.setUI(str: "world.openfoodfacts.org")
+            return [cell1, cell2, cell3, cell4]
         case .list:
             self.title = "Lists"
             return [UITableViewCell()]
@@ -241,7 +247,7 @@ class SettingsDetailVC: UIViewController {
             }
              
         }))
-        alert.addAction(.init(title: "Back", style: .cancel, handler: nil))
+        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         present(alert, animated: true)
     }
     @objc private func createGroup() {

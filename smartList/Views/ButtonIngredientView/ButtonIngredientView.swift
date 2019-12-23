@@ -35,7 +35,7 @@ class ButtonIngredientView: UIView {
         label.text = ingredient
         button.addTarget(self, action: #selector(bAction), for: .touchUpInside)
         let systemIngredient = "\(Search.turnIntoSystemItem(string: ingredient))"
-        if SharedValues.shared.currentItemsInStorage?.contains(systemIngredient) ?? false {
+        if systemIngredient != "other" && SharedValues.shared.currentItemsInStorage?.contains(systemIngredient) ?? false {
             label.textColor = .systemGreen
         }
     }

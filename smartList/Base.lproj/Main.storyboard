@@ -749,7 +749,7 @@
                                                 </constraints>
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Na1-4m-cBc">
-                                                <rect key="frame" x="0.0" y="687" width="143" height="38"/>
+                                                <rect key="frame" x="0.0" y="687" width="374" height="38"/>
                                                 <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="20"/>
                                                 <state key="normal" title="Create recipe">
@@ -803,7 +803,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Paste allrecipes.com recipe URL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wAt-Gc-BD3">
                                         <rect key="frame" x="5" y="5" width="369" height="40"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6WG-Af-woE">
                                         <rect key="frame" x="379" y="5" width="30" height="40"/>
@@ -1972,28 +1972,38 @@
                                 <rect key="frame" x="47" y="253" width="320" height="216"/>
                             </datePicker>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oPt-C8-S0c">
-                                <rect key="frame" x="365" y="46" width="39" height="38"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                                <rect key="frame" x="371" y="49" width="33" height="35"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <state key="normal" title="Add"/>
                                 <connections>
                                     <action selector="itemCreated:" destination="s3e-O6-k2W" eventType="touchUpInside" id="siW-rj-DVi"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A6E-Ac-ZEs">
+                                <rect key="frame" x="10" y="49" width="54" height="35"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancel:" destination="s3e-O6-k2W" eventType="touchUpInside" id="e3U-N1-izT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="oPt-C8-S0c" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="8L4-IS-eEL" secondAttribute="leading" constant="30" id="07u-mF-VmB"/>
                             <constraint firstItem="8L4-IS-eEL" firstAttribute="trailing" secondItem="xHK-eQ-tEv" secondAttribute="trailing" constant="20" id="2UQ-Zr-eTs"/>
                             <constraint firstItem="afB-rc-PAn" firstAttribute="top" secondItem="8L4-IS-eEL" secondAttribute="top" constant="50" id="5U7-eq-d4G"/>
                             <constraint firstItem="xHK-eQ-tEv" firstAttribute="leading" secondItem="8L4-IS-eEL" secondAttribute="leading" constant="20" id="8bj-js-jWx"/>
                             <constraint firstItem="xHK-eQ-tEv" firstAttribute="top" secondItem="afB-rc-PAn" secondAttribute="bottom" constant="10" id="8eO-cX-WEo"/>
+                            <constraint firstItem="afB-rc-PAn" firstAttribute="top" secondItem="A6E-Ac-ZEs" secondAttribute="bottom" constant="10" id="AhQ-0P-iFs"/>
                             <constraint firstItem="tST-Jr-JHx" firstAttribute="centerX" secondItem="Jv4-YR-rIY" secondAttribute="centerX" id="BkH-s3-WZI"/>
                             <constraint firstItem="afB-rc-PAn" firstAttribute="leading" secondItem="8L4-IS-eEL" secondAttribute="leading" constant="20" id="HOU-qv-8jU"/>
+                            <constraint firstItem="oPt-C8-S0c" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="A6E-Ac-ZEs" secondAttribute="trailing" constant="50" id="L6v-Hy-8Fb"/>
+                            <constraint firstItem="afB-rc-PAn" firstAttribute="top" secondItem="oPt-C8-S0c" secondAttribute="bottom" constant="10" id="Lem-Q8-4rP"/>
                             <constraint firstItem="8L4-IS-eEL" firstAttribute="trailing" secondItem="oPt-C8-S0c" secondAttribute="trailing" constant="10" id="OUh-gs-nAM"/>
                             <constraint firstItem="8L4-IS-eEL" firstAttribute="trailing" secondItem="afB-rc-PAn" secondAttribute="trailing" constant="20" id="SNY-GK-5s6"/>
                             <constraint firstItem="eQ3-1Q-PC5" firstAttribute="centerX" secondItem="Jv4-YR-rIY" secondAttribute="centerX" id="VTS-vH-4ec"/>
                             <constraint firstItem="eQ3-1Q-PC5" firstAttribute="top" secondItem="xHK-eQ-tEv" secondAttribute="bottom" constant="40" id="Vx1-TG-FzD"/>
-                            <constraint firstItem="afB-rc-PAn" firstAttribute="top" secondItem="oPt-C8-S0c" secondAttribute="bottom" constant="10" id="YRH-KX-BCq"/>
+                            <constraint firstItem="A6E-Ac-ZEs" firstAttribute="leading" secondItem="8L4-IS-eEL" secondAttribute="leading" constant="10" id="Xft-Gt-qeA"/>
                             <constraint firstItem="tST-Jr-JHx" firstAttribute="top" secondItem="eQ3-1Q-PC5" secondAttribute="bottom" id="c0A-AJ-kls"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8L4-IS-eEL"/>

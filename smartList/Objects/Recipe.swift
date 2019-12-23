@@ -113,17 +113,19 @@ struct Recipe {
     
     
     static func getRecipeInfoFromURLallRecipes(recipeURL: String) {
+        
         guard let url = URL(string: recipeURL) else {
-            print("No URL entered")
+            NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
             return
         }
+        
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else {
-                print("data was nil")
+                NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
                 return
             }
             guard let htmlString = String(data: data, encoding: .utf8) else {
-                print("couldn't cast data into String")
+                NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
                 return
             }
             
@@ -133,23 +135,32 @@ struct Recipe {
                 return
             }
             guard let rightSideIngredients = htmlString.range(of: ">Add all ingredients to list</span>") else {
-                print("Trouble finding right side -- ingredients")
+                NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
                 return
             }
             
             guard let leftSideDirections = htmlString.range(of: "<div class=\"directions--section\">") else {
-                print("Trouble finding left side -- directions")
+                NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
                 return
             }
             
             guard let rightSideDirections = htmlString.range(of: "<div class=\"directions--section__right-side\">") else {
-                print("Trouble finding right side -- directions")
+                NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
                 return
             }
             
             let rangeOfIngredientText = leftSideIngredients.upperBound..<rightSideIngredients.lowerBound
+            
+            
             let ingredientText = String(htmlString[rangeOfIngredientText])
-            let finalIngredients = ingredientText.getIngredientsFromString(ingredients: [])
+            print(ingredientText)
+            var finalIngredients: [String] = []
+            
+            DispatchQueue.main.async {
+                print(ingredientText)
+                finalIngredients = ingredientText.getIngredientsFromString(ingredients: [])
+            }
+            
             
             
             let rangeOfDirectionText = leftSideDirections.upperBound..<rightSideDirections.lowerBound
@@ -273,26 +284,25 @@ struct Recipe {
 
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else {
-                print("data was nil")
+                NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
                 return
             }
             guard let htmlString = String(data: data, encoding: .utf8) else {
-                print("couldn't cast data into String")
+                NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
                 return
             }
-            print(htmlString)
             
             let leftSideString = "[{\"@context\""
             
             let rightSideString = "[{\"@type\":\"Review\""
             
             guard let leftSideRange = htmlString.range(of: leftSideString) else {
-                print("couldn't find left range")
+                NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
                 return
             }
             
             guard let rightSideRange = htmlString.range(of: rightSideString) else {
-                print("couldn't find right range")
+                NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
                 return
             }
             
@@ -549,7 +559,6 @@ extension Recipe {
     }
     
     func addRecipeToRecentlyViewedRecipes(db: Firestore) {
-        #warning("does dispatchQueue do anything here, ask")
         DispatchQueue.main.async {
             if let uid = Auth.auth().currentUser?.uid {
                 let reference = db.collection("users").document(uid)

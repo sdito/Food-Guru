@@ -1058,6 +1058,8 @@ struct Search {
         } else if item.contains("sugar") {
             if item.contains("brown") {
                 return .brownSugar
+            } else if item.contains("powdered") || item.contains("confectioners") {
+                return .powderedSugar
             } else {
                 return .sugar
             }
@@ -1167,6 +1169,8 @@ struct Search {
                 return .creamCheese
             } else if item.contains("american") {
                 return .americanCheese
+            } else if item.contains("jack") || item.contains("monterey") {
+                return .montereyJackCheese
             } else {
                 return .cheese
             }
@@ -1261,7 +1265,11 @@ struct Search {
         } else if item.contains("vanilla") {
             return .vanilla
         } else if item.contains("almond") || item.contains("almonds") {
-            return .almond
+            if item.contains("extract") {
+                return .almondExtract
+            } else {
+                return .almond
+            }
         } else if item.contains("baking") && item.contains("soda") {
             return .bakingSoda
         } else if item.contains("baking") && item.contains("powder") {
@@ -1440,6 +1448,10 @@ struct Search {
             return .pepperoni
         } else if item.contains("bison") {
             return .bison
+        } else if item.contains("monterey") && item.contains("jack") {
+            return .montereyJackCheese
+        } else if item.contains("cornmeal") {
+            return .cornmeal
         }
         
         

@@ -13,6 +13,7 @@ enum GenericItem: String, CaseIterable {
     case alfredoSauce
     case almond
     case almondButter
+    case almondExtract
     case almondMilk
     case americanCheese
     case anchovy
@@ -92,6 +93,7 @@ enum GenericItem: String, CaseIterable {
     case coffee
     case corn
     case cornedBeef
+    case cornmeal
     case cornstarch
     case cottageCheese
     case crab
@@ -177,6 +179,7 @@ enum GenericItem: String, CaseIterable {
     case melon
     case mayonnaise
     case milk
+    case montereyJackCheese
     case mozzarella
     case mushroom
     case mussels
@@ -221,6 +224,7 @@ enum GenericItem: String, CaseIterable {
     case portobelloMushroom
     case potRoast
     case potato
+    case powderedSugar
     case provolone
     case quinoa
     case raisin
@@ -880,6 +884,14 @@ enum GenericItem: String, CaseIterable {
             return "Bison"
         case .cornedBeef:
             return "Corned beef"
+        case .montereyJackCheese:
+            return "Monterey jack cheese"
+        case .almondExtract:
+            return "Almond extract"
+        case .cornmeal:
+            return "Cornmeal"
+        case .powderedSugar:
+            return "Powdered sugar"
         }
     }
     
@@ -1495,6 +1507,14 @@ enum GenericItem: String, CaseIterable {
             return .meat
         case .cornedBeef:
             return .deli
+        case .montereyJackCheese:
+            return .dairy
+        case .almondExtract:
+            return .cookingBakingSpices
+        case .cornmeal:
+            return .cookingBakingSpices
+        case .powderedSugar:
+            return .cookingBakingSpices
         }
     }
     

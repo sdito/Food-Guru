@@ -84,6 +84,9 @@ class StorageNewItemVC: UIViewController {
         }
     }
     
+    @IBAction func cancel(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     @IBAction func itemCreated(_ sender: Any) {
         var timeExpires: TimeInterval? {
             if switchOutlet.isOn {

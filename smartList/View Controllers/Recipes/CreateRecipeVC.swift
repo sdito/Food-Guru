@@ -102,6 +102,7 @@ class CreateRecipeVC: UIViewController {
         cookTimeTextField.setUpDoneToolbar(action: #selector(removeFirstResponder), style: .done)
         prepTimeTextField.setUpDoneToolbar(action: #selector(removeFirstResponder), style: .done)
         caloriesTextField.setUpDoneToolbar(action: #selector(removeFirstResponder), style: .done)
+        urlTextField.setUpDoneToolbar(action: #selector(removeFirstResponderURL), style: .done)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -126,14 +127,30 @@ class CreateRecipeVC: UIViewController {
     
     private func createObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(recipeDataReceivedFromURL), name: .recipeDataFromURLReceived, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(noRecipeFound), name: .recipeNotFoundFromURLalert, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     
+    @objc private func noRecipeFound() {
+        
+        DispatchQueue.main.async {
+            self.urlTextField.resignFirstResponder()
+            self.urlTextField.text = ""
+            let alert = UIAlertController(title: "Error", message: "No recipe found from your URL! Make sure the reciple URL you copied is from allrecipes.com", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
+        }
+        
+    }
+    
     @objc private func removeFirstResponder() {
         SharedValues.shared.currText?.resignFirstResponder()
+    }
+    
+    @objc private func removeFirstResponderURL() {
+        urlTextField.resignFirstResponder()
     }
     
     @objc private func keyboardChange(notification: Notification) {
@@ -236,7 +253,9 @@ class CreateRecipeVC: UIViewController {
     
     @IBAction func findUrlRecipe(_ sender: Any) {
         print("Find recipe")
-        Recipe.getRecipeInfoFromURLallRecipes(recipeURL: urlTextField.text!)
+        let stringRepresentation = String(urlTextField.text ?? "")
+        print(stringRepresentation)
+        Recipe.getRecipeInfoFromURLallRecipes(recipeURL: stringRepresentation)
         
         
     }
@@ -304,7 +323,6 @@ class CreateRecipeVC: UIViewController {
             navigationController?.popToRootViewController(animated: true)
             
         case true:
-            #warning("need to handle incomplete data here too, make sure is working properly as before")
             let ingredients: List<String> = List.init()
             let instructions: List<String> = List.init()
             IngredientView.getIngredients(stack: ingredientsStackView).forEach { (str) in

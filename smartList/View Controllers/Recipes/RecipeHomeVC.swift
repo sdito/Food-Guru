@@ -146,7 +146,13 @@ class RecipeHomeVC: UIViewController {
         
         currentSearchesView.delegate = self
         let layout = collectionView.collectionViewLayout as! DynamicHeightLayout
-        layout.numberOfColumns = 2
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            layout.numberOfColumns = 3
+        } else {
+            layout.numberOfColumns = 2
+        }
+        
         layout.delegate = self
         
         
