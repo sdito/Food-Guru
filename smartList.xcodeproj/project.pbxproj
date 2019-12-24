@@ -159,7 +159,7 @@
 		E20F2AD723258A4B00CD907A /* StorageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCell.swift; sourceTree = "<group>"; };
 		E2149CF6235ADCAB002BF2D0 /* CreateNewItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewItemVC.swift; sourceTree = "<group>"; };
 		E2149CF8235B9587002BF2D0 /* CreateNewItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewItemCell.swift; sourceTree = "<group>"; };
-		E216204322F658D10074A0DF /* smartList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smartList.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E216204322F658D10074A0DF /* Food Guru.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Food Guru.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E216204622F658D10074A0DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E216204B22F658D10074A0DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E216204D22F658D20074A0DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -334,7 +334,7 @@
 		E216204422F658D10074A0DF /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E216204322F658D10074A0DF /* smartList.app */,
+				E216204322F658D10074A0DF /* Food Guru.app */,
 				E216205722F658D20074A0DF /* smartListTests.xctest */,
 				E216206222F658D20074A0DF /* smartListUITests.xctest */,
 			);
@@ -675,7 +675,7 @@
 			);
 			name = smartList;
 			productName = smartList;
-			productReference = E216204322F658D10074A0DF /* smartList.app */;
+			productReference = E216204322F658D10074A0DF /* Food Guru.app */;
 			productType = "com.apple.product-type.application";
 		};
 		E216205622F658D20074A0DF /* smartListTests */ = {
@@ -1178,7 +1178,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = SDito.smartList;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Food Guru";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1198,7 +1198,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = SDito.smartList;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Food Guru";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

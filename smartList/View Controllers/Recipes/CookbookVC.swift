@@ -80,6 +80,7 @@ class CookbookVC: UIViewController {
         addSelectors(sv: searchHelperSV)
         currentSearchesView.delegate = self
         searchBar.setUpAddItemToolbar(cancelAction: #selector(cancelSelector), addAction: #selector(addSelector))
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -99,6 +100,7 @@ class CookbookVC: UIViewController {
             destVC.cookbookRecipe = sender as? CookbookRecipe
         }
     }
+    
     
     @IBAction func savedRecipes(_ sender: Any) {
         print("Saved recipes")

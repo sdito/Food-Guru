@@ -187,14 +187,13 @@ class StorageHomeVC: UIViewController {
     @IBAction func findRecipes(_ sender: Any) {
         print("find recipes with selected ingredients")
         let genericItems = sortedItems.filter{(indexes?.contains(sortedItems.firstIndex(of: $0)!) ?? false)}.map({$0.systemItem!.rawValue})
-        for _ in 1...100 {
-            print(genericItems)
-        }
         Search.getRecipesFromIngredients(db: db, ingredients: genericItems) { (rcps) in
             if let rcps = rcps {
                 SharedValues.shared.sentRecipesInfo = (rcps, genericItems)
-                self.tabBarController?.selectedIndex = 1
                 
+                #error("would need to change this if i move the recipe tab, also need to take this and make sure the correct recipe tab is visible")
+                
+                self.tabBarController?.selectedIndex = 1
                 
                 // to make sure that the recipe home page is visible when sent over there
                 (self.tabBarController!.selectedViewController! as? UINavigationController)?.popToRootViewController(animated: true)
