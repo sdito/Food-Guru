@@ -119,6 +119,25 @@ struct Item: Equatable {
         return item
     }
     
+    static func updateItemForListName(name: String, itemID: String, listID: String, db: Firestore) {
+        let reference = db.collection("lists").document(listID).collection("items").document(itemID)
+        reference.updateData([
+            "name": name
+        ])
+    }
+    static func updateItemForListStore(store: String, itemID: String, listID: String, db: Firestore) {
+        let reference = db.collection("lists").document(listID).collection("items").document(itemID)
+        reference.updateData([
+            "store": store
+        ])
+    }
+    static func updateItemForListCategory(category: String, itemID: String, listID: String, db: Firestore) {
+        let reference = db.collection("lists").document(listID).collection("items").document(itemID)
+        reference.updateData([
+            "category": category
+        ])
+    }
+    #warning("set the next function here")
 }
 
 extension Item {

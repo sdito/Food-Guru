@@ -97,6 +97,37 @@ extension UIViewController {
         }
     }
     
+    func createEditItemInfoView(forCategory: Bool, stores: [String]?, item: Item, listID: String?) {
+        let vc = UIViewController()
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
+        button.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
+        button.addTarget(self, action: #selector(removeFromSuperViewSelector), for: .touchUpInside)
+        button.backgroundColor = .black
+        button.alpha = 0.3
+        vc.view.insertSubview(button, at: 1)
+        
+        let v = Bundle.main.loadNibNamed("EditItemInfoView", owner: nil, options: nil)?.first as! EditItemInfoView
+        v.setUI(forCategory: forCategory, stores: stores, item: item, listID: listID)
+        v.forStore = !forCategory
+        v.center.x = vc.view.center.x
+        v.center.y = vc.view.center.y
+        
+        vc.view.insertSubview(v, at: 2)
+        v.alpha = 0
+        v.shadowAndRounded(cornerRadius: 25.0, border: false)
+        vc.modalPresentationStyle = .overFullScreen
+        
+        self.present(vc, animated: false) {
+            UIView.animate(withDuration: 0.3) {
+                v.alpha = 1.0
+            }
+        }
+    }
+    
+    
+    
     func createImageDetailView(imagePath: String?, initialImage: UIImage?) {
         print("Image path \(String(describing: imagePath)) will be used here for the big grand detail view yay")
         let vc = UIViewController()

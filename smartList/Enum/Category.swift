@@ -14,6 +14,7 @@ enum Category: String, CaseIterable {
     case bakery
     case beverages
     case breakfast
+    case canned
     case condimentsAndDressings
     case cookingBakingSpices
     case dairy
@@ -24,7 +25,6 @@ enum Category: String, CaseIterable {
     case produce
     case seafood
     case snacks
-    case canned
     case other
     
     var textDescription: String {
@@ -35,6 +35,8 @@ enum Category: String, CaseIterable {
             return "Beverages"
         case .breakfast:
             return "Breakfast"
+        case .canned:
+            return "Canned"
         case .condimentsAndDressings:
             return "Condiments & Dressings"
         case .cookingBakingSpices:
@@ -55,10 +57,11 @@ enum Category: String, CaseIterable {
             return "Seafood"
         case .snacks:
             return "Snacks"
-        case .canned:
-            return "Canned"
+        
         case .other:
             return "Other Category"
         }
     }
+    
+    
 }

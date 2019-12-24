@@ -21,9 +21,9 @@
                                 <rect key="frame" x="0.0" y="44" width="414" height="40"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apn-2J-FFz">
-                                        <rect key="frame" x="15" y="2.6666666666666643" width="30" height="35"/>
+                                        <rect key="frame" x="15" y="2.6666666666666643" width="54" height="35"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                        <state key="normal" title="Exit">
+                                        <state key="normal" title="Cancel">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -41,7 +41,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="KJg-s7-r18" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="apn-2J-FFz" secondAttribute="trailing" constant="10" id="1He-FN-c0r"/>
                                     <constraint firstAttribute="trailing" secondItem="KJg-s7-r18" secondAttribute="trailing" constant="15" id="6gS-7m-m3M"/>
@@ -262,7 +262,7 @@
                                                 </constraints>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstItem="EwO-Xj-1OE" firstAttribute="centerY" secondItem="l3v-xn-fS2" secondAttribute="centerY" id="1Ob-Tv-yb2"/>
                                             <constraint firstAttribute="trailing" secondItem="EwO-Xj-1OE" secondAttribute="trailing" constant="10" id="HqT-I0-pEW"/>
@@ -275,25 +275,37 @@
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="itemCell" id="uhq-4D-dTy" customClass="ItemCell" customModule="smartList" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="414" height="42.666667938232422"/>
+                                                <rect key="frame" x="0.0" y="28" width="414" height="51.333332061767578"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uhq-4D-dTy" id="tCu-gS-Lbc">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="42.666667938232422"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="51.333332061767578"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hyc-Sg-TeI">
-                                                            <rect key="frame" x="29.999999999999996" y="10.000000000000002" width="41.666666666666657" height="22.666666666666671"/>
-                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                                            <color key="textColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <rect key="frame" x="30.000000000000004" y="14.999999999999998" width="39.333333333333343" height="21.333333333333329"/>
+                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
+                                                            <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MsM-9g-Yk8">
+                                                            <rect key="frame" x="388.33333333333331" y="15.666666666666664" width="20.666666666666686" height="20"/>
+                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="12"/>
+                                                            <state key="normal" image="square.and.pencil" catalog="system">
+                                                                <color key="titleColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="editItemAction:" destination="uhq-4D-dTy" eventType="touchUpInside" id="mYs-nU-DBG"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="hyc-Sg-TeI" firstAttribute="top" secondItem="tCu-gS-Lbc" secondAttribute="top" constant="10" id="7tU-GX-2M1"/>
+                                                        <constraint firstItem="hyc-Sg-TeI" firstAttribute="top" secondItem="tCu-gS-Lbc" secondAttribute="top" constant="15" id="7tU-GX-2M1"/>
+                                                        <constraint firstItem="MsM-9g-Yk8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="hyc-Sg-TeI" secondAttribute="trailing" constant="10" id="Bpl-5J-bPh"/>
                                                         <constraint firstItem="hyc-Sg-TeI" firstAttribute="leading" secondItem="tCu-gS-Lbc" secondAttribute="leading" constant="30" id="Evj-Yi-Ihe"/>
-                                                        <constraint firstAttribute="bottom" secondItem="hyc-Sg-TeI" secondAttribute="bottom" constant="10" id="j0P-oP-aaH"/>
+                                                        <constraint firstItem="MsM-9g-Yk8" firstAttribute="centerY" secondItem="tCu-gS-Lbc" secondAttribute="centerY" id="gG0-ya-4jc"/>
+                                                        <constraint firstAttribute="bottom" secondItem="hyc-Sg-TeI" secondAttribute="bottom" constant="15" id="j0P-oP-aaH"/>
                                                         <constraint firstItem="hyc-Sg-TeI" firstAttribute="centerY" secondItem="tCu-gS-Lbc" secondAttribute="centerY" id="jNa-ms-9PR"/>
-                                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hyc-Sg-TeI" secondAttribute="trailing" constant="30" id="xAA-lG-G5t"/>
+                                                        <constraint firstAttribute="trailing" secondItem="MsM-9g-Yk8" secondAttribute="trailing" constant="5" id="wb1-Yh-6jK"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
@@ -3229,6 +3241,7 @@
         <image name="search-3-xl" width="64" height="64"/>
         <image name="services" width="30" height="30"/>
         <image name="shopping_cart" width="25" height="25"/>
+        <image name="square.and.pencil" catalog="system" width="64" height="58"/>
         <image name="trash-10-xxl" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>

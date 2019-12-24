@@ -49,7 +49,7 @@ class AddItemsVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         super.viewWillAppear(animated)
-        topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
+//        topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
         tableView.delegate = self
         tableView.dataSource = self
         textField.delegate = self
@@ -133,6 +133,9 @@ class AddItemsVC: UIViewController {
     }
     @IBAction func editList(_ sender: Any) {
         //sendHome = false
+        
+        
+        
         let vc = storyboard?.instantiateViewController(withIdentifier: "setUpList") as! SetUpListVC
         if list?.docID == nil {
             list?.docID = SharedValues.shared.listIdentifier?.documentID
@@ -143,16 +146,23 @@ class AddItemsVC: UIViewController {
         
     }
     @IBAction func deleteList(_ sender: Any) {
-        let alert = UIAlertController(title: "Delete list", message: "Are you sure you want to delete this list? This action can't be undone.", preferredStyle: .alert)
-    
-        alert.addAction(.init(title: "Delete", style: .destructive, handler: {action in
+        
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(.init(title: "Delete list", style: .destructive, handler: { action in
             self.list?.deleteListToFirestore(db: self.db)
             self.navigationController?.popToRootViewController(animated: true)
         }))
+        actionSheet.addAction(.init(title: "Delete items from list (and keep list)", style: .destructive, handler: { action in
+            if let items = self.list?.items {
+                for item in items {
+                    item.deleteItemFromList(db: self.db, listID: self.list?.ownID ?? " ")
+                }
+                self.list?.items?.removeAll()
+            }
+        }))
+        actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        present(actionSheet, animated: true)
         
-        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
-        
-        self.present(alert, animated: true)
         
     }
     
@@ -250,6 +260,8 @@ class AddItemsVC: UIViewController {
         }
         
     }
+    
+
 }
 
 
@@ -292,6 +304,7 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
         let item = arrayArrayItems[indexPath.section][indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell") as! ItemCell
         cell.setUI(item: item)
+        cell.delegate = self
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -314,7 +327,52 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
         tableView.endUpdates()
         item.deleteItemFromList(db: db, listID: list?.docID ?? " ")
     }
+
 }
+
+extension AddItemsVC: ItemCellDelegate {
+    func edit(item: Item) {
+        
+        
+        
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(.init(title: "Edit name", style: .default, handler: { alert in
+            self.nameAlert(item: item)
+        }))
+        actionSheet.addAction(.init(title: "Edit category", style: .default, handler: { alert in
+            self.createEditItemInfoView(forCategory: true, stores: nil, item: item, listID: self.list?.ownID)
+        }))
+        
+        actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        
+        if list?.stores?.count ?? 0 > 1 {
+            actionSheet.addAction(.init(title: "Edit store", style: .default, handler: { alert in
+                self.createEditItemInfoView(forCategory: false, stores: self.list?.stores, item: item, listID: self.list?.ownID)
+            }))
+        }
+        
+        
+        
+        present(actionSheet, animated: true)
+        
+    }
+    
+    private func nameAlert(item: Item) {
+        let alert = UIAlertController(title: nil, message: "Edit name for \(item.name)", preferredStyle: .alert)
+        alert.addTextField(configurationHandler: nil)
+        alert.addAction(.init(title: "Cancel", style: .default, handler: nil))
+        alert.addAction(.init(title: "Done", style: .default, handler: { action in
+            
+            if let itemID = item.ownID, let listID = self.list?.ownID, let name = alert.textFields?.first?.text {
+                if name != "" {
+                    Item.updateItemForListName(name: name, itemID: itemID, listID: listID, db: self.db)
+                }
+            }
+        }))
+        present(alert, animated: true)
+    }
+}
+
 
 extension AddItemsVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

@@ -133,7 +133,7 @@ class SetUpListVC: UIViewController {
         if SharedValues.shared.anonymousUser == true {
             switchOutlet.isUserInteractionEnabled = false
         }
-        topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
+//        topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
         
 //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
 //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
