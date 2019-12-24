@@ -199,10 +199,16 @@ class AddItemsVC: UIViewController {
         var item = Item(name: text, selected: false, category: category.rawValue, store: currentStore, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: genericItem, systemCategory: category)
         item.writeToFirestoreForList(db: db)
         
-        if list?.items?.isEmpty == false {
-            list?.items!.append(item)
-        } else {
-            list?.items = [item]
+//        if list?.items?.isEmpty == false {
+//            list?.items!.append(item)
+//        } else {
+//            list?.items = [item]
+//        }
+        
+        list?.items?.append(item)
+        
+        if let id = list?.ownID {
+            GroceryList.updateListTimeIntervalTime(db: db, listID: id, timeToSetTo: Date().timeIntervalSince1970)
         }
         
         textField.text = ""

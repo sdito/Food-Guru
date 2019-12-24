@@ -141,6 +141,8 @@ extension Item {
             }
         }
     }
+    
+    
     func writeToFirestoreForStorage(db: Firestore!, docID: String) {
        let reference = db.collection("storages").document(docID).collection("items").document()
         reference.setData([

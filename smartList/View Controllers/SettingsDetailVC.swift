@@ -93,7 +93,7 @@ class SettingsDetailVC: UIViewController {
             let cell2 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
             cell2.setUI(str: "2. Access the control center.")
             let cell3 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
-            cell3.setUI(str: "3. Press and hold on the brightness displayed in the control center.")
+            cell3.setUI(str: "3. Press and hold on the brightness control displayed in the control center.")
             let cell4 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
             cell4.setUI(str: "4. Select 'Dark Mode'")
             return [cell1, cell2, cell3, cell4]
@@ -129,10 +129,11 @@ class SettingsDetailVC: UIViewController {
             }
  
             
-        case .textSize:
-            return [UITableViewCell()]
+            
         case .notifications:
             return [UITableViewCell()]
+            
+            
         case .licences:
             self.title = "Software licences"
             let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
@@ -144,9 +145,8 @@ class SettingsDetailVC: UIViewController {
             let cell4 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
             cell4.setUI(str: "world.openfoodfacts.org")
             return [cell1, cell2, cell3, cell4]
-        case .list:
-            self.title = "Lists"
-            return [UITableViewCell()]
+            
+            
         case .storage:
             if SharedValues.shared.foodStorageID == nil {
                 var txt: String {

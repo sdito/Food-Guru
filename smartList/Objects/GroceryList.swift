@@ -110,8 +110,16 @@ struct GroceryList {
             } else {
                 print("Document successfully written")
                 NotificationCenter.default.post(name: .itemAddedFromRecipe, object: nil, userInfo: ["itemName": name])
+                
             }
         }
+    }
+    
+    static func updateListTimeIntervalTime(db: Firestore, listID: String, timeToSetTo timeInterval: TimeInterval) {
+        let reference = db.collection("lists").document(listID)
+        reference.updateData([
+            "timeIntervalSince1970": timeInterval
+        ])
     }
     
     static func handleProcessForAutomaticallyGeneratedListFromRecipe(db: Firestore, items: [String]) {

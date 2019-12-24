@@ -21,10 +21,8 @@ struct Setting {
     enum SettingName {
         case account
         case group
-        case list
         case recentlyViewedRecipes
         case storage
-        case textSize
         case darkMode
         case notifications
         case contact
@@ -35,10 +33,8 @@ struct Setting {
     static func createSettings() -> ([String], [[Setting]]) {
         let account_ = Setting(name: "Account", settingName: .account)
         let group = Setting(name: "Group", settingName: .group)
-        let list = Setting(name: "Lists", settingName: .list)
         let recentlyViewedRecipes = Setting(name: "Recently viewed recipes", settingName: .recentlyViewedRecipes)
         let storage = Setting(name: "Storage", settingName: .storage)
-        let textSize = Setting(name: "Text size", settingName: .textSize)
         let darkMode = Setting(name: "Dark mode", settingName: .darkMode)
         let notifications = Setting(name: "Notifications", settingName: .notifications)
         let contact = Setting(name: "Contact the developer", settingName: .contact)
@@ -46,7 +42,7 @@ struct Setting {
         let about = Setting(name: "About", settingName: .about)
         
         
-        return (["Users & Accounts", "Application", "Settings", "Support & About"], [[account_, group], [list, recentlyViewedRecipes, storage], [textSize, darkMode, notifications], [contact, licences, about]])
+        return (["Users & Accounts", "Application", "Settings", "Support & About"], [[account_, group], [recentlyViewedRecipes, storage], [darkMode, notifications], [contact, licences, about]])
     }
     
     
@@ -59,14 +55,10 @@ extension Setting.SettingName {
             return "Account"
         case .group:
             return "Group"
-        case .list:
-            return "List"
         case .recentlyViewedRecipes:
             return "Recently viewed recipes"
         case .storage:
             return "Storage"
-        case .textSize:
-            return "Text size"
         case .darkMode:
             return "Dark mode"
         case .notifications:
