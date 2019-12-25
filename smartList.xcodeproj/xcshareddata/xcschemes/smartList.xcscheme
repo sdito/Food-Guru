@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E216204222F658D10074A0DF"
-               BuildableName = "smartList.app"
+               BuildableName = "Food Guru.app"
                BlueprintName = "smartList"
                ReferencedContainer = "container:smartList.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E216204222F658D10074A0DF"
-            BuildableName = "smartList.app"
+            BuildableName = "Food Guru.app"
             BlueprintName = "smartList"
             ReferencedContainer = "container:smartList.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E216204222F658D10074A0DF"
-            BuildableName = "smartList.app"
+            BuildableName = "Food Guru.app"
             BlueprintName = "smartList"
             ReferencedContainer = "container:smartList.xcodeproj">
          </BuildableReference>

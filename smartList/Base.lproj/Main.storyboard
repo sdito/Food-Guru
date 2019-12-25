@@ -12,7 +12,7 @@
         <!--Set Up ListVC-->
         <scene sceneID="RNe-NM-pNe">
             <objects>
-                <viewController storyboardIdentifier="setUpList" id="DLP-QI-gOQ" customClass="SetUpListVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="setUpList" id="DLP-QI-gOQ" customClass="SetUpListVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WjR-wx-twj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -178,7 +178,7 @@
         <!--Add ItemsVC-->
         <scene sceneID="VmX-0h-R9o">
             <objects>
-                <viewController id="AVh-qM-Vlx" customClass="AddItemsVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="AVh-qM-Vlx" customClass="AddItemsVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="N0S-xy-Xer">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -274,7 +274,7 @@
                                         <rect key="frame" x="0.0" y="80" width="414" height="645"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="itemCell" id="uhq-4D-dTy" customClass="ItemCell" customModule="smartList" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="itemCell" id="uhq-4D-dTy" customClass="ItemCell" customModule="Food_Guru" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="414" height="51.333332061767578"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uhq-4D-dTy" id="tCu-gS-Lbc">
@@ -382,7 +382,7 @@
         <!--Select Recipe TypeVC-->
         <scene sceneID="sJN-4X-XO0">
             <objects>
-                <viewController storyboardIdentifier="recipeType" id="IUK-Ph-7gP" customClass="SelectRecipeTypeVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="recipeType" id="IUK-Ph-7gP" customClass="SelectRecipeTypeVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="896-MC-jFV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -391,7 +391,7 @@
                                 <rect key="frame" x="0.0" y="225.33333333333331" width="414" height="538.66666666666674"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="recipeType" rowHeight="64" id="oeK-K1-fad" customClass="RecipeTypeCell" customModule="smartList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="recipeType" rowHeight="64" id="oeK-K1-fad" customClass="RecipeTypeCell" customModule="Food_Guru" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="64"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oeK-K1-fad" id="yR9-Im-e1V">
@@ -520,7 +520,7 @@
         <!--Create recipe-->
         <scene sceneID="tA0-f8-jFz">
             <objects>
-                <viewController storyboardIdentifier="cRecipe" id="Kgx-m8-jVE" customClass="CreateRecipeVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="cRecipe" id="Kgx-m8-jVE" customClass="CreateRecipeVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1B5-Xf-Wcl">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -861,7 +861,7 @@
                         <viewLayoutGuide key="safeArea" id="C2d-ST-4bV"/>
                     </view>
                     <navigationItem key="navigationItem" title="Create recipe" id="3qt-l8-exu">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="link" catalog="system" id="Ail-wj-d5I">
+                        <barButtonItem key="rightBarButtonItem" image="link-5-xl" id="Ail-wj-d5I">
                             <connections>
                                 <action selector="linkToRecipe:" destination="Kgx-m8-jVE" id="Dwi-mU-bcJ"/>
                             </connections>
@@ -898,7 +898,7 @@
         <!--Recipe HomeVC-->
         <scene sceneID="nPf-Z7-HbM">
             <objects>
-                <viewController storyboardIdentifier="recipeHomeVC" id="fFf-qk-23l" customClass="RecipeHomeVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="recipeHomeVC" id="fFf-qk-23l" customClass="RecipeHomeVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2t2-b4-sre">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -941,9 +941,9 @@
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="5rE-ht-6sa">
                                         <rect key="frame" x="0.0" y="44" width="414" height="632"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                        <collectionViewLayout key="collectionViewLayout" id="NqM-sV-OUV" customClass="DynamicHeightLayout" customModule="smartList" customModuleProvider="target"/>
+                                        <collectionViewLayout key="collectionViewLayout" id="NqM-sV-OUV" customClass="DynamicHeightLayout" customModule="Food_Guru" customModuleProvider="target"/>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="recipeCell" id="YhB-jP-Nf3" customClass="RecipeCell" customModule="smartList" customModuleProvider="target">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="recipeCell" id="YhB-jP-Nf3" customClass="RecipeCell" customModule="Food_Guru" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="199" height="304"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="cr7-Kg-hOZ">
@@ -1049,10 +1049,10 @@
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rl3-58-2ly">
-                                <rect key="frame" x="106" y="664" width="202" height="40"/>
+                                <rect key="frame" x="99" y="664" width="216" height="40"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h3Y-0p-nWg">
-                                        <rect key="frame" x="0.0" y="0.0" width="202" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="216" height="40"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                         <state key="normal" title="More recipes">
                                             <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -1073,10 +1073,10 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uGf-6c-fMe">
-                                <rect key="frame" x="106" y="714" width="202" height="40"/>
+                                <rect key="frame" x="99" y="714" width="216" height="40"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="Fi2-ny-4bM">
-                                        <rect key="frame" x="10" y="0.0" width="182" height="40"/>
+                                        <rect key="frame" x="10" y="0.0" width="196" height="40"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dar-Wz-q7g">
                                                 <rect key="frame" x="0.0" y="0.0" width="71" height="40"/>
@@ -1088,19 +1088,32 @@
                                                     <action selector="savedRecipes:" destination="fFf-qk-23l" eventType="touchUpInside" id="lAe-9V-Zey"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eic-QH-FIa">
-                                                <rect key="frame" x="78" y="0.0" width="26" height="40"/>
-                                                <color key="tintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                <state key="normal" image="arrow.up.circle.fill" catalog="system">
-                                                    <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="black"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="scrollBackUp:" destination="fFf-qk-23l" eventType="touchUpInside" id="kFk-rG-RLT"/>
-                                                </connections>
-                                            </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rnJ-JI-iIH">
+                                                <rect key="frame" x="78" y="0.0" width="40" height="40"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eic-QH-FIa">
+                                                        <rect key="frame" x="7" y="7" width="26" height="26"/>
+                                                        <color key="tintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <state key="normal" image="arrow.up">
+                                                            <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="black"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="scrollBackUp:" destination="fFf-qk-23l" eventType="touchUpInside" id="kFk-rG-RLT"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstItem="eic-QH-FIa" firstAttribute="top" secondItem="rnJ-JI-iIH" secondAttribute="top" constant="7" id="7J2-uw-09F"/>
+                                                    <constraint firstItem="eic-QH-FIa" firstAttribute="leading" secondItem="rnJ-JI-iIH" secondAttribute="leading" constant="7" id="Avp-CX-iRC"/>
+                                                    <constraint firstAttribute="bottom" secondItem="eic-QH-FIa" secondAttribute="bottom" constant="7" id="MxT-Az-1z6"/>
+                                                    <constraint firstAttribute="trailing" secondItem="eic-QH-FIa" secondAttribute="trailing" constant="7" id="fwh-PK-hGf"/>
+                                                    <constraint firstAttribute="width" secondItem="rnJ-JI-iIH" secondAttribute="height" multiplier="1:1" id="tUK-O4-D0T"/>
+                                                </constraints>
+                                            </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5UA-5d-TOv">
-                                                <rect key="frame" x="111" y="0.0" width="71" height="40"/>
+                                                <rect key="frame" x="125" y="0.0" width="71" height="40"/>
                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                                 <state key="normal" title="Cookbook">
                                                     <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -1165,7 +1178,7 @@
         <!--List HomeVC-->
         <scene sceneID="oLb-1R-rGF">
             <objects>
-                <viewController id="5n7-mD-jxg" customClass="ListHomeVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="5n7-mD-jxg" customClass="ListHomeVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="x2o-Ez-ptL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1174,7 +1187,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="listHomeCell" rowHeight="82" id="GCa-2j-pwv" customClass="ListHomeCell" customModule="smartList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="listHomeCell" rowHeight="82" id="GCa-2j-pwv" customClass="ListHomeCell" customModule="Food_Guru" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="55.333332061767578" width="414" height="82"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GCa-2j-pwv" id="4rq-nc-F96">
@@ -1225,7 +1238,7 @@
                                             <outlet property="numberItems" destination="ijz-bd-R9j" id="O6J-4m-GMX"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingBasicCell" rowHeight="80" id="Yjd-gu-cq3" customClass="SettingBasicCell" customModule="smartList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingBasicCell" rowHeight="80" id="Yjd-gu-cq3" customClass="SettingBasicCell" customModule="Food_Guru" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="137.33333206176758" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Yjd-gu-cq3" id="aDf-JE-UNS">
@@ -1252,7 +1265,7 @@
                                             <outlet property="label" destination="KkH-Pa-ETO" id="Fhf-lY-hO2"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingButtonCell" rowHeight="74" id="OTE-Vr-nO8" customClass="SettingButtonCell" customModule="smartList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingButtonCell" rowHeight="74" id="OTE-Vr-nO8" customClass="SettingButtonCell" customModule="Food_Guru" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="217.33333206176758" width="414" height="74"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OTE-Vr-nO8" id="MHh-96-xht">
@@ -1329,13 +1342,13 @@
         <!--Create New ItemVC-->
         <scene sceneID="eyL-Xc-GCc">
             <objects>
-                <tableViewController storyboardIdentifier="createNewItemVC" id="Yj8-Uc-rDf" customClass="CreateNewItemVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="createNewItemVC" id="Yj8-Uc-rDf" customClass="CreateNewItemVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="XVD-zf-1lh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="500"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="createNewItemCell" rowHeight="66" id="TXK-yW-1Ha" customClass="CreateNewItemCell" customModule="smartList" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="createNewItemCell" rowHeight="66" id="TXK-yW-1Ha" customClass="CreateNewItemCell" customModule="Food_Guru" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="66"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TXK-yW-1Ha" id="LQE-Cl-LV7">
@@ -1373,12 +1386,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LWP-Mc-JSH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2499" y="621"/>
+            <point key="canvasLocation" x="-2500" y="620.75892857142856"/>
         </scene>
         <!--CookbookVC-->
         <scene sceneID="cwl-pp-qCj">
             <objects>
-                <viewController storyboardIdentifier="cookbookVC" id="vwZ-MF-IUW" customClass="CookbookVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="cookbookVC" id="vwZ-MF-IUW" customClass="CookbookVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KkP-qT-kZn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1422,7 +1435,7 @@
                                         <rect key="frame" x="0.0" y="44" width="414" height="632"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cookbookCell" rowHeight="77" id="7JF-N1-rdp" customClass="CookbookCell" customModule="smartList" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cookbookCell" rowHeight="77" id="7JF-N1-rdp" customClass="CookbookCell" customModule="Food_Guru" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="414" height="77"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7JF-N1-rdp" id="ixI-BC-vyK">
@@ -1574,7 +1587,7 @@
         <!--TabVC-->
         <scene sceneID="QDs-tw-DsW">
             <objects>
-                <tabBarController storyboardIdentifier="tabVC" id="Lse-hg-hTa" customClass="TabVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabVC" id="Lse-hg-hTa" customClass="TabVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="CP3-z4-qUU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1595,7 +1608,7 @@
         <!--Storage-->
         <scene sceneID="0kp-pY-S5T">
             <objects>
-                <viewController id="TBV-k4-MLm" customClass="StorageHomeVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="TBV-k4-MLm" customClass="StorageHomeVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XIK-7e-dU1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1619,7 +1632,7 @@
                                 <rect key="frame" x="0.0" y="107" width="414" height="706"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="storageCell" rowHeight="104" id="Y4U-pR-t9C" customClass="StorageCell" customModule="smartList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="storageCell" rowHeight="104" id="Y4U-pR-t9C" customClass="StorageCell" customModule="Food_Guru" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="104"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Y4U-pR-t9C" id="1It-HM-Lvc">
@@ -1679,7 +1692,7 @@
                                             <outlet property="viewForCircle" destination="gMv-HI-qAV" id="yXH-Ed-4gM"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingBasicCell" rowHeight="80" id="dhW-7E-bK4" customClass="SettingBasicCell" customModule="smartList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingBasicCell" rowHeight="80" id="dhW-7E-bK4" customClass="SettingBasicCell" customModule="Food_Guru" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="132" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dhW-7E-bK4" id="KCM-p6-www">
@@ -1705,7 +1718,7 @@
                                             <outlet property="label" destination="7fA-g0-0Ct" id="rq7-kb-Oq8"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="settingButtonCell" rowHeight="74" id="q5X-MR-DJG" customClass="SettingButtonCell" customModule="smartList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="settingButtonCell" rowHeight="74" id="q5X-MR-DJG" customClass="SettingButtonCell" customModule="Food_Guru" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="212" width="414" height="74"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="q5X-MR-DJG" id="TDo-zL-MCD">
@@ -1857,29 +1870,51 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="7" translatesAutoresizingMaskIntoConstraints="NO" id="0do-Vn-5X5">
                                         <rect key="frame" x="0.0" y="0.0" width="87" height="40"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAQ-iX-8P3">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gIc-Kh-fLw">
                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MAQ-iX-8P3">
+                                                        <rect key="frame" x="7" y="7" width="26" height="26"/>
+                                                        <color key="tintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <state key="normal" image="plus_circle_filled">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="plusWasPressed:" destination="TBV-k4-MLm" eventType="touchUpInside" id="rHx-yq-CVW"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="MAQ-iX-8P3" secondAttribute="height" multiplier="1:1" id="2zM-WU-EPf"/>
+                                                    <constraint firstAttribute="bottom" secondItem="MAQ-iX-8P3" secondAttribute="bottom" constant="7" id="7BD-SQ-TRq"/>
+                                                    <constraint firstAttribute="width" secondItem="gIc-Kh-fLw" secondAttribute="height" multiplier="1:1" id="RQf-yp-aDN"/>
+                                                    <constraint firstAttribute="trailing" secondItem="MAQ-iX-8P3" secondAttribute="trailing" constant="7" id="SUx-nv-XGi"/>
+                                                    <constraint firstItem="MAQ-iX-8P3" firstAttribute="leading" secondItem="gIc-Kh-fLw" secondAttribute="leading" constant="7" id="cEC-cd-XRW"/>
+                                                    <constraint firstItem="MAQ-iX-8P3" firstAttribute="top" secondItem="gIc-Kh-fLw" secondAttribute="top" constant="7" id="eMy-F7-N2p"/>
                                                 </constraints>
-                                                <color key="tintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                <state key="normal" image="plus.circle.fill" catalog="system">
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="plusWasPressed:" destination="TBV-k4-MLm" eventType="touchUpInside" id="rHx-yq-CVW"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fzs-aI-a7s">
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="caE-o3-Ajh">
                                                 <rect key="frame" x="47" y="0.0" width="40" height="40"/>
-                                                <color key="tintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                <state key="normal" image="barcode.viewfinder" catalog="system">
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="barcodeScanPressed:" destination="TBV-k4-MLm" eventType="touchUpInside" id="ABR-Vf-pwh"/>
-                                                </connections>
-                                            </button>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fzs-aI-a7s">
+                                                        <rect key="frame" x="7" y="7" width="26" height="26"/>
+                                                        <color key="tintColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <state key="normal" image="barcode">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="barcodeScanPressed:" destination="TBV-k4-MLm" eventType="touchUpInside" id="ABR-Vf-pwh"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="fzs-aI-a7s" secondAttribute="bottom" constant="7" id="9El-zx-Ho7"/>
+                                                    <constraint firstItem="fzs-aI-a7s" firstAttribute="top" secondItem="caE-o3-Ajh" secondAttribute="top" constant="7" id="BfB-Ip-G5H"/>
+                                                    <constraint firstAttribute="trailing" secondItem="fzs-aI-a7s" secondAttribute="trailing" constant="7" id="HTg-mN-V6T"/>
+                                                    <constraint firstItem="fzs-aI-a7s" firstAttribute="leading" secondItem="caE-o3-Ajh" secondAttribute="leading" constant="7" id="fhc-ep-G2s"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="Rad-15-73b"/>
@@ -1938,12 +1973,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1M9-XC-U2d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2084" y="1165"/>
+            <point key="canvasLocation" x="-2084.057971014493" y="1163.8392857142856"/>
         </scene>
         <!--Storage New ItemVC-->
         <scene sceneID="7ON-hg-Pl2">
             <objects>
-                <viewController storyboardIdentifier="storageNewItem" id="s3e-O6-k2W" customClass="StorageNewItemVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="storageNewItem" id="s3e-O6-k2W" customClass="StorageNewItemVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jv4-YR-rIY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2038,7 +2073,7 @@
         <!--Recipe DetailVC-->
         <scene sceneID="4zV-VX-qeO">
             <objects>
-                <viewController storyboardIdentifier="recipeDetailVC" id="hdZ-0Z-sHl" customClass="RecipeDetailVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="recipeDetailVC" id="hdZ-0Z-sHl" customClass="RecipeDetailVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hG4-yT-I2T">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2422,7 +2457,7 @@
         <!--RecipePDFVC-->
         <scene sceneID="6bF-wj-8Rl">
             <objects>
-                <viewController id="FcJ-xj-1cM" customClass="RecipePDFVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="FcJ-xj-1cM" customClass="RecipePDFVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Mb2-FU-fn3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2453,7 +2488,7 @@
         <!--Outside RecipesVC-->
         <scene sceneID="ahZ-TR-5f1">
             <objects>
-                <viewController storyboardIdentifier="outsideRecipesVC" id="Kih-xn-dId" customClass="OutsideRecipesVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="outsideRecipesVC" id="Kih-xn-dId" customClass="OutsideRecipesVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="doW-n8-XVB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2462,7 +2497,7 @@
                                 <rect key="frame" x="0.0" y="82" width="414" height="780"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="recipePuppyCell" rowHeight="108" id="ffM-wV-eTd" customClass="RecipePuppyCell" customModule="smartList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="recipePuppyCell" rowHeight="108" id="ffM-wV-eTd" customClass="RecipePuppyCell" customModule="Food_Guru" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="108"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ffM-wV-eTd" id="8Gi-ma-PL4">
@@ -2548,7 +2583,7 @@
         <!--Search By IngredientVC-->
         <scene sceneID="tuP-tI-EFY">
             <objects>
-                <viewController storyboardIdentifier="searchByIngredient" id="A9s-o8-Op0" customClass="SearchByIngredientVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="searchByIngredient" id="A9s-o8-Op0" customClass="SearchByIngredientVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Jr0-Mb-2ee">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2556,7 +2591,7 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qhb-kA-rJt">
                                 <rect key="frame" x="0.0" y="122" width="414" height="740"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="recipeSearchCell" rowHeight="76" id="rif-LH-7FT" customClass="RecipeSearchCell" customModule="smartList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="recipeSearchCell" rowHeight="76" id="rif-LH-7FT" customClass="RecipeSearchCell" customModule="Food_Guru" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="76"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="rif-LH-7FT" id="hXt-1n-t8m">
@@ -2644,7 +2679,7 @@
         <!--Settings-->
         <scene sceneID="0Hb-nF-PrK">
             <objects>
-                <viewController id="aAT-3x-dVl" customClass="SettingsHomeVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="aAT-3x-dVl" customClass="SettingsHomeVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IB4-WD-Mr7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2653,7 +2688,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="settingCell" rowHeight="89" id="SNT-qA-jld" customClass="SettingCell" customModule="smartList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="settingCell" rowHeight="89" id="SNT-qA-jld" customClass="SettingCell" customModule="Food_Guru" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="55.333332061767578" width="414" height="89"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SNT-qA-jld" id="y1h-df-2jG">
@@ -2704,7 +2739,7 @@
         <!--Settings DetailVC-->
         <scene sceneID="Y9A-h7-3i6">
             <objects>
-                <viewController id="4cK-qK-H99" customClass="SettingsDetailVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="4cK-qK-H99" customClass="SettingsDetailVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1G9-wF-wJv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2713,7 +2748,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="929"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="settingBasicCell" rowHeight="80" id="Pic-8l-1GB" customClass="SettingBasicCell" customModule="smartList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="settingBasicCell" rowHeight="80" id="Pic-8l-1GB" customClass="SettingBasicCell" customModule="Food_Guru" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="55.333332061767578" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Pic-8l-1GB" id="FiA-bV-Yw2">
@@ -2738,7 +2773,7 @@
                                             <outlet property="label" destination="ln6-hT-f2I" id="CeE-MW-ELb"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="settingButtonCell" rowHeight="74" id="8hf-mG-7I6" customClass="SettingButtonCell" customModule="smartList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="settingButtonCell" rowHeight="74" id="8hf-mG-7I6" customClass="SettingButtonCell" customModule="Food_Guru" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="135.33333206176758" width="414" height="74"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="8hf-mG-7I6" id="V7O-pR-bj8">
@@ -2762,7 +2797,7 @@
                                             <outlet property="button" destination="nMQ-jt-Ysp" id="y63-lT-AUQ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="settingTwoLevelCell" rowHeight="147" id="Utw-Rp-8F0" customClass="SettingTwoLevelCell" customModule="smartList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="settingTwoLevelCell" rowHeight="147" id="Utw-Rp-8F0" customClass="SettingTwoLevelCell" customModule="Food_Guru" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="209.33333206176758" width="414" height="147"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Utw-Rp-8F0" id="A7M-ia-Ppd">
@@ -2797,7 +2832,7 @@
                                             <outlet property="topLabel" destination="9Fg-Of-mAX" id="uGE-sU-2Yr"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="settingContactDeveloperCell" rowHeight="290" id="d3R-i1-Zh4" customClass="SettingContactDeveloperCell" customModule="smartList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="settingContactDeveloperCell" rowHeight="290" id="d3R-i1-Zh4" customClass="SettingContactDeveloperCell" customModule="Food_Guru" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="356.33333206176758" width="414" height="290"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="d3R-i1-Zh4" id="96e-tm-hGJ">
@@ -2871,7 +2906,7 @@
                                             <outlet property="textView" destination="LUY-JD-4wz" id="gaC-Mh-zRZ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingViewedRecipeCell" rowHeight="103" id="PjW-bV-le8" customClass="SettingViewedRecipeCell" customModule="smartList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingViewedRecipeCell" rowHeight="103" id="PjW-bV-le8" customClass="SettingViewedRecipeCell" customModule="Food_Guru" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="646.33333206176758" width="414" height="103"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PjW-bV-le8" id="8OM-rC-fns">
@@ -2934,7 +2969,7 @@
         <!--Create GroupVC-->
         <scene sceneID="gLa-pq-Kvp">
             <objects>
-                <viewController storyboardIdentifier="createGroup" id="brx-TS-AYQ" customClass="CreateGroupVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="createGroup" id="brx-TS-AYQ" customClass="CreateGroupVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MEN-Uf-yyC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2954,7 +2989,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="groupNameCell" id="uGT-ZW-aoi" customClass="GroupNameCell" customModule="smartList" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="groupNameCell" id="uGT-ZW-aoi" customClass="GroupNameCell" customModule="Food_Guru" customModuleProvider="target">
                                         <rect key="frame" x="44.666666666666664" y="0.0" width="325" height="38"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -3082,7 +3117,7 @@
         <!--Log InVC-->
         <scene sceneID="0GH-6Y-0xw">
             <objects>
-                <viewController storyboardIdentifier="logIn" id="AAX-es-SHS" customClass="LogInVC" customModule="smartList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="logIn" id="AAX-es-SHS" customClass="LogInVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IkW-NP-d4y">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3231,18 +3266,18 @@
     </scenes>
     <resources>
         <image name="add-file-xl" width="64" height="64"/>
-        <image name="arrow.up.circle.fill" catalog="system" width="64" height="60"/>
-        <image name="barcode.viewfinder" catalog="system" width="64" height="56"/>
+        <image name="arrow.up" width="50" height="50"/>
+        <image name="barcode" width="50" height="50"/>
         <image name="book" width="30" height="30"/>
         <image name="checked-checkbox-xl-green" width="64" height="64"/>
         <image name="checked-checkbox-xxl" width="64" height="64"/>
         <image name="edit-2-xl" width="64" height="64"/>
         <image name="heart.black.white" width="100" height="100"/>
         <image name="icons8-pencil-60" width="60" height="60"/>
-        <image name="link" catalog="system" width="64" height="58"/>
+        <image name="link-5-xl" width="26" height="26"/>
         <image name="order" width="30" height="30"/>
         <image name="plus-6-xl" width="64" height="64"/>
-        <image name="plus.circle.fill" catalog="system" width="64" height="60"/>
+        <image name="plus_circle_filled" width="50" height="50"/>
         <image name="search-3-xl" width="64" height="64"/>
         <image name="services" width="30" height="30"/>
         <image name="shopping_cart" width="25" height="25"/>

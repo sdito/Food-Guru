@@ -191,12 +191,12 @@ class StorageHomeVC: UIViewController {
             if let rcps = rcps {
                 SharedValues.shared.sentRecipesInfo = (rcps, genericItems)
                 
-                #error("would need to change this if i move the recipe tab, also need to take this and make sure the correct recipe tab is visible")
-                
+                #warning("would need to change this if i move the recipe tab, also need to take this and make sure the correct recipe tab is visible, maybe not force unwrap these")
+                // to set the RecipeHomeVC to the correct current view controller
                 self.tabBarController?.selectedIndex = 1
+                (self.tabBarController?.viewControllers?[self.tabBarController!.selectedIndex] as? UITabBarController)?.selectedIndex = 0
+                ((self.tabBarController?.viewControllers?[self.tabBarController!.selectedIndex] as? UITabBarController)?.viewControllers?[0] as? UINavigationController)?.popToRootViewController(animated: true)
                 
-                // to make sure that the recipe home page is visible when sent over there
-                (self.tabBarController!.selectedViewController! as? UINavigationController)?.popToRootViewController(animated: true)
             }
         }
         

@@ -72,8 +72,6 @@
 		E2A54E1E2318553400BEBF39 /* InstructionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A54E1C2318553400BEBF39 /* InstructionView.swift */; };
 		E2A8A635234CF75400A676FA /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8A634234CF75400A676FA /* Search.swift */; };
 		E2A9766A236FFF8000BF039F /* CookbookRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A97669236FFF8000BF039F /* CookbookRecipe.swift */; };
-		E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B4694B22F78D1C006BA77D /* CreateListView.xib */; };
-		E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4694F22F78D44006BA77D /* CreateListView.swift */; };
 		E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4695622F7F18E006BA77D /* UITextField-Extension.swift */; };
 		E2B4695A22F7F485006BA77D /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B4695922F7F485006BA77D /* Colors.swift */; };
 		E2B68D6D232EBD92006A3B58 /* Notification.Name-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B68D6C232EBD92006A3B58 /* Notification.Name-Extension.swift */; };
@@ -208,8 +206,6 @@
 		E2A54E1C2318553400BEBF39 /* InstructionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstructionView.swift; sourceTree = "<group>"; };
 		E2A8A634234CF75400A676FA /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
 		E2A97669236FFF8000BF039F /* CookbookRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookbookRecipe.swift; sourceTree = "<group>"; };
-		E2B4694B22F78D1C006BA77D /* CreateListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateListView.xib; sourceTree = "<group>"; };
-		E2B4694F22F78D44006BA77D /* CreateListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateListView.swift; sourceTree = "<group>"; };
 		E2B4695622F7F18E006BA77D /* UITextField-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField-Extension.swift"; sourceTree = "<group>"; };
 		E2B4695922F7F485006BA77D /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E2B68D6C232EBD92006A3B58 /* Notification.Name-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name-Extension.swift"; sourceTree = "<group>"; };
@@ -502,18 +498,8 @@
 				E253AC0923431FA70018274A /* ButtonIngredientView */,
 				E2F380AE2319847F003857F7 /* IngredientView */,
 				E2A54E1F23186DEB00BEBF39 /* InstructionView */,
-				E2B4694E22F78D2B006BA77D /* CreateListView */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		E2B4694E22F78D2B006BA77D /* CreateListView */ = {
-			isa = PBXGroup;
-			children = (
-				E2B4694B22F78D1C006BA77D /* CreateListView.xib */,
-				E2B4694F22F78D44006BA77D /* CreateListView.swift */,
-			);
-			path = CreateListView;
 			sourceTree = "<group>";
 		};
 		E2B4695522F79748006BA77D /* Objects */ = {
@@ -775,7 +761,6 @@
 				E2F380B023198496003857F7 /* IngredientView.xib in Resources */,
 				E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */,
 				E216204E22F658D20074A0DF /* Assets.xcassets in Resources */,
-				E2B4694C22F78D1C006BA77D /* CreateListView.xib in Resources */,
 				E2CE480F23442F6F0045FCC0 /* LabelInstructionView.xib in Resources */,
 				E2E29036234C3F1300620576 /* RatingView.xib in Resources */,
 				E2DA80BB2347F0E400BD7101 /* SortItemView.xib in Resources */,
@@ -932,7 +917,6 @@
 				E2B4695A22F7F485006BA77D /* Colors.swift in Sources */,
 				E253AC08234315BB0018274A /* ButtonIngredientView.swift in Sources */,
 				E206E15F236FA4D4005C3422 /* CookbookVC.swift in Sources */,
-				E2B4695022F78D44006BA77D /* CreateListView.swift in Sources */,
 				E24ADB0E233DB063008F2F9F /* SettingContactDeveloperCell.swift in Sources */,
 				E2DA80D22349BB9000BD7101 /* GiveRatingView.swift in Sources */,
 				E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */,

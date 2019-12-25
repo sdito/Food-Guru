@@ -137,7 +137,6 @@ struct Item: Equatable {
             "category": category
         ])
     }
-    #warning("set the next function here")
 }
 
 extension Item {
