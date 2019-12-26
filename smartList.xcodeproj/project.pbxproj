@@ -478,8 +478,8 @@
 		E2A54E1F23186DEB00BEBF39 /* InstructionView */ = {
 			isa = PBXGroup;
 			children = (
-				E2A54E1C2318553400BEBF39 /* InstructionView.swift */,
 				E2A54E1B2318553300BEBF39 /* InstructionView.xib */,
+				E2A54E1C2318553400BEBF39 /* InstructionView.swift */,
 			);
 			path = InstructionView;
 			sourceTree = "<group>";
