@@ -58,8 +58,6 @@ class SelectRecipeTypeVC: UIViewController {
         pickerView.delegate = self
         pickerView.dataSource = self
         searchBar.setTextProperties()
-        topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
-        secondTopView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
     }
     
     @IBAction func exit(_ sender: Any) {

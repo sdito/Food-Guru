@@ -16,7 +16,7 @@ protocol ButtonIngredientViewDelegate {
     func haveUserSortItem(addedItemName: [String], addedItemStores: [String]?, addedItemListID: String)
 }
 
-
+#warning("need to change SF symbol in associated xib")
 
 class ButtonIngredientView: UIView {
     

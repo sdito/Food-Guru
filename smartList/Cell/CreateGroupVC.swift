@@ -48,7 +48,10 @@ class CreateGroupVC: UIViewController {
         } else if previousGroupID != nil {
             doneCreatingOutlet.setTitle("Done editing", for: .normal)
         }
-        topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
+    }
+    @IBAction func addUser(_ sender: Any) {
+        print("Add user pressed")
+        addItem()
     }
     
     @IBAction func exit(_ sender: Any) {
@@ -61,11 +64,15 @@ class CreateGroupVC: UIViewController {
         if previousGroupID == nil {
             // create a new group, nothing to do with editing
             User.writeGroupToFirestoreAndAddToUsers(db: db, emails: emails)
+            self.presentingViewController?.createMessageView(color: Colors.messageGreen, text: "Group created")
             self.dismiss(animated: true, completion: nil)
+            
         } else {
             // need to edit the group
             User.editedGroupInfo(db: db, initialEmails: SharedValues.shared.groupEmails ?? [""], updatedEmails: emails, groupID: SharedValues.shared.groupID ?? " ", storageID: SharedValues.shared.foodStorageID ?? " ")
+            self.presentingViewController?.createMessageView(color: Colors.messageGreen, text: "Group edited")
             self.dismiss(animated: true, completion: nil)
+            
         }
         
     }

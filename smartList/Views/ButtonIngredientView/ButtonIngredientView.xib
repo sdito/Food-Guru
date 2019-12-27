@@ -11,16 +11,17 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ButtonIngredientView" customModule="Food_Guru" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="556" height="93"/>
+            <rect key="frame" x="0.0" y="0.0" width="549" height="27"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="uxS-O6-p4g">
-                    <rect key="frame" x="0.0" y="0.0" width="556" height="59"/>
+                    <rect key="frame" x="0.0" y="0.0" width="549" height="27"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kPY-Hf-6G4">
-                            <rect key="frame" x="0.0" y="0.0" width="30" height="59"/>
+                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kPY-Hf-6G4">
+                            <rect key="frame" x="0.0" y="0.0" width="30" height="27"/>
+                            <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="30" id="ogi-4A-cy5"/>
+                                <constraint firstAttribute="width" constant="30" id="wld-zs-Bhz"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                             <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -29,19 +30,22 @@
                             </state>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OYx-9Y-neE">
-                            <rect key="frame" x="45" y="0.0" width="511" height="59"/>
+                            <rect key="frame" x="45" y="0.0" width="504" height="27"/>
                             <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                             <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" secondItem="OYx-9Y-neE" secondAttribute="height" id="7Lg-rt-mZ0"/>
+                    </constraints>
                 </stackView>
             </subviews>
             <constraints>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="uxS-O6-p4g" secondAttribute="bottom" id="B2z-3z-3fV"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="uxS-O6-p4g" secondAttribute="trailing" id="UDD-Pz-bMC"/>
-                <constraint firstItem="uxS-O6-p4g" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="aVs-on-94C"/>
-                <constraint firstItem="uxS-O6-p4g" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="gVI-h7-7CO"/>
+                <constraint firstItem="uxS-O6-p4g" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8s5-Fq-Lx3"/>
+                <constraint firstItem="uxS-O6-p4g" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Aap-6D-6a6"/>
+                <constraint firstAttribute="bottom" secondItem="uxS-O6-p4g" secondAttribute="bottom" id="IRM-95-84O"/>
+                <constraint firstAttribute="trailing" secondItem="uxS-O6-p4g" secondAttribute="trailing" id="hna-fZ-Hx8"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
@@ -49,7 +53,7 @@
                 <outlet property="button" destination="kPY-Hf-6G4" id="igz-da-c9X"/>
                 <outlet property="label" destination="OYx-9Y-neE" id="D6c-u6-F2l"/>
             </connections>
-            <point key="canvasLocation" x="243.47826086956525" y="393.41517857142856"/>
+            <point key="canvasLocation" x="239.85507246376812" y="388.05803571428572"/>
         </view>
     </objects>
     <resources>

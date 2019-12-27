@@ -27,8 +27,11 @@ class SignUpVC: UIViewController {
         GIDSignIn.sharedInstance()?.presentingViewController = self
         User.resetSharedValues()
         
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
         
-        print("\(String(describing: Auth.auth().currentUser?.isAnonymous)) is if the current user is anonymous")
+        emailTextField.setUpDoneToolbar(action: #selector(dismissTextfield), style: .done)
+        passwordTextField.setUpDoneToolbar(action: #selector(dismissTextfield), style: .done)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -223,4 +226,26 @@ extension SignUpVC: GIDSignInDelegate {
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
         return GIDSignIn.sharedInstance().handle(url)
     }
+}
+
+
+
+
+extension SignUpVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailTextField {
+            textField.resignFirstResponder()
+            passwordTextField.becomeFirstResponder()
+        } else if textField == passwordTextField {
+            textField.resignFirstResponder()
+            emailTextField.becomeFirstResponder()
+        }
+        return true
+    }
+    
+    @objc private func dismissTextfield() {
+        emailTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
+    }
+    
 }

@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseFirestore
 
+
 class ListHomeVC: UIViewController {
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var tableView: UITableView!
@@ -29,8 +30,6 @@ class ListHomeVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        //super.viewWillAppear(animated)
-        
         
     }
     
@@ -46,6 +45,8 @@ class ListHomeVC: UIViewController {
         }
         
         bottomView.shadowAndRounded(cornerRadius: 10, border: false)
+        
+        
         
     }
     

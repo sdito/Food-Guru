@@ -10,7 +10,6 @@ import UIKit
 
 
 import FirebaseFirestore
-import FirebaseUI
 import Firebase
 import GoogleSignIn
 

@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-class CreateDisplayNameVC: UIViewController {
+class CreateDisplayNameVC: UIViewController, UITextFieldDelegate {
     var db: Firestore!
     var forChange: Bool = false
     
@@ -23,6 +23,7 @@ class CreateDisplayNameVC: UIViewController {
         db = Firestore.firestore()
         createUsernameOutlet.border(cornerRadius: 15.0)
         getCurrentNameOrSuggested()
+        usernameTextField.setUpDoneToolbar(action: #selector(dismissKeyboard), style: .done)
     }
     
     @IBAction func backPressed(_ sender: Any) {
@@ -69,4 +70,9 @@ class CreateDisplayNameVC: UIViewController {
         }
     }
     
+    @objc private func dismissKeyboard() {
+        usernameTextField.resignFirstResponder()
+    }
 }
+
+

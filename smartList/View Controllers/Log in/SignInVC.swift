@@ -21,6 +21,11 @@ class SignInVC: UIViewController {
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance()?.presentingViewController = self
         User.resetSharedValues()
+        
+        emailTextField.setUpDoneToolbar(action: #selector(dismissKeyboard), style: .done)
+        passwordTextField.setUpDoneToolbar(action: #selector(dismissKeyboard), style: .done)
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -162,5 +167,25 @@ extension SignInVC: GIDSignInDelegate {
 
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
         return GIDSignIn.sharedInstance().handle(url)
+    }
+}
+
+
+
+extension SignInVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailTextField {
+            textField.resignFirstResponder()
+            passwordTextField.becomeFirstResponder()
+        } else if textField == passwordTextField {
+            textField.resignFirstResponder()
+            emailTextField.becomeFirstResponder()
+        }
+        return true
+    }
+    
+    @objc private func dismissKeyboard() {
+        emailTextField.resignFirstResponder()
+        passwordTextField.resignFirstResponder()
     }
 }

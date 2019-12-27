@@ -11,28 +11,12 @@ import FirebaseFirestore
 import FirebaseAuth
 
 
-//protocol RecipeCellDelegate {
-//    func addToFavorites(recipe: Recipe?)
-//    func removeFromFavorites(recipe: Recipe?)
-//}
-
-
-
 
 class RecipeCell: UICollectionViewCell {
     
 //    var delegate: RecipeCellDelegate!
     
-    var selectionState: Bool = false /*{
-        didSet {
-            switch self.selectionState {
-            case true:
-                delegate.addToFavorites(recipe: recipe)
-            case false:
-                delegate.removeFromFavorites(recipe: recipe)
-            }
-        }
-    }*/
+    var selectionState: Bool = false
     
     private var recipe: Recipe?
     @IBOutlet weak var recipeImage: UIImageView!
@@ -96,6 +80,8 @@ class RecipeCell: UICollectionViewCell {
     
     
     @objc func favoriteButtonPressed() {
+        
+        
         let db = Firestore.firestore()
         let path = self.recipe?.imagePath ?? " "
         if SharedValues.shared.savedRecipes?.contains(self.recipe?.imagePath ?? " ") ?? false {

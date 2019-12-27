@@ -8,7 +8,7 @@
 
 import UIKit
 import FirebaseFirestore
-
+import StoreKit
 
 class TabVC: UITabBarController {
     var db: Firestore!
@@ -18,6 +18,16 @@ class TabVC: UITabBarController {
         User.writeNewUserDocumentIfApplicable(db: db)
         User.setAndPersistGroupDataInSharedValues(db: db)
         
+        let defaults = UserDefaults.standard
+        let numTimesRan = defaults.integer(forKey: "timesOpened")
+        
+        if numTimesRan == 10 {
+            SKStoreReviewController.requestReview()
+        }
+        
+        defaults.set(numTimesRan + 1, forKey: "timesOpened")
+        
     }
+    
 }
 

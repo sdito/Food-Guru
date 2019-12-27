@@ -10,13 +10,12 @@ inhibit_all_warnings!
 
 
 pod 'Firebase/Firestore', :inhibit_warnings => true
-pod 'FirebaseUI', :inhibit_warnings => true
 pod 'Firebase/Auth', :inhibit_warnings => true
 pod 'Firebase/Storage', :inhibit_warnings => true
 pod 'Firebase/MLVision'
 pod 'Firebase/MLVisionBarcodeModel'
-
 pod 'RealmSwift'
+pod 'GoogleSignIn'
 
   target 'smartListTests' do
     inherit! :search_paths

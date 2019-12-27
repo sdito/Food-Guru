@@ -63,8 +63,5 @@ class InitialLogInVC: UIViewController {
         
     }
     
-    @objc func cancelLoadingPopUp() {
-        print("cancel pressed")
-    }
     
 }

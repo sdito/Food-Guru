@@ -130,6 +130,7 @@ class AddItemsVC: UIViewController {
         } else {
             segmentedControl.isHidden = false
         }
+        
     }
     @IBAction func editList(_ sender: Any) {
         //sendHome = false

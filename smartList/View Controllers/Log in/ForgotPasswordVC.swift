@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseAuth
 
-class ForgotPasswordVC: UIViewController {
+class ForgotPasswordVC: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var getPasswordOutlet: UIButton!
@@ -17,6 +17,7 @@ class ForgotPasswordVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         getPasswordOutlet.border(cornerRadius: 15.0)
+        emailTextField.setUpDoneToolbar(action: #selector(dismissKeybaord), style: .done)
     }
     
     @IBAction func back(_ sender: Any) {
@@ -43,5 +44,8 @@ class ForgotPasswordVC: UIViewController {
         
     }
     
-
+    @objc private func dismissKeybaord() {
+        emailTextField.resignFirstResponder()
+    }
+    
 }

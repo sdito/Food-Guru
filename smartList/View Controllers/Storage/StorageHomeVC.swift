@@ -11,7 +11,6 @@ import FirebaseFirestore
 import FirebaseAuth
 import Firebase
 
-
 class StorageHomeVC: UIViewController {
     //var delegate: IngredientsFromStorageDelegate!
     private var indexes: [Int]? {
@@ -81,6 +80,7 @@ class StorageHomeVC: UIViewController {
         searchBar.setTextProperties()
         searchOutlet.setImage(UIImage(named: "search-3-xl"), for: .normal)
         helperView.shadowAndRounded(cornerRadius: 10, border: false)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -368,7 +368,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
-                cell.setUI(str: "Your storage is empty. To add and keep track of your items, select done after you are done using one of your lists or manually add the items.")
+                cell.setUI(str: "Your storage is empty. To add and keep track of your items, select done after you are done using one of your lists, manually add items, or scan the barcode of items you want to add.")
                 return cell
             }
         } else {

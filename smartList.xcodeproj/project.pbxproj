@@ -44,7 +44,6 @@
 		E2445CF22321D8F90089582F /* RecipeHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CF12321D8F90089582F /* RecipeHomeVC.swift */; };
 		E2445CF42321DC100089582F /* StorageHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CF32321DC100089582F /* StorageHomeVC.swift */; };
 		E2445CFE23220D950089582F /* TimeInterval-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CFD23220D950089582F /* TimeInterval-Extension.swift */; };
-		E2481B7F2300B00D0036E378 /* LogInVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2481B7E2300B00D0036E378 /* LogInVC.swift */; };
 		E24ADB0A23386E69008F2F9F /* StorageNewItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADB0923386E69008F2F9F /* StorageNewItemVC.swift */; };
 		E24ADB0C23399BD8008F2F9F /* ListHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADB0B23399BD8008F2F9F /* ListHomeCell.swift */; };
 		E24ADB0E233DB063008F2F9F /* SettingContactDeveloperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADB0D233DB063008F2F9F /* SettingContactDeveloperCell.swift */; };
@@ -178,7 +177,6 @@
 		E2445CF12321D8F90089582F /* RecipeHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeHomeVC.swift; sourceTree = "<group>"; };
 		E2445CF32321DC100089582F /* StorageHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageHomeVC.swift; sourceTree = "<group>"; };
 		E2445CFD23220D950089582F /* TimeInterval-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval-Extension.swift"; sourceTree = "<group>"; };
-		E2481B7E2300B00D0036E378 /* LogInVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInVC.swift; sourceTree = "<group>"; };
 		E24ADB0923386E69008F2F9F /* StorageNewItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageNewItemVC.swift; sourceTree = "<group>"; };
 		E24ADB0B23399BD8008F2F9F /* ListHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHomeCell.swift; sourceTree = "<group>"; };
 		E24ADB0D233DB063008F2F9F /* SettingContactDeveloperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContactDeveloperCell.swift; sourceTree = "<group>"; };
@@ -379,7 +377,6 @@
 		E216207822F660C40074A0DF /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				E2481B7E2300B00D0036E378 /* LogInVC.swift */,
 				E2149CF6235ADCAB002BF2D0 /* CreateNewItemVC.swift */,
 				E2445CED2321D6500089582F /* TabVC.swift */,
 				E2C5EC35239A022F0030E3CD /* Log in */,
@@ -653,7 +650,7 @@
 				E216204022F658D10074A0DF /* Frameworks */,
 				E216204122F658D10074A0DF /* Resources */,
 				CAB36106BB041121C33432F9 /* [CP] Embed Pods Frameworks */,
-				D0BC9984D722D2CE4C52D500 /* [CP] Copy Pods Resources */,
+				C867E72843BDEF12C7AB9127 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -832,6 +829,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C867E72843BDEF12C7AB9127 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-smartList/Pods-smartList-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-smartList/Pods-smartList-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-smartList/Pods-smartList-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		CAB36106BB041121C33432F9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -847,23 +861,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-smartList/Pods-smartList-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D0BC9984D722D2CE4C52D500 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-smartList/Pods-smartList-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-smartList/Pods-smartList-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-smartList/Pods-smartList-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E5BB9C9DF234276440290F64 /* [CP] Check Pods Manifest.lock */ = {
@@ -931,7 +928,6 @@
 				E2654C46237E654400BE7130 /* VisionDocumentText-Extension.swift in Sources */,
 				E2B8E943237C81160051B07D /* RecipePDFVC.swift in Sources */,
 				E20BC6CB2327376000F1E5E7 /* SettingCell.swift in Sources */,
-				E2481B7F2300B00D0036E378 /* LogInVC.swift in Sources */,
 				E2088BD22369EF9000370D09 /* SearchType.swift in Sources */,
 				E2E980D0238E3A6D00FAD549 /* ReviewImagesView.swift in Sources */,
 				E20BC6E0232AB39F00F1E5E7 /* SetUpListVC.swift in Sources */,
