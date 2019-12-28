@@ -21,10 +21,10 @@ class TabVC: UITabBarController {
         let defaults = UserDefaults.standard
         let numTimesRan = defaults.integer(forKey: "timesOpened")
         
-        if numTimesRan == 10 {
+        if numTimesRan == 8 {
             SKStoreReviewController.requestReview()
         }
-        
+        print(numTimesRan)
         defaults.set(numTimesRan + 1, forKey: "timesOpened")
         
     }

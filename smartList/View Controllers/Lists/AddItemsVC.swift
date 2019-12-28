@@ -32,9 +32,10 @@ class AddItemsVC: UIViewController {
     var list: GroceryList? {
         didSet {
             if list?.items?.isEmpty == false {
-                //print(storeText)
                 (sortedCategories, arrayArrayItems) = (list?.sortForTableView(from: currentStore))!
                 tableView.reloadData()
+            } else {
+                arrayArrayItems = []
             }
         }
     }
@@ -49,7 +50,6 @@ class AddItemsVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         super.viewWillAppear(animated)
-//        topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
         tableView.delegate = self
         tableView.dataSource = self
         textField.delegate = self
@@ -67,9 +67,9 @@ class AddItemsVC: UIViewController {
             
             self.setUIfrom(list: self.list!)
         }
+        
         Item.readItemsForList(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (itm) in
             self.list?.items = itm
-            
         }
         
         
@@ -133,10 +133,6 @@ class AddItemsVC: UIViewController {
         
     }
     @IBAction func editList(_ sender: Any) {
-        //sendHome = false
-        
-        
-        
         let vc = storyboard?.instantiateViewController(withIdentifier: "setUpList") as! SetUpListVC
         if list?.docID == nil {
             list?.docID = SharedValues.shared.listIdentifier?.documentID
@@ -158,7 +154,6 @@ class AddItemsVC: UIViewController {
                 for item in items {
                     item.deleteItemFromList(db: self.db, listID: self.list?.ownID ?? " ")
                 }
-                self.list?.items?.removeAll()
             }
         }))
         actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
@@ -209,12 +204,6 @@ class AddItemsVC: UIViewController {
         let category = GenericItem.getCategory(item: genericItem, words: words)
         var item = Item(name: text, selected: false, category: category.rawValue, store: currentStore, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: genericItem, systemCategory: category)
         item.writeToFirestoreForList(db: db)
-        
-//        if list?.items?.isEmpty == false {
-//            list?.items!.append(item)
-//        } else {
-//            list?.items = [item]
-//        }
         
         list?.items?.append(item)
         
@@ -301,16 +290,18 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
         return arrayArrayItems[section].count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //guard let item = list?.items?[indexPath.row] else { return UITableViewCell() }
-        let item = arrayArrayItems[indexPath.section][indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell") as! ItemCell
-        cell.setUI(item: item)
-        cell.delegate = self
-        return cell
+        if arrayArrayItems.isEmpty == false {
+            let item = arrayArrayItems[indexPath.section][indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell") as! ItemCell
+            cell.setUI(item: item)
+            cell.delegate = self
+            return cell
+        } else {
+            return UITableViewCell()
+        }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //print(list?.items.map({$0.map({$0.name})}))
-        
         arrayArrayItems[indexPath.section][indexPath.row].selected = !arrayArrayItems[indexPath.section][indexPath.row].selected
         arrayArrayItems[indexPath.section][indexPath.row].selectedItem(db: db)
         tableView.reloadData()

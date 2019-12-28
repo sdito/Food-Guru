@@ -27,7 +27,7 @@ extension UIStackView {
             let b = UIButton()
             
             b.setTitle(button.name, for: .normal)
-            b.titleLabel?.backgroundColor = Colors.main
+            b.titleLabel?.backgroundColor = Colors.secondary
             b.titleLabel?.font = font
             b.addTarget(self, action: #selector(recipePressed), for: .touchUpInside)
             
@@ -40,30 +40,31 @@ extension UIStackView {
         }
     }
     
-    func setUpQuickSearchButtonsForCookbook() {
-        let font = UIFont(name: "futura", size: 17)!
-        
-        guard let ingredients = SharedValues.shared.currentItemsInStorage else { return }
-        let forDisplay = ingredients.map { (i) -> String in
-            (GenericItem.init(rawValue: i)?.description ?? "other")
-        }.filter({$0 != "other"})
-        forDisplay.forEach { (ingredient) in
-            let b = UIButton()
-            
-            b.setTitle(ingredient, for: .normal)
-            b.titleLabel?.backgroundColor = Colors.main
-            b.titleLabel?.font = font
-            
-            
-            // to get the width of the text by itself in order to add padding to the title
-            let textArea = NSString(string: ingredient).boundingRect(with: CGSize(width: CGFloat(MAXFLOAT), height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
-            let width = ceil(textArea.width)
-            b.titleLabel?.widthAnchor.constraint(equalToConstant: width + 20).isActive = true
-            b.titleLabel?.textAlignment = .center
-            self.addArrangedSubview(b)
-        }
-        
-    }
+//    func setUpQuickSearchButtonsForCookbook() {
+//        let font = UIFont(name: "futura", size: 17)!
+//        
+//        guard let ingredients = SharedValues.shared.currentItemsInStorage else { return }
+//        
+//        let forDisplay = ingredients.map { (i) -> String in
+//            (GenericItem.init(rawValue: i)?.description ?? "other")
+//        }.filter({$0 != "other"})
+//        forDisplay.forEach { (ingredient) in
+//            let b = UIButton()
+//            
+//            b.setTitle(ingredient, for: .normal)
+//            b.titleLabel?.backgroundColor = Colors.main
+//            b.titleLabel?.font = font
+//            
+//            
+//            // to get the width of the text by itself in order to add padding to the title
+//            let textArea = NSString(string: ingredient).boundingRect(with: CGSize(width: CGFloat(MAXFLOAT), height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+//            let width = ceil(textArea.width)
+//            b.titleLabel?.widthAnchor.constraint(equalToConstant: width + 20).isActive = true
+//            b.titleLabel?.textAlignment = .center
+//            self.addArrangedSubview(b)
+//        }
+//        
+//    }
     
     // purpose of having this sent through notification to RecipeHomeVC then to Search is to keep logic for searching in Search struct
     @objc func recipePressed(sender: Any) {

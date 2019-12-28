@@ -376,7 +376,8 @@ extension Recipe {
             "notes": self.notes as Any,
             "path": self.imagePath as Any,
             "tagline": self.tagline as Any,
-            "reviewImagePaths": self.reviewImagePaths as Any
+            "reviewImagePaths": self.reviewImagePaths as Any,
+            "numberIngredients": self.ingredients.count as Any
         ]) { err in
             if err != nil {
                 UIApplication.shared.keyWindow?.rootViewController?.createMessageView(color: .red, text: "Failed creating recipe")

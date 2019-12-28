@@ -28,6 +28,22 @@ struct Search {
         
         if otherCount != 0 {
             switch otherText.first {
+            case "Simple":
+                print("Find simple recipes, (with few ingredients)")
+                #warning("need to implement this search, just added field in Recipe.writeToFirestore 'numberIngredients', need to check if that is writing correcty, reads correctly as is..12/27")
+                reference.whereField("numberIngredients", isLessThanOrEqualTo: 5).getDocuments { (querySnapshot, error) in
+                    guard let documents = querySnapshot?.documents else {
+                        print("Error retrieving documents: \(String(describing: error))")
+                        return
+                    }
+                    
+                    for doc in documents {
+                        recipes.append(doc.recipe())
+                    }
+                    print(recipes.map({$0.name}))
+                    recipesReturned(recipes)
+                }
+                return
             case "Quick":
                 reference.whereField("totalTime", isLessThanOrEqualTo: 25).getDocuments { (querySnapshot, error) in
                     guard let documents = querySnapshot?.documents else {

@@ -86,23 +86,23 @@ extension CookbookRecipe {
 
 
 
-extension Array where Element: CookbookRecipe {
-    func filterRecipes(from searches: [String]) -> [CookbookRecipe] {
-        if searches.isEmpty {
-            return self
-        } else {
-            var matchedRecipes: [CookbookRecipe] = []
-            let correctedSearches = searches.map({"has_\($0)"})
-            for recipe in self {
-                for search in correctedSearches {
-                    if recipe.systemItems.contains(search) {
-                        matchedRecipes.append(recipe)
-                        break
-                    }
-                }
-            }
-            return matchedRecipes
-        }
-        
-    }
-}
+//extension Array where Element: CookbookRecipe {
+//    func filterRecipes(from searches: [String]) -> [CookbookRecipe] {
+//        if searches.isEmpty {
+//            return self
+//        } else {
+//            var matchedRecipes: [CookbookRecipe] = []
+//            let correctedSearches = searches.map({"has_\($0)"})
+//            for recipe in self {
+//                for search in correctedSearches {
+//                    if recipe.systemItems.contains(search) {
+//                        matchedRecipes.append(recipe)
+//                        break
+//                    }
+//                }
+//            }
+//            return matchedRecipes
+//        }
+//        
+//    }
+//}

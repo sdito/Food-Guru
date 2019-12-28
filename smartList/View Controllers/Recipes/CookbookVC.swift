@@ -11,46 +11,42 @@ import RealmSwift
 import FirebaseFirestore
 
 class CookbookVC: UIViewController {
-    private let currentSearchesView = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
+//    private let currentSearchesView = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
     private var lastContentOffset: CGFloat = 0
     
     
     private var filteredRecipes: [CookbookRecipe] = [] {
         didSet {
-            print(currentSearches.map({$0.0}))
             tableView.reloadData()
         }
     }
     private var recipes: [CookbookRecipe] = [] {
         didSet {
-            print(self.recipes.map({$0.name}))
             tableView.reloadData()
         }
     }
     
-    private var currentSearches: [(String, SearchType)] = [] {
-        didSet {
-            print("Current searches set: \(self.currentSearches)")
-            filteredRecipes = recipes.filterRecipes(from: self.currentSearches.map({$0.0}))
-            if self.view.subviews.contains(currentSearchesView) {
-                print("Already contains")
-                currentSearchesView.setUI(searches: self.currentSearches)
-            } else {
-                // add the view
-                wholeStackView.insertArrangedSubview(currentSearchesView, at: 1)
-                currentSearchesView.setUI(searches: self.currentSearches)
-            }
-            
-            if self.currentSearches.isEmpty {
-                searchBar.placeholder = "Filter recipes"
-            } else {
-                searchBar.placeholder = "Add another search"
-            }
-        }
-    }
+//    private var currentSearches: [(String, SearchType)] = [] {
+//        didSet {
+//            print("Current searches set: \(self.currentSearches)")
+//            filteredRecipes = recipes.filterRecipes(from: self.currentSearches.map({$0.0}))
+//            if self.view.subviews.contains(currentSearchesView) {
+//                print("Already contains")
+//                currentSearchesView.setUI(searches: self.currentSearches)
+//            } else {
+//                // add the view
+//                wholeStackView.insertArrangedSubview(currentSearchesView, at: 1)
+//                currentSearchesView.setUI(searches: self.currentSearches)
+//            }
+//
+//            if self.currentSearches.isEmpty {
+//                searchBar.placeholder = "Filter recipes"
+//            } else {
+//                searchBar.placeholder = "Add another search"
+//            }
+//        }
+//    }
     
-    @IBOutlet weak var searchHelperView: UIView!
-    @IBOutlet weak var searchHelperSV: UIStackView!
     @IBOutlet weak var wholeStackView: UIStackView!
     
     
@@ -75,10 +71,6 @@ class CookbookVC: UIViewController {
         } else {
             self.view.backgroundColor = .white
         }
-        searchHelperView.isHidden = true
-        searchHelperSV.setUpQuickSearchButtonsForCookbook()
-        addSelectors(sv: searchHelperSV)
-        currentSearchesView.delegate = self
         searchBar.setUpAddItemToolbar(cancelAction: #selector(cancelSelector), addAction: #selector(addSelector))
         
     }
@@ -117,7 +109,7 @@ class CookbookVC: UIViewController {
         
     }
     @objc private func cancelSelector() {
-        searchBar.text = ""
+//        searchBar.text = ""
         searchBar.endEditing(true)
     }
     @objc private func addSelector() {
@@ -125,14 +117,6 @@ class CookbookVC: UIViewController {
     }
     
     @objc private func searchPressed(sender: UIButton) {
-        print(sender.titleLabel?.text as Any)
-        
-        if let text = sender.titleLabel?.text {
-            let search = Search.searchFromSearchBar(string: text)
-            currentSearches += search
-        }
-        
-        searchHelperView.isHidden = true
         searchBar.endEditing(true)
     }
     
@@ -145,11 +129,6 @@ class CookbookVC: UIViewController {
     }
 }
 
-extension CookbookVC: CurrentSearchesViewDelegate {
-    func buttonPressedToDeleteSearch(index: Int) {
-        currentSearches.remove(at: index)
-    }
-}
 
 extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -170,7 +149,7 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
         } else {
             let cell: UITableViewCell = .init(style: .default, reuseIdentifier: nil)
             cell.textLabel?.font = UIFont(name: "futura", size: 17)
-            cell.textLabel?.text = "No recipes saved to your cookbook! Add a recipe to your cookbook to always have your recipes, even without an internet connection."
+            cell.textLabel?.text = "No recipes saved to your cookbook! Add a recipe to your cookbook to always have your recipes, even without an internet connection. Cookbook recipes are private and will only be on your device."
             cell.textLabel?.numberOfLines = 0
             return cell
         }
@@ -227,11 +206,6 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
 //        let realm = try! Realm()
         recipe.delete()
         tableView.cellForRow(at: idx)?.isHidden = true
-//        tableView.reloadData()
-//        tableView.beginUpdates()
-//        tableView.deleteRows(at: [idx], with: .automatic)
-////        recipes = Array(realm.objects(CookbookRecipe.self))
-//        tableView.endUpdates()
         
     }
 }
@@ -239,27 +213,13 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
 
 extension CookbookVC: UISearchBarDelegate {
     func search() {
-        print(searchBar.text!)
-        searchBar.text = ""
         searchBar.endEditing(true)
-        searchHelperView.isHidden = true
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        currentSearches.removeAll()
         if searchText == "" {
-            searchHelperView.isHidden = false
             filteredRecipes = recipes
         } else {
-            searchHelperView.isHidden = true
             filteredRecipes = recipes.filter({$0.name.lowercased().contains(searchBar.text!.lowercased())})
         }
-        
-        
-        
-        
-    }
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        print("Search bar did begin editing")
-        searchHelperView.isHidden = false
     }
 }
