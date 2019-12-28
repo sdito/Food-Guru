@@ -144,7 +144,9 @@ class SettingsDetailVC: UIViewController {
             cell3.setUI(str: "icons8.com")
             let cell4 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
             cell4.setUI(str: "world.openfoodfacts.org")
-            return [cell1, cell2, cell3, cell4]
+            let cell5 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+            cell5.setUI(str: "flaticon.com")
+            return [cell1, cell2, cell3, cell4, cell5]
             
             
         case .storage:
