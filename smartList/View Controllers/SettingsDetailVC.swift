@@ -217,7 +217,7 @@ class SettingsDetailVC: UIViewController {
     @objc private func createAccountFromAnonymous() {
         print("Create account from anonymous")
         let sb: UIStoryboard = UIStoryboard(name: "LogIn", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "signUpVC") as! SignUpVC
+        let vc = sb.instantiateViewController(withIdentifier: "initialLogInVC") as! InitialLogInVC
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }

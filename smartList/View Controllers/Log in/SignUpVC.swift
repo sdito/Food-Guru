@@ -11,6 +11,7 @@ import FirebaseFirestore
 import FirebaseAuth
 import GoogleSignIn
 
+
 class SignUpVC: UIViewController {
     
     @IBOutlet weak var createAccountOutlet: UIButton!
@@ -72,7 +73,6 @@ class SignUpVC: UIViewController {
         }
         
     }
-    
     
     @IBAction func continueAsGuest(_ sender: Any) {
         self.createLoadingView()
@@ -186,9 +186,12 @@ class SignUpVC: UIViewController {
             vc.createMessageView(color: Colors.messageGreen, text: "Welcome \(Auth.auth().currentUser?.displayName ?? "")")
         }
     }
-        
-    
 }
+
+
+
+
+
 
 
 extension SignUpVC: GIDSignInDelegate {
@@ -249,3 +252,4 @@ extension SignUpVC: UITextFieldDelegate {
     }
     
 }
+
