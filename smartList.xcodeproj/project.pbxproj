@@ -193,6 +193,7 @@
 		E25F071C231490A200E6738E /* RecipeTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTypeCell.swift; sourceTree = "<group>"; };
 		E2654C45237E654400BE7130 /* VisionDocumentText-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VisionDocumentText-Extension.swift"; sourceTree = "<group>"; };
 		E26B9C4F234A6F960039E9EE /* UITextView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView-Extension.swift"; sourceTree = "<group>"; };
+		E273ADD823B8565500E0B35D /* Food Guru.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Food Guru.entitlements"; sourceTree = "<group>"; };
 		E273F210235A60F4007B54E2 /* SearchByIngredientVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByIngredientVC.swift; sourceTree = "<group>"; };
 		E273F212235A6E96007B54E2 /* RecipeSearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSearchCell.swift; sourceTree = "<group>"; };
 		E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar-Extension.swift"; sourceTree = "<group>"; };
@@ -338,6 +339,7 @@
 		E216204522F658D10074A0DF /* smartList */ = {
 			isa = PBXGroup;
 			children = (
+				E273ADD823B8565500E0B35D /* Food Guru.entitlements */,
 				E216204622F658D10074A0DF /* AppDelegate.swift */,
 				E216207822F660C40074A0DF /* View Controllers */,
 				E216204A22F658D10074A0DF /* Main.storyboard */,
@@ -1149,6 +1151,7 @@
 			baseConfigurationReference = 637340E166032438AC62EA0F /* Pods-smartList.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "smartList/Food Guru.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XVWYN7L6Y8;
 				INFOPLIST_FILE = smartList/Info.plist;
@@ -1169,6 +1172,7 @@
 			baseConfigurationReference = 2C88071BA2D6027769549A73 /* Pods-smartList.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "smartList/Food Guru.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = XVWYN7L6Y8;
 				INFOPLIST_FILE = smartList/Info.plist;
