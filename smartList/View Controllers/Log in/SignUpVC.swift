@@ -9,7 +9,6 @@
 import UIKit
 import FirebaseFirestore
 import FirebaseAuth
-import GoogleSignIn
 
 
 class SignUpVC: UIViewController {
@@ -24,9 +23,7 @@ class SignUpVC: UIViewController {
         super.viewDidLoad()
         db = Firestore.firestore()
         createAccountOutlet.border(cornerRadius: 15.0)
-        GIDSignIn.sharedInstance().delegate = self
-        GIDSignIn.sharedInstance()?.presentingViewController = self
-        User.resetSharedValues()
+        
         
         emailTextField.delegate = self
         passwordTextField.delegate = self
@@ -35,9 +32,6 @@ class SignUpVC: UIViewController {
         passwordTextField.setUpDoneToolbar(action: #selector(dismissTextfield), style: .done)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        GIDSignIn.sharedInstance()?.delegate = nil
-    }
     
     
     @IBAction func emailCreateAccount(_ sender: Any) {
@@ -132,105 +126,9 @@ class SignUpVC: UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
     
-    private func normalGoogleLogIn(credential: AuthCredential) {
-        Auth.auth().signIn(with: credential) { (authResult, error) in
-            if let error = error {
-                print(error.localizedDescription)
-                self.dismiss(animated: false, completion: nil)
-                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true)
-                return
-            } else {
-                self.handleNewGoogleAccount(authDataResult: authResult, isLinked: false)
-            }
-        }
-    }
     
-    private func handleNewGoogleAccount(authDataResult: AuthDataResult?, isLinked: Bool) {
-        
-        //#error("display name is not being written on converted account")
-        
-        // just put below
-        let docRef = self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")")
-        docRef.setData([
-            "email": authDataResult?.user.email as Any,
-            "uid": authDataResult?.user.uid as Any,
-            "name": authDataResult?.user.displayName as Any
-        ])
-        // end of new stuff
-        
-        if Auth.auth().currentUser != nil {
-            SharedValues.shared.userID = Auth.auth().currentUser?.uid
 
-            if Auth.auth().currentUser?.isAnonymous == true {
-                SharedValues.shared.anonymousUser = true
-            } else {
-              SharedValues.shared.anonymousUser = false
-            }
-        }
-        
-        if isLinked == true {
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "createUsernameVC") as! CreateDisplayNameVC
-            vc.modalPresentationStyle = .fullScreen
-            vc.modalTransitionStyle = .crossDissolve
-            self.dismiss(animated: false, completion: nil)
-            self.present(vc, animated: true, completion: nil)
-        } else {
-            let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: "tabVC") as! TabVC
-            vc.modalPresentationStyle = .fullScreen
-            vc.modalTransitionStyle = .crossDissolve
-            self.dismiss(animated: false, completion: nil)
-            self.present(vc, animated: true, completion: nil)
-            vc.createMessageView(color: Colors.messageGreen, text: "Welcome \(Auth.auth().currentUser?.displayName ?? "")")
-        }
-    }
 }
-
-
-
-
-
-
-
-extension SignUpVC: GIDSignInDelegate {
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
-        self.createLoadingView()
-        if let error = error {
-            print("Error signing in with google account: \(error.localizedDescription)")
-            self.dismiss(animated: false, completion: nil)
-            return
-        }
-
-        guard let authentication = user.authentication else { return }
-        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
-        print("GOT TO THIS POINT")
-        
-        let isAnonymousAccount = Auth.auth().currentUser?.isAnonymous
-        
-        if isAnonymousAccount == true {
-            Auth.auth().currentUser?.link(with: credential, completion: { (authDataResult, error) in
-                if error != nil {
-                    self.normalGoogleLogIn(credential: credential)
-                    return
-                } else {
-                    self.handleNewGoogleAccount(authDataResult: authDataResult, isLinked: true)
-                }
-            })
-            
-        } else {
-            normalGoogleLogIn(credential: credential)
-        }
-        
-        
-    }
-
-    func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
-        return GIDSignIn.sharedInstance().handle(url)
-    }
-}
-
 
 
 

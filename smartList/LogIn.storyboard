@@ -16,34 +16,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="NO0-Ap-8pM">
-                                <rect key="frame" x="20" y="362.5" width="374" height="171"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="NO0-Ap-8pM">
+                                <rect key="frame" x="20" y="365" width="374" height="166"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qzd-Ts-6QH">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="45"/>
-                                        <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="25"/>
-                                        <state key="normal" title="Apple sign in">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="signInWithApple:" destination="2rE-ug-UMF" eventType="touchUpInside" id="u9P-TT-1CY"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ahw-27-aw8">
-                                        <rect key="frame" x="0.0" y="68" width="374" height="45"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="36"/>
                                         <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="25"/>
-                                        <state key="normal" title="Create account">
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="18"/>
+                                        <state key="normal" title="Create email account">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
                                             <action selector="createAccount:" destination="2rE-ug-UMF" eventType="touchUpInside" id="3o4-Ic-x3d"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jID-ru-mkL" customClass="GIDSignInButton">
+                                        <rect key="frame" x="137" y="51" width="100" height="36"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="t2d-7M-uvE"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wqu-58-4hJ">
+                                        <rect key="frame" x="67" y="102" width="240" height="20"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="ciZ-Y8-CjG"/>
+                                        </constraints>
+                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ij-Uc-CM5">
-                                        <rect key="frame" x="118.5" y="136" width="137" height="35"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                        <rect key="frame" x="134.5" y="137" width="105" height="29"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                                         <state key="normal" title="Continue as guest">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -54,22 +58,20 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="ahw-27-aw8" secondAttribute="trailing" id="3Rp-8M-MNX"/>
-                                    <constraint firstItem="qzd-Ts-6QH" firstAttribute="leading" secondItem="NO0-Ap-8pM" secondAttribute="leading" id="Goz-7w-kfv"/>
                                     <constraint firstItem="ahw-27-aw8" firstAttribute="leading" secondItem="NO0-Ap-8pM" secondAttribute="leading" id="RKA-Bz-50d"/>
-                                    <constraint firstAttribute="trailing" secondItem="qzd-Ts-6QH" secondAttribute="trailing" id="YxP-WH-zv7"/>
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="vFL-sX-JeG">
-                                <rect key="frame" x="93.5" y="800" width="227" height="32"/>
+                                <rect key="frame" x="84" y="800" width="246.5" height="32"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gYf-vr-pXF">
-                                        <rect key="frame" x="0.0" y="0.0" width="179" height="32"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have email account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gYf-vr-pXF">
+                                        <rect key="frame" x="0.0" y="0.0" width="198.5" height="32"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z1c-kj-gTg">
-                                        <rect key="frame" x="185" y="0.0" width="42" height="32"/>
+                                        <rect key="frame" x="204.5" y="0.0" width="42" height="32"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                         <state key="normal" title="Log in">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -93,6 +95,7 @@
                     </view>
                     <connections>
                         <outlet property="createAccountOutlet" destination="ahw-27-aw8" id="ghA-va-1uT"/>
+                        <outlet property="stackView" destination="NO0-Ap-8pM" id="DOk-id-F2n"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ttc-dv-x0x" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -146,16 +149,16 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="XXQ-4M-Yx5">
-                                <rect key="frame" x="93.5" y="800" width="227" height="32"/>
+                                <rect key="frame" x="84" y="800" width="246.5" height="32"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CWT-fH-30K">
-                                        <rect key="frame" x="0.0" y="0.0" width="179" height="32"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have email account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CWT-fH-30K">
+                                        <rect key="frame" x="0.0" y="0.0" width="198.5" height="32"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jvu-cz-ZKy">
-                                        <rect key="frame" x="185" y="0.0" width="42" height="32"/>
+                                        <rect key="frame" x="204.5" y="0.0" width="42" height="32"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                         <state key="normal" title="Log in">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -166,24 +169,6 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="APV-2Z-Ybd" customClass="GIDSignInButton">
-                                <rect key="frame" x="157" y="315" width="100" height="50"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="JtX-4v-vah"/>
-                                    <constraint firstAttribute="height" constant="50" id="ZAW-fq-hyN"/>
-                                </constraints>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fwb-ZT-jvg">
-                                <rect key="frame" x="163" y="397" width="89" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Apple sign in">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="appleSignInPressed:" destination="ESS-79-oPP" eventType="touchUpInside" id="dzU-FS-dhb"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -192,13 +177,11 @@
                             <constraint firstItem="zqM-uy-biH" firstAttribute="width" secondItem="ZNh-I2-QYM" secondAttribute="width" multiplier="7:8" id="9ty-Ts-v8H"/>
                             <constraint firstItem="zqM-uy-biH" firstAttribute="centerX" secondItem="KLl-UG-GbU" secondAttribute="centerX" id="HpH-HP-O5U"/>
                             <constraint firstItem="XXQ-4M-Yx5" firstAttribute="centerX" secondItem="KLl-UG-GbU" secondAttribute="centerX" id="OT4-nv-Xra"/>
-                            <constraint firstItem="APV-2Z-Ybd" firstAttribute="centerX" secondItem="KLl-UG-GbU" secondAttribute="centerX" id="Pf5-mA-Yps"/>
                             <constraint firstItem="KsI-8C-uNV" firstAttribute="trailing" secondItem="ZNh-I2-QYM" secondAttribute="trailing" constant="20" id="b5V-dd-v4j"/>
                             <constraint firstItem="8kQ-G8-9Fz" firstAttribute="centerX" secondItem="KLl-UG-GbU" secondAttribute="centerX" id="ceP-xl-bKk"/>
                             <constraint firstItem="ZNh-I2-QYM" firstAttribute="top" secondItem="KsI-8C-uNV" secondAttribute="top" constant="50" id="nFD-sY-DZq"/>
                             <constraint firstItem="XXQ-4M-Yx5" firstAttribute="top" secondItem="8kQ-G8-9Fz" secondAttribute="bottom" constant="10" id="pFh-Vh-3xr"/>
                             <constraint firstItem="KsI-8C-uNV" firstAttribute="bottom" secondItem="XXQ-4M-Yx5" secondAttribute="bottom" constant="30" id="umW-fF-cGq"/>
-                            <constraint firstItem="APV-2Z-Ybd" firstAttribute="top" secondItem="zqM-uy-biH" secondAttribute="bottom" constant="100" id="yMn-Zg-cH3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="KsI-8C-uNV"/>
                     </view>
@@ -318,16 +301,16 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="mPc-dW-ty2">
-                                <rect key="frame" x="98" y="800" width="218" height="32"/>
+                                <rect key="frame" x="77.5" y="800" width="259.5" height="32"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gG4-G6-8zB">
-                                        <rect key="frame" x="0.0" y="0.0" width="160" height="32"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an email account?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gG4-G6-8zB">
+                                        <rect key="frame" x="0.0" y="0.0" width="201.5" height="32"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ah-vw-dzl">
-                                        <rect key="frame" x="166" y="0.0" width="52" height="32"/>
+                                        <rect key="frame" x="207.5" y="0.0" width="52" height="32"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                         <state key="normal" title="Sign up">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -348,18 +331,9 @@
                                     <action selector="continueAsGuest:" destination="Jw5-xX-Z5i" eventType="touchUpInside" id="UHe-sS-yqj"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DkX-Bh-D4m" customClass="GIDSignInButton">
-                                <rect key="frame" x="157" y="315" width="100" height="50"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="3hE-58-DeU"/>
-                                    <constraint firstAttribute="width" constant="100" id="T0a-UO-9cY"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="DkX-Bh-D4m" firstAttribute="centerX" secondItem="22t-jT-QIM" secondAttribute="centerX" id="0lA-ng-Rqe"/>
                             <constraint firstItem="Fc7-Kz-sbO" firstAttribute="bottom" secondItem="mPc-dW-ty2" secondAttribute="bottom" constant="30" id="Anz-jr-5o5"/>
                             <constraint firstItem="n1c-ff-ugb" firstAttribute="leading" secondItem="Fc7-Kz-sbO" secondAttribute="leading" constant="20" id="FHW-vV-uUy"/>
                             <constraint firstItem="eTV-Mb-3Vp" firstAttribute="centerX" secondItem="22t-jT-QIM" secondAttribute="centerX" id="I27-Ov-8nl"/>
@@ -369,7 +343,6 @@
                             <constraint firstItem="mPc-dW-ty2" firstAttribute="centerX" secondItem="22t-jT-QIM" secondAttribute="centerX" id="Ncd-vV-ygu"/>
                             <constraint firstItem="eTV-Mb-3Vp" firstAttribute="top" secondItem="n1c-ff-ugb" secondAttribute="bottom" constant="10" id="WHY-Ga-atq"/>
                             <constraint firstItem="8nk-Yy-OJl" firstAttribute="centerX" secondItem="22t-jT-QIM" secondAttribute="centerX" id="aCn-7n-A1n"/>
-                            <constraint firstItem="DkX-Bh-D4m" firstAttribute="top" secondItem="eTV-Mb-3Vp" secondAttribute="bottom" constant="100" id="bKw-Q1-rxT"/>
                             <constraint firstItem="eTV-Mb-3Vp" firstAttribute="width" secondItem="n1c-ff-ugb" secondAttribute="width" multiplier="7:8" id="bz2-1I-Yk2"/>
                             <constraint firstItem="n1c-ff-ugb" firstAttribute="top" secondItem="Fc7-Kz-sbO" secondAttribute="top" constant="50" id="n3j-4c-QlR"/>
                             <constraint firstItem="8nk-Yy-OJl" firstAttribute="top" secondItem="TsM-yl-Mh4" secondAttribute="bottom" constant="10" id="wC4-Cc-DI8"/>

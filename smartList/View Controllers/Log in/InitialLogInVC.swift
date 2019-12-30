@@ -11,15 +11,29 @@ import FirebaseAuth
 import FirebaseFirestore
 import AuthenticationServices
 import CryptoKit
+import GoogleSignIn
+
 
 class InitialLogInVC: UIViewController {
     var db: Firestore!
     @IBOutlet weak var createAccountOutlet: UIButton!
+    @IBOutlet weak var stackView: UIStackView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         createAccountOutlet.border(cornerRadius: 20.0)
         db = Firestore.firestore()
+        
+        GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        User.resetSharedValues()
+        
+        if #available(iOS 13.0, *) {
+            let button = ASAuthorizationAppleIDButton()
+            button.addTarget(self, action: #selector(startSignInWithAppleFlow), for: .touchUpInside)
+            stackView.insertArrangedSubview(button, at: 1)
+        } 
+        
     }
  
     @IBAction func createAccount(_ sender: Any) {
@@ -29,14 +43,14 @@ class InitialLogInVC: UIViewController {
         vc.modalTransitionStyle = .crossDissolve
         self.present(vc, animated: true, completion: nil)
     }
-    @IBAction func signInWithApple(_ sender: Any) {
-        print("sign in with apple")
-        if #available(iOS 13, *) {
-            startSignInWithAppleFlow()
-        } else {
-            // Fallback on earlier versions
-        }
-    }
+//    @IBAction func signInWithApple(_ sender: Any) {
+//        print("sign in with apple")
+//        if #available(iOS 13, *) {
+//            
+//        } else {
+//            // Fallback on earlier versions
+//        }
+//    }
     
     @IBAction func continueAsGuest(_ sender: Any) {
         self.createLoadingView()
@@ -75,12 +89,63 @@ class InitialLogInVC: UIViewController {
         
     }
     
+    private func normalGoogleLogIn(credential: AuthCredential) {
+        Auth.auth().signIn(with: credential) { (authResult, error) in
+            if let error = error {
+                print(error.localizedDescription)
+                self.dismiss(animated: false, completion: nil)
+                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true)
+                return
+            } else {
+                self.handleNewGoogleAccount(authDataResult: authResult, isLinked: false)
+            }
+        }
+    }
     
+    private func handleNewGoogleAccount(authDataResult: AuthDataResult?, isLinked: Bool) {
+        
+        // just put below
+        let docRef = self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")")
+        docRef.setData([
+            "email": authDataResult?.user.email as Any,
+            "uid": authDataResult?.user.uid as Any,
+            "name": authDataResult?.user.displayName as Any
+        ])
+        // end of new stuff
+        
+        if Auth.auth().currentUser != nil {
+            SharedValues.shared.userID = Auth.auth().currentUser?.uid
+
+            if Auth.auth().currentUser?.isAnonymous == true {
+                SharedValues.shared.anonymousUser = true
+            } else {
+              SharedValues.shared.anonymousUser = false
+            }
+        }
+        
+        if isLinked == true {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "createUsernameVC") as! CreateDisplayNameVC
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            self.dismiss(animated: false, completion: nil)
+            self.present(vc, animated: true, completion: nil)
+        } else {
+            let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "tabVC") as! TabVC
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            self.dismiss(animated: false, completion: nil)
+            self.present(vc, animated: true, completion: nil)
+            vc.createMessageView(color: Colors.messageGreen, text: "Welcome \(Auth.auth().currentUser?.displayName ?? "")")
+        }
+    }
     /// Start of apple log in stuff
     
     fileprivate var currentNonce: String?
 
-    @available(iOS 13, *)
+    @objc @available(iOS 13, *)
     func startSignInWithAppleFlow() {
       let nonce = randomNonceString()
       currentNonce = nonce
@@ -139,6 +204,42 @@ class InitialLogInVC: UIViewController {
     }
 }
 
+extension InitialLogInVC: GIDSignInDelegate {
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
+        self.createLoadingView()
+        if let error = error {
+            print("Error signing in with google account: \(error.localizedDescription)")
+            self.dismiss(animated: false, completion: nil)
+            return
+        }
+
+        guard let authentication = user.authentication else { return }
+        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+        print("GOT TO THIS POINT")
+        
+        let isAnonymousAccount = Auth.auth().currentUser?.isAnonymous
+        
+        if isAnonymousAccount == true {
+            Auth.auth().currentUser?.link(with: credential, completion: { (authDataResult, error) in
+                if error != nil {
+                    self.normalGoogleLogIn(credential: credential)
+                    return
+                } else {
+                    self.handleNewGoogleAccount(authDataResult: authDataResult, isLinked: true)
+                }
+            })
+            
+        } else {
+            normalGoogleLogIn(credential: credential)
+        }
+        
+        
+    }
+
+    func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url)
+    }
+}
 
 
 extension InitialLogInVC: ASAuthorizationControllerDelegate {
@@ -162,23 +263,29 @@ extension InitialLogInVC: ASAuthorizationControllerDelegate {
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "createUsernameVC") as! CreateDisplayNameVC
                     vc.modalPresentationStyle = .fullScreen
                     vc.modalTransitionStyle = .crossDissolve
+                    self.dismiss(animated: false, completion: nil)
                     self.present(vc, animated: true, completion: nil)
                 } else {
                     let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = sb.instantiateViewController(withIdentifier: "tabVC") as! TabVC
                     vc.modalPresentationStyle = .fullScreen
                     vc.modalTransitionStyle = .crossDissolve
+                    self.dismiss(animated: false, completion: nil)
                     self.present(vc, animated: true, completion: nil)
                     vc.createMessageView(color: Colors.messageGreen, text: "Welcome \(authDataResult?.user.displayName ?? "")")
                 }
             } else {
-                print("Error logging in with apple: \(error?.localizedDescription ?? "")")
+                self.dismiss(animated: false, completion: nil)
+                let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                self.present(alert, animated: true)
             }
         }
     }
     @available(iOS 13.0, *)
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            self.createLoadingView()
             guard let nonce = currentNonce else {
                 fatalError("Invalid state: A login callback was received, but no login request was sent.")
             }
@@ -190,15 +297,11 @@ extension InitialLogInVC: ASAuthorizationControllerDelegate {
                 print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
                 return
             }
-            // Initialize a Firebase credential.
-            let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
-            // Sign in with Firebase.
-        
-        
-            let isAnonymous = SharedValues.shared.anonymousUser
             
+            let credential = OAuthProvider.credential(withProviderID: "apple.com", idToken: idTokenString, rawNonce: nonce)
+            
+            let isAnonymous = SharedValues.shared.anonymousUser
             if isAnonymous == false || isAnonymous == nil {
-                // do normal sign in, if there is no username then go to create username screen, else just to normal tabVC
                 normalAppleLogIn(credential: credential)
             } else {
                 print("They have an anonymous account")
@@ -221,6 +324,7 @@ extension InitialLogInVC: ASAuthorizationControllerDelegate {
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "createUsernameVC") as! CreateDisplayNameVC
                         vc.modalPresentationStyle = .fullScreen
                         vc.modalTransitionStyle = .crossDissolve
+                        self.dismiss(animated: false, completion: nil)
                         self.present(vc, animated: true, completion: nil)
                         
                     } else {
