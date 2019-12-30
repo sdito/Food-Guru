@@ -67,6 +67,9 @@ class SignUpVC: UIViewController {
         }
         
     }
+    @IBAction func backPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     
     @IBAction func continueAsGuest(_ sender: Any) {
         self.createLoadingView()

@@ -18,10 +18,11 @@ class InitialLogInVC: UIViewController {
     var db: Firestore!
     @IBOutlet weak var createAccountOutlet: UIButton!
     @IBOutlet weak var stackView: UIStackView!
+    @IBOutlet weak var googleSignInButton: GIDSignInButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        createAccountOutlet.border(cornerRadius: 20.0)
+        createAccountOutlet.border(cornerRadius: 5.0)
         db = Firestore.firestore()
         
         GIDSignIn.sharedInstance().delegate = self
@@ -31,26 +32,22 @@ class InitialLogInVC: UIViewController {
         if #available(iOS 13.0, *) {
             let button = ASAuthorizationAppleIDButton()
             button.addTarget(self, action: #selector(startSignInWithAppleFlow), for: .touchUpInside)
-            stackView.insertArrangedSubview(button, at: 1)
+            stackView.insertArrangedSubview(button, at: 0)
+            button.widthAnchor.constraint(equalTo: createAccountOutlet.widthAnchor).isActive = true
+            
         } 
-        
+        googleSignInButton.widthAnchor.constraint(equalTo: createAccountOutlet.widthAnchor).isActive = true
+        googleSignInButton.style = .wide
     }
  
     @IBAction func createAccount(_ sender: Any) {
         print("Create account")
         let vc = storyboard?.instantiateViewController(withIdentifier: "signUpVC") as! SignUpVC
         vc.modalPresentationStyle = .fullScreen
-        vc.modalTransitionStyle = .crossDissolve
+//        vc.modalTransitionStyle = .crossDissolve
         self.present(vc, animated: true, completion: nil)
     }
-//    @IBAction func signInWithApple(_ sender: Any) {
-//        print("sign in with apple")
-//        if #available(iOS 13, *) {
-//            
-//        } else {
-//            // Fallback on earlier versions
-//        }
-//    }
+    
     
     @IBAction func continueAsGuest(_ sender: Any) {
         self.createLoadingView()
@@ -84,7 +81,7 @@ class InitialLogInVC: UIViewController {
         print("Log in")
         let vc = storyboard?.instantiateViewController(withIdentifier: "signInVC") as! SignInVC
         vc.modalPresentationStyle = .fullScreen
-        vc.modalTransitionStyle = .crossDissolve
+//        vc.modalTransitionStyle = .crossDissolve
         self.present(vc, animated: true, completion: nil)
         
     }
@@ -206,13 +203,15 @@ class InitialLogInVC: UIViewController {
 
 extension InitialLogInVC: GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
-        self.createLoadingView()
+        
         if let error = error {
             print("Error signing in with google account: \(error.localizedDescription)")
             self.dismiss(animated: false, completion: nil)
             return
         }
-
+        
+        self.createLoadingView()
+        
         guard let authentication = user.authentication else { return }
         let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
         print("GOT TO THIS POINT")
@@ -239,6 +238,7 @@ extension InitialLogInVC: GIDSignInDelegate {
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
         return GIDSignIn.sharedInstance().handle(url)
     }
+    
 }
 
 

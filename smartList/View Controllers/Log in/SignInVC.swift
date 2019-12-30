@@ -111,7 +111,10 @@ class SignInVC: UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
     
-
+    @IBAction func backPressed(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 }
 
 
