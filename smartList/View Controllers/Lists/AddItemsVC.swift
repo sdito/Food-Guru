@@ -145,6 +145,7 @@ class AddItemsVC: UIViewController {
     @IBAction func deleteList(_ sender: Any) {
         
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
         actionSheet.addAction(.init(title: "Delete list", style: .destructive, handler: { action in
             self.list?.deleteListToFirestore(db: self.db)
             self.navigationController?.popToRootViewController(animated: true)
@@ -157,6 +158,9 @@ class AddItemsVC: UIViewController {
             }
         }))
         actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        
+        
+        
         present(actionSheet, animated: true)
         
         

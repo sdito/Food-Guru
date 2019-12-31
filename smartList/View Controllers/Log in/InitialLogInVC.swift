@@ -14,6 +14,8 @@ import CryptoKit
 import GoogleSignIn
 
 
+//#error("not working on ios 12")
+
 class InitialLogInVC: UIViewController {
     var db: Firestore!
     @IBOutlet weak var createAccountOutlet: UIButton!
@@ -35,11 +37,15 @@ class InitialLogInVC: UIViewController {
             stackView.insertArrangedSubview(button, at: 0)
             button.widthAnchor.constraint(equalTo: createAccountOutlet.widthAnchor).isActive = true
             
-        } 
+        }
+        
         googleSignInButton.widthAnchor.constraint(equalTo: createAccountOutlet.widthAnchor).isActive = true
         googleSignInButton.style = .wide
+        
     }
- 
+    
+    
+    
     @IBAction func createAccount(_ sender: Any) {
         print("Create account")
         let vc = storyboard?.instantiateViewController(withIdentifier: "signUpVC") as! SignUpVC
@@ -67,13 +73,17 @@ class InitialLogInVC: UIViewController {
                     }
                     
                 }
-                self.dismiss(animated: false, completion: nil)
-                self.present(vc, animated: true, completion: nil)
+                self.dismiss(animated: false) {
+                    self.present(vc, animated: true, completion: nil)
+                }
+                
             } else {
-                self.dismiss(animated: false, completion: nil)
-                let alert = UIAlertController(title: "Error", message: "Unable to sign in anonymously", preferredStyle: .alert)
-                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true)
+                self.dismiss(animated: false) {
+                    let alert = UIAlertController(title: "Error", message: "Unable to sign in anonymously", preferredStyle: .alert)
+                    alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }
+                
             }
         }
     }
@@ -90,10 +100,11 @@ class InitialLogInVC: UIViewController {
         Auth.auth().signIn(with: credential) { (authResult, error) in
             if let error = error {
                 print(error.localizedDescription)
-                self.dismiss(animated: false, completion: nil)
-                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true)
+                self.dismiss(animated: false) {
+                    let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                    alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }
                 return
             } else {
                 self.handleNewGoogleAccount(authDataResult: authResult, isLinked: false)
@@ -126,16 +137,22 @@ class InitialLogInVC: UIViewController {
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "createUsernameVC") as! CreateDisplayNameVC
             vc.modalPresentationStyle = .fullScreen
             vc.modalTransitionStyle = .crossDissolve
-            self.dismiss(animated: false, completion: nil)
-            self.present(vc, animated: true, completion: nil)
+//            self.dismiss(animated: false, completion: nil)
+            self.dismiss(animated: false) {
+                self.present(vc, animated: true, completion: nil)
+            }
+            
         } else {
             let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "tabVC") as! TabVC
             vc.modalPresentationStyle = .fullScreen
             vc.modalTransitionStyle = .crossDissolve
-            self.dismiss(animated: false, completion: nil)
-            self.present(vc, animated: true, completion: nil)
-            vc.createMessageView(color: Colors.messageGreen, text: "Welcome \(Auth.auth().currentUser?.displayName ?? "")")
+//            self.dismiss(animated: false, completion: nil)
+            self.dismiss(animated: false) {
+                self.present(vc, animated: true, completion: nil)
+                vc.createMessageView(color: Colors.messageGreen, text: "Welcome \(Auth.auth().currentUser?.displayName ?? "")")
+            }
+            
         }
     }
     /// Start of apple log in stuff
@@ -144,27 +161,29 @@ class InitialLogInVC: UIViewController {
 
     @objc @available(iOS 13, *)
     func startSignInWithAppleFlow() {
-      let nonce = randomNonceString()
-      currentNonce = nonce
-      let appleIDProvider = ASAuthorizationAppleIDProvider()
-      let request = appleIDProvider.createRequest()
-      request.requestedScopes = [.fullName, .email]
-      request.nonce = sha256(nonce)
+        let nonce = randomNonceString()
+        currentNonce = nonce
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        request.nonce = sha256(nonce)
 
-      let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-      authorizationController.delegate = self
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
         authorizationController.presentationContextProvider = self as? ASAuthorizationControllerPresentationContextProviding
-      authorizationController.performRequests()
+        authorizationController.performRequests()
     }
     
-    @available(iOS 13, *)
+    
+    
+
+    @available(iOS 13.0, *)
     private func sha256(_ input: String) -> String {
         let inputData = Data(input.utf8)
         let hashedData = SHA256.hash(data: inputData)
         let hashString = hashedData.compactMap {
             return String(format: "%02x", $0)
         }.joined()
-
         return hashString
     }
     
@@ -206,7 +225,10 @@ extension InitialLogInVC: GIDSignInDelegate {
         
         if let error = error {
             print("Error signing in with google account: \(error.localizedDescription)")
-            self.dismiss(animated: false, completion: nil)
+//            self.dismiss(animated: false, completion: nil)
+            let alert = UIAlertController(title: nil, message: "Error signing in with google account, please try again.", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
             return
         }
         
@@ -263,22 +285,30 @@ extension InitialLogInVC: ASAuthorizationControllerDelegate {
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "createUsernameVC") as! CreateDisplayNameVC
                     vc.modalPresentationStyle = .fullScreen
                     vc.modalTransitionStyle = .crossDissolve
-                    self.dismiss(animated: false, completion: nil)
-                    self.present(vc, animated: true, completion: nil)
+                    self.dismiss(animated: false) {
+                        self.present(vc, animated: true, completion: nil)
+                    }
+                    
                 } else {
                     let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = sb.instantiateViewController(withIdentifier: "tabVC") as! TabVC
                     vc.modalPresentationStyle = .fullScreen
                     vc.modalTransitionStyle = .crossDissolve
-                    self.dismiss(animated: false, completion: nil)
-                    self.present(vc, animated: true, completion: nil)
-                    vc.createMessageView(color: Colors.messageGreen, text: "Welcome \(authDataResult?.user.displayName ?? "")")
+                    self.dismiss(animated: false) {
+                        print("This is being called")
+                        self.present(vc, animated: true, completion: nil)
+                        vc.createMessageView(color: Colors.messageGreen, text: "Welcome \(authDataResult?.user.displayName ?? "")")
+                    }
+                    
                 }
             } else {
-                self.dismiss(animated: false, completion: nil)
+//                self.dismiss(animated: false, completion: nil)
+                
                 let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
                 alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true)
+                self.dismiss(animated: false) {
+                    self.present(alert, animated: true)
+                }
             }
         }
     }
@@ -287,14 +317,29 @@ extension InitialLogInVC: ASAuthorizationControllerDelegate {
         if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             self.createLoadingView()
             guard let nonce = currentNonce else {
+                self.dismiss(animated: false, completion: nil)
+                
                 fatalError("Invalid state: A login callback was received, but no login request was sent.")
             }
             guard let appleIDToken = appleIDCredential.identityToken else {
                 print("Unable to fetch identity token")
+                self.dismiss(animated: false) {
+                    let alert = UIAlertController(title: "Error", message: "A problem occured trying to log in with apple. Please try again. Error: Unable to fetch identity token.", preferredStyle: .alert)
+                    alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }
+                
                 return
             }
             guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
                 print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
+                self.dismiss(animated: false) {
+                    let alert = UIAlertController(title: "Error", message: "A problem occured trying to log in with apple. Please try again. Error: Unable to serialize token string form data.", preferredStyle: .alert)
+                    alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }
+                
+                
                 return
             }
             
@@ -324,8 +369,10 @@ extension InitialLogInVC: ASAuthorizationControllerDelegate {
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "createUsernameVC") as! CreateDisplayNameVC
                         vc.modalPresentationStyle = .fullScreen
                         vc.modalTransitionStyle = .crossDissolve
-                        self.dismiss(animated: false, completion: nil)
-                        self.present(vc, animated: true, completion: nil)
+                        self.dismiss(animated: false) {
+                            self.present(vc, animated: true, completion: nil)
+                        }
+                        
                         
                     } else {
                         // do normal sign in since linking is not possible with the account situation (there is an error)

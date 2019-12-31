@@ -83,7 +83,8 @@ class StorageHomeVC: UIViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    
+    override func viewWillAppear(_ animated: Bool) {
         emptyCells = createEmptyStorageCells()
         tableView.reloadData()
         
@@ -92,8 +93,8 @@ class StorageHomeVC: UIViewController {
         } else {
             helperView.isHidden = false
         }
-        
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         searchBar.isHidden = true
         segmentedControl.isHidden = false
@@ -308,6 +309,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
             expirationDateOutlet.setTitleColor(.lightGray, for: .normal)
         }
     }
+    
     func createEmptyStorageCells() -> [UITableViewCell] {
         var createGroup: Bool?
         let one = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
