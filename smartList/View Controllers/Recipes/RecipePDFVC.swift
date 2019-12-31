@@ -22,12 +22,22 @@ class RecipePDFVC: UIViewController {
         if let data = documentData {
             pdfView.document = PDFDocument(data: data)
             pdfView.autoScales = true
+            
             let vc = UIActivityViewController(
-              activityItems: [data],
-              applicationActivities: []
+                activityItems: [data],
+                applicationActivities: []
             )
-            present(vc, animated: true, completion: nil)
+            
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                present(vc, animated: true, completion: nil)
+            } else {
+                // do other stuff for iPad
+                vc.popoverPresentationController?.sourceView = self.view
+                vc.popoverPresentationController?.sourceRect = pdfView.frame
+                present(vc, animated: true, completion: nil)
+                
+                
+            }
         }
     }
-
 }

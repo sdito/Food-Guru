@@ -301,7 +301,7 @@ class SettingsDetailVC: UIViewController {
     }
     @objc private func deleteStorage() {
         print("Delete storage")
-        let alert = UIAlertController(title: "Are you sure you want to delete your storage?", message: "This action can't be undome", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Are you sure you want to delete your storage?", message: "This action can't be undone", preferredStyle: .alert)
         alert.addAction(.init(title: "Delete", style: .destructive, handler: { (action) in
             if let id = SharedValues.shared.foodStorageID {
                 FoodStorage.deleteStorage(db: self.db, storageID: id)

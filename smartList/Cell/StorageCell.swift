@@ -54,5 +54,16 @@ class StorageCell: UITableViewCell {
         } else {
             expires.text = ""
         }
+        
+        
+        
+        if SharedValues.shared.isPhone == false {
+            name.font = UIFont(name: "futura", size: 34)
+            
+            added.font = UIFont(name: "futura", size: 24)
+            expires.font = UIFont(name: "futura", size: 24)
+        }
+        
+        
     }
 }

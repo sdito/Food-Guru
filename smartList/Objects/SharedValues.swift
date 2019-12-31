@@ -61,6 +61,8 @@ class SharedValues {
     
     var previouslyViewedRecipes: [String:[String:Any]]?
     
+    var isPhone: Bool = UIDevice.current.userInterfaceIdiom == .phone
+    
     static let shared = SharedValues()
     
     

@@ -27,6 +27,10 @@ class ListHomeCell: UITableViewCell {
         default:
             numberItems.text = "\(list.numItems ?? 0) items"
         }
+        
+        if SharedValues.shared.isPhone == false {
+            
+        }
     }
 
 }

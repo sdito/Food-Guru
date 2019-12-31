@@ -40,6 +40,7 @@ class AddItemsVC: UIViewController {
         }
     }
     
+    @IBOutlet weak var topViewHeight: NSLayoutConstraint!
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var storesView: UIView!
@@ -81,6 +82,11 @@ class AddItemsVC: UIViewController {
         db = Firestore.firestore()
         textField.setUpDoneToolbar(action: #selector(dismissKeyboardPressed), style: .cancel)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        if SharedValues.shared.isPhone == false {
+            topViewHeight.isActive = false
+            topView.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        }
     }
     
     deinit {
@@ -144,6 +150,7 @@ class AddItemsVC: UIViewController {
     }
     @IBAction func deleteList(_ sender: Any) {
         
+        
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         actionSheet.addAction(.init(title: "Delete list", style: .destructive, handler: { action in
@@ -159,9 +166,20 @@ class AddItemsVC: UIViewController {
         }))
         actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            present(actionSheet, animated: true)
+        } else {
+            // do other stuff for iPad
+            guard let viewRect = sender as? UIView else { return }
+            if let presenter = actionSheet.popoverPresentationController {
+                presenter.sourceView = viewRect
+                presenter.sourceRect = viewRect.bounds
+            }
+            present(actionSheet, animated: true, completion: nil)
+        }
         
         
-        present(actionSheet, animated: true)
+        
         
         
     }
@@ -175,8 +193,19 @@ class AddItemsVC: UIViewController {
             
             let alert = UIAlertController(title: "Are you done with the list?", message: "The selected items from this list will be added to your storage, where you can keep track of your items.", preferredStyle: .actionSheet)
             alert.addAction(.init(title: "Add items to storage", style: .default, handler: {(alert: UIAlertAction!) in self.addItemsToStorageIfPossible(sendList: self.list!, foodStorageEmails: gottenEmails)}))
-            alert.addAction(.init(title: "Back", style: .default, handler: nil))
-            present(alert, animated: true)
+            alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+            
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                present(alert, animated: true)
+            } else {
+                guard let viewRect = sender as? UIView else { return }
+                if let presenter = alert.popoverPresentationController {
+                    presenter.sourceView = viewRect
+                    presenter.sourceRect = viewRect.bounds
+                }
+                present(alert, animated: true)
+            }
+            
         } else {
             let userFS = FoodStorage(isGroup: false, groupID: nil, peopleEmails: [Auth.auth().currentUser?.email ?? "no email"], items: nil, numberOfPeople: 1)
             if SharedValues.shared.groupID == nil {
@@ -184,14 +213,36 @@ class AddItemsVC: UIViewController {
                 alert.addAction(.init(title: "Create group", style: .default, handler: {(alert: UIAlertAction!) in self.pushToCreateGroupVC()}))
                 alert.addAction(.init(title: "Create own storage without group", style: .default, handler: {(alert: UIAlertAction!) in FoodStorage.createStorageToFirestoreWithPeople(db: self.db, foodStorage: userFS)}))
                 alert.addAction(.init(title: "Back", style: .default, handler: nil))
-                present(alert, animated: true)
+                
+                
+                if UIDevice.current.userInterfaceIdiom == .phone {
+                    present(alert, animated: true)
+                } else {
+                    guard let viewRect = sender as? UIView else { return }
+                    if let presenter = alert.popoverPresentationController {
+                        presenter.sourceView = viewRect
+                        presenter.sourceRect = viewRect.bounds
+                    }
+                    present(alert, animated: true)
+                }
+                
             } else {
                 let groupFS = FoodStorage(isGroup: true, groupID: SharedValues.shared.groupID, peopleEmails: SharedValues.shared.groupEmails, items: nil, numberOfPeople: SharedValues.shared.groupEmails?.count)
                 let alert = UIAlertController(title: "Error - can't add items to storage", message: "Create a storage to be able to view the current food items you have in stock.", preferredStyle: .actionSheet)
                 alert.addAction(.init(title: "Create storage with group (recommended)", style: .default, handler: {(alert: UIAlertAction!) in FoodStorage.createStorageToFirestoreWithPeople(db: self.db, foodStorage: groupFS)}))
                 alert.addAction(.init(title: "Create own storage without group", style: .default, handler: {(alert: UIAlertAction!) in FoodStorage.createStorageToFirestoreWithPeople(db: self.db, foodStorage: userFS)}))
                 alert.addAction(.init(title: "Back", style: .default, handler: nil))
-                present(alert, animated: true)
+                
+                if UIDevice.current.userInterfaceIdiom == .phone {
+                    present(alert, animated: true)
+                } else {
+                    guard let viewRect = sender as? UIView else { return }
+                    if let presenter = alert.popoverPresentationController {
+                        presenter.sourceView = viewRect
+                        presenter.sourceRect = viewRect.bounds
+                    }
+                    present(alert, animated: true)
+                }
             }
             
         }
@@ -277,7 +328,14 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let l = UILabel()
         l.text = sortedCategories[section]
-        l.font = UIFont(name: "futura", size: 15)
+        
+        if SharedValues.shared.isPhone == true {
+            l.font = UIFont(name: "futura", size: 15)
+        } else {
+            l.font = UIFont(name: "futura", size: 22.5)
+        }
+        
+        
         
         if #available(iOS 13.0, *) {
             l.backgroundColor = .secondarySystemBackground
@@ -347,9 +405,16 @@ extension AddItemsVC: ItemCellDelegate {
             }))
         }
         
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            present(actionSheet, animated: true)
+        } else {
+            actionSheet.popoverPresentationController?.sourceView = self.view
+            actionSheet.popoverPresentationController?.sourceRect = segmentedControl.frame
+            present(actionSheet, animated: true, completion: nil)
+        }
         
         
-        present(actionSheet, animated: true)
+        
         
     }
     

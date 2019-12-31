@@ -367,6 +367,7 @@
                         <outlet property="tableView" destination="Eeu-xt-zJT" id="ELF-Vq-RDG"/>
                         <outlet property="textField" destination="4Ll-rd-7AG" id="pDt-Qe-32n"/>
                         <outlet property="topView" destination="l3v-xn-fS2" id="x7M-5u-nW4"/>
+                        <outlet property="topViewHeight" destination="Lfv-ea-ulf" id="9WB-ap-Vfc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HLN-GU-yAH" userLabel="First Responder" sceneMemberID="firstResponder"/>

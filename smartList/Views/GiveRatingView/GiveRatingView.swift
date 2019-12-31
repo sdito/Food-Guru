@@ -62,7 +62,19 @@ class GiveRatingView: UIView {
         actionSheet.addAction(.init(title: "Camera", style: .default, handler: {(alert: UIAlertAction!) in self.cameraOption()}))
         actionSheet.addAction(.init(title: "Photo library", style: .default, handler: {(alert: UIAlertAction!) in self.photoLibraryOption()}))
         actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
-        self.findViewController()?.present(actionSheet, animated: true)
+        
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            self.findViewController()?.present(actionSheet, animated: true)
+        } else {
+            // do other stuff for iPad
+            guard let viewRect = sender as? UIView else { return }
+            if let presenter = actionSheet.popoverPresentationController {
+                presenter.sourceView = viewRect
+                presenter.sourceRect = viewRect.bounds
+            }
+            self.findViewController()?.present(actionSheet, animated: true)
+        }
+        
     }
     
     private func cameraOption() {

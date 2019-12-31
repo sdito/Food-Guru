@@ -26,19 +26,19 @@ class SignInVC: UIViewController {
     
     
     @IBAction func logIn(_ sender: Any) {
-        
         // with email and password
-        
         if let email = emailTextField.text, let password = passwordTextField.text {
             if email != "" && password != "" {
                 self.createLoadingView()
                 Auth.auth().signIn(withEmail: email, password: password) { (authDataResult, error) in
                     if error != nil {
                         print("There is an error: \(error?.localizedDescription ?? "unknown error")")
-                        self.dismiss(animated: false, completion: nil)
-                        let alert = UIAlertController(title: "Error", message: error!.localizedDescription, preferredStyle: .alert)
-                        alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                        self.present(alert, animated: true)
+                        self.dismiss(animated: false) {
+                            let alert = UIAlertController(title: "Error", message: error!.localizedDescription, preferredStyle: .alert)
+                            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                            self.present(alert, animated: true)
+                        }
+                        
                     } else {
                         print("Successfully logged in")
                         if Auth.auth().currentUser != nil {
@@ -51,13 +51,17 @@ class SignInVC: UIViewController {
                             }
                             
                         }
-                        self.dismiss(animated: false, completion: nil)
+                        
                         let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                         let vc = sb.instantiateViewController(withIdentifier: "tabVC") as! TabVC
                         vc.modalPresentationStyle = .fullScreen
                         vc.modalTransitionStyle = .crossDissolve
-                        self.present(vc, animated: true, completion: nil)
-                        vc.createMessageView(color: Colors.messageGreen, text: "Welcome \(authDataResult?.user.displayName ?? "")")
+                        
+                        self.dismiss(animated: false) {
+                            self.present(vc, animated: true, completion: nil)
+                            vc.createMessageView(color: Colors.messageGreen, text: "Welcome \(authDataResult?.user.displayName ?? "")")
+                        }
+                        
                     }
                 }
             } else {
@@ -70,9 +74,6 @@ class SignInVC: UIViewController {
     
     
     @IBAction func continueAsGuest(_ sender: Any) {
-        
-        print("CONTINUE FROM GUEST HERE")
-        
         self.createLoadingView()
         Auth.auth().signInAnonymously { (authDataResult, error) in
             if error == nil {
@@ -91,10 +92,18 @@ class SignInVC: UIViewController {
                     }
                     
                 }
-                self.dismiss(animated: false, completion: nil)
-                self.present(vc, animated: true, completion: nil)
+                
+                self.dismiss(animated: false) {
+                    self.present(vc, animated: true, completion: nil)
+                }
+                
             } else {
-                self.dismiss(animated: false, completion: nil)
+                self.dismiss(animated: false) {
+                    let alert = UIAlertController(title: "Error", message: "Unable to sign in. Please try again.", preferredStyle: .alert)
+                    alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                    self.present(alert, animated: true)
+                }
+                
             }
         }
     }

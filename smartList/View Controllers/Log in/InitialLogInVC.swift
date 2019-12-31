@@ -116,11 +116,20 @@ class InitialLogInVC: UIViewController {
         
         // just put below
         let docRef = self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")")
-        docRef.setData([
+        docRef.updateData([
             "email": authDataResult?.user.email as Any,
             "uid": authDataResult?.user.uid as Any,
             "name": authDataResult?.user.displayName as Any
-        ])
+        ]) { err in
+            if err != nil {
+                docRef.setData([
+                    "email": authDataResult?.user.email as Any,
+                    "uid": authDataResult?.user.uid as Any,
+                    "name": authDataResult?.user.displayName as Any
+                ])
+            }
+        }
+        
         // end of new stuff
         
         if Auth.auth().currentUser != nil {
@@ -270,11 +279,19 @@ extension InitialLogInVC: ASAuthorizationControllerDelegate {
             if error == nil {
                 if let uid = authDataResult?.user.uid {
                     let reference = self.db.collection("users").document(uid)
-                    reference.setData([
+                    reference.updateData([
                         "email": authDataResult?.user.email as Any,
                         "uid": authDataResult?.user.uid as Any,
                         "name": Auth.auth().currentUser?.displayName as Any
-                    ])
+                    ]) { err in
+                        if err != nil {
+                            reference.setData([
+                                "email": authDataResult?.user.email as Any,
+                                "uid": authDataResult?.user.uid as Any,
+                                "name": Auth.auth().currentUser?.displayName as Any
+                            ])
+                        }
+                    }
                 }
                 
                 SharedValues.shared.anonymousUser = false
@@ -357,7 +374,7 @@ extension InitialLogInVC: ASAuthorizationControllerDelegate {
                         // then they can correctly link the account
                         if let uid = authDataResult?.user.uid {
                             let reference = self.db.collection("users").document(uid)
-                            reference.setData([
+                            reference.updateData([
                                 "email": authDataResult?.user.email as Any,
                                 "uid": authDataResult?.user.uid as Any
                             ])

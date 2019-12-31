@@ -32,6 +32,10 @@ class ItemCell: UITableViewCell {
             nameLabel.attributedText = nil
             nameLabel.text = item.name
         }
+        
+        if SharedValues.shared.isPhone == false {
+            nameLabel.font = UIFont(name: "futura", size: 30)
+        }
     }
     @IBAction func editItemAction(_ sender: Any) {
         if let item = item {

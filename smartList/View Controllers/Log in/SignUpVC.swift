@@ -41,11 +41,11 @@ class SignUpVC: UIViewController {
             Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!) { (authDataResult, error) in
                 guard error == nil else {
                     print("Account not created")
-                    self.dismiss(animated: false, completion: nil)
-                    
-                    let alert = UIAlertController(title: "Error", message: error!.localizedDescription, preferredStyle: .alert)
-                    alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                    self.present(alert, animated: true)
+                    self.dismiss(animated: false) {
+                        let alert = UIAlertController(title: "Error", message: error!.localizedDescription, preferredStyle: .alert)
+                        alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                        self.present(alert, animated: true)
+                    }
                     
                     return
                 }
@@ -60,8 +60,11 @@ class SignUpVC: UIViewController {
                 if error == nil {
                     self.handleNewEmailAccount(authDataResult: authDataResult)
                 } else {
-                    self.dismiss(animated: false, completion: nil)
-                    print(error?.localizedDescription as Any)
+                    self.dismiss(animated: false) {
+                        let alert = UIAlertController(title: "Error", message: "Please try logging in again.", preferredStyle: .alert)
+                        alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                        self.present(alert, animated: true)
+                    }
                 }
             })
         }
@@ -89,13 +92,18 @@ class SignUpVC: UIViewController {
                     }
                     
                 }
-                self.dismiss(animated: false, completion: nil)
-                self.present(vc, animated: true, completion: nil)
+                self.dismiss(animated: false) {
+                    self.present(vc, animated: true, completion: nil)
+                }
+                
             } else {
-                self.dismiss(animated: false, completion: nil)
+                
                 let alert = UIAlertController(title: "Error", message: "Unable to sign in anonymously", preferredStyle: .alert)
                 alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                self.present(alert, animated: true)
+                self.dismiss(animated: false) {
+                    self.present(alert, animated: true)
+                }
+                
             }
         }
     }
@@ -112,10 +120,17 @@ class SignUpVC: UIViewController {
     private func handleNewEmailAccount(authDataResult: AuthDataResult?) {
         let docRef = self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")")
         docRef.getDocument { (document, error) in
-            self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")").setData([
+            self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")").updateData([
             "email": authDataResult?.user.email as Any,
             "uid": authDataResult?.user.uid as Any
-            ])
+            ]) { err in
+                if err != nil {
+                    docRef.setData([
+                        "email": authDataResult?.user.email as Any,
+                        "uid": authDataResult?.user.uid as Any
+                    ])
+                }
+            }
         }
         SharedValues.shared.anonymousUser = false
         SharedValues.shared.userID = authDataResult?.user.uid
@@ -125,8 +140,10 @@ class SignUpVC: UIViewController {
         let vc = self.storyboard?.instantiateViewController(withIdentifier: "createUsernameVC") as! CreateDisplayNameVC
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
-        self.dismiss(animated: false, completion: nil)
-        self.present(vc, animated: true, completion: nil)
+        self.dismiss(animated: false) {
+            self.present(vc, animated: true, completion: nil)
+        }
+        
     }
     
     
