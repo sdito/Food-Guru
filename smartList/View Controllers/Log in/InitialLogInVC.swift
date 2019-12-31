@@ -341,7 +341,7 @@ extension InitialLogInVC: ASAuthorizationControllerDelegate {
             guard let appleIDToken = appleIDCredential.identityToken else {
                 print("Unable to fetch identity token")
                 self.dismiss(animated: false) {
-                    let alert = UIAlertController(title: "Error", message: "A problem occured trying to log in with apple. Please try again. Error: Unable to fetch identity token.", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Error", message: "A problem occured trying to log in with apple. Please try again. ", preferredStyle: .alert)
                     alert.addAction(.init(title: "Ok", style: .default, handler: nil))
                     self.present(alert, animated: true)
                 }
@@ -351,7 +351,7 @@ extension InitialLogInVC: ASAuthorizationControllerDelegate {
             guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
                 print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
                 self.dismiss(animated: false) {
-                    let alert = UIAlertController(title: "Error", message: "A problem occured trying to log in with apple. Please try again. Error: Unable to serialize token string form data.", preferredStyle: .alert)
+                    let alert = UIAlertController(title: "Error", message: "There was a problem when trying to log in with apple. Please try again.", preferredStyle: .alert)
                     alert.addAction(.init(title: "Ok", style: .default, handler: nil))
                     self.present(alert, animated: true)
                 }
