@@ -208,6 +208,8 @@ class SettingsDetailVC: UIViewController {
                 }
             }
             return cells
+        case .tutorial:
+            return []
         }
     }
     

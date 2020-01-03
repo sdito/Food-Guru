@@ -39,6 +39,8 @@
 		E22A0EF423AC03C5007D7272 /* OutsideRecipesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A0EF323AC03C5007D7272 /* OutsideRecipesVC.swift */; };
 		E22A0EF623AC064F007D7272 /* RecipePuppyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A0EF523AC064F007D7272 /* RecipePuppyCell.swift */; };
 		E22A0EF823AD9238007D7272 /* SettingViewedRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A0EF723AD9238007D7272 /* SettingViewedRecipeCell.swift */; };
+		E242494923BFDD5E007C03F5 /* Tutorial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E242494823BFDD5E007C03F5 /* Tutorial.storyboard */; };
+		E242494B23BFDE4B007C03F5 /* TutorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E242494A23BFDE4B007C03F5 /* TutorialVC.swift */; };
 		E2445CEE2321D6500089582F /* TabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CED2321D6500089582F /* TabVC.swift */; };
 		E2445CF02321D8EA0089582F /* ListHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CEF2321D8EA0089582F /* ListHomeVC.swift */; };
 		E2445CF22321D8F90089582F /* RecipeHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CF12321D8F90089582F /* RecipeHomeVC.swift */; };
@@ -172,6 +174,8 @@
 		E22A0EF323AC03C5007D7272 /* OutsideRecipesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutsideRecipesVC.swift; sourceTree = "<group>"; };
 		E22A0EF523AC064F007D7272 /* RecipePuppyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePuppyCell.swift; sourceTree = "<group>"; };
 		E22A0EF723AD9238007D7272 /* SettingViewedRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewedRecipeCell.swift; sourceTree = "<group>"; };
+		E242494823BFDD5E007C03F5 /* Tutorial.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tutorial.storyboard; sourceTree = "<group>"; };
+		E242494A23BFDE4B007C03F5 /* TutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialVC.swift; sourceTree = "<group>"; };
 		E2445CED2321D6500089582F /* TabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabVC.swift; sourceTree = "<group>"; };
 		E2445CEF2321D8EA0089582F /* ListHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListHomeVC.swift; path = "../New Group/ListHomeVC.swift"; sourceTree = "<group>"; };
 		E2445CF12321D8F90089582F /* RecipeHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeHomeVC.swift; sourceTree = "<group>"; };
@@ -344,6 +348,7 @@
 				E216207822F660C40074A0DF /* View Controllers */,
 				E216204A22F658D10074A0DF /* Main.storyboard */,
 				E2C5EC3123986D420030E3CD /* LogIn.storyboard */,
+				E242494823BFDD5E007C03F5 /* Tutorial.storyboard */,
 				E2B4695522F79748006BA77D /* Objects */,
 				E25F071523146C9A00E6738E /* Enum */,
 				E2B4694D22F78D23006BA77D /* Views */,
@@ -386,8 +391,17 @@
 				E2445CF82321DDA20089582F /* Recipes */,
 				E2445CF92321DDCA0089582F /* Storage */,
 				E2445CFA2321DDDB0089582F /* Settings */,
+				E242494C23BFF809007C03F5 /* Tutorial */,
 			);
 			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		E242494C23BFF809007C03F5 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				E242494A23BFDE4B007C03F5 /* TutorialVC.swift */,
+			);
+			path = Tutorial;
 			sourceTree = "<group>";
 		};
 		E2445CF72321DD5D0089582F /* Lists */ = {
@@ -760,6 +774,7 @@
 				E2F380B023198496003857F7 /* IngredientView.xib in Resources */,
 				E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */,
 				E216204E22F658D20074A0DF /* Assets.xcassets in Resources */,
+				E242494923BFDD5E007C03F5 /* Tutorial.storyboard in Resources */,
 				E2CE480F23442F6F0045FCC0 /* LabelInstructionView.xib in Resources */,
 				E2E29036234C3F1300620576 /* RatingView.xib in Resources */,
 				E2DA80BB2347F0E400BD7101 /* SortItemView.xib in Resources */,
@@ -929,6 +944,7 @@
 				E2445CF02321D8EA0089582F /* ListHomeVC.swift in Sources */,
 				E2654C46237E654400BE7130 /* VisionDocumentText-Extension.swift in Sources */,
 				E2B8E943237C81160051B07D /* RecipePDFVC.swift in Sources */,
+				E242494B23BFDE4B007C03F5 /* TutorialVC.swift in Sources */,
 				E20BC6CB2327376000F1E5E7 /* SettingCell.swift in Sources */,
 				E2088BD22369EF9000370D09 /* SearchType.swift in Sources */,
 				E2E980D0238E3A6D00FAD549 /* ReviewImagesView.swift in Sources */,

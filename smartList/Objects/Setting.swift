@@ -28,6 +28,7 @@ struct Setting {
         case contact
         case licences
         case about
+        case tutorial
     }
     
     static func createSettings() -> ([String], [[Setting]]) {
@@ -40,9 +41,9 @@ struct Setting {
         let contact = Setting(name: "Contact the developer", settingName: .contact)
         let licences = Setting(name: "Software licences", settingName: .licences)
         let about = Setting(name: "About", settingName: .about)
+        let tutorial = Setting(name: "Tutorial", settingName: .tutorial)
         
-        
-        return (["Users & Accounts", "Application", "Settings", "Support & About"], [[account_, group], [recentlyViewedRecipes, storage], [darkMode, notifications], [contact, licences, about]])
+        return (["Users & Accounts", "Application", "Settings", "Support & About"], [[account_, group], [tutorial, recentlyViewedRecipes, storage], [darkMode, notifications], [contact, licences, about]])
     }
     
     
@@ -69,6 +70,8 @@ extension Setting.SettingName {
             return "Licenses"
         case .about:
             return "About"
+        case .tutorial:
+            return "Tutorial"
         }
     }
 }

@@ -63,8 +63,19 @@ extension SettingsHomeVC: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let setting = cells[indexPath.section][indexPath.row].settingName
-        performSegue(withIdentifier: "settingDetail", sender: setting)
         
+        if setting != .tutorial {
+            performSegue(withIdentifier: "settingDetail", sender: setting)
+        } else {
+            tableView.visibleCells.forEach { (c) in
+                c.isSelected = false
+            }
+            let sb: UIStoryboard = UIStoryboard(name: "Tutorial", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "tutorialVC") as! TutorialVC
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+            print("tutorial was pressed -> SettingHomeVC")
+        }
     }
     
 }
