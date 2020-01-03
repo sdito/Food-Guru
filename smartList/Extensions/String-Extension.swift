@@ -10,6 +10,19 @@ import Foundation
 
 extension String {
     
+    func trimUntilText() -> String {
+        guard let idx = self.firstIndex(where: {$0.isLetter}) else { return self }
+        let str = String(self[idx...])
+        return str
+        
+    }
+    
+    func getAmountForNewItem() -> String {
+        guard let idx = self.firstIndex(where: {$0.isLetter}) else { return "" }
+        let str = String(self[..<idx])
+        return str
+    }
+    
     func trim() -> String {
           return self.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
     }

@@ -22,12 +22,12 @@ class CreateNewItemVC: UITableViewController {
             if self.searchText == "" {
                 tableView.isHidden = true
             } else {
-                self.searchText = self.searchText.lowercased()
+                let txt = self.searchText.trimUntilText().lowercased()
                 tableView.isHidden = false
                 searchedItems.removeAll()
                 items.forEach { (itm) in
                     let lower = itm.lowercased()
-                    if lower.contains(self.searchText) {
+                    if lower.contains(txt) {
                         searchedItems.append(itm)
                     }
                 }
@@ -40,6 +40,7 @@ class CreateNewItemVC: UITableViewController {
             }
         }
     }
+    
     private var searchedItems: [String] = []
     private lazy var items = GenericItem.all
     
@@ -63,13 +64,16 @@ class CreateNewItemVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let number = searchText.getAmountForNewItem()
         let text = searchedItems[indexPath.row]
         let words = text.split{ !$0.isLetter }.map { (sStr) -> String in
             String(sStr)
         }
         let systemItem = Search.turnIntoSystemItem(string: text)
         let category = GenericItem.getCategory(item: systemItem, words: words)
-        let item = Item(name: text, selected: false, category: category.rawValue, store: nil, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: category)
+        
+        let displayText = "\(number)\(text)"
+        let item = Item(name: displayText, selected: false, category: category.rawValue, store: nil, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: category)
         delegate.itemCreated(item: item)
         self.willMove(toParent: nil)
         self.view.removeFromSuperview()

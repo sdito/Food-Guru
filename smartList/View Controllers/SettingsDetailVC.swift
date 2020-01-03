@@ -187,7 +187,12 @@ class SettingsDetailVC: UIViewController {
                 let button2 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
                 button2.setUI(title: "Delete all items from storage")
                 button2.button.addTarget(self, action: #selector(deleteItemsFromStorage), for: .touchUpInside)
-                return [cell1, button1, button2]
+                
+                let button0 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                button0.setUI(title: "Edit storage members")
+                button0.button.addTarget(self, action: #selector(editMembersForStorage), for: .touchUpInside)
+                
+                return [cell1, button0, button1, button2]
             }
             
         case .recentlyViewedRecipes:
@@ -231,6 +236,13 @@ class SettingsDetailVC: UIViewController {
         vc.forChange = true
         vc.createUsernameOutlet.setTitle("Change username", for: .normal)
 //        #error("need to reload the table view once the display name is changed")
+    }
+    
+    @objc private func editMembersForStorage() {
+        print("Edit storage members")
+        #error("need to implement")
+        // First, need to make sure the user that clicked this button has an email in the list (could not be with an anonymous account)
+        // Maybe should not allow this butotn to be visible if the user has an anonymous account
     }
     
     @objc private func logOut() {
