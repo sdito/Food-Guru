@@ -240,9 +240,8 @@ class SettingsDetailVC: UIViewController {
     
     @objc private func editMembersForStorage() {
         print("Edit storage members")
-        #error("need to implement")
-        // First, need to make sure the user that clicked this button has an email in the list (could not be with an anonymous account)
-        // Maybe should not allow this butotn to be visible if the user has an anonymous account
+        #warning("need to implement")
+        
     }
     
     @objc private func logOut() {

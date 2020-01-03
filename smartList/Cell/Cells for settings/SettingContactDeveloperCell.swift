@@ -36,7 +36,7 @@ class SettingContactDeveloperCell: UITableViewCell {
         
         if textView.text != "" {
             db = Firestore.firestore()
-            db.collection("messages").document().setData([
+            db.collection("mail").document().setData([
                 "fromEmail": textField.text as Any,
                 "message": textView.text!,
                 "uid": Auth.auth().currentUser?.uid as Any,

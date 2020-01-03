@@ -78,6 +78,7 @@ class CreateGroupVC: UIViewController {
     }
     
     @objc private func addItem() {
+        let email = textField.text!
         if emails.contains(textField.text!) == false {
             User.checkIfEmailIsValid(db: db, email: textField.text!) { (ec) in
                 if let ec = ec {
@@ -90,10 +91,12 @@ class CreateGroupVC: UIViewController {
                         alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
                         self.present(alert, animated: true)
                     case .noUser:
-                        let alert = UIAlertController(title: "Error", message: "This email does not have an account associated with it. Double check the email or ask them to make an account.", preferredStyle: .alert)
-                        alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
+                        let alert = UIAlertController(title: "Error", message: "This email does not have an account associated with it. Invite them to the app in order to have them in your group!.", preferredStyle: .alert)
+                        alert.addAction(.init(title: "Invite", style: .default, handler: {alert in
+                            self.sendEmail(email: email)
+                        }))
+                        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
                         self.present(alert, animated: true)
-                        #warning("should send auto-email here")
                     }
                 }
             }
@@ -102,6 +105,20 @@ class CreateGroupVC: UIViewController {
             alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
             present(alert, animated: true)
             textField.text = ""
+        }
+    }
+    private func sendEmail(email: String) {
+        #warning("make sure this works and that the app store URL is corret")
+        let subject = "Join%20my%20group%20on%20Food%20Guru!"
+        let link = URL(string: "https://apps.apple.com/us/app/food-guru:-recipes-and-more/id1493046325?ls=1")!
+        let body = "Here%20is%20the%20link%20to%20download%20the%20app%20on%20the%20appstore:%20\(link)"
+        
+        if let url = URL(string: "mailto:\(email)?&subject=\(subject)&body=\(body)") {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url)
+            } else {
+                UIApplication.shared.openURL(url)
+            }
         }
     }
 }
