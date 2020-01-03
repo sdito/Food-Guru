@@ -16,6 +16,9 @@ class ForgotPasswordVC: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .dark
+        }
         getPasswordOutlet.border(cornerRadius: 15.0)
         emailTextField.setUpDoneToolbar(action: #selector(dismissKeybaord), style: .done)
     }

@@ -93,6 +93,7 @@ class CreateGroupVC: UIViewController {
                         let alert = UIAlertController(title: "Error", message: "This email does not have an account associated with it. Double check the email or ask them to make an account.", preferredStyle: .alert)
                         alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
                         self.present(alert, animated: true)
+                        #error("should send auto-email here")
                     }
                 }
             }

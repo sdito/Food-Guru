@@ -20,6 +20,9 @@ class CreateDisplayNameVC: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .dark
+        }
         db = Firestore.firestore()
         createUsernameOutlet.border(cornerRadius: 15.0)
         getCurrentNameOrSuggested()

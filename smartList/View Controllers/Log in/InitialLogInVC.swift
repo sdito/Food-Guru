@@ -24,6 +24,9 @@ class InitialLogInVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if #available(iOS 13.0, *) {
+            overrideUserInterfaceStyle = .dark
+        }
         createAccountOutlet.border(cornerRadius: 5.0)
         db = Firestore.firestore()
         

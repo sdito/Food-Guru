@@ -33,7 +33,11 @@
     }
     
     
-    
+    override func viewDidDisappear(_ animated: Bool) {
+        tableView.visibleCells.forEach { (cell) in
+            cell.isSelected = false
+        }
+    }
     
 }
   
@@ -60,6 +64,7 @@ extension SettingsHomeVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let setting = cells[indexPath.section][indexPath.row].settingName
         performSegue(withIdentifier: "settingDetail", sender: setting)
+        
     }
     
 }
