@@ -238,7 +238,16 @@ class SettingsDetailVC: UIViewController {
     
     @objc func mergeStoragesWithGroup() {
         print("Need to merge storges with group")
-        #error("need to test this a lot, and to test all of the three fucntions a lot")
+        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
+        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
+        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
+        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
+        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
+        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
+        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
+        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
+        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
+        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
         if let storageID = SharedValues.shared.foodStorageID {
             let groupEmails = Set<String>(SharedValues.shared.groupEmails ?? [])
             var storageEmails = Set<String>(SharedValues.shared.foodStorageEmails ?? [])
@@ -263,7 +272,7 @@ class SettingsDetailVC: UIViewController {
                 
                 
                 // take all the items if they have another storage and combine the items from all the storages
-                
+                // Delete the old storages
                 
                 
                 
