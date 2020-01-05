@@ -43,6 +43,7 @@ class CreateGroupVC: UIViewController {
         textField.becomeFirstResponder()
         textField.setUpDoneToolbar(action: #selector(addItem), style: .add)
         textField.setUpStandardFormat(text: "Enter user's email")
+        
         if previousGroupID == nil {
             doneCreatingOutlet.setTitle("Create group", for: .normal)
         } else if previousGroupID != nil {

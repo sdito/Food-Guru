@@ -24,6 +24,11 @@ class SettingsDetailVC: UIViewController {
         self.createNavigationBarTextAttributes()
         self.title = setting?.description()
         Recipe.readPreviouslyViewedRecipes(db: db)
+        
+        if let sID = SharedValues.shared.foodStorageID {
+            FoodStorage.findIfUsersStorageIsWithGroup(db: db, storageID: sID)
+        }
+        
     }
     
     
@@ -188,11 +193,21 @@ class SettingsDetailVC: UIViewController {
                 button2.setUI(title: "Delete all items from storage")
                 button2.button.addTarget(self, action: #selector(deleteItemsFromStorage), for: .touchUpInside)
                 
-                let button0 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
-                button0.setUI(title: "Edit storage members")
-                button0.button.addTarget(self, action: #selector(editMembersForStorage), for: .touchUpInside)
                 
-                return [cell1, button0, button1, button2]
+                #warning("probably works correctlhy, need to actually implement though")
+                if SharedValues.shared.groupID != nil && SharedValues.shared.isStorageWithGroup == false {
+                    // would need to have the option to merge the groups for members in their group
+                    let button0 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                    button0.setUI(title: "Merge storages with group")
+                    button0.button.addTarget(self, action: #selector(mergeStoragesWithGroup), for: .touchUpInside)
+                    return [cell1, button0, button1, button2]
+                } else {
+                    return [cell1, button1, button2]
+                }
+                
+                
+                
+                
             }
             
         case .recentlyViewedRecipes:
@@ -221,6 +236,50 @@ class SettingsDetailVC: UIViewController {
         tableView.reloadData()
     }
     
+    @objc func mergeStoragesWithGroup() {
+        print("Need to merge storges with group")
+        #error("need to test this a lot, and to test all of the three fucntions a lot")
+        if let storageID = SharedValues.shared.foodStorageID {
+            let groupEmails = Set<String>(SharedValues.shared.groupEmails ?? [])
+            var storageEmails = Set<String>(SharedValues.shared.foodStorageEmails ?? [])
+            storageEmails.remove("no email")
+            
+            if let e = Auth.auth().currentUser?.email {
+                storageEmails.insert(e)
+            }
+            
+            let emailsToAdd = groupEmails.subtracting(storageEmails)
+            
+            
+            if emailsToAdd.isEmpty {
+            } else {
+                for email in emailsToAdd {
+                    // Add the food storage ID to the user's profile information
+                    FoodStorage.addForStorageInformationToGroupMembersProfile(db: db, foodStorageID: storageID, email: email)
+                }
+                // replace the old emails with the emails that are in the group
+                let ge = Array(groupEmails)
+                FoodStorage.updateDataInStorageDocument(db: db, foodStorageID: storageID, emails: ge)
+                
+                
+                // take all the items if they have another storage and combine the items from all the storages
+                
+                
+                
+                
+            }
+
+        } else {
+            let alert = UIAlertController(title: "Error", message: "No storage found, so unable to merge the storages.", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+        }
+        
+                
+    }
+    
+    
+    
     @objc private func createAccountFromAnonymous() {
         print("Create account from anonymous")
         let sb: UIStoryboard = UIStoryboard(name: "LogIn", bundle: nil)
@@ -240,11 +299,6 @@ class SettingsDetailVC: UIViewController {
 //        #error("need to reload the table view once the display name is changed")
     }
     
-    @objc private func editMembersForStorage() {
-        print("Edit storage members")
-        #warning("need to implement")
-        
-    }
     
     @objc private func logOut() {
         let alert = UIAlertController(title: "Are you sure you want to log out of your account?", message: nil, preferredStyle: .alert)

@@ -201,30 +201,66 @@ struct FoodStorage {
             }
             SharedValues.shared.currentItemsInStorage?.removeAll()
             SharedValues.shared.currentItemsInStorage = items
+            
         }
     }
     
-//    static func getIngredientsThatAreExpiring(db: Firestore, itemNamesReturned: @escaping (_ names: [String]) -> Void) {
-//        #warning("maks sure this is being used")
-//        var displayNamesExpiring: [String] = []
-//        let timeIntervalForSearch = Date().timeIntervalSince1970 + (86_400 * 2)
-//        let foodStorageReference = db.collection("storages").document(SharedValues.shared.foodStorageID ?? " ").collection("items").whereField("timeExpires", isLessThan: timeIntervalForSearch)
-//        foodStorageReference.getDocuments { (querySnapshot, error) in
-//            guard let documents = querySnapshot?.documents else {
-//                print("Error retreiving documents: \(String(describing: error))")
-//                return
-//            }
-//            
-//            for doc in documents {
-//                let name = doc.get("systemItem") as? String
-//                if let name = name {
-//                    let displayName = GenericItem(rawValue: name)?.description
-//                    if let displayName = displayName {
-//                        displayNamesExpiring.append(displayName)
-//                    }
-//                }
-//            }
-//           itemNamesReturned(displayNamesExpiring)
-//        }
-//    }
+    
+    
+    #warning("make sure this is being used below")
+    static func findIfUsersStorageIsWithGroup(db: Firestore, storageID: String) {
+        let reference = db.collection("storages").document(storageID)
+        reference.getDocument { (documentSnapshot, error) in
+            guard let doc = documentSnapshot else { return }
+            if let isWithGroup = doc.get("isGroup") as? Bool {
+                if isWithGroup == true {
+                    SharedValues.shared.isStorageWithGroup = true
+                } else {
+                    SharedValues.shared.isStorageWithGroup = false
+                }
+            } else {
+                SharedValues.shared.isStorageWithGroup = false
+            }
+        }
+    }
+    
+    #warning("need to make sure this is being used")
+    static func addForStorageInformationToGroupMembersProfile(db: Firestore, foodStorageID: String, email: String) {
+        // need to get the uid from the email
+        User.turnEmailToUid(db: db, email: email) { (uid) in
+            if let uid = uid {
+                let reference = db.collection("users").document(uid)
+                reference.updateData([
+                    "storageID": foodStorageID
+                ]) { err in
+                    if let err = err {
+                        print("Error merging storage at group profile: \(err)")
+                    } else {
+                        print("Successfully updated user profile in merging storages to group")
+                        let reference = db.collection("storages").document(foodStorageID)
+                        reference.updateData([
+                            "shared" : FieldValue.arrayUnion([uid])
+                        ])
+                    }
+                }
+            }
+        }
+    }
+    
+    #warning("need to make sure this is being used")
+    static func updateDataInStorageDocument(db: Firestore, foodStorageID: String, emails: [String]) {
+        // uids are added to 'shared' in the addForStorageInformationToGroupMembersProfile function
+        // need to update 'numPeople' and 'emails'
+        // emails need to be the emails for the GROUP MEMBERS
+        let reference = db.collection("storages").document(foodStorageID)
+        reference.updateData([
+            "emails" : emails,
+            "numPeople": emails.count,
+            "isGroup": true
+        ])
+        
+        
+    }
+    
+    
 }

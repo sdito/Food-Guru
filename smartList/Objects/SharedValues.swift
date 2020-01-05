@@ -63,6 +63,8 @@ class SharedValues {
     
     var isPhone: Bool = UIDevice.current.userInterfaceIdiom == .phone
     
+    var isStorageWithGroup: Bool?
+    
     static let shared = SharedValues()
     
     

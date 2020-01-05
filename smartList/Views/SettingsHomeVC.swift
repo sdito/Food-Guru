@@ -23,6 +23,9 @@
         (sections, cells) = Setting.createSettings()
         tableView.reloadData()
         
+        
+        
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

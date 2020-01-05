@@ -16,6 +16,7 @@ pod 'Firebase/MLVision'
 pod 'Firebase/MLVisionBarcodeModel'
 pod 'RealmSwift'
 pod 'GoogleSignIn'
+pod 'Firebase/Analytics'
 
   target 'smartListTests' do
     inherit! :search_paths
