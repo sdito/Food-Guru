@@ -21,6 +21,8 @@ class TutorialVC: UIPageViewController {
         if let firstViewController = pages.first {
             setViewControllers([firstViewController], direction: .forward, animated: true, completion: nil)
         }
+        
+        
     
     }
     

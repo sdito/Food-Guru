@@ -75,7 +75,7 @@ extension SettingsHomeVC: UITableViewDataSource, UITableViewDelegate {
             }
             let sb: UIStoryboard = UIStoryboard(name: "Tutorial", bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "tutorialVC") as! TutorialVC
-            vc.modalPresentationStyle = .fullScreen
+//            vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
             print("tutorial was pressed -> SettingHomeVC")
         }

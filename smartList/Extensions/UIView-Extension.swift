@@ -11,6 +11,23 @@ import UIKit
 
 
 extension UIView {
+    
+    func pulsateView() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+        }) { (true) in
+            UIView.animate(withDuration: 0.2) {
+                self.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            }
+        }
+    }
+    
+    func disappearAnimation() {
+        UIView.animate(withDuration: 0.1) {
+            self.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+        }
+    }
+    
     func findViewController() -> UIViewController? {
         if let nextResponder = self.next as? UIViewController {
             return nextResponder
