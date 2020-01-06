@@ -30,7 +30,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select the [] button to add the selected items to your storage" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G1T-Z5-hsX">
                                 <rect key="frame" x="10" y="54" width="394" height="80"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -70,7 +70,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select one or multiple items in your storage to sort then, find recipes with them, or do other actions" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AKK-mT-5gg">
                                 <rect key="frame" x="10" y="54" width="394" height="80"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -110,7 +110,7 @@
                                 <rect key="frame" x="10" y="54" width="394" height="80"/>
                                 <string key="text">From the recipes tab, select the heart on the top right of a recipe to save it for later. These recipes can be found be pressing 'Saved' at the bottom. Select 'Cookbook' to view recipes downloaded on your device</string>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -151,7 +151,7 @@
                                 <rect key="frame" x="10" y="54" width="394" height="80"/>
                                 <string key="text">After selecting a recipe, select [] to add the item to your list. Select 'Download' to have the recipe saved to your cookbook and select 'Save' to have your recipe appear in saved recipes.</string>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -192,7 +192,7 @@
                                 <rect key="frame" x="10" y="54" width="394" height="80"/>
                                 <string key="text">From the recipe page, either choose one or more selected searches or type in your own searches. This is perfect for finding recipes with expiring ingredients.</string>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -218,35 +218,53 @@
             </objects>
             <point key="canvasLocation" x="3743" y="-33"/>
         </scene>
-        <!--View Controller-->
+        <!--Six TutorialVC-->
         <scene sceneID="c64-Qz-BYj">
             <objects>
-                <viewController id="oyO-OY-LhO" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Six" id="oyO-OY-LhO" customClass="SixTutorialVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kyG-aY-Iv6">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="have this about creating a recipe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbK-PC-ODC">
-                                <rect key="frame" x="145" y="223" width="249" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="_six" translatesAutoresizingMaskIntoConstraints="NO" id="6Lg-NU-3T0">
+                                <rect key="frame" x="0.0" y="144" width="414" height="688"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ef4-dt-NwB">
+                                <rect key="frame" x="10" y="54" width="394" height="80"/>
+                                <string key="text">To create a recipe, for your cookbook or for everyone, either select [link button] from an allrecipes.com recipe in the top right or fill in the fields yourself.</string>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Lg-NU-3T0" firstAttribute="top" secondItem="xI3-X4-H1f" secondAttribute="top" constant="100" id="DSO-KT-y1R"/>
+                            <constraint firstItem="6Lg-NU-3T0" firstAttribute="leading" secondItem="xI3-X4-H1f" secondAttribute="leading" id="J5G-uZ-ymg"/>
+                            <constraint firstItem="Ef4-dt-NwB" firstAttribute="leading" secondItem="xI3-X4-H1f" secondAttribute="leading" constant="10" id="O4A-CH-tT4"/>
+                            <constraint firstItem="xI3-X4-H1f" firstAttribute="trailing" secondItem="6Lg-NU-3T0" secondAttribute="trailing" id="XRq-4y-DD9"/>
+                            <constraint firstItem="xI3-X4-H1f" firstAttribute="bottom" secondItem="6Lg-NU-3T0" secondAttribute="bottom" constant="30" id="ifK-PQ-1eN"/>
+                            <constraint firstItem="xI3-X4-H1f" firstAttribute="trailing" secondItem="Ef4-dt-NwB" secondAttribute="trailing" constant="10" id="rue-tf-ATu"/>
+                            <constraint firstItem="6Lg-NU-3T0" firstAttribute="top" secondItem="Ef4-dt-NwB" secondAttribute="bottom" constant="10" id="sY8-Vk-bsc"/>
+                            <constraint firstItem="Ef4-dt-NwB" firstAttribute="top" secondItem="xI3-X4-H1f" secondAttribute="top" constant="10" id="yI4-TZ-Tmd"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="xI3-X4-H1f"/>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="6Lg-NU-3T0" id="xFJ-GJ-Sad"/>
+                        <outlet property="topLabel" destination="Ef4-dt-NwB" id="0b6-Mk-bnA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aEP-pS-phn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4559" y="-29"/>
+            <point key="canvasLocation" x="4449" y="-33"/>
         </scene>
     </scenes>
     <resources>
         <image name="_five" width="1242" height="2688"/>
         <image name="_four" width="1242" height="2688"/>
         <image name="_one" width="1242" height="2688"/>
+        <image name="_six" width="1242" height="2688"/>
         <image name="_three" width="1242" height="2688"/>
         <image name="_two" width="1242" height="2688"/>
     </resources>

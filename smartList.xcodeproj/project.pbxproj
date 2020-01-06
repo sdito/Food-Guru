@@ -80,6 +80,7 @@
 		E2B6273723C2F0C70039459B /* ThreeTutorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B6273623C2F0C70039459B /* ThreeTutorialVC.swift */; };
 		E2B6273923C2F2B70039459B /* FourTutorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B6273823C2F2B70039459B /* FourTutorialVC.swift */; };
 		E2B6273B23C2FB0A0039459B /* FiveTutorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B6273A23C2FB0A0039459B /* FiveTutorialVC.swift */; };
+		E2B6273D23C307890039459B /* SixTutorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B6273C23C307890039459B /* SixTutorialVC.swift */; };
 		E2B68D6D232EBD92006A3B58 /* Notification.Name-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B68D6C232EBD92006A3B58 /* Notification.Name-Extension.swift */; };
 		E2B68D7523305877006A3B58 /* FoodStorageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B68D7423305877006A3B58 /* FoodStorageType.swift */; };
 		E2B8E943237C81160051B07D /* RecipePDFVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B8E942237C81160051B07D /* RecipePDFVC.swift */; };
@@ -221,6 +222,7 @@
 		E2B6273623C2F0C70039459B /* ThreeTutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeTutorialVC.swift; sourceTree = "<group>"; };
 		E2B6273823C2F2B70039459B /* FourTutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FourTutorialVC.swift; sourceTree = "<group>"; };
 		E2B6273A23C2FB0A0039459B /* FiveTutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiveTutorialVC.swift; sourceTree = "<group>"; };
+		E2B6273C23C307890039459B /* SixTutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SixTutorialVC.swift; sourceTree = "<group>"; };
 		E2B68D6C232EBD92006A3B58 /* Notification.Name-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification.Name-Extension.swift"; sourceTree = "<group>"; };
 		E2B68D7423305877006A3B58 /* FoodStorageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodStorageType.swift; sourceTree = "<group>"; };
 		E2B8E942237C81160051B07D /* RecipePDFVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePDFVC.swift; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 				E2B6273623C2F0C70039459B /* ThreeTutorialVC.swift */,
 				E2B6273823C2F2B70039459B /* FourTutorialVC.swift */,
 				E2B6273A23C2FB0A0039459B /* FiveTutorialVC.swift */,
+				E2B6273C23C307890039459B /* SixTutorialVC.swift */,
 			);
 			path = Tutorial;
 			sourceTree = "<group>";
@@ -994,6 +997,7 @@
 				E20BC6D62328326600F1E5E7 /* SettingButtonCell.swift in Sources */,
 				E2EB7FC322FFB29A003948A6 /* String-Extension.swift in Sources */,
 				E2E529D222FA7F9100C55DA0 /* GroceryList.swift in Sources */,
+				E2B6273D23C307890039459B /* SixTutorialVC.swift in Sources */,
 				E2C49343230887F3002907C2 /* User.swift in Sources */,
 				E2B8E947237C865D0051B07D /* PDFCreator.swift in Sources */,
 				E2A54E1E2318553400BEBF39 /* InstructionView.swift in Sources */,

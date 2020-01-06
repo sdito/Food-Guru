@@ -21,7 +21,7 @@ class OneTutorialVC: UIViewController {
         let img = UIImage(named: "checked-checkbox-xxl")
         let imageString = NSAttributedString(attachment: image)
         
-        let resized = img!.resizeImage(targetSize: CGSize(width: 30, height: 30))
+        let resized = img!.resizeImage(targetSize: CGSize(width: 15, height: 15))
         
         image.image = resized
         
