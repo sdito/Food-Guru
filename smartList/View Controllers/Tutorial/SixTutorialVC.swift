@@ -16,7 +16,7 @@ class SixTutorialVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+        imageView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
         
         let image = NSTextAttachment()
         

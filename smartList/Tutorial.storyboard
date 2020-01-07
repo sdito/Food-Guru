@@ -33,21 +33,31 @@
                                 <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.tutorial" translatesAutoresizingMaskIntoConstraints="NO" id="MXl-R8-mK2">
+                                <rect key="frame" x="369" y="430.5" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="MXl-R8-mK2" secondAttribute="height" multiplier="1:1" id="1tX-En-N6A"/>
+                                    <constraint firstAttribute="height" constant="35" id="47d-aD-dmX"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="MXl-R8-mK2" firstAttribute="centerY" secondItem="NsC-zI-YmV" secondAttribute="centerY" id="2lU-tR-RM6"/>
                             <constraint firstItem="jHe-cc-Zeh" firstAttribute="top" secondItem="RsB-Ql-cvO" secondAttribute="top" constant="100" id="84b-0h-1SZ"/>
                             <constraint firstItem="jHe-cc-Zeh" firstAttribute="leading" secondItem="RsB-Ql-cvO" secondAttribute="leading" id="BlO-ob-lXe"/>
                             <constraint firstItem="RsB-Ql-cvO" firstAttribute="trailing" secondItem="jHe-cc-Zeh" secondAttribute="trailing" id="R2V-xm-gRf"/>
                             <constraint firstItem="RsB-Ql-cvO" firstAttribute="trailing" secondItem="G1T-Z5-hsX" secondAttribute="trailing" constant="10" id="S0M-oj-JYa"/>
                             <constraint firstItem="RsB-Ql-cvO" firstAttribute="bottom" secondItem="jHe-cc-Zeh" secondAttribute="bottom" constant="30" id="b4h-1a-q5F"/>
                             <constraint firstItem="jHe-cc-Zeh" firstAttribute="top" secondItem="G1T-Z5-hsX" secondAttribute="bottom" constant="10" id="c90-WX-sDq"/>
+                            <constraint firstItem="RsB-Ql-cvO" firstAttribute="trailing" secondItem="MXl-R8-mK2" secondAttribute="trailing" constant="10" id="neg-h6-T0F"/>
                             <constraint firstItem="G1T-Z5-hsX" firstAttribute="leading" secondItem="RsB-Ql-cvO" secondAttribute="leading" constant="10" id="sDv-Iq-Q4E"/>
                             <constraint firstItem="G1T-Z5-hsX" firstAttribute="top" secondItem="RsB-Ql-cvO" secondAttribute="top" constant="10" id="uGP-po-wCI"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RsB-Ql-cvO"/>
                     </view>
                     <connections>
+                        <outlet property="arrow" destination="MXl-R8-mK2" id="2i8-md-Gbh"/>
                         <outlet property="imageView" destination="jHe-cc-Zeh" id="z1O-VY-9kb"/>
                         <outlet property="topLabel" destination="G1T-Z5-hsX" id="vcO-h6-wNo"/>
                     </connections>
@@ -267,5 +277,6 @@
         <image name="_six" width="1242" height="2688"/>
         <image name="_three" width="1242" height="2688"/>
         <image name="_two" width="1242" height="2688"/>
+        <image name="arrow.tutorial" width="50" height="50"/>
     </resources>
 </document>

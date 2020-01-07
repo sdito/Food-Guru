@@ -24,7 +24,7 @@ extension UIView {
     
     func disappearAnimation() {
         UIView.animate(withDuration: 0.1) {
-            self.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+            self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
         }
     }
     

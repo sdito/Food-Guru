@@ -238,16 +238,8 @@ class SettingsDetailVC: UIViewController {
     
     @objc func mergeStoragesWithGroup() {
         print("Need to merge storges with group")
-        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
-        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
-        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
-        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
-        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
-        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
-        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
-        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
-        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
-        #warning("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
+        #error("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
+        
         if let storageID = SharedValues.shared.foodStorageID {
             let groupEmails = Set<String>(SharedValues.shared.groupEmails ?? [])
             var storageEmails = Set<String>(SharedValues.shared.foodStorageEmails ?? [])
@@ -273,6 +265,31 @@ class SettingsDetailVC: UIViewController {
                 
                 // take all the items if they have another storage and combine the items from all the storages
                 // Delete the old storages
+                // These above two actions should likely be done at the same time, i.e. after the items are transferred then just delete the storage
+                
+                #warning("move this logic into extension")
+                for email in groupEmails {
+                    User.turnEmailToUid(db: db, email: email) { (uid) in
+                        // get storageID
+                        if let uid = uid {
+                            let reference = self.db.collection("users").document(uid)
+                            reference.getDocument { (documentSnapshot, error) in
+                                guard let doc = documentSnapshot else { return }
+                                if let sid = doc.get("storageID") as? String {
+                                    let storageRef = self.db.collection("storages").document(sid).collection("items")
+                                    storageRef.getDocuments { (querySnapshot, error) in
+                                        // storageID is the NEW storage identifier that everything needs to be merged into
+                                        guard let itemDocuments = querySnapshot?.documents else { return }
+                                        for itemDoc in itemDocuments {
+                                            let item = itemDoc.getItem()
+                                            #error("need to transfer this item into the new storage, and then delete the reference to this item")
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 
                 
                 

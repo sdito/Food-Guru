@@ -229,6 +229,7 @@ struct FoodStorage {
         // need to get the uid from the email
         User.turnEmailToUid(db: db, email: email) { (uid) in
             if let uid = uid {
+                
                 let reference = db.collection("users").document(uid)
                 reference.updateData([
                     "storageID": foodStorageID

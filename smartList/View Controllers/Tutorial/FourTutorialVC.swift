@@ -15,7 +15,7 @@ class FourTutorialVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+        imageView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
         
         let str = NSMutableAttributedString(string: "After selecting a recipe, select ")
         let plus = NSAttributedString(string: "+", attributes: [.foregroundColor:Colors.main])

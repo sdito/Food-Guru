@@ -10,13 +10,16 @@ import UIKit
 
 
 class OneTutorialVC: UIViewController {
-
+    
+    var timer: Timer?
+    
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var arrow: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+        imageView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
         let image = NSTextAttachment()
         let img = UIImage(named: "checked-checkbox-xxl")
         let imageString = NSAttributedString(attachment: image)
@@ -31,14 +34,26 @@ class OneTutorialVC: UIViewController {
         
         topLabel.attributedText = str
     }
-
+    
+    
     override func viewDidAppear(_ animated: Bool) {
         imageView.pulsateView()
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false, block: { (tmr) in
+            print("Timer was fired")
+            self.arrow.setIsHidden(false, animated: true)
+        })
+        
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         imageView.disappearAnimation()
+        arrow.setIsHidden(true, animated: true)
+        timer?.invalidate()
     }
+    
     
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {

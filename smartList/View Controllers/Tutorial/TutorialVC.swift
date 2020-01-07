@@ -41,7 +41,9 @@ class TutorialVC: UIPageViewController {
     }
     private func configurePageControl() {
         // The total number of pages that are available is based on how many available colors we have.
-        pageControl = UIPageControl(frame: CGRect(x: 0,y: UIScreen.main.bounds.maxY - 50,width: UIScreen.main.bounds.width,height: 50))
+        
+//        UIScreen.main.bounds.maxY - 120
+        pageControl = UIPageControl(frame: CGRect(x: 0,y: UIScreen.main.bounds.maxY - 80, width: UIScreen.main.bounds.width,height: 50))
         self.pageControl.numberOfPages = pages.count
         self.pageControl.currentPage = 0
         self.pageControl.tintColor = .black

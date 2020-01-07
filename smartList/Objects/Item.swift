@@ -226,3 +226,14 @@ extension Sequence where Element == Item {
         return returnSorted
     }
 }
+
+
+#warning("make sure this is being used")
+extension QueryDocumentSnapshot {
+    func getItem() -> Item {
+        let systemItem = GenericItem(rawValue: self.get("systemItem") as? String ?? "other")
+        let systemCategory = Category(rawValue: self.get("systemCategory") as? String ?? "other")
+        let i = Item(name: self.get("name") as! String, selected: self.get("selected")! as! Bool, category: (self.get("category") as! String), store: (self.get("store") as! String), user: (self.get("user") as! String), ownID: self.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (self.get("storageSection") as? String ?? " ")), timeAdded: self.get("timeAdded") as? TimeInterval, timeExpires: self.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory)
+        return i
+    }
+}

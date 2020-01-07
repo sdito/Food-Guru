@@ -17,7 +17,7 @@ class ThreeTutorialVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
+        imageView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
         
         let str = NSMutableAttributedString(string: "From the recipes tab, select the heart on the top right of a recipe to save it for later. These recipes can be found be pressing ")
         let save = NSAttributedString(string: "Saved", attributes: [.foregroundColor:Colors.main])
