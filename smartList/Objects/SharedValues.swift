@@ -65,6 +65,8 @@ class SharedValues {
     
     var isStorageWithGroup: Bool?
     
+    
+    
     static let shared = SharedValues()
     
     

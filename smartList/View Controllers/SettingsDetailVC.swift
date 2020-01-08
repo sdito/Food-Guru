@@ -158,13 +158,18 @@ class SettingsDetailVC: UIViewController {
             if SharedValues.shared.foodStorageID == nil {
                 var txt: String {
                     if SharedValues.shared.groupID == nil {
-                        return "You do not have a storage created yet. A storage will allow you to keep track of the items you have in stock, and to help you find recipes with your items. Create a group to easily share your storage with other people."
+                        return "Creating a group will allow you to share your items in stock with the people you want!"
                     } else {
-                        return "You do not have a storage created yet. A storage will allow you to keep track of the items you have in stock, and to help you find recipes with your items."
+                        return "Creating a storage with your group will allow you to see realtime updates and share your items."
                     }
                 }
+                
                 let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
-                cell1.setUI(str: txt)
+                cell1.setUI(str: "You do not have a storage created yet. A storage will allow you to keep track of the items you have in stock, and to help you find recipes with your items.")
+                
+                let cell2 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+                cell2.setUI(str: txt)
+                
                 let button2 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
                 button2.setUI(title: "Create storage without group")
                 button2.button.addTarget(self, action: #selector(createStorageIndividual), for: .touchUpInside)
@@ -172,12 +177,12 @@ class SettingsDetailVC: UIViewController {
                     let button1 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
                     button1.setUI(title: "Create group")
                     button1.button.addTarget(self, action: #selector(createGroup), for: .touchUpInside)
-                    return [cell1, button1, button2]
+                    return [cell1, cell2, button1, button2]
                 } else {
                    let button3 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
                     button3.setUI(title: "Create storage with group (recommended)")
                     button3.button.addTarget(self, action: #selector(createStorageGroup), for: .touchUpInside)
-                   return [cell1, button3, button2]
+                   return [cell1, cell2, button3, button2]
                 }
                 
             } else {
@@ -202,7 +207,16 @@ class SettingsDetailVC: UIViewController {
                     button0.button.addTarget(self, action: #selector(mergeStoragesWithGroup), for: .touchUpInside)
                     return [cell1, button0, button1, button2]
                 } else {
-                    return [cell1, button1, button2]
+                    let cell2 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+                    var txt: String {
+                        if SharedValues.shared.isStorageWithGroup == true {
+                            return "Storage is with group"
+                        } else {
+                            return "Storage is not with group"
+                        }
+                    }
+                    cell2.setUI(str: txt)
+                    return [cell1, cell2, button1, button2]
                 }
                 
                 
@@ -236,9 +250,11 @@ class SettingsDetailVC: UIViewController {
         tableView.reloadData()
     }
     
-    @objc func mergeStoragesWithGroup() {
+    @objc func mergeStoragesWithGroup(_ sender: UIButton) {
+        sender.alpha = 0.4
+        sender.isUserInteractionEnabled = false
         print("Need to merge storges with group")
-        #error("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
+//        #error("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
         
         if let storageID = SharedValues.shared.foodStorageID {
             let groupEmails = Set<String>(SharedValues.shared.groupEmails ?? [])
@@ -251,49 +267,35 @@ class SettingsDetailVC: UIViewController {
             
             let emailsToAdd = groupEmails.subtracting(storageEmails)
             
+            #warning("need to just get all the storageIDs and feed them into this function, then will not need to worry about the other stuff, if there are no storageIDs then this function doenst need to be called")
+            
+            
+            // delete all values from ownUserStorages from group document
+            if let groupID = SharedValues.shared.groupID {
+                let reference = db.collection("groups").document(groupID)
+                reference.updateData([
+                    "ownUserStorages": FieldValue.delete()
+                ])
+            }
+            
+            #warning("this function kinda works, just need to have it completely finish running before going to the next functions")
+            FoodStorage.mergeItemsTogetherInStorage(db: self.db, newStorageID: storageID, newEmails: Array(groupEmails))
             
             if emailsToAdd.isEmpty {
+
             } else {
                 for email in emailsToAdd {
                     // Add the food storage ID to the user's profile information
-                    FoodStorage.addForStorageInformationToGroupMembersProfile(db: db, foodStorageID: storageID, email: email)
+                    FoodStorage.addForStorageInformationToGroupMembersProfile(db: self.db, foodStorageID: storageID, email: email)
                 }
                 // replace the old emails with the emails that are in the group
                 let ge = Array(groupEmails)
-                FoodStorage.updateDataInStorageDocument(db: db, foodStorageID: storageID, emails: ge)
-                
-                
-                // take all the items if they have another storage and combine the items from all the storages
-                // Delete the old storages
-                // These above two actions should likely be done at the same time, i.e. after the items are transferred then just delete the storage
-                
-                #warning("move this logic into extension")
-                for email in groupEmails {
-                    User.turnEmailToUid(db: db, email: email) { (uid) in
-                        // get storageID
-                        if let uid = uid {
-                            let reference = self.db.collection("users").document(uid)
-                            reference.getDocument { (documentSnapshot, error) in
-                                guard let doc = documentSnapshot else { return }
-                                if let sid = doc.get("storageID") as? String {
-                                    let storageRef = self.db.collection("storages").document(sid).collection("items")
-                                    storageRef.getDocuments { (querySnapshot, error) in
-                                        // storageID is the NEW storage identifier that everything needs to be merged into
-                                        guard let itemDocuments = querySnapshot?.documents else { return }
-                                        for itemDoc in itemDocuments {
-                                            let item = itemDoc.getItem()
-                                            #error("need to transfer this item into the new storage, and then delete the reference to this item")
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                
-                
-                
+                FoodStorage.updateDataInStorageDocument(db: self.db, foodStorageID: storageID, emails: ge)
+
+
+
             }
+            
 
         } else {
             let alert = UIAlertController(title: "Error", message: "No storage found, so unable to merge the storages.", preferredStyle: .alert)
@@ -399,6 +401,7 @@ class SettingsDetailVC: UIViewController {
             if let id = SharedValues.shared.foodStorageID {
                 FoodStorage.deleteStorage(db: self.db, storageID: id)
                 self.createMessageView(color: Colors.messageGreen, text: "Storage successfully deleted")
+                
             }
         }))
         alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))

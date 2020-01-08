@@ -264,4 +264,43 @@ struct FoodStorage {
     }
     
     
+    
+    #warning("make sure this is being used, need to feed storageIDs into this function")
+    static func mergeItemsTogetherInStorage(db: Firestore, newStorageID: String, newEmails: [String]) {
+        
+        for email in newEmails {
+            User.turnEmailToUid(db: db, email: email) { (uid) in
+                // get storageID
+                if let uid = uid {
+                    let reference = db.collection("users").document(uid)
+                    reference.getDocument { (documentSnapshot, error) in
+                        guard let doc = documentSnapshot else { return }
+                        if let sid = doc.get("storageID") as? String {
+                            if sid != newStorageID {
+                                let storageRef = db.collection("storages").document(sid).collection("items")
+                                storageRef.getDocuments { (querySnapshot, error) in
+                                    // storageID is the NEW storage identifier that everything needs to be merged into
+                                    guard let itemDocuments = querySnapshot?.documents else { return }
+                                    for itemDoc in itemDocuments {
+                                        let item = itemDoc.getItem()
+                                        // if this process doesnt work, maybe these storage IDs are wrong
+                                        
+                                        item.writeToFirestoreForStorage(db: db, docID: newStorageID)
+                                        item.deleteItemFromStorageFromSpecificStorageID(db: db, storageID: sid)
+                                        if itemDoc == itemDocuments.last {
+                                            print("Need to delete the storage, then continue to the other functionx")
+                                            let refToDelete = db.collection("storages").document(sid)
+                                            refToDelete.delete()
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+    
 }

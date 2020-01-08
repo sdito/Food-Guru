@@ -21,6 +21,10 @@ class IngredientView: UIView, UITextFieldDelegate {
     override func awakeFromNib() {
         left.delegate = self
         right.delegate = self
+        
+        left.tag = 1
+        right.tag = 2
+        
         left.setUpDoneToolbar(action: #selector(doneSelector), style: .done)
         right.setUpDoneToolbar(action: #selector(doneSelector), style: .done)
     }
@@ -62,14 +66,18 @@ class IngredientView: UIView, UITextFieldDelegate {
         }
         return true
     }
-//    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-//        SharedValues.shared.currText = textField
-//
-//        return true
-//    }
+
     func textFieldDidBeginEditing(_ textField: UITextField) {
         SharedValues.shared.currText = textField
         
+        if textField.tag == 2 {
+            if (self.superview as! UIStackView).subviews.firstIndex(of: self) == (self.superview as! UIStackView).subviews.count - 1 {
+                let t = (Bundle.main.loadNibNamed("IngredientView", owner: nil, options: nil)?.first as? IngredientView)!
+                (self.superview as! UIStackView).insertArrangedSubview(t, at: (self.superview as! UIStackView).subviews.count)
+            }
+
+        }
+                
     }
 }
 

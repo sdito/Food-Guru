@@ -43,9 +43,3 @@ class InstructionView: UIView {
     }
 }
 
-//
-//extension InstructionView: UITextViewDelegate {
-//    func textViewDidBeginEditing(_ textView: UITextView) {
-//        SharedValues.shared.currText = textView
-//    }
-//}

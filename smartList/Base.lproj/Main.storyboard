@@ -2926,11 +2926,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add users to your group" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mCr-7M-6TP">
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ali-xv-6sK">
                                 <rect key="frame" x="30" y="104" width="354" height="28.666666666666657"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="22"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add users to your group" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mCr-7M-6TP">
+                                        <rect key="frame" x="0.0" y="0.0" width="325.33333333333331" height="28.666666666666668"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="22"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q2d-ti-rCs">
+                                        <rect key="frame" x="325.33333333333331" y="0.0" width="28.666666666666686" height="28.666666666666668"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="q2d-ti-rCs" secondAttribute="height" multiplier="1:1" id="SET-Dp-pvn"/>
+                                        </constraints>
+                                        <connections>
+                                            <action selector="appleEmailAlert:" destination="brx-TS-AYQ" eventType="touchUpInside" id="jM9-Zu-YET"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Y4I-Hi-hIN">
                                 <rect key="frame" x="0.0" y="192.66666666666666" width="414" height="260.33333333333337"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -3042,23 +3056,23 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="58n-0Z-xVv" firstAttribute="leading" secondItem="eiy-Df-Y7h" secondAttribute="leading" id="72s-ln-cVm"/>
-                            <constraint firstItem="mCr-7M-6TP" firstAttribute="leading" secondItem="TAL-xR-sVS" secondAttribute="leading" id="Ajx-dz-idl"/>
                             <constraint firstItem="eiy-Df-Y7h" firstAttribute="trailing" secondItem="X93-r7-QIf" secondAttribute="trailing" id="Bx6-7j-DEY"/>
                             <constraint firstItem="58n-0Z-xVv" firstAttribute="top" secondItem="eiy-Df-Y7h" secondAttribute="top" id="DVz-CY-UaJ"/>
                             <constraint firstItem="X93-r7-QIf" firstAttribute="height" secondItem="eiy-Df-Y7h" secondAttribute="height" multiplier="1:2" id="DYh-sh-IJb"/>
                             <constraint firstItem="Y4I-Hi-hIN" firstAttribute="leading" secondItem="eiy-Df-Y7h" secondAttribute="leading" id="IWy-yT-upL"/>
-                            <constraint firstItem="mCr-7M-6TP" firstAttribute="top" secondItem="58n-0Z-xVv" secondAttribute="bottom" constant="20" id="JX1-UY-ikk"/>
-                            <constraint firstItem="TAL-xR-sVS" firstAttribute="top" secondItem="mCr-7M-6TP" secondAttribute="bottom" constant="16" id="KkQ-6B-8bO"/>
                             <constraint firstItem="aBf-ZM-jlg" firstAttribute="top" secondItem="TAL-xR-sVS" secondAttribute="top" id="Lb1-uh-3BE"/>
-                            <constraint firstItem="mCr-7M-6TP" firstAttribute="leading" secondItem="eiy-Df-Y7h" secondAttribute="leading" constant="30" id="VaL-Nx-04S"/>
+                            <constraint firstItem="ali-xv-6sK" firstAttribute="top" secondItem="58n-0Z-xVv" secondAttribute="bottom" constant="20" id="SO2-pE-ZMf"/>
                             <constraint firstItem="Y4I-Hi-hIN" firstAttribute="top" secondItem="TAL-xR-sVS" secondAttribute="bottom" constant="10" id="VlT-39-kNW"/>
                             <constraint firstItem="eiy-Df-Y7h" firstAttribute="bottom" secondItem="X93-r7-QIf" secondAttribute="bottom" id="Z1Y-Yt-beg"/>
                             <constraint firstItem="eiy-Df-Y7h" firstAttribute="trailing" secondItem="TAL-xR-sVS" secondAttribute="trailing" constant="50" id="Z8D-pb-ixb"/>
                             <constraint firstItem="eiy-Df-Y7h" firstAttribute="trailing" secondItem="58n-0Z-xVv" secondAttribute="trailing" id="ar2-Fx-iTq"/>
-                            <constraint firstItem="eiy-Df-Y7h" firstAttribute="trailing" secondItem="mCr-7M-6TP" secondAttribute="trailing" constant="30" id="azZ-M3-sZm"/>
+                            <constraint firstItem="ali-xv-6sK" firstAttribute="leading" secondItem="eiy-Df-Y7h" secondAttribute="leading" constant="30" id="cBL-Sz-iak"/>
                             <constraint firstItem="X93-r7-QIf" firstAttribute="leading" secondItem="eiy-Df-Y7h" secondAttribute="leading" id="dC8-kh-zaW"/>
                             <constraint firstItem="X93-r7-QIf" firstAttribute="top" secondItem="Y4I-Hi-hIN" secondAttribute="bottom" id="gMV-5q-xCB"/>
                             <constraint firstItem="Y4I-Hi-hIN" firstAttribute="trailing" secondItem="eiy-Df-Y7h" secondAttribute="trailing" id="oKI-zr-lbA"/>
+                            <constraint firstItem="aBf-ZM-jlg" firstAttribute="top" secondItem="ali-xv-6sK" secondAttribute="bottom" constant="16" id="sUZ-IA-bNW"/>
+                            <constraint firstItem="eiy-Df-Y7h" firstAttribute="trailing" secondItem="ali-xv-6sK" secondAttribute="trailing" constant="30" id="sdR-sF-MXf"/>
+                            <constraint firstItem="TAL-xR-sVS" firstAttribute="leading" secondItem="mCr-7M-6TP" secondAttribute="leading" id="tOn-bO-NyS"/>
                             <constraint firstItem="eiy-Df-Y7h" firstAttribute="trailing" secondItem="aBf-ZM-jlg" secondAttribute="trailing" constant="20" id="xQK-mi-ch7"/>
                             <constraint firstItem="aBf-ZM-jlg" firstAttribute="height" secondItem="TAL-xR-sVS" secondAttribute="height" id="yY1-f9-g1Y"/>
                             <constraint firstItem="aBf-ZM-jlg" firstAttribute="leading" secondItem="TAL-xR-sVS" secondAttribute="trailing" id="yx8-25-hiZ"/>

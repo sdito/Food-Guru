@@ -55,6 +55,12 @@ class CreateGroupVC: UIViewController {
         addItem()
     }
     
+    @IBAction func appleEmailAlert(_ sender: Any) {
+        let alert = UIAlertController(title: "Apple account", message: "If you are getting an error while trying to add someone to your group, it could be due to them creating an account with Apple. If the individal selected the option to hide their email when creating an account, then the user will need to go to the settings of this app, click on 'Account,' and then find the email that is associated with their account there.", preferredStyle: .alert)
+        alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+        present(alert, animated: true)
+    }
+    
     @IBAction func exit(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }

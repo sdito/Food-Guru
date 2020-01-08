@@ -10,6 +10,7 @@ import UIKit
 import FirebaseFirestore
 import FirebaseAuth
 import Firebase
+import AVFoundation
 
 class StorageHomeVC: UIViewController {
     //var delegate: IngredientsFromStorageDelegate!
@@ -149,11 +150,25 @@ class StorageHomeVC: UIViewController {
     
     @IBAction func barcodeScanPressed(_ sender: Any) {
         print("barcode scanner pressed")
+        
+        
+        let value = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        
+            
+            
         let cameraPicker = UIImagePickerController()
         cameraPicker.sourceType = .camera
         cameraPicker.cameraCaptureMode = .photo
         cameraPicker.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
         present(cameraPicker, animated: true, completion: nil)
+        
+        
+        if value == .denied || value == .restricted {
+            let alert = UIAlertController(title: "Camera access was denied", message: "To enable access, go to Apple Settings > Privacy > Camera and turn on camera access for Food Guru", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+        }
         
         
         

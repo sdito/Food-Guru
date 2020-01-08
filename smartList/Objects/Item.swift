@@ -204,6 +204,12 @@ extension Item {
         let documentRef = db.collection("storages").document(SharedValues.shared.foodStorageID ?? " ").collection("items").document(self.ownID ?? " ")
         documentRef.delete()
     }
+    
+    func deleteItemFromStorageFromSpecificStorageID(db: Firestore, storageID: String) {
+        let documentRef = db.collection("storages").document(storageID).collection("items").document(self.ownID ?? " ")
+        documentRef.delete()
+    }
+    
     func deleteItemFromList(db: Firestore, listID: String) {
         let documentRef = db.collection("lists").document(listID).collection("items").document(self.ownID ?? " ")
         documentRef.delete()

@@ -466,6 +466,14 @@ extension CreateRecipeVC: UITextFieldDelegate {
 extension CreateRecipeVC: UITextViewDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         SharedValues.shared.currText = textView
+        
+        if let iv = textView.superview?.superview as? InstructionView {
+            if iv.button.titleLabel?.text == "+" {
+                print("Need to add another tv")
+                insert()
+            }
+        }
+        
         return true
     }
     func textViewDidBeginEditing(_ textView: UITextView) {
