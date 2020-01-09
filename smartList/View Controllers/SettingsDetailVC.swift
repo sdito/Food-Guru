@@ -279,21 +279,17 @@ class SettingsDetailVC: UIViewController {
             }
             
             #warning("this function kinda works, just need to have it completely finish running before going to the next functions")
+            
+            
+            
+            
             FoodStorage.mergeItemsTogetherInStorage(db: self.db, newStorageID: storageID, newEmails: Array(groupEmails))
             
-            if emailsToAdd.isEmpty {
 
-            } else {
-                for email in emailsToAdd {
-                    // Add the food storage ID to the user's profile information
-                    FoodStorage.addForStorageInformationToGroupMembersProfile(db: self.db, foodStorageID: storageID, email: email)
-                }
-                // replace the old emails with the emails that are in the group
+            
+            if !emailsToAdd.isEmpty {
                 let ge = Array(groupEmails)
                 FoodStorage.updateDataInStorageDocument(db: self.db, foodStorageID: storageID, emails: ge)
-
-
-
             }
             
 

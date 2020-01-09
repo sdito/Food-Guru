@@ -207,7 +207,7 @@ struct FoodStorage {
     
     
     
-    #warning("make sure this is being used below")
+    
     static func findIfUsersStorageIsWithGroup(db: Firestore, storageID: String) {
         let reference = db.collection("storages").document(storageID)
         reference.getDocument { (documentSnapshot, error) in
@@ -224,7 +224,7 @@ struct FoodStorage {
         }
     }
     
-    #warning("need to make sure this is being used")
+    
     static func addForStorageInformationToGroupMembersProfile(db: Firestore, foodStorageID: String, email: String) {
         // need to get the uid from the email
         User.turnEmailToUid(db: db, email: email) { (uid) in
@@ -248,7 +248,7 @@ struct FoodStorage {
         }
     }
     
-    #warning("need to make sure this is being used")
+    
     static func updateDataInStorageDocument(db: Firestore, foodStorageID: String, emails: [String]) {
         // uids are added to 'shared' in the addForStorageInformationToGroupMembersProfile function
         // need to update 'numPeople' and 'emails'
@@ -265,7 +265,9 @@ struct FoodStorage {
     
     
     
-    #warning("make sure this is being used, need to feed storageIDs into this function")
+    
+    
+    #warning("make sure this is being used, need to feed storageIDs into this function, need to double check this is wrking properly")
     static func mergeItemsTogetherInStorage(db: Firestore, newStorageID: String, newEmails: [String]) {
         
         for email in newEmails {
@@ -275,31 +277,39 @@ struct FoodStorage {
                     let reference = db.collection("users").document(uid)
                     reference.getDocument { (documentSnapshot, error) in
                         guard let doc = documentSnapshot else { return }
+                        
                         if let sid = doc.get("storageID") as? String {
                             if sid != newStorageID {
                                 let storageRef = db.collection("storages").document(sid).collection("items")
                                 storageRef.getDocuments { (querySnapshot, error) in
                                     // storageID is the NEW storage identifier that everything needs to be merged into
-                                    guard let itemDocuments = querySnapshot?.documents else { return }
+                                    guard let itemDocuments = querySnapshot?.documents else {
+                                        FoodStorage.addForStorageInformationToGroupMembersProfile(db: db, foodStorageID: newStorageID, email: email)
+                                        return
+                                    }
                                     for itemDoc in itemDocuments {
                                         let item = itemDoc.getItem()
                                         // if this process doesnt work, maybe these storage IDs are wrong
-                                        
+                                        print("item being moved: \(item)")
                                         item.writeToFirestoreForStorage(db: db, docID: newStorageID)
                                         item.deleteItemFromStorageFromSpecificStorageID(db: db, storageID: sid)
-                                        if itemDoc == itemDocuments.last {
-                                            print("Need to delete the storage, then continue to the other functionx")
-                                            let refToDelete = db.collection("storages").document(sid)
-                                            refToDelete.delete()
-                                        }
+                                        
                                     }
+                                    FoodStorage.addForStorageInformationToGroupMembersProfile(db: db, foodStorageID: newStorageID, email: email)
                                 }
                             }
+                        } else {
+                            FoodStorage.addForStorageInformationToGroupMembersProfile(db: db, foodStorageID: newStorageID, email: email)
                         }
+                        
+                        
                     }
                 }
             }
         }
+        
+        
+        
         
     }
     
