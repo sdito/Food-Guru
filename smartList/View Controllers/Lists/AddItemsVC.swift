@@ -387,9 +387,17 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
 extension AddItemsVC: ItemCellDelegate {
     func edit(item: Item) {
         
+        var text: String? {
+            if item.user != nil {
+                return "Item added by \(item.user!)"
+            } else {
+                return nil
+            }
+        }
+        
+        let actionSheet = UIAlertController(title: nil, message: text, preferredStyle: .actionSheet)
         
         
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         actionSheet.addAction(.init(title: "Edit name", style: .default, handler: { alert in
             self.nameAlert(item: item)
         }))

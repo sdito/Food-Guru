@@ -26,6 +26,8 @@ class TutorialVC: UIPageViewController {
     
     }
     
+    
+    
     lazy var pages: [UIViewController] = {
         return [self.newVc(viewController: "One"),
                 self.newVc(viewController: "Two"),
@@ -42,14 +44,27 @@ class TutorialVC: UIPageViewController {
     private func configurePageControl() {
         // The total number of pages that are available is based on how many available colors we have.
         
-//        UIScreen.main.bounds.maxY - 120
-        pageControl = UIPageControl(frame: CGRect(x: 0,y: UIScreen.main.bounds.maxY - 80, width: UIScreen.main.bounds.width,height: 50))
+        pageControl = UIPageControl(frame: CGRect(x: 0,y: UIScreen.main.bounds.maxY - 45, width: UIScreen.main.bounds.width,height: 50))
         self.pageControl.numberOfPages = pages.count
         self.pageControl.currentPage = 0
         self.pageControl.tintColor = .black
         self.pageControl.pageIndicatorTintColor = .white
         self.pageControl.currentPageIndicatorTintColor = .black
         self.view.addSubview(pageControl)
+        
+        
+        #warning("need to fix this mess of a way to exit the tutorial screen")
+        let button = UIButton()
+        button.setTitle("Done", for: .normal)
+        button.frame = CGRect(x: 0, y: UIScreen.main.bounds.minY + 15, width: 60, height: 30)
+        button.titleLabel?.textAlignment = .right
+        button.setTitleColor(.systemRed, for: .normal)
+        if #available(iOS 13.0, *) {
+            button.titleLabel?.backgroundColor = .systemBackground
+        } else {
+            button.titleLabel?.backgroundColor = .white
+        }
+        self.view.addSubview(button)
     }
 }
 

@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
 struct Item: Equatable {
     var name: String
@@ -51,7 +52,7 @@ struct Item: Equatable {
             for doc in documents {
                 let systemItem = GenericItem(rawValue: doc.get("systemItem") as? String ?? "other")
                 let systemCategory = Category(rawValue: doc.get("systemCategory") as? String ?? "other")
-                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as! String), ownID: doc.documentID, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: systemCategory)
+                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as? String), ownID: doc.documentID, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: systemCategory)
                 if listItems.isEmpty == false {
                     listItems.append(i)
                 } else {
@@ -76,7 +77,7 @@ struct Item: Equatable {
             for doc in documents {
                 let systemItem = GenericItem(rawValue: doc.get("systemItem") as? String ?? "other")
                 let systemCategory = Category(rawValue: doc.get("systemCategory") as? String ?? "other")
-                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as! String), ownID: doc.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (doc.get("storageSection") as? String ?? " ")), timeAdded: doc.get("timeAdded") as? TimeInterval, timeExpires: doc.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory)
+                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as? String), ownID: doc.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (doc.get("storageSection") as? String ?? " ")), timeAdded: doc.get("timeAdded") as? TimeInterval, timeExpires: doc.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory)
                 if storageItems.isEmpty == false {
                     storageItems.append(i)
                 } else {
@@ -97,7 +98,7 @@ struct Item: Equatable {
             for doc in documents {
               let systemItem = GenericItem(rawValue: doc.get("systemItem") as? String ?? "other")
                 let systemCategory = Category(rawValue: doc.get("systemCategory") as? String ?? "other")
-                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as! String), ownID: doc.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (doc.get("storageSection") as? String ?? " ")), timeAdded: doc.get("timeAdded") as? TimeInterval, timeExpires: doc.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory)
+                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as? String), ownID: doc.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (doc.get("storageSection") as? String ?? " ")), timeAdded: doc.get("timeAdded") as? TimeInterval, timeExpires: doc.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory)
                 if storageItems.isEmpty == false {
                     storageItems.append(i)
                 } else {
@@ -115,7 +116,7 @@ struct Item: Equatable {
         }
         let systemCategory = GenericItem.getCategory(item: systemItem, words: words)
         
-        let item = Item(name: text, selected: false, category: systemCategory.rawValue, store: nil, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: systemCategory)
+        let item = Item(name: text, selected: false, category: systemCategory.rawValue, store: nil, user: Auth.auth().currentUser?.displayName, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: systemCategory)
         return item
     }
     
@@ -140,6 +141,7 @@ struct Item: Equatable {
 }
 
 extension Item {
+    
     mutating func writeToFirestoreForList(db: Firestore!) {
         let itemRef = db.collection("lists").document("\(SharedValues.shared.listIdentifier!.documentID)").collection("items").document()
         self.ownID = itemRef.documentID
@@ -147,7 +149,7 @@ extension Item {
             "name": self.name,
             "category": self.category!,
             "store": self.store!,
-            "user": SharedValues.shared.userID ?? "did not write",
+            "user": Auth.auth().currentUser?.displayName as Any,
             "selected": self.selected,
             "systemItem": "\(self.systemItem ?? .other)",
             "systemCategory": "\(self.systemCategory ?? .other)"
@@ -168,7 +170,7 @@ extension Item {
             "selected": false,
             "category": self.category!,
             "store": self.store as Any,
-            "user": self.user ?? "",
+            "user": Auth.auth().currentUser?.displayName as Any,
             "ownID": reference.documentID,
             "storageSection": self.storageSection?.string ?? FoodStorageType.unsorted.string,
             "timeAdded": Date().timeIntervalSince1970,
@@ -239,7 +241,7 @@ extension QueryDocumentSnapshot {
     func getItem() -> Item {
         let systemItem = GenericItem(rawValue: self.get("systemItem") as? String ?? "other")
         let systemCategory = Category(rawValue: self.get("systemCategory") as? String ?? "other")
-        let i = Item(name: self.get("name") as! String, selected: self.get("selected")! as! Bool, category: (self.get("category") as! String), store: (self.get("store") as! String), user: (self.get("user") as! String), ownID: self.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (self.get("storageSection") as? String ?? " ")), timeAdded: self.get("timeAdded") as? TimeInterval, timeExpires: self.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory)
+        let i = Item(name: self.get("name") as! String, selected: self.get("selected")! as! Bool, category: (self.get("category") as! String), store: (self.get("store") as! String), user: (self.get("user") as? String), ownID: self.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (self.get("storageSection") as? String ?? " ")), timeAdded: self.get("timeAdded") as? TimeInterval, timeExpires: self.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory)
         return i
     }
 }

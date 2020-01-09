@@ -55,7 +55,6 @@ class OneTutorialVC: UIViewController {
     }
     
     
-    
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
         let size = image.size
 

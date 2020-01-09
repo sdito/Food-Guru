@@ -359,7 +359,6 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         
         
     }
-
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -382,6 +381,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "storageCell") as! StorageCell
                 let item = sortedItems[indexPath.row]
                 cell.setUI(item: item)
+                
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
@@ -393,13 +393,19 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         }
         
     }
+    
+    
+    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let v = UIView()
         v.backgroundColor = .clear
         return v
     }
+    
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         handlePopUpView()
+        
     }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
         handlePopUpView()
