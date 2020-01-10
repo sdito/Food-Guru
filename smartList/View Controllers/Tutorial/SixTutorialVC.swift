@@ -11,6 +11,7 @@ import UIKit
 class SixTutorialVC: UIViewController {
     
     
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
@@ -31,6 +32,8 @@ class SixTutorialVC: UIViewController {
         str.append(second)
         
         topLabel.attributedText = str
+        self.view.setGradientBackgroundTutorial(colorOne: Colors.main, colorTwo: Colors.secondary)
+        topView.setUpTutorialLabel()
         
     }
     override func viewDidAppear(_ animated: Bool) {

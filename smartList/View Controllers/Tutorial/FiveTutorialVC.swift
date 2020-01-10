@@ -10,13 +10,16 @@ import UIKit
 
 class FiveTutorialVC: UIViewController {
     
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        self.view.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.secondary)
         
+        topView.setUpTutorialLabel()
     }
     
     override func viewDidAppear(_ animated: Bool) {

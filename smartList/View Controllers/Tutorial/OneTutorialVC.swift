@@ -13,6 +13,7 @@ class OneTutorialVC: UIViewController {
     
     var timer: Timer?
     
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var arrow: UIImageView!
@@ -33,6 +34,13 @@ class OneTutorialVC: UIViewController {
         str.append(NSAttributedString(string: " to add the selected items from your list to your storage"))
         
         topLabel.attributedText = str
+        
+        self.view.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.secondary)
+        topView.setUpTutorialLabel()
+        
+//        topLabel.drawText(in: CGRect(x: 5, y: 5, width: topLabel.intrinsicContentSize.width, height: topLabel.intrinsicContentSize.height))
+        
+
     }
     
     

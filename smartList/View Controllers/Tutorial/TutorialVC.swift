@@ -56,7 +56,7 @@ class TutorialVC: UIPageViewController {
         #warning("need to fix this mess of a way to exit the tutorial screen")
         let button = UIButton()
         button.setTitle("Done", for: .normal)
-        button.frame = CGRect(x: 0, y: UIScreen.main.bounds.minY + 15, width: 60, height: 30)
+        button.frame = CGRect(x: 0, y: UIScreen.main.bounds.maxX - 45, width: 60, height: 30)
         button.titleLabel?.textAlignment = .right
         button.setTitleColor(.systemRed, for: .normal)
         if #available(iOS 13.0, *) {
@@ -64,7 +64,13 @@ class TutorialVC: UIPageViewController {
         } else {
             button.titleLabel?.backgroundColor = .white
         }
+        button.addTarget(self, action: #selector(dismissTutorial), for: .touchUpInside)
         self.view.addSubview(button)
+    }
+    
+    @objc private func dismissTutorial() {
+        print("dismissTutorial was called")
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

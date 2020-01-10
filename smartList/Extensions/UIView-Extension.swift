@@ -11,7 +11,16 @@ import UIKit
 
 
 extension UIView {
-    
+    func setUpTutorialLabel() {
+        self.layer.cornerRadius = 5.0
+        self.layer.borderWidth = 1
+        if #available(iOS 13.0, *) {
+            self.layer.borderColor = UIColor.label.cgColor
+        } else {
+            self.layer.borderColor = UIColor.black.cgColor
+        }
+        self.clipsToBounds = true
+    }
     func pulsateView() {
         UIView.animate(withDuration: 0.3, animations: {
             self.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
@@ -70,6 +79,17 @@ extension UIView {
         gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
         self.layer.insertSublayer(gradientLayer, at: 0)
     }
+    
+    func setGradientBackgroundTutorial(colorOne: UIColor, colorTwo: UIColor) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = bounds
+        gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.0)
+        self.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
     
     func border(cornerRadius: CGFloat) {
         self.layer.cornerRadius = cornerRadius

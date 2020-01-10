@@ -10,6 +10,7 @@ import UIKit
 
 class FourTutorialVC: UIViewController {
 
+    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var topLabel: UILabel!
     
@@ -31,6 +32,8 @@ class FourTutorialVC: UIViewController {
         let fourth = NSAttributedString(string: " to have your recipe appear in saved recipes.")
         str.append(fourth)
         topLabel.attributedText = str
+        self.view.setGradientBackgroundTutorial(colorOne: Colors.main, colorTwo: Colors.secondary)
+        topView.setUpTutorialLabel()
         
     }
     override func viewDidAppear(_ animated: Bool) {

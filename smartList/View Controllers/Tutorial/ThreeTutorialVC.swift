@@ -12,6 +12,7 @@ class ThreeTutorialVC: UIViewController {
 
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var topView: UIView!
     
     
     
@@ -30,6 +31,9 @@ class ThreeTutorialVC: UIViewController {
         str.append(third)
         
         topLabel.attributedText = str
+        self.view.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.secondary)
+        topView.setUpTutorialLabel()
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
