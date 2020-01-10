@@ -9,8 +9,8 @@
 import UIKit
 
 class TutorialVC: UIPageViewController {
-    
-    var pageControl = UIPageControl()
+    let button = UIButton()
+    private var pageControl = UIPageControl()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +23,6 @@ class TutorialVC: UIPageViewController {
         }
         
         
-    
     }
     
     
@@ -54,10 +53,16 @@ class TutorialVC: UIPageViewController {
         
         
         #warning("need to fix this mess of a way to exit the tutorial screen")
-        let button = UIButton()
+        
         button.setTitle("Done", for: .normal)
-        button.frame = CGRect(x: 0, y: UIScreen.main.bounds.maxX - 45, width: 60, height: 30)
-        button.titleLabel?.textAlignment = .right
+        let font = UIFont(name: "futura", size: 20)
+        button.titleLabel?.font = font
+        let size = "Done".sizeForText(font: font!)
+        let padding: CGFloat = 8.0
+        button.clipsToBounds = true
+        button.frame = CGRect(x: (UIScreen.main.bounds.width - (size.width * 1.5)) ,y: UIScreen.main.bounds.maxY - 45, width: size.width + padding,height: size.height)
+        button.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: padding/2, bottom: 0.0, right: padding/2)
+        button.titleLabel?.widthAnchor.constraint(equalToConstant: size.width + padding).isActive = true
         button.setTitleColor(.systemRed, for: .normal)
         if #available(iOS 13.0, *) {
             button.titleLabel?.backgroundColor = .systemBackground
@@ -65,6 +70,10 @@ class TutorialVC: UIPageViewController {
             button.titleLabel?.backgroundColor = .white
         }
         button.addTarget(self, action: #selector(dismissTutorial), for: .touchUpInside)
+        button.layer.cornerRadius = 5.0
+        button.layer.borderColor = UIColor.systemRed.cgColor
+        button.layer.borderWidth = 1.0
+        button.titleLabel?.textAlignment = .center
         self.view.addSubview(button)
     }
     
@@ -95,5 +104,12 @@ extension TutorialVC: UIPageViewControllerDelegate, UIPageViewControllerDataSour
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         let pageContentViewController = pageViewController.viewControllers![0]
         self.pageControl.currentPage = pages.firstIndex(of: pageContentViewController)!
+        
+        
     }
+    
 }
+
+
+
+

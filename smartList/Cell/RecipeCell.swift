@@ -25,13 +25,13 @@ class RecipeCell: UICollectionViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
     
     func setUI(recipe: Recipe) {
+        
         self.recipe = recipe
         for subview in recipeImage.subviews {
             subview.removeFromSuperview()
         }
         
         title.text = recipe.name
-        //tagline.text = recipe.recipeType.joined(separator: ", ")
         tagline.text = recipe.tagline
         recipeImage.layer.cornerRadius = 4.0
         recipeImage.clipsToBounds = true

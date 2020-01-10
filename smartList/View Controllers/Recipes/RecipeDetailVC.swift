@@ -60,7 +60,7 @@ class RecipeDetailVC: UIViewController {
     
     @IBOutlet weak var scaleSlider: UISlider!
     
-    var data: (image: UIImage, recipe: Recipe)?
+    var data: (image: UIImage?, recipe: Recipe)?
     var cookbookRecipe: CookbookRecipe?
     
     override func viewDidLoad() {
@@ -308,8 +308,11 @@ class RecipeDetailVC: UIViewController {
         
     }
     
-    private func setUI(recipe: Recipe, image: UIImage) {
-        imageView.image = data?.image
+    private func setUI(recipe: Recipe, image: UIImage?) {
+        if let img = image {
+            imageView.image = img
+        }
+        
         recipeName.text = recipe.name
         addStarRatingViewIfApplicable(recipe: recipe)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {

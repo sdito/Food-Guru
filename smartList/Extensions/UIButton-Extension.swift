@@ -20,7 +20,6 @@ extension UIButton {
         self.alpha = 0.6
     }
 
-    
 }
 
 

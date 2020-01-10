@@ -211,7 +211,7 @@ class RecipeHomeVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showRecipeDetail" {
             let destVC = segue.destination as! RecipeDetailVC
-            destVC.data = sender as? (UIImage, Recipe)
+            destVC.data = sender as? (UIImage?, Recipe)
         }
     }
     
@@ -393,6 +393,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         case false:
             let selected = recipes[indexPath.item]
             performSegue(withIdentifier: "showRecipeDetail", sender: (imageCache.object(forKey: "\(indexPath.row)" as NSString), selected))
+            
         }
     }
     

@@ -7,8 +7,17 @@
 //
 
 import Foundation
+import AVFoundation
+import UIKit
 
 extension String {
+    
+    
+    func sizeForText(font: UIFont) -> CGRect {
+        
+        let rect = NSString(string: self).boundingRect(with: CGSize(width: CGFloat(MAXFLOAT), height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+        return rect
+    }
     
     func trimUntilText() -> String {
         guard let idx = self.firstIndex(where: {$0.isLetter}) else { return self }
