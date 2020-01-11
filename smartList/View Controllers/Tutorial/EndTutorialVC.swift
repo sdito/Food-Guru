@@ -30,7 +30,7 @@ class EndTutorialVC: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         timer?.invalidate()
-//        (self.parent as? TutorialVC)?.button.isHidden = false
+        
     }
     
     override func viewDidLoad() {

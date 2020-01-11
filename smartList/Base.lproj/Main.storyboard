@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Lse-hg-hTa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Lhl-QV-snq">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -1532,6 +1532,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iiq-zw-4d4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="274" y="394"/>
+        </scene>
+        <!--SplashVC-->
+        <scene sceneID="vpM-2M-ulX">
+            <objects>
+                <viewController id="Lhl-QV-snq" customClass="SplashVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="4gn-Ap-AOi">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Guru" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mvx-w5-8ct">
+                                <rect key="frame" x="108" y="422" width="198" height="52"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="40"/>
+                                <color key="textColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="mvx-w5-8ct" firstAttribute="centerY" secondItem="4gn-Ap-AOi" secondAttribute="centerY" id="1NK-Uj-W9K"/>
+                            <constraint firstItem="mvx-w5-8ct" firstAttribute="centerX" secondItem="4gn-Ap-AOi" secondAttribute="centerX" id="jao-UF-Nuz"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="gwK-kf-4nM"/>
+                    </view>
+                    <connections>
+                        <outlet property="label" destination="mvx-w5-8ct" id="atn-w3-y23"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fp4-JK-BHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-4892" y="699"/>
         </scene>
         <!--TabVC-->
         <scene sceneID="QDs-tw-DsW">
