@@ -38,6 +38,7 @@ class SixTutorialVC: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         imageView.pulsateView()
+        (self.parent as? TutorialVC)?.button.isHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {

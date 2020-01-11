@@ -50,7 +50,7 @@ class OneTutorialVC: UIViewController {
             self.arrow.setIsHidden(false, animated: true)
         })
         
-        
+        (self.parent as? TutorialVC)?.button.isHidden = false
     }
     
     

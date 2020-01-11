@@ -72,7 +72,6 @@ extension SettingsHomeVC: UITableViewDataSource, UITableViewDelegate {
             let sb: UIStoryboard = UIStoryboard(name: "Tutorial", bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "tutorialVC") as! TutorialVC
             vc.modalPresentationStyle = .fullScreen
-//            self.navigationController?.pushViewController(vc, animated: true)
             self.present(vc, animated: true, completion: nil)
             
         }

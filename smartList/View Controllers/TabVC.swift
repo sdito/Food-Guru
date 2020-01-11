@@ -21,8 +21,27 @@ class TabVC: UITabBarController {
         let defaults = UserDefaults.standard
         let numTimesRan = defaults.integer(forKey: "timesOpened")
         
+        if numTimesRan < 20_000 {
+            // Have a small pop up to alert the user that they can view the tutioral
+            let view = Bundle.main.loadNibNamed("SuggestTutorialView", owner: nil, options: nil)?.first as! SuggestTutorialView
+            
+            let width = view.bounds.width
+            view.frame = CGRect(x: 0.0 - width, y: 37.5, width: width, height: view.bounds.height)
+            view.border(cornerRadius: 5.0)
+            self.view.addSubview(view)
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                UIView.animate(withDuration: 0.3, animations: {
+                    view.frame = CGRect(x: UIScreen.main.bounds.width/2 - width/2, y: 37.5, width: width, height: view.bounds.height)
+                })
+            }
+            
+            
+        }
+        
         if numTimesRan == 8 {
             SKStoreReviewController.requestReview()
+            
         }
         print(numTimesRan)
         defaults.set(numTimesRan + 1, forKey: "timesOpened")

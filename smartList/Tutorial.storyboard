@@ -348,8 +348,52 @@
             </objects>
             <point key="canvasLocation" x="4449" y="-33"/>
         </scene>
+        <!--End TutorialVC-->
+        <scene sceneID="NH1-w4-v3f">
+            <objects>
+                <viewController storyboardIdentifier="End" id="f4L-DY-SJl" customClass="EndTutorialVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wZz-hp-pwG">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="__logo" translatesAutoresizingMaskIntoConstraints="NO" id="CqW-k6-mIz">
+                                <rect key="frame" x="30" y="353.5" width="354" height="189"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="CqW-k6-mIz" secondAttribute="height" multiplier="15:8" id="zbM-HO-mjz"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YO2-Bh-d5c">
+                                <rect key="frame" x="133.5" y="562.5" width="147" height="38"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
+                                <state key="normal" title="Continue to app">
+                                    <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="continuePressed:" destination="f4L-DY-SJl" eventType="touchUpInside" id="Wg5-hf-PZo"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="YO2-Bh-d5c" firstAttribute="centerX" secondItem="wZz-hp-pwG" secondAttribute="centerX" id="Ge8-uZ-ZJi"/>
+                            <constraint firstItem="YO2-Bh-d5c" firstAttribute="top" secondItem="CqW-k6-mIz" secondAttribute="bottom" constant="20" id="J9c-Zg-d1Q"/>
+                            <constraint firstItem="CqW-k6-mIz" firstAttribute="centerY" secondItem="wZz-hp-pwG" secondAttribute="centerY" id="OyE-Ur-ZIt"/>
+                            <constraint firstItem="CqW-k6-mIz" firstAttribute="centerX" secondItem="wZz-hp-pwG" secondAttribute="centerX" id="iPs-vO-wRx"/>
+                            <constraint firstItem="CqW-k6-mIz" firstAttribute="leading" secondItem="aHA-kJ-oPj" secondAttribute="leading" constant="30" id="lLe-qT-awo"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="aHA-kJ-oPj"/>
+                    </view>
+                    <connections>
+                        <outlet property="logo" destination="CqW-k6-mIz" id="Hfk-NW-qL3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Prg-bP-MPa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5202" y="-36"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="__logo" width="512" height="512"/>
         <image name="_five" width="1242" height="2688"/>
         <image name="_four" width="1242" height="2688"/>
         <image name="_one" width="1242" height="2688"/>
