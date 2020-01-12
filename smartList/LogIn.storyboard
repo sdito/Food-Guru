@@ -455,6 +455,36 @@
             </objects>
             <point key="canvasLocation" x="-2886.9565217391305" y="1399.5535714285713"/>
         </scene>
+        <!--SplashVC-->
+        <scene sceneID="DB6-Ta-tBj">
+            <objects>
+                <viewController storyboardIdentifier="splashLogIn" id="AxI-Vp-3Fd" customClass="SplashVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mSc-3M-Gzt">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food Guru" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XvY-ML-8Ko">
+                                <rect key="frame" x="108" y="422" width="198" height="52"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="40"/>
+                                <color key="textColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="XvY-ML-8Ko" firstAttribute="centerX" secondItem="mSc-3M-Gzt" secondAttribute="centerX" id="Z0h-US-tRH"/>
+                            <constraint firstItem="XvY-ML-8Ko" firstAttribute="centerY" secondItem="mSc-3M-Gzt" secondAttribute="centerY" id="hUH-hB-fTM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="On7-NP-Avv"/>
+                    </view>
+                    <connections>
+                        <outlet property="label" destination="XvY-ML-8Ko" id="tla-R0-j81"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p3y-Gn-mHV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-6294" y="1400"/>
+        </scene>
     </scenes>
     <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

@@ -33,7 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         } else {
             let sb: UIStoryboard = UIStoryboard(name: "LogIn", bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: "initialLogInVC") as! InitialLogInVC
+            let vc = sb.instantiateViewController(withIdentifier: "splashLogIn") as! SplashVC
+            vc.logIn = true
             self.window?.rootViewController = vc
             self.window?.makeKeyAndVisible()
             

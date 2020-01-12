@@ -45,6 +45,7 @@ class PDFCreator: NSObject {
             let ingredientSectionBottom = addBodyText(pageRect: pageRect, textTop: ingredientsBottom + 9.0, text: ingredients, ingredients: true)
             let instructionsBottom = addSectionTitle(pageRect: pageRect, sectionTitle: "Instructions", textTop: ingredientSectionBottom + 18.0)
             _ = addBodyText(pageRect: pageRect, textTop: instructionsBottom + 9.0, text: instructions, ingredients: false)
+            addLogo(pageRect: pageRect, image: UIImage(named: "__logoOpposite")!)
         }
 
       return data
@@ -79,6 +80,12 @@ class PDFCreator: NSObject {
         )
         attributedTitle.draw(in: titleStringRect)
         return titleStringRect.origin.y + titleStringRect.size.height
+    }
+    
+    func addLogo(pageRect: CGRect, image: UIImage) {
+        let imageRect = CGRect(x: pageRect.width - 30 - 40, y: 30, width: 40, height: 40)
+        
+        image.draw(in: imageRect)
     }
     
     func addBodyText(pageRect: CGRect, textTop: CGFloat, text: [String], ingredients: Bool) -> CGFloat {
