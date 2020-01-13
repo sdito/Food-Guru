@@ -23,7 +23,7 @@ class TabVC: UITabBarController {
         let defaults = UserDefaults.standard
         let numTimesRan = defaults.integer(forKey: "timesOpened")
         
-        if numTimesRan < 2000 {
+        if numTimesRan < 2 {
             // Have a small pop up to alert the user that they can view the tutioral
             let view = Bundle.main.loadNibNamed("SuggestTutorialView", owner: nil, options: nil)?.first as! SuggestTutorialView
             

@@ -13,10 +13,18 @@ import Firebase
 import AVFoundation
 
 class StorageHomeVC: UIViewController {
-    //var delegate: IngredientsFromStorageDelegate!
-    private var indexes: [Int]? {
-        return tableView.indexPathsForSelectedRows?.map({$0.row})
+    
+    #warning("make sure this is being used, left off wtih this, need to have the items stay selecte between tabs, and then used for the action, rather than just taking the current selected rows")
+    private var currentlySelectedItems: [Item] = [] {
+        didSet {
+            handlePopUpView()
+        }
     }
+    
+//    private var indexes: [Int]? {
+//        return tableView.indexPathsForSelectedRows?.map({$0.row})
+//    }
+    
     var db: Firestore!
     lazy private var emptyCells: [UITableViewCell] = []
     private var searchActive = false
@@ -104,6 +112,8 @@ class StorageHomeVC: UIViewController {
         searchBar.resignFirstResponder()
         searchBar.text = ""
         sortedItems = items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: "")
+        
+        currentlySelectedItems.removeAll()
     }
     @IBAction func searchPressed(_ sender: Any) {
         
@@ -154,9 +164,6 @@ class StorageHomeVC: UIViewController {
         
         let value = AVCaptureDevice.authorizationStatus(for: .video)
         
-        
-            
-            
         let cameraPicker = UIImagePickerController()
         cameraPicker.sourceType = .camera
         cameraPicker.cameraCaptureMode = .photo
@@ -202,7 +209,9 @@ class StorageHomeVC: UIViewController {
     
     @IBAction func findRecipes(_ sender: Any) {
         print("find recipes with selected ingredients")
-        let genericItems = sortedItems.filter{(indexes?.contains(sortedItems.firstIndex(of: $0)!) ?? false)}.map({$0.systemItem!.rawValue})
+        //let genericItems = sortedItems.filter{(indexes?.contains(sortedItems.firstIndex(of: $0)!) ?? false)}.map({$0.systemItem!.rawValue})
+        // type [String)
+        let genericItems = currentlySelectedItems.map({$0.systemItem!.rawValue})
         Search.getRecipesFromIngredients(db: db, ingredients: genericItems) { (rcps) in
             if let rcps = rcps {
                 SharedValues.shared.sentRecipesInfo = (rcps, genericItems)
@@ -221,14 +230,13 @@ class StorageHomeVC: UIViewController {
     
     @IBAction func deleteCells(_ sender: Any) {
         //let indexes = tableView.indexPathsForSelectedRows?.map({$0.row})
-        for item in sortedItems {
-            if let idx = sortedItems.firstIndex(of: item) {
-                if indexes?.contains(idx) ?? false {
-                    item.deleteItemFromStorage(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
-                }
-            }
+        for item in currentlySelectedItems {
+            item.deleteItemFromStorage(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
         }
+        
+        currentlySelectedItems.removeAll()
     }
+    
     @IBAction func addExpirationDateCells(_ sender: Any) {
         if pickerPopUpView.isHidden {
             pickerPopUpView.setIsHidden(false, animated: true)
@@ -247,28 +255,22 @@ class StorageHomeVC: UIViewController {
     @IBAction func putInPantryCells(_ sender: Any) {
         handleCellSortingTo(segment: "pantry")
     }
+    
     @IBAction func doneAddingExpirationDate(_ sender: Any) {
-        let indexes = tableView.indexPathsForSelectedRows?.map({$0.row})
-        for item in sortedItems {
-            if let idx = sortedItems.firstIndex(of: item) {
-                if indexes?.contains(idx) ?? false {
-                    item.addExpirationDateToItem(db: db, timeIntervalSince1970: pickerView.date.timeIntervalSince1970)
-                }
-            }
+        for item in currentlySelectedItems {
+            item.addExpirationDateToItem(db: db, timeIntervalSince1970: pickerView.date.timeIntervalSince1970)
         }
-        
+        currentlySelectedItems.removeAll()
     }
     
     private func handleCellSortingTo(segment: String) {
-        let indexes = tableView.indexPathsForSelectedRows?.map({$0.row})
-        for item in sortedItems {
-            if let idx = sortedItems.firstIndex(of: item) {
-                if indexes?.contains(idx) ?? false {
-                    item.switchItemToSegment(named: segment, db: db/*, storageID: SharedValues.shared.foodStorageID ?? " "*/)
-                }
-            }
+        
+        for item in currentlySelectedItems {
+            item.switchItemToSegment(named: segment, db: db/*, storageID: SharedValues.shared.foodStorageID ?? " "*/)
         }
+        currentlySelectedItems.removeAll()
     }
+    
     private func haveNeededSectionsInSegmentedControl(unsortedNeeded: Bool, segmentedControl: UISegmentedControl) {
         switch unsortedNeeded {
         case true:
@@ -316,13 +318,27 @@ extension StorageHomeVC: UISearchBarDelegate {
 
 extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     private func handlePopUpView() {
-        if tableView.indexPathsForSelectedRows?.count ?? 0 >= 1 {
+        print(currentlySelectedItems.map({$0.name}))
+        
+        for _ in 1...10 {
+            print(currentlySelectedItems.count)
+        }
+        if currentlySelectedItems.count > 0 {
             popUpView.setIsHidden(false, animated: true)
         } else {
             popUpView.setIsHidden(true, animated: true)
             pickerPopUpView.setIsHidden(true, animated: true)
             expirationDateOutlet.setTitleColor(.lightGray, for: .normal)
         }
+        
+//        if tableView.indexPathsForSelectedRows?.count ?? 0 >= 1 {
+//            popUpView.setIsHidden(false, animated: true)
+//        } else {
+//            popUpView.setIsHidden(true, animated: true)
+//            pickerPopUpView.setIsHidden(true, animated: true)
+//            expirationDateOutlet.setTitleColor(.lightGray, for: .normal)
+//        }
+        
     }
     
     func createEmptyStorageCells() -> [UITableViewCell] {
@@ -381,7 +397,6 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "storageCell") as! StorageCell
                 let item = sortedItems[indexPath.row]
                 cell.setUI(item: item)
-                
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
@@ -394,6 +409,18 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+
+        if let cell = cell as? StorageCell {
+            if let itm = cell.item {
+                if currentlySelectedItems.contains(itm) {
+                    cell.isHighlighted = true
+                    #warning("this isnt working properly, not able to deselect row")
+                }
+            }
+        }
+        
+    }
     
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -404,16 +431,29 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let item = sortedItems[indexPath.row]
+        
+        if currentlySelectedItems.contains(item) {
+            currentlySelectedItems.removeAll(where: {$0 == item})
+        } else {
+            currentlySelectedItems.append(item)
+        }
         if SharedValues.shared.foodStorageID != nil {
             handlePopUpView()
         }
-        let item = sortedItems[indexPath.row].user
-        print(item)
+        tableView.reloadData()
     }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let item = sortedItems[indexPath.row]
+        if currentlySelectedItems.contains(item) {
+            currentlySelectedItems.removeAll(where: {$0 == item})
+        } else {
+            currentlySelectedItems.append(item)
+        }
         if SharedValues.shared.foodStorageID != nil {
             handlePopUpView()
         }
+        tableView.reloadData()
     }
 }
 

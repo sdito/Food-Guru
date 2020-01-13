@@ -14,8 +14,9 @@ class StorageCell: UITableViewCell {
     @IBOutlet weak var added: UILabel!
     @IBOutlet weak var expires: UILabel!
     @IBOutlet weak var viewForCircle: UIView!
-    
+    var item: Item?
     func setUI(item: Item) {
+        self.item = item
         name.text = item.name
         let pct = item.timeExpires?.getPercentageUntilExpiringFromExpirationDate(timeAdded: item.timeAdded ?? 0) ?? 1
         viewForCircle.layer.sublayers = nil
