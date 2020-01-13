@@ -21,7 +21,6 @@ struct GroceryList {
     var timeIntervalSince1970: TimeInterval?
     var groupID: String?
     var ownID: String?
-    //var categories: [String]?
     var systemCategories: [String] = Category.allCases.map { (ctgry) -> String in
         "\(ctgry)"
     }

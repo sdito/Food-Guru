@@ -13,7 +13,6 @@ class SplashVC: UIViewController {
     var logIn: Bool = false
     
     @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var tabBar: UITabBar!
     
     
     override func viewDidLoad() {

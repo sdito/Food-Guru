@@ -24,7 +24,6 @@ struct Setting {
         case recentlyViewedRecipes
         case storage
         case darkMode
-        case notifications
         case contact
         case licences
         case about
@@ -37,13 +36,12 @@ struct Setting {
         let recentlyViewedRecipes = Setting(name: "Recently viewed recipes", settingName: .recentlyViewedRecipes)
         let storage = Setting(name: "Storage", settingName: .storage)
         let darkMode = Setting(name: "Dark mode", settingName: .darkMode)
-        let notifications = Setting(name: "Notifications", settingName: .notifications)
         let contact = Setting(name: "Contact the developer", settingName: .contact)
         let licences = Setting(name: "Software licences", settingName: .licences)
         let about = Setting(name: "About", settingName: .about)
         let tutorial = Setting(name: "Tutorial", settingName: .tutorial)
         
-        return (["Users & Accounts", "Application", "Settings", "Support & About"], [[account_, group], [tutorial, recentlyViewedRecipes, storage], [darkMode, notifications], [contact, licences, about]])
+        return (["Users & Accounts", "Application", "Settings", "Support & About"], [[account_, group], [tutorial, recentlyViewedRecipes, storage], [darkMode], [contact, licences, about]])
     }
     
     
@@ -62,8 +60,6 @@ extension Setting.SettingName {
             return "Storage"
         case .darkMode:
             return "Dark mode"
-        case .notifications:
-            return "Notifications"
         case .contact:
             return "Contact the developer"
         case .licences:

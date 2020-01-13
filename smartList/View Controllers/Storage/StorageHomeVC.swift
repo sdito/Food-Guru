@@ -404,11 +404,16 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        handlePopUpView()
-        
+        if SharedValues.shared.foodStorageID != nil {
+            handlePopUpView()
+        }
+        let item = sortedItems[indexPath.row].user
+        print(item)
     }
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        handlePopUpView()
+        if SharedValues.shared.foodStorageID != nil {
+            handlePopUpView()
+        }
     }
 }
 

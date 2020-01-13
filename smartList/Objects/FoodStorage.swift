@@ -28,9 +28,14 @@ struct FoodStorage {
     
     static func addItemsFromListintoFoodStorage(sendList: GroceryList, storageID: String, db: Firestore) {
         for item in sendList.items ?? [] {
-            print(item.selected)
             if item.selected == true {
-                item.writeToFirestoreForStorage(db: db, docID: storageID)
+                var newItemWithStorage = item
+                let words = item.name.split{ !$0.isLetter }.map { (sStr) -> String in
+                    String(sStr)
+                }
+                let storageSection = GenericItem.getStorageType(item: newItemWithStorage.systemItem ?? .other, words: words)
+                newItemWithStorage.storageSection = storageSection
+                newItemWithStorage.writeToFirestoreForStorage(db: db, docID: storageID)
             }
         }
     }

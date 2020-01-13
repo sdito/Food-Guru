@@ -37,4 +37,5 @@ extension UISearchBar {
         toolbar.setItems([cancel, space, add], animated: false)
         self.inputAccessoryView = toolbar
     }
+    
 }

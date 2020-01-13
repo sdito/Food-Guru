@@ -134,11 +134,6 @@ class SettingsDetailVC: UIViewController {
             }
  
             
-            
-        case .notifications:
-            return [UITableViewCell()]
-            
-            
         case .licences:
             self.title = "Software licences"
             let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell

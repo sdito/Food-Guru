@@ -1388,7 +1388,7 @@ struct Search {
             } else {
                 return .hamburgerPatties
             }
-        } else if item.contains("icing") {
+        } else if item.contains("icing") || item.contains("frosting") {
             return .icing
         } else if item.contains("crackers") {
             return .cracker

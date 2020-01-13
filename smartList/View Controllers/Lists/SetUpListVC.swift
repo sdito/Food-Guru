@@ -238,9 +238,11 @@ class SetUpListVC: UIViewController {
         textField.textColor = Colors.main
         textField.delegate = self
         textField.text = text
-//        stackView.insertArrangedSubview(textField, at: 1)
         stackView.addArrangedSubview(textField)
         textField.isUserInteractionEnabled = userInteraction
+        if stackView == peopleStackView {
+            textField.placeholder = "Enter user's email"
+        }
         textField.setUpListToolbar(action: #selector(handleTextFieldForPlus), arrowAction: #selector(handleTextFieldForArrow))
     }
     
@@ -257,6 +259,9 @@ class SetUpListVC: UIViewController {
         textField.setUpListToolbar(action: #selector(handleTextFieldForPlus), arrowAction: #selector(handleTextFieldForArrow))
         
         if let stackView = (currentTextField.superview as? UIStackView), currentTextField != nameTextField {
+            if stackView == peopleStackView {
+                textField.placeholder = "Enter user's email"
+            }
             if currentTextField == stackView.subviews.last {
                 print(stackView.subviews.count)
                 stackView.insertArrangedSubview(textField, at: stackView.subviews.count)

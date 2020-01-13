@@ -26,26 +26,6 @@ class CookbookVC: UIViewController {
         }
     }
     
-//    private var currentSearches: [(String, SearchType)] = [] {
-//        didSet {
-//            print("Current searches set: \(self.currentSearches)")
-//            filteredRecipes = recipes.filterRecipes(from: self.currentSearches.map({$0.0}))
-//            if self.view.subviews.contains(currentSearchesView) {
-//                print("Already contains")
-//                currentSearchesView.setUI(searches: self.currentSearches)
-//            } else {
-//                // add the view
-//                wholeStackView.insertArrangedSubview(currentSearchesView, at: 1)
-//                currentSearchesView.setUI(searches: self.currentSearches)
-//            }
-//
-//            if self.currentSearches.isEmpty {
-//                searchBar.placeholder = "Filter recipes"
-//            } else {
-//                searchBar.placeholder = "Add another search"
-//            }
-//        }
-//    }
     
     @IBOutlet weak var wholeStackView: UIStackView!
     
@@ -105,12 +85,12 @@ class CookbookVC: UIViewController {
     
     @IBAction func allRecipes(_ sender: Any) {
         tabBarController?.selectedIndex = 0
-//        self.dismiss(animated: false, completion: nil)
         
     }
     @objc private func cancelSelector() {
-//        searchBar.text = ""
         searchBar.endEditing(true)
+        searchBar.text = ""
+        filteredRecipes = recipes
     }
     @objc private func addSelector() {
         search()
