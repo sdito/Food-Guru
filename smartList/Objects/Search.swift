@@ -770,6 +770,8 @@ struct Search {
                 return .broth
             } else if item.contains("corned") {
                 return .cornedBeef
+            } else if item.contains("jerky") {
+                return .beefJerky
             } else {
                 return .beef
             }
@@ -866,6 +868,8 @@ struct Search {
                 return .groundTurkey
             } else if item.contains("stock") || item.contains("broth") {
                 return .broth
+            } else if item.contains("jerky") {
+                return .turkeyJerky
             } else if item.contains("liver") {
                 return .other
             } else {
@@ -1390,8 +1394,12 @@ struct Search {
             }
         } else if item.contains("icing") || item.contains("frosting") {
             return .icing
-        } else if item.contains("crackers") {
-            return .cracker
+        } else if item.contains("crackers") || item.contains("cracker") {
+            if item.contains("graham") {
+                return .grahamCracker
+            } else {
+                return .cracker
+            }
         } else if item.contains("fennel") {
             return .fennelSeeds
         } else if item.contains("half") && item.count > 1 {
@@ -1450,6 +1458,8 @@ struct Search {
             return .clam
         } else if item.contains("water") && (item.count == 1) {
             return .water
+        } else if item.contains("sparkling") && item.contains("water") {
+            return .sparklingWater
         } else if item.contains("buttermilk") {
             return .buttermilk
         } else if item.contains("vegetable") && item.contains("broth") {
@@ -1468,6 +1478,10 @@ struct Search {
             return .montereyJackCheese
         } else if item.contains("cornmeal") {
             return .cornmeal
+        } else if item.contains("saltines") || item.contains("saltine") {
+            return .saltines
+        } else if item.contains("oreo") || item.contains("oreos") {
+            return .oreoCookies
         }
         
         

@@ -43,6 +43,7 @@ enum GenericItem: String, CaseIterable {
     case bayLeaf
     case bbqSauce
     case beef
+    case beefJerky
     case beer
     case bellPepper
     case bison
@@ -127,6 +128,7 @@ enum GenericItem: String, CaseIterable {
     case ginger
     case gingerRoot
     case goatCheese
+    case grahamCracker
     case granola
     case granolaBars
     case grapefruit
@@ -194,6 +196,7 @@ enum GenericItem: String, CaseIterable {
     case onionPowder
     case orange
     case oregano
+    case oreoCookies
     case oyster
     case oysterSauce
     case paprika
@@ -245,6 +248,7 @@ enum GenericItem: String, CaseIterable {
     case salmon
     case salsa
     case salt
+    case saltines
     case sardine
     case sausage
     case scallops
@@ -259,6 +263,7 @@ enum GenericItem: String, CaseIterable {
     case sourCream
     case soyMilk
     case soySauce
+    case sparklingWater
     case spinach
     case squash
     case steakSauce
@@ -286,6 +291,7 @@ enum GenericItem: String, CaseIterable {
     case trout
     case tuna
     case turkey
+    case turkeyJerky
     case turmeric
     case vanilla
     case vegetableOil
@@ -892,6 +898,18 @@ enum GenericItem: String, CaseIterable {
             return "Cornmeal"
         case .powderedSugar:
             return "Powdered sugar"
+        case .beefJerky:
+            return "Beef jerky"
+        case .turkeyJerky:
+            return "Turkey jerky"
+        case .grahamCracker:
+            return "Graham crackers"
+        case .oreoCookies:
+            return "Oreo cookies"
+        case .saltines:
+            return "Saltines"
+        case .sparklingWater:
+            return "Sparkling water"
         }
     }
     
@@ -1491,6 +1509,18 @@ enum GenericItem: String, CaseIterable {
                 return .pantry
             case .other:
                 return .unsorted
+            case .beefJerky:
+                return .pantry
+            case .turkeyJerky:
+                return .pantry
+            case .grahamCracker:
+                return .pantry
+            case .oreoCookies:
+                return .pantry
+            case .saltines:
+                return .pantry
+            case .sparklingWater:
+                return .pantry
             }
         }
         
@@ -2114,9 +2144,69 @@ enum GenericItem: String, CaseIterable {
             return .cookingBakingSpices
         case .powderedSugar:
             return .cookingBakingSpices
+        case .beefJerky:
+            return .snacks
+        case .turkeyJerky:
+            return .snacks
+        case .grahamCracker:
+            return .snacks
+        case .oreoCookies:
+            return .snacks
+        case .saltines:
+            return .snacks
+        case .sparklingWater:
+            return .beverages
         }
     }
     
     
+//    #error("need to finish this")
+    static func getSuggestedExpirationDate(item: GenericItem, storageType: FoodStorageType) -> Int {
+        let day = 86_400
+        let week = 604_800
+        let month = 2_592_000
+        let year = 31_536_000
+        
+        switch item {
+        case .chicken:
+            switch storageType {
+            case .unsorted:
+                return day*3
+            case .fridge:
+                return day*3
+            case .freezer:
+                return month*9
+            case .pantry:
+                return year*2
+            }
+        case .milk:
+            switch storageType {
+            case .unsorted:
+                return day*7
+            case .fridge:
+                return day*7
+            case .freezer:
+                return month*6
+            case .pantry:
+                return year + (month*6)
+            }
+        case .egg:
+            switch storageType {
+            case .unsorted:
+                return week*5
+            case .fridge:
+                return week*5
+            case .freezer:
+                return year
+            case .pantry:
+                return week*5
+            }
+        
+            
+        default:
+            return 0
+        }
+        
+    }
     
 }

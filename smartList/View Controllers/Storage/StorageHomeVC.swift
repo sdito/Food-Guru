@@ -240,6 +240,7 @@ class StorageHomeVC: UIViewController {
     @IBAction func addExpirationDateCells(_ sender: Any) {
         if pickerPopUpView.isHidden {
             pickerPopUpView.setIsHidden(false, animated: true)
+            #warning("could set the suggested expiration date here")
             expirationDateOutlet.setTitleColor(Colors.main, for: .normal)
         } else {
             pickerPopUpView.setIsHidden(true, animated: true)
@@ -320,9 +321,6 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     private func handlePopUpView() {
         print(currentlySelectedItems.map({$0.name}))
         
-        for _ in 1...10 {
-            print(currentlySelectedItems.count)
-        }
         if currentlySelectedItems.count > 0 {
             popUpView.setIsHidden(false, animated: true)
         } else {
@@ -341,7 +339,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         
     }
     
-    func createEmptyStorageCells() -> [UITableViewCell] {
+    private func createEmptyStorageCells() -> [UITableViewCell] {
         var createGroup: Bool?
         let one = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
         var oneText: String {
@@ -368,6 +366,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
             let three = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
             three.setUI(title: "Create a group")
             three.button.addTarget(self, action: #selector(createGroupSelector), for: .touchUpInside)
+            
             
             
             return [one, three, four]
@@ -409,13 +408,28 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let item = sortedItems[indexPath.row]
+            item.deleteItemFromStorage(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
+            
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if SharedValues.shared.foodStorageID != nil && !items.isEmpty {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 
         if let cell = cell as? StorageCell {
             if let itm = cell.item {
                 if currentlySelectedItems.contains(itm) {
                     cell.isHighlighted = true
-                    #warning("this isnt working properly, not able to deselect row")
                 }
             }
         }
@@ -501,6 +515,7 @@ extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationController
                                     self.createMessageView(color: Colors.messageGreen, text: "Added: \(name)")
 //                                    #error("need to add the item to the storage here")
                                     var item = Item.createItemFrom(text: name)
+                                    #warning("could set the suggested expiration date here")
                                     item.store = ""
                                     item.writeToFirestoreForStorage(db: self.db, docID: SharedValues.shared.foodStorageID ?? " ")
                                 } else {

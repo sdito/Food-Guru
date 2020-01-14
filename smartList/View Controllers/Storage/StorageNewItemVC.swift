@@ -120,6 +120,9 @@ extension StorageNewItemVC: CreateNewItemDelegate {
         print("Item to add to storage: \(item.name)")
         nameTextField.text = item.name
         textAssistantViewActive = false
+        #warning("could set the suggested expiration date here")
+        print("could set the suggested expiration date here")
+        
     }
 }
 

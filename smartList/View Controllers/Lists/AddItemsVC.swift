@@ -212,7 +212,7 @@ class AddItemsVC: UIViewController {
                 let alert = UIAlertController(title: "Error - can't add items to storage", message: "In order to have a shared storage where multiple people can view the items, first create a group.", preferredStyle: .actionSheet)
                 alert.addAction(.init(title: "Create group", style: .default, handler: {(alert: UIAlertAction!) in self.pushToCreateGroupVC()}))
                 alert.addAction(.init(title: "Create own storage without group", style: .default, handler: {(alert: UIAlertAction!) in FoodStorage.createStorageToFirestoreWithPeople(db: self.db, foodStorage: userFS)}))
-                alert.addAction(.init(title: "Back", style: .default, handler: nil))
+                alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
                 
                 
                 if UIDevice.current.userInterfaceIdiom == .phone {
@@ -231,7 +231,7 @@ class AddItemsVC: UIViewController {
                 let alert = UIAlertController(title: "Error - can't add items to storage", message: "Create a storage to be able to view the current food items you have in stock.", preferredStyle: .actionSheet)
                 alert.addAction(.init(title: "Create storage with group (recommended)", style: .default, handler: {(alert: UIAlertAction!) in FoodStorage.createStorageToFirestoreWithPeople(db: self.db, foodStorage: groupFS)}))
                 alert.addAction(.init(title: "Create own storage without group", style: .default, handler: {(alert: UIAlertAction!) in FoodStorage.createStorageToFirestoreWithPeople(db: self.db, foodStorage: userFS)}))
-                alert.addAction(.init(title: "Back", style: .default, handler: nil))
+                alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
                 
                 if UIDevice.current.userInterfaceIdiom == .phone {
                     present(alert, animated: true)
