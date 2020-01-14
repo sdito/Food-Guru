@@ -112,6 +112,7 @@ enum GenericItem: String, CaseIterable {
     case dijonMustard
     case dillWeed
     case driedBasil
+    case driedMango
     case driedParsley
     case duck
     case egg
@@ -188,6 +189,7 @@ enum GenericItem: String, CaseIterable {
     case mustard
     case nectarine
     case nutmeg
+    case nutella
     case oatmeal
     case oats
     case oil
@@ -331,7 +333,7 @@ enum GenericItem: String, CaseIterable {
         case .appleJuice:
             return "Apple juice"
         case .appleSauce:
-            return "Apple sauce"
+            return "Applesauce"
         case .apricot:
             return "Apricots"
         case .arborioRice:
@@ -910,6 +912,10 @@ enum GenericItem: String, CaseIterable {
             return "Saltines"
         case .sparklingWater:
             return "Sparkling water"
+        case .driedMango:
+            return "Dried mango"
+        case .nutella:
+            return "Nutella"
         }
     }
     
@@ -1520,6 +1526,10 @@ enum GenericItem: String, CaseIterable {
             case .saltines:
                 return .pantry
             case .sparklingWater:
+                return .pantry
+            case .driedMango:
+                return .pantry
+            case .nutella:
                 return .pantry
             }
         }
@@ -2156,6 +2166,10 @@ enum GenericItem: String, CaseIterable {
             return .snacks
         case .sparklingWater:
             return .beverages
+        case .driedMango:
+            return .snacks
+        case .nutella:
+            return .snacks
         }
     }
     
@@ -2166,8 +2180,266 @@ enum GenericItem: String, CaseIterable {
         let week = 604_800
         let month = 2_592_000
         let year = 31_536_000
-        
         switch item {
+        case .alfredoSauce:
+            return week
+        case .almond:
+            return year + (month*3)
+        case .almondButter:
+            return month*3
+        case .almondExtract:
+            return year + (month*3)
+        case .almondMilk:
+            return day*10
+        case .americanCheese:
+            return week*3
+        case .anchovy:
+            if storageType == .fridge {
+                return month*2
+            } else {
+                return year
+            }
+        case .apple:
+            switch storageType {
+            case .fridge:
+                return month*2
+            case .freezer:
+                return month*11
+            default:
+                return week*2
+            }
+        case .appleButter:
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return month
+            }
+        case .appleCiderVinegar:
+            return year*2
+        case .appleJuice:
+            return month*9
+        case .appleSauce:
+            if storageType == .fridge {
+                return week*2
+            } else if storageType == .freezer {
+                return month*2
+            } else {
+                return month
+            }
+        case .apricot:
+            if storageType == .freezer {
+                return month*11
+            } else {
+                return day*5
+            }
+        case .arborioRice:
+            return year*3
+        case .artichoke:
+            if storageType == .freezer {
+                return month*10
+            } else {
+                return week
+            }
+        case .artichokeHeart:
+            if storageType == .freezer {
+                return month*2
+            } else {
+                return day*4
+            }
+        case .asiagoCheese:
+            if storageType == .freezer {
+                return year
+            } else {
+                return week*6
+            }
+        case .asparagus:
+            if storageType == .freezer {
+                return month*11
+            } else {
+                return day*4
+            }
+        case .avocado:
+            return day*5
+        case .avocadoOil:
+            return month*20
+        case .babySpinach:
+            if storageType == .freezer {
+                return year
+            } else {
+                return week
+            }
+        case .bacon:
+            if storageType == .freezer {
+                return month*8
+            } else {
+                return week*2
+            }
+        case .bagel:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return day*6
+            }
+        case .bakedBeans:
+            return year*4
+        case .bakingPowder:
+            return month*9
+        case .bakingSoda:
+            return year*2
+        case .balsamicVinegar:
+            return year*3
+        case .banana:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return week
+            }
+        case .barley:
+            return year
+        case .basil:
+            if storageType == .fridge {
+                return day*4
+            } else {
+                return (year*2) + (month*6)
+            }
+        case .bayLeaf:
+            return year*3
+        case .bbqSauce:
+            return month*9
+        case .beef:
+            if storageType == .freezer {
+                return month*9
+            } else {
+                return day*6
+            }
+        case .beefJerky:
+            return year*2
+        case .beer:
+            return month*9
+        case .bellPepper:
+            return week*2
+        case .bison:
+            if storageType == .freezer {
+                return month*9
+            } else {
+                return day*6
+            }
+        case .blackBeans:
+            return year*3
+        case .blackberry:
+            if storageType == .freezer {
+                return month*11
+            } else {
+                return day*5
+            }
+        case .blackOlive:
+            return year*2
+        case .blackPepper:
+            return year*4
+        case .bleuCheese:
+            return week*4
+        case .blueberries:
+            if storageType == .freezer {
+                return year
+            } else {
+                return week*2
+            }
+        case .bread:
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return week
+            }
+        case .breadCrumbs:
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return week
+            }
+        case .breadFlour:
+            return month*8
+        case .breakfastSausage:
+            if storageType == .freezer {
+                return month*2
+            } else {
+                return day*5
+            }
+        case .broccoli:
+            if storageType == .freezer {
+                return month*8
+            } else {
+                return week*2
+            }
+        case .broth:
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return day*5
+            }
+        case .brownSugar:
+            return year*2
+        case .brusselsSprouts:
+            if storageType == .freezer {
+                return month*16
+            } else if storageType == .pantry {
+                return day*5
+            } else {
+                return week*4
+            }
+        case .butter:
+            return month*9
+        case .buttermilk:
+            return week*2
+        case .cabbage:
+            return month*2
+        case .cannedTomato:
+            return year*2
+        case .cannelliniBeans:
+            return year*2
+        case .canolaOil:
+            return year*2
+        case .capers:
+            return year*1
+        case .carrot:
+            if storageType == .freezer {
+                return month*11
+            } else {
+                return week*5
+            }
+        case .catfish:
+            if storageType == .freezer {
+                return month*8
+            } else {
+                return day*3
+            }
+        case .cashew:
+            return month*6
+        case .cashewButter:
+            return month*6
+        case .cauliflower:
+            if storageType == .freezer {
+                return month*8
+            } else {
+                return week*3
+            }
+        case .cayenne:
+            return year*3
+        case .celery:
+            if storageType == .freezer {
+                return month*18
+            } else {
+                return week*2
+            }
+        case .cereal:
+            return month*7
+        case .champagne:
+            return year
+        case .cheddar:
+            return week*6
+        case .cheese:
+            return week*6
+        case .cherries:
+            return day*5
         case .chicken:
             switch storageType {
             case .unsorted:
@@ -2179,6 +2451,330 @@ enum GenericItem: String, CaseIterable {
             case .pantry:
                 return year*2
             }
+        case .chili:
+            return year*2
+        case .chiliPowder:
+            return year*3
+        case .chips:
+            return month*3
+        case .chives:
+            return week*2
+        case .chocolate:
+            return year*2
+        case .cilantro:
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return day*10
+            }
+        case .cinnamon:
+            return year*3
+        case .clam:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return day*3
+            }
+        case .coconutMilk:
+            return day*10
+        case .cod:
+            if storageType == .freezer {
+                return month*8
+            } else {
+                return day*3
+            }
+        case .coffee:
+            return month*5
+        case .corn:
+            if storageType == .pantry {
+                return year*3
+            } else if storageType == .pantry {
+                return year*2
+            } else {
+                return day*5
+            }
+        case .cornedBeef:
+            return day*4
+        case .cornmeal:
+            return year
+        case .cornstarch:
+            return year*4
+        case .cottageCheese:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return day*3
+            }
+        case .crab:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return day*5
+            }
+        case .cracker:
+            return month*9
+        case .cranberry:
+            if storageType == .freezer {
+                return month*11
+            } else {
+                return week*4
+            }
+        case .cranberrySauce:
+            return month*2
+        case .cream:
+            return day*10
+        case .creamCheese:
+            return week*2
+        case .creamOfChickenSoup:
+            return year*4
+        case .creamOfMushroomSoup:
+            return year*4
+        case .cucumber:
+            return week*1
+        case .cumin:
+            return year*3
+        case .curryPowder:
+            return year*3
+        case .dip:
+            return week*2
+        case .dijonMustard:
+            return month*15
+        case .dillWeed:
+            return year*2
+        case .driedBasil:
+            return year*3
+        case .driedMango:
+            return year
+        case .driedParsley:
+            return year*3
+        case .duck:
+            if storageType == .freezer {
+                return year*2
+            } else {
+                return week*2
+            }
+        case .egg:
+            return week*5
+        case .eggNoodles:
+            return year*2
+        case .eggplant:
+            return day*10
+        case .favaBeans:
+            return year*2
+        case .fennelSeeds:
+            return year*3
+        case .feta:
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return week*6
+            }
+        case .flounder:
+            if storageType == .freezer {
+                return month*8
+            } else {
+                return day*3
+            }
+        case .flour:
+            return month*8
+        case .garlic:
+            return month*5
+        case .garlicPowder:
+            return year*3
+        case .gin:
+            return year
+        case .ginger:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return week*4
+            }
+        case .gingerRoot:
+            return month
+        case .goatCheese:
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return week*2
+            }
+        case .grahamCracker:
+            return month*9
+        case .granola:
+            return month*6
+        case .granolaBars:
+            return month*8
+        case .grapefruit:
+            return week*6
+        case .grape:
+            if storageType == .freezer {
+                return month*11
+            } else {
+                return week*2
+            }
+        case .greekYogurt:
+            if storageType == .freezer {
+                return month*1
+            } else {
+                return week*3
+            }
+        case .greenBeans:
+            if storageType == .freezer {
+                return month*18
+            } else {
+                return day*5
+            }
+        case .greenOlive:
+            return year*3
+        case .greenOnion:
+            if storageType == .freezer {
+                return month*10
+            } else {
+                return day*10
+            }
+        case .groundBeef:
+            if storageType == .freezer {
+                return month*4
+            } else {
+                return day*3
+            }
+        case .groundTurkey:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return day*4
+            }
+        case .gruyere:
+            return month
+        case .guava:
+            return week
+        case .haddock:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return day*4
+            }
+        case .halfAndHalf:
+            return week
+        case .halibut:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return day*4
+            }
+        case .ham:
+            if storageType == .freezer {
+                return month*4
+            } else {
+                return day*4
+            }
+        case .hamburgerBuns:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return day*7
+            }
+        case .hamburgerPatties:
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return week
+            }
+        case .heavyCream:
+            return day*8
+        case .honey:
+            return year*5
+        case .hotDogs:
+            if storageType == .freezer {
+                return month*2
+            } else {
+                return week
+            }
+        case .hotDogBuns:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return day*7
+            }
+        case .hotSauce:
+            return year*3
+        case .hummus:
+            return week
+        case .iceCream:
+            return month*3
+        case .icing:
+            return month*15
+        case .italianSeasoning:
+            return year*3
+        case .jalapeno:
+            return week*2
+        case .jelly:
+            return year
+        case .juice:
+            return month*3
+        case .kale:
+            if storageType == .freezer {
+                return year
+            } else {
+                return day*6
+            }
+        case .ketchup:
+            return month*18
+        case .kidneyBeans:
+            return month
+        case .kiwi:
+            return week*4
+        case .lamb:
+            if storageType == .freezer {
+                return month*9
+            } else {
+                return day*5
+            }
+        case .lasagnaNoodles:
+            return year*2
+        case .lemon:
+            return week*3
+        case .lemonJuice:
+            return month*18
+        case .lentil:
+            return year*3
+        case .lettuce:
+            return day*10
+        case .limaBeans:
+            return year
+        case .lime:
+            return week*2
+        case .limeJuice:
+            return month*18
+        case .lobster:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return day*4
+            }
+        case .macAndCheese:
+            return year*2
+        case .mahiMahi:
+            if storageType == .freezer {
+                return month*11
+            } else {
+                return day*5
+            }
+        case .mango:
+            if storageType == .freezer {
+                return year
+            } else if storageType == .fridge {
+                return week
+            } else {
+                return day*5
+            }
+        case .margarine:
+            return month*5
+        case .marinara:
+            return month*10
+        case .melon:
+            return week*2
+        case .mayonnaise:
+            return year
         case .milk:
             switch storageType {
             case .unsorted:
@@ -2190,23 +2786,377 @@ enum GenericItem: String, CaseIterable {
             case .pantry:
                 return year + (month*6)
             }
-        case .egg:
-            switch storageType {
-            case .unsorted:
-                return week*5
-            case .fridge:
-                return week*5
-            case .freezer:
-                return year
-            case .pantry:
+        case .montereyJackCheese:
+            if storageType == .freezer {
+                return month*6
+            } else {
                 return week*5
             }
-        
-            
-        default:
+        case .mozzarella:
+            if storageType == .freezer {
+                return month*5
+            } else {
+                return week*2
+            }
+        case .mushroom:
+            if storageType == .freezer {
+                return month*11
+            } else {
+                return day*6
+            }
+        case .mussels:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return day*2
+            }
+        case .mustard:
+            return month*18
+        case .nectarine:
+            return day*5
+        case .nutmeg:
+            return year*4
+        case .nutella:
+            return month*2
+        case .oatmeal:
+            return month*20
+        case .oats:
+            return month*18
+        case .oil:
+            return year*2
+        case .oliveOil:
+            return year*2
+        case .onion:
+            return month*2
+        case .onionPowder:
+            return year*4
+        case .orange:
+            return week*3
+        case .oregano:
+            return year*1
+        case .oreoCookies:
+            return week*3
+        case .oyster:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return day*3
+            }
+        case .oysterSauce:
+            return month*6
+        case .paprika:
+            return year*2
+        case .parmesan:
+            return month*9
+        case .parsley:
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return day*10
+            }
+        case .pasta:
+            return year*2
+        case .pastrami:
+            if storageType == .freezer {
+                return month*2
+            } else {
+                return day*5
+            }
+        case .peach:
+            return day*5
+        case .peanutButter:
+            return month*4
+        case .peanut:
+            return month*2
+        case .peanutOil:
+            return month*6
+        case .pear:
+            if storageType == .freezer {
+                return year
+            } else if storageType == .fridge {
+                return week
+            } else {
+                return day*4
+            }
+        case .peas:
+            if storageType == .freezer {
+                return year*1
+            } else {
+                return day*5
+            }
+        case .pecan:
+            if storageType == .freezer {
+                return year*2
+            } else if storageType == .fridge {
+                return month*9
+            } else {
+                return week*2
+            }
+        case .pepper:
+            return month*5
+        case .pepperoni:
+            return week*3
+        case .pestoSauce:
+            if storageType == .freezer {
+                return year
+            } else {
+                return month
+            }
+        case .pickle:
+            return month*14
+        case .pineapple:
+            if storageType == .freezer {
+                return year
+            } else if storageType == .fridge {
+                return day*5
+            } else {
+                return day*2
+            }
+        case .pintoBeans:
+            return year*2
+        case .pitaBread:
+            if storageType == .freezer {
+                return month*13
+            } else {
+                return week
+            }
+        case .pizza:
+            return month*18
+        case .plum:
+            if storageType == .freezer {
+                return year
+            } else if storageType == .fridge {
+                return day*5
+            } else {
+                return day*3
+            }
+        case .pomegranate:
+            return month*2
+        case .popcorn:
+            return year
+        case .poppySeed:
+            return month
+        case .pork:
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return day*6
+            }
+        case .portobelloMushroom:
+            return week
+        case .potRoast:
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return day*6
+            }
+        case .potato:
+            if storageType == .fridge {
+                return month*4
+            } else {
+                return week*5
+            }
+        case .powderedSugar:
+            return year*2
+        case .provolone:
+            return week*3
+        case .quinoa:
+            return month*18
+        case .raisin:
+            return month*6
+        case .ranch:
+            return month*9
+        case .raspberry:
+            if storageType == .freezer {
+                return year
+            } else {
+                return day*4
+            }
+        case .ravioli:
+            if storageType == .freezer {
+                return month*2
+            } else {
+                return day*5
+            }
+        case .redPepper:
+            return year*3
+        case .redWine:
+            return year
+        case .relish:
+            return year
+        case .rice:
+            return year*5
+        case .ricotta:
+            return week*2
+        case .romanoCheese:
+            return month*8
+        case .rosemary:
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return week*2
+            }
+        case .rum:
+            return year
+        case .sage:
+            return year
+        case .saladDressing:
+            return month*4
+        case .salami:
+            return day*8
+        case .salmon:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return day*2
+            }
+        case .salsa:
+            return week*2
+        case .salt:
+            return year*5
+        case .saltines:
+            return month*4
+        case .sardine:
+            return year*5
+        case .sausage:
+            if storageType == .freezer {
+                return month*2
+            } else {
+                return day*5
+            }
+        case .scallops:
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return day*2
+            }
+        case .sesame:
+            return month*6
+        case .sesameOil:
+            return month*7
+        case .shallot:
+            if storageType == .freezer {
+                return year
+            } else {
+                return month
+            }
+        case .sherry:
+            return year
+        case .shrimp:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return day*4
+            }
+        case .snapper:
+            if storageType == .freezer {
+                return month*8
+            } else {
+                return day*2
+            }
+        case .soda:
+            return year
+        case .sole:
+            <#code#>
+        case .sourCream:
+            <#code#>
+        case .soyMilk:
+            <#code#>
+        case .soySauce:
+            <#code#>
+        case .sparklingWater:
+            return year*4
+        case .spinach:
+            <#code#>
+        case .squash:
+            <#code#>
+        case .steakSauce:
+            <#code#>
+        case .strawberry:
+            <#code#>
+        case .sugar:
+            <#code#>
+        case .sunDriedTomato:
+            <#code#>
+        case .sunflowerButter:
+            <#code#>
+        case .sunflowerSeeds:
+            <#code#>
+        case .sweetPotato:
+            <#code#>
+        case .swiss:
+            <#code#>
+        case .swordfish:
+            <#code#>
+        case .syrup:
+            <#code#>
+        case .taterTots:
+            <#code#>
+        case .tartarSauce:
+            <#code#>
+        case .tea:
+            <#code#>
+        case .teriyakiSauce:
+            <#code#>
+        case .thyme:
+            <#code#>
+        case .tilapia:
+            <#code#>
+        case .tofu:
+            <#code#>
+        case .tomato:
+            <#code#>
+        case .tomatoPaste:
+            <#code#>
+        case .tomatoSauce:
+            <#code#>
+        case .tortellini:
+            <#code#>
+        case .tortilla:
+            <#code#>
+        case .trout:
+            <#code#>
+        case .tuna:
+            <#code#>
+        case .turkey:
+            <#code#>
+        case .turkeyJerky:
+            <#code#>
+        case .turmeric:
+            <#code#>
+        case .vanilla:
+            <#code#>
+        case .vegetableOil:
+            <#code#>
+        case .venison:
+            <#code#>
+        case .vinegar:
+            <#code#>
+        case .vodka:
+            <#code#>
+        case .walnuts:
+            <#code#>
+        case .water:
+            <#code#>
+        case .watermelon:
+            <#code#>
+        case .whippedCream:
+            <#code#>
+        case .whiskey:
+            <#code#>
+        case .whiteWine:
+            <#code#>
+        case .worcestershireSauce:
+            <#code#>
+        case .yeast:
+            <#code#>
+        case .yogurt:
+            <#code#>
+        case .zucchini:
+            <#code#>
+        case .other:
             return 0
+            
         }
-        
     }
-    
 }

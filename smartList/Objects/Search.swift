@@ -1132,7 +1132,11 @@ struct Search {
         } else if item.contains("guava") {
             return .guava
         } else if item.contains("mango") || item.contains("mangoes") || item.contains("mangos") {
-            return .mango
+            if item.contains("dried") {
+                return .driedMango
+            } else {
+                return .mango
+            }
         } else if item.contains("melon") {
             return .melon
         } else if item.contains("pineapple") {
@@ -1482,10 +1486,11 @@ struct Search {
             return .saltines
         } else if item.contains("oreo") || item.contains("oreos") {
             return .oreoCookies
-        }
-        
-        
-        else {
+        } else if item.contains("applesauce") {
+            return .appleSauce
+        } else if item.contains("nutella") {
+            return .nutella
+        } else {
             return .other
         }
         return .other
