@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import FirebaseStorage
-
+import AVFoundation
 
 extension UIViewController {
     
@@ -220,6 +220,28 @@ extension UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "futura", size: 20)!]
         
     }
+    
+    #error("make sure this is being used AND NEED TO FINISH IT, make this a button not a label")
+    func createIngredientsDidntShowInSearchView() {
+        let button = UIButton()
+        
+        button.backgroundColor = .systemGreen
+        
+        let text = "Why didnt all the ingredients appear in my search?"
+        let font = UIFont(name: "futura", size: 10)
+        button.setTitle(text, for: .normal)
+        button.titleLabel?.font = font
+        button.titleLabel?.textAlignment = .center
+        let rect = NSString(string: text).boundingRect(with: CGSize(width: CGFloat(MAXFLOAT), height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font!], context: nil)
+        let xValue = (self.view.bounds.width/2.0) - (5.0) - (rect.width/2.0)
+        for _ in 1...10 {
+            print(xValue)
+        }
+        button.frame = CGRect(x: xValue, y: 100, width: rect.width + 10.0, height: rect.height + 4.0)
+        button.border(cornerRadius: 5.0)
+        self.view.addSubview(button)
+    }
+    
     @objc func createMessageView(color: UIColor, text: String) {
         let messageView = UILabel()
         messageView.backgroundColor = color

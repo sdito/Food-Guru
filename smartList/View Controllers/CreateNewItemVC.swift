@@ -42,7 +42,7 @@ class CreateNewItemVC: UITableViewController {
     }
     
     private var searchedItems: [String] = []
-    private lazy var items = GenericItem.all
+    private lazy var items = GenericItem.all + ["Frozen chicken", "Chicken thighs", "Chicken breast", "Chicken strips", "Non-fat milk", "Whole milk", "2% milk", "Skim milk", "Whole chicken", "Rotisserie chicken", "Frozen strawberries", "Frozen blueberries", "Frozen broccoli", "Frozen peas", "Frozen corn", "Frozen vegetables", "Frozen dinner", "Frozen waffles"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +67,7 @@ class CreateNewItemVC: UITableViewController {
         let number = searchText.getAmountForNewItem()
         let text = searchedItems[indexPath.row]
         let words = text.split{ !$0.isLetter }.map { (sStr) -> String in
-            String(sStr)
+            String(sStr.lowercased())
         }
         let systemItem = Search.turnIntoSystemItem(string: text)
         let category = GenericItem.getCategory(item: systemItem, words: words)

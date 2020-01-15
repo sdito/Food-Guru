@@ -208,10 +208,27 @@ class StorageHomeVC: UIViewController {
     
     
     @IBAction func findRecipes(_ sender: Any) {
-        print("find recipes with selected ingredients")
-        //let genericItems = sortedItems.filter{(indexes?.contains(sortedItems.firstIndex(of: $0)!) ?? false)}.map({$0.systemItem!.rawValue})
-        // type [String)
-        let genericItems = currentlySelectedItems.map({$0.systemItem!.rawValue})
+        
+        let genericItemsFirst = currentlySelectedItems.map({$0.systemItem!.rawValue})
+        
+        // new addition, need to handle errors associated with
+        let genericItems = genericItemsFirst.filter({$0 != "other"})
+        
+//        #error("have a message or something saying why some certain items may not appear, and if there are no items enabled for searching, then have an alert, if there was only one item, then would be find to continue with search for recipe puppy searches")
+        if genericItems.count == 0 {
+            let alert = UIAlertController(title: "Unable to find recipes with selected items", message: "These items do not match any records in the application, these items may be added in the future!", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+        }
+        
+//        else if genericItems.count != genericItemsFirst.count {
+//            print("Some items were deleted, have a little message or something")
+//            self.tabBarController?.createMessageView(color: .systemRed, text: "Why don't all items appear in search?")
+//        }
+        
+        
+        
+        
         Search.getRecipesFromIngredients(db: db, ingredients: genericItems) { (rcps) in
             if let rcps = rcps {
                 SharedValues.shared.sentRecipesInfo = (rcps, genericItems)
@@ -221,6 +238,13 @@ class StorageHomeVC: UIViewController {
                 self.tabBarController?.selectedIndex = 1
                 (self.tabBarController?.viewControllers?[self.tabBarController!.selectedIndex] as? UITabBarController)?.selectedIndex = 0
                 ((self.tabBarController?.viewControllers?[self.tabBarController!.selectedIndex] as? UITabBarController)?.viewControllers?[0] as? UINavigationController)?.popToRootViewController(animated: true)
+                
+                
+                #warning("make sure this is implemented properly")
+                if genericItems.count != genericItemsFirst.count {
+                    print("Some items were deleted, have a little message or something")
+                    self.tabBarController?.createIngredientsDidntShowInSearchView()
+                }
                 
             }
         }
@@ -240,7 +264,18 @@ class StorageHomeVC: UIViewController {
     @IBAction func addExpirationDateCells(_ sender: Any) {
         if pickerPopUpView.isHidden {
             pickerPopUpView.setIsHidden(false, animated: true)
-            #warning("could set the suggested expiration date here")
+            #warning("could set the suggested expiration date here, ONLY if one item is currently selected: MAKE SURE THIS IS WORKING")
+            if currentlySelectedItems.count == 1 {
+                let item = currentlySelectedItems.first!
+                if let genericItem = item.systemItem {
+                    if genericItem != .other {
+                        let additionalTime = GenericItem.getSuggestedExpirationDate(item: genericItem, storageType: item.storageSection ?? .unsorted)
+                        let date = Date(timeIntervalSince1970: Date().timeIntervalSince1970 + Double(additionalTime))
+                        pickerView.setDate(date, animated: true)
+                    }
+                }
+                
+            }
             expirationDateOutlet.setTitleColor(Colors.main, for: .normal)
         } else {
             pickerPopUpView.setIsHidden(true, animated: true)
@@ -515,7 +550,18 @@ extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationController
                                     self.createMessageView(color: Colors.messageGreen, text: "Added: \(name)")
 //                                    #error("need to add the item to the storage here")
                                     var item = Item.createItemFrom(text: name)
-                                    #warning("could set the suggested expiration date here")
+                                    let words = name.split{ !$0.isLetter }.map { (sStr) -> String in
+                                        String(sStr.lowercased())
+                                    }
+                                    #warning("warning make sure this works, potentially update in future if API supports expiration dates")
+                                    
+                                    if let genericItem = item.systemItem {
+                                        if genericItem != .other {
+                                            item.storageSection = GenericItem.getStorageType(item: genericItem, words: words)
+                                            item.timeExpires = Date().timeIntervalSince1970 + Double(GenericItem.getSuggestedExpirationDate(item: genericItem, storageType: item.storageSection ?? .unsorted))
+                                        }
+                                    }
+                                    
                                     item.store = ""
                                     item.writeToFirestoreForStorage(db: self.db, docID: SharedValues.shared.foodStorageID ?? " ")
                                 } else {
@@ -531,9 +577,7 @@ extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationController
                         
                         
                     }
-                    
                 }
-                
                 task.resume()
             }
         }

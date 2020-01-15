@@ -473,6 +473,7 @@ struct Search {
         var recipes: [Recipe] = []
         let reference = db.collection("recipes")
         
+        
         switch ingredients.count {
         case 0:
             return
@@ -741,6 +742,8 @@ struct Search {
                 return .broth
             } else if item.contains("sausage") {
                 return .sausage
+            } else if item.contains("wings") {
+                return .chickenWings
             } else {
                 return .chicken
             }

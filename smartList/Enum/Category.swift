@@ -46,7 +46,7 @@ enum Category: String, CaseIterable {
         case .deli:
             return "Deli"
         case .frozenFoods:
-            return "Frozen"
+            return "Frozen foods"
         case .grainsPastaSides:
             return "Grains, Pasta, & Sides"
         case .meat:

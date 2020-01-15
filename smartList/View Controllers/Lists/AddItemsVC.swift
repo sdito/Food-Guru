@@ -253,7 +253,7 @@ class AddItemsVC: UIViewController {
     
     private func toAddItem(text: String) {
         let words = text.split{ !$0.isLetter }.map { (sStr) -> String in
-            String(sStr)
+            String(sStr.lowercased())
         }
         let genericItem = Search.turnIntoSystemItem(string: text)
         let category = GenericItem.getCategory(item: genericItem, words: words)

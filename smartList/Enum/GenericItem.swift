@@ -81,6 +81,7 @@ enum GenericItem: String, CaseIterable {
     case cheese
     case cherries
     case chicken
+    case chickenWings
     case chili
     case chiliPowder
     case chips
@@ -916,6 +917,8 @@ enum GenericItem: String, CaseIterable {
             return "Dried mango"
         case .nutella:
             return "Nutella"
+        case .chickenWings:
+            return "Chicken wings"
         }
     }
     
@@ -1531,646 +1534,657 @@ enum GenericItem: String, CaseIterable {
                 return .pantry
             case .nutella:
                 return .pantry
+            case .chickenWings:
+                return .fridge
             }
         }
         
     }
     
     static func getCategory(item: GenericItem, words: [String]) -> Category {
-        switch item {
-        case .alfredoSauce:
-            return .grainsPastaSides
-        case .almond:
-            return .snacks
-        case .almondButter:
-            return .condimentsAndDressings
-        case .anchovy:
-            return .canned
-        case .apple:
-            return .produce
-        case .appleButter:
-            return .condimentsAndDressings
-        case .appleCiderVinegar:
-            return .condimentsAndDressings
-        case .appleJuice:
-            return .beverages
-        case .appleSauce:
-            return .snacks
-        case .apricot:
-            return .produce
-        case .arborioRice:
-            return .grainsPastaSides
-        case .artichoke:
-            return .produce
-        case .artichokeHeart:
-            return .canned
-        case .asiagoCheese:
-            return .dairy
-        case .asparagus:
-            return .produce
-        case .avocado:
-            return .produce
-        case .avocadoOil:
-            return .condimentsAndDressings
-        case .babySpinach:
-            return .produce
-        case .bacon:
-            return .meat
-        case .bagel:
-            return .bakery
-        case .bakedBeans:
-            return .canned
-        case .bakingPowder:
-            return .cookingBakingSpices
-        case .bakingSoda:
-            return .cookingBakingSpices
-        case .balsamicVinegar:
-            return .condimentsAndDressings
-        case .banana:
-            return .produce
-        case .barley:
-            return .grainsPastaSides
-        case .basil:
-            return .produce
-        case .bayLeaf:
-            return .cookingBakingSpices
-        case .bbqSauce:
-            return .condimentsAndDressings
-        case .beef:
-            return .meat
-        case .beer:
-            return .beverages
-        case .bellPepper:
-            return .produce
-        case .blackBeans:
-            return .canned
-        case .blackberry:
-            return .produce
-        case .blackOlive:
-            return .canned
-        case .blackPepper:
-            return .cookingBakingSpices
-        case .bleuCheese:
-            return .dairy
-        case .blueberries:
-            return .produce
-        case .bread:
-            return .bakery
-        case .breadCrumbs:
-            return .cookingBakingSpices
-        case .breakfastSausage:
-            return .breakfast
-        case .broccoli:
-            return .produce
-        case .broth:
-            return .cookingBakingSpices
-        case .brownSugar:
-            return .cookingBakingSpices
-        case .brusselsSprouts:
-            return .produce
-        case .butter:
-            return .dairy
-        case .cabbage:
-            return .produce
-        case .cannedTomato:
-            return .canned
-        case .cannelliniBeans:
-            return .canned
-        case .canolaOil:
-            return .cookingBakingSpices
-        case .capers:
-            return .condimentsAndDressings
-        case .carrot:
-            return .produce
-        case .catfish:
-            return .seafood
-        case .cashew:
-            return .snacks
-        case .cashewButter:
-            return .condimentsAndDressings
-        case .cauliflower:
-            if words.contains("frozen") {
-                return .frozenFoods
-            } else {
-                return .produce
-            }
-        case .cayenne:
-            return .cookingBakingSpices
-        case .celery:
-            return .produce
-        case .cereal:
-            return .breakfast
-        case .champagne:
-            return .beverages
-        case .cheddar:
-            return .dairy
-        case .cheese:
-            return .dairy
-        case .cherries:
-            return .produce
-        case .chicken:
-            return .meat
-        case .chili:
-            return .cookingBakingSpices
-        case .chiliPowder:
-            return .cookingBakingSpices
-        case .chips:
-            return .snacks
-        case .chives:
-            return .produce
-        case .chocolate:
-            return .snacks
-        case .cilantro:
-            return .cookingBakingSpices
-        case .cinnamon:
-            return .cookingBakingSpices
-        case .clam:
-            return .seafood
-        case .coconutMilk:
-            return .canned
-        case .cod:
-            return .seafood
-        case .coffee:
-            return .beverages
-        case .corn:
-            if words.contains("canned") || words.contains("can") {
-                return .canned
-            } else {
-                return .produce
-            }
-        case .cornstarch:
-            return .cookingBakingSpices
-        case .cottageCheese:
-            return .dairy
-        case .crab:
-            return .seafood
-        case .cracker:
-            return .snacks
-        case .cranberry:
-            return .produce
-        case .cranberrySauce:
-            return .condimentsAndDressings
-        case .cream:
-            return .dairy
-        case .creamOfChickenSoup:
-            return .canned
-        case .creamOfMushroomSoup:
-            return .canned
-        case .cucumber:
-            return .produce
-        case .cumin:
-            return .cookingBakingSpices
-        case .curryPowder:
-            return .cookingBakingSpices
-        case .dip:
-            return .condimentsAndDressings
-        case .dijonMustard:
-            return .condimentsAndDressings
-        case .dillWeed:
-            return .cookingBakingSpices
-        case .driedBasil:
-            return .cookingBakingSpices
-        case .driedParsley:
-            return .cookingBakingSpices
-        case .duck:
-            return .meat
-        case .egg:
-            return .dairy
-        case .eggNoodles:
-            return .grainsPastaSides
-        case .eggplant:
-            return .produce
-        case .favaBeans:
-            return .canned
-        case .fennelSeeds:
-            return .cookingBakingSpices
-        case .feta:
-            return .dairy
-        case .flounder:
-            return .seafood
-        case .flour:
-            return .cookingBakingSpices
-        case .garlic:
-            return .cookingBakingSpices
-        case .garlicPowder:
-            return .cookingBakingSpices
-        case .gin:
-            return .beverages
-        case .ginger:
-            return .cookingBakingSpices
-        case .gingerRoot:
-            return .cookingBakingSpices
-        case .goatCheese:
-            return .dairy
-        case .granola:
-            return .snacks
-        case .granolaBars:
-            return .snacks
-        case .grapefruit:
-            return .produce
-        case .grape:
-            return .produce
-        case .greekYogurt:
-            return .dairy
-        case .greenBeans:
-            if words.contains("can") || words.contains("canned") {
-                return .canned
-            } else {
-                return .produce
-            }
-        case .greenOlive:
-            return .canned
-        case .greenOnion:
-            return .produce
-        case .groundBeef:
-            return .meat
-        case .groundTurkey:
-            return .meat
-        case .gruyere:
-            return .dairy
-        case .guava:
-            return .produce
-        case .haddock:
-            return .seafood
-        case .halfAndHalf:
-            return .dairy
-        case .halibut:
-            return .seafood
-        case .ham:
-            return .deli
-        case .heavyCream:
-            return .dairy
-        case .honey:
-            return .condimentsAndDressings
-        case .hotDogs:
-            return .meat
-        case .hotSauce:
-            return .condimentsAndDressings
-        case .hummus:
-            return .condimentsAndDressings
-        case .iceCream:
+        if words.contains("frozen") {
             return .frozenFoods
-        case .icing:
-            return .bakery
-        case .italianSeasoning:
-            return .cookingBakingSpices
-        case .jalapeno:
-            return .produce
-        case .jelly:
-            return .condimentsAndDressings
-        case .juice:
-            return .beverages
-        case .kale:
-            return .produce
-        case .ketchup:
-            return .condimentsAndDressings
-        case .kidneyBeans:
+        } else if words.contains("canned") {
             return .canned
-        case .kiwi:
-            return .produce
-        case .lamb:
-            return .meat
-        case .lasagnaNoodles:
-            return .grainsPastaSides
-        case .lemon:
-            return .produce
-        case .lemonJuice:
-            return .cookingBakingSpices
-        case .lentil:
-            return .grainsPastaSides
-        case .lettuce:
-            return .produce
-        case .limaBeans:
-            return .canned
-        case .lime:
-            return .produce
-        case .limeJuice:
-            return .cookingBakingSpices
-        case .lobster:
-            return .seafood
-        case .macAndCheese:
-            return .grainsPastaSides
-        case .mahiMahi:
-            return .seafood
-        case .mango:
-            return .produce
-        case .margarine:
-            return .cookingBakingSpices
-        case .marinara:
-            return .condimentsAndDressings
-        case .melon:
-            return .produce
-        case .mayonnaise:
-            return .condimentsAndDressings
-        case .milk:
-            return .dairy
-        case .mozzarella:
-            return .dairy
-        case .mushroom:
-            return .produce
-        case .mussels:
-            return .seafood
-        case .mustard:
-            return .condimentsAndDressings
-        case .nectarine:
-            return .produce
-        case .nutmeg:
-            return .cookingBakingSpices
-        case .oatmeal:
-            return .breakfast
-        case .oats:
-            return .grainsPastaSides
-        case .oil:
-            return .cookingBakingSpices
-        case .oliveOil:
-            return .cookingBakingSpices
-        case .onion:
-            return .produce
-        case .onionPowder:
-            return .cookingBakingSpices
-        case .orange:
-            return .produce
-        case .oregano:
-            return .cookingBakingSpices
-        case .oyster:
-            return .seafood
-        case .oysterSauce:
-            return .condimentsAndDressings
-        case .paprika:
-            return .cookingBakingSpices
-        case .parmesan:
-            return .dairy
-        case .parsley:
-            return .cookingBakingSpices
-        case .pasta:
-            return .grainsPastaSides
-        case .peach:
-            return .produce
-        case .peanutButter:
-            return .condimentsAndDressings
-        case .peanut:
-            return .snacks
-        case .peanutOil:
-            return .cookingBakingSpices
-        case .pear:
-            return .produce
-        case .peas:
-            if words.contains("frozen") {
-                return .frozenFoods
-            } else if words.contains("can") || words.contains("canned") {
+        } else {
+            switch item {
+            case .alfredoSauce:
+                return .grainsPastaSides
+            case .almond:
+                return .snacks
+            case .almondButter:
+                return .condimentsAndDressings
+            case .anchovy:
                 return .canned
-            } else {
+            case .apple:
                 return .produce
-            }
-        case .pecan:
-            return .snacks
-        case .pepper:
-            return .cookingBakingSpices
-        case .pestoSauce:
-            return .condimentsAndDressings
-        case .pickle:
-            return .condimentsAndDressings
-        case .pineapple:
-            if words.contains("can") || words.contains("canned") {
+            case .appleButter:
+                return .condimentsAndDressings
+            case .appleCiderVinegar:
+                return .condimentsAndDressings
+            case .appleJuice:
+                return .beverages
+            case .appleSauce:
+                return .snacks
+            case .apricot:
+                return .produce
+            case .arborioRice:
+                return .grainsPastaSides
+            case .artichoke:
+                return .produce
+            case .artichokeHeart:
                 return .canned
-            } else {
+            case .asiagoCheese:
+                return .dairy
+            case .asparagus:
                 return .produce
-            }
-        case .pintoBeans:
-            return .canned
-        case .pitaBread:
-            return .bakery
-        case .pizza:
-            return .frozenFoods
-        case .plum:
-            return .produce
-        case .pomegranate:
-            return .produce
-        case .popcorn:
-            return .snacks
-        case .poppySeed:
-            return .cookingBakingSpices
-        case .pork:
-            return .meat
-        case .portobelloMushroom:
-            return .produce
-        case .potRoast:
-            return .meat
-        case .potato:
-            return .produce
-        case .provolone:
-            return .dairy
-        case .quinoa:
-            return .grainsPastaSides
-        case .raisin:
-            return .snacks
-        case .raspberry:
-            return .produce
-        case .ravioli:
-            return .grainsPastaSides
-        case .redPepper:
-            return .cookingBakingSpices
-        case .redWine:
-            return .beverages
-        case .relish:
-            return .condimentsAndDressings
-        case .rice:
-            return .grainsPastaSides
-        case .ricotta:
-            return .dairy
-        case .romanoCheese:
-            return .dairy
-        case .rosemary:
-            return .cookingBakingSpices
-        case .rum:
-            return .beverages
-        case .sage:
-            return .cookingBakingSpices
-        case .salami:
-            return .deli
-        case .salmon:
-            return .seafood
-        case .salsa:
-            return .condimentsAndDressings
-        case .salt:
-            return .cookingBakingSpices
-        case .sardine:
-            return .canned
-        case .sausage:
-            return .meat
-        case .scallops:
-            return .seafood
-        case .sesame:
-            return .cookingBakingSpices
-        case .sesameOil:
-            return .cookingBakingSpices
-        case .shallot:
-            return .produce
-        case .sherry:
-            return .beverages
-        case .shrimp:
-            return .seafood
-        case .snapper:
-            return .seafood
-        case .soda:
-            return .beverages
-        case .sole:
-            return .seafood
-        case .sourCream:
-            return .dairy
-        case .soySauce:
-            return .condimentsAndDressings
-        case .spinach:
-            if words.contains("frozen") {
-                return .frozenFoods
-            } else {
+            case .avocado:
                 return .produce
-            }
-        case .squash:
-            return .produce
-        case .steakSauce:
-            return .condimentsAndDressings
-        case .strawberry:
-            return .produce
-        case .sugar:
-            return .cookingBakingSpices
-        case .sunDriedTomato:
-            return .produce
-        case .sunflowerButter:
-            return .condimentsAndDressings
-        case .sunflowerSeeds:
-            return .snacks
-        case .sweetPotato:
-            return .produce
-        case .swiss:
-            return .dairy
-        case .swordfish:
-            return .seafood
-        case .syrup:
-            return .condimentsAndDressings
-        case .taterTots:
-            return .frozenFoods
-        case .tea:
-            return .beverages
-        case .thyme:
-            return .cookingBakingSpices
-        case .tilapia:
-            return .seafood
-        case .tofu:
-            return .produce
-        case .tomato:
-            return .produce
-        case .tomatoPaste:
-            return .canned
-        case .tomatoSauce:
-            return .canned
-        case .tortellini:
-            return .grainsPastaSides
-        case .tortilla:
-            return .grainsPastaSides
-        case .trout:
-            return .seafood
-        case .tuna:
-            if words.contains("can") || words.contains("canned") {
+            case .avocadoOil:
+                return .condimentsAndDressings
+            case .babySpinach:
+                return .produce
+            case .bacon:
+                return .meat
+            case .bagel:
+                return .bakery
+            case .bakedBeans:
                 return .canned
-            } else {
+            case .bakingPowder:
+                return .cookingBakingSpices
+            case .bakingSoda:
+                return .cookingBakingSpices
+            case .balsamicVinegar:
+                return .condimentsAndDressings
+            case .banana:
+                return .produce
+            case .barley:
+                return .grainsPastaSides
+            case .basil:
+                return .produce
+            case .bayLeaf:
+                return .cookingBakingSpices
+            case .bbqSauce:
+                return .condimentsAndDressings
+            case .beef:
+                return .meat
+            case .beer:
+                return .beverages
+            case .bellPepper:
+                return .produce
+            case .blackBeans:
+                return .canned
+            case .blackberry:
+                return .produce
+            case .blackOlive:
+                return .canned
+            case .blackPepper:
+                return .cookingBakingSpices
+            case .bleuCheese:
+                return .dairy
+            case .blueberries:
+                return .produce
+            case .bread:
+                return .bakery
+            case .breadCrumbs:
+                return .cookingBakingSpices
+            case .breakfastSausage:
+                return .breakfast
+            case .broccoli:
+                return .produce
+            case .broth:
+                return .cookingBakingSpices
+            case .brownSugar:
+                return .cookingBakingSpices
+            case .brusselsSprouts:
+                return .produce
+            case .butter:
+                return .dairy
+            case .cabbage:
+                return .produce
+            case .cannedTomato:
+                return .canned
+            case .cannelliniBeans:
+                return .canned
+            case .canolaOil:
+                return .cookingBakingSpices
+            case .capers:
+                return .condimentsAndDressings
+            case .carrot:
+                return .produce
+            case .catfish:
                 return .seafood
+            case .cashew:
+                return .snacks
+            case .cashewButter:
+                return .condimentsAndDressings
+            case .cauliflower:
+                if words.contains("frozen") {
+                    return .frozenFoods
+                } else {
+                    return .produce
+                }
+            case .cayenne:
+                return .cookingBakingSpices
+            case .celery:
+                return .produce
+            case .cereal:
+                return .breakfast
+            case .champagne:
+                return .beverages
+            case .cheddar:
+                return .dairy
+            case .cheese:
+                return .dairy
+            case .cherries:
+                return .produce
+            case .chicken:
+                return .meat
+            case .chili:
+                return .cookingBakingSpices
+            case .chiliPowder:
+                return .cookingBakingSpices
+            case .chips:
+                return .snacks
+            case .chives:
+                return .produce
+            case .chocolate:
+                return .snacks
+            case .cilantro:
+                return .cookingBakingSpices
+            case .cinnamon:
+                return .cookingBakingSpices
+            case .clam:
+                return .seafood
+            case .coconutMilk:
+                return .canned
+            case .cod:
+                return .seafood
+            case .coffee:
+                return .beverages
+            case .corn:
+                if words.contains("canned") || words.contains("can") {
+                    return .canned
+                } else {
+                    return .produce
+                }
+            case .cornstarch:
+                return .cookingBakingSpices
+            case .cottageCheese:
+                return .dairy
+            case .crab:
+                return .seafood
+            case .cracker:
+                return .snacks
+            case .cranberry:
+                return .produce
+            case .cranberrySauce:
+                return .condimentsAndDressings
+            case .cream:
+                return .dairy
+            case .creamOfChickenSoup:
+                return .canned
+            case .creamOfMushroomSoup:
+                return .canned
+            case .cucumber:
+                return .produce
+            case .cumin:
+                return .cookingBakingSpices
+            case .curryPowder:
+                return .cookingBakingSpices
+            case .dip:
+                return .condimentsAndDressings
+            case .dijonMustard:
+                return .condimentsAndDressings
+            case .dillWeed:
+                return .cookingBakingSpices
+            case .driedBasil:
+                return .cookingBakingSpices
+            case .driedParsley:
+                return .cookingBakingSpices
+            case .duck:
+                return .meat
+            case .egg:
+                return .dairy
+            case .eggNoodles:
+                return .grainsPastaSides
+            case .eggplant:
+                return .produce
+            case .favaBeans:
+                return .canned
+            case .fennelSeeds:
+                return .cookingBakingSpices
+            case .feta:
+                return .dairy
+            case .flounder:
+                return .seafood
+            case .flour:
+                return .cookingBakingSpices
+            case .garlic:
+                return .cookingBakingSpices
+            case .garlicPowder:
+                return .cookingBakingSpices
+            case .gin:
+                return .beverages
+            case .ginger:
+                return .cookingBakingSpices
+            case .gingerRoot:
+                return .cookingBakingSpices
+            case .goatCheese:
+                return .dairy
+            case .granola:
+                return .snacks
+            case .granolaBars:
+                return .snacks
+            case .grapefruit:
+                return .produce
+            case .grape:
+                return .produce
+            case .greekYogurt:
+                return .dairy
+            case .greenBeans:
+                if words.contains("can") || words.contains("canned") {
+                    return .canned
+                } else {
+                    return .produce
+                }
+            case .greenOlive:
+                return .canned
+            case .greenOnion:
+                return .produce
+            case .groundBeef:
+                return .meat
+            case .groundTurkey:
+                return .meat
+            case .gruyere:
+                return .dairy
+            case .guava:
+                return .produce
+            case .haddock:
+                return .seafood
+            case .halfAndHalf:
+                return .dairy
+            case .halibut:
+                return .seafood
+            case .ham:
+                return .deli
+            case .heavyCream:
+                return .dairy
+            case .honey:
+                return .condimentsAndDressings
+            case .hotDogs:
+                return .meat
+            case .hotSauce:
+                return .condimentsAndDressings
+            case .hummus:
+                return .condimentsAndDressings
+            case .iceCream:
+                return .frozenFoods
+            case .icing:
+                return .bakery
+            case .italianSeasoning:
+                return .cookingBakingSpices
+            case .jalapeno:
+                return .produce
+            case .jelly:
+                return .condimentsAndDressings
+            case .juice:
+                return .beverages
+            case .kale:
+                return .produce
+            case .ketchup:
+                return .condimentsAndDressings
+            case .kidneyBeans:
+                return .canned
+            case .kiwi:
+                return .produce
+            case .lamb:
+                return .meat
+            case .lasagnaNoodles:
+                return .grainsPastaSides
+            case .lemon:
+                return .produce
+            case .lemonJuice:
+                return .cookingBakingSpices
+            case .lentil:
+                return .grainsPastaSides
+            case .lettuce:
+                return .produce
+            case .limaBeans:
+                return .canned
+            case .lime:
+                return .produce
+            case .limeJuice:
+                return .cookingBakingSpices
+            case .lobster:
+                return .seafood
+            case .macAndCheese:
+                return .grainsPastaSides
+            case .mahiMahi:
+                return .seafood
+            case .mango:
+                return .produce
+            case .margarine:
+                return .cookingBakingSpices
+            case .marinara:
+                return .condimentsAndDressings
+            case .melon:
+                return .produce
+            case .mayonnaise:
+                return .condimentsAndDressings
+            case .milk:
+                return .dairy
+            case .mozzarella:
+                return .dairy
+            case .mushroom:
+                return .produce
+            case .mussels:
+                return .seafood
+            case .mustard:
+                return .condimentsAndDressings
+            case .nectarine:
+                return .produce
+            case .nutmeg:
+                return .cookingBakingSpices
+            case .oatmeal:
+                return .breakfast
+            case .oats:
+                return .grainsPastaSides
+            case .oil:
+                return .cookingBakingSpices
+            case .oliveOil:
+                return .cookingBakingSpices
+            case .onion:
+                return .produce
+            case .onionPowder:
+                return .cookingBakingSpices
+            case .orange:
+                return .produce
+            case .oregano:
+                return .cookingBakingSpices
+            case .oyster:
+                return .seafood
+            case .oysterSauce:
+                return .condimentsAndDressings
+            case .paprika:
+                return .cookingBakingSpices
+            case .parmesan:
+                return .dairy
+            case .parsley:
+                return .cookingBakingSpices
+            case .pasta:
+                return .grainsPastaSides
+            case .peach:
+                return .produce
+            case .peanutButter:
+                return .condimentsAndDressings
+            case .peanut:
+                return .snacks
+            case .peanutOil:
+                return .cookingBakingSpices
+            case .pear:
+                return .produce
+            case .peas:
+                if words.contains("frozen") {
+                    return .frozenFoods
+                } else if words.contains("can") || words.contains("canned") {
+                    return .canned
+                } else {
+                    return .produce
+                }
+            case .pecan:
+                return .snacks
+            case .pepper:
+                return .cookingBakingSpices
+            case .pestoSauce:
+                return .condimentsAndDressings
+            case .pickle:
+                return .condimentsAndDressings
+            case .pineapple:
+                if words.contains("can") || words.contains("canned") {
+                    return .canned
+                } else {
+                    return .produce
+                }
+            case .pintoBeans:
+                return .canned
+            case .pitaBread:
+                return .bakery
+            case .pizza:
+                return .frozenFoods
+            case .plum:
+                return .produce
+            case .pomegranate:
+                return .produce
+            case .popcorn:
+                return .snacks
+            case .poppySeed:
+                return .cookingBakingSpices
+            case .pork:
+                return .meat
+            case .portobelloMushroom:
+                return .produce
+            case .potRoast:
+                return .meat
+            case .potato:
+                return .produce
+            case .provolone:
+                return .dairy
+            case .quinoa:
+                return .grainsPastaSides
+            case .raisin:
+                return .snacks
+            case .raspberry:
+                return .produce
+            case .ravioli:
+                return .grainsPastaSides
+            case .redPepper:
+                return .cookingBakingSpices
+            case .redWine:
+                return .beverages
+            case .relish:
+                return .condimentsAndDressings
+            case .rice:
+                return .grainsPastaSides
+            case .ricotta:
+                return .dairy
+            case .romanoCheese:
+                return .dairy
+            case .rosemary:
+                return .cookingBakingSpices
+            case .rum:
+                return .beverages
+            case .sage:
+                return .cookingBakingSpices
+            case .salami:
+                return .deli
+            case .salmon:
+                return .seafood
+            case .salsa:
+                return .condimentsAndDressings
+            case .salt:
+                return .cookingBakingSpices
+            case .sardine:
+                return .canned
+            case .sausage:
+                return .meat
+            case .scallops:
+                return .seafood
+            case .sesame:
+                return .cookingBakingSpices
+            case .sesameOil:
+                return .cookingBakingSpices
+            case .shallot:
+                return .produce
+            case .sherry:
+                return .beverages
+            case .shrimp:
+                return .seafood
+            case .snapper:
+                return .seafood
+            case .soda:
+                return .beverages
+            case .sole:
+                return .seafood
+            case .sourCream:
+                return .dairy
+            case .soySauce:
+                return .condimentsAndDressings
+            case .spinach:
+                if words.contains("frozen") {
+                    return .frozenFoods
+                } else {
+                    return .produce
+                }
+            case .squash:
+                return .produce
+            case .steakSauce:
+                return .condimentsAndDressings
+            case .strawberry:
+                return .produce
+            case .sugar:
+                return .cookingBakingSpices
+            case .sunDriedTomato:
+                return .produce
+            case .sunflowerButter:
+                return .condimentsAndDressings
+            case .sunflowerSeeds:
+                return .snacks
+            case .sweetPotato:
+                return .produce
+            case .swiss:
+                return .dairy
+            case .swordfish:
+                return .seafood
+            case .syrup:
+                return .condimentsAndDressings
+            case .taterTots:
+                return .frozenFoods
+            case .tea:
+                return .beverages
+            case .thyme:
+                return .cookingBakingSpices
+            case .tilapia:
+                return .seafood
+            case .tofu:
+                return .produce
+            case .tomato:
+                return .produce
+            case .tomatoPaste:
+                return .canned
+            case .tomatoSauce:
+                return .canned
+            case .tortellini:
+                return .grainsPastaSides
+            case .tortilla:
+                return .grainsPastaSides
+            case .trout:
+                return .seafood
+            case .tuna:
+                if words.contains("can") || words.contains("canned") {
+                    return .canned
+                } else {
+                    return .seafood
+                }
+            case .turkey:
+                return .meat
+            case .turmeric:
+                return .cookingBakingSpices
+            case .vanilla:
+                return .cookingBakingSpices
+            case .vegetableOil:
+                return .cookingBakingSpices
+            case .venison:
+                return .meat
+            case .vinegar:
+                return .cookingBakingSpices
+            case .vodka:
+                return .beverages
+            case .walnuts:
+                return .snacks
+            case .watermelon:
+                return .produce
+            case .whippedCream:
+                return .dairy
+            case .whiskey:
+                return .beverages
+            case .whiteWine:
+                return .beverages
+            case .worcestershireSauce:
+                return .condimentsAndDressings
+            case .yeast:
+                return .cookingBakingSpices
+            case .yogurt:
+                return .dairy
+            case .zucchini:
+                return .produce
+            case .other:
+                return .other
+            case .water:
+                return .beverages
+            case .breadFlour:
+                return .cookingBakingSpices
+            case .buttermilk:
+                return .dairy
+            case .almondMilk:
+                return .beverages
+            case .soyMilk:
+                return .beverages
+            case .ranch:
+                return .condimentsAndDressings
+            case .saladDressing:
+                return .condimentsAndDressings
+            case .hotDogBuns:
+                return .bakery
+            case .hamburgerPatties:
+                return .meat
+            case .hamburgerBuns:
+                return .bakery
+            case .creamCheese:
+                return .dairy
+            case .americanCheese:
+                return .dairy
+            case .pastrami:
+                return .deli
+            case .pepperoni:
+                return .deli
+            case .tartarSauce:
+                return .condimentsAndDressings
+            case .teriyakiSauce:
+                return .condimentsAndDressings
+            case .bison:
+                return .meat
+            case .cornedBeef:
+                return .deli
+            case .montereyJackCheese:
+                return .dairy
+            case .almondExtract:
+                return .cookingBakingSpices
+            case .cornmeal:
+                return .cookingBakingSpices
+            case .powderedSugar:
+                return .cookingBakingSpices
+            case .beefJerky:
+                return .snacks
+            case .turkeyJerky:
+                return .snacks
+            case .grahamCracker:
+                return .snacks
+            case .oreoCookies:
+                return .snacks
+            case .saltines:
+                return .snacks
+            case .sparklingWater:
+                return .beverages
+            case .driedMango:
+                return .snacks
+            case .nutella:
+                return .snacks
+            case .chickenWings:
+                return .meat
             }
-        case .turkey:
-            return .meat
-        case .turmeric:
-            return .cookingBakingSpices
-        case .vanilla:
-            return .cookingBakingSpices
-        case .vegetableOil:
-            return .cookingBakingSpices
-        case .venison:
-            return .meat
-        case .vinegar:
-            return .cookingBakingSpices
-        case .vodka:
-            return .beverages
-        case .walnuts:
-            return .snacks
-        case .watermelon:
-            return .produce
-        case .whippedCream:
-            return .dairy
-        case .whiskey:
-            return .beverages
-        case .whiteWine:
-            return .beverages
-        case .worcestershireSauce:
-            return .condimentsAndDressings
-        case .yeast:
-            return .cookingBakingSpices
-        case .yogurt:
-            return .dairy
-        case .zucchini:
-            return .produce
-        case .other:
-            return .other
-        case .water:
-            return .beverages
-        case .breadFlour:
-            return .cookingBakingSpices
-        case .buttermilk:
-            return .dairy
-        case .almondMilk:
-            return .beverages
-        case .soyMilk:
-            return .beverages
-        case .ranch:
-            return .condimentsAndDressings
-        case .saladDressing:
-            return .condimentsAndDressings
-        case .hotDogBuns:
-            return .bakery
-        case .hamburgerPatties:
-            return .meat
-        case .hamburgerBuns:
-            return .bakery
-        case .creamCheese:
-            return .dairy
-        case .americanCheese:
-            return .dairy
-        case .pastrami:
-            return .deli
-        case .pepperoni:
-            return .deli
-        case .tartarSauce:
-            return .condimentsAndDressings
-        case .teriyakiSauce:
-            return .condimentsAndDressings
-        case .bison:
-            return .meat
-        case .cornedBeef:
-            return .deli
-        case .montereyJackCheese:
-            return .dairy
-        case .almondExtract:
-            return .cookingBakingSpices
-        case .cornmeal:
-            return .cookingBakingSpices
-        case .powderedSugar:
-            return .cookingBakingSpices
-        case .beefJerky:
-            return .snacks
-        case .turkeyJerky:
-            return .snacks
-        case .grahamCracker:
-            return .snacks
-        case .oreoCookies:
-            return .snacks
-        case .saltines:
-            return .snacks
-        case .sparklingWater:
-            return .beverages
-        case .driedMango:
-            return .snacks
-        case .nutella:
-            return .snacks
         }
+        
     }
     
     
@@ -3057,103 +3071,179 @@ enum GenericItem: String, CaseIterable {
         case .soda:
             return year
         case .sole:
-            <#code#>
+            if storageType == .freezer {
+                return month*11
+            } else {
+                return day*8
+            }
         case .sourCream:
-            <#code#>
+            return week*3
         case .soyMilk:
-            <#code#>
+            return day*10
         case .soySauce:
-            <#code#>
+            return year*3
         case .sparklingWater:
             return year*4
         case .spinach:
-            <#code#>
+            if storageType == .freezer {
+                return year
+            } else {
+                return week
+            }
         case .squash:
-            <#code#>
+            if storageType == .freezer {
+                return year
+            } else {
+                return day*5
+            }
         case .steakSauce:
-            <#code#>
+            return year*2
         case .strawberry:
-            <#code#>
+            if storageType == .freezer {
+                return year
+            } else {
+                return day*6
+            }
         case .sugar:
-            <#code#>
+            return year*2
         case .sunDriedTomato:
-            <#code#>
+            return month*7
         case .sunflowerButter:
-            <#code#>
+            return month*7
         case .sunflowerSeeds:
-            <#code#>
+            return month*3
         case .sweetPotato:
-            <#code#>
+            if storageType == .freezer {
+                return year
+            } else {
+                return week*2
+            }
         case .swiss:
-            <#code#>
+            if storageType == .freezer {
+                return month*8
+            } else {
+                return week*4
+            }
         case .swordfish:
-            <#code#>
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return day*2
+            }
         case .syrup:
-            <#code#>
+            return year*2
         case .taterTots:
-            <#code#>
+            return month*13
         case .tartarSauce:
-            <#code#>
+            return month*6
         case .tea:
-            <#code#>
+            return year*2
         case .teriyakiSauce:
-            <#code#>
+            return year
         case .thyme:
-            <#code#>
+            return day*13
         case .tilapia:
-            <#code#>
+            if storageType == .freezer {
+                return month*8
+            } else {
+                return day*2
+            }
         case .tofu:
-            <#code#>
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return day*12
+            }
         case .tomato:
-            <#code#>
+            return day*8
         case .tomatoPaste:
-            <#code#>
+            return month*6
         case .tomatoSauce:
-            <#code#>
+            return month*8
         case .tortellini:
-            <#code#>
+            if storageType == .freezer {
+                return month*2
+            } else {
+                return day*5
+            }
         case .tortilla:
-            <#code#>
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return week*3
+            }
         case .trout:
-            <#code#>
+            if storageType == .freezer {
+                return month*4
+            } else {
+                return day*4
+            }
         case .tuna:
-            <#code#>
+            if storageType == .pantry {
+                return year*3
+            } else {
+                return week*2
+            }
         case .turkey:
-            <#code#>
+            if storageType == .freezer {
+                return month*9
+            } else {
+                return day*6
+            }
         case .turkeyJerky:
-            <#code#>
+            return year*2
         case .turmeric:
-            <#code#>
+            return year*4
         case .vanilla:
-            <#code#>
+            return year*2
         case .vegetableOil:
-            <#code#>
+            return year*2
         case .venison:
-            <#code#>
+            if storageType == .freezer {
+                return month*9
+            } else {
+                return day*5
+            }
         case .vinegar:
-            <#code#>
+            return year*5
         case .vodka:
-            <#code#>
+            return year
         case .walnuts:
-            <#code#>
+            if storageType == .freezer {
+                return year*2
+            } else if storageType == .fridge {
+                return year
+            } else {
+                return week*4
+            }
         case .water:
-            <#code#>
+            return year*7
         case .watermelon:
-            <#code#>
+            return week*2
         case .whippedCream:
-            <#code#>
+            return month*3
         case .whiskey:
-            <#code#>
+            return year
         case .whiteWine:
-            <#code#>
+            return year
         case .worcestershireSauce:
-            <#code#>
+            return year*3
         case .yeast:
-            <#code#>
+            return month*4
         case .yogurt:
-            <#code#>
+            return week*2
         case .zucchini:
-            <#code#>
+            if storageType == .freezer {
+                return month*11
+            } else {
+                return day*5
+            }
+        case .chickenWings:
+            if storageType == .freezer {
+                return month*8
+            } else {
+                return day*5
+            }
         case .other:
             return 0
             

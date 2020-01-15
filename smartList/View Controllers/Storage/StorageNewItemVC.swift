@@ -98,7 +98,7 @@ class StorageNewItemVC: UIViewController {
         
         let text = nameTextField.text ?? ""
         let words = text.split{ !$0.isLetter }.map { (sStr) -> String in
-            String(sStr)
+            String(sStr.lowercased())
         }
         let genericItem = Search.turnIntoSystemItem(string: text)
         let category = GenericItem.getCategory(item: genericItem, words: words)
@@ -120,7 +120,11 @@ extension StorageNewItemVC: CreateNewItemDelegate {
         print("Item to add to storage: \(item.name)")
         nameTextField.text = item.name
         textAssistantViewActive = false
-        #warning("could set the suggested expiration date here")
+        #warning("set the suggested expiration date here")
+        if let itemType = item.systemItem {
+            let expiration = GenericItem.getSuggestedExpirationDate(item: itemType, storageType: item.storageSection ?? .unsorted)
+            datePicker.date = Date(timeIntervalSince1970: Date().timeIntervalSince1970 + Double(expiration))
+        }
         print("could set the suggested expiration date here")
         
     }

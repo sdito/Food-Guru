@@ -92,7 +92,7 @@ struct GroceryList {
         let reference = db.collection("lists").document(listID).collection("items").document()
         let genericName = Search.turnIntoSystemItem(string: name)
         let words = name.split{ !$0.isLetter }.map { (sStr) -> String in
-            String(sStr)
+            String(sStr.lowercased())
         }
         let genericCategory = GenericItem.getCategory(item: genericName, words: words)
         reference.setData([
@@ -149,7 +149,7 @@ struct GroceryList {
             } else {
                 for i in items {
                     let words = i.split{ !$0.isLetter }.map { (sStr) -> String in
-                        String(sStr)
+                        String(sStr.lowercased())
                     }
                     let genericItem = Search.turnIntoSystemItem(string: i)
                     let category = GenericItem.getCategory(item: genericItem, words: words)
