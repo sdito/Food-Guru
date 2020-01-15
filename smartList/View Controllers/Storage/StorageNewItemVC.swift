@@ -120,9 +120,9 @@ extension StorageNewItemVC: CreateNewItemDelegate {
         print("Item to add to storage: \(item.name)")
         nameTextField.text = item.name
         textAssistantViewActive = false
-        #warning("set the suggested expiration date here")
+        
         if let itemType = item.systemItem {
-            let expiration = GenericItem.getSuggestedExpirationDate(item: itemType, storageType: item.storageSection ?? .unsorted)
+            let expiration = GenericItem.getSuggestedExpirationDate(item: itemType, storageType: foodCategory)
             datePicker.date = Date(timeIntervalSince1970: Date().timeIntervalSince1970 + Double(expiration))
         }
         print("could set the suggested expiration date here")

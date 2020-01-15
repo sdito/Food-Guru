@@ -253,10 +253,12 @@ class RecipeHomeVC: UIViewController {
                 if buttonName.0 != "Select Ingredients" {
                     handleDuplicateSearchesAndAddNew(newSearches: [buttonName])
                 } else {
+                    print("Got to this point")
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewController(withIdentifier: "searchByIngredient") as! SearchByIngredientVC
                     vc.recipesFoundDelegate = self
-                    UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
+//                    UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
+                    self.present(vc, animated: true, completion: nil)
                 }
             }
         }

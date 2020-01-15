@@ -105,14 +105,15 @@ extension UIView {
         self.layer.shadowRadius = 5
     }
     
-    func animateRemoveFromSuperview() {
+    func animateRemoveFromSuperview(y: CGFloat) {
         let width = self.bounds.width
         UIView.animate(withDuration: 0.3, animations: {
-            self.frame = CGRect(x: 0.0 - width, y: 37.5, width: width, height: self.bounds.height)
+            self.frame = CGRect(x: 0.0 - width, y: y, width: width, height: self.bounds.height)
         }) { (complete) in
             self.removeFromSuperview()
         }
     }
+    
     
     func setIsHidden(_ hidden: Bool, animated: Bool) {
         if animated {

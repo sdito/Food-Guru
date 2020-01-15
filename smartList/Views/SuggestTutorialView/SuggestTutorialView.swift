@@ -28,13 +28,13 @@ class SuggestTutorialView: UIView {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 13.0) {
             print("Automatically removing view")
-            self.animateRemoveFromSuperview()
+            self.animateRemoveFromSuperview(y: 37.5)
         }
     }
     
     
     @objc private func xButtonAction() {
-        self.animateRemoveFromSuperview()
+        self.animateRemoveFromSuperview(y: 37.5)
     }
     @objc private func viewTutorialButtonAction() {
         let sb: UIStoryboard = UIStoryboard(name: "Tutorial", bundle: nil)

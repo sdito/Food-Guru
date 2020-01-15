@@ -10,7 +10,7 @@ import UIKit
 import FirebaseFirestore
 
 
-
+#warning("might need to add a 'done' button on this VC")
 
 protocol SearchAssistantDelegate {
     func searchTextChanged(text: String)
@@ -66,7 +66,7 @@ class SearchByIngredientVC: UIViewController {
         buttonOutlet.titleLabel?.numberOfLines = 2
         buttonOutlet.titleLabel?.textAlignment = .center
         Item.readItemsForStorageNoListener(db: db, storageID: SharedValues.shared.foodStorageID ?? " ") { (itms) in
-            self.possibleItems = itms
+            self.possibleItems = itms.filter({$0.systemItem != .other})
         }
         searchBar.setUpAddItemToolbar(cancelAction: #selector(cancelSelector), addAction: #selector(addSelector))
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)

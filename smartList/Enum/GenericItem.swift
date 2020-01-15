@@ -67,6 +67,7 @@ enum GenericItem: String, CaseIterable {
     case cannedTomato
     case cannelliniBeans
     case canolaOil
+    case cantaloupe
     case capers
     case carrot
     case catfish
@@ -93,8 +94,10 @@ enum GenericItem: String, CaseIterable {
     case coconutMilk
     case cod
     case coffee
+    case cookingWine
     case corn
     case cornedBeef
+    case cornbread
     case cornmeal
     case cornstarch
     case cottageCheese
@@ -125,6 +128,7 @@ enum GenericItem: String, CaseIterable {
     case flounder
     case flour
     case garlic
+    case garlicBread
     case garlicPowder
     case gin
     case ginger
@@ -151,6 +155,7 @@ enum GenericItem: String, CaseIterable {
     case hamburgerPatties
     case heavyCream
     case honey
+    case honeydew
     case hotDogs
     case hotDogBuns
     case hotSauce
@@ -919,6 +924,16 @@ enum GenericItem: String, CaseIterable {
             return "Nutella"
         case .chickenWings:
             return "Chicken wings"
+        case .cornbread:
+            return "Cornbread"
+        case .garlicBread:
+            return "Garlic bread"
+        case .cantaloupe:
+            return "Cantaloupe"
+        case .honeydew:
+            return "Honeydew"
+        case .cookingWine:
+            return "Cooking wine"
         }
     }
     
@@ -1536,6 +1551,16 @@ enum GenericItem: String, CaseIterable {
                 return .pantry
             case .chickenWings:
                 return .fridge
+            case .cornbread:
+                return .pantry
+            case .garlicBread:
+                return .pantry
+            case .cantaloupe:
+                return .pantry
+            case .honeydew:
+                return .pantry
+            case .cookingWine:
+                return .pantry
             }
         }
         
@@ -2182,6 +2207,16 @@ enum GenericItem: String, CaseIterable {
                 return .snacks
             case .chickenWings:
                 return .meat
+            case .cornbread:
+                return .bakery
+            case .garlicBread:
+                return .bakery
+            case .cantaloupe:
+                return .produce
+            case .honeydew:
+                return .produce
+            case .cookingWine:
+                return .beverages
             }
         }
         
@@ -3244,9 +3279,34 @@ enum GenericItem: String, CaseIterable {
             } else {
                 return day*5
             }
+        case .cornbread:
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return week
+            }
+        case .garlicBread:
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return week
+            }
+        case .cantaloupe:
+            if storageType == .freezer {
+                return month*11
+            } else {
+                return day*6
+            }
+        case .honeydew:
+            if storageType == .freezer {
+                return month*11
+            } else {
+                return day*6
+            }
+        case .cookingWine:
+            return year
+        }
         case .other:
             return 0
-            
-        }
     }
 }

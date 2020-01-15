@@ -750,6 +750,8 @@ struct Search {
         } else if item.contains("bread") || item.contains("roll") || item.contains("bun") {
             if item.contains("crumbs") {
                 return .breadCrumbs
+            } else if item.contains("garlic") {
+                return .garlicBread
             } else if item.contains("pita") {
                 return .pitaBread
             } else if item.contains("flour") {
@@ -787,6 +789,8 @@ struct Search {
         } else if item.contains("pasta") || item.contains("macaroni") || item.contains("spaghetti") {
             if item.contains("sauce") {
                 return .marinara
+            } else if item.contains("squash") {
+                return .squash
             } else {
                 return .pasta
             }
@@ -806,6 +810,8 @@ struct Search {
                 return .almondMilk
             } else if item.contains("soy") {
                 return .soyMilk
+            } else if item.contains("chocolate") {
+                return .chocolate
             } else {
                 return .milk
             }
@@ -916,6 +922,8 @@ struct Search {
                 return .garlicPowder
             } else if item.contains("pepper") {
                 return .other
+            } else if item.contains("bread") {
+                return .garlicBread
             } else {
                 return .garlic
             }
@@ -1073,10 +1081,12 @@ struct Search {
                 return .greenBeans
             }
         } else if item.contains("wine") {
-            if item.contains("white") {
+            if item.contains("red") {
+                return .redWine
+            } else if item.contains("white") {
                 return .whiteWine
             } else {
-                return .redWine
+                return .cookingWine
             }
         } else if item.contains("sugar") {
             if item.contains("brown") {
@@ -1264,7 +1274,11 @@ struct Search {
         } else if item.contains("cucumber") || item.contains("cucumbers") {
             return .cucumber
         } else if item.contains("coffee") {
-            return .coffee
+            if item.contains("creamer") {
+                return .cream
+            } else {
+                return .coffee
+            }
         } else if item.contains("corn") {
             return .corn
         } else if item.contains("chocolate") {
@@ -1493,7 +1507,15 @@ struct Search {
             return .appleSauce
         } else if item.contains("nutella") {
             return .nutella
-        } else {
+        } else if item.contains("cornbread") {
+            return .cornbread
+        } else if item.contains("honeydew") {
+            return .honeydew
+        } else if item.contains("cantaloupe") {
+            return .cantaloupe
+        }
+        
+        else {
             return .other
         }
         return .other

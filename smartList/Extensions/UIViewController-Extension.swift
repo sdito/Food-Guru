@@ -129,7 +129,6 @@ extension UIViewController {
     
     
     func createImageDetailView(imagePath: String?, initialImage: UIImage?) {
-        print("Image path \(String(describing: imagePath)) will be used here for the big grand detail view yay")
         let vc = UIViewController()
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -221,25 +220,45 @@ extension UIViewController {
         
     }
     
-    #error("make sure this is being used AND NEED TO FINISH IT, make this a button not a label")
+    #warning("make sure this is being used AND NEED TO FINISH IT, make this a button not a label")
+    #warning("also need to make it such that the user can permanently stop this pop up")
     func createIngredientsDidntShowInSearchView() {
+        
         let button = UIButton()
         
         button.backgroundColor = .systemGreen
         
         let text = "Why didnt all the ingredients appear in my search?"
-        let font = UIFont(name: "futura", size: 10)
+        let font = UIFont(name: "futura", size: 14)
+        let distanceToTop: CGFloat = 110
+        if #available(iOS 13.0, *) {
+            button.setTitleColor(.systemBackground, for: .normal)
+        } else {
+            button.setTitleColor(.white, for: .normal)
+        }
         button.setTitle(text, for: .normal)
         button.titleLabel?.font = font
         button.titleLabel?.textAlignment = .center
         let rect = NSString(string: text).boundingRect(with: CGSize(width: CGFloat(MAXFLOAT), height: CGFloat(MAXFLOAT)), options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font!], context: nil)
         let xValue = (self.view.bounds.width/2.0) - (5.0) - (rect.width/2.0)
-        for _ in 1...10 {
-            print(xValue)
-        }
-        button.frame = CGRect(x: xValue, y: 100, width: rect.width + 10.0, height: rect.height + 4.0)
+        button.frame = CGRect(x: -rect.width - 15.0, y: distanceToTop, width: rect.width + 10.0, height: rect.height + 4.0)
         button.border(cornerRadius: 5.0)
+        
+        #warning("could have something in a setting about this")
+        button.addTarget(self, action: #selector(whyDidntAllIngredintsShow), for: .touchUpInside)
+        
+        
         self.view.addSubview(button)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            UIView.animate(withDuration: 0.25) {
+                button.frame = CGRect(x: xValue, y: distanceToTop, width: rect.width + 10.0, height: rect.height + 4.0)
+            }
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 7.0) {
+            button.animateRemoveFromSuperview(y: distanceToTop)
+        }
+ 
     }
     
     @objc func createMessageView(color: UIColor, text: String) {
@@ -274,6 +293,18 @@ extension UIViewController {
         v.forEach { (view) in
             view.removeFromSuperview()
         }
+    }
+    
+    @objc func whyDidntAllIngredintsShow(_ sender: UIButton) {
+        let alert = UIAlertController(title: "Search", message: "Some items did not appear in your search since this application has not supported those specific ingredients yet in order to enable search. There will always be more ingredients added in the future! If you this this specific ingredient should been in the application, send me a message from settings.", preferredStyle: .alert)
+        alert.addAction(.init(title: "Don't show this again", style: .default, handler: {alert in
+            #warning("need to write to user defaults, before prsenting the button view need to cheeck this value in user defaults")
+            UserDefaults.standard.set(true, forKey: "doneSeeingNoIngredientView")
+            
+        }))
+        alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
+        sender.findViewController()?.present(alert, animated: true)
+        sender.removeFromSuperview()
     }
     
     @objc func createGroupPopUp() {

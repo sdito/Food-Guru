@@ -240,8 +240,8 @@ class StorageHomeVC: UIViewController {
                 ((self.tabBarController?.viewControllers?[self.tabBarController!.selectedIndex] as? UITabBarController)?.viewControllers?[0] as? UINavigationController)?.popToRootViewController(animated: true)
                 
                 
-                #warning("make sure this is implemented properly")
-                if genericItems.count != genericItemsFirst.count {
+                
+                if (UserDefaults.standard.value(forKey: "doneSeeingNoIngredientView") as? Bool != true) && (genericItems.count != genericItemsFirst.count) {
                     print("Some items were deleted, have a little message or something")
                     self.tabBarController?.createIngredientsDidntShowInSearchView()
                 }
