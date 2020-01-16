@@ -3305,8 +3305,8 @@ enum GenericItem: String, CaseIterable {
             }
         case .cookingWine:
             return year
-        }
         case .other:
             return 0
+        }
     }
 }

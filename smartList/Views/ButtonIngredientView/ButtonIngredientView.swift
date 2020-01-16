@@ -16,7 +16,6 @@ protocol ButtonIngredientViewDelegate {
     func haveUserSortItem(addedItemName: [String], addedItemStores: [String]?, addedItemListID: String)
 }
 
-#warning("need to change SF symbol in associated xib")
 
 class ButtonIngredientView: UIView {
     
@@ -38,6 +37,15 @@ class ButtonIngredientView: UIView {
         if systemIngredient != "other" && SharedValues.shared.currentItemsInStorage?.contains(systemIngredient) ?? false {
             label.textColor = .systemGreen
         }
+        
+        if #available(iOS 13.0, *) {
+            let img = UIImage(systemName: "plus")
+            button.setImage(img, for: .normal)
+        } else {
+            button.setTitle("+", for: .normal)
+            button.setTitleColor(Colors.main, for: .normal)
+        }
+        
     }
     
     @objc private func bAction() {

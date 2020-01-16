@@ -24,7 +24,7 @@
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="19"/>
                             <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <state key="normal" image="plus" catalog="system">
+                            <state key="normal">
                                 <color key="titleColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                         </button>
@@ -55,7 +55,4 @@
             <point key="canvasLocation" x="239.85507246376812" y="388.05803571428572"/>
         </view>
     </objects>
-    <resources>
-        <image name="plus" catalog="system" width="64" height="56"/>
-    </resources>
 </document>
