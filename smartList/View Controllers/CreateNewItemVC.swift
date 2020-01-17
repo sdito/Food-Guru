@@ -16,7 +16,9 @@ protocol CreateNewItemDelegate {
 
 
 class CreateNewItemVC: UITableViewController {
+    
     var delegate: CreateNewItemDelegate!
+    
     private var searchText: String = "" {
         didSet {
             if self.searchText == "" {

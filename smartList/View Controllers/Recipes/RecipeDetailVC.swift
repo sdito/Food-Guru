@@ -250,7 +250,6 @@ class RecipeDetailVC: UIViewController {
         
         let v = UIView()
         v.heightAnchor.constraint(equalToConstant: 10).isActive = true
-        //wholeSV.insertArrangedSubview(label, at: 0)
         wholeSV.insertArrangedSubview(v, at: 0)
         
         
@@ -260,13 +259,13 @@ class RecipeDetailVC: UIViewController {
         
         
         if let ct = recipe.cookTime.value {
-            cookTime.text = "\(ct) m"
+            cookTime.text = ct.getDisplayHoursAndMinutes()
         } else {
             cookSV.removeFromSuperview()
         }
         
         if let pt = recipe.prepTime.value {
-            prepTime.text = "\(pt) m"
+            prepTime.text = pt.getDisplayHoursAndMinutes()
         } else {
             prepSV.removeFromSuperview()
         }
@@ -320,8 +319,8 @@ class RecipeDetailVC: UIViewController {
         }
         nameAndTitleView.alpha = 0.95
         tagline.text = recipe.tagline
-        prepTime.text = "\(recipe.prepTime) m"
-        cookTime.text = "\(recipe.cookTime) m"
+        prepTime.text = recipe.prepTime.getDisplayHoursAndMinutes()
+        cookTime.text = recipe.cookTime.getDisplayHoursAndMinutes()
         servings.text = "\(recipe.numServes)"
         calories.text = "\(recipe.calories!)"
         

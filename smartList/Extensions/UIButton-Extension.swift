@@ -23,8 +23,6 @@ extension UIButton {
 }
 
 
-
-
 extension Array where Element: UIButton {
     func setSelected(selected: UIButton) {
         for i in self {
