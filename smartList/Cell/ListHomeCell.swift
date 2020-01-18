@@ -29,8 +29,12 @@ class ListHomeCell: UITableViewCell {
         }
         
         if SharedValues.shared.isPhone == false {
+            name.font = UIFont(name: "futura", size: 30)
+            numberItems.font = UIFont(name: "futura", size: 24)
+            createdAgo.font = UIFont(name: "futura", size: 18)
             
         }
+        
     }
 
 }

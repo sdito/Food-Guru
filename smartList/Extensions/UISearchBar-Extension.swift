@@ -14,6 +14,8 @@ extension UISearchBar {
         let inside = self.value(forKey: "searchField") as? UITextField
         inside?.textColor = Colors.main
         inside?.font = UIFont(name: "futura", size: 17)
+        
+        
     }
     func setUpToolBar(action: Selector) {
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)

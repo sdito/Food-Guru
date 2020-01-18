@@ -79,6 +79,7 @@ class RecipeHomeVC: UIViewController {
     @IBOutlet weak var searchButtonStackView: UIStackView!
     @IBOutlet weak var scrollBackUpView: UIView!
     @IBOutlet weak var moreRecipesView: UIView!
+    @IBOutlet weak var searchBarHeight: NSLayoutConstraint!
     
     private var lastContentOffset: CGFloat = 0
     private var allowButtonToBeShowed = true
@@ -92,6 +93,7 @@ class RecipeHomeVC: UIViewController {
             imageCache.removeAllObjects()
             collectionView?.collectionViewLayout.invalidateLayout()
             collectionView?.reloadData()
+            
             if self.recipes.isEmpty {
                 self.createMessageView(color: .red, text: "No recipes found")
                 #warning("should i have the function below that automatically calles the recipe puppy recipes?")
@@ -164,7 +166,7 @@ class RecipeHomeVC: UIViewController {
         
         
         FoodStorage.readAndPersistSystemItemsFromStorageWithListener(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
-//        tabBarController?.tabBar.isHidden = true
+        
         
     }
     @objc func fireTimer() {

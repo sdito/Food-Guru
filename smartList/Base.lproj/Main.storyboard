@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Lhl-QV-snq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Lhl-QV-snq">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -251,9 +251,6 @@
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="OnA-Cl-aZC" firstAttribute="width" secondItem="LI4-Xy-43r" secondAttribute="width" multiplier="1.04348" id="UVu-eH-1sF"/>
-                                                </constraints>
                                             </stackView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
@@ -262,6 +259,8 @@
                                             <constraint firstAttribute="trailing" secondItem="EwO-Xj-1OE" secondAttribute="trailing" constant="10" id="HqT-I0-pEW"/>
                                             <constraint firstAttribute="height" constant="40" id="Lfv-ea-ulf"/>
                                             <constraint firstItem="EwO-Xj-1OE" firstAttribute="leading" secondItem="l3v-xn-fS2" secondAttribute="leading" constant="10" id="Oct-aZ-30y"/>
+                                            <constraint firstAttribute="bottom" secondItem="EwO-Xj-1OE" secondAttribute="bottom" constant="5" id="fJP-BR-B03"/>
+                                            <constraint firstItem="EwO-Xj-1OE" firstAttribute="top" secondItem="l3v-xn-fS2" secondAttribute="top" constant="5" id="sP4-su-XdC"/>
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Eeu-xt-zJT">
@@ -362,6 +361,7 @@
                     <navigationItem key="navigationItem" id="ZjQ-0G-uSO"/>
                     <connections>
                         <outlet property="backView" destination="EUV-NV-fy5" id="v01-Ex-Ffc"/>
+                        <outlet property="plusButton" destination="Osh-oq-mtD" id="CeU-i0-KRQ"/>
                         <outlet property="segmentedControl" destination="FyL-B2-6cH" id="e3B-7z-VGz"/>
                         <outlet property="storesView" destination="RvJ-JD-oBH" id="wAQ-39-lC0"/>
                         <outlet property="tableView" destination="Eeu-xt-zJT" id="ELF-Vq-RDG"/>
@@ -1155,6 +1155,7 @@
                         <outlet property="savedAndAllRecipesOutlet" destination="Dar-Wz-q7g" id="KHp-eD-DVG"/>
                         <outlet property="scrollBackUpView" destination="uGf-6c-fMe" id="hGd-lL-uWv"/>
                         <outlet property="searchBar" destination="bmD-Dr-sbB" id="jGd-49-Zzf"/>
+                        <outlet property="searchBarHeight" destination="Jee-9z-SYA" id="eFw-I0-RSw"/>
                         <outlet property="searchButtonStackView" destination="EQf-BE-tEZ" id="UlM-PM-oiK"/>
                         <outlet property="searchHelperView" destination="e0U-VF-pog" id="Nbt-40-fQ0"/>
                         <outlet property="wholeStackView" destination="dLU-nb-1Ri" id="32v-f6-udU"/>
@@ -1944,10 +1945,18 @@
                         <outlet property="pickerPopUpView" destination="z6d-S8-LRX" id="Uxl-uC-5ii"/>
                         <outlet property="pickerView" destination="IQu-OV-dr4" id="NJR-OB-vj2"/>
                         <outlet property="popUpView" destination="Xf8-CJ-kAi" id="LCP-RS-EdU"/>
+                        <outlet property="popUpViewHeight" destination="X8i-N9-FhE" id="tgx-3B-b5H"/>
+                        <outlet property="popUpViewWidth" destination="fJX-5x-mFE" id="ODy-gE-cyn"/>
                         <outlet property="searchBar" destination="k1z-zh-Gs7" id="5rl-Rd-kah"/>
                         <outlet property="searchOutlet" destination="yIr-eq-aLA" id="AZW-QL-c9D"/>
                         <outlet property="segmentedControl" destination="2pe-Jw-8cP" id="Ykj-d2-fpg"/>
                         <outlet property="tableView" destination="UVb-sG-vZ1" id="ykd-10-Srg"/>
+                        <outletCollection property="optionButtons" destination="VRm-aF-33k" collectionClass="NSMutableArray" id="ivG-eg-SQe"/>
+                        <outletCollection property="optionButtons" destination="5n7-7R-IyG" collectionClass="NSMutableArray" id="j4t-jn-ktz"/>
+                        <outletCollection property="optionButtons" destination="lMq-ml-PTa" collectionClass="NSMutableArray" id="Ahg-be-cwX"/>
+                        <outletCollection property="optionButtons" destination="Kc1-1s-WSa" collectionClass="NSMutableArray" id="ija-Up-P1h"/>
+                        <outletCollection property="optionButtons" destination="R7N-tm-e24" collectionClass="NSMutableArray" id="ZUo-Pd-m50"/>
+                        <outletCollection property="optionButtons" destination="nuc-Za-uOb" collectionClass="NSMutableArray" id="rQL-6e-K1x"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1M9-XC-U2d" userLabel="First Responder" sceneMemberID="firstResponder"/>

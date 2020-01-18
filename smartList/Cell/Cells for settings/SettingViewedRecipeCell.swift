@@ -23,6 +23,15 @@ class SettingViewedRecipeCell: UITableViewCell {
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var time: UILabel!
     
+    
+    override func awakeFromNib() {
+        if SharedValues.shared.isPhone == false {
+            name.font = UIFont(name: "futura", size: 20)
+            time.font = UIFont(name: "futura", size: 16)
+            
+        }
+    }
+    
     func setUIfromData(data: [String:Any]) {
         name.text = data["name"] as? String
         time.text = (data["timeIntervalSince1970"] as? TimeInterval)?.timeSince()

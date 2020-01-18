@@ -35,6 +35,10 @@ class FourTutorialVC: UIViewController {
         self.view.setGradientBackgroundTutorial(colorOne: Colors.main, colorTwo: Colors.secondary)
         topView.setUpTutorialLabel()
         
+        if SharedValues.shared.isPhone == false {
+            topLabel.font = UIFont(name: "futura", size: 17)
+        }
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         imageView.pulsateView()

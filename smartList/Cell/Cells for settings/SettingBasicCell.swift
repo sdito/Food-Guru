@@ -11,9 +11,14 @@ import UIKit
 class SettingBasicCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     
-    
+    override func awakeFromNib() {
+        if SharedValues.shared.isPhone == false {
+            label.font = UIFont(name: "futura", size: 24)
+        }
+    }
     
     func setUI(str: String) {
         label.text = str
     }
 }
+

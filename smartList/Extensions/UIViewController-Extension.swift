@@ -220,17 +220,15 @@ extension UIViewController {
         
     }
     
-    #warning("make sure this is being used AND NEED TO FINISH IT, make this a button not a label")
-    #warning("also need to make it such that the user can permanently stop this pop up")
+    
     func createIngredientsDidntShowInSearchView() {
         
         let button = UIButton()
-        
         button.backgroundColor = .systemGreen
         
         let text = "Why didnt all the ingredients appear in my search?"
         let font = UIFont(name: "futura", size: 14)
-        let distanceToTop: CGFloat = 110
+        let distanceToTop: CGFloat = 150
         if #available(iOS 13.0, *) {
             button.setTitleColor(.systemBackground, for: .normal)
         } else {
@@ -244,7 +242,7 @@ extension UIViewController {
         button.frame = CGRect(x: -rect.width - 15.0, y: distanceToTop, width: rect.width + 10.0, height: rect.height + 4.0)
         button.border(cornerRadius: 5.0)
         
-        #warning("could have something in a setting about this")
+        
         button.addTarget(self, action: #selector(whyDidntAllIngredintsShow), for: .touchUpInside)
         
         

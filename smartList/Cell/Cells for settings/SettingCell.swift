@@ -12,6 +12,11 @@ class SettingCell: UITableViewCell {
 
     @IBOutlet weak var title: UILabel!
     
+    override func awakeFromNib() {
+        if SharedValues.shared.isPhone == false {
+            title.font = UIFont(name: "futura", size: 24)
+        }
+    }
     
     func setUI(setting: Setting) {
         title.text = setting.name

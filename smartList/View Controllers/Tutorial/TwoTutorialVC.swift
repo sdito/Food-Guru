@@ -21,6 +21,10 @@ class TwoTutorialVC: UIViewController {
         
         topView.setUpTutorialLabel()
         
+        if SharedValues.shared.isPhone == false {
+            topLabel.font = UIFont(name: "futura", size: 17)
+        }
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         imageView.pulsateView()

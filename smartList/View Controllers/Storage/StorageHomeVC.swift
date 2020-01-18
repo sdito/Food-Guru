@@ -14,7 +14,7 @@ import AVFoundation
 
 class StorageHomeVC: UIViewController {
     
-    #warning("make sure this is being used, left off wtih this, need to have the items stay selecte between tabs, and then used for the action, rather than just taking the current selected rows")
+    #warning("make sure this is being used, left off wtih this, need to have the items stay selected between tabs, and then used for the action, rather than just taking the current selected rows")
     private var currentlySelectedItems: [Item] = [] {
         didSet {
             handlePopUpView()
@@ -39,6 +39,12 @@ class StorageHomeVC: UIViewController {
     @IBOutlet weak var expirationDateOutlet: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var helperView: UIView!
+    
+    @IBOutlet weak var popUpViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var popUpViewWidth: NSLayoutConstraint!
+    
+    @IBOutlet var optionButtons: [UIButton]!
+    
     
     var items: [Item] = [] {
         didSet {
@@ -89,6 +95,20 @@ class StorageHomeVC: UIViewController {
         searchBar.setTextProperties()
         searchOutlet.setImage(UIImage(named: "search-3-xl"), for: .normal)
         helperView.shadowAndRounded(cornerRadius: 10, border: false)
+        
+        if SharedValues.shared.isPhone == false {
+            // need to change the size of the pop up view if on iPad
+            popUpViewHeight.isActive = false
+            popUpViewWidth.isActive = false
+            popUpView.heightAnchor.constraint(equalToConstant: 300.0).isActive = true
+            popUpView.widthAnchor.constraint(equalToConstant: 150.0).isActive = true
+            
+            let font = UIFont(name: "futura", size: 15)
+            
+            optionButtons.forEach { (button) in
+                button.titleLabel?.font = font
+            }
+        }
         
     }
     
@@ -553,7 +573,7 @@ extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationController
                                     let words = name.split{ !$0.isLetter }.map { (sStr) -> String in
                                         String(sStr.lowercased())
                                     }
-                                    #warning("warning make sure this works, potentially update in future if API supports expiration dates")
+                                    
                                     
                                     if let genericItem = item.systemItem {
                                         if genericItem != .other {

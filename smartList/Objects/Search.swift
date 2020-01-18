@@ -786,7 +786,7 @@ struct Search {
             } else {
                 return .pork
             }
-        } else if item.contains("pasta") || item.contains("macaroni") || item.contains("spaghetti") {
+        } else if item.contains("pasta") || item.contains("macaroni") || item.contains("spaghetti") || item.contains("noodles") {
             if item.contains("sauce") {
                 return .marinara
             } else if item.contains("squash") {

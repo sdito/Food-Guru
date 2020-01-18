@@ -46,6 +46,18 @@ extension UITextField {
         
     }
     
+    func setUpCancelAndAddToolbar(cancelAction: Selector, addAction: Selector) {
+        let cancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: cancelAction)
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let add = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: addAction)
+        cancel.tintColor = Colors.main
+        add.tintColor = Colors.main
+        
+        let toolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 40))
+        toolbar.autoresizingMask = .flexibleHeight
+        toolbar.setItems([cancel, space, add], animated: false)
+        self.inputAccessoryView = toolbar
+    }
     
     
 }

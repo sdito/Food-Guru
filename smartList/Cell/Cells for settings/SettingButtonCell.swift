@@ -10,6 +10,11 @@ import UIKit
 
 class SettingButtonCell: UITableViewCell {
 
+    override func awakeFromNib() {
+        if SharedValues.shared.isPhone == false {
+            button.titleLabel?.font = UIFont(name: "futura", size: 20)
+        }
+    }
     
     @IBOutlet weak var button: UIButton!
     func setUI(title: String) {

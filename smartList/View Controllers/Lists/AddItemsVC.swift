@@ -40,6 +40,7 @@ class AddItemsVC: UIViewController {
         }
     }
     
+    @IBOutlet weak var plusButton: UIButton!
     @IBOutlet weak var topViewHeight: NSLayoutConstraint!
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var topView: UIView!
@@ -69,6 +70,7 @@ class AddItemsVC: UIViewController {
             self.setUIfrom(list: self.list!)
         }
         
+        
         Item.readItemsForList(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (itm) in
             self.list?.items = itm
         }
@@ -80,14 +82,17 @@ class AddItemsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
-        textField.setUpDoneToolbar(action: #selector(dismissKeyboardPressed), style: .cancel)
+        textField.setUpCancelAndAddToolbar(cancelAction: #selector(dismissKeyboardPressed), addAction: #selector(addItemAction))
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         
         if SharedValues.shared.isPhone == false {
             topViewHeight.isActive = false
-            topView.heightAnchor.constraint(equalToConstant: 80).isActive = true
+            topView.heightAnchor.constraint(equalToConstant: 55).isActive = true
+            textField.font = UIFont(name: "futura", size: 27)
+            plusButton.titleLabel?.font = UIFont(name: "futura", size: 55)
         }
     }
+    
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -111,10 +116,13 @@ class AddItemsVC: UIViewController {
 
     
     @IBAction func addItem(_ sender: Any) {
+        addItemAction()
+        /*
         if textField.text != "" {
             toAddItem(text: textField.text!)
             delegate.searchTextChanged(text: "")
         }
+        */
     }
     
     @IBAction func segmentedControlPressed(_ sender: Any) {
@@ -249,7 +257,12 @@ class AddItemsVC: UIViewController {
         
         
     }
-    
+    @objc private func addItemAction() {
+        if textField.text != "" {
+            toAddItem(text: textField.text!)
+            delegate.searchTextChanged(text: "")
+        }
+    }
     
     private func toAddItem(text: String) {
         let words = text.split{ !$0.isLetter }.map { (sStr) -> String in
