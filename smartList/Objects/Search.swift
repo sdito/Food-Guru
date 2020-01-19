@@ -30,7 +30,6 @@ struct Search {
             switch otherText.first {
             case "Simple":
                 print("Find simple recipes, (with few ingredients)")
-                #warning("need to implement this search, just added field in Recipe.writeToFirestore 'numberIngredients', need to check if that is writing correcty, reads correctly as is..12/27")
                 reference.whereField("numberIngredients", isLessThanOrEqualTo: 5).getDocuments { (querySnapshot, error) in
                     guard let documents = querySnapshot?.documents else {
                         print("Error retrieving documents: \(String(describing: error))")

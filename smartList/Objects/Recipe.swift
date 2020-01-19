@@ -358,9 +358,10 @@ struct Recipe {
 
 
 extension Recipe {
+    #warning("should probably not allow users to write directly to the main collection...")
     mutating func writeToFirestore(db: Firestore!, storage: Storage) {
         let ingredients = self.ingredients
-        let doc = db.collection("recipes").document()
+        let doc = db.collection("recipes-other").document()
         self.imagePath = "recipe/\(doc.documentID).jpg"
         doc.setData([
             "name": self.name,
@@ -418,7 +419,6 @@ extension Recipe {
             thumbPath?.append(contentsOf: "_200x200.jpg")
         }
         
-        #warning("check which thumbnail image size works the best and change here, then limit firebase extension to only keep that size so theres no extra images")
         
         let storageRef = Storage.storage().reference(withPath: thumbPath ?? "")
         storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in

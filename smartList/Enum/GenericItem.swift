@@ -939,7 +939,8 @@ enum GenericItem: String, CaseIterable {
     
     static let all = GenericItem.allCases.map({$0.description})
     
-    #warning("could think about having this stored somewhere, and have the user the option to persist changes i.e. if they always want oranges to be in fridge and not pantry")
+    #warning("could think about having this stored somewhere, and have the user the option to persist changes i.e. if they always want oranges to be in fridge and not pantry, or if they want specific expiration dates for items")
+    
     static func getStorageType(item: GenericItem, words: [String]) -> FoodStorageType {
         if words.contains("canned") {
             return .pantry
