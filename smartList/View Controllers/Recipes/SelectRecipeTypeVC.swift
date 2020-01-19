@@ -12,14 +12,11 @@ import UIKit
 
 class SelectRecipeTypeVC: UIViewController {
     
-    
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var secondTopView: UIView!
-    
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
-    
     @IBOutlet weak var cuisineLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
@@ -37,6 +34,16 @@ class SelectRecipeTypeVC: UIViewController {
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
+        searchBar.delegate = self
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        searchBar.setTextProperties()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         super.viewWillAppear(animated)
@@ -49,25 +56,9 @@ class SelectRecipeTypeVC: UIViewController {
         
     }
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
-        searchBar.delegate = self
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        searchBar.setTextProperties()
-    }
-    
     @IBAction func exit(_ sender: Any) {
         // collect the RecipeType and CuisineType from storyboard here before removeFromSuperview -- should be in enum type
-        
         if cuisineType != nil && recipeType.isEmpty == false && cuisineType != " - " {
-            //delegate = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
-            //delegate.transferValues(cuisine: cuisineType ?? "", description: recipeType.sorted())
-            
-            //self.dismiss(animated: true, completion: nil)
             SharedValues.shared.cuisineType = cuisineType
             SharedValues.shared.recipeType = recipeType.sorted()
             
@@ -79,22 +70,14 @@ class SelectRecipeTypeVC: UIViewController {
             alrt.addAction(.init(title: "Exit", style: .destructive, handler: {(alert: UIAlertAction!) in self.back()}))
             present(alrt, animated: true)
         }
-        
     }
     
-//    struct popUp {
-//        static let popOverVC = UIStoryboard(name: "main", bundle: nil).instantiateViewController(withIdentifier: "recipeType") as! SelectRecipeTypeVC
-//    }
-    
     private func back() {
-        //let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
-        //present(vc, animated: false, completion: nil)
         navigationController?.popViewController(animated: true)
     }
 
+    
 }
-
-
 
 extension SelectRecipeTypeVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

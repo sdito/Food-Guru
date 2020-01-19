@@ -14,7 +14,6 @@ class SplashVC: UIViewController {
     
     @IBOutlet weak var label: UILabel!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,10 +50,5 @@ class SplashVC: UIViewController {
                 self.present(nextVC, animated: false, completion: nil)
             }
         }
-        
-        
-        
     }
-    
-
 }

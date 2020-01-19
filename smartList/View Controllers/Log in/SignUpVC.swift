@@ -26,15 +26,11 @@ class SignUpVC: UIViewController {
         }
         db = Firestore.firestore()
         createAccountOutlet.border(cornerRadius: 15.0)
-        
-        
         emailTextField.delegate = self
         passwordTextField.delegate = self
-        
         emailTextField.setUpDoneToolbar(action: #selector(dismissTextfield), style: .done)
         passwordTextField.setUpDoneToolbar(action: #selector(dismissTextfield), style: .done)
     }
-    
     
     
     @IBAction func emailCreateAccount(_ sender: Any) {
@@ -71,8 +67,8 @@ class SignUpVC: UIViewController {
                 }
             })
         }
-        
     }
+    
     @IBAction func backPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -106,7 +102,6 @@ class SignUpVC: UIViewController {
                 self.dismiss(animated: false) {
                     self.present(alert, animated: true)
                 }
-                
             }
         }
     }
@@ -146,11 +141,7 @@ class SignUpVC: UIViewController {
         self.dismiss(animated: false) {
             self.present(vc, animated: true, completion: nil)
         }
-        
     }
-    
-    
-
 }
 
 
@@ -171,6 +162,4 @@ extension SignUpVC: UITextFieldDelegate {
         emailTextField.resignFirstResponder()
         passwordTextField.resignFirstResponder()
     }
-    
 }
-

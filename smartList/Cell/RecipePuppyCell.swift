@@ -10,7 +10,7 @@ import UIKit
 
 
 
-#warning("do i need class here also")
+
 protocol RecipePuppyCellDelegate: class {
     func urlPressed(url: URL)
 }

@@ -10,12 +10,12 @@ import Foundation
 import UIKit
 
 struct Colors {
-    //should be 169
+    
     static let main = UIColor(red: 146.0/255.0, green: 0.0/255.0, blue: 255.0/255.0, alpha: 1.0)
     static let secondary = UIColor(red: 0.3236978054, green: 0.1063579395, blue: 0.574860394, alpha: 1)
-    
-    static let mainGradient = UIColor(red: 117.0/255.0, green: 0.0/255.0, blue: 204.0/255.0, alpha: 1.0)
     static let mainLight = UIColor(red: 169.0/255.0, green: 0.0/255.0, blue: 255.0/255.0, alpha: 0.5)
+    
+    //used to blend in with textFields for non textfields
     static let lightGray = UIColor(red: 200.0/255.0, green: 200.0/255.0, blue: 200.0/255.0, alpha: 1.0)
     static let messageGreen = UIColor(red: 0.0/255.0, green: 128.0/255.0, blue: 0.0/255.0, alpha: 1.0)
     

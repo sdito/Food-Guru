@@ -12,11 +12,36 @@ import FirebaseAuth
 
 class SetUpListVC: UIViewController {
     
-    var returnGroupID: String?
-//
-//    #warning("make sure this is being used")
-//    private var keyboardHeight: CGFloat?
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var storesTextField: UITextField!
+    @IBOutlet weak var storesStackView: UIStackView!
+    @IBOutlet weak var peopleStackView: UIStackView!
+    @IBOutlet weak var finishCreatingOrEditing: UIButton!
+    @IBOutlet weak var groupOrNotLabel: UILabel!
+    @IBOutlet weak var switchOutlet: UISwitch!
     
+    var listToEdit: GroceryList?
+    private var db: Firestore!
+    private var currentOffset: CGFloat?
+    
+    //start list data
+    private var name: String?
+    private var stores: [String]?
+    private var categories: [String]?
+    private var isGroup: Bool?
+    private var groupID: String? {
+        if isGroup == true {
+            return SharedValues.shared.groupID
+        } else {
+            return nil
+        }
+    }
+    private var people: [String]?
+    // end list data
+    
+    private var currentTextField: UITextField?
+    private var returnGroupID: String?
     private var usingGroup: Bool? {
         didSet {
             if self.usingGroup == true {
@@ -64,49 +89,6 @@ class SetUpListVC: UIViewController {
         }
     }
     
-    
-    var listToEdit: GroceryList?
-    private var db: Firestore!
-    private var currentOffset: CGFloat?
-    
-    //start list data
-    private var name: String?
-    private var stores: [String]?
-    private var categories: [String]?
-    private var isGroup: Bool?
-    private var groupID: String? {
-        if isGroup == true {
-            return SharedValues.shared.groupID
-        } else {
-            return nil
-        }
-    }
-    private var people: [String]?
-    // end list data
-
-    #warning("need to handle moving screen with this textField variable or with something else idk")
-    private var currentTextField: UITextField? /*{
-        didSet {
-            currentOffset = self.currentTextField?.superview?.frame.minY
-            self.view.frame.origin.y = -(currentOffset ?? 0)
-        }
-    }*/
-    
-    @IBOutlet weak var topView: UIView!
-    
-    @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var storesTextField: UITextField!
-    //@IBOutlet weak var peopleTextField: UITextField!
-    
-    @IBOutlet weak var storesStackView: UIStackView!
-    @IBOutlet weak var peopleStackView: UIStackView!
-    
-    @IBOutlet weak var finishCreatingOrEditing: UIButton!
-    @IBOutlet weak var groupOrNotLabel: UILabel!
-    
-    @IBOutlet weak var switchOutlet: UISwitch!
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
@@ -133,28 +115,8 @@ class SetUpListVC: UIViewController {
         if SharedValues.shared.anonymousUser == true {
             switchOutlet.isUserInteractionEnabled = false
         }
-//        topView.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
-        
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-//
-//    deinit {
-//        NotificationCenter.default.removeObserver(self)
-//    }
-//
-//    @objc func keyboardWillHide() {
-//        print("keyBoard will hide")
-//        self.view.frame.origin.y = 0
-//    }
-//
-//    @objc func keyboardWillShow(_ notification: Notification) {
-//        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-//            let keyboardRectangle = keyboardFrame.cgRectValue
-//            keyboardHeight = keyboardRectangle.height
-//        }
-//    }
-    
+
     
     @IBAction func writeToFirestoreIfValid() {
         gatherListData()

@@ -296,7 +296,6 @@ extension UIViewController {
     @objc func whyDidntAllIngredintsShow(_ sender: UIButton) {
         let alert = UIAlertController(title: "Search", message: "Some items did not appear in your search since this application has not supported those specific ingredients yet in order to enable search. There will always be more ingredients added in the future! If you this this specific ingredient should been in the application, send me a message from settings.", preferredStyle: .alert)
         alert.addAction(.init(title: "Don't show this again", style: .default, handler: {alert in
-            #warning("need to write to user defaults, before prsenting the button view need to cheeck this value in user defaults")
             UserDefaults.standard.set(true, forKey: "doneSeeingNoIngredientView")
             
         }))

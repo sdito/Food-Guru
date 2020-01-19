@@ -331,11 +331,11 @@
 			isa = PBXGroup;
 			children = (
 				E20BC6D223275BC200F1E5E7 /* SettingBasicCell.swift */,
-				E22A0EF723AD9238007D7272 /* SettingViewedRecipeCell.swift */,
-				E24ADB0D233DB063008F2F9F /* SettingContactDeveloperCell.swift */,
-				E20BC6CA2327376000F1E5E7 /* SettingCell.swift */,
 				E20BC6D52328326600F1E5E7 /* SettingButtonCell.swift */,
+				E20BC6CA2327376000F1E5E7 /* SettingCell.swift */,
+				E24ADB0D233DB063008F2F9F /* SettingContactDeveloperCell.swift */,
 				E20BC6DD2329A43300F1E5E7 /* SettingTwoLevelCell.swift */,
+				E22A0EF723AD9238007D7272 /* SettingViewedRecipeCell.swift */,
 			);
 			path = "Cells for settings";
 			sourceTree = "<group>";
@@ -367,17 +367,14 @@
 			children = (
 				E273ADD823B8565500E0B35D /* Food Guru.entitlements */,
 				E216204622F658D10074A0DF /* AppDelegate.swift */,
+				E29BB2C523D3FC81000BD145 /* Storyboards */,
 				E216207822F660C40074A0DF /* View Controllers */,
-				E216204A22F658D10074A0DF /* Main.storyboard */,
-				E2C5EC3123986D420030E3CD /* LogIn.storyboard */,
-				E242494823BFDD5E007C03F5 /* Tutorial.storyboard */,
 				E2B4695522F79748006BA77D /* Objects */,
 				E25F071523146C9A00E6738E /* Enum */,
 				E2B4694D22F78D23006BA77D /* Views */,
 				E2EB7FC122FFAD81003948A6 /* Cell */,
 				E2B4695822F7F19C006BA77D /* Extensions */,
 				E27D70C023403A6D009C68B3 /* Layout */,
-				E216204F22F658D20074A0DF /* LaunchScreen.storyboard */,
 				E216204D22F658D20074A0DF /* Assets.xcassets */,
 				E216205222F658D20074A0DF /* Info.plist */,
 				E216207422F659860074A0DF /* GoogleService-Info.plist */,
@@ -518,6 +515,17 @@
 			path = Layout;
 			sourceTree = "<group>";
 		};
+		E29BB2C523D3FC81000BD145 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				E216204A22F658D10074A0DF /* Main.storyboard */,
+				E2C5EC3123986D420030E3CD /* LogIn.storyboard */,
+				E242494823BFDD5E007C03F5 /* Tutorial.storyboard */,
+				E216204F22F658D20074A0DF /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
 		E2A54E1F23186DEB00BEBF39 /* InstructionView */ = {
 			isa = PBXGroup;
 			children = (
@@ -539,18 +547,18 @@
 		E2B4694D22F78D23006BA77D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E2AE35D123CA36C800D19E38 /* SuggestTutorialView */,
-				E2DC0F2A23B1F0300094FDB2 /* EditItemInfoView */,
-				E2E980D1238F36E900FAD549 /* ReviewImagesView */,
-				E2E409C9236B629A0082A84D /* CurrentSearchesView */,
-				E2E29039234C5C9500620576 /* RatingView */,
-				E2DA80D32349BB9E00BD7101 /* GiveRatingView */,
-				E2DA80CE2349958600BD7101 /* StarRatingView */,
-				E2DA80B92347F0C700BD7101 /* SortItemView */,
-				E25B12AE2346E48800B7FACF /* LabelInstructionView */,
 				E253AC0923431FA70018274A /* ButtonIngredientView */,
+				E2E409C9236B629A0082A84D /* CurrentSearchesView */,
+				E2DC0F2A23B1F0300094FDB2 /* EditItemInfoView */,
+				E2DA80D32349BB9E00BD7101 /* GiveRatingView */,
 				E2F380AE2319847F003857F7 /* IngredientView */,
 				E2A54E1F23186DEB00BEBF39 /* InstructionView */,
+				E25B12AE2346E48800B7FACF /* LabelInstructionView */,
+				E2E29039234C5C9500620576 /* RatingView */,
+				E2E980D1238F36E900FAD549 /* ReviewImagesView */,
+				E2DA80B92347F0C700BD7101 /* SortItemView */,
+				E2DA80CE2349958600BD7101 /* StarRatingView */,
+				E2AE35D123CA36C800D19E38 /* SuggestTutorialView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -558,18 +566,18 @@
 		E2B4695522F79748006BA77D /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				E2E529D122FA7F9100C55DA0 /* GroceryList.swift */,
-				E2D8462C231264CD004B19C2 /* Recipe.swift */,
 				E2A97669236FFF8000BF039F /* CookbookRecipe.swift */,
-				E2C49342230887F3002907C2 /* User.swift */,
-				E2E529D422FA80C400C55DA0 /* Item.swift */,
-				E2E6A19A2326FF6A00477AB1 /* FoodStorage.swift */,
 				E2B4695922F7F485006BA77D /* Colors.swift */,
-				E20BC6D0232752A600F1E5E7 /* Setting.swift */,
-				E2E29037234C490D00620576 /* Review.swift */,
-				E2A8A634234CF75400A676FA /* Search.swift */,
-				E2EB7FBD22FF5ACF003948A6 /* SharedValues.swift */,
+				E2E6A19A2326FF6A00477AB1 /* FoodStorage.swift */,
+				E2E529D122FA7F9100C55DA0 /* GroceryList.swift */,
+				E2E529D422FA80C400C55DA0 /* Item.swift */,
 				E2B8E946237C865D0051B07D /* PDFCreator.swift */,
+				E2D8462C231264CD004B19C2 /* Recipe.swift */,
+				E2E29037234C490D00620576 /* Review.swift */,
+				E2EB7FBD22FF5ACF003948A6 /* SharedValues.swift */,
+				E2A8A634234CF75400A676FA /* Search.swift */,
+				E20BC6D0232752A600F1E5E7 /* Setting.swift */,
+				E2C49342230887F3002907C2 /* User.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -578,17 +586,17 @@
 			isa = PBXGroup;
 			children = (
 				E29BB2C323D172C1000BD145 /* Int-Extension.swift */,
-				E2B4695622F7F18E006BA77D /* UITextField-Extension.swift */,
-				E26B9C4F234A6F960039E9EE /* UITextView-Extension.swift */,
+				E2B68D6C232EBD92006A3B58 /* Notification.Name-Extension.swift */,
 				E2EB7FC222FFB29A003948A6 /* String-Extension.swift */,
-				E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */,
-				E2C4934023066012002907C2 /* UIView-Extension.swift */,
 				E2445CFD23220D950089582F /* TimeInterval-Extension.swift */,
+				E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */,
+				E291CBFB23C85B9100F0FF56 /* UIImage-Extension.swift */,
 				E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */,
 				E20BC6E1232AE13300F1E5E7 /* UIStackView-Extension.swift */,
-				E2B68D6C232EBD92006A3B58 /* Notification.Name-Extension.swift */,
+				E2B4695622F7F18E006BA77D /* UITextField-Extension.swift */,
+				E26B9C4F234A6F960039E9EE /* UITextView-Extension.swift */,
+				E2C4934023066012002907C2 /* UIView-Extension.swift */,
 				E24ADB0F233E7974008F2F9F /* UIViewController-Extension.swift */,
-				E291CBFB23C85B9100F0FF56 /* UIImage-Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -672,16 +680,16 @@
 			isa = PBXGroup;
 			children = (
 				E20BC6D423275BDC00F1E5E7 /* Cells for settings */,
-				E2EB7FBF22FFAD7C003948A6 /* ItemCell.swift */,
-				E22A0EF523AC064F007D7272 /* RecipePuppyCell.swift */,
 				E2EA019B2370E27300DD55C9 /* CookbookCell.swift */,
-				E273F212235A6E96007B54E2 /* RecipeSearchCell.swift */,
 				E2149CF8235B9587002BF2D0 /* CreateNewItemCell.swift */,
-				E27D70B52340079D009C68B3 /* RecipeCell.swift */,
-				E20F2AD723258A4B00CD907A /* StorageCell.swift */,
 				E20BC6D72328429F00F1E5E7 /* GroupNameCell.swift */,
+				E2EB7FBF22FFAD7C003948A6 /* ItemCell.swift */,
 				E24ADB0B23399BD8008F2F9F /* ListHomeCell.swift */,
+				E27D70B52340079D009C68B3 /* RecipeCell.swift */,
+				E22A0EF523AC064F007D7272 /* RecipePuppyCell.swift */,
+				E273F212235A6E96007B54E2 /* RecipeSearchCell.swift */,
 				E25F071C231490A200E6738E /* RecipeTypeCell.swift */,
+				E20F2AD723258A4B00CD907A /* StorageCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";

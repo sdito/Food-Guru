@@ -11,7 +11,9 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class SettingsDetailVC: UIViewController {
+    
     @IBOutlet weak var tableView: UITableView!
+    
     var setting: Setting.SettingName?
     var db: Firestore!
     
@@ -31,20 +33,16 @@ class SettingsDetailVC: UIViewController {
         
     }
     
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         tableView.reloadData()
-        
-        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        print("View did dissapear")
         SharedValues.shared.newUsername = nil
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     private func returnCells(setting: Setting.SettingName, db: Firestore!) -> [UITableViewCell] {
@@ -78,9 +76,6 @@ class SettingsDetailVC: UIViewController {
                 cell2.button.addTarget(self, action: #selector(createAccountFromAnonymous), for: .touchUpInside)
                 return [cell1, cell2]
             }
-            
-            
-            
             
         case .about:
             let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
@@ -194,7 +189,7 @@ class SettingsDetailVC: UIViewController {
                 button2.button.addTarget(self, action: #selector(deleteItemsFromStorage), for: .touchUpInside)
                 
                 
-                #warning("probably works correctlhy, need to actually implement though")
+                
                 if SharedValues.shared.groupID != nil && SharedValues.shared.isStorageWithGroup == false {
                     // would need to have the option to merge the groups for members in their group
                     let button0 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
@@ -213,10 +208,6 @@ class SettingsDetailVC: UIViewController {
                     cell2.setUI(str: txt)
                     return [cell1, cell2, button1, button2]
                 }
-                
-                
-                
-                
             }
             
         case .recentlyViewedRecipes:
@@ -248,22 +239,16 @@ class SettingsDetailVC: UIViewController {
     @objc func mergeStoragesWithGroup(_ sender: UIButton) {
         sender.alpha = 0.4
         sender.isUserInteractionEnabled = false
-        print("Need to merge storges with group")
-//        #error("need to test this a lot, and to test all of the three fucntions a lot, and to finish implementing")
         
+        // need to merge storages with group
         if let storageID = SharedValues.shared.foodStorageID {
             let groupEmails = Set<String>(SharedValues.shared.groupEmails ?? [])
             var storageEmails = Set<String>(SharedValues.shared.foodStorageEmails ?? [])
-            storageEmails.remove("no email")
             
             if let e = Auth.auth().currentUser?.email {
                 storageEmails.insert(e)
             }
-            
             let emailsToAdd = groupEmails.subtracting(storageEmails)
-            
-            #warning("need to just get all the storageIDs and feed them into this function, then will not need to worry about the other stuff, if there are no storageIDs then this function doenst need to be called")
-            
             
             // delete all values from ownUserStorages from group document
             if let groupID = SharedValues.shared.groupID {
@@ -273,31 +258,18 @@ class SettingsDetailVC: UIViewController {
                 ])
             }
             
-            #warning("this function kinda works, just need to have it completely finish running before going to the next functions")
-            
-            
-            
-            
             FoodStorage.mergeItemsTogetherInStorage(db: self.db, newStorageID: storageID, newEmails: Array(groupEmails))
-            
-
             
             if !emailsToAdd.isEmpty {
                 let ge = Array(groupEmails)
                 FoodStorage.updateDataInStorageDocument(db: self.db, foodStorageID: storageID, emails: ge)
             }
-            
-
         } else {
             let alert = UIAlertController(title: "Error", message: "No storage found, so unable to merge the storages.", preferredStyle: .alert)
             alert.addAction(.init(title: "Ok", style: .default, handler: nil))
             present(alert, animated: true)
         }
-        
-                
     }
-    
-    
     
     @objc private func createAccountFromAnonymous() {
         print("Create account from anonymous")
@@ -306,16 +278,15 @@ class SettingsDetailVC: UIViewController {
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
+    
     @objc private func changeUsername() {
         print("Change the username from here")
         let sb: UIStoryboard = UIStoryboard(name: "LogIn", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "createUsernameVC") as! CreateDisplayNameVC
-//        vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
         vc.backOutlet.isHidden = false
         vc.forChange = true
         vc.createUsernameOutlet.setTitle("Change username", for: .normal)
-//        #error("need to reload the table view once the display name is changed")
     }
     
     
@@ -338,6 +309,7 @@ class SettingsDetailVC: UIViewController {
         alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         present(alert, animated: true)
     }
+    
     @objc private func createGroup() {
         if SharedValues.shared.anonymousUser == false {
             let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
@@ -349,6 +321,7 @@ class SettingsDetailVC: UIViewController {
             present(alert, animated: true)
         }
     }
+    
     @objc private func leaveGroupAction() {
         let alert = UIAlertController(title: "Are you sure you want to leave your group?", message: nil, preferredStyle: .alert)
         
@@ -356,23 +329,27 @@ class SettingsDetailVC: UIViewController {
         alert.addAction(.init(title: "Back", style: .cancel, handler: nil))
         present(alert, animated: true)
     }
+    
     @objc private func editGroupAction() {
         let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
         vc.modalPresentationStyle = .fullScreen
         vc.previousGroupID = SharedValues.shared.groupID
         present(vc, animated: true, completion: nil)
     }
+    
     @objc private func createStorageIndividual() {
         print("create individual storage")
         let foodStorage = FoodStorage(isGroup: false, groupID: nil, peopleEmails: [Auth.auth().currentUser?.email ?? "no email"], items: nil, numberOfPeople: 1)
         FoodStorage.createStorageToFirestoreWithPeople(db: db, foodStorage: foodStorage)
         tableView.reloadData()
     }
+    
     @objc private func createStorageGroup() {
         print("create group storage")
         let foodStorage = FoodStorage(isGroup: true, groupID: SharedValues.shared.groupID, peopleEmails: SharedValues.shared.groupEmails ?? ["emails didnt work"], items: nil, numberOfPeople: SharedValues.shared.groupEmails?.count)
         FoodStorage.createStorageToFirestoreWithPeople(db: db, foodStorage: foodStorage)
     }
+    
     @objc private func deleteItemsFromStorage() {
         let alert = UIAlertController(title: "Are you sure you want to delete all items from your storage?", message: "This action can't be undone", preferredStyle: .alert)
         alert.addAction(.init(title: "Delete", style: .destructive, handler: { (action) in
@@ -385,6 +362,7 @@ class SettingsDetailVC: UIViewController {
         alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         present(alert, animated: true)
     }
+    
     @objc private func deleteStorage() {
         print("Delete storage")
         let alert = UIAlertController(title: "Are you sure you want to delete your storage?", message: "This action can't be undone", preferredStyle: .alert)

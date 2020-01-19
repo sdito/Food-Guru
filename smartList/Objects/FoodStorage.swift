@@ -46,6 +46,24 @@ struct FoodStorage {
         }
     }
     
+    static func addAllItemsFromListintoFoodStorage(sendList: GroceryList, storageID: String, db: Firestore) {
+        for item in sendList.items ?? [] {
+            var newItemWithStorage = item
+            let words = item.name.split{ !$0.isLetter }.map { (sStr) -> String in
+                String(sStr.lowercased())
+            }
+            let storageSection = GenericItem.getStorageType(item: newItemWithStorage.systemItem ?? .other, words: words)
+            
+            newItemWithStorage.storageSection = storageSection
+            
+            if let genericItem = newItemWithStorage.systemItem {
+                newItemWithStorage.timeExpires = Date().timeIntervalSince1970 + Double(GenericItem.getSuggestedExpirationDate(item: genericItem, storageType: newItemWithStorage.storageSection ?? .unsorted))
+            }
+            
+            newItemWithStorage.writeToFirestoreForStorage(db: db, docID: storageID)
+        }
+    }
+    
     static func getEmailsfromStorageID(storageID: String, db: Firestore, emailsReturned: @escaping (_ emails: [String]?) -> Void) {
         var emails: [String]?
         db.collection("storages").document(storageID).getDocument { (docSnapshot, error) in
@@ -275,7 +293,7 @@ struct FoodStorage {
     }
     
     
-    #warning("make sure this is being used, need to feed storageIDs into this function, need to double check this is wrking properly")
+    
     static func mergeItemsTogetherInStorage(db: Firestore, newStorageID: String, newEmails: [String]) {
         
         for email in newEmails {

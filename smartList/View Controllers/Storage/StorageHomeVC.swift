@@ -14,23 +14,8 @@ import AVFoundation
 
 class StorageHomeVC: UIViewController {
     
-    #warning("make sure this is being used, left off wtih this, need to have the items stay selected between tabs, and then used for the action, rather than just taking the current selected rows")
-    private var currentlySelectedItems: [Item] = [] {
-        didSet {
-            handlePopUpView()
-        }
-    }
-    
-//    private var indexes: [Int]? {
-//        return tableView.indexPathsForSelectedRows?.map({$0.row})
-//    }
-    
-    var db: Firestore!
-    lazy private var emptyCells: [UITableViewCell] = []
-    private var searchActive = false
-    
+    @IBOutlet var optionButtons: [UIButton]!
     @IBOutlet weak var pickerView: UIDatePicker!
-    
     @IBOutlet weak var searchOutlet: UIButton!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
@@ -39,14 +24,19 @@ class StorageHomeVC: UIViewController {
     @IBOutlet weak var expirationDateOutlet: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var helperView: UIView!
-    
     @IBOutlet weak var popUpViewHeight: NSLayoutConstraint!
     @IBOutlet weak var popUpViewWidth: NSLayoutConstraint!
     
-    @IBOutlet var optionButtons: [UIButton]!
+    var db: Firestore!
+    lazy private var emptyCells: [UITableViewCell] = []
+    private var searchActive = false
+    private var currentlySelectedItems: [Item] = [] {
+        didSet {
+            handlePopUpView()
+        }
+    }
     
-    
-    var items: [Item] = [] {
+    private var items: [Item] = [] {
         didSet {
             segmentedControl.setTitle("None \(self.items.filter({$0.storageSection == .unsorted}).count)", forSegmentAt: 0)
             segmentedControl.setTitle("Fridge \(self.items.filter({$0.storageSection == .fridge}).count)", forSegmentAt: 1)
@@ -59,16 +49,14 @@ class StorageHomeVC: UIViewController {
         }
     }
     
-    var sortedItems: [Item] = [] {
+    private var sortedItems: [Item] = [] {
         didSet {
             tableView.reloadData()
             handlePopUpView()
         }
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -135,6 +123,11 @@ class StorageHomeVC: UIViewController {
         
         currentlySelectedItems.removeAll()
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     @IBAction func searchPressed(_ sender: Any) {
         
         searchActive = !searchActive
@@ -158,7 +151,6 @@ class StorageHomeVC: UIViewController {
     }
     
     @IBAction func plusWasPressed(_ sender: Any) {
-        print("Plus was pressed")
         let vc = storyboard?.instantiateViewController(withIdentifier: "storageNewItem") as! StorageNewItemVC
         var idx: Int {
             switch segmentedControl.selectedSegmentIndex {
@@ -179,9 +171,6 @@ class StorageHomeVC: UIViewController {
     }
     
     @IBAction func barcodeScanPressed(_ sender: Any) {
-        print("barcode scanner pressed")
-        
-        
         let value = AVCaptureDevice.authorizationStatus(for: .video)
         
         let cameraPicker = UIImagePickerController()
@@ -196,57 +185,22 @@ class StorageHomeVC: UIViewController {
             alert.addAction(.init(title: "Ok", style: .default, handler: nil))
             present(alert, animated: true)
         }
-        
-        
-        
     }
     
     @IBAction func segmentedControlPressed(_ sender: Any) {
         sortedItems = self.items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: searchBar.text ?? "")
     }
     
-    @objc func createGroupSelector() {
-        if SharedValues.shared.anonymousUser == false {
-            let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
-            vc.modalPresentationStyle = .fullScreen
-            present(vc, animated: true, completion: nil)
-        } else {
-            let alert = UIAlertController(title: "Error", message: "Create a free account in order to share your storage with other people.", preferredStyle: .alert)
-            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-            present(alert, animated: true)
-        }
-        
-        
-    }
-    @objc func createIndividualStorage() {
-        print("create individual storage")
-        let foodStorage = FoodStorage(isGroup: false, groupID: nil, peopleEmails: [Auth.auth().currentUser?.email ?? "no email"], items: nil, numberOfPeople: 1)
-        FoodStorage.createStorageToFirestoreWithPeople(db: db, foodStorage: foodStorage)
-        tableView.reloadData()
-        helperView.isHidden = false
-    }
-    
-    
     @IBAction func findRecipes(_ sender: Any) {
         
         let genericItemsFirst = currentlySelectedItems.map({$0.systemItem!.rawValue})
-        
-        // new addition, need to handle errors associated with
         let genericItems = genericItemsFirst.filter({$0 != "other"})
         
-//        #error("have a message or something saying why some certain items may not appear, and if there are no items enabled for searching, then have an alert, if there was only one item, then would be find to continue with search for recipe puppy searches")
         if genericItems.count == 0 {
             let alert = UIAlertController(title: "Unable to find recipes with selected items", message: "These items do not match any records in the application, these items may be added in the future!", preferredStyle: .alert)
             alert.addAction(.init(title: "Ok", style: .default, handler: nil))
             present(alert, animated: true)
         }
-        
-//        else if genericItems.count != genericItemsFirst.count {
-//            print("Some items were deleted, have a little message or something")
-//            self.tabBarController?.createMessageView(color: .systemRed, text: "Why don't all items appear in search?")
-//        }
-        
-        
         
         
         Search.getRecipesFromIngredients(db: db, ingredients: genericItems) { (rcps) in
@@ -284,7 +238,7 @@ class StorageHomeVC: UIViewController {
     @IBAction func addExpirationDateCells(_ sender: Any) {
         if pickerPopUpView.isHidden {
             pickerPopUpView.setIsHidden(false, animated: true)
-            #warning("could set the suggested expiration date here, ONLY if one item is currently selected: MAKE SURE THIS IS WORKING")
+            
             if currentlySelectedItems.count == 1 {
                 let item = currentlySelectedItems.first!
                 if let genericItem = item.systemItem {
@@ -319,6 +273,31 @@ class StorageHomeVC: UIViewController {
         currentlySelectedItems.removeAll()
     }
     
+    @objc private func createGroupSelector() {
+        if SharedValues.shared.anonymousUser == false {
+            let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
+            vc.modalPresentationStyle = .fullScreen
+            present(vc, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "Create a free account in order to share your storage with other people.", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+        }
+        
+        
+    }
+    
+    @objc private func createIndividualStorage() {
+        print("create individual storage")
+        let foodStorage = FoodStorage(isGroup: false, groupID: nil, peopleEmails: [Auth.auth().currentUser?.email ?? "no email"], items: nil, numberOfPeople: 1)
+        FoodStorage.createStorageToFirestoreWithPeople(db: db, foodStorage: foodStorage)
+        tableView.reloadData()
+        helperView.isHidden = false
+    }
+    
+    
+    
+    
     private func handleCellSortingTo(segment: String) {
         
         for item in currentlySelectedItems {
@@ -340,8 +319,7 @@ class StorageHomeVC: UIViewController {
         }
     }
     
-    @objc func createGroupStorage() {
-        print("create group storage")
+    @objc private func createGroupStorage() {
         let foodStorage = FoodStorage(isGroup: true, groupID: SharedValues.shared.groupID, peopleEmails: SharedValues.shared.groupEmails ?? ["emails didnt work"], items: nil, numberOfPeople: SharedValues.shared.groupEmails?.count)
         FoodStorage.createStorageToFirestoreWithPeople(db: db, foodStorage: foodStorage)
         
@@ -353,8 +331,8 @@ class StorageHomeVC: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(observerSelectorFoodStorageID), name: .foodStorageIDchanged, object: nil)
     }
     
-    @objc func observerSelectorFoodStorageID() {
-        print("FOOD STORAGE ID CHANGED")
+    @objc private func observerSelectorFoodStorageID() {
+        // food storage id changed
         Item.readItemsForStorage(db: db, storageID: SharedValues.shared.foodStorageID ?? " ") { (itms) in
             self.items = itms
         }
@@ -383,14 +361,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
             pickerPopUpView.setIsHidden(true, animated: true)
             expirationDateOutlet.setTitleColor(.lightGray, for: .normal)
         }
-        
-//        if tableView.indexPathsForSelectedRows?.count ?? 0 >= 1 {
-//            popUpView.setIsHidden(false, animated: true)
-//        } else {
-//            popUpView.setIsHidden(true, animated: true)
-//            pickerPopUpView.setIsHidden(true, animated: true)
-//            expirationDateOutlet.setTitleColor(.lightGray, for: .normal)
-//        }
+
         
     }
     
@@ -421,13 +392,8 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
             let three = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
             three.setUI(title: "Create a group")
             three.button.addTarget(self, action: #selector(createGroupSelector), for: .touchUpInside)
-            
-            
-            
             return [one, three, four]
         }
-        
-        
     }
     
     
@@ -442,7 +408,6 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         } else {
             return emptyCells.count
         }
-        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -460,7 +425,6 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         } else {
             return emptyCells[indexPath.row]
         }
-        
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

@@ -83,7 +83,7 @@ extension String {
         ingredient = ingredient.replacingOccurrences(of: "&#39;", with: "'")
         let returnIngredients = ingredients + [ingredient]
         let returnText = String(textAfterIngredientStart[idx...])
-        #warning("can still improve this")
+        
         return returnText.getIngredientsFromString(ingredients: returnIngredients)
     }
 

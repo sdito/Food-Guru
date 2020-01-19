@@ -11,14 +11,6 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class CreateGroupVC: UIViewController {
-    var db: Firestore!
-    var previousGroupID: String?
-    private var selectedEmail: String? {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
-    
     
     @IBOutlet weak var exitOutlet: UIButton!
     @IBOutlet weak var topView: UIView!
@@ -26,6 +18,13 @@ class CreateGroupVC: UIViewController {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneCreatingOutlet: UIButton!
     
+    var db: Firestore!
+    var previousGroupID: String?
+    private var selectedEmail: String? {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     var emails: [String] = SharedValues.shared.groupEmails ?? [(Auth.auth().currentUser?.email)!] {
         didSet {
@@ -50,6 +49,7 @@ class CreateGroupVC: UIViewController {
             doneCreatingOutlet.setTitle("Done editing", for: .normal)
         }
     }
+    
     @IBAction func addUser(_ sender: Any) {
         print("Add user pressed")
         addItem()
@@ -115,7 +115,7 @@ class CreateGroupVC: UIViewController {
         }
     }
     private func sendEmail(email: String) {
-        #warning("make sure this works and that the app store URL is corret")
+        #warning("make sure this works and that the app store URL is correct, probably need to check after release")
         let subject = "Join%20my%20group%20on%20Food%20Guru!"
         let link = URL(string: "https://apps.apple.com/us/app/food-guru:-recipes-and-more/id1493046325?ls=1")!
         let body = "Here%20is%20the%20link%20to%20download%20the%20app%20on%20the%20appstore:%20\(link)"

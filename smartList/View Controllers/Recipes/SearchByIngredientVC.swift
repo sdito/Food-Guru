@@ -10,7 +10,6 @@ import UIKit
 import FirebaseFirestore
 
 
-#warning("might need to add a 'done' button on this VC")
 
 protocol SearchAssistantDelegate {
     func searchTextChanged(text: String)
@@ -23,6 +22,13 @@ protocol RecipesFoundFromSearchingDelegate {
 
 
 class SearchByIngredientVC: UIViewController {
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var buttonOutlet: UIButton!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var newItemButtonOutlet: UIButton!
+    
+    var db: Firestore!
     var delegate: SearchAssistantDelegate!
     var recipesFoundDelegate: RecipesFoundFromSearchingDelegate!
     private var keyboardHeight: CGFloat?
@@ -50,11 +56,6 @@ class SearchByIngredientVC: UIViewController {
         }
     }
     
-    var db: Firestore!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var buttonOutlet: UIButton!
-    @IBOutlet weak var searchBar: UISearchBar!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
@@ -70,14 +71,12 @@ class SearchByIngredientVC: UIViewController {
         }
         searchBar.setUpAddItemToolbar(cancelAction: #selector(cancelSelector), addAction: #selector(addSelector))
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        
+        newItemButtonOutlet.widthAnchor.constraint(equalToConstant: newItemButtonOutlet.bounds.width + 10.0).isActive = true
+        newItemButtonOutlet.shadowAndRounded(cornerRadius: 10, border: false)
     }
     
-    @objc func keyboardWillShow(_ notification: Notification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            keyboardHeight = keyboardRectangle.height
-        }
-    }
     
     @IBAction func buttonAction(_ sender: Any) {
         let ingredients = selectedItems.map { (itm) -> GenericItem in
@@ -91,9 +90,14 @@ class SearchByIngredientVC: UIViewController {
         
     }
     
+    @IBAction func exitPressed(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     @IBAction func addItem(_ sender: Any) {
         //#error("need to get create item vc to be proper size")
         searchBar.isHidden = false
+        buttonOutlet.isHidden = true
+        
         searchBar.becomeFirstResponder()
         let vc = storyboard?.instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
         self.addChild(vc)
@@ -111,6 +115,13 @@ class SearchByIngredientVC: UIViewController {
         delegate = vc
     }
     
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            keyboardHeight = keyboardRectangle.height
+        }
+    }
+    
 }
 
 extension SearchByIngredientVC: CreateNewItemDelegate {
@@ -119,7 +130,7 @@ extension SearchByIngredientVC: CreateNewItemDelegate {
         selectedItems.append(item)
         searchBar.text = ""
         searchBar.isHidden = true
-        
+        buttonOutlet.isHidden = false
         
         for item in selectedItems {
             if let row = possibleItems.firstIndex(of: item) {
@@ -134,10 +145,10 @@ extension SearchByIngredientVC: UISearchBarDelegate {
     @objc private func cancelSelector() {
         searchBar.endEditing(true)
         searchBar.isHidden = true
+        buttonOutlet.isHidden = false
         delegate.removeChildVC()
     }
     @objc private func addSelector() {
-        print("Add")
         
         if searchBar.text != "" {
             let item = Item.createItemFrom(text: searchBar.text ?? " ")
@@ -145,6 +156,7 @@ extension SearchByIngredientVC: UISearchBarDelegate {
             selectedItems.append(item)
             searchBar.text = ""
             searchBar.isHidden = true
+            buttonOutlet.isHidden = false
             searchBar.setTextProperties()
             for item in selectedItems {
                 if let row = possibleItems.firstIndex(of: item) {
@@ -157,12 +169,14 @@ extension SearchByIngredientVC: UISearchBarDelegate {
         
         searchBar.endEditing(true)
         searchBar.isHidden = true
+        buttonOutlet.isHidden = false
         delegate.removeChildVC()
     }
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         delegate.searchTextChanged(text: searchBar.text ?? "")
+        
     }
 }
 

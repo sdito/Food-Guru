@@ -9,6 +9,7 @@
 import UIKit
 
 class TutorialVC: UIPageViewController {
+    
     let button = UIButton()
     private var pageControl = UIPageControl()
     
@@ -21,13 +22,9 @@ class TutorialVC: UIPageViewController {
         if let firstViewController = pages.first {
             setViewControllers([firstViewController], direction: .forward, animated: true, completion: nil)
         }
-        
-        
     }
     
-    
-    
-    lazy var pages: [UIViewController] = {
+    lazy private var pages: [UIViewController] = {
         return [self.newVc(viewController: "One"),
                 self.newVc(viewController: "Two"),
                 self.newVc(viewController: "Three"),
@@ -51,9 +48,6 @@ class TutorialVC: UIPageViewController {
         self.pageControl.pageIndicatorTintColor = .white
         self.pageControl.currentPageIndicatorTintColor = .black
         self.view.addSubview(pageControl)
-        
-        
-        #warning("need to fix this mess of a way to exit the tutorial screen")
         
         button.setTitle("Done", for: .normal)
         let font = UIFont(name: "futura", size: 20)
@@ -102,11 +96,10 @@ extension TutorialVC: UIPageViewControllerDelegate, UIPageViewControllerDataSour
         guard pages.count > nextIndex else { return nil }
         return pages[nextIndex]
     }
+    
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         let pageContentViewController = pageViewController.viewControllers![0]
         self.pageControl.currentPage = pages.firstIndex(of: pageContentViewController)!
-        
-        
     }
     
 }

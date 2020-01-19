@@ -12,6 +12,17 @@ import FirebaseFirestore
 
 
 class AddItemsVC: UIViewController {
+    
+    @IBOutlet weak var plusButton: UIButton!
+    @IBOutlet weak var topViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var backView: UIView!
+    @IBOutlet weak var topView: UIView!
+    @IBOutlet weak var storesView: UIView!
+    @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var tableView: UITableView!
+    
+    var db: Firestore!
     private var arrayArrayItems: [[Item]] = []
     private var sortedCategories: [String] = []
     private var delegate: SearchAssistantDelegate!
@@ -28,7 +39,6 @@ class AddItemsVC: UIViewController {
     }
     
     
-    var db: Firestore!
     var list: GroceryList? {
         didSet {
             if list?.items?.isEmpty == false {
@@ -40,14 +50,19 @@ class AddItemsVC: UIViewController {
         }
     }
     
-    @IBOutlet weak var plusButton: UIButton!
-    @IBOutlet weak var topViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var backView: UIView!
-    @IBOutlet weak var topView: UIView!
-    @IBOutlet weak var storesView: UIView!
-    @IBOutlet weak var textField: UITextField!
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
-    @IBOutlet weak var tableView: UITableView!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        db = Firestore.firestore()
+        textField.setUpCancelAndAddToolbar(cancelAction: #selector(dismissKeyboardPressed), addAction: #selector(addItemAction))
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        if SharedValues.shared.isPhone == false {
+            topViewHeight.isActive = false
+            topView.heightAnchor.constraint(equalToConstant: 55).isActive = true
+            textField.font = UIFont(name: "futura", size: 27)
+            plusButton.titleLabel?.font = UIFont(name: "futura", size: 55)
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -74,35 +89,6 @@ class AddItemsVC: UIViewController {
         Item.readItemsForList(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (itm) in
             self.list?.items = itm
         }
-        
-        
-    }
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        db = Firestore.firestore()
-        textField.setUpCancelAndAddToolbar(cancelAction: #selector(dismissKeyboardPressed), addAction: #selector(addItemAction))
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        if SharedValues.shared.isPhone == false {
-            topViewHeight.isActive = false
-            topView.heightAnchor.constraint(equalToConstant: 55).isActive = true
-            textField.font = UIFont(name: "futura", size: 27)
-            plusButton.titleLabel?.font = UIFont(name: "futura", size: 55)
-        }
-    }
-    
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    @objc func keyboardWillShow(_ notification: Notification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            keyboardHeight = keyboardRectangle.height
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -111,18 +97,14 @@ class AddItemsVC: UIViewController {
         SharedValues.shared.listIdentifier?.updateData([
             "numItems": list?.items?.count as Any
         ])
-        
     }
-
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     @IBAction func addItem(_ sender: Any) {
         addItemAction()
-        /*
-        if textField.text != "" {
-            toAddItem(text: textField.text!)
-            delegate.searchTextChanged(text: "")
-        }
-        */
     }
     
     @IBAction func segmentedControlPressed(_ sender: Any) {
@@ -130,22 +112,6 @@ class AddItemsVC: UIViewController {
         tableView.reloadData()
     }
     
-    private func setUIfrom(list: GroceryList) {
-        //segmented control set up
-        segmentedControl.removeAllSegments()
-        
-        list.stores?.forEach({ (store) in
-            segmentedControl.insertSegment(withTitle: store, at: 0, animated: false)
-        })
-        
-        segmentedControl.selectedSegmentIndex = 0
-        if list.stores?.isEmpty == true {
-            segmentedControl.isHidden = true
-        } else {
-            segmentedControl.isHidden = false
-        }
-        
-    }
     @IBAction func editList(_ sender: Any) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "setUpList") as! SetUpListVC
         if list?.docID == nil {
@@ -156,9 +122,8 @@ class AddItemsVC: UIViewController {
         self.present(vc, animated: true, completion: nil)
         
     }
+    
     @IBAction func deleteList(_ sender: Any) {
-        
-        
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         actionSheet.addAction(.init(title: "Delete list", style: .destructive, handler: { action in
@@ -185,11 +150,33 @@ class AddItemsVC: UIViewController {
             }
             present(actionSheet, animated: true, completion: nil)
         }
-        
-        
-        
-        
-        
+    }
+    
+    @IBAction func textDidChange(_ sender: Any) {
+        if textAssistantViewActive == false {
+            // add the view here
+            let vc = storyboard?.instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
+            self.addChild(vc)
+            self.view.addSubview(vc.tableView)
+            vc.didMove(toParent: self)
+            vc.tableView.translatesAutoresizingMaskIntoConstraints = false
+            
+            vc.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+            vc.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+            vc.tableView.topAnchor.constraint(equalTo: topView.bottomAnchor).isActive = true
+            
+            let tb = (tabBarController?.tabBar.frame.height ?? 0.0)
+            let distance = (backView.frame.height) - (keyboardHeight ?? 0.0) - (topView.frame.height) + tb
+            
+            vc.tableView.heightAnchor.constraint(equalToConstant: distance).isActive = true
+            
+            vc.delegate = self as CreateNewItemDelegate
+            delegate = vc
+            delegate.searchTextChanged(text: textField.text!)
+            textAssistantViewActive = true
+        } else {
+            delegate.searchTextChanged(text: textField.text!)
+        }
     }
     
     @IBAction func doneWithList(_ sender: Any) {
@@ -199,8 +186,13 @@ class AddItemsVC: UIViewController {
                 gottenEmails = emails
             }
             
-            let alert = UIAlertController(title: "Are you done with the list?", message: "The selected items from this list will be added to your storage, where you can keep track of your items.", preferredStyle: .actionSheet)
-            alert.addAction(.init(title: "Add items to storage", style: .default, handler: {(alert: UIAlertAction!) in self.addItemsToStorageIfPossible(sendList: self.list!, foodStorageEmails: gottenEmails)}))
+            let alert = UIAlertController(title: "Are you done with the list?", message: "Items from this list will be added to your storage, where you can keep track of your items.", preferredStyle: .actionSheet)
+            alert.addAction(.init(title: "Add selected items to storage", style: .default, handler: {(alert: UIAlertAction!) in self.addSelectedItemsToStorageIfPossible(sendList: self.list!, foodStorageEmails: gottenEmails)
+            }))
+            alert.addAction(.init(title: "Add all items to storage", style: .default, handler: { (alert: UIAlertAction!) in
+                print("Add all items to storage")
+                self.addAllItemsToStorage(sendList: self.list!, foodStorageEmails: gottenEmails)
+            }))
             alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
             
             if UIDevice.current.userInterfaceIdiom == .phone {
@@ -252,11 +244,33 @@ class AddItemsVC: UIViewController {
                     present(alert, animated: true)
                 }
             }
-            
+        }
+    }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            keyboardHeight = keyboardRectangle.height
+        }
+    }
+
+    private func setUIfrom(list: GroceryList) {
+        //segmented control set up
+        segmentedControl.removeAllSegments()
+        
+        list.stores?.forEach({ (store) in
+            segmentedControl.insertSegment(withTitle: store, at: 0, animated: false)
+        })
+        
+        segmentedControl.selectedSegmentIndex = 0
+        if list.stores?.isEmpty == true {
+            segmentedControl.isHidden = true
+        } else {
+            segmentedControl.isHidden = false
         }
         
-        
     }
+    
     @objc private func addItemAction() {
         if textField.text != "" {
             toAddItem(text: textField.text!)
@@ -282,33 +296,7 @@ class AddItemsVC: UIViewController {
         textField.text = ""
     }
     
-    @IBAction func textDidChange(_ sender: Any) {
-        if textAssistantViewActive == false {
-            // add the view here
-            let vc = storyboard?.instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
-            self.addChild(vc)
-            self.view.addSubview(vc.tableView)
-            vc.didMove(toParent: self)
-            vc.tableView.translatesAutoresizingMaskIntoConstraints = false
-            
-            vc.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-            vc.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-            vc.tableView.topAnchor.constraint(equalTo: topView.bottomAnchor).isActive = true
-            
-            let tb = (tabBarController?.tabBar.frame.height ?? 0.0)
-            let distance = (backView.frame.height) - (keyboardHeight ?? 0.0) - (topView.frame.height) + tb
-            
-            vc.tableView.heightAnchor.constraint(equalToConstant: distance).isActive = true
-//            vc.tableView.heightAnchor.constraint(equalToConstant: (self.view.bounds.height - textField.bounds.height - (keyboardHeight ?? 0.0))).isActive = true
-            
-            vc.delegate = self as CreateNewItemDelegate
-            delegate = vc
-            delegate.searchTextChanged(text: textField.text!)
-            textAssistantViewActive = true
-        } else {
-            delegate.searchTextChanged(text: textField.text!)
-        }
-    }
+    
     
     @objc func dismissKeyboardPressed() {
         textField.resignFirstResponder()
@@ -483,20 +471,52 @@ extension AddItemsVC {
         }
         
     }
-    func addItemsToStorageIfPossible(sendList: GroceryList, foodStorageEmails: [String]?) {
+    func addSelectedItemsToStorageIfPossible(sendList: GroceryList, foodStorageEmails: [String]?) {
         if list != nil && list?.items?.isEmpty == false {
             if let id = SharedValues.shared.foodStorageID {
                 FoodStorage.addItemsFromListintoFoodStorage(sendList: list!, storageID: id, db: db)
+                var numItemsAdded = 0
                 for index in (list?.items!.indices)! {
-                    list?.items?[index].selected = false
+                    if list?.items?[index].selected == true {
+                        numItemsAdded += 1
+                        list?.items?[index].selected = false
+                    }
+                    
                 }
                 
-                self.createMessageView(color: Colors.messageGreen, text: "Items added to storage")
+                if numItemsAdded > 0 {
+                    self.createMessageView(color: Colors.messageGreen, text: "Items added to storage")
+                } else {
+                    self.createMessageView(color: .red, text: "No items selected")
+                }
+                numItemsAdded = 0
             }
         } else {
-            let alert = UIAlertController(title: "Error", message: "There are no selected from your list. Only selected items will be sent to your storage.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Error", message: "There are no items in your list Add items to be able to add them to your storage.", preferredStyle: .alert)
             alert.addAction(.init(title: "Ok", style: .default, handler: nil))
             present(alert, animated: true)
         }
+    }
+    
+    func addAllItemsToStorage(sendList: GroceryList, foodStorageEmails: [String]?) {
+        
+        if list != nil && list?.items?.isEmpty == false {
+            if let id = SharedValues.shared.foodStorageID {
+                FoodStorage.addAllItemsFromListintoFoodStorage(sendList: list!, storageID: id, db: db)
+                for index in (list?.items!.indices)! {
+                    list?.items?[index].selected = false
+                    
+                }
+                
+                self.createMessageView(color: Colors.messageGreen, text: "Items added to storage")
+                
+            }
+        } else {
+            let alert = UIAlertController(title: "Error", message: "There are no items in your list Add items to be able to add them to your storage.", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+        }
+        
+        
     }
 }

@@ -9,12 +9,11 @@
   import UIKit
   
   class SettingsHomeVC: UIViewController {
-    private var sections: [String] = []
-    private var cells: [[Setting]] = []
-    
-    
     
     @IBOutlet weak var tableView: UITableView!
+    
+    private var sections: [String] = []
+    private var cells: [[Setting]] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,17 +23,16 @@
         tableView.reloadData()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        tableView.visibleCells.forEach { (cell) in
+            cell.isSelected = false
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "settingDetail" {
             let destVC = segue.destination as! SettingsDetailVC
             destVC.setting = sender as? Setting.SettingName
-        }
-    }
-    
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        tableView.visibleCells.forEach { (cell) in
-            cell.isSelected = false
         }
     }
     
@@ -60,6 +58,7 @@ extension SettingsHomeVC: UITableViewDataSource, UITableViewDelegate {
         cell.setUI(setting: setting)
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let setting = cells[indexPath.section][indexPath.row].settingName
         

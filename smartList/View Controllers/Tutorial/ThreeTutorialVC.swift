@@ -14,8 +14,6 @@ class ThreeTutorialVC: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var topView: UIView!
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)

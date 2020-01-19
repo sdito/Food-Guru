@@ -11,10 +11,13 @@ import RealmSwift
 import FirebaseFirestore
 
 class CookbookVC: UIViewController {
-//    private let currentSearchesView = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
+    
+    @IBOutlet weak var wholeStackView: UIStackView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var scrollBackUpView: UIView!
+    
     private var lastContentOffset: CGFloat = 0
-    
-    
     private var filteredRecipes: [CookbookRecipe] = [] {
         didSet {
             tableView.reloadData()
@@ -25,15 +28,7 @@ class CookbookVC: UIViewController {
             tableView.reloadData()
         }
     }
-    
-    
-    @IBOutlet weak var wholeStackView: UIStackView!
-    
-    
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var scrollBackUpView: UIView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let realm = try! Realm()
@@ -54,6 +49,7 @@ class CookbookVC: UIViewController {
         searchBar.setUpAddItemToolbar(cancelAction: #selector(cancelSelector), addAction: #selector(addSelector))
         
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -66,6 +62,7 @@ class CookbookVC: UIViewController {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showFromCookbook" {
             let destVC = segue.destination as! RecipeDetailVC
@@ -73,25 +70,22 @@ class CookbookVC: UIViewController {
         }
     }
     
-    
     @IBAction func savedRecipes(_ sender: Any) {
-        print("Saved recipes")
-//        self.dismiss(animated: false, completion: nil)
         tabBarController?.selectedIndex = 0
         NotificationCenter.default.post(name: .haveSavedRecipesAppear, object: nil)
-        
     }
-    
     
     @IBAction func allRecipes(_ sender: Any) {
         tabBarController?.selectedIndex = 0
         
     }
+    
     @objc private func cancelSelector() {
         searchBar.endEditing(true)
         searchBar.text = ""
         filteredRecipes = recipes
     }
+    
     @objc private func addSelector() {
         search()
     }
@@ -107,6 +101,7 @@ class CookbookVC: UIViewController {
             }
         }
     }
+    
 }
 
 
@@ -183,7 +178,6 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     private func deleteSelectedRecipe(recipe: CookbookRecipe, idx: IndexPath) {
-//        let realm = try! Realm()
         recipe.delete()
         tableView.cellForRow(at: idx)?.isHidden = true
         
@@ -202,4 +196,5 @@ extension CookbookVC: UISearchBarDelegate {
             filteredRecipes = recipes.filter({$0.name.lowercased().contains(searchBar.text!.lowercased())})
         }
     }
+    
 }

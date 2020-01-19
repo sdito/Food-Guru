@@ -11,9 +11,9 @@ import FirebaseFirestore
 import StoreKit
 
 class TabVC: UITabBarController {
+    
     var db: Firestore!
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
@@ -37,8 +37,6 @@ class TabVC: UITabBarController {
                     view.frame = CGRect(x: UIScreen.main.bounds.width/2 - width/2, y: 37.5, width: width, height: view.bounds.height)
                 })
             }
-            
-            
         }
         
         if numTimesRan == 8 {

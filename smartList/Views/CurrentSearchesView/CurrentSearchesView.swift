@@ -9,7 +9,7 @@
 import UIKit
 
 
-#warning("do i need class here idk")
+
 protocol CurrentSearchesViewDelegate: class {
     func buttonPressedToDeleteSearch(index: Int)
 }

@@ -11,12 +11,13 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class CreateDisplayNameVC: UIViewController, UITextFieldDelegate {
-    var db: Firestore!
-    var forChange: Bool = false
     
     @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var createUsernameOutlet: UIButton!
     @IBOutlet weak var backOutlet: UIButton!
+    
+    var db: Firestore!
+    var forChange: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +31,11 @@ class CreateDisplayNameVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func backPressed(_ sender: Any) {
-        print("Back pressed")
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func createUsername(_ sendrer: Any) {
+        // should only be shown if when logging in the user does not already have a username
         if let name = usernameTextField.text {
             let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
             changeRequest?.displayName = name
@@ -55,10 +56,6 @@ class CreateDisplayNameVC: UIViewController, UITextFieldDelegate {
             } else {
                 SharedValues.shared.newUsername = name
                 self.dismiss(animated: true, completion: nil)
-                //self.presentingViewController?.createMessageView(color: Colors.messageGreen, text: "Welcome \(name)")
-                //NotificationCenter.default.post(name: .needToUpdateSettingsDetailUI, object: nil)
-                
-//                #error("left off here, need to reload settings when display name is changed")
             }
             
         }

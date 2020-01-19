@@ -12,43 +12,36 @@ import RealmSwift
 
 
 class CreateRecipeVC: UIViewController {
-    var db: Firestore!
-    var storage: Storage!
-    let imagePicker = UIImagePickerController()
-    var image: Data?
-    private var forCookbook = false
     
     @IBOutlet var stackViewsToHide: [UIStackView]!
-    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var servingsTextField: UITextField!
     @IBOutlet weak var cookTimeTextField: UITextField!
     @IBOutlet weak var prepTimeTextField: UITextField!
     @IBOutlet weak var caloriesTextField: UITextField!
-    
     @IBOutlet weak var notesTextView: UITextView!
     @IBOutlet weak var taglineTextView: UITextView!
-    
     @IBOutlet weak var selectimageOutlet: UIButton!
     @IBOutlet weak var cuisineOutlet: UIButton!
     @IBOutlet weak var recipeDescriptionOutlet: UIButton!
     @IBOutlet weak var createRecipeOutlet: UIButton!
-    
     @IBOutlet weak var instructionsListStackView: UIStackView!
     @IBOutlet weak var ingredientsStackView: UIStackView!
-    
-    
     @IBOutlet weak var urlView: UIView!
     @IBOutlet weak var urlTextField: UITextField!
-    //var currTextField: UIView?
     
-    var cuisineType: String? {
+    var db: Firestore!
+    private var storage: Storage!
+    private let imagePicker = UIImagePickerController()
+    private var image: Data?
+    private var forCookbook = false
+    private var cuisineType: String? {
         didSet {
             cuisineOutlet.setTitle(self.cuisineType, for: .normal)
         }
     }
-    var recipeType: [String]? {
+    private var recipeType: [String]? {
         didSet {
             recipeDescriptionOutlet.setTitle(self.recipeType?.joined(separator: ", "), for: .normal)
         }
@@ -76,10 +69,7 @@ class CreateRecipeVC: UIViewController {
         cuisineOutlet.titleEdgeInsets.left = 7
         recipeDescriptionOutlet.titleEdgeInsets.left = 7
         
-        //nameTextField.becomeFirstResponder()
-        
-        
-        createRecipeOutlet.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.mainGradient)
+        createRecipeOutlet.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.secondary)
         createRecipeOutlet.layer.cornerRadius = 15
         createRecipeOutlet.clipsToBounds = true
         
@@ -90,7 +80,6 @@ class CreateRecipeVC: UIViewController {
         notesTextView.border(cornerRadius: 5.0)
         taglineTextView.border(cornerRadius: 5.0)
         self.createNavigationBarTextAttributes()
-        
         
         handleUI()
         createObserver()
@@ -123,6 +112,101 @@ class CreateRecipeVC: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    @IBAction func linkToRecipe(_ sender: Any) {
+        urlView.isHidden = !urlView.isHidden
+    }
+    
+    @IBAction func findUrlRecipe(_ sender: Any) {
+        let stringRepresentation = String(urlTextField.text ?? "")
+        Recipe.getRecipeInfoFromURLallRecipes(recipeURL: stringRepresentation)
+    }
+    
+    
+    @IBAction func createRecipePressed(_ sender: Any) {
+        // handles both creating a cookbook recipe and creating a normal recipe
+        // Can't be nil for both cookbook and normal recipes
+        guard nameTextField.text != "" else {
+            let alert = UIAlertController(title: "Error", message: "Missing recipe name", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
+            return
+        }
+        
+        guard InstructionView.getInstructions(stack: instructionsListStackView) != [] else {
+            let alert = UIAlertController(title: "Error", message: "Missing recipe instructions", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
+            return
+        }
+        
+        guard IngredientView.getIngredients(stack: ingredientsStackView) != [] else {
+            let alert = UIAlertController(title: "Error", message: "Missing recipe ingredients", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
+            return
+        }
+        // end
+        
+        switch forCookbook {
+        case false:
+            guard let img = image else {
+                let alert = UIAlertController(title: "Error", message: "Missing recipe image", preferredStyle: .alert)
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                present(alert, animated: true)
+                return
+            }
+            
+            guard taglineTextView.text != "" else {
+                print("Missing tagline")
+                let alert = UIAlertController(title: "Error", message: "Missing recipe tagline data", preferredStyle: .alert)
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                present(alert, animated: true)
+                return
+            }
+            
+            guard let rType = recipeType, let cType = cuisineType, let cookTime = cookTimeTextField.toInt(), let prepTime = prepTimeTextField.toInt(), let servings = servingsTextField.toInt(), let uid = Auth.auth().currentUser?.uid else {
+                let alert = UIAlertController(title: "Error", message: "Incomplete recipe data", preferredStyle: .alert)
+                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+                present(alert, animated: true)
+                return
+            }
+            
+            var recipe = Recipe(name: nameTextField.text!, recipeType: rType, cuisineType: cType, cookTime: cookTime, prepTime: prepTime, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servings, userID: uid, numReviews: nil, numStars: nil, notes: notesTextView.text, tagline: taglineTextView.text, recipeImage: img, imagePath: nil, reviewImagePaths: nil)
+            recipe.writeToFirestore(db: db, storage: storage)
+            navigationController?.popToRootViewController(animated: true)
+            
+        case true:
+            let ingredients: List<String> = List.init()
+            let instructions: List<String> = List.init()
+            IngredientView.getIngredients(stack: ingredientsStackView).forEach { (str) in
+                ingredients.append(str)
+            }
+            InstructionView.getInstructions(stack: instructionsListStackView).forEach { (str) in
+                instructions.append(str)
+            }
+            
+            let cookbookRecipe = CookbookRecipe()
+            cookbookRecipe.setUp(name: nameTextField.text!, servings: RealmOptional(servingsTextField.toInt()), cookTime: RealmOptional(cookTimeTextField.toInt()), prepTime: RealmOptional(prepTimeTextField.toInt()), calories: RealmOptional(caloriesTextField.toInt()), ingredients: ingredients, instructions: instructions, notes: notesTextView.text)
+            cookbookRecipe.write()
+            
+            navigationController?.popToRootViewController(animated: true)
+        }
+    }
+    
+    @IBAction func selectImage(_ sender: Any) {
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    
+    
+    @IBAction func selectCuisine(_ sender: Any) {
+        pushToPopUp()
+    }
+    
+    @IBAction func selectDescriptions(_ sender: Any) {
+        pushToPopUp()
     }
     
     private func createObserver() {
@@ -246,113 +330,7 @@ class CreateRecipeVC: UIViewController {
         }
     }
     
-    @IBAction func linkToRecipe(_ sender: Any) {
-        print("Link to recipe")
-        urlView.isHidden = !urlView.isHidden
-    }
     
-    @IBAction func findUrlRecipe(_ sender: Any) {
-        print("Find recipe")
-        let stringRepresentation = String(urlTextField.text ?? "")
-        print(stringRepresentation)
-        Recipe.getRecipeInfoFromURLallRecipes(recipeURL: stringRepresentation)
-        
-        
-    }
-    
-    
-    @IBAction func createRecipePressed(_ sender: Any) {
-        // handles both creating a cookbook recipe and creating a normal recipe
-        
-        // Can't be nil for both cookbook and normal recipes
-        guard nameTextField.text != "" else {
-            let alert = UIAlertController(title: "Error", message: "Missing recipe name", preferredStyle: .alert)
-            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-            self.present(alert, animated: true)
-            return
-        }
-        
-        guard InstructionView.getInstructions(stack: instructionsListStackView) != [] else {
-            let alert = UIAlertController(title: "Error", message: "Missing recipe instructions", preferredStyle: .alert)
-            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-            self.present(alert, animated: true)
-            return
-        }
-        
-        guard IngredientView.getIngredients(stack: ingredientsStackView) != [] else {
-            let alert = UIAlertController(title: "Error", message: "Missing recipe ingredients", preferredStyle: .alert)
-            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-            self.present(alert, animated: true)
-            return
-        }
-        // end
-        
-        switch forCookbook {
-        case false:
-            #warning("check to make sure this is blocking in complete recipes correctly")
-            
-            
-            
-            guard let img = image else {
-                let alert = UIAlertController(title: "Error", message: "Missing recipe image", preferredStyle: .alert)
-                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                present(alert, animated: true)
-                return
-            }
-            
-            guard taglineTextView.text != "" else {
-                print("Missing tagline")
-                let alert = UIAlertController(title: "Error", message: "Missing recipe tagline data", preferredStyle: .alert)
-                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                present(alert, animated: true)
-                return
-            }
-            
-            
-            
-            
-            guard let rType = recipeType, let cType = cuisineType, let cookTime = cookTimeTextField.toInt(), let prepTime = prepTimeTextField.toInt(), let servings = servingsTextField.toInt(), let uid = Auth.auth().currentUser?.uid else {
-                let alert = UIAlertController(title: "Error", message: "Incomplete recipe data", preferredStyle: .alert)
-                alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-                present(alert, animated: true)
-                return
-            }
-            
-            var recipe = Recipe(name: nameTextField.text!, recipeType: rType, cuisineType: cType, cookTime: cookTime, prepTime: prepTime, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servings, userID: uid, numReviews: nil, numStars: nil, notes: notesTextView.text, tagline: taglineTextView.text, recipeImage: img, imagePath: nil, reviewImagePaths: nil)
-            recipe.writeToFirestore(db: db, storage: storage)
-            navigationController?.popToRootViewController(animated: true)
-            
-        case true:
-            let ingredients: List<String> = List.init()
-            let instructions: List<String> = List.init()
-            IngredientView.getIngredients(stack: ingredientsStackView).forEach { (str) in
-                ingredients.append(str)
-            }
-            InstructionView.getInstructions(stack: instructionsListStackView).forEach { (str) in
-                instructions.append(str)
-            }
-            
-            let cookbookRecipe = CookbookRecipe()
-            cookbookRecipe.setUp(name: nameTextField.text!, servings: RealmOptional(servingsTextField.toInt()), cookTime: RealmOptional(cookTimeTextField.toInt()), prepTime: RealmOptional(prepTimeTextField.toInt()), calories: RealmOptional(caloriesTextField.toInt()), ingredients: ingredients, instructions: instructions, notes: notesTextView.text)
-            cookbookRecipe.write()
-            
-            navigationController?.popToRootViewController(animated: true)
-        }
-    }
-    
-    @IBAction func selectImage(_ sender: Any) {
-        present(imagePicker, animated: true, completion: nil)
-    }
-    
-    
-    
-    @IBAction func selectCuisine(_ sender: Any) {
-        pushToPopUp()
-    }
-    
-    @IBAction func selectDescriptions(_ sender: Any) {
-        pushToPopUp()
-    }
     
     private func handleUI() {
         if (self.navigationController?.viewControllers.first as? CookbookVC) != nil {
@@ -473,11 +451,10 @@ extension CreateRecipeVC: UITextViewDelegate {
                 insert()
             }
         }
-        
         return true
     }
+    
     func textViewDidBeginEditing(_ textView: UITextView) {
-        
         textView.setUpDoneToolbar(action: #selector(removeTextViewKeyboard), style: .done)
     }
     
@@ -502,6 +479,5 @@ extension CreateRecipeVC: UIImagePickerControllerDelegate, UINavigationControlle
         }
         dismiss(animated: true, completion: nil)
     }
-    
 }
 

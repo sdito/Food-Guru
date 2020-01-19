@@ -11,11 +11,16 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class StorageNewItemVC: UIViewController {
+    
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var datePicker: UIDatePicker!
+    @IBOutlet weak var switchOutlet: UISwitch!
+    
+    var db: Firestore!
     private var keyboardHeight: CGFloat?
     private var delegate: SearchAssistantDelegate!
     private var textAssistantViewActive = false
-    var db: Firestore!
-    
     private var foodCategory: FoodStorageType {
         switch segmentedControl.selectedSegmentIndex {
         case 0:
@@ -29,10 +34,6 @@ class StorageNewItemVC: UIViewController {
         }
     }
     
-    @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var segmentedControl: UISegmentedControl!
-    @IBOutlet weak var datePicker: UIDatePicker!
-    @IBOutlet weak var switchOutlet: UISwitch!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,13 +42,6 @@ class StorageNewItemVC: UIViewController {
         nameTextField.becomeFirstResponder()
         nameTextField.setUpDoneToolbar(action: #selector(doneAction), style: .done)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-    }
-    
-    @objc func keyboardWillShow(_ notification: Notification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            keyboardHeight = keyboardRectangle.height
-        }
     }
     
     @IBAction func switchAction(_ sender: Any) {
@@ -60,7 +54,6 @@ class StorageNewItemVC: UIViewController {
     }
     
     @IBAction func textDidChange(_ sender: Any) {
-        print(nameTextField.text!)
         if textAssistantViewActive == false {
             let vc = storyboard?.instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
             self.addChild(vc)
@@ -68,7 +61,6 @@ class StorageNewItemVC: UIViewController {
             vc.didMove(toParent: self)
             vc.tableView.translatesAutoresizingMaskIntoConstraints = false
             vc.tableView.topAnchor.constraint(equalTo: nameTextField.bottomAnchor).isActive = true
-            
             
             let distance = (view.frame.height) - (keyboardHeight ?? 0.0) - 50.0 - (nameTextField.frame.height)
             vc.tableView.heightAnchor.constraint(equalToConstant: distance).isActive = true
@@ -109,10 +101,17 @@ class StorageNewItemVC: UIViewController {
     }
     
     
-    @objc func doneAction() {
+    @objc private func doneAction() {
         nameTextField.resignFirstResponder()
     }
-
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            keyboardHeight = keyboardRectangle.height
+        }
+    }
+    
 }
 
 extension StorageNewItemVC: CreateNewItemDelegate {

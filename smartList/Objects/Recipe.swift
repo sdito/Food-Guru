@@ -195,8 +195,8 @@ struct Recipe {
     }
     
     static func getPuppyRecipesFromSearches(activeSearches: [(String, SearchType)], expiringItems: [String], recipesFound: @escaping (_ recipes: [Recipe.Puppy]) -> Void) {
-        var puppyRecipes: [Recipe.Puppy] = []
         
+        var puppyRecipes: [Recipe.Puppy] = []
         
         var itemsToSearch: [String] {
             if activeSearches.contains(where: {$0 == ("Expiring", .other)}) {
@@ -244,6 +244,7 @@ struct Recipe {
                 }
                 
                 let json = try? JSONSerialization.jsonObject(with: data, options: [])
+                
                 if let dictionary = json as? [String:Any] {
                     let newData = dictionary["results"] as? [Any]
                     
@@ -263,6 +264,8 @@ struct Recipe {
                         }
                         recipesFound(puppyRecipes)
                     }
+                } else {
+                    recipesFound([])
                 }
             }
         }

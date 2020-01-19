@@ -11,13 +11,13 @@ import FirebaseFirestore
 
 
 class ListHomeVC: UIViewController {
+    
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var tableView: UITableView!
     
     var db: Firestore!
-    var sections: [String]?
-    var listsForSections: [[GroceryList]]?
-    
+    private var sections: [String]?
+    private var listsForSections: [[GroceryList]]?
     lazy private var emptyCells: [UITableViewCell] = createEmptyListCells()
     
     private var items: [Item] = []
@@ -27,12 +27,6 @@ class ListHomeVC: UIViewController {
             tableView.reloadData()
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        
-    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,9 +40,13 @@ class ListHomeVC: UIViewController {
         
         bottomView.shadowAndRounded(cornerRadius: 10, border: false)
         
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
         
     }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "listSelected" {

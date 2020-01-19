@@ -10,11 +10,11 @@ import UIKit
 
 class EndTutorialVC: UIViewController {
     
+    @IBOutlet weak var logo: UIImageView!
+    
     private var timer: Timer?
     private let rotation: CGFloat = .pi/2
     private var rotationCount = 1
-    
-    @IBOutlet weak var logo: UIImageView!
     
     override func viewWillAppear(_ animated: Bool) {
         timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true, block: { (tmr) in

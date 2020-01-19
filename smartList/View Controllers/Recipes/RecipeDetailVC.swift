@@ -13,19 +13,9 @@ import FirebaseStorage
 import RealmSwift
 
 class RecipeDetailVC: UIViewController {
-    var db: Firestore!
-    private var itemsAddedToList: Set<String>? = [""]
-    private var recipeSliderScaleMax = 4
-    
-    
-    
-    private var originalIngredients: [String]?
-    private var originalServings: Int?
-    private var newServingsValue: Int?
     
     @IBOutlet weak var wholeSV: UIStackView!
     @IBOutlet weak var servingsFromSliderLabel: UILabel!
-    
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var mainStackView: UIStackView!
     @IBOutlet weak var reviewRecipeOutlet: UIButton!
@@ -43,25 +33,27 @@ class RecipeDetailVC: UIViewController {
     @IBOutlet weak var instructionsStackView: UIStackView!
     @IBOutlet weak var reviewsStackView: UIStackView!
     @IBOutlet weak var notes: UILabel!
-    
     @IBOutlet weak var printRecipeOutlet: UIButton!
     @IBOutlet weak var downloadRecipeOutlet: UIButton!
     @IBOutlet weak var saveRecipeOutlet: UIButton!
-    
-    
     @IBOutlet weak var optionalInfoStackView: UIStackView!
     @IBOutlet weak var prepSV: UIStackView!
     @IBOutlet weak var cookSV: UIStackView!
     @IBOutlet weak var servingsSV: UIStackView!
     @IBOutlet weak var caloriesSV: UIStackView!
     @IBOutlet weak var scaleSV: UIStackView!
-    
-    @IBOutlet var viewsToRemoveForCookbook: [UIView]!
-    
+    @IBOutlet var      viewsToRemoveForCookbook: [UIView]!
     @IBOutlet weak var scaleSlider: UISlider!
     
+    var db: Firestore!
     var data: (image: UIImage?, recipe: Recipe)?
     var cookbookRecipe: CookbookRecipe?
+    private var itemsAddedToList: Set<String>? = [""]
+    private var recipeSliderScaleMax = 4
+    private var originalIngredients: [String]?
+    private var originalServings: Int?
+    private var newServingsValue: Int?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,7 +67,7 @@ class RecipeDetailVC: UIViewController {
         data?.recipe.getImageFromStorage(thumb: false, imageReturned: { (img) in
             self.imageView.image = img
         })
-        //addAllToListOutlet.isUserInteractionEnabled = true
+        
         createObserver()
     
     }
@@ -115,8 +107,6 @@ class RecipeDetailVC: UIViewController {
     
     
     @IBAction func addAllToList(_ sender: Any) {
-        print("Add all items to list")
-        
         var ingredientsToAddToList: [String] {
             if data?.recipe != nil {
                 return data!.recipe.ingredients
@@ -397,7 +387,7 @@ class RecipeDetailVC: UIViewController {
         addAllToListOutlet.setTitle("✓ Add all to list", for: .normal)
         addAllToListOutlet.isUserInteractionEnabled = false
     }
-    @objc func itemAddedSelector(_ notification: NSNotification) {
+    @objc private func itemAddedSelector(_ notification: NSNotification) {
         if let dict = notification.userInfo as NSDictionary? {
             if let name = dict["itemName"] as? String {
                 print("Name of the item: \(name)")

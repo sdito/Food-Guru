@@ -11,12 +11,12 @@ import UIKit
 
 class OneTutorialVC: UIViewController {
     
-    var timer: Timer?
-    
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var arrow: UIImageView!
+    
+    private var timer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,8 +44,6 @@ class OneTutorialVC: UIViewController {
         
     }
     
-    
-    
     override func viewDidAppear(_ animated: Bool) {
         imageView.pulsateView()
         
@@ -56,8 +54,6 @@ class OneTutorialVC: UIViewController {
         
         (self.parent as? TutorialVC)?.button.isHidden = false
     }
-    
-    
     
     override func viewWillDisappear(_ animated: Bool) {
         imageView.disappearAnimation()

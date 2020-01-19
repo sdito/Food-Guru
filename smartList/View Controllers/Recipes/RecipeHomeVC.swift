@@ -13,6 +13,24 @@ import AVFoundation
 
 
 class RecipeHomeVC: UIViewController {
+    
+    @IBOutlet weak var savedAndAllRecipesOutlet: UIButton!
+    @IBOutlet weak var backUpOutlet: UIButton!
+    @IBOutlet weak var wholeStackView: UIStackView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchHelperView: UIView!
+    @IBOutlet weak var searchButtonStackView: UIStackView!
+    @IBOutlet weak var scrollBackUpView: UIView!
+    @IBOutlet weak var moreRecipesView: UIView!
+    @IBOutlet weak var searchBarHeight: NSLayoutConstraint!
+    
+    var db: Firestore!
+    var imageCache = NSCache<NSString, UIImage>()
+    private var userWantsMoreRecipes = false
+    private var lastContentOffset: CGFloat = 0
+    private var allowButtonToBeShowed = true
+    private let currentSearchesView = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
     private var expiringItems: [String] = []
     private var previousContentOffset: CGPoint?
     private var timer: Timer?
@@ -40,7 +58,7 @@ class RecipeHomeVC: UIViewController {
         return collectionView.contentSize.height
     }
     
-    private let currentSearchesView = Bundle.main.loadNibNamed("CurrentSearchesView", owner: nil, options: nil)?.first as! CurrentSearchesView
+    
     private var activeSearches: [(String, SearchType)] = [] {
         didSet {
             if SharedValues.shared.sentRecipesInfo == nil {
@@ -70,24 +88,6 @@ class RecipeHomeVC: UIViewController {
         }
     }
     
-    @IBOutlet weak var savedAndAllRecipesOutlet: UIButton!
-    @IBOutlet weak var backUpOutlet: UIButton!
-    @IBOutlet weak var wholeStackView: UIStackView!
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var searchHelperView: UIView!
-    @IBOutlet weak var searchButtonStackView: UIStackView!
-    @IBOutlet weak var scrollBackUpView: UIView!
-    @IBOutlet weak var moreRecipesView: UIView!
-    @IBOutlet weak var searchBarHeight: NSLayoutConstraint!
-    
-    private var lastContentOffset: CGFloat = 0
-    private var allowButtonToBeShowed = true
-    var imageCache = NSCache<NSString, UIImage>()
-    
-    
-    var db: Firestore!
-    
     var recipes: [Recipe] = [] {
         didSet {
             imageCache.removeAllObjects()
@@ -96,7 +96,6 @@ class RecipeHomeVC: UIViewController {
             
             if self.recipes.isEmpty {
                 self.createMessageView(color: .red, text: "No recipes found")
-                #warning("should i have the function below that automatically calles the recipe puppy recipes?")
                 handleNeedingMoreRecipes()
             }
             
@@ -118,22 +117,6 @@ class RecipeHomeVC: UIViewController {
             collectionView?.collectionViewLayout.invalidateLayout()
             collectionView?.reloadData()
         }
-    }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-        handleRecipesToShow()
-        timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in self.handleTimer()}
-        timer?.tolerance = 0.2
-        
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: animated)
-        timer?.invalidate()
     }
     
     override func viewDidLoad() {
@@ -166,12 +149,36 @@ class RecipeHomeVC: UIViewController {
         
         
         FoodStorage.readAndPersistSystemItemsFromStorageWithListener(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+        handleRecipesToShow()
+        timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in self.handleTimer()}
+        timer?.tolerance = 0.2
         
     }
-    @objc func fireTimer() {
-        print("Timer fired!")
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        timer?.invalidate()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+           if segue.identifier == "showRecipeDetail" {
+               let destVC = segue.destination as! RecipeDetailVC
+               destVC.data = sender as? (UIImage?, Recipe)
+           }
+       }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+   
+    
     @IBAction func createRecipePressed(_ sender: Any) {
         if SharedValues.shared.anonymousUser == false {
             performSegue(withIdentifier: "toCreateRecipe", sender: nil)
@@ -202,26 +209,31 @@ class RecipeHomeVC: UIViewController {
     
     
     @IBAction func moreRecipesPressed(_ sender: Any) {
+        userWantsMoreRecipes = true
         handleNeedingMoreRecipes()
+        
     }
     
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showRecipeDetail" {
-            let destVC = segue.destination as! RecipeDetailVC
-            destVC.data = sender as? (UIImage?, Recipe)
-        }
+    @IBAction func goToCookbook(_ sender: Any) {
+        tabBarController?.selectedIndex = 1
     }
     
     private func handleNeedingMoreRecipes() {
+        
         Recipe.getPuppyRecipesFromSearches(activeSearches: self.activeSearches, expiringItems: expiringItems) { (puppyRecipes) in
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "outsideRecipesVC") as! OutsideRecipesVC
             vc.puppyRecipes = puppyRecipes
-            self.present(vc, animated: true, completion: nil)
+            if vc.puppyRecipes?.isEmpty == false {
+                self.present(vc, animated: true, completion: nil)
+            } else {
+                // to only allow this messageview if the user specifically pressed the more recipes button
+                if self.userWantsMoreRecipes == true {
+                    self.createMessageView(color: .red, text: "Couldn't find more recipes")
+                    self.userWantsMoreRecipes = false
+                }
+                
+            }
+            
         }
     }
     
@@ -244,9 +256,7 @@ class RecipeHomeVC: UIViewController {
         }
     }
     
-    @IBAction func goToCookbook(_ sender: Any) {
-        tabBarController?.selectedIndex = 1
-    }
+    
     
     @objc func recipeButtonPressed(_ notification: NSNotification) {
         handleSuggestedSearchButtonBeingPressed()
@@ -259,7 +269,6 @@ class RecipeHomeVC: UIViewController {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
                     let vc = storyboard.instantiateViewController(withIdentifier: "searchByIngredient") as! SearchByIngredientVC
                     vc.recipesFoundDelegate = self
-//                    UIApplication.shared.keyWindow?.rootViewController?.present(vc, animated: true, completion: nil)
                     self.present(vc, animated: true, completion: nil)
                 }
             }
@@ -513,7 +522,6 @@ extension RecipeHomeVC: UISearchBarDelegate {
         if savedRecipesActive == false {
             searchHelperView.isHidden = false
         }
-        
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -526,7 +534,6 @@ extension RecipeHomeVC: UISearchBarDelegate {
         } else {
             print("Need different search, saved recipes is active")
         }
-        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -534,9 +541,4 @@ extension RecipeHomeVC: UISearchBarDelegate {
             filteredSavedRecipes = Recipe.filterSavedRecipesFrom(text: searchText, savedRecipes: savedRecipes)
         }
     }
-    
 }
-
-
-
-

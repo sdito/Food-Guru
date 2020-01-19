@@ -18,10 +18,8 @@ struct Item: Equatable {
     var user: String?
     var ownID: String?
     var storageSection: FoodStorageType?
-    
     var timeAdded: TimeInterval?
     var timeExpires: TimeInterval?
-    
     var systemItem: GenericItem?
     var systemCategory: Category?
     
@@ -236,7 +234,7 @@ extension Sequence where Element == Item {
 }
 
 
-#warning("make sure this is being used")
+
 extension QueryDocumentSnapshot {
     func getItem() -> Item {
         let systemItem = GenericItem(rawValue: self.get("systemItem") as? String ?? "other")

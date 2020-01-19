@@ -10,7 +10,6 @@ import UIKit
 
 class SixTutorialVC: UIViewController {
     
-    
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!

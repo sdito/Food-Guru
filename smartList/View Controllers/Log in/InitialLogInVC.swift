@@ -14,13 +14,16 @@ import CryptoKit
 import GoogleSignIn
 
 
-//#error("not working on ios 12")
+
 
 class InitialLogInVC: UIViewController {
-    var db: Firestore!
+    
     @IBOutlet weak var createAccountOutlet: UIButton!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var googleSignInButton: GIDSignInButton!
+    
+    fileprivate var currentNonce: String?
+    var db: Firestore!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -167,12 +170,11 @@ class InitialLogInVC: UIViewController {
             
         }
     }
-    /// Start of apple log in stuff
     
-    fileprivate var currentNonce: String?
-
+    // Start of apple log in stuff
+    
     @objc @available(iOS 13, *)
-    func startSignInWithAppleFlow() {
+    private func startSignInWithAppleFlow() {
         let nonce = randomNonceString()
         currentNonce = nonce
         let appleIDProvider = ASAuthorizationAppleIDProvider()

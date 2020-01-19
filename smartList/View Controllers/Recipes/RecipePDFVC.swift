@@ -11,10 +11,9 @@ import PDFKit
 
 class RecipePDFVC: UIViewController {
     
-    public var documentData: Data?
-    
-    
     @IBOutlet weak var pdfView: PDFView!
+    
+    public var documentData: Data?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,8 +34,6 @@ class RecipePDFVC: UIViewController {
                 vc.popoverPresentationController?.sourceView = self.view
                 vc.popoverPresentationController?.sourceRect = pdfView.frame
                 present(vc, animated: true, completion: nil)
-                
-                
             }
         }
     }
