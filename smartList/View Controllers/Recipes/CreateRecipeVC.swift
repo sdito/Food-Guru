@@ -30,12 +30,17 @@ class CreateRecipeVC: UIViewController {
     @IBOutlet weak var ingredientsStackView: UIStackView!
     @IBOutlet weak var urlView: UIView!
     @IBOutlet weak var urlTextField: UITextField!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     var db: Firestore!
     private var storage: Storage!
     private let imagePicker = UIImagePickerController()
     private var image: Data?
-    private var forCookbook = false
+    private var forCookbook = true {
+        didSet {
+            self.handleUI()
+        }
+    }
     private var cuisineType: String? {
         didSet {
             cuisineOutlet.setTitle(self.cuisineType, for: .normal)
@@ -123,10 +128,21 @@ class CreateRecipeVC: UIViewController {
         Recipe.getRecipeInfoFromURLallRecipes(recipeURL: stringRepresentation)
     }
     
+    @IBAction func infoAboutPrivateAndPublic(_ sender: Any) {
+        let alert = UIAlertController(title: "Private vs. Public Recipes", message: "Select private if you want this recipe to be in your cookbook (you can navigate to your cookbook from the recipe home page by selecting cookbook on the bottom). Cookbook recipes will be only visible to you and will be saved on your device. Select public if you want this recipe to be viewed by everyone. This recipe would appear in the recipe home page once it is approved.", preferredStyle: .alert)
+        alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+        present(alert, animated: true)
+    }
+    
+    @IBAction func segmentedControlPressed(_ sender: Any) {
+        if segmentedControl.selectedSegmentIndex == 0 {
+            forCookbook = true
+        } else {
+            forCookbook = false
+        }
+    }
     
     @IBAction func createRecipePressed(_ sender: Any) {
-        // handles both creating a cookbook recipe and creating a normal recipe
-        // Can't be nil for both cookbook and normal recipes
         guard nameTextField.text != "" else {
             let alert = UIAlertController(title: "Error", message: "Missing recipe name", preferredStyle: .alert)
             alert.addAction(.init(title: "Ok", style: .default, handler: nil))
@@ -333,10 +349,13 @@ class CreateRecipeVC: UIViewController {
     
     
     private func handleUI() {
-        if (self.navigationController?.viewControllers.first as? CookbookVC) != nil {
-            forCookbook = true
+        if forCookbook == true {
             stackViewsToHide.forEach { (sv) in
-                sv.removeFromSuperview()
+                sv.isHidden = true
+            }
+        } else {
+            stackViewsToHide.forEach { (sv) in
+                sv.isHidden = false
             }
         }
     }

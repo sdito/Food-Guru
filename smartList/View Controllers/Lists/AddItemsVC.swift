@@ -399,6 +399,11 @@ extension AddItemsVC: ItemCellDelegate {
         let actionSheet = UIAlertController(title: nil, message: text, preferredStyle: .actionSheet)
         
         
+        actionSheet.addAction(.init(title: "Change quantity", style: .default, handler: { (alert) in
+            print("Need to change quantity here")
+            #error("need to complete")
+        }))
+        
         actionSheet.addAction(.init(title: "Edit name", style: .default, handler: { alert in
             self.nameAlert(item: item)
         }))
