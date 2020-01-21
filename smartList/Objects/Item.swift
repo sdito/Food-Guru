@@ -22,8 +22,9 @@ struct Item: Equatable {
     var timeExpires: TimeInterval?
     var systemItem: GenericItem?
     var systemCategory: Category?
+    var quantity: String?
     
-    init(name: String, selected: Bool, category: String?, store: String?, user: String?, ownID: String?, storageSection: FoodStorageType?, timeAdded: TimeInterval?, timeExpires: TimeInterval?, systemItem: GenericItem?, systemCategory: Category?) {
+    init(name: String, selected: Bool, category: String?, store: String?, user: String?, ownID: String?, storageSection: FoodStorageType?, timeAdded: TimeInterval?, timeExpires: TimeInterval?, systemItem: GenericItem?, systemCategory: Category?, quantity: String?) {
         self.name = name
         self.selected = selected
         self.category = category
@@ -35,6 +36,7 @@ struct Item: Equatable {
         self.timeExpires = timeExpires
         self.systemItem = systemItem
         self.systemCategory = systemCategory
+        self.quantity = quantity
     }
     
     //correctly reads the ownID of the document of items
@@ -50,7 +52,7 @@ struct Item: Equatable {
             for doc in documents {
                 let systemItem = GenericItem(rawValue: doc.get("systemItem") as? String ?? "other")
                 let systemCategory = Category(rawValue: doc.get("systemCategory") as? String ?? "other")
-                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as? String), ownID: doc.documentID, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: systemCategory)
+                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as? String), ownID: doc.documentID, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: systemCategory, quantity: doc.get("quantity") as? String)
                 if listItems.isEmpty == false {
                     listItems.append(i)
                 } else {
@@ -75,7 +77,7 @@ struct Item: Equatable {
             for doc in documents {
                 let systemItem = GenericItem(rawValue: doc.get("systemItem") as? String ?? "other")
                 let systemCategory = Category(rawValue: doc.get("systemCategory") as? String ?? "other")
-                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as? String), ownID: doc.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (doc.get("storageSection") as? String ?? " ")), timeAdded: doc.get("timeAdded") as? TimeInterval, timeExpires: doc.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory)
+                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as? String), ownID: doc.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (doc.get("storageSection") as? String ?? " ")), timeAdded: doc.get("timeAdded") as? TimeInterval, timeExpires: doc.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory, quantity: doc.get("quantity") as? String)
                 if storageItems.isEmpty == false {
                     storageItems.append(i)
                 } else {
@@ -96,7 +98,7 @@ struct Item: Equatable {
             for doc in documents {
               let systemItem = GenericItem(rawValue: doc.get("systemItem") as? String ?? "other")
                 let systemCategory = Category(rawValue: doc.get("systemCategory") as? String ?? "other")
-                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as? String), ownID: doc.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (doc.get("storageSection") as? String ?? " ")), timeAdded: doc.get("timeAdded") as? TimeInterval, timeExpires: doc.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory)
+                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as? String), ownID: doc.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (doc.get("storageSection") as? String ?? " ")), timeAdded: doc.get("timeAdded") as? TimeInterval, timeExpires: doc.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory, quantity: doc.get("quantity") as? String)
                 if storageItems.isEmpty == false {
                     storageItems.append(i)
                 } else {
@@ -114,10 +116,15 @@ struct Item: Equatable {
             String(sStr.lowercased())
         }
         let systemCategory = GenericItem.getCategory(item: systemItem, words: words)
-        let item = Item(name: text, selected: false, category: systemCategory.rawValue, store: nil, user: Auth.auth().currentUser?.displayName, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: systemCategory)
+        let item = Item(name: text, selected: false, category: systemCategory.rawValue, store: nil, user: Auth.auth().currentUser?.displayName, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: systemCategory, quantity: nil)
         return item
     }
-    
+    static func updateItemForListQuantity(quantity: String, itemID: String, listID: String, db: Firestore) {
+        let reference = db.collection("lists").document(listID).collection("items").document(itemID)
+        reference.updateData([
+            "quantity": quantity
+        ])
+    }
     static func updateItemForListName(name: String, itemID: String, listID: String, db: Firestore) {
         let reference = db.collection("lists").document(listID).collection("items").document(itemID)
         reference.updateData([
@@ -150,7 +157,8 @@ extension Item {
             "user": Auth.auth().currentUser?.displayName as Any,
             "selected": self.selected,
             "systemItem": "\(self.systemItem ?? .other)",
-            "systemCategory": "\(self.systemCategory ?? .other)"
+            "systemCategory": "\(self.systemCategory ?? .other)",
+            "quantity": self.quantity as Any
         ]) { err in
             if let err = err {
                 print("Error writing document: \(err)")
@@ -174,7 +182,8 @@ extension Item {
             "timeAdded": Date().timeIntervalSince1970,
             "timeExpires": self.timeExpires as Any,
             "systemItem": "\(self.systemItem ?? .other)",
-            "systemCategory": "\(self.systemCategory ?? .other)"
+            "systemCategory": "\(self.systemCategory ?? .other)",
+            "quantity": self.quantity as Any
         ])
     }
     
@@ -239,7 +248,7 @@ extension QueryDocumentSnapshot {
     func getItem() -> Item {
         let systemItem = GenericItem(rawValue: self.get("systemItem") as? String ?? "other")
         let systemCategory = Category(rawValue: self.get("systemCategory") as? String ?? "other")
-        let i = Item(name: self.get("name") as! String, selected: self.get("selected")! as! Bool, category: (self.get("category") as! String), store: (self.get("store") as! String), user: (self.get("user") as? String), ownID: self.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (self.get("storageSection") as? String ?? " ")), timeAdded: self.get("timeAdded") as? TimeInterval, timeExpires: self.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory)
+        let i = Item(name: self.get("name") as! String, selected: self.get("selected")! as! Bool, category: (self.get("category") as! String), store: (self.get("store") as! String), user: (self.get("user") as? String), ownID: self.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (self.get("storageSection") as? String ?? " ")), timeAdded: self.get("timeAdded") as? TimeInterval, timeExpires: self.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory, quantity: self.get("quantity") as? String)
         return i
     }
 }

@@ -14,7 +14,10 @@ class StorageCell: UITableViewCell {
     @IBOutlet weak var added: UILabel!
     @IBOutlet weak var expires: UILabel!
     @IBOutlet weak var viewForCircle: UIView!
+    @IBOutlet weak var quantity: UILabel!
+    
     var item: Item?
+    #error("need ability to edit cells, similar to the addItemVC cell")
     func setUI(item: Item) {
         self.item = item
         name.text = item.name
@@ -48,15 +51,17 @@ class StorageCell: UITableViewCell {
             //third, if item is still fine, then show the date
             } else {
                expires.text = "Expires - \(time.dateFormatted(style: .short))"
-               expires.textColor = .lightGray
+                if #available(iOS 13.0, *) {
+                    expires.textColor = .tertiaryLabel
+                } else {
+                    expires.textColor = .lightGray
+                }
                viewForCircle.circularPercentageView(endStrokeAt: CGFloat(pct), color: Colors.getRGBcolorFromPercentage(double: pct).cgColor)
             }
  
         } else {
             expires.text = ""
         }
-        
-        
         
         if SharedValues.shared.isPhone == false {
             name.font = UIFont(name: "futura", size: 30)
@@ -65,6 +70,12 @@ class StorageCell: UITableViewCell {
             expires.font = UIFont(name: "futura", size: 20)
         }
         
+        if let q = item.quantity {
+            quantity.isHidden = false
+            quantity.text = "(\(q))"
+        } else {
+            quantity.isHidden = true
+        }
         
     }
 }

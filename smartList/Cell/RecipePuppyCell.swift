@@ -17,14 +17,14 @@ protocol RecipePuppyCellDelegate: class {
 
 
 class RecipePuppyCell: UITableViewCell {
-    private var recipeUrl: URL?
-    weak var delegate: RecipePuppyCellDelegate!
     
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var ingredients: UILabel!
     @IBOutlet weak var link: UIButton!
     
-    
+    private var recipeUrl: URL?
+    weak var delegate: RecipePuppyCellDelegate!
+
     func setUI(recipe: Recipe.Puppy) {
         title.text = recipe.title
         ingredients.text = recipe.ingredients

@@ -284,7 +284,7 @@ class AddItemsVC: UIViewController {
         }
         let genericItem = Search.turnIntoSystemItem(string: text)
         let category = GenericItem.getCategory(item: genericItem, words: words)
-        var item = Item(name: text, selected: false, category: category.rawValue, store: currentStore, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: genericItem, systemCategory: category)
+        var item = Item(name: text, selected: false, category: category.rawValue, store: currentStore, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: genericItem, systemCategory: category, quantity: nil)
         item.writeToFirestoreForList(db: db)
         
         list?.items?.append(item)
@@ -401,7 +401,8 @@ extension AddItemsVC: ItemCellDelegate {
         
         actionSheet.addAction(.init(title: "Change quantity", style: .default, handler: { (alert) in
             print("Need to change quantity here")
-            #error("need to complete")
+            #warning("need to complete")
+            self.quantityAlert(item: item)
         }))
         
         actionSheet.addAction(.init(title: "Edit name", style: .default, handler: { alert in
@@ -432,12 +433,29 @@ extension AddItemsVC: ItemCellDelegate {
         
     }
     
+    private func quantityAlert(item: Item) {
+        // could clean up string presenting format
+        let alert = UIAlertController(title: nil, message: "Add quantity for \(item.name)", preferredStyle: .alert)
+        alert.addTextField { (txtField) in
+            txtField.keyboardType = .numbersAndPunctuation
+        }
+        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(.init(title: "Done", style: .default, handler: { (action) in
+            if let itemID = item.ownID, let listID = self.list?.ownID, let quantity = alert.textFields?.first?.text {
+                if quantity != "" {
+                    #warning("quantity should be written here (still need to do so for storage) just need to have it in UI now")
+                    Item.updateItemForListQuantity(quantity: quantity, itemID: itemID, listID: listID, db: self.db)
+                }
+            }
+        }))
+        present(alert, animated: true)
+    }
+    
     private func nameAlert(item: Item) {
         let alert = UIAlertController(title: nil, message: "Edit name for \(item.name)", preferredStyle: .alert)
         alert.addTextField(configurationHandler: nil)
-        alert.addAction(.init(title: "Cancel", style: .default, handler: nil))
+        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(.init(title: "Done", style: .default, handler: { action in
-            
             if let itemID = item.ownID, let listID = self.list?.ownID, let name = alert.textFields?.first?.text {
                 if name != "" {
                     Item.updateItemForListName(name: name, itemID: itemID, listID: listID, db: self.db)

@@ -12,16 +12,7 @@ class RecipeSearchCell: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!
     
-    func setUI(item: Item) {
-        self.selectionStyle = .none
-        label.text = item.name
-        if #available(iOS 13.0, *) {
-            label.textColor = .label
-        } else {
-            label.textColor = .black
-        }
-        
-    }
+    
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -37,8 +28,17 @@ class RecipeSearchCell: UITableViewCell {
                 label.textColor = .black
             }
         }
-        
     }
     
+    func setUI(item: Item) {
+        self.selectionStyle = .none
+        label.text = item.name
+        if #available(iOS 13.0, *) {
+            label.textColor = .label
+        } else {
+            label.textColor = .black
+        }
+        
+    }
     
 }

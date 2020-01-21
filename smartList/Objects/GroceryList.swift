@@ -94,6 +94,7 @@ struct GroceryList {
         let words = name.split{ !$0.isLetter }.map { (sStr) -> String in
             String(sStr.lowercased())
         }
+        #warning("could automatically set the quantity here")
         let genericCategory = GenericItem.getCategory(item: genericName, words: words)
         reference.setData([
             "name": name,
@@ -154,7 +155,8 @@ struct GroceryList {
                     let genericItem = Search.turnIntoSystemItem(string: i)
                     let category = GenericItem.getCategory(item: genericItem, words: words)
                     
-                    let item = Item(name: i, selected: false, category: category.rawValue, store: "", user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: genericItem, systemCategory: category)
+                    #warning("could automatically set the quantity here (might need to do in another place) from the recipe ingredient quantity")
+                    let item = Item(name: i, selected: false, category: category.rawValue, store: "", user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: genericItem, systemCategory: category, quantity: nil)
                     let ref = db.collection("lists").document(SharedValues.shared.listIdentifier!.documentID).collection("items").document()
                     ref.setData([
                         "name": item.name,

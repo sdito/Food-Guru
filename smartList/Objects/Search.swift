@@ -1486,8 +1486,12 @@ struct Search {
             return .broth
         } else if item.contains("ranch") {
             return .ranch
-        } else if item.contains("salad") && item.contains("dressing") {
-            return .saladDressing
+        } else if item.contains("salad") {
+            if item.contains("dressing") {
+                return .saladDressing
+            } else {
+                return .salad
+            }
         } else if item.contains("pastrami") {
             return .pastrami
         } else if item.contains("pepperoni") {

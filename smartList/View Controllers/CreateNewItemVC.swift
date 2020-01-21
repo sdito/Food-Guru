@@ -76,7 +76,7 @@ class CreateNewItemVC: UITableViewController {
         let category = GenericItem.getCategory(item: systemItem, words: words)
         
         let displayText = "\(number)\(text)"
-        let item = Item(name: displayText, selected: false, category: category.rawValue, store: nil, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: category)
+        let item = Item(name: displayText, selected: false, category: category.rawValue, store: nil, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: category, quantity: nil)
         delegate.itemCreated(item: item)
         self.willMove(toParent: nil)
         self.view.removeFromSuperview()

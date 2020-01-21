@@ -14,18 +14,14 @@ import FirebaseAuth
 
 class RecipeCell: UICollectionViewCell {
     
-//    var delegate: RecipeCellDelegate!
-    
-    var selectionState: Bool = false
-    
-    private var recipe: Recipe?
     @IBOutlet weak var recipeImage: UIImageView!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var tagline: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
     
+    private var recipe: Recipe?
+
     func setUI(recipe: Recipe) {
-        
         self.recipe = recipe
         for subview in recipeImage.subviews {
             subview.removeFromSuperview()
@@ -78,10 +74,7 @@ class RecipeCell: UICollectionViewCell {
         
     }
     
-    
     @objc func favoriteButtonPressed() {
-        
-        
         let db = Firestore.firestore()
         let path = self.recipe?.imagePath ?? " "
         if SharedValues.shared.savedRecipes?.contains(self.recipe?.imagePath ?? " ") ?? false {
@@ -91,7 +84,6 @@ class RecipeCell: UICollectionViewCell {
             Recipe.addRecipeToSavedRecipes(db: db, str: path)
             self.recipe?.addRecipeDocumentToUserProfile(db: db)
         }
-        
     }
     
 }

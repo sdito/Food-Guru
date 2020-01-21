@@ -333,10 +333,5 @@ struct FoodStorage {
                 }
             }
         }
-        
-        
-        
-        
     }
-    
 }

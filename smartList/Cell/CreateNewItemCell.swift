@@ -9,6 +9,7 @@
 import UIKit
 
 class CreateNewItemCell: UITableViewCell {
+    
     @IBOutlet weak var label: UILabel!
     
     func setUI(text: String) {
