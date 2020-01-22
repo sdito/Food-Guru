@@ -119,6 +119,7 @@ struct Item: Equatable {
         let item = Item(name: text, selected: false, category: systemCategory.rawValue, store: nil, user: Auth.auth().currentUser?.displayName, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: systemCategory, quantity: nil)
         return item
     }
+    
     static func updateItemForListQuantity(quantity: String, itemID: String, listID: String, db: Firestore) {
         let reference = db.collection("lists").document(listID).collection("items").document(itemID)
         reference.updateData([
@@ -141,6 +142,22 @@ struct Item: Equatable {
         let reference = db.collection("lists").document(listID).collection("items").document(itemID)
         reference.updateData([
             "category": category
+        ])
+    }
+    
+    
+    static func updateItemForStorageName(name: String, itemID: String, storageID: String, db: Firestore) {
+        #warning("need to complete and add to actionSheet")
+        let reference = db.collection("storages").document(storageID).collection("items").document(itemID)
+        reference.updateData([
+            "name": name
+        ])
+    }
+    static func updateItemForStorageQuantity(quantity: String, itemID: String, storageID: String, db: Firestore) {
+        #warning("need to complete and add to actionSheet")
+        let reference = db.collection("storages").document(storageID).collection("items").document(itemID)
+        reference.updateData([
+            "quantity": quantity
         ])
     }
 }
@@ -206,6 +223,7 @@ extension Item {
             "timeExpires": timeIntervalSince1970
         ])
     }
+    
     
     
     func deleteItemFromStorage(db: Firestore, storageID: String) {

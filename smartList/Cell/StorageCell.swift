@@ -8,6 +8,14 @@
 
 import UIKit
 
+
+
+protocol StorageCellDelegate: class {
+    func itemToEdit(item: Item)
+}
+
+
+
 class StorageCell: UITableViewCell {
     
     @IBOutlet weak var name: UILabel!
@@ -15,9 +23,12 @@ class StorageCell: UITableViewCell {
     @IBOutlet weak var expires: UILabel!
     @IBOutlet weak var viewForCircle: UIView!
     @IBOutlet weak var quantity: UILabel!
+    @IBOutlet weak var editItemPressed: UIButton!
     
+    weak var delegate: StorageCellDelegate!
     var item: Item?
-    #error("need ability to edit cells, similar to the addItemVC cell")
+    
+    
     func setUI(item: Item) {
         self.item = item
         name.text = item.name
@@ -38,7 +49,6 @@ class StorageCell: UITableViewCell {
         
         if let time = item.timeExpires {
             // first, if item expires today
-            
             if time.dateFormatted(style: .short) == Date().timeIntervalSince1970.dateFormatted(style: .short) {
                 expires.text = "Expires today"
                 expires.textColor = .darkGray
@@ -77,5 +87,14 @@ class StorageCell: UITableViewCell {
             quantity.isHidden = true
         }
         
+        editItemPressed.addTarget(self, action: #selector(editItem), for: .touchUpInside)
     }
+    
+    
+    @objc func editItem() {
+        if let itm = item {
+            delegate.itemToEdit(item: itm)
+        }
+    }
+    
 }

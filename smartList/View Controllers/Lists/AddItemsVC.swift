@@ -427,10 +427,6 @@ extension AddItemsVC: ItemCellDelegate {
             actionSheet.popoverPresentationController?.sourceRect = segmentedControl.frame
             present(actionSheet, animated: true, completion: nil)
         }
-        
-        
-        
-        
     }
     
     private func quantityAlert(item: Item) {
@@ -443,7 +439,6 @@ extension AddItemsVC: ItemCellDelegate {
         alert.addAction(.init(title: "Done", style: .default, handler: { (action) in
             if let itemID = item.ownID, let listID = self.list?.ownID, let quantity = alert.textFields?.first?.text {
                 if quantity != "" {
-                    #warning("quantity should be written here (still need to do so for storage) just need to have it in UI now")
                     Item.updateItemForListQuantity(quantity: quantity, itemID: itemID, listID: listID, db: self.db)
                 }
             }

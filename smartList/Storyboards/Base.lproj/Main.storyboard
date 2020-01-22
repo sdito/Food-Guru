@@ -1651,7 +1651,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="qlf-rs-OCD">
-                                                    <rect key="frame" x="20" y="20" width="314" height="64"/>
+                                                    <rect key="frame" x="80" y="20" width="220" height="64"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Dea-xR-eP9">
                                                             <rect key="frame" x="0.0" y="0.0" width="165.66666666666666" height="28"/>
@@ -1690,25 +1690,36 @@
                                                     </subviews>
                                                 </stackView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gMv-HI-qAV">
-                                                    <rect key="frame" x="344" y="21" width="40" height="40"/>
+                                                    <rect key="frame" x="20" y="32" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="gMv-HI-qAV" secondAttribute="height" multiplier="1:1" id="j9c-SX-gKq"/>
                                                         <constraint firstAttribute="width" constant="40" id="oXs-I2-UeF"/>
                                                     </constraints>
                                                 </view>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZsA-kL-3zm">
+                                                    <rect key="frame" x="379" y="39.666666666666664" width="25" height="24.999999999999993"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="ZsA-kL-3zm" secondAttribute="height" multiplier="1:1" id="DCu-4x-IF8"/>
+                                                        <constraint firstAttribute="height" constant="25" id="Pax-dZ-X1Q"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button" image="icons8-pencil-60"/>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="qlf-rs-OCD" firstAttribute="top" secondItem="1It-HM-Lvc" secondAttribute="top" constant="20" id="2Cz-FJ-9Ez"/>
-                                                <constraint firstItem="gMv-HI-qAV" firstAttribute="leading" secondItem="qlf-rs-OCD" secondAttribute="trailing" constant="10" id="9ll-Nj-N4g"/>
+                                                <constraint firstItem="gMv-HI-qAV" firstAttribute="centerY" secondItem="1It-HM-Lvc" secondAttribute="centerY" id="54j-kg-mOv"/>
+                                                <constraint firstItem="gMv-HI-qAV" firstAttribute="leading" secondItem="1It-HM-Lvc" secondAttribute="leadingMargin" id="O8O-j1-CGd"/>
                                                 <constraint firstAttribute="bottom" secondItem="qlf-rs-OCD" secondAttribute="bottom" constant="20" id="QHw-Ah-rcV"/>
-                                                <constraint firstItem="qlf-rs-OCD" firstAttribute="leading" secondItem="1It-HM-Lvc" secondAttribute="leading" constant="20" id="RLM-nm-Fce"/>
-                                                <constraint firstItem="gMv-HI-qAV" firstAttribute="top" secondItem="1It-HM-Lvc" secondAttribute="topMargin" constant="10" id="tBf-2I-B0Y"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="gMv-HI-qAV" secondAttribute="trailing" constant="10" id="tuY-qr-7Gg"/>
+                                                <constraint firstItem="qlf-rs-OCD" firstAttribute="leading" secondItem="gMv-HI-qAV" secondAttribute="trailing" constant="20" id="TT2-Y1-ggV"/>
+                                                <constraint firstItem="ZsA-kL-3zm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="qlf-rs-OCD" secondAttribute="trailing" constant="10" id="eqo-tl-Bs8"/>
+                                                <constraint firstItem="ZsA-kL-3zm" firstAttribute="centerY" secondItem="1It-HM-Lvc" secondAttribute="centerY" id="pDa-a6-Aq7"/>
+                                                <constraint firstAttribute="trailing" secondItem="ZsA-kL-3zm" secondAttribute="trailing" constant="10" id="xUg-UB-iPI"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                         <connections>
                                             <outlet property="added" destination="H82-hB-S1h" id="Bfz-C5-3y4"/>
+                                            <outlet property="editItemPressed" destination="ZsA-kL-3zm" id="SJh-hu-3hP"/>
                                             <outlet property="expires" destination="78v-MH-qhy" id="6mL-Vh-iiO"/>
                                             <outlet property="name" destination="8jR-du-5JF" id="Ec0-jV-pO2"/>
                                             <outlet property="quantity" destination="g1d-73-xKx" id="AUX-jB-Kfa"/>
@@ -2004,7 +2015,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1M9-XC-U2d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2084.057971014493" y="1163.8392857142856"/>
+            <point key="canvasLocation" x="-2084.057971014493" y="1163.1696428571429"/>
         </scene>
         <!--Storage New ItemVC-->
         <scene sceneID="7ON-hg-Pl2">

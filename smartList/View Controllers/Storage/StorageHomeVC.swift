@@ -227,12 +227,16 @@ class StorageHomeVC: UIViewController {
     
     
     @IBAction func deleteCells(_ sender: Any) {
-        //let indexes = tableView.indexPathsForSelectedRows?.map({$0.row})
-        for item in currentlySelectedItems {
-            item.deleteItemFromStorage(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
-        }
-        
-        currentlySelectedItems.removeAll()
+        let names = currentlySelectedItems.map({$0.name}).joined(separator: ", ")
+        let alert = UIAlertController(title: nil, message: "Are you sure you want to delete \(names)?", preferredStyle: .alert)
+        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(.init(title: "Delete", style: .destructive, handler: { (alert) in
+            for item in self.currentlySelectedItems {
+                item.deleteItemFromStorage(db: self.db, storageID: SharedValues.shared.foodStorageID ?? " ")
+            }
+            self.currentlySelectedItems.removeAll()
+        }))
+        present(alert, animated: true)
     }
     
     @IBAction func addExpirationDateCells(_ sender: Any) {
@@ -340,6 +344,45 @@ class StorageHomeVC: UIViewController {
     }
 }
 
+extension StorageHomeVC: StorageCellDelegate {
+    func itemToEdit(item: Item) {
+        #error("likely confusing to have two methods of editing/actions for items, can finish implementing this way, however should merge with the pop up view system and use when one item is selected only")
+        // do not want to have both editing methods active at the same time
+        currentlySelectedItems.removeAll()
+        tableView.reloadData()
+        
+        let actionSheet = UIAlertController(title: nil, message: "Edit \(item.name)", preferredStyle: .actionSheet)
+        actionSheet.addAction(.init(title: "Change name", style: .default, handler: {alert in
+            print("Change name")
+//            Item.updateItemForStorageName()
+            
+            
+            
+        }))
+        actionSheet.addAction(.init(title: "Change quantity", style: .default, handler: { alert in
+            print("Change quantity")
+//            Item.updateItemForStorageQuantity()
+            
+            
+            
+        }))
+        actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        
+        
+        if SharedValues.shared.isPhone == true {
+            present(actionSheet, animated: true)
+        } else {
+            actionSheet.popoverPresentationController?.sourceView = self.view
+            actionSheet.popoverPresentationController?.sourceRect = popUpView.frame
+            present(actionSheet, animated: true, completion: nil)
+        }
+    }
+    
+    
+    
+    
+}
+
 extension StorageHomeVC: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
@@ -416,6 +459,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "storageCell") as! StorageCell
                 let item = sortedItems[indexPath.row]
                 cell.setUI(item: item)
+                cell.delegate = self
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
@@ -489,6 +533,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
         tableView.reloadData()
     }
 }
+
 
 extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
