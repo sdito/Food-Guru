@@ -285,6 +285,7 @@ enum GenericItem: String, CaseIterable {
     case swiss
     case swordfish
     case syrup
+    case tacoSeasoning
     case taterTots
     case tartarSauce
     case tea
@@ -937,6 +938,8 @@ enum GenericItem: String, CaseIterable {
             return "Cooking wine"
         case .salad:
             return "Salad"
+        case .tacoSeasoning:
+            return "Taco seasoning"
         }
     }
     
@@ -1567,6 +1570,8 @@ enum GenericItem: String, CaseIterable {
                 return .pantry
             case .salad:
                 return .fridge
+            case .tacoSeasoning:
+                return .pantry
             }
         }
         
@@ -2225,6 +2230,8 @@ enum GenericItem: String, CaseIterable {
                 return .beverages
             case .salad:
                 return .produce
+            case .tacoSeasoning:
+                return .cookingBakingSpices
             }
         }
         
@@ -3317,6 +3324,8 @@ enum GenericItem: String, CaseIterable {
             return 0
         case .salad:
             return week
+        case .tacoSeasoning:
+            return month*18
         }
     }
 }

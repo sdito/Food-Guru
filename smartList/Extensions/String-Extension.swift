@@ -12,6 +12,67 @@ import UIKit
 
 extension String {
     
+    func getQuantityFromIngredient() -> (ingredient: String, quantity: String) {
+        var ing: [String] = []
+        var qua: [String] = []
+    
+        var leftParen = false
+        var doneWithQuantity = false
+        
+        let measurements = ["cup", "ounce", "pound", "gallon", "packet", "cups", "ounces", "pounds", "packets", "gallons", "teaspoon", "teaspoons", "tablespoons", "tablespoon", "clove", "cloves", "cubes", "cube", "package", "packages"]
+        let words = self.split(separator: " ").map({String($0)})
+        
+        words.forEach { (word) in
+            if !doneWithQuantity {
+                if !word.containsLetters() {
+                    qua.append(word)
+                }
+                
+                else if word.contains("(") {
+                    if word.contains(")") == false {
+                        leftParen = true
+                    }
+                    qua.append(word)
+                } else if word.contains(")") {
+                    leftParen = false
+                    qua.append(word)
+                } else {
+                    if measurements.contains(word.lowercased()) {
+                        qua.append(word)
+                    } else {
+                        doneWithQuantity = true
+                        ing.append(word)
+                    }
+                }
+            } else {
+                ing.append(word)
+            }
+        }
+        
+        var returnQuantity: String {
+            if qua == [] {
+                return ""
+            } else {
+                return qua.joined(separator: " ")
+            }
+        }
+        
+        if ing.isEmpty {
+            return (self, "")
+        } else {
+            return (ing.joined(separator: " "), returnQuantity)
+        }
+        
+    }
+    
+    func containsLetters() -> Bool {
+        for char in self {
+            if char.isLetter {
+                return true
+            }
+        }
+        return false
+    }
     
     func sizeForText(font: UIFont) -> CGRect {
         

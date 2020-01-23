@@ -37,6 +37,7 @@ class ItemCell: UITableViewCell {
         
         if SharedValues.shared.isPhone == false {
             nameLabel.font = UIFont(name: "futura", size: 30)
+            quantityLabel.font = UIFont(name: "futura", size: 20)
         }
         
         if let q = item.quantity {

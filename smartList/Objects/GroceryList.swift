@@ -94,16 +94,18 @@ struct GroceryList {
         let words = name.split{ !$0.isLetter }.map { (sStr) -> String in
             String(sStr.lowercased())
         }
-        #warning("could automatically set the quantity here")
+        #warning("could automatically set the quantity here, need to make sure its working")
+        let ingAndQuan = name.getQuantityFromIngredient()
         let genericCategory = GenericItem.getCategory(item: genericName, words: words)
         reference.setData([
-            "name": name,
+            "name": ingAndQuan.ingredient,
             "selected": false,
             "store": store,
-            "user": userID,
+            "user": Auth.auth().currentUser?.displayName as Any,
             "systemCategory": "\(genericCategory)",
             "category": "\(genericCategory)",
-            "systemItem": "\(genericName)"
+            "systemItem": "\(genericName)",
+            "quantity": ingAndQuan.quantity
         ]) { err in
             if let err = err {
                 print("Error adding item from recipe to list: \(err)")
@@ -155,17 +157,19 @@ struct GroceryList {
                     let genericItem = Search.turnIntoSystemItem(string: i)
                     let category = GenericItem.getCategory(item: genericItem, words: words)
                     
-                    #warning("could automatically set the quantity here (might need to do in another place) from the recipe ingredient quantity")
-                    let item = Item(name: i, selected: false, category: category.rawValue, store: "", user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: genericItem, systemCategory: category, quantity: nil)
+                    #warning("could automatically set the quantity here (might need to do in another place) from the recipe ingredient quantity, make sure its working")
+                    let ingAndQuan = i.getQuantityFromIngredient()
+                    let item = Item(name: ingAndQuan.ingredient, selected: false, category: category.rawValue, store: "", user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: genericItem, systemCategory: category, quantity: ingAndQuan.quantity)
                     let ref = db.collection("lists").document(SharedValues.shared.listIdentifier!.documentID).collection("items").document()
                     ref.setData([
                         "name": item.name,
                         "category": item.category!,
                         "store": item.store!,
-                        "user": SharedValues.shared.userID ?? "did not write",
+                        "user": Auth.auth().currentUser?.displayName as Any,
                         "selected": item.selected,
                         "systemItem": "\(item.systemItem ?? .other)",
-                        "systemCategory": "\(item.systemCategory ?? .other)"
+                        "systemCategory": "\(item.systemCategory ?? .other)",
+                        "quantity": item.quantity as Any
                     ]) { err in
                         if let err = err {
                             print("Error writing document for new list from recipe: \(err)")

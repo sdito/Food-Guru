@@ -265,6 +265,7 @@ class AddItemsVC: UIViewController {
         segmentedControl.selectedSegmentIndex = 0
         if list.stores?.isEmpty == true {
             segmentedControl.isHidden = true
+            #warning("could do something to hide where the stores segmented control would be here")
         } else {
             segmentedControl.isHidden = false
         }
@@ -433,6 +434,7 @@ extension AddItemsVC: ItemCellDelegate {
         let alert = UIAlertController(title: nil, message: "Add quantity for \(item.name)", preferredStyle: .alert)
         alert.addTextField { (txtField) in
             txtField.keyboardType = .numbersAndPunctuation
+            txtField.textColor = Colors.main
         }
         alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(.init(title: "Done", style: .default, handler: { (action) in
@@ -445,7 +447,9 @@ extension AddItemsVC: ItemCellDelegate {
     
     private func nameAlert(item: Item) {
         let alert = UIAlertController(title: nil, message: "Edit name for \(item.name)", preferredStyle: .alert)
-        alert.addTextField(configurationHandler: nil)
+        alert.addTextField { (txtField) in
+            txtField.textColor = Colors.main
+        }
         alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(.init(title: "Done", style: .default, handler: { action in
             if let itemID = item.ownID, let listID = self.list?.ownID, let name = alert.textFields?.first?.text {

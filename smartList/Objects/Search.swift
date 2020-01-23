@@ -1516,6 +1516,8 @@ struct Search {
             return .honeydew
         } else if item.contains("cantaloupe") {
             return .cantaloupe
+        } else if item.contains("taco") && item.contains("seasoning") {
+            return .tacoSeasoning
         }
         
         else {

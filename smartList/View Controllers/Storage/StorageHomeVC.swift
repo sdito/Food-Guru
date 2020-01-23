@@ -311,10 +311,11 @@ class StorageHomeVC: UIViewController {
     
     private func nameAlert(item: Item) {
         let alert = UIAlertController(title: nil, message: "Edit name for \(item.name)", preferredStyle: .alert)
-        alert.addTextField(configurationHandler: nil)
+        alert.addTextField { (txtField) in
+            txtField.textColor = Colors.main
+        }
         alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(.init(title: "Done", style: .default, handler: { action in
-            
             if let storageID = SharedValues.shared.foodStorageID, let itemID = item.ownID, let name = alert.textFields?.first?.text {
                 if name != "" {
                     Item.updateItemForStorageName(name: name, itemID: itemID, storageID: storageID, db: self.db)
@@ -328,7 +329,11 @@ class StorageHomeVC: UIViewController {
     
     private func quantityAlert(item: Item) {
         let alert = UIAlertController(title: nil, message: "Edit quantity for \(item.name)", preferredStyle: .alert)
-        alert.addTextField(configurationHandler: nil)
+        alert.addTextField { (txtField) in
+            txtField.text = item.quantity
+            txtField.textColor = Colors.main
+        }
+        
         alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(.init(title: "Done", style: .default, handler: { action in
             
@@ -405,7 +410,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
             expirationDateOutlet.setTitleColor(.lightGray, for: .normal)
         }
         
-        #warning("probably should animate this change")
+        
         if count == 1 || count == 0 {
             UIView.animate(withDuration: 0.2) {
                 self.optionSingleItemButtons.forEach({$0.isHidden = false})

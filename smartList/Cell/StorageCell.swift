@@ -69,7 +69,7 @@ class StorageCell: UITableViewCell {
         
         if SharedValues.shared.isPhone == false {
             name.font = UIFont(name: "futura", size: 30)
-            
+            quantity.font = UIFont(name: "futura", size: 20)
             added.font = UIFont(name: "futura", size: 20)
             expires.font = UIFont(name: "futura", size: 20)
         }
