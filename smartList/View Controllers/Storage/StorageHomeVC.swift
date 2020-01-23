@@ -309,7 +309,37 @@ class StorageHomeVC: UIViewController {
     }
     
     
+    private func nameAlert(item: Item) {
+        let alert = UIAlertController(title: nil, message: "Edit name for \(item.name)", preferredStyle: .alert)
+        alert.addTextField(configurationHandler: nil)
+        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(.init(title: "Done", style: .default, handler: { action in
+            
+            if let storageID = SharedValues.shared.foodStorageID, let itemID = item.ownID, let name = alert.textFields?.first?.text {
+                if name != "" {
+                    Item.updateItemForStorageName(name: name, itemID: itemID, storageID: storageID, db: self.db)
+                    self.currentlySelectedItems.removeAll()
+                    self.tableView.reloadData()
+                }
+            }
+        }))
+        present(alert, animated: true)
+    }
     
+    private func quantityAlert(item: Item) {
+        let alert = UIAlertController(title: nil, message: "Edit quantity for \(item.name)", preferredStyle: .alert)
+        alert.addTextField(configurationHandler: nil)
+        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(.init(title: "Done", style: .default, handler: { action in
+            
+            if let storageID = SharedValues.shared.foodStorageID, let itemID = item.ownID, let quantity = alert.textFields?.first?.text {
+                Item.updateItemForStorageQuantity(quantity: quantity, itemID: itemID, storageID: storageID, db: self.db)
+                self.currentlySelectedItems.removeAll()
+                self.tableView.reloadData()
+            }
+        }))
+        present(alert, animated: true)
+    }
     
     private func handleCellSortingTo(segment: String) {
         
@@ -353,71 +383,6 @@ class StorageHomeVC: UIViewController {
     }
 }
 
-extension StorageHomeVC: StorageCellDelegate {
-    
-    private func nameAlert(item: Item) {
-        let alert = UIAlertController(title: nil, message: "Edit name for \(item.name)", preferredStyle: .alert)
-        alert.addTextField(configurationHandler: nil)
-        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(.init(title: "Done", style: .default, handler: { action in
-            
-            if let storageID = SharedValues.shared.foodStorageID, let itemID = item.ownID, let name = alert.textFields?.first?.text {
-                if name != "" {
-                    Item.updateItemForStorageName(name: name, itemID: itemID, storageID: storageID, db: self.db)
-                    self.currentlySelectedItems.removeAll()
-                    self.tableView.reloadData()
-                }
-            }
-        }))
-        present(alert, animated: true)
-    }
-    
-    private func quantityAlert(item: Item) {
-        let alert = UIAlertController(title: nil, message: "Edit quantity for \(item.name)", preferredStyle: .alert)
-        alert.addTextField(configurationHandler: nil)
-        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(.init(title: "Done", style: .default, handler: { action in
-            
-            if let storageID = SharedValues.shared.foodStorageID, let itemID = item.ownID, let quantity = alert.textFields?.first?.text {
-                Item.updateItemForStorageQuantity(quantity: quantity, itemID: itemID, storageID: storageID, db: self.db)
-                self.currentlySelectedItems.removeAll()
-                self.tableView.reloadData()
-            }
-        }))
-        present(alert, animated: true)
-    }
-    
-    func itemToEdit(item: Item) {
-        #warning("likely confusing to have two methods of editing/actions for items, can finish implementing this way, however should merge with the pop up view system and use when one item is selected only")
-        // do not want to have both editing methods active at the same time
-        currentlySelectedItems.removeAll()
-        tableView.reloadData()
-        
-        let actionSheet = UIAlertController(title: nil, message: "Edit \(item.name)", preferredStyle: .actionSheet)
-        actionSheet.addAction(.init(title: "Change name", style: .default, handler: {alert in
-            self.nameAlert(item: item)
-            
-        }))
-        actionSheet.addAction(.init(title: "Change quantity", style: .default, handler: { alert in
-            self.quantityAlert(item: item)
-            
-        }))
-        actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
-        
-        
-        if SharedValues.shared.isPhone == true {
-            present(actionSheet, animated: true)
-        } else {
-            actionSheet.popoverPresentationController?.sourceView = self.view
-            actionSheet.popoverPresentationController?.sourceRect = popUpView.frame
-            present(actionSheet, animated: true, completion: nil)
-        }
-    }
-    
-    
-    
-    
-}
 
 extension StorageHomeVC: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -505,7 +470,6 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "storageCell") as! StorageCell
                 let item = sortedItems[indexPath.row]
                 cell.setUI(item: item)
-                cell.delegate = self
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell

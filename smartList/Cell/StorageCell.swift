@@ -10,10 +10,6 @@ import UIKit
 
 
 
-protocol StorageCellDelegate: class {
-    func itemToEdit(item: Item)
-}
-
 
 
 class StorageCell: UITableViewCell {
@@ -23,9 +19,7 @@ class StorageCell: UITableViewCell {
     @IBOutlet weak var expires: UILabel!
     @IBOutlet weak var viewForCircle: UIView!
     @IBOutlet weak var quantity: UILabel!
-    @IBOutlet weak var editItemPressed: UIButton!
     
-    weak var delegate: StorageCellDelegate!
     var item: Item?
     
     
@@ -91,14 +85,7 @@ class StorageCell: UITableViewCell {
             quantity.isHidden = true
         }
         
-        editItemPressed.addTarget(self, action: #selector(editItem), for: .touchUpInside)
     }
     
-    
-    @objc func editItem() {
-        if let itm = item {
-            delegate.itemToEdit(item: itm)
-        }
-    }
     
 }

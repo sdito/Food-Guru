@@ -147,14 +147,12 @@ struct Item: Equatable {
     
     
     static func updateItemForStorageName(name: String, itemID: String, storageID: String, db: Firestore) {
-        #warning("need to complete and add to actionSheet")
         let reference = db.collection("storages").document(storageID).collection("items").document(itemID)
         reference.updateData([
             "name": name
         ])
     }
     static func updateItemForStorageQuantity(quantity: String, itemID: String, storageID: String, db: Firestore) {
-        #warning("need to complete and add to actionSheet")
         let reference = db.collection("storages").document(storageID).collection("items").document(itemID)
         reference.updateData([
             "quantity": quantity
