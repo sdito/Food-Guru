@@ -15,6 +15,7 @@ import AVFoundation
 class StorageHomeVC: UIViewController {
     
     @IBOutlet var optionButtons: [UIButton]!
+    @IBOutlet var optionSingleItemButtons: [UIButton]!
     @IBOutlet weak var pickerView: UIDatePicker!
     @IBOutlet weak var searchOutlet: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -24,7 +25,6 @@ class StorageHomeVC: UIViewController {
     @IBOutlet weak var expirationDateOutlet: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var helperView: UIView!
-    @IBOutlet weak var popUpViewHeight: NSLayoutConstraint!
     @IBOutlet weak var popUpViewWidth: NSLayoutConstraint!
     
     var db: Firestore!
@@ -86,18 +86,15 @@ class StorageHomeVC: UIViewController {
         
         if SharedValues.shared.isPhone == false {
             // need to change the size of the pop up view if on iPad
-            popUpViewHeight.isActive = false
             popUpViewWidth.isActive = false
-            popUpView.heightAnchor.constraint(equalToConstant: 300.0).isActive = true
             popUpView.widthAnchor.constraint(equalToConstant: 150.0).isActive = true
             
-            let font = UIFont(name: "futura", size: 15)
+            let font = UIFont(name: "futura", size: 17)
             
             optionButtons.forEach { (button) in
                 button.titleLabel?.font = font
             }
         }
-        
     }
     
     
@@ -277,6 +274,18 @@ class StorageHomeVC: UIViewController {
         currentlySelectedItems.removeAll()
     }
     
+    @IBAction func editNamePressed(_ sender: Any) {
+        if let itm = currentlySelectedItems.first {
+            nameAlert(item: itm)
+        }
+        
+    }
+    @IBAction func editQuantityPressed(_ sender: Any) {
+        if let itm = currentlySelectedItems.first {
+            quantityAlert(item: itm)
+        }
+    }
+    
     @objc private func createGroupSelector() {
         if SharedValues.shared.anonymousUser == false {
             let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
@@ -345,25 +354,52 @@ class StorageHomeVC: UIViewController {
 }
 
 extension StorageHomeVC: StorageCellDelegate {
+    
+    private func nameAlert(item: Item) {
+        let alert = UIAlertController(title: nil, message: "Edit name for \(item.name)", preferredStyle: .alert)
+        alert.addTextField(configurationHandler: nil)
+        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(.init(title: "Done", style: .default, handler: { action in
+            
+            if let storageID = SharedValues.shared.foodStorageID, let itemID = item.ownID, let name = alert.textFields?.first?.text {
+                if name != "" {
+                    Item.updateItemForStorageName(name: name, itemID: itemID, storageID: storageID, db: self.db)
+                    self.currentlySelectedItems.removeAll()
+                    self.tableView.reloadData()
+                }
+            }
+        }))
+        present(alert, animated: true)
+    }
+    
+    private func quantityAlert(item: Item) {
+        let alert = UIAlertController(title: nil, message: "Edit quantity for \(item.name)", preferredStyle: .alert)
+        alert.addTextField(configurationHandler: nil)
+        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(.init(title: "Done", style: .default, handler: { action in
+            
+            if let storageID = SharedValues.shared.foodStorageID, let itemID = item.ownID, let quantity = alert.textFields?.first?.text {
+                Item.updateItemForStorageQuantity(quantity: quantity, itemID: itemID, storageID: storageID, db: self.db)
+                self.currentlySelectedItems.removeAll()
+                self.tableView.reloadData()
+            }
+        }))
+        present(alert, animated: true)
+    }
+    
     func itemToEdit(item: Item) {
-        #error("likely confusing to have two methods of editing/actions for items, can finish implementing this way, however should merge with the pop up view system and use when one item is selected only")
+        #warning("likely confusing to have two methods of editing/actions for items, can finish implementing this way, however should merge with the pop up view system and use when one item is selected only")
         // do not want to have both editing methods active at the same time
         currentlySelectedItems.removeAll()
         tableView.reloadData()
         
         let actionSheet = UIAlertController(title: nil, message: "Edit \(item.name)", preferredStyle: .actionSheet)
         actionSheet.addAction(.init(title: "Change name", style: .default, handler: {alert in
-            print("Change name")
-//            Item.updateItemForStorageName()
-            
-            
+            self.nameAlert(item: item)
             
         }))
         actionSheet.addAction(.init(title: "Change quantity", style: .default, handler: { alert in
-            print("Change quantity")
-//            Item.updateItemForStorageQuantity()
-            
-            
+            self.quantityAlert(item: item)
             
         }))
         actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
@@ -395,17 +431,27 @@ extension StorageHomeVC: UISearchBarDelegate {
 
 extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     private func handlePopUpView() {
-        print(currentlySelectedItems.map({$0.name}))
-        
-        if currentlySelectedItems.count > 0 {
+        let count = currentlySelectedItems.count
+        if count > 0 {
             popUpView.setIsHidden(false, animated: true)
         } else {
             popUpView.setIsHidden(true, animated: true)
             pickerPopUpView.setIsHidden(true, animated: true)
             expirationDateOutlet.setTitleColor(.lightGray, for: .normal)
         }
-
         
+        #warning("probably should animate this change")
+        if count == 1 || count == 0 {
+            UIView.animate(withDuration: 0.2) {
+                self.optionSingleItemButtons.forEach({$0.isHidden = false})
+            }
+            
+        } else {
+            UIView.animate(withDuration: 0.2) {
+                self.optionSingleItemButtons.forEach({$0.isHidden = true})
+            }
+            
+        }
     }
     
     private func createEmptyStorageCells() -> [UITableViewCell] {

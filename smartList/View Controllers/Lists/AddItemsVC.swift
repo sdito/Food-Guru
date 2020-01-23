@@ -438,9 +438,7 @@ extension AddItemsVC: ItemCellDelegate {
         alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         alert.addAction(.init(title: "Done", style: .default, handler: { (action) in
             if let itemID = item.ownID, let listID = self.list?.ownID, let quantity = alert.textFields?.first?.text {
-                if quantity != "" {
-                    Item.updateItemForListQuantity(quantity: quantity, itemID: itemID, listID: listID, db: self.db)
-                }
+                Item.updateItemForListQuantity(quantity: quantity, itemID: itemID, listID: listID, db: self.db)
             }
         }))
         present(alert, animated: true)

@@ -81,8 +81,12 @@ class StorageCell: UITableViewCell {
         }
         
         if let q = item.quantity {
-            quantity.isHidden = false
-            quantity.text = "(\(q))"
+            if q != "" {
+                quantity.isHidden = false
+                quantity.text = "(\(q))"
+            } else {
+                quantity.isHidden = true
+            }
         } else {
             quantity.isHidden = true
         }

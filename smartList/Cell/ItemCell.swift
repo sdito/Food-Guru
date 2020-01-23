@@ -40,8 +40,12 @@ class ItemCell: UITableViewCell {
         }
         
         if let q = item.quantity {
-            quantityLabel.isHidden = false
-            quantityLabel.text = "(\(q))"
+            if q != "" {
+                quantityLabel.isHidden = false
+                quantityLabel.text = "(\(q))"
+            } else {
+               quantityLabel.isHidden = true
+            }
         } else {
             quantityLabel.isHidden = true
         }

@@ -1780,14 +1780,14 @@
                                 </prototypes>
                             </tableView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xf8-CJ-kAi">
-                                <rect key="frame" x="314" y="142" width="80" height="240"/>
+                                <rect key="frame" x="299" y="102" width="100" height="267"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="4bS-H3-ze1">
-                                        <rect key="frame" x="0.0" y="0.0" width="80" height="240"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="267"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VRm-aF-33k">
-                                                <rect key="frame" x="0.0" y="0.0" width="80" height="36"/>
-                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="11"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="100" height="29"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                                                 <state key="normal" title="Find recipes">
                                                     <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -1796,8 +1796,8 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5n7-7R-IyG">
-                                                <rect key="frame" x="0.0" y="41" width="80" height="35.666666666666657"/>
-                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="11"/>
+                                                <rect key="frame" x="0.0" y="34" width="100" height="29"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                                                 <state key="normal" title="Delete">
                                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -1806,8 +1806,8 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="lMq-ml-PTa">
-                                                <rect key="frame" x="0.0" y="81.666666666666657" width="80" height="36"/>
-                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="11"/>
+                                                <rect key="frame" x="0.0" y="68" width="100" height="29"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                                                 <state key="normal" title="Expiration date">
                                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -1816,8 +1816,8 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kc1-1s-WSa">
-                                                <rect key="frame" x="0.0" y="122.6666666666667" width="80" height="35.666666666666671"/>
-                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="11"/>
+                                                <rect key="frame" x="0.0" y="102" width="100" height="29"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                                                 <state key="normal" title="Put in fridge">
                                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -1826,8 +1826,8 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R7N-tm-e24">
-                                                <rect key="frame" x="0.0" y="163.33333333333331" width="80" height="36"/>
-                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="11"/>
+                                                <rect key="frame" x="0.0" y="136" width="100" height="29"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                                                 <state key="normal" title="Put in freezer">
                                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -1836,13 +1836,33 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nuc-Za-uOb">
-                                                <rect key="frame" x="0.0" y="204.33333333333331" width="80" height="35.666666666666657"/>
-                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="11"/>
+                                                <rect key="frame" x="0.0" y="170" width="100" height="29"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                                                 <state key="normal" title="Put in pantry">
                                                     <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="putInPantryCells:" destination="TBV-k4-MLm" eventType="touchUpInside" id="Qfi-uu-7rk"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bIU-IO-EqB">
+                                                <rect key="frame" x="0.0" y="204" width="100" height="29"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                                <state key="normal" title="Edit name">
+                                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="editNamePressed:" destination="TBV-k4-MLm" eventType="touchUpInside" id="AtI-nY-FzG"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yQr-oU-L5N">
+                                                <rect key="frame" x="0.0" y="238" width="100" height="29"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                                <state key="normal" title="Edit quantity">
+                                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="editQuantityPressed:" destination="TBV-k4-MLm" eventType="touchUpInside" id="AtC-fL-hqw"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1853,13 +1873,12 @@
                                     <constraint firstItem="4bS-H3-ze1" firstAttribute="top" secondItem="Xf8-CJ-kAi" secondAttribute="top" id="Byw-Vq-QfK"/>
                                     <constraint firstItem="4bS-H3-ze1" firstAttribute="leading" secondItem="Xf8-CJ-kAi" secondAttribute="leading" id="Mon-6P-gQO"/>
                                     <constraint firstAttribute="bottom" secondItem="4bS-H3-ze1" secondAttribute="bottom" id="WqJ-i8-PYb"/>
-                                    <constraint firstAttribute="height" constant="240" id="X8i-N9-FhE"/>
                                     <constraint firstAttribute="trailing" secondItem="4bS-H3-ze1" secondAttribute="trailing" id="Yns-9V-gqu"/>
-                                    <constraint firstAttribute="width" constant="80" id="fJX-5x-mFE"/>
+                                    <constraint firstAttribute="width" constant="100" id="fJX-5x-mFE"/>
                                 </constraints>
                             </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z6d-S8-LRX">
-                                <rect key="frame" x="74" y="392" width="320" height="216"/>
+                                <rect key="frame" x="74" y="374" width="320" height="216"/>
                                 <subviews>
                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="IQu-OV-dr4">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
@@ -1977,8 +1996,8 @@
                             <constraint firstItem="c6i-fk-vry" firstAttribute="centerX" secondItem="XIK-7e-dU1" secondAttribute="centerX" id="Hez-Yy-3Gg"/>
                             <constraint firstItem="2pe-Jw-8cP" firstAttribute="top" secondItem="Zhw-h2-rb1" secondAttribute="top" constant="20" id="OlS-yf-jQ2"/>
                             <constraint firstItem="Zhw-h2-rb1" firstAttribute="bottom" secondItem="c6i-fk-vry" secondAttribute="bottom" constant="10" id="TPr-tv-jjc"/>
-                            <constraint firstItem="Zhw-h2-rb1" firstAttribute="trailing" secondItem="Xf8-CJ-kAi" secondAttribute="trailing" constant="20" id="UAa-1I-Fhy"/>
-                            <constraint firstItem="Xf8-CJ-kAi" firstAttribute="top" secondItem="2pe-Jw-8cP" secondAttribute="bottom" constant="50" id="UoE-IT-dWG"/>
+                            <constraint firstItem="Zhw-h2-rb1" firstAttribute="trailing" secondItem="Xf8-CJ-kAi" secondAttribute="trailing" constant="15" id="UAa-1I-Fhy"/>
+                            <constraint firstItem="Xf8-CJ-kAi" firstAttribute="top" secondItem="2pe-Jw-8cP" secondAttribute="bottom" constant="10" id="UoE-IT-dWG"/>
                             <constraint firstItem="yIr-eq-aLA" firstAttribute="leading" secondItem="2pe-Jw-8cP" secondAttribute="trailing" constant="5" id="YMp-f1-0LX"/>
                             <constraint firstItem="k1z-zh-Gs7" firstAttribute="width" secondItem="2pe-Jw-8cP" secondAttribute="width" id="amL-V1-GhK"/>
                             <constraint firstItem="k1z-zh-Gs7" firstAttribute="leading" secondItem="Zhw-h2-rb1" secondAttribute="leading" constant="10" id="dvZ-fR-6Oo"/>
@@ -1988,7 +2007,7 @@
                             <constraint firstItem="UVb-sG-vZ1" firstAttribute="leading" secondItem="Zhw-h2-rb1" secondAttribute="leading" id="nfQ-9R-3Cw"/>
                             <constraint firstItem="2pe-Jw-8cP" firstAttribute="leading" secondItem="Zhw-h2-rb1" secondAttribute="leading" constant="10" id="oF2-td-fdE"/>
                             <constraint firstItem="UVb-sG-vZ1" firstAttribute="top" secondItem="2pe-Jw-8cP" secondAttribute="bottom" constant="15" id="sDl-pM-bTF"/>
-                            <constraint firstItem="z6d-S8-LRX" firstAttribute="top" secondItem="Xf8-CJ-kAi" secondAttribute="bottom" constant="10" id="xAK-QX-zSy"/>
+                            <constraint firstItem="z6d-S8-LRX" firstAttribute="top" secondItem="Xf8-CJ-kAi" secondAttribute="bottom" constant="5" id="xAK-QX-zSy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Zhw-h2-rb1"/>
                     </view>
@@ -1999,7 +2018,6 @@
                         <outlet property="pickerPopUpView" destination="z6d-S8-LRX" id="Uxl-uC-5ii"/>
                         <outlet property="pickerView" destination="IQu-OV-dr4" id="NJR-OB-vj2"/>
                         <outlet property="popUpView" destination="Xf8-CJ-kAi" id="LCP-RS-EdU"/>
-                        <outlet property="popUpViewHeight" destination="X8i-N9-FhE" id="tgx-3B-b5H"/>
                         <outlet property="popUpViewWidth" destination="fJX-5x-mFE" id="ODy-gE-cyn"/>
                         <outlet property="searchBar" destination="k1z-zh-Gs7" id="5rl-Rd-kah"/>
                         <outlet property="searchOutlet" destination="yIr-eq-aLA" id="AZW-QL-c9D"/>
@@ -2011,6 +2029,10 @@
                         <outletCollection property="optionButtons" destination="Kc1-1s-WSa" collectionClass="NSMutableArray" id="ija-Up-P1h"/>
                         <outletCollection property="optionButtons" destination="R7N-tm-e24" collectionClass="NSMutableArray" id="ZUo-Pd-m50"/>
                         <outletCollection property="optionButtons" destination="nuc-Za-uOb" collectionClass="NSMutableArray" id="rQL-6e-K1x"/>
+                        <outletCollection property="optionButtons" destination="bIU-IO-EqB" collectionClass="NSMutableArray" id="2GK-mG-JnF"/>
+                        <outletCollection property="optionButtons" destination="yQr-oU-L5N" collectionClass="NSMutableArray" id="paZ-CA-Rly"/>
+                        <outletCollection property="optionSingleItemButtons" destination="bIU-IO-EqB" collectionClass="NSMutableArray" id="V1D-ze-2yq"/>
+                        <outletCollection property="optionSingleItemButtons" destination="yQr-oU-L5N" collectionClass="NSMutableArray" id="LiM-Z4-PyP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1M9-XC-U2d" userLabel="First Responder" sceneMemberID="firstResponder"/>
