@@ -19,7 +19,7 @@ extension String {
         var leftParen = false
         var doneWithQuantity = false
         
-        let measurements = ["cup", "ounce", "pound", "gallon", "packet", "cups", "ounces", "pounds", "packets", "gallons", "teaspoon", "teaspoons", "tablespoons", "tablespoon", "clove", "cloves", "cubes", "cube", "package", "packages", "can", "cans", "pinch", "bottle", "bottles", "bag", "bags", "slice", "slices", "quarts", "quart"]
+        let measurements = ["cup", "ounce", "pound", "gallon", "packet", "cups", "ounces", "pounds", "packets", "gallons", "teaspoon", "teaspoons", "tablespoons", "tablespoon", "clove", "cloves", "cubes", "cube", "package", "packages", "can", "cans", "pinch", "bottle", "bottles", "bag", "bags", "slice", "slices", "quarts", "quart", "box", "boxes"]
         let words = self.split(separator: " ").map({String($0)})
         
         words.forEach { (word) in

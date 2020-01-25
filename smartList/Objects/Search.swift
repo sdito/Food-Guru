@@ -155,7 +155,7 @@ struct Search {
                         print("Error retrieving documents: \(String(describing: error))")
                         return
                     }
-                    for doc in documents {
+                    for doc in documents.shuffled() {
                         recipes.append(doc.recipe())
                     }
                     recipesReturned(recipes)

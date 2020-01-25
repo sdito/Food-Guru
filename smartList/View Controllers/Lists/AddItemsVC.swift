@@ -269,7 +269,6 @@ class AddItemsVC: UIViewController {
         segmentedControl.selectedSegmentIndex = 0
         if list.stores?.isEmpty == true {
             segmentedControl.isHidden = true
-            #warning("could do something to hide where the stores segmented control would be here")
             
             tableViewToTopView.priority = UILayoutPriority(rawValue: 1000)
             tableViewToStoresView.priority = UILayoutPriority(rawValue: 999)
