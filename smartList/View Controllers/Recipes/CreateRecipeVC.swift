@@ -269,7 +269,7 @@ class CreateRecipeVC: UIViewController {
                 let difference = keyboardPosition - viewPosition
                 print("Need to move: \(difference)")
                 #warning("need to scroll down the scroll view by the difference here")
-                //scrollView.contentOffset = CGPoint(x: 0, y: difference)
+//                scrollView.scrollRectToVisible(<#T##rect: CGRect##CGRect#>, animated: true)
             }
         }
     }
