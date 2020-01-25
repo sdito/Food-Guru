@@ -101,23 +101,23 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="MV7-Xx-V9a">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="31"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="People" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="7Vh-uj-i5N">
-                                                                <rect key="frame" x="0.0" y="0.0" width="97" height="31"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shared with" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="7Vh-uj-i5N">
+                                                                <rect key="frame" x="0.0" y="0.0" width="143" height="31"/>
                                                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="8iY-W8-msN">
-                                                                <rect key="frame" x="103" y="0.0" width="271" height="31"/>
+                                                                <rect key="frame" x="149" y="0.0" width="225" height="31"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use group" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dho-Nh-Bss">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="212" height="31"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="166" height="31"/>
                                                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
                                                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O6c-Od-dVS">
-                                                                        <rect key="frame" x="222" y="0.0" width="51" height="31"/>
+                                                                        <rect key="frame" x="176" y="0.0" width="51" height="31"/>
                                                                         <color key="onTintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <connections>
                                                                             <action selector="switchAction:" destination="DLP-QI-gOQ" eventType="valueChanged" id="69D-wK-31P"/>
@@ -255,12 +255,35 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstItem="EwO-Xj-1OE" firstAttribute="centerY" secondItem="l3v-xn-fS2" secondAttribute="centerY" id="1Ob-Tv-yb2"/>
                                             <constraint firstAttribute="trailing" secondItem="EwO-Xj-1OE" secondAttribute="trailing" constant="10" id="HqT-I0-pEW"/>
                                             <constraint firstAttribute="height" constant="40" id="Lfv-ea-ulf"/>
                                             <constraint firstItem="EwO-Xj-1OE" firstAttribute="leading" secondItem="l3v-xn-fS2" secondAttribute="leading" constant="10" id="Oct-aZ-30y"/>
                                             <constraint firstAttribute="bottom" secondItem="EwO-Xj-1OE" secondAttribute="bottom" constant="5" id="fJP-BR-B03"/>
                                             <constraint firstItem="EwO-Xj-1OE" firstAttribute="top" secondItem="l3v-xn-fS2" secondAttribute="top" constant="5" id="sP4-su-XdC"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RvJ-JD-oBH">
+                                        <rect key="frame" x="0.0" y="40" width="414" height="40"/>
+                                        <subviews>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FyL-B2-6cH">
+                                                <rect key="frame" x="57.666666666666657" y="4.6666666666666572" width="299" height="32"/>
+                                                <segments>
+                                                    <segment title="Trader Joe's"/>
+                                                    <segment title="Whole Foods"/>
+                                                    <segment title="Target"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="segmentedControlPressed:" destination="AVh-qM-Vlx" eventType="valueChanged" id="3BL-hD-ZMT"/>
+                                                </connections>
+                                            </segmentedControl>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="FyL-B2-6cH" firstAttribute="centerX" secondItem="RvJ-JD-oBH" secondAttribute="centerX" id="4BB-vy-4NN"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="FyL-B2-6cH" secondAttribute="trailing" constant="5" id="4LL-nx-JXc"/>
+                                            <constraint firstItem="FyL-B2-6cH" firstAttribute="top" secondItem="RvJ-JD-oBH" secondAttribute="top" constant="4.5" id="Ux4-AZ-lsk"/>
+                                            <constraint firstAttribute="bottom" secondItem="FyL-B2-6cH" secondAttribute="bottom" constant="4.5" id="Vb0-II-BZX"/>
+                                            <constraint firstItem="FyL-B2-6cH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RvJ-JD-oBH" secondAttribute="leading" constant="5" id="jd3-mH-4A1"/>
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Eeu-xt-zJT">
@@ -322,27 +345,6 @@
                                             </tableViewCell>
                                         </prototypes>
                                     </tableView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RvJ-JD-oBH">
-                                        <rect key="frame" x="0.0" y="40" width="414" height="40"/>
-                                        <subviews>
-                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="FyL-B2-6cH">
-                                                <rect key="frame" x="57.666666666666657" y="4.6666666666666572" width="299" height="32"/>
-                                                <segments>
-                                                    <segment title="Trader Joe's"/>
-                                                    <segment title="Whole Foods"/>
-                                                    <segment title="Target"/>
-                                                </segments>
-                                                <connections>
-                                                    <action selector="segmentedControlPressed:" destination="AVh-qM-Vlx" eventType="valueChanged" id="3BL-hD-ZMT"/>
-                                                </connections>
-                                            </segmentedControl>
-                                        </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                        <constraints>
-                                            <constraint firstItem="FyL-B2-6cH" firstAttribute="centerX" secondItem="RvJ-JD-oBH" secondAttribute="centerX" id="4BB-vy-4NN"/>
-                                            <constraint firstItem="FyL-B2-6cH" firstAttribute="centerY" secondItem="RvJ-JD-oBH" secondAttribute="centerY" id="ll0-ih-8r2"/>
-                                        </constraints>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
@@ -357,6 +359,7 @@
                                     <constraint firstItem="RvJ-JD-oBH" firstAttribute="top" secondItem="l3v-xn-fS2" secondAttribute="bottom" id="i6g-Q4-hKY"/>
                                     <constraint firstAttribute="trailing" secondItem="l3v-xn-fS2" secondAttribute="trailing" id="sCF-eb-Lwt"/>
                                     <constraint firstItem="RvJ-JD-oBH" firstAttribute="leading" secondItem="EUV-NV-fy5" secondAttribute="leading" id="up7-pF-LPH"/>
+                                    <constraint firstItem="Eeu-xt-zJT" firstAttribute="top" secondItem="l3v-xn-fS2" secondAttribute="bottom" priority="999" id="wia-vs-QOB"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -376,6 +379,8 @@
                         <outlet property="segmentedControl" destination="FyL-B2-6cH" id="e3B-7z-VGz"/>
                         <outlet property="storesView" destination="RvJ-JD-oBH" id="wAQ-39-lC0"/>
                         <outlet property="tableView" destination="Eeu-xt-zJT" id="ELF-Vq-RDG"/>
+                        <outlet property="tableViewToStoresView" destination="Qo4-3f-fil" id="7y8-kv-H47"/>
+                        <outlet property="tableViewToTopView" destination="wia-vs-QOB" id="bv6-VZ-4vq"/>
                         <outlet property="textField" destination="4Ll-rd-7AG" id="pDt-Qe-32n"/>
                         <outlet property="topView" destination="l3v-xn-fS2" id="x7M-5u-nW4"/>
                         <outlet property="topViewHeight" destination="Lfv-ea-ulf" id="9WB-ap-Vfc"/>

@@ -24,9 +24,8 @@ class TabVC: UITabBarController {
         let numTimesRan = defaults.integer(forKey: "timesOpened")
         
         if numTimesRan < 2 {
-            // Have a small pop up to alert the user that they can view the tutioral
+            // Have a small pop up to alert the user that they can view the tutioral, center that view in the display and present it after two seconds
             let view = Bundle.main.loadNibNamed("SuggestTutorialView", owner: nil, options: nil)?.first as! SuggestTutorialView
-            
             let width = view.bounds.width
             view.frame = CGRect(x: 0.0 - width, y: 37.5, width: width, height: view.bounds.height)
             view.border(cornerRadius: 5.0)

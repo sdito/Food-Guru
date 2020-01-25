@@ -14,13 +14,17 @@ import FirebaseFirestore
 class AddItemsVC: UIViewController {
     
     @IBOutlet weak var plusButton: UIButton!
-    @IBOutlet weak var topViewHeight: NSLayoutConstraint!
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var storesView: UIView!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var topViewHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var tableViewToStoresView: NSLayoutConstraint!
+    @IBOutlet weak var tableViewToTopView: NSLayoutConstraint!
+    
     
     var db: Firestore!
     private var arrayArrayItems: [[Item]] = []
@@ -158,6 +162,7 @@ class AddItemsVC: UIViewController {
             self.addChild(vc)
             self.view.addSubview(vc.tableView)
             vc.didMove(toParent: self)
+            
             vc.tableView.translatesAutoresizingMaskIntoConstraints = false
             
             vc.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
@@ -265,8 +270,14 @@ class AddItemsVC: UIViewController {
         if list.stores?.isEmpty == true {
             segmentedControl.isHidden = true
             #warning("could do something to hide where the stores segmented control would be here")
+            
+            tableViewToTopView.priority = UILayoutPriority(rawValue: 1000)
+            tableViewToStoresView.priority = UILayoutPriority(rawValue: 999)
         } else {
             segmentedControl.isHidden = false
+            
+            tableViewToTopView.priority = UILayoutPriority(rawValue: 999)
+            tableViewToStoresView.priority = UILayoutPriority(rawValue: 1000)
         }
         
     }

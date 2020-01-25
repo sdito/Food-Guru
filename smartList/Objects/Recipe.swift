@@ -361,7 +361,7 @@ extension Recipe {
     #warning("should probably not allow users to write directly to the main collection...")
     mutating func writeToFirestore(db: Firestore!, storage: Storage) {
         let ingredients = self.ingredients
-        let doc = db.collection("recipes").document()
+        let doc = db.collection("recipes-external").document()
         self.imagePath = "recipe/\(doc.documentID).jpg"
         doc.setData([
             "name": self.name,

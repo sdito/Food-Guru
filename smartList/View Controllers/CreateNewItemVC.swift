@@ -52,8 +52,6 @@ class CreateNewItemVC: UITableViewController {
         tableView.isHidden = true
     }
     
-    
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchedItems.count
     }
