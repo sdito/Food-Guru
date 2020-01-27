@@ -312,7 +312,7 @@ class SettingsDetailVC: UIViewController {
     
     @objc private func createGroup() {
         if SharedValues.shared.anonymousUser == false {
-            let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
         } else {
@@ -331,7 +331,7 @@ class SettingsDetailVC: UIViewController {
     }
     
     @objc private func editGroupAction() {
-        let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
         vc.modalPresentationStyle = .fullScreen
         vc.previousGroupID = SharedValues.shared.groupID
         present(vc, animated: true, completion: nil)
@@ -394,7 +394,7 @@ extension SettingsDetailVC: UpdateScreenDelegate {
 extension SettingsDetailVC: SettingViewedRecipeCellDelegate {
     func recipeDocumentIdPressed(id: String) {
         Recipe.readOneRecipeFrom(id: id, db: db) { (rcp) in
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC
+            let vc = UIStoryboard(name: "Recipes", bundle: nil).instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC
             let data = (UIImage(), rcp)
             vc.data = data
             self.navigationController?.pushViewController(vc, animated: true)

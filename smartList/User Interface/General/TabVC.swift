@@ -16,6 +16,15 @@ class TabVC: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let listsTab = UIStoryboard(name: "Lists", bundle: nil).instantiateViewController(withIdentifier: "ListsTab")
+        let recipesTab = UIStoryboard(name: "Recipes", bundle: nil).instantiateViewController(withIdentifier: "RecipesTab")
+        let storageTab = UIStoryboard(name: "Storage", bundle: nil).instantiateViewController(withIdentifier: "StorageTab")
+        let mealPlannerTab = UIStoryboard(name: "MealPlanner", bundle: nil).instantiateViewController(withIdentifier: "MealPlannerTab")
+        let settingsTab = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "SettingsTab")
+        
+        self.setViewControllers([listsTab, recipesTab, storageTab, mealPlannerTab, settingsTab], animated: false)
+        
         db = Firestore.firestore()
         User.writeNewUserDocumentIfApplicable(db: db)
         User.setAndPersistGroupDataInSharedValues(db: db)

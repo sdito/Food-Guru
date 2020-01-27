@@ -306,7 +306,7 @@ extension UIViewController {
     
     @objc func createGroupPopUp() {
         if SharedValues.shared.anonymousUser == false {
-            let vc = storyboard?.instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
             vc.modalPresentationStyle = .fullScreen
             present(vc, animated: true, completion: nil)
         } else {

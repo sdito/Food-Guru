@@ -42,7 +42,6 @@
 		E242494923BFDD5E007C03F5 /* Tutorial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E242494823BFDD5E007C03F5 /* Tutorial.storyboard */; };
 		E242494B23BFDE4B007C03F5 /* TutorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E242494A23BFDE4B007C03F5 /* TutorialVC.swift */; };
 		E2445CEE2321D6500089582F /* TabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CED2321D6500089582F /* TabVC.swift */; };
-		E2445CF02321D8EA0089582F /* ListHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CEF2321D8EA0089582F /* ListHomeVC.swift */; };
 		E2445CF22321D8F90089582F /* RecipeHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CF12321D8F90089582F /* RecipeHomeVC.swift */; };
 		E2445CF42321DC100089582F /* StorageHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CF32321DC100089582F /* StorageHomeVC.swift */; };
 		E2445CFE23220D950089582F /* TimeInterval-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CFD23220D950089582F /* TimeInterval-Extension.swift */; };
@@ -68,6 +67,13 @@
 		E27D70B4233F24A5009C68B3 /* UISearchBar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */; };
 		E27D70B62340079D009C68B3 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70B52340079D009C68B3 /* RecipeCell.swift */; };
 		E27D70C223404414009C68B3 /* DynamicHeightLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70C123404414009C68B3 /* DynamicHeightLayout.swift */; };
+		E28A4CBD23DE817800C94DF9 /* Lists.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E28A4CBC23DE817800C94DF9 /* Lists.storyboard */; };
+		E28A4CBF23DE818100C94DF9 /* Recipes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E28A4CBE23DE818100C94DF9 /* Recipes.storyboard */; };
+		E28A4CC123DE818B00C94DF9 /* Storage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E28A4CC023DE818B00C94DF9 /* Storage.storyboard */; };
+		E28A4CC323DE819400C94DF9 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E28A4CC223DE819400C94DF9 /* Settings.storyboard */; };
+		E28A4CC523DE840D00C94DF9 /* MealPlanner.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E28A4CC423DE840D00C94DF9 /* MealPlanner.storyboard */; };
+		E28A4CC723DE841D00C94DF9 /* MealPlannerHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28A4CC623DE841D00C94DF9 /* MealPlannerHomeVC.swift */; };
+		E28A4CD223DEB77200C94DF9 /* ListHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28A4CD123DEB77200C94DF9 /* ListHomeVC.swift */; };
 		E291CBFC23C85B9100F0FF56 /* UIImage-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E291CBFB23C85B9100F0FF56 /* UIImage-Extension.swift */; };
 		E291CBFE23C9BA1B00F0FF56 /* SuggestTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E291CBFD23C9BA1B00F0FF56 /* SuggestTutorialView.xib */; };
 		E291CC0023C9BA3100F0FF56 /* SuggestTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E291CBFF23C9BA3100F0FF56 /* SuggestTutorialView.swift */; };
@@ -161,7 +167,7 @@
 		E20BC6D223275BC200F1E5E7 /* SettingBasicCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingBasicCell.swift; sourceTree = "<group>"; };
 		E20BC6D52328326600F1E5E7 /* SettingButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButtonCell.swift; sourceTree = "<group>"; };
 		E20BC6D72328429F00F1E5E7 /* GroupNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNameCell.swift; sourceTree = "<group>"; };
-		E20BC6D9232843E400F1E5E7 /* CreateGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateGroupVC.swift; path = smartList/Cell/CreateGroupVC.swift; sourceTree = SOURCE_ROOT; };
+		E20BC6D9232843E400F1E5E7 /* CreateGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateGroupVC.swift; path = "smartList/User Interface/General/CreateGroupVC.swift"; sourceTree = SOURCE_ROOT; };
 		E20BC6DB23288B9C00F1E5E7 /* EmailCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailCheck.swift; sourceTree = "<group>"; };
 		E20BC6DD2329A43300F1E5E7 /* SettingTwoLevelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTwoLevelCell.swift; sourceTree = "<group>"; };
 		E20BC6DF232AB39F00F1E5E7 /* SetUpListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpListVC.swift; sourceTree = "<group>"; };
@@ -188,7 +194,6 @@
 		E242494823BFDD5E007C03F5 /* Tutorial.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tutorial.storyboard; sourceTree = "<group>"; };
 		E242494A23BFDE4B007C03F5 /* TutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialVC.swift; sourceTree = "<group>"; };
 		E2445CED2321D6500089582F /* TabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabVC.swift; sourceTree = "<group>"; };
-		E2445CEF2321D8EA0089582F /* ListHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ListHomeVC.swift; path = "../New Group/ListHomeVC.swift"; sourceTree = "<group>"; };
 		E2445CF12321D8F90089582F /* RecipeHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeHomeVC.swift; sourceTree = "<group>"; };
 		E2445CF32321DC100089582F /* StorageHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageHomeVC.swift; sourceTree = "<group>"; };
 		E2445CFD23220D950089582F /* TimeInterval-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval-Extension.swift"; sourceTree = "<group>"; };
@@ -215,6 +220,13 @@
 		E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar-Extension.swift"; sourceTree = "<group>"; };
 		E27D70B52340079D009C68B3 /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		E27D70C123404414009C68B3 /* DynamicHeightLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightLayout.swift; sourceTree = "<group>"; };
+		E28A4CBC23DE817800C94DF9 /* Lists.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Lists.storyboard; sourceTree = "<group>"; };
+		E28A4CBE23DE818100C94DF9 /* Recipes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Recipes.storyboard; sourceTree = "<group>"; };
+		E28A4CC023DE818B00C94DF9 /* Storage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storage.storyboard; sourceTree = "<group>"; };
+		E28A4CC223DE819400C94DF9 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
+		E28A4CC423DE840D00C94DF9 /* MealPlanner.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MealPlanner.storyboard; sourceTree = "<group>"; };
+		E28A4CC623DE841D00C94DF9 /* MealPlannerHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlannerHomeVC.swift; sourceTree = "<group>"; };
+		E28A4CD123DEB77200C94DF9 /* ListHomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListHomeVC.swift; path = "smartList/View Controllers/New Group/ListHomeVC.swift"; sourceTree = SOURCE_ROOT; };
 		E291CBFB23C85B9100F0FF56 /* UIImage-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage-Extension.swift"; sourceTree = "<group>"; };
 		E291CBFD23C9BA1B00F0FF56 /* SuggestTutorialView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestTutorialView.xib; sourceTree = "<group>"; };
 		E291CBFF23C9BA3100F0FF56 /* SuggestTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestTutorialView.swift; sourceTree = "<group>"; };
@@ -367,8 +379,7 @@
 			children = (
 				E273ADD823B8565500E0B35D /* Food Guru.entitlements */,
 				E216204622F658D10074A0DF /* AppDelegate.swift */,
-				E29BB2C523D3FC81000BD145 /* Storyboards */,
-				E216207822F660C40074A0DF /* View Controllers */,
+				E29BB2C523D3FC81000BD145 /* User Interface */,
 				E2B4695522F79748006BA77D /* Objects */,
 				E25F071523146C9A00E6738E /* Enum */,
 				E2B4694D22F78D23006BA77D /* Views */,
@@ -400,23 +411,7 @@
 			path = smartListUITests;
 			sourceTree = "<group>";
 		};
-		E216207822F660C40074A0DF /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				E2149CF6235ADCAB002BF2D0 /* CreateNewItemVC.swift */,
-				E2445CED2321D6500089582F /* TabVC.swift */,
-				E24F4EA323CA65D500C85DA7 /* SplashVC.swift */,
-				E2C5EC35239A022F0030E3CD /* Log in */,
-				E2445CF72321DD5D0089582F /* Lists */,
-				E2445CF82321DDA20089582F /* Recipes */,
-				E2445CF92321DDCA0089582F /* Storage */,
-				E2445CFA2321DDDB0089582F /* Settings */,
-				E242494C23BFF809007C03F5 /* Tutorial */,
-			);
-			path = "View Controllers";
-			sourceTree = "<group>";
-		};
-		E242494C23BFF809007C03F5 /* Tutorial */ = {
+		E242494C23BFF809007C03F5 /* View controllers */ = {
 			isa = PBXGroup;
 			children = (
 				E242494A23BFDE4B007C03F5 /* TutorialVC.swift */,
@@ -428,20 +423,20 @@
 				E2B6273C23C307890039459B /* SixTutorialVC.swift */,
 				E24F4EA123CA452F00C85DA7 /* EndTutorialVC.swift */,
 			);
-			path = Tutorial;
+			path = "View controllers";
 			sourceTree = "<group>";
 		};
-		E2445CF72321DD5D0089582F /* Lists */ = {
+		E2445CF72321DD5D0089582F /* View controllers */ = {
 			isa = PBXGroup;
 			children = (
-				E2445CEF2321D8EA0089582F /* ListHomeVC.swift */,
+				E28A4CD123DEB77200C94DF9 /* ListHomeVC.swift */,
 				E20BC6DF232AB39F00F1E5E7 /* SetUpListVC.swift */,
 				E2EBE5D222FD25060019BB0F /* AddItemsVC.swift */,
 			);
-			path = Lists;
+			path = "View controllers";
 			sourceTree = "<group>";
 		};
-		E2445CF82321DDA20089582F /* Recipes */ = {
+		E2445CF82321DDA20089582F /* View controllers */ = {
 			isa = PBXGroup;
 			children = (
 				E2445CF12321D8F90089582F /* RecipeHomeVC.swift */,
@@ -453,26 +448,26 @@
 				E22A0EF323AC03C5007D7272 /* OutsideRecipesVC.swift */,
 				E2B8E942237C81160051B07D /* RecipePDFVC.swift */,
 			);
-			path = Recipes;
+			path = "View controllers";
 			sourceTree = "<group>";
 		};
-		E2445CF92321DDCA0089582F /* Storage */ = {
+		E2445CF92321DDCA0089582F /* View controllers */ = {
 			isa = PBXGroup;
 			children = (
 				E2445CF32321DC100089582F /* StorageHomeVC.swift */,
 				E24ADB0923386E69008F2F9F /* StorageNewItemVC.swift */,
 			);
-			path = Storage;
+			path = "View controllers";
 			sourceTree = "<group>";
 		};
-		E2445CFA2321DDDB0089582F /* Settings */ = {
+		E2445CFA2321DDDB0089582F /* View controllers */ = {
 			isa = PBXGroup;
 			children = (
 				E20AFF3B2324911300A5479A /* SettingsHomeVC.swift */,
 				E20BC6CE2327430C00F1E5E7 /* SettingsDetailVC.swift */,
-				E20BC6D9232843E400F1E5E7 /* CreateGroupVC.swift */,
 			);
-			path = Settings;
+			name = "View controllers";
+			path = "../../View Controllers/View controllers";
 			sourceTree = "<group>";
 		};
 		E253AC0923431FA70018274A /* ButtonIngredientView */ = {
@@ -515,15 +510,103 @@
 			path = Layout;
 			sourceTree = "<group>";
 		};
-		E29BB2C523D3FC81000BD145 /* Storyboards */ = {
+		E28A4CC823DE842400C94DF9 /* View controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E28A4CC623DE841D00C94DF9 /* MealPlannerHomeVC.swift */,
+			);
+			path = "View controllers";
+			sourceTree = "<group>";
+		};
+		E28A4CC923DEB52400C94DF9 /* Log in */ = {
+			isa = PBXGroup;
+			children = (
+				E2C5EC3123986D420030E3CD /* LogIn.storyboard */,
+				E2C5EC35239A022F0030E3CD /* View controllers */,
+			);
+			path = "Log in";
+			sourceTree = "<group>";
+		};
+		E28A4CCA23DEB56E00C94DF9 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				E242494823BFDD5E007C03F5 /* Tutorial.storyboard */,
+				E242494C23BFF809007C03F5 /* View controllers */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
+		E28A4CCB23DEB5E000C94DF9 /* Lists */ = {
+			isa = PBXGroup;
+			children = (
+				E28A4CBC23DE817800C94DF9 /* Lists.storyboard */,
+				E2445CF72321DD5D0089582F /* View controllers */,
+			);
+			path = Lists;
+			sourceTree = "<group>";
+		};
+		E28A4CCC23DEB5F500C94DF9 /* Recipes */ = {
+			isa = PBXGroup;
+			children = (
+				E28A4CBE23DE818100C94DF9 /* Recipes.storyboard */,
+				E2445CF82321DDA20089582F /* View controllers */,
+			);
+			path = Recipes;
+			sourceTree = "<group>";
+		};
+		E28A4CCD23DEB60600C94DF9 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				E28A4CC023DE818B00C94DF9 /* Storage.storyboard */,
+				E2445CF92321DDCA0089582F /* View controllers */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		E28A4CCE23DEB61700C94DF9 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				E28A4CC223DE819400C94DF9 /* Settings.storyboard */,
+				E2445CFA2321DDDB0089582F /* View controllers */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		E28A4CCF23DEB63600C94DF9 /* General */ = {
 			isa = PBXGroup;
 			children = (
 				E216204A22F658D10074A0DF /* Main.storyboard */,
-				E2C5EC3123986D420030E3CD /* LogIn.storyboard */,
-				E242494823BFDD5E007C03F5 /* Tutorial.storyboard */,
-				E216204F22F658D20074A0DF /* LaunchScreen.storyboard */,
+				E20BC6D9232843E400F1E5E7 /* CreateGroupVC.swift */,
+				E2149CF6235ADCAB002BF2D0 /* CreateNewItemVC.swift */,
+				E2445CED2321D6500089582F /* TabVC.swift */,
+				E24F4EA323CA65D500C85DA7 /* SplashVC.swift */,
 			);
-			path = Storyboards;
+			path = General;
+			sourceTree = "<group>";
+		};
+		E28A4CD023DEB64700C94DF9 /* Meal planner */ = {
+			isa = PBXGroup;
+			children = (
+				E28A4CC423DE840D00C94DF9 /* MealPlanner.storyboard */,
+				E28A4CC823DE842400C94DF9 /* View controllers */,
+			);
+			path = "Meal planner";
+			sourceTree = "<group>";
+		};
+		E29BB2C523D3FC81000BD145 /* User Interface */ = {
+			isa = PBXGroup;
+			children = (
+				E28A4CCF23DEB63600C94DF9 /* General */,
+				E216204F22F658D20074A0DF /* LaunchScreen.storyboard */,
+				E28A4CC923DEB52400C94DF9 /* Log in */,
+				E28A4CCA23DEB56E00C94DF9 /* Tutorial */,
+				E28A4CCB23DEB5E000C94DF9 /* Lists */,
+				E28A4CCC23DEB5F500C94DF9 /* Recipes */,
+				E28A4CCD23DEB60600C94DF9 /* Storage */,
+				E28A4CCE23DEB61700C94DF9 /* Settings */,
+				E28A4CD023DEB64700C94DF9 /* Meal planner */,
+			);
+			path = "User Interface";
 			sourceTree = "<group>";
 		};
 		E2A54E1F23186DEB00BEBF39 /* InstructionView */ = {
@@ -601,7 +684,7 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		E2C5EC35239A022F0030E3CD /* Log in */ = {
+		E2C5EC35239A022F0030E3CD /* View controllers */ = {
 			isa = PBXGroup;
 			children = (
 				E2C5EC3C239A0B280030E3CD /* InitialLogInVC.swift */,
@@ -610,7 +693,7 @@
 				E2BB81A4239A14C20038269F /* ForgotPasswordVC.swift */,
 				E252283123A34B220036F604 /* CreateDisplayNameVC.swift */,
 			);
-			path = "Log in";
+			path = "View controllers";
 			sourceTree = "<group>";
 		};
 		E2DA80B92347F0C700BD7101 /* SortItemView */ = {
@@ -816,13 +899,18 @@
 				E216205122F658D20074A0DF /* LaunchScreen.storyboard in Resources */,
 				E2DA80CC2349957700BD7101 /* StarRatingView.xib in Resources */,
 				E291CBFE23C9BA1B00F0FF56 /* SuggestTutorialView.xib in Resources */,
+				E28A4CBF23DE818100C94DF9 /* Recipes.storyboard in Resources */,
+				E28A4CBD23DE817800C94DF9 /* Lists.storyboard in Resources */,
 				E2E980CE238E3A5600FAD549 /* ReviewImagesView.xib in Resources */,
 				E2DC0F2723B1DF920094FDB2 /* EditItemInfoView.xib in Resources */,
 				E2DA80D02349BB6100BD7101 /* GiveRatingView.xib in Resources */,
 				E253AC06234315170018274A /* ButtonIngredientView.xib in Resources */,
 				E25DEC702362B4810007535C /* CurrentSearchesView.xib in Resources */,
+				E28A4CC123DE818B00C94DF9 /* Storage.storyboard in Resources */,
 				E2F380B023198496003857F7 /* IngredientView.xib in Resources */,
+				E28A4CC323DE819400C94DF9 /* Settings.storyboard in Resources */,
 				E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */,
+				E28A4CC523DE840D00C94DF9 /* MealPlanner.storyboard in Resources */,
 				E216204E22F658D20074A0DF /* Assets.xcassets in Resources */,
 				E242494923BFDD5E007C03F5 /* Tutorial.storyboard in Resources */,
 				E2CE480F23442F6F0045FCC0 /* LabelInstructionView.xib in Resources */,
@@ -969,6 +1057,7 @@
 				E2E529D522FA80C400C55DA0 /* Item.swift in Sources */,
 				E24ADB10233E7974008F2F9F /* UIViewController-Extension.swift in Sources */,
 				E2CE480D23442F4E0045FCC0 /* LabelInstructionView.swift in Sources */,
+				E28A4CD223DEB77200C94DF9 /* ListHomeVC.swift in Sources */,
 				E24ADB0C23399BD8008F2F9F /* ListHomeCell.swift in Sources */,
 				E2445CF42321DC100089582F /* StorageHomeVC.swift in Sources */,
 				E20BC6DC23288B9C00F1E5E7 /* EmailCheck.swift in Sources */,
@@ -995,7 +1084,6 @@
 				E252283223A34B220036F604 /* CreateDisplayNameVC.swift in Sources */,
 				E2C49349230B45E4002907C2 /* CreateRecipeVC.swift in Sources */,
 				E2B6273723C2F0C70039459B /* ThreeTutorialVC.swift in Sources */,
-				E2445CF02321D8EA0089582F /* ListHomeVC.swift in Sources */,
 				E29BB2C423D172C1000BD145 /* Int-Extension.swift in Sources */,
 				E2B8E943237C81160051B07D /* RecipePDFVC.swift in Sources */,
 				E242494B23BFDE4B007C03F5 /* TutorialVC.swift in Sources */,
@@ -1032,6 +1120,7 @@
 				E20BC6D62328326600F1E5E7 /* SettingButtonCell.swift in Sources */,
 				E2EB7FC322FFB29A003948A6 /* String-Extension.swift in Sources */,
 				E2E529D222FA7F9100C55DA0 /* GroceryList.swift in Sources */,
+				E28A4CC723DE841D00C94DF9 /* MealPlannerHomeVC.swift in Sources */,
 				E2B6273D23C307890039459B /* SixTutorialVC.swift in Sources */,
 				E2C49343230887F3002907C2 /* User.swift in Sources */,
 				E2B8E947237C865D0051B07D /* PDFCreator.swift in Sources */,
