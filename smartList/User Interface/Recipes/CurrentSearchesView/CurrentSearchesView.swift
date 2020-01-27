@@ -41,7 +41,7 @@ class CurrentSearchesView: UIView {
                 }
                 
                 b.setTitle(" X  \(buttonText) ", for: .normal)
-                //b.setTitleColor(Colors.main, for: .normal)
+                
                 b.titleLabel?.font = UIFont(name: "futura", size: 13)
                 b.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
                 b.layer.cornerRadius = 5
