@@ -10,6 +10,9 @@ import Foundation
 import FirebaseFirestore
 import FirebaseAuth
 
+import UIKit
+import Firebase
+
 struct Item: Equatable {
     var name: String
     var selected: Bool
@@ -157,6 +160,78 @@ struct Item: Equatable {
         reference.updateData([
             "quantity": quantity
         ])
+    }
+    
+    static func getItemFromBarcode(image: UIImage, vc: UIViewController, picker: UIImagePickerController, db: Firestore) {
+        let format = VisionBarcodeFormat.all
+        let barcodeOptions = VisionBarcodeDetectorOptions(formats: format)
+        let vision = Vision.vision()
+        let barcodeDetector = vision.barcodeDetector(options: barcodeOptions)
+        let visionImage = VisionImage(image: image)
+        
+        let imageMetadata = VisionImageMetadata()
+        imageMetadata.orientation = .topLeft
+        visionImage.metadata = imageMetadata
+        
+        barcodeDetector.detect(in: visionImage) { (visionBarcode, error) in
+            guard let barcodeData = visionBarcode else {
+                vc.createMessageView(color: .red, text: "Unable to read barcode")
+                picker.dismiss(animated: true, completion: nil)
+                return
+            }
+        
+            picker.dismiss(animated: true, completion: nil)
+            guard let barcode = barcodeData.first?.displayValue else {
+                vc.createMessageView(color: .red, text: "Barcode not found")
+                return
+            }
+            
+            
+            guard let url = URL(string: "https://world.openfoodfacts.org/api/v0/product/\(barcode).json") else { return }
+            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+                DispatchQueue.main.async {
+                    guard let data = data else {
+                        print("Data was nil")
+                        return
+                    }
+                    
+                    
+                    let json = try? JSONSerialization.jsonObject(with: data, options: [])
+                    if let dictionary = json as? [String:Any] {
+                        if let nestedDict = dictionary["product"] as? [String:Any] {
+                            if let name = nestedDict["product_name_en"] as? String {
+                                vc.createMessageView(color: Colors.messageGreen, text: "Added: \(name)")
+                                var item = Item.createItemFrom(text: name)
+                                let words = name.split{ !$0.isLetter }.map { (sStr) -> String in
+                                    String(sStr.lowercased())
+                                }
+                                
+                                
+                                if let genericItem = item.systemItem {
+                                    if genericItem != .other {
+                                        item.storageSection = GenericItem.getStorageType(item: genericItem, words: words)
+                                        item.timeExpires = Date().timeIntervalSince1970 + Double(GenericItem.getSuggestedExpirationDate(item: genericItem, storageType: item.storageSection ?? .unsorted))
+                                    }
+                                }
+                                
+                                item.store = ""
+                                item.writeToFirestoreForStorage(db: db, docID: SharedValues.shared.foodStorageID ?? " ")
+                            } else {
+                                vc.createMessageView(color: .red, text: "Item not found")
+                            }
+                            
+                        } else {
+                            vc.createMessageView(color: .red, text: "Barcode '\(barcode)' not found")
+                        }
+                    } else {
+                        vc.createMessageView(color: .red, text: "Item not found")
+                    }
+                    
+                    
+                }
+            }
+            task.resume()
+        }
     }
 }
 

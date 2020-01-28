@@ -23,7 +23,7 @@ class TabVC: UITabBarController {
         let mealPlannerTab = UIStoryboard(name: "MealPlanner", bundle: nil).instantiateViewController(withIdentifier: "MealPlannerTab")
         let settingsTab = UIStoryboard(name: "Settings", bundle: nil).instantiateViewController(withIdentifier: "SettingsTab")
         
-        self.setViewControllers([listsTab, recipesTab, storageTab, mealPlannerTab, settingsTab], animated: false)
+        self.setViewControllers([listsTab, recipesTab, storageTab/*, mealPlannerTab*/, settingsTab], animated: false)
         
         db = Firestore.firestore()
         User.writeNewUserDocumentIfApplicable(db: db)

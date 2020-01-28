@@ -55,7 +55,7 @@ class StorageNewItemVC: UIViewController {
     
     @IBAction func textDidChange(_ sender: Any) {
         if textAssistantViewActive == false {
-            let vc = storyboard?.instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
             self.addChild(vc)
             self.view.addSubview(vc.tableView)
             vc.didMove(toParent: self)

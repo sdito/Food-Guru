@@ -443,8 +443,10 @@ extension RecipeDetailVC: ReviewImagesViewDelegate {
 }
 
 extension RecipeDetailVC: GiveRatingViewDelegate {
+    
+    #warning("should move this code into review")
+    
     func writeImageForReview(image: UIImage) {
-        print("Write the image from here")
         
         guard let recipeID = data?.recipe.imagePath?.imagePathToDocID() else { return }
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -482,14 +484,15 @@ extension RecipeDetailVC: GiveRatingViewDelegate {
         
     }
     
+    #warning("should move this code into review")
     
     func publishRating(stars: Int, rating: String?) {
         reviewRecipeOutlet.isUserInteractionEnabled = false
         reviewRecipeOutlet.alpha = 0.4
         reviewRecipeOutlet.setTitleColor(.black, for: .normal)
         reviewRecipeOutlet.setTitle("✓ Review the recipe", for: .normal)
-        let recipeID = data?.recipe.imagePath?.imagePathToDocID()
         
+        let recipeID = data?.recipe.imagePath?.imagePathToDocID()
         let reference = db.collection("recipes").document(recipeID ?? " ").collection("reviews")
         reference.whereField("user", isEqualTo: Auth.auth().currentUser?.uid ?? " ").getDocuments { (querySnapshot, error) in
             if (querySnapshot?.documents.count) == nil || querySnapshot?.documents.count == 0 {
@@ -515,5 +518,6 @@ extension RecipeDetailVC: GiveRatingViewDelegate {
             }
         }
     }
+    
 }
 

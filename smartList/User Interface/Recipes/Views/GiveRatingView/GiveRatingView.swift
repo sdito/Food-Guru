@@ -16,14 +16,15 @@ protocol GiveRatingViewDelegate {
 
 
 class GiveRatingView: UIView {
+    
     private var imageForReview: UIImage?
     var imagePicker = UIImagePickerController()
     var delegate: GiveRatingViewDelegate!
     private var rating: Int?
     private let placeholder = "How was the recipe? Did you have any cooking tips, or make any substitutions?"
+    
     @IBOutlet weak var ratingButton: UIButton!
     @IBOutlet weak var textView: UITextView!
-    
     @IBOutlet weak var imageSelectOutlet: UIButton!
     @IBOutlet var starButtons: [UIButton]!
     

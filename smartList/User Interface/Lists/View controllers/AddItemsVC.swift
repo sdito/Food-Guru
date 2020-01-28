@@ -158,7 +158,7 @@ class AddItemsVC: UIViewController {
     @IBAction func textDidChange(_ sender: Any) {
         if textAssistantViewActive == false {
             // add the view here
-            let vc = storyboard?.instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
             self.addChild(vc)
             self.view.addSubview(vc.tableView)
             vc.didMove(toParent: self)
