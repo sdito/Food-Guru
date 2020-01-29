@@ -195,9 +195,7 @@ struct Recipe {
     }
     
     static func getPuppyRecipesFromSearches(activeSearches: [(String, SearchType)], expiringItems: [String], recipesFound: @escaping (_ recipes: [Recipe.Puppy]) -> Void) {
-        
         var puppyRecipes: [Recipe.Puppy] = []
-        
         var itemsToSearch: [String] {
             if activeSearches.contains(where: {$0 == ("Expiring", .other)}) {
                 return expiringItems
@@ -270,7 +268,6 @@ struct Recipe {
             }
         }
         task.resume()
-        
     }
     
     static func readOneRecipeFrom(id: String, db: Firestore, recipeReturned: @escaping(_ recipe: Recipe) -> Void) {

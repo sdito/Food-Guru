@@ -444,62 +444,35 @@ extension RecipeDetailVC: ReviewImagesViewDelegate {
 
 extension RecipeDetailVC: GiveRatingViewDelegate {
     
-    #warning("should move this code into review")
+    #warning("need to make sure this works with new implementation")
     
     func writeImageForReview(image: UIImage) {
-        
-        guard let recipeID = data?.recipe.imagePath?.imagePathToDocID() else { return }
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        guard let imageData: Data = image.jpegData(compressionQuality: 0.75) else { return }
-        let random = String.randomString(length: 8)
-        let uploadReference = Storage.storage().reference(withPath: "review/\(recipeID)/\(uid)/\(random).jpg")
-        let metadata = StorageMetadata()
-        metadata.contentType = "image/jpeg"
-        uploadReference.putData(imageData, metadata: metadata)
-        let fullPath = uploadReference.fullPath
-        
-
-        // add the path to the recipe document
-        let recipeReference = db.collection("recipes").document(recipeID)
-        recipeReference.updateData([
-            "reviewImagePaths": FieldValue.arrayUnion([fullPath])
-        ])
-        
-        // delay to make sure the document is updated, how fast this data is updated is not important
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            self.db.collection("recipes").document(recipeID).collection("reviews").whereField("user", isEqualTo: uid).getDocuments { (querySnapshot, error) in
-                guard let document = querySnapshot?.documents.first else {
-                    print("Error retrieving document: \(String(describing: error))")
-                    return
-                }
-                
-                let id = document.documentID
-                self.db.collection("recipes").document(recipeID).collection("reviews").document(id).updateData([
-                    "imagePath": fullPath
-                ])
-                
-            }
+        if let r = data?.recipe {
+            Review.writeImageForReview(image: image, recipe: r, db: db)
         }
-        
         
     }
     
-    #warning("should move this code into review")
     
     func publishRating(stars: Int, rating: String?) {
+        
         reviewRecipeOutlet.isUserInteractionEnabled = false
         reviewRecipeOutlet.alpha = 0.4
         reviewRecipeOutlet.setTitleColor(.black, for: .normal)
         reviewRecipeOutlet.setTitle("✓ Review the recipe", for: .normal)
         
+        
         let recipeID = data?.recipe.imagePath?.imagePathToDocID()
         let reference = db.collection("recipes").document(recipeID ?? " ").collection("reviews")
+        
         reference.whereField("user", isEqualTo: Auth.auth().currentUser?.uid ?? " ").getDocuments { (querySnapshot, error) in
             if (querySnapshot?.documents.count) == nil || querySnapshot?.documents.count == 0 {
                 self.data?.recipe.addReviewToRecipe(stars: stars, review: rating, db: self.db)
                 self.dismiss(animated: false) {
                     self.createMessageView(color: Colors.messageGreen, text: "Review successfully written")
                 }
+                
+                
             } else {
                 if let doc = querySnapshot?.documents.first {
                     let starsToDelete = doc.get("stars") as? Int
@@ -515,8 +488,15 @@ extension RecipeDetailVC: GiveRatingViewDelegate {
                     }
                 }
                 
+                
+                
             }
         }
+        
+        
+        
+        
+        
     }
     
 }

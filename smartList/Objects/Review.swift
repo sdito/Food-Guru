@@ -8,6 +8,8 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
+import FirebaseStorage
 
 struct Review {
     var userName: String
@@ -60,6 +62,41 @@ struct Review {
             return [label]
         }
         
+    }
+    
+    
+    static func writeImageForReview(image: UIImage, recipe: Recipe, db: Firestore) {
+        guard let recipeID = recipe.imagePath?.imagePathToDocID() else { return }
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let imageData: Data = image.jpegData(compressionQuality: 0.75) else { return }
+        let random = String.randomString(length: 8)
+        let uploadReference = Storage.storage().reference(withPath: "review/\(recipeID)/\(uid)/\(random).jpg")
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/jpeg"
+        uploadReference.putData(imageData, metadata: metadata)
+        let fullPath = uploadReference.fullPath
+        
+
+        // add the path to the recipe document
+        let recipeReference = db.collection("recipes").document(recipeID)
+        recipeReference.updateData([
+            "reviewImagePaths": FieldValue.arrayUnion([fullPath])
+        ])
+        
+        // delay to make sure the document is updated, how fast this data is updated is not important
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            db.collection("recipes").document(recipeID).collection("reviews").whereField("user", isEqualTo: uid).getDocuments { (querySnapshot, error) in
+                guard let document = querySnapshot?.documents.first else {
+                    print("Error retrieving document: \(String(describing: error))")
+                    return
+                }
+                
+                let id = document.documentID
+                db.collection("recipes").document(recipeID).collection("reviews").document(id).updateData([
+                    "imagePath": fullPath
+                ])
+            }
+        }
     }
     
     
