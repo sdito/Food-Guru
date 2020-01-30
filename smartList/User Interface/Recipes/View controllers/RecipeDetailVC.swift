@@ -54,7 +54,7 @@ class RecipeDetailVC: UIViewController {
     private var originalServings: Int?
     private var newServingsValue: Int?
     
-    
+    // MARK: Override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
@@ -105,7 +105,7 @@ class RecipeDetailVC: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    
+    // MARK: @IBAction funcs
     @IBAction func addAllToList(_ sender: Any) {
         var ingredientsToAddToList: [String] {
             if data?.recipe != nil {
@@ -229,7 +229,7 @@ class RecipeDetailVC: UIViewController {
         saveRecipeOutlet.setTitle("✓ Save", for: .normal)
         
     }
-    
+    // MARK: functions
     private func setUI(recipe: CookbookRecipe) {
         viewsToRemoveForCookbook.forEach { (v) in
             v.removeFromSuperview()
@@ -420,7 +420,7 @@ class RecipeDetailVC: UIViewController {
         }
     }
 }
-
+// MARK: ButtonIngredientViewDelegate
 extension RecipeDetailVC: ButtonIngredientViewDelegate {
     func haveUserSortItem(addedItemName: [String], addedItemStores: [String]?, addedItemListID: String) {
         print("picker view added here")
@@ -428,20 +428,20 @@ extension RecipeDetailVC: ButtonIngredientViewDelegate {
     }
 }
 
-
+// MARK: DisableAllItemsDelegate
 extension RecipeDetailVC: DisableAddAllItemsDelegate {
     func disableButton() {
         removeAddAllButton()
     }
 }
-
+// MARK: RecipeImagesViewDelegate
 extension RecipeDetailVC: ReviewImagesViewDelegate {
     func showDetailedImage(path: String?, initialImage: UIImage?) {
         self.createImageDetailView(imagePath: path, initialImage: initialImage)
         
     }
 }
-
+// MARK: GiveRatingViewDelegate
 extension RecipeDetailVC: GiveRatingViewDelegate {
     
     #warning("need to make sure this works with new implementation")

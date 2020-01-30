@@ -55,9 +55,7 @@ class StorageHomeVC: UIViewController {
             handlePopUpView()
         }
     }
-    
-    
-    
+    // MARK: override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
@@ -124,7 +122,7 @@ class StorageHomeVC: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+    // MARK: @IBAction funcs
     @IBAction func searchPressed(_ sender: Any) {
         
         searchActive = !searchActive
@@ -222,7 +220,7 @@ class StorageHomeVC: UIViewController {
         
     }
     
-    
+    // MARK: Pop up @IBAction funcs
     @IBAction func deleteCells(_ sender: Any) {
         let names = currentlySelectedItems.map({$0.name}).joined(separator: ", ")
         let alert = UIAlertController(title: nil, message: "Are you sure you want to delete \(names)?", preferredStyle: .alert)
@@ -257,6 +255,8 @@ class StorageHomeVC: UIViewController {
             expirationDateOutlet.setTitleColor(.lightGray, for: .normal)
         }
     }
+    
+    
     @IBAction func putInFridgeCells(_ sender: Any) {
         handleCellSortingTo(segment: "fridge")
     }
@@ -285,7 +285,7 @@ class StorageHomeVC: UIViewController {
             quantityAlert(item: itm)
         }
     }
-    
+    // MARK: functions
     @objc private func createGroupSelector() {
         if SharedValues.shared.anonymousUser == false {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "createGroup") as! CreateGroupVC
@@ -388,7 +388,7 @@ class StorageHomeVC: UIViewController {
     }
 }
 
-
+// MARK: Search bar
 extension StorageHomeVC: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
@@ -398,7 +398,7 @@ extension StorageHomeVC: UISearchBarDelegate {
     }
 }
 
-
+// MARK: Table view
 extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     private func handlePopUpView() {
         let count = currentlySelectedItems.count
@@ -549,7 +549,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-
+// MARK: Picker controller
 extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         

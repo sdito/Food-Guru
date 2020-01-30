@@ -25,72 +25,17 @@ struct FoodStorage {
         self.numberOfPeople = numberOfPeople
     }
     
+    // MARK: General
     
-    static func addItemsFromListintoFoodStorage(sendList: GroceryList, storageID: String, db: Firestore) {
-        for item in sendList.items ?? [] {
-            if item.selected == true {
-                var newItemWithStorage = item
-                let words = item.name.split{ !$0.isLetter }.map { (sStr) -> String in
-                    String(sStr.lowercased())
-                }
-                let storageSection = GenericItem.getStorageType(item: newItemWithStorage.systemItem ?? .other, words: words)
-                
-                newItemWithStorage.storageSection = storageSection
-                
-                if let genericItem = newItemWithStorage.systemItem {
-                    newItemWithStorage.timeExpires = Date().timeIntervalSince1970 + Double(GenericItem.getSuggestedExpirationDate(item: genericItem, storageType: newItemWithStorage.storageSection ?? .unsorted))
-                }
-                
-                newItemWithStorage.writeToFirestoreForStorage(db: db, docID: storageID)
-            }
-        }
-    }
-    
-    static func addAllItemsFromListintoFoodStorage(sendList: GroceryList, storageID: String, db: Firestore) {
-        for item in sendList.items ?? [] {
-            var newItemWithStorage = item
-            let words = item.name.split{ !$0.isLetter }.map { (sStr) -> String in
-                String(sStr.lowercased())
-            }
-            let storageSection = GenericItem.getStorageType(item: newItemWithStorage.systemItem ?? .other, words: words)
-            
-            newItemWithStorage.storageSection = storageSection
-            
-            if let genericItem = newItemWithStorage.systemItem {
-                newItemWithStorage.timeExpires = Date().timeIntervalSince1970 + Double(GenericItem.getSuggestedExpirationDate(item: genericItem, storageType: newItemWithStorage.storageSection ?? .unsorted))
-            }
-            
-            newItemWithStorage.writeToFirestoreForStorage(db: db, docID: storageID)
-        }
-    }
-    
-    static func getEmailsfromStorageID(storageID: String, db: Firestore, emailsReturned: @escaping (_ emails: [String]?) -> Void) {
-        var emails: [String]?
-        db.collection("storages").document(storageID).getDocument { (docSnapshot, error) in
-            if let doc = docSnapshot {
-                emails = doc.get("emails") as? [String]
-            }
-            emailsReturned(emails)
-        }
-    }
-    static func checkForUsersAlreadyInStorage(db: Firestore, groupID: String, isStorageValid: @escaping (_ boolean: Bool?, _ emails: [String]?) -> Void) {
-        var storageValid = true
-        var emails: [String]?
-        let reference = db.collection("groups").document(groupID)
-        reference.getDocument { (docSnapshot, error) in
-            guard let doc = docSnapshot else { return }
-            if doc.get("ownUserStorages") as? [String] != nil && doc.get("ownUserStorages") as? [String] != [] {
-                storageValid = false
-                emails = doc.get("ownUserStorages") as? [String]
-            }
-            isStorageValid(storageValid, emails)
-        }
-    }
-    
+    /*
+    Used to create a storage for both an individual storage and one with the group, the FoodStorage that is passed through will contain the emails already in the value, so will just need to use
+    those emails. Need to update/write both the storage document and information in each user's own profile
+    */
     static func createStorageToFirestoreWithPeople(db: Firestore!, foodStorage: FoodStorage) {
         // need to check that no users already have a storage, need to write the storage to the individuals in people, create the storage
         checkForUsersAlreadyInStorage(db: db, groupID: SharedValues.shared.groupID ?? " ") { (boolean, inStorageEmails) in
             if boolean == true || foodStorage.isGroup == false {
+                // need to if somone has their own storage already in the group
                 if foodStorage.peopleEmails?.count == 1 && foodStorage.isGroup == false {
                     db.collection("groups").document(SharedValues.shared.groupID ?? " ").updateData([
                         "ownUserStorages" : FieldValue.arrayUnion([foodStorage.peopleEmails?.first as Any])
@@ -159,61 +104,80 @@ struct FoodStorage {
         
         
     }
-    static func deleteItemsFromStorage(db: Firestore, storageID: String) {
-        db.collection("storages").document(storageID).collection("items").getDocuments { (querySnapshot, error) in
-            guard let documents = querySnapshot?.documents else {
-                print("Error fetching documents: \(String(describing: error))")
-                return
-            }
-            for doc in documents {
-                if let itemID = doc.get("ownID") as? String {
-                    db.collection("storages").document(storageID).collection("items").document(itemID).delete()
-                    print("Item being deleted from storage: \(String(describing: doc.get("name")))")
+    
+    static func deleteStorage(db: Firestore, storageID: String) {
+       // need to delete the storage and also the foodStorageID from user's document, if not deleted from user's document then theyll have a permanently broken storage
+       if let groupID = SharedValues.shared.groupID {
+           if let email = Auth.auth().currentUser?.email {
+               db.collection("groups").document(groupID).updateData([
+                   "ownUserStorages": FieldValue.arrayRemove([email])
+               ])
+           }
+       }
+       
+       let reference = db.collection("storages").document(storageID)
+       FoodStorage.getEmailsfromStorageID(storageID: storageID, db: db) { (emails) in
+           emails?.forEach({ (email) in
+               User.turnEmailToUid(db: db, email: email) { (uid) in
+                   if let uid = uid {
+                     let userReference = db.collection("users").document(uid)
+                     print("Deleting from userID: \(uid)")
+                     userReference.updateData([
+                       "storageID": FieldValue.delete()
+                     ])
+                   }
+               }
+           })
+       }
+       
+       if SharedValues.shared.anonymousUser == true {
+           db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").updateData([
+               "storageID": FieldValue.delete()
+           ])
+       }
+       
+       // doesnt matter when actual storage document is deleted, just need to make sure it would be deleted after the groupID is deleted from the user document
+       DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+           print("Deleting storage")
+           reference.delete()
+       }
+       
+   }
+    static func updateDataInStorageDocument(db: Firestore, foodStorageID: String, emails: [String]) {
+        // uids are added to 'shared' in the addForStorageInformationToGroupMembersProfile function
+        // need to update 'numPeople' and 'emails'
+        // emails need to be the emails for the GROUP MEMBERS
+        let reference = db.collection("storages").document(foodStorageID)
+        reference.updateData([
+            "emails" : emails,
+            "numPeople": emails.count,
+            "isGroup": true
+        ])
+        
+        
+    }
+    // MARK: Items
+    static func addItemsFromListintoFoodStorage(sendList: GroceryList, storageID: String, db: Firestore) {
+        for item in sendList.items ?? [] {
+            if item.selected == true {
+                var newItemWithStorage = item
+                let words = item.name.split{ !$0.isLetter }.map { (sStr) -> String in
+                    String(sStr.lowercased())
+                }
+                let storageSection = GenericItem.getStorageType(item: newItemWithStorage.systemItem ?? .other, words: words)
+                
+                newItemWithStorage.storageSection = storageSection
+                
+                if let genericItem = newItemWithStorage.systemItem {
+                    newItemWithStorage.timeExpires = Date().timeIntervalSince1970 + Double(GenericItem.getSuggestedExpirationDate(item: genericItem, storageType: newItemWithStorage.storageSection ?? .unsorted))
                 }
                 
+                newItemWithStorage.writeToFirestoreForStorage(db: db, docID: storageID)
             }
         }
-    }
-    static func deleteStorage(db: Firestore, storageID: String) {
-        // need to delete the storage and also the foodStorageID from user's document
-        
-        if let groupID = SharedValues.shared.groupID {
-            if let email = Auth.auth().currentUser?.email {
-                db.collection("groups").document(groupID).updateData([
-                    "ownUserStorages": FieldValue.arrayRemove([email])
-                ])
-            }
-        }
-        
-        let reference = db.collection("storages").document(storageID)
-        FoodStorage.getEmailsfromStorageID(storageID: storageID, db: db) { (emails) in
-            emails?.forEach({ (email) in
-                User.turnEmailToUid(db: db, email: email) { (uid) in
-                    if let uid = uid {
-                      let userReference = db.collection("users").document(uid)
-                      print("Deleting from userID: \(uid)")
-                      userReference.updateData([
-                        "storageID": FieldValue.delete()
-                      ])
-                    }
-                }
-            })
-        }
-        
-        if SharedValues.shared.anonymousUser == true {
-            db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").updateData([
-                "storageID": FieldValue.delete()
-            ])
-        }
-        
-        // doesnt matter when actual storage document is deleted, just need to make sure it would be deleted after the groupID is deleted from the user document
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            print("Deleting storage")
-            reference.delete()
-        }
-        
     }
     
+    // used to have real-time updates for the items that are in the user's storage, either individual or shared storage
     static func readAndPersistSystemItemsFromStorageWithListener(db: Firestore, storageID: String) {
         let reference = db.collection("storages").document(storageID).collection("items")
         reference.addSnapshotListener { (querySnapshot, error) in
@@ -234,9 +198,111 @@ struct FoodStorage {
         }
     }
     
+    /*
+        used (from settings) for combining multiple individual storages into a group storage, this will edit each individual's profile if necessary throghh addForStorageInformationToGroupMembersProfile
+        this will also update the storage information
     
+       */
+       static func mergeItemsTogetherInStorage(db: Firestore, newStorageID: String, newEmails: [String]) {
+           
+           for email in newEmails {
+               User.turnEmailToUid(db: db, email: email) { (uid) in
+                   // get storageID
+                   if let uid = uid {
+                       let reference = db.collection("users").document(uid)
+                       reference.getDocument { (documentSnapshot, error) in
+                           guard let doc = documentSnapshot else { return }
+                           
+                           if let sid = doc.get("storageID") as? String {
+                               if sid != newStorageID {
+                                   let storageRef = db.collection("storages").document(sid).collection("items")
+                                   storageRef.getDocuments { (querySnapshot, error) in
+                                       // storageID is the NEW storage identifier that everything needs to be merged into
+                                       guard let itemDocuments = querySnapshot?.documents else {
+                                           FoodStorage.addForStorageInformationToGroupMembersProfile(db: db, foodStorageID: newStorageID, email: email)
+                                           return
+                                       }
+                                       for itemDoc in itemDocuments {
+                                           let item = itemDoc.getItem()
+                                           // if this process doesnt work, maybe these storage IDs are wrong
+                                           print("item being moved: \(item)")
+                                           item.writeToFirestoreForStorage(db: db, docID: newStorageID)
+                                           item.deleteItemFromStorageFromSpecificStorageID(db: db, storageID: sid)
+                                           
+                                       }
+                                       FoodStorage.addForStorageInformationToGroupMembersProfile(db: db, foodStorageID: newStorageID, email: email)
+                                   }
+                               }
+                           } else {
+                               FoodStorage.addForStorageInformationToGroupMembersProfile(db: db, foodStorageID: newStorageID, email: email)
+                           }
+                           
+                           
+                       }
+                   }
+               }
+           }
+       }
     
+    static func addAllItemsFromListintoFoodStorage(sendList: GroceryList, storageID: String, db: Firestore) {
+        for item in sendList.items ?? [] {
+            var newItemWithStorage = item
+            let words = item.name.split{ !$0.isLetter }.map { (sStr) -> String in
+                String(sStr.lowercased())
+            }
+            let storageSection = GenericItem.getStorageType(item: newItemWithStorage.systemItem ?? .other, words: words)
+            
+            newItemWithStorage.storageSection = storageSection
+            
+            if let genericItem = newItemWithStorage.systemItem {
+                newItemWithStorage.timeExpires = Date().timeIntervalSince1970 + Double(GenericItem.getSuggestedExpirationDate(item: genericItem, storageType: newItemWithStorage.storageSection ?? .unsorted))
+            }
+            
+            newItemWithStorage.writeToFirestoreForStorage(db: db, docID: storageID)
+        }
+    }
     
+    static func deleteItemsFromStorage(db: Firestore, storageID: String) {
+        db.collection("storages").document(storageID).collection("items").getDocuments { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documents else {
+                print("Error fetching documents: \(String(describing: error))")
+                return
+            }
+            for doc in documents {
+                if let itemID = doc.get("ownID") as? String {
+                    db.collection("storages").document(storageID).collection("items").document(itemID).delete()
+                    print("Item being deleted from storage: \(String(describing: doc.get("name")))")
+                }
+                
+            }
+        }
+    }
+    
+    // MARK: Users
+    
+    static func getEmailsfromStorageID(storageID: String, db: Firestore, emailsReturned: @escaping (_ emails: [String]?) -> Void) {
+        var emails: [String]?
+        db.collection("storages").document(storageID).getDocument { (docSnapshot, error) in
+            if let doc = docSnapshot {
+                emails = doc.get("emails") as? [String]
+            }
+            emailsReturned(emails)
+        }
+    }
+    
+    static func checkForUsersAlreadyInStorage(db: Firestore, groupID: String, isStorageValid: @escaping (_ boolean: Bool?, _ emails: [String]?) -> Void) {
+        var storageValid = true
+        var emails: [String]?
+        let reference = db.collection("groups").document(groupID)
+        reference.getDocument { (docSnapshot, error) in
+            guard let doc = docSnapshot else { return }
+            if doc.get("ownUserStorages") as? [String] != nil && doc.get("ownUserStorages") as? [String] != [] {
+                storageValid = false
+                emails = doc.get("ownUserStorages") as? [String]
+            }
+            isStorageValid(storageValid, emails)
+        }
+    }
     static func findIfUsersStorageIsWithGroup(db: Firestore, storageID: String) {
         let reference = db.collection("storages").document(storageID)
         reference.getDocument { (documentSnapshot, error) in
@@ -253,7 +319,7 @@ struct FoodStorage {
         }
     }
     
-    
+    // called from mergeItemsTogetherInStorage only
     static func addForStorageInformationToGroupMembersProfile(db: Firestore, foodStorageID: String, email: String) {
         // need to get the uid from the email
         User.turnEmailToUid(db: db, email: email) { (uid) in
@@ -278,60 +344,4 @@ struct FoodStorage {
     }
     
     
-    static func updateDataInStorageDocument(db: Firestore, foodStorageID: String, emails: [String]) {
-        // uids are added to 'shared' in the addForStorageInformationToGroupMembersProfile function
-        // need to update 'numPeople' and 'emails'
-        // emails need to be the emails for the GROUP MEMBERS
-        let reference = db.collection("storages").document(foodStorageID)
-        reference.updateData([
-            "emails" : emails,
-            "numPeople": emails.count,
-            "isGroup": true
-        ])
-        
-        
-    }
-    
-    
-    
-    static func mergeItemsTogetherInStorage(db: Firestore, newStorageID: String, newEmails: [String]) {
-        
-        for email in newEmails {
-            User.turnEmailToUid(db: db, email: email) { (uid) in
-                // get storageID
-                if let uid = uid {
-                    let reference = db.collection("users").document(uid)
-                    reference.getDocument { (documentSnapshot, error) in
-                        guard let doc = documentSnapshot else { return }
-                        
-                        if let sid = doc.get("storageID") as? String {
-                            if sid != newStorageID {
-                                let storageRef = db.collection("storages").document(sid).collection("items")
-                                storageRef.getDocuments { (querySnapshot, error) in
-                                    // storageID is the NEW storage identifier that everything needs to be merged into
-                                    guard let itemDocuments = querySnapshot?.documents else {
-                                        FoodStorage.addForStorageInformationToGroupMembersProfile(db: db, foodStorageID: newStorageID, email: email)
-                                        return
-                                    }
-                                    for itemDoc in itemDocuments {
-                                        let item = itemDoc.getItem()
-                                        // if this process doesnt work, maybe these storage IDs are wrong
-                                        print("item being moved: \(item)")
-                                        item.writeToFirestoreForStorage(db: db, docID: newStorageID)
-                                        item.deleteItemFromStorageFromSpecificStorageID(db: db, storageID: sid)
-                                        
-                                    }
-                                    FoodStorage.addForStorageInformationToGroupMembersProfile(db: db, foodStorageID: newStorageID, email: email)
-                                }
-                            }
-                        } else {
-                            FoodStorage.addForStorageInformationToGroupMembersProfile(db: db, foodStorageID: newStorageID, email: email)
-                        }
-                        
-                        
-                    }
-                }
-            }
-        }
-    }
 }

@@ -29,8 +29,8 @@ class IngredientView: UIView, UITextFieldDelegate {
         right.setUpDoneToolbar(action: #selector(doneSelector), style: .done)
     }
     
+    // MARK: functions
     // to get the ingredients from each ingredient view in [String] format
-    
     class func getIngredients(stack: UIStackView) -> [String] {
         var ingredients: [String] = []
         for view in stack.subviews {
@@ -81,7 +81,7 @@ class IngredientView: UIView, UITextFieldDelegate {
     }
 }
 
-
+// MARK: Extension
 extension IngredientView {
     func ingredients() -> [String] {
         return [self.left.text ?? "", self.right.text ?? ""]

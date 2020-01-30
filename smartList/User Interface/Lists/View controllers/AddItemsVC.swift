@@ -53,7 +53,7 @@ class AddItemsVC: UIViewController {
             }
         }
     }
-    
+    // MARK: override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
@@ -106,7 +106,7 @@ class AddItemsVC: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+    // MARK: @IBAction funcs
     @IBAction func addItem(_ sender: Any) {
         addItemAction()
     }
@@ -250,7 +250,7 @@ class AddItemsVC: UIViewController {
             }
         }
     }
-    
+    // MARK: functions
     @objc private func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
@@ -320,7 +320,7 @@ class AddItemsVC: UIViewController {
 
 }
 
-
+// MARK: CreateNewItemDelegate
 extension AddItemsVC: CreateNewItemDelegate {
     func itemCreated(item: Item) {
         toAddItem(text: item.name)
@@ -330,7 +330,7 @@ extension AddItemsVC: CreateNewItemDelegate {
     
 }
 
-
+// MARK: Table view
 // have the cells organized by
 extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -395,6 +395,7 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
 
 }
 
+// MARK: ItemCellDelegate
 extension AddItemsVC: ItemCellDelegate {
     func edit(item: Item) {
         
@@ -471,7 +472,7 @@ extension AddItemsVC: ItemCellDelegate {
     }
 }
 
-
+// MARK: Text field delegate
 extension AddItemsVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.text != "" {
@@ -485,7 +486,7 @@ extension AddItemsVC: UITextFieldDelegate {
 
 
 
-// handlers
+// MARK: Handlers
 extension AddItemsVC {
     func pushToCreateGroupVC() {
         if SharedValues.shared.anonymousUser != true {

@@ -37,7 +37,8 @@
     }
     
 }
-  
+
+// MARK: Table view
 extension SettingsHomeVC: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {

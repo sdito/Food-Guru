@@ -43,7 +43,7 @@ class StorageNewItemVC: UIViewController {
         nameTextField.setUpDoneToolbar(action: #selector(doneAction), style: .done)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
-    
+    // MARK: @IBAction funcs
     @IBAction func switchAction(_ sender: Any) {
         switch switchOutlet.isOn {
         case true:
@@ -100,7 +100,7 @@ class StorageNewItemVC: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    
+    // MARK: functions
     @objc private func doneAction() {
         nameTextField.resignFirstResponder()
     }
@@ -113,7 +113,7 @@ class StorageNewItemVC: UIViewController {
     }
     
 }
-
+// MARK: CreateNewItemDelegate
 extension StorageNewItemVC: CreateNewItemDelegate {
     func itemCreated(item: Item) {
         print("Item to add to storage: \(item.name)")

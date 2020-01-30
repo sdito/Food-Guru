@@ -41,7 +41,7 @@ class SortItemView: UIView {
     
     private var stores: [String]?
     private var categories: [String]?
-    
+    // MARK: functions
     func setUIoneItem(name: String, stores: [String]?, listID: String) {
         pickerView.delegate = self
         pickerView.dataSource = self
@@ -82,7 +82,7 @@ class SortItemView: UIView {
     }
     
 }
-
+// MARK: Picker view
 extension SortItemView: UIPickerViewDelegate, UIPickerViewDataSource {
     @objc func buttonAction() {
         let storesIndex = pickerView.selectedRow(inComponent: 0)

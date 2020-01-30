@@ -69,7 +69,7 @@ class CookbookVC: UIViewController {
             destVC.cookbookRecipe = sender as? CookbookRecipe
         }
     }
-    
+    // MARK: @IBAction funcs
     @IBAction func savedRecipes(_ sender: Any) {
         tabBarController?.selectedIndex = 0
         NotificationCenter.default.post(name: .haveSavedRecipesAppear, object: nil)
@@ -79,7 +79,7 @@ class CookbookVC: UIViewController {
         tabBarController?.selectedIndex = 0
         
     }
-    
+    // MARK: functions
     @objc private func cancelSelector() {
         searchBar.endEditing(true)
         searchBar.text = ""
@@ -104,7 +104,7 @@ class CookbookVC: UIViewController {
     
 }
 
-
+// MARK: Table view
 extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if recipes.count != 0 {
@@ -184,7 +184,7 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-
+// MARK: Search bar
 extension CookbookVC: UISearchBarDelegate {
     func search() {
         searchBar.endEditing(true)

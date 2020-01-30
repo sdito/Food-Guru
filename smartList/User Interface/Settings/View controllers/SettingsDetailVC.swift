@@ -44,7 +44,7 @@ class SettingsDetailVC: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+    // MARK: functions
     private func returnCells(setting: Setting.SettingName, db: Firestore!) -> [UITableViewCell] {
         switch setting {
         case .account:
@@ -380,7 +380,7 @@ class SettingsDetailVC: UIViewController {
     }
     
 }
-
+// MARK: UpdateScreenDeleagate
 extension SettingsDetailVC: UpdateScreenDelegate {
     func updateScreen() {
         navigationController?.popViewController(animated: true)
@@ -390,7 +390,7 @@ extension SettingsDetailVC: UpdateScreenDelegate {
     
 }
 
-
+// MARK: SettingViewedRecipeCellDeleagate
 extension SettingsDetailVC: SettingViewedRecipeCellDelegate {
     func recipeDocumentIdPressed(id: String) {
         Recipe.readOneRecipeFrom(id: id, db: db) { (rcp) in
@@ -402,7 +402,7 @@ extension SettingsDetailVC: SettingViewedRecipeCellDelegate {
     }
 }
 
-
+// MARK: Table view
 extension SettingsDetailVC: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

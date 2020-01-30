@@ -50,7 +50,7 @@ class InitialLogInVC: UIViewController {
         
     }
     
-    
+    // MARK: @IBAction funcs
     
     @IBAction func createAccount(_ sender: Any) {
         print("Create account")
@@ -101,7 +101,7 @@ class InitialLogInVC: UIViewController {
         self.present(vc, animated: true, completion: nil)
         
     }
-    
+    // MARK: functions
     private func normalGoogleLogIn(credential: AuthCredential) {
         Auth.auth().signIn(with: credential) { (authResult, error) in
             if let error = error {
@@ -171,7 +171,7 @@ class InitialLogInVC: UIViewController {
         }
     }
     
-    // Start of apple log in stuff
+    // MARK: Apple log in
     
     @objc @available(iOS 13, *)
     private func startSignInWithAppleFlow() {
@@ -233,6 +233,7 @@ class InitialLogInVC: UIViewController {
     }
 }
 
+// MARK: Google sign in
 extension InitialLogInVC: GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
         
@@ -276,7 +277,7 @@ extension InitialLogInVC: GIDSignInDelegate {
     
 }
 
-
+// MARK: AuthorizationController
 extension InitialLogInVC: ASAuthorizationControllerDelegate {
     private func normalAppleLogIn(credential: OAuthCredential) {
         Auth.auth().signIn(with: credential) { (authDataResult, error) in

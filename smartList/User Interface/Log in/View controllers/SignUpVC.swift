@@ -31,7 +31,7 @@ class SignUpVC: UIViewController {
         emailTextField.setUpDoneToolbar(action: #selector(dismissTextfield), style: .done)
         passwordTextField.setUpDoneToolbar(action: #selector(dismissTextfield), style: .done)
     }
-    
+    // MARK: @IBAction funcs
     
     @IBAction func emailCreateAccount(_ sender: Any) {
         let isAnonymousAccount = Auth.auth().currentUser?.isAnonymous
@@ -113,7 +113,7 @@ class SignUpVC: UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
     
-    
+    // MARK: functions
     
     private func handleNewEmailAccount(authDataResult: AuthDataResult?) {
         let docRef = self.db.collection("users").document("\(authDataResult?.user.uid ?? " ")")
@@ -145,7 +145,7 @@ class SignUpVC: UIViewController {
 }
 
 
-
+// MARK: Text field delegate
 extension SignUpVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailTextField {

@@ -64,7 +64,7 @@ struct Review {
         
     }
     
-    
+    // used only when the review has an added image
     static func writeImageForReview(image: UIImage, recipe: Recipe, db: Firestore) {
         guard let recipeID = recipe.imagePath?.imagePathToDocID() else { return }
         guard let uid = Auth.auth().currentUser?.uid else { return }

@@ -53,7 +53,105 @@ struct Recipe {
         self.reviewImagePaths = reviewImagePaths
     }
     
-
+    // MARK: General
+    
+    #warning("should probably not allow users to write directly to the main collection...")
+    mutating func writeToFirestore(db: Firestore!, storage: Storage) {
+        let ingredients = self.ingredients
+        let doc = db.collection("recipes-external").document()
+        self.imagePath = "recipe/\(doc.documentID).jpg"
+        doc.setData([
+            "name": self.name,
+            "recipeType": self.recipeType,
+            "cuisineType": self.cuisineType,
+            "cookTime": self.cookTime,
+            "prepTime": self.prepTime,
+            "totalTime": self.cookTime + self.prepTime,
+            "ingredients": self.ingredients,
+            "instructions": self.instructions,
+            "calories": self.calories as Any,
+            "numServes": self.numServes,
+            "userID": self.userID as Any,
+            "numReviews": self.numReviews as Any,
+            "numStars": self.numStars as Any,
+            "notes": self.notes as Any,
+            "path": self.imagePath as Any,
+            "tagline": self.tagline as Any,
+            "reviewImagePaths": self.reviewImagePaths as Any,
+            "numberIngredients": self.ingredients.count as Any
+        ]) { err in
+            if err != nil {
+                UIApplication.shared.keyWindow?.rootViewController?.createMessageView(color: .red, text: "Failed creating recipe")
+            } else {
+                print("Document successfully written")
+                UIApplication.shared.keyWindow?.rootViewController?.createMessageView(color: Colors.messageGreen, text: "Recipe successfully created")
+                // give the items their own line for easier querying
+                for item in ingredients {
+                    let systemitem = Search.turnIntoSystemItem(string: item)
+                    print(systemitem)
+                    if systemitem != .other {
+                        doc.updateData([
+                            "has_\(systemitem)": true
+                        ])
+                    }
+                    
+                }
+            }
+        }
+        let uploadReference = Storage.storage().reference(withPath: imagePath ?? "")
+        guard let imageData = self.recipeImage else { return }
+        let newMetadata = StorageMetadata()
+        newMetadata.contentType = "image/jpeg"
+        //uploadReference.putData(imageData)
+        
+        uploadReference.putData(imageData, metadata: newMetadata)
+        
+        
+    }
+    
+    static func readOneRecipeFrom(id: String, db: Firestore, recipeReturned: @escaping(_ recipe: Recipe) -> Void) {
+        let reference = db.collection("recipes").document(id)
+        reference.getDocument { (documentSnapshot, error) in
+            guard let doc = documentSnapshot else { return }
+            let recipe = Recipe(name: doc.get("name") as! String, recipeType: doc.get("recipeType") as! [String], cuisineType: doc.get("cuisineType") as! String, cookTime: doc.get("cookTime") as! Int, prepTime: doc.get("prepTime") as! Int, ingredients: doc.get("ingredients") as! [String], instructions: doc.get("instructions") as! [String], calories: doc.get("calories") as? Int, numServes: doc.get("numServes") as! Int, userID: doc.get("userID") as? String, numReviews: doc.get("numReviews") as? Int, numStars: doc.get("numStars") as? Int, notes: doc.get("notes") as? String, tagline: doc.get("tagline") as? String, recipeImage: nil, imagePath: doc.get("path") as? String, reviewImagePaths: doc.get("reviewImagePaths") as? [String])
+            recipeReturned(recipe)
+        }
+    }
+    
+    func turnRecipeIntoCookbookRecipe() -> CookbookRecipe {
+        let cbr = CookbookRecipe()
+        let ingredients = List<String>.init()
+        let instructions = List<String>.init()
+        self.ingredients.forEach({ingredients.append($0)})
+        self.instructions.forEach({instructions.append($0)})
+        cbr.setUp(name: self.name, servings: RealmOptional(self.numServes), cookTime: RealmOptional(self.cookTime), prepTime: RealmOptional(self.prepTime), calories: RealmOptional(self.calories), ingredients: ingredients, instructions: instructions, notes: self.notes)
+        return cbr
+    }
+    
+    func getImageFromStorage(thumb: Bool, imageReturned: @escaping (_ image: UIImage?) -> Void) {
+        var image: UIImage?
+        var thumbPath = self.imagePath
+        if thumb == true {
+            thumbPath?.removeLast(4)
+            thumbPath?.append(contentsOf: "_200x200.jpg")
+        }
+        
+        
+        let storageRef = Storage.storage().reference(withPath: thumbPath ?? "")
+        storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
+            if let error = error {
+                print("Got an error fetching data: \(error)")
+                return
+            }
+            if let data = data {
+                image = UIImage(data: data)
+                
+            }
+            imageReturned(image)
+        }
+    }
+    // MARK: Save recipes
+    
     
     static func addRecipeToSavedRecipes(db: Firestore, str: String) {
         let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ")
@@ -100,6 +198,44 @@ struct Recipe {
         }
     }
     
+    // MARK: Previous viewed
+    
+    func addRecipeToRecentlyViewedRecipes(db: Firestore) {
+        DispatchQueue.main.async {
+            if let uid = Auth.auth().currentUser?.uid {
+                let reference = db.collection("users").document(uid)
+                reference.getDocument { (documentSnapshot, error) in
+                    guard let doc = documentSnapshot else { return }
+                    guard let data = doc.data() else { return }
+                    
+                    if var dict = data["recentlyViewedRecipes"] as? [String:[String:Any]] {
+                        // update the data, already have saved recipes
+                        print(dict.keys.count)
+                        dict["\(Date().timeIntervalSince1970)"] = ["name": self.name, "path": self.imagePath as Any, "timeIntervalSince1970": Date().timeIntervalSince1970]
+                        // should have the dict, just would need to write over the previous dict with this new dict, also might need to delete the oldest entry
+                        
+                        print(dict.keys.count)
+                        if dict.keys.count > 20 {
+                            let key = dict.keys.sorted().first
+                            dict.removeValue(forKey: key!)
+                            
+                        }
+                        print(dict.keys.count)
+                        reference.updateData([
+                            "recentlyViewedRecipes" : dict
+                        ])
+                    } else {
+                        // no saved recipes, need to create the dictionary
+                        let dict: [String:[String:Any]] = ["\(Date().timeIntervalSince1970)":["name": self.name, "path": self.imagePath as Any, "timeIntervalSince1970": Date().timeIntervalSince1970]]
+                        reference.updateData([
+                            "recentlyViewedRecipes" : dict
+                        ])
+                    }
+                }
+            }
+        }
+    }
+    
     static func readPreviouslyViewedRecipes(db: Firestore) {
         if let uid = Auth.auth().currentUser?.uid {
             let reference = db.collection("users").document(uid)
@@ -110,6 +246,44 @@ struct Recipe {
             }
         }
     }
+    
+    
+    func addRecipeDocumentToUserProfile(db: Firestore) {
+        guard let id = self.imagePath?.imagePathToDocID() else { return }
+        let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").collection("savedRecipes").document(id)
+        reference.setData([
+            "name": self.name,
+            "recipeType": self.recipeType,
+            "cuisineType": self.cuisineType,
+            "cookTime": self.cookTime,
+            "prepTime": self.prepTime,
+            "totalTime": self.cookTime + self.prepTime,
+            "ingredients": self.ingredients,
+            "instructions": self.instructions,
+            "calories": self.calories as Any,
+            "numServes": self.numServes,
+            "userID": self.userID as Any,
+            "numReviews": self.numReviews as Any,
+            "numStars": self.numStars as Any,
+            "notes": self.notes as Any,
+            "path": self.imagePath as Any,
+            "tagline": self.tagline as Any,
+            "reviewImagePaths": self.reviewImagePaths as Any
+        ]) { err in
+        if let err = err {
+            print("Error writing document: \(err)")
+        } else {
+            print("Document successfully written")
+            }
+        }
+    }
+    
+    func removeRecipeDocumentFromUserProfile(db: Firestore) {
+        guard let id = self.imagePath?.imagePathToDocID() else { return }
+        let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").collection("savedRecipes").document(id)
+        reference.delete()
+    }
+    // MARK: Parse from URL
     
     
     static func getRecipeInfoFromURLallRecipes(recipeURL: String) {
@@ -194,92 +368,14 @@ struct Recipe {
         task.resume()
     }
     
-    static func getPuppyRecipesFromSearches(activeSearches: [(String, SearchType)], expiringItems: [String], recipesFound: @escaping (_ recipes: [Recipe.Puppy]) -> Void) {
-        var puppyRecipes: [Recipe.Puppy] = []
-        var itemsToSearch: [String] {
-            if activeSearches.contains(where: {$0 == ("Expiring", .other)}) {
-                return expiringItems
-            } else {
-                return activeSearches.filter({$0.1 == .ingredient}).map { (str) -> String in
-                    (GenericItem(rawValue: str.0)?.description ?? "")
-                }.filter({$0 != ""})
-            }
-        }
-        
-        let ingredientText = itemsToSearch.map { (str) -> String in
-            str.replacingOccurrences(of: " ", with: "%20")
-        }.joined(separator: ",")
-        
-        
-        var potentialOtherThanIngredientText: String {
-            let otherSearches = activeSearches.filter({$0.1 != .ingredient})
-            if otherSearches.isEmpty == false {
-                return "&q=\(otherSearches.first!.0)"
-            } else {
-                return ""
-            }
-        }
-        
-        var searchURL: URL? {
-            if ingredientText != "" {
-                return URL(string: "http://www.recipepuppy.com/api/?i=\(ingredientText)\(potentialOtherThanIngredientText)")
-            } else {
-                print("Doing general query")
-                let txt = (activeSearches.first?.0)?.replacingOccurrences(of: " ", with: "%20")
-                return URL(string: "http://www.recipepuppy.com/api/?q=\(txt ?? "\(GenericItem.all.randomElement() ?? "")")")
-            }
-        }
-        
-        guard let url = searchURL else {
-            return
-        }
-        
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            DispatchQueue.main.async {
-                guard let data = data else {
-                    print("Data was nil")
-                    return
-                }
-                
-                let json = try? JSONSerialization.jsonObject(with: data, options: [])
-                
-                if let dictionary = json as? [String:Any] {
-                    let newData = dictionary["results"] as? [Any]
-                    
-                    if let newData = newData {
-                        for recipeData in newData {
-                            let recipeDataDict = recipeData as? [String:Any]
-                            if let recipeDataDict = recipeDataDict {
-                                let title = recipeDataDict["title"] as? String
-                                let trimTitle = title?.trim()
-                                let ingredients = recipeDataDict["ingredients"] as? String
-                                let url = recipeDataDict["href"] as? String
-                                let puppyRecipe = Recipe.Puppy(title: trimTitle, ingredients: ingredients, url: URL(string: url ?? ""))
-                                puppyRecipes.append(puppyRecipe)
-                                
-                            }
-                            
-                        }
-                        recipesFound(puppyRecipes)
-                    }
-                } else {
-                    recipesFound([])
-                }
-            }
-        }
-        task.resume()
-    }
+   
     
-    static func readOneRecipeFrom(id: String, db: Firestore, recipeReturned: @escaping(_ recipe: Recipe) -> Void) {
-        let reference = db.collection("recipes").document(id)
-        reference.getDocument { (documentSnapshot, error) in
-            guard let doc = documentSnapshot else { return }
-            let recipe = Recipe(name: doc.get("name") as! String, recipeType: doc.get("recipeType") as! [String], cuisineType: doc.get("cuisineType") as! String, cookTime: doc.get("cookTime") as! Int, prepTime: doc.get("prepTime") as! Int, ingredients: doc.get("ingredients") as! [String], instructions: doc.get("instructions") as! [String], calories: doc.get("calories") as? Int, numServes: doc.get("numServes") as! Int, userID: doc.get("userID") as? String, numReviews: doc.get("numReviews") as? Int, numStars: doc.get("numStars") as? Int, notes: doc.get("notes") as? String, tagline: doc.get("tagline") as? String, recipeImage: nil, imagePath: doc.get("path") as? String, reviewImagePaths: doc.get("reviewImagePaths") as? [String])
-            recipeReturned(recipe)
-        }
-    }
+    
     
     static func getRecipeInfoFromURL_allRecipesTwo(recipeURL: String) {
+        
+        // for the second type of webpage from allrecipes
+        
         let url = URL(string: recipeURL)!
 
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -307,8 +403,9 @@ struct Recipe {
             }
             
             let rangeOfTheData = leftSideRange.upperBound..<rightSideRange.lowerBound
+            
+            // Text to grab is the shortened version of all the data, so there will be less collisions and less of the string to search
             let textToGrab = String(htmlString[rangeOfTheData])
-            //print(textToGrab)
             
             
             guard let leftSideIngredients = textToGrab.range(of: "\"recipeIngredient\":") else { return }
@@ -317,23 +414,20 @@ struct Recipe {
             let ingredientText = String(textToGrab[ingredientRange])
             let finalIngredients = ingredientText.getIngredientsFromHTML_ARTWO()
             
-            
             guard let leftSideInstructions = textToGrab.range(of: "\"recipeInstructions\":") else { return }
             guard let rightSideInstructions = textToGrab.range(of: ",\"recipeCategory\":") else { return }
+            
             let instructionRange = leftSideInstructions.upperBound..<rightSideInstructions.lowerBound
             let instructionText = String(textToGrab[instructionRange])
             let finalInstructions = instructionText.getInstructionsFromHTML_ARTWO([])
             
             let finalServings = htmlString.getServingsFromHTML_ARTWO()
-            
             let finalTitle = htmlString.getTitleFromHTML()
-            
             let finalCookTime = textToGrab.getCookTimeARTWO()
             let finalPrepTime = textToGrab.getPrepTimeARTWO()
-            
             let finalCalories = textToGrab.getCaloriesFromHTML_ARTWO()
             
-            
+            // Could get more things in the future, such as notes or image
             let dict: [String:Any] = [
                 "title": finalTitle,
                 "ingredients": finalIngredients,
@@ -348,85 +442,9 @@ struct Recipe {
         }
         task.resume()
     }
-}
-
-
-extension Recipe {
-    #warning("should probably not allow users to write directly to the main collection...")
-    mutating func writeToFirestore(db: Firestore!, storage: Storage) {
-        let ingredients = self.ingredients
-        let doc = db.collection("recipes-external").document()
-        self.imagePath = "recipe/\(doc.documentID).jpg"
-        doc.setData([
-            "name": self.name,
-            "recipeType": self.recipeType,
-            "cuisineType": self.cuisineType,
-            "cookTime": self.cookTime,
-            "prepTime": self.prepTime,
-            "totalTime": self.cookTime + self.prepTime,
-            "ingredients": self.ingredients,
-            "instructions": self.instructions,
-            "calories": self.calories as Any,
-            "numServes": self.numServes,
-            "userID": self.userID as Any,
-            "numReviews": self.numReviews as Any,
-            "numStars": self.numStars as Any,
-            "notes": self.notes as Any,
-            "path": self.imagePath as Any,
-            "tagline": self.tagline as Any,
-            "reviewImagePaths": self.reviewImagePaths as Any,
-            "numberIngredients": self.ingredients.count as Any
-        ]) { err in
-            if err != nil {
-                UIApplication.shared.keyWindow?.rootViewController?.createMessageView(color: .red, text: "Failed creating recipe")
-            } else {
-                print("Document successfully written")
-                UIApplication.shared.keyWindow?.rootViewController?.createMessageView(color: Colors.messageGreen, text: "Recipe successfully created")
-                // give the items their own line for easier querying
-                for item in ingredients {
-                    let systemitem = Search.turnIntoSystemItem(string: item)
-                    print(systemitem)
-                    if systemitem != .other {
-                        doc.updateData([
-                            "has_\(systemitem)": true
-                        ])
-                    }
-                    
-                }
-            }
-        }
-        let uploadReference = Storage.storage().reference(withPath: imagePath ?? "")
-        guard let imageData = self.recipeImage else { return }
-        let newMetadata = StorageMetadata()
-        newMetadata.contentType = "image/jpeg"
-        //uploadReference.putData(imageData)
-        
-        uploadReference.putData(imageData, metadata: newMetadata)
-        
-        
-    }
-    func getImageFromStorage(thumb: Bool, imageReturned: @escaping (_ image: UIImage?) -> Void) {
-        var image: UIImage?
-        var thumbPath = self.imagePath
-        if thumb == true {
-            thumbPath?.removeLast(4)
-            thumbPath?.append(contentsOf: "_200x200.jpg")
-        }
-        
-        
-        let storageRef = Storage.storage().reference(withPath: thumbPath ?? "")
-        storageRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
-            if let error = error {
-                print("Got an error fetching data: \(error)")
-                return
-            }
-            if let data = data {
-                image = UIImage(data: data)
-                
-            }
-            imageReturned(image)
-        }
-    }
+    
+    // MARK: Review
+    
     func updateRecipeReviewInfo(stars: Int, reviews: Int, db: Firestore) {
         
         let recipeID = self.imagePath?.imagePathToDocID()
@@ -451,9 +469,6 @@ extension Recipe {
             }
         }
     }
-    
-    
-    
     
     func addReviewToRecipe(stars: Int, review: String?, db: Firestore) {
         let recipeID = self.imagePath?.imagePathToDocID()
@@ -489,7 +504,8 @@ extension Recipe {
         }
     }
     
-    //(Bundle.main.loadNibNamed("IngredientView", owner: nil, options: nil)?.first as? IngredientView)!
+    // MARK: UI
+    
     func addButtonIngredientViewsTo(stackView: UIStackView, delegateVC: UIViewController) {
         for item in self.ingredients {
             let v = Bundle.main.loadNibNamed("ButtonIngredientView", owner: nil, options: nil)?.first as! ButtonIngredientView
@@ -508,93 +524,10 @@ extension Recipe {
             counter += 1
         }
     }
-    
-    
-    func addRecipeDocumentToUserProfile(db: Firestore) {
-        guard let id = self.imagePath?.imagePathToDocID() else { return }
-        let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").collection("savedRecipes").document(id)
-        reference.setData([
-            "name": self.name,
-            "recipeType": self.recipeType,
-            "cuisineType": self.cuisineType,
-            "cookTime": self.cookTime,
-            "prepTime": self.prepTime,
-            "totalTime": self.cookTime + self.prepTime,
-            "ingredients": self.ingredients,
-            "instructions": self.instructions,
-            "calories": self.calories as Any,
-            "numServes": self.numServes,
-            "userID": self.userID as Any,
-            "numReviews": self.numReviews as Any,
-            "numStars": self.numStars as Any,
-            "notes": self.notes as Any,
-            "path": self.imagePath as Any,
-            "tagline": self.tagline as Any,
-            "reviewImagePaths": self.reviewImagePaths as Any
-        ]) { err in
-        if let err = err {
-            print("Error writing document: \(err)")
-        } else {
-            print("Document successfully written")
-            }
-        }
-    }
-    
-    func removeRecipeDocumentFromUserProfile(db: Firestore) {
-        guard let id = self.imagePath?.imagePathToDocID() else { return }
-        let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").collection("savedRecipes").document(id)
-        reference.delete()
-    }
-    
-    func turnRecipeIntoCookbookRecipe() -> CookbookRecipe {
-        let cbr = CookbookRecipe()
-        let ingredients = List<String>.init()
-        let instructions = List<String>.init()
-        self.ingredients.forEach({ingredients.append($0)})
-        self.instructions.forEach({instructions.append($0)})
-        cbr.setUp(name: self.name, servings: RealmOptional(self.numServes), cookTime: RealmOptional(self.cookTime), prepTime: RealmOptional(self.prepTime), calories: RealmOptional(self.calories), ingredients: ingredients, instructions: instructions, notes: self.notes)
-        return cbr
-    }
-    
-    func addRecipeToRecentlyViewedRecipes(db: Firestore) {
-        DispatchQueue.main.async {
-            if let uid = Auth.auth().currentUser?.uid {
-                let reference = db.collection("users").document(uid)
-                reference.getDocument { (documentSnapshot, error) in
-                    guard let doc = documentSnapshot else { return }
-                    guard let data = doc.data() else { return }
-                    
-                    if var dict = data["recentlyViewedRecipes"] as? [String:[String:Any]] {
-                        // update the data, already have saved recipes
-                        print(dict.keys.count)
-                        dict["\(Date().timeIntervalSince1970)"] = ["name": self.name, "path": self.imagePath as Any, "timeIntervalSince1970": Date().timeIntervalSince1970]
-                        // should have the dict, just would need to write over the previous dict with this new dict, also might need to delete the oldest entry
-                        
-                        print(dict.keys.count)
-                        if dict.keys.count > 20 {
-                            let key = dict.keys.sorted().first
-                            dict.removeValue(forKey: key!)
-                            
-                        }
-                        print(dict.keys.count)
-                        reference.updateData([
-                            "recentlyViewedRecipes" : dict
-                        ])
-                    } else {
-                        // no saved recipes, need to create the dictionary
-                        let dict: [String:[String:Any]] = ["\(Date().timeIntervalSince1970)":["name": self.name, "path": self.imagePath as Any, "timeIntervalSince1970": Date().timeIntervalSince1970]]
-                        reference.updateData([
-                            "recentlyViewedRecipes" : dict
-                        ])
-                    }
-                }
-            }
-        }
-    }
-    
 }
 
 
+// MARK: Recipe.Puppy
 extension Recipe {
     struct Puppy {
         var title: String?
@@ -607,5 +540,85 @@ extension Recipe {
             self.url = url
         }
     }
+    
+    static func getPuppyRecipesFromSearches(activeSearches: [(String, SearchType)], expiringItems: [String], recipesFound: @escaping (_ recipes: [Recipe.Puppy]) -> Void) {
+           // recipes that come form the 'More recipes' pop up bottom from RecipeHomeVC
+           var puppyRecipes: [Recipe.Puppy] = []
+           var itemsToSearch: [String] {
+               if activeSearches.contains(where: {$0 == ("Expiring", .other)}) {
+                   return expiringItems
+               } else {
+                   return activeSearches.filter({$0.1 == .ingredient}).map { (str) -> String in
+                       (GenericItem(rawValue: str.0)?.description ?? "")
+                   }.filter({$0 != ""})
+               }
+           }
+           
+           let ingredientText = itemsToSearch.map { (str) -> String in
+               str.replacingOccurrences(of: " ", with: "%20")
+           }.joined(separator: ",")
+           
+           
+           var potentialOtherThanIngredientText: String {
+               let otherSearches = activeSearches.filter({$0.1 != .ingredient})
+               if otherSearches.isEmpty == false {
+                   return "&q=\(otherSearches.first!.0)"
+               } else {
+                   return ""
+               }
+           }
+           
+           // if there is a search for something such as 'Italian' food, then need to add that on to after the ingredientText through potentialOtherThanIngredientText
+           var searchURL: URL? {
+               if ingredientText != "" {
+                   return URL(string: "http://www.recipepuppy.com/api/?i=\(ingredientText)\(potentialOtherThanIngredientText)")
+               } else {
+                   print("Doing general query")
+                   let txt = (activeSearches.first?.0)?.replacingOccurrences(of: " ", with: "%20")
+                   return URL(string: "http://www.recipepuppy.com/api/?q=\(txt ?? "\(GenericItem.all.randomElement() ?? "")")")
+               }
+           }
+           
+           guard let url = searchURL else {
+               return
+           }
+           
+           let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+               DispatchQueue.main.async {
+                   guard let data = data else {
+                       print("Data was nil")
+                       return
+                   }
+                   
+                   let json = try? JSONSerialization.jsonObject(with: data, options: [])
+                   
+                   if let dictionary = json as? [String:Any] {
+                       let newData = dictionary["results"] as? [Any]
+                       
+                       if let newData = newData {
+                           for recipeData in newData {
+                               let recipeDataDict = recipeData as? [String:Any]
+                               if let recipeDataDict = recipeDataDict {
+                                   // only need title, ingredients, and URL for displaying in OtherRecipes VC
+                                   let title = recipeDataDict["title"] as? String
+                                   let trimTitle = title?.trim()
+                                   let ingredients = recipeDataDict["ingredients"] as? String
+                                   let url = recipeDataDict["href"] as? String
+                                   let puppyRecipe = Recipe.Puppy(title: trimTitle, ingredients: ingredients, url: URL(string: url ?? ""))
+                                   puppyRecipes.append(puppyRecipe)
+                                   
+                               }
+                               
+                           }
+                           recipesFound(puppyRecipes)
+                       }
+                   } else {
+                       recipesFound([])
+                   }
+               }
+           }
+           task.resume()
+       }
+    
 }
 

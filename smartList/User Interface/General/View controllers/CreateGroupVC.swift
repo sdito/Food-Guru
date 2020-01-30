@@ -50,6 +50,8 @@ class CreateGroupVC: UIViewController {
         }
     }
     
+    // MARK: @IBAction funcs
+    
     @IBAction func addUser(_ sender: Any) {
         print("Add user pressed")
         addItem()
@@ -83,7 +85,7 @@ class CreateGroupVC: UIViewController {
         }
         
     }
-    
+    // MARK: functions
     @objc private func addItem() {
         let email = textField.text!
         if emails.contains(textField.text!) == false {
@@ -126,7 +128,7 @@ class CreateGroupVC: UIViewController {
     }
 }
 
-
+// MARK: Collection View extension
 extension CreateGroupVC: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return emails.count
@@ -163,6 +165,7 @@ extension CreateGroupVC: UICollectionViewDataSource, UICollectionViewDelegate {
     }
 }
 
+// MARK: Text field extension
 extension CreateGroupVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         addItem()

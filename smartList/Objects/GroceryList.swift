@@ -39,6 +39,120 @@ struct GroceryList {
         self.ownID = ownID
     }
     
+    // MARK: General
+    
+    static func listenerOnListWithDocID(db: Firestore, docID: String, listReturned: @escaping (_ list: GroceryList?) -> Void) {
+        let reference = db.collection("lists").document(docID)
+        var l: GroceryList?
+        reference.addSnapshotListener { (docSnapshot, error) in
+            if let doc = docSnapshot {
+                if doc.get("name") != nil {
+                    l = GroceryList(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
+                }
+            }
+            listReturned(l)
+        }
+    }
+    
+    // to update list information i.e. if stores changed
+    
+    
+    
+    func editListToFirestore(db: Firestore!, listID: String) {
+        
+        db.collection("lists").document(listID).updateData([
+            "name": self.name,
+            "stores": self.stores!,
+            "people": Array(Set(self.people!)).sorted(),
+            "timeIntervalSince1970": Date().timeIntervalSince1970
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document sucessfully updated")
+                User.emailToUid(emails: self.people, db: db, listID: listID)
+                if self.stores?.isEmpty == false {
+                    // Need to get the items that do not have a store associated with them, from there make the user either sort all those items or just move them all to one store
+                    let itemsReference = db.collection("lists").document(listID).collection("items").whereField("store", isEqualTo: "")
+                    
+                    itemsReference.getDocuments { (querySnapshot, error) in
+                        guard let documents = querySnapshot?.documents else {
+                            print("Error reading documents: \(error?.localizedDescription ?? "error")")
+                            return
+                        }
+                        
+                        // documents are the items that have no store
+                        for doc in documents {
+                            let id = doc.documentID
+                            if let store = self.stores?.last {
+                                let specificItemReference = db.collection("lists").document(listID).collection("items").document(id)
+                                specificItemReference.updateData([
+                                    "store" : store
+                                ])
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    func writeToFirestore(db: Firestore!) {
+        SharedValues.shared.listIdentifier = db.collection("lists").document()
+        SharedValues.shared.listIdentifier?.setData([
+            "name": self.name,
+            "isGroup": self.isGroup ?? false,
+            "stores": self.stores as Any,
+            "people": Array(Set(self.people!)).sorted(),
+            "user": SharedValues.shared.userID ?? "did not write",
+            "timeIntervalSince1970": Date().timeIntervalSince1970,
+            "groupID": self.groupID as Any,
+            "ownID": SharedValues.shared.listIdentifier?.documentID as Any
+        ]) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written")
+                User.emailToUid(emails: self.people, db: db, listID: SharedValues.shared.listIdentifier!.documentID)
+            }
+        }
+    }
+    
+    func deleteListToFirestore(db: Firestore!) {
+        db.collection("lists").document(self.docID ?? " ").delete()
+    }
+    
+    func removeItemsThatNoLongerBelong() -> [Item] {
+        let dontDelete = ""
+        var stores: Set<String> = Set(self.stores ?? [dontDelete])
+        stores.insert(dontDelete)
+        var goodItems: [Item] = []
+        if let items = self.items {
+            for item in items {
+                if stores.contains(item.store ?? "") {
+                    goodItems.append(item)
+                } else {
+                    print("Item is being deleted: \(item.name)")
+                    item.deleteItemFromList(db: Firestore.firestore(), listID: self.docID ?? " ")
+                }
+            }
+        }
+        return goodItems
+    }
+    
+    
+    
+    
+    static func updateListTimeIntervalTime(db: Firestore, listID: String, timeToSetTo timeInterval: TimeInterval) {
+        let reference = db.collection("lists").document(listID)
+        reference.updateData([
+            "timeIntervalSince1970": timeInterval
+        ])
+    }
+    
+    
+    // MARK: User
     
     static func getUsersCurrentList(db: Firestore, userID: String, listReturned: @escaping (_ list: GroceryList?) -> Void) {
         var listID: GroceryList?
@@ -50,20 +164,7 @@ struct GroceryList {
         }
     }
     
-    static func listenerOnListWithDocID(db: Firestore, docID: String, listReturned: @escaping (_ list: GroceryList?) -> Void) {
-        let reference = db.collection("lists").document(docID)
-        var l: GroceryList?
-        reference.addSnapshotListener { (docSnapshot, error) in
-            if let doc = docSnapshot {
-                if doc.get("name") != nil {
-                    l = GroceryList(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
-                }
-                
-            }
-            listReturned(l)
-        }
-    }
-    
+    // used for ListHomeVC to allow user to select all posible lists
     static func readAllUserLists(db: Firestore, userID: String, listsChanged: @escaping (_ lists: [GroceryList]) -> Void) {
         var lists: [GroceryList] = []
         db.collection("lists").whereField("shared", arrayContains: userID).addSnapshotListener { (querySnapshot, error) in
@@ -88,42 +189,7 @@ struct GroceryList {
         }
     }
     
-    static func addItemToListFromRecipe(db: Firestore, listID: String, name: String, userID: String, store: String) {
-        let reference = db.collection("lists").document(listID).collection("items").document()
-        let genericName = Search.turnIntoSystemItem(string: name)
-        let words = name.split{ !$0.isLetter }.map { (sStr) -> String in
-            String(sStr.lowercased())
-        }
-        
-        let ingAndQuan = name.getQuantityFromIngredient()
-        let genericCategory = GenericItem.getCategory(item: genericName, words: words)
-        reference.setData([
-            "name": ingAndQuan.ingredient,
-            "selected": false,
-            "store": store,
-            "user": Auth.auth().currentUser?.displayName as Any,
-            "systemCategory": "\(genericCategory)",
-            "category": "\(genericCategory)",
-            "systemItem": "\(genericName)",
-            "quantity": ingAndQuan.quantity
-        ]) { err in
-            if let err = err {
-                print("Error adding item from recipe to list: \(err)")
-            } else {
-                print("Document successfully written")
-                NotificationCenter.default.post(name: .itemAddedFromRecipe, object: nil, userInfo: ["itemName": name])
-                
-            }
-        }
-    }
-    
-    static func updateListTimeIntervalTime(db: Firestore, listID: String, timeToSetTo timeInterval: TimeInterval) {
-        let reference = db.collection("lists").document(listID)
-        reference.updateData([
-            "timeIntervalSince1970": timeInterval
-        ])
-    }
-    
+    // MARK: Recipe
     static func handleProcessForAutomaticallyGeneratedListFromRecipe(db: Firestore, items: [String]) {
         let reference = db.collection("lists").document()
         let uid = Auth.auth().currentUser?.uid
@@ -183,102 +249,38 @@ struct GroceryList {
         }
     }
     
-}
-
-
-extension GroceryList {
-    func writeToFirestore(db: Firestore!) {
-        SharedValues.shared.listIdentifier = db.collection("lists").document()
-        SharedValues.shared.listIdentifier?.setData([
-            "name": self.name,
-            "isGroup": self.isGroup ?? false,
-            "stores": self.stores as Any,
-            "people": Array(Set(self.people!)).sorted(),
-            "user": SharedValues.shared.userID ?? "did not write",
-            "timeIntervalSince1970": Date().timeIntervalSince1970,
-            "groupID": self.groupID as Any,
-            "ownID": SharedValues.shared.listIdentifier?.documentID as Any
+    static func addItemToListFromRecipe(db: Firestore, listID: String, name: String, userID: String, store: String) {
+        let reference = db.collection("lists").document(listID).collection("items").document()
+        let genericName = Search.turnIntoSystemItem(string: name)
+        let words = name.split{ !$0.isLetter }.map { (sStr) -> String in
+            String(sStr.lowercased())
+        }
+        
+        let ingAndQuan = name.getQuantityFromIngredient()
+        let genericCategory = GenericItem.getCategory(item: genericName, words: words)
+        reference.setData([
+            "name": ingAndQuan.ingredient,
+            "selected": false,
+            "store": store,
+            "user": Auth.auth().currentUser?.displayName as Any,
+            "systemCategory": "\(genericCategory)",
+            "category": "\(genericCategory)",
+            "systemItem": "\(genericName)",
+            "quantity": ingAndQuan.quantity
         ]) { err in
             if let err = err {
-                print("Error writing document: \(err)")
+                print("Error adding item from recipe to list: \(err)")
             } else {
                 print("Document successfully written")
-                User.emailToUid(emails: self.people, db: db, listID: SharedValues.shared.listIdentifier!.documentID)
-            }
-        }
-    }
-    
-    
-    func deleteListToFirestore(db: Firestore!) {
-        db.collection("lists").document(self.docID ?? " ").delete()
-    }
-    
-    
-    func editListToFirestore(db: Firestore!, listID: String) {
-        
-        db.collection("lists").document(listID).updateData([
-            "name": self.name,
-            "stores": self.stores!,
-            "people": Array(Set(self.people!)).sorted(),
-            "timeIntervalSince1970": Date().timeIntervalSince1970
-        ]) { err in
-            if let err = err {
-                print("Error updating document: \(err)")
-            } else {
-                print("Document sucessfully updated")
-                User.emailToUid(emails: self.people, db: db, listID: listID)
-                if self.stores?.isEmpty == false {
-                    // Need to get the items that do not have a store associated with them, from there make the user either sort all those items or just move them all to one store
-                    let itemsReference = db.collection("lists").document(listID).collection("items").whereField("store", isEqualTo: "")
-                    
-                    itemsReference.getDocuments { (querySnapshot, error) in
-                        guard let documents = querySnapshot?.documents else {
-                            print("Error reading documents: \(error?.localizedDescription ?? "error")")
-                            return
-                        }
-                        
-                        // documents are the items that have no store
-                        for doc in documents {
-                            let id = doc.documentID
-                            if let store = self.stores?.last {
-                                let specificItemReference = db.collection("lists").document(listID).collection("items").document(id)
-                                specificItemReference.updateData([
-                                    "store" : store
-                                ])
-                            }
-                        }
-                        
-//                        #error("need to update the UI to reflect that there are stores now")
-                        
-                    }
-                }
-                
-                
-                
-                
+                NotificationCenter.default.post(name: .itemAddedFromRecipe, object: nil, userInfo: ["itemName": name])
                 
             }
         }
     }
     
-    func removeItemsThatNoLongerBelong() -> [Item] {
-        let dontDelete = ""
-        var stores: Set<String> = Set(self.stores ?? [dontDelete])
-        stores.insert(dontDelete)
-        var goodItems: [Item] = []
-        if let items = self.items {
-            for item in items {
-                if stores.contains(item.store ?? "") {
-                    goodItems.append(item)
-                } else {
-                    print("Item is being deleted: \(item.name)")
-                    item.deleteItemFromList(db: Firestore.firestore(), listID: self.docID ?? " ")
-                }
-            }
-        }
-        return goodItems
-    }
     
+    
+    // MARK: UI
     func sortForTableView(from store: String) -> ([String], [[Item]]) {
         var categories = self.systemCategories
         var sortedItems: [[Item]] = []
@@ -309,9 +311,11 @@ extension GroceryList {
         }
         return (textDescription, sortedItems)
     }
+    
 }
 
 
+// MARK: Sequence
 extension Sequence where Element == GroceryList {
     func organizeTableViewForListHome() -> ([String]?, [[GroceryList]]?) {
         let lists = self as? [GroceryList]

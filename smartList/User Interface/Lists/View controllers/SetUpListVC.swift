@@ -88,7 +88,7 @@ class SetUpListVC: UIViewController {
             }
         }
     }
-    
+    // MARK: override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
@@ -117,7 +117,7 @@ class SetUpListVC: UIViewController {
         }
     }
 
-    
+    // MARK: @IBAction funcs
     @IBAction func writeToFirestoreIfValid() {
         gatherListData()
         let list = GroceryList(name: name ?? "", isGroup: usingGroup, stores: stores, people: people, items: nil, numItems: nil, docID: nil, timeIntervalSince1970: Date().timeIntervalSince1970, groupID: returnGroupID, ownID: "")
@@ -161,7 +161,7 @@ class SetUpListVC: UIViewController {
         }
     }
     
-    
+    // MARK: functions
     private func gatherListData() {
         name = nil; stores = nil; categories = nil; isGroup = nil; people = nil
         name = nameTextField.text ?? ""
@@ -258,7 +258,7 @@ class SetUpListVC: UIViewController {
     
 }
 
-
+// MARK: Text field delegate
 extension SetUpListVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         insertTextFieldInCorrectSpot(currentTextField: textField)

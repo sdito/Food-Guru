@@ -28,7 +28,7 @@ class SignInVC: UIViewController {
         passwordTextField.delegate = self
     }
     
-    
+    // MARK: @IBAction funcs
     @IBAction func logIn(_ sender: Any) {
         // with email and password
         if let email = emailTextField.text, let password = passwordTextField.text {
@@ -132,7 +132,7 @@ class SignInVC: UIViewController {
 
 
 
-
+// MARK: Text field delegate
 extension SignInVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailTextField {

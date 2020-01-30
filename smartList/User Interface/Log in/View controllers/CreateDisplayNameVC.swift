@@ -29,7 +29,7 @@ class CreateDisplayNameVC: UIViewController, UITextFieldDelegate {
         getCurrentNameOrSuggested()
         usernameTextField.setUpDoneToolbar(action: #selector(dismissKeyboard), style: .done)
     }
-    
+    // MARK: @IBAction funcs
     @IBAction func backPressed(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -61,7 +61,7 @@ class CreateDisplayNameVC: UIViewController, UITextFieldDelegate {
         }
         
     }
-    
+    // MARK: functions
     private func getCurrentNameOrSuggested() {
         if Auth.auth().currentUser?.displayName != "" || Auth.auth().currentUser?.displayName != nil {
             usernameTextField.text = Auth.auth().currentUser!.displayName

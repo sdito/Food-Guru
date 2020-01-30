@@ -41,6 +41,7 @@ struct Item: Equatable {
         self.systemCategory = systemCategory
         self.quantity = quantity
     }
+    // MARK: Lists
     
     //correctly reads the ownID of the document of items
     static func readItemsForList(db: Firestore, docID: String, itemsChanged: @escaping (_ items: [Item]) -> Void) {
@@ -65,9 +66,79 @@ struct Item: Equatable {
             itemsChanged(listItems)
         }
     }
+    static func updateItemForListQuantity(quantity: String, itemID: String, listID: String, db: Firestore) {
+        let reference = db.collection("lists").document(listID).collection("items").document(itemID)
+        reference.updateData([
+            "quantity": quantity
+        ])
+    }
+    static func updateItemForListName(name: String, itemID: String, listID: String, db: Firestore) {
+        let reference = db.collection("lists").document(listID).collection("items").document(itemID)
+        reference.updateData([
+            "name": name
+        ])
+    }
+    static func updateItemForListStore(store: String, itemID: String, listID: String, db: Firestore) {
+        let reference = db.collection("lists").document(listID).collection("items").document(itemID)
+        reference.updateData([
+            "store": store
+        ])
+    }
+    static func updateItemForListCategory(category: String, itemID: String, listID: String, db: Firestore) {
+        let reference = db.collection("lists").document(listID).collection("items").document(itemID)
+        reference.updateData([
+            "category": category
+        ])
+    }
+    
+    mutating func writeToFirestoreForList(db: Firestore!) {
+        let itemRef = db.collection("lists").document("\(SharedValues.shared.listIdentifier!.documentID)").collection("items").document()
+        self.ownID = itemRef.documentID
+        itemRef.setData([
+            "name": self.name,
+            "category": self.category!,
+            "store": self.store!,
+            "user": Auth.auth().currentUser?.displayName as Any,
+            "selected": self.selected,
+            "systemItem": "\(self.systemItem ?? .other)",
+            "systemCategory": "\(self.systemCategory ?? .other)",
+            "quantity": self.quantity as Any
+        ]) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written")
+            }
+        }
+    }
+    
+    func deleteItemFromList(db: Firestore, listID: String) {
+        let documentRef = db.collection("lists").document(listID).collection("items").document(self.ownID ?? " ")
+        documentRef.delete()
+    }
     
     
-    // hasnt been used yet
+    
+    // MARK: Storage
+    
+    func writeToFirestoreForStorage(db: Firestore!, docID: String) {
+       let reference = db.collection("storages").document(docID).collection("items").document()
+        reference.setData([
+            "name": self.name,
+            "selected": false,
+            "category": self.category!,
+            "store": self.store as Any,
+            "user": Auth.auth().currentUser?.displayName as Any,
+            "ownID": reference.documentID,
+            "storageSection": self.storageSection?.string ?? FoodStorageType.unsorted.string,
+            "timeAdded": Date().timeIntervalSince1970,
+            "timeExpires": self.timeExpires as Any,
+            "systemItem": "\(self.systemItem ?? .other)",
+            "systemCategory": "\(self.systemCategory ?? .other)",
+            "quantity": self.quantity as Any
+        ])
+    }
+    
     static func readItemsForStorage(db: Firestore!, storageID: String, itemsChanged: @escaping (_ items: [Item]) -> Void) {
         var storageItems: [Item] = []
         db.collection("storages").document(storageID).collection("items").addSnapshotListener { (querySnapshot, error) in
@@ -112,43 +183,6 @@ struct Item: Equatable {
         }
     }
     
-    
-    static func createItemFrom(text: String) -> Item {
-        let systemItem = Search.turnIntoSystemItem(string: text)
-        let words = text.split{ !$0.isLetter }.map { (sStr) -> String in
-            String(sStr.lowercased())
-        }
-        let systemCategory = GenericItem.getCategory(item: systemItem, words: words)
-        let item = Item(name: text, selected: false, category: systemCategory.rawValue, store: nil, user: Auth.auth().currentUser?.displayName, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: systemCategory, quantity: nil)
-        return item
-    }
-    
-    static func updateItemForListQuantity(quantity: String, itemID: String, listID: String, db: Firestore) {
-        let reference = db.collection("lists").document(listID).collection("items").document(itemID)
-        reference.updateData([
-            "quantity": quantity
-        ])
-    }
-    static func updateItemForListName(name: String, itemID: String, listID: String, db: Firestore) {
-        let reference = db.collection("lists").document(listID).collection("items").document(itemID)
-        reference.updateData([
-            "name": name
-        ])
-    }
-    static func updateItemForListStore(store: String, itemID: String, listID: String, db: Firestore) {
-        let reference = db.collection("lists").document(listID).collection("items").document(itemID)
-        reference.updateData([
-            "store": store
-        ])
-    }
-    static func updateItemForListCategory(category: String, itemID: String, listID: String, db: Firestore) {
-        let reference = db.collection("lists").document(listID).collection("items").document(itemID)
-        reference.updateData([
-            "category": category
-        ])
-    }
-    
-    
     static func updateItemForStorageName(name: String, itemID: String, storageID: String, db: Firestore) {
         let reference = db.collection("storages").document(storageID).collection("items").document(itemID)
         reference.updateData([
@@ -162,6 +196,55 @@ struct Item: Equatable {
         ])
     }
     
+    func switchItemToSegment(named: String, db: Firestore/*, storageID: String*/) {
+        let documentRef = db.collection("storages").document(SharedValues.shared.foodStorageID ?? " ").collection("items").document(self.ownID ?? " ")
+        documentRef.updateData([
+            "storageSection": named
+        ])
+    }
+    func addExpirationDateToItem(db: Firestore, timeIntervalSince1970: TimeInterval) {
+        let documentRef = db.collection("storages").document(SharedValues.shared.foodStorageID ?? " ").collection("items").document(self.ownID ?? " ")
+        documentRef.updateData([
+            "timeExpires": timeIntervalSince1970
+        ])
+    }
+    
+    
+    
+    func deleteItemFromStorage(db: Firestore, storageID: String) {
+        print(storageID)
+        let documentRef = db.collection("storages").document(SharedValues.shared.foodStorageID ?? " ").collection("items").document(self.ownID ?? " ")
+        documentRef.delete()
+    }
+    
+    func deleteItemFromStorageFromSpecificStorageID(db: Firestore, storageID: String) {
+        let documentRef = db.collection("storages").document(storageID).collection("items").document(self.ownID ?? " ")
+        documentRef.delete()
+    }
+    
+    
+    // MARK: General
+    
+    static func createItemFrom(text: String) -> Item {
+        let systemItem = Search.turnIntoSystemItem(string: text)
+        let words = text.split{ !$0.isLetter }.map { (sStr) -> String in
+            String(sStr.lowercased())
+        }
+        let systemCategory = GenericItem.getCategory(item: systemItem, words: words)
+        let item = Item(name: text, selected: false, category: systemCategory.rawValue, store: nil, user: Auth.auth().currentUser?.displayName, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: systemCategory, quantity: nil)
+        return item
+    }
+    
+    func selectedItem(db: Firestore) { db.collection("lists").document("\(SharedValues.shared.listIdentifier!.documentID)").collection("items").document(self.ownID!).updateData([
+            "selected": self.selected
+        ])
+    }
+    
+    
+    
+    
+    
+    // MARK: Open Food Facts API
     static func getItemFromBarcode(image: UIImage, vc: UIViewController, picker: UIImagePickerController, db: Firestore) {
         let format = VisionBarcodeFormat.all
         let barcodeOptions = VisionBarcodeDetectorOptions(formats: format)
@@ -233,90 +316,18 @@ struct Item: Equatable {
             task.resume()
         }
     }
-}
-
-extension Item {
-    
-    mutating func writeToFirestoreForList(db: Firestore!) {
-        let itemRef = db.collection("lists").document("\(SharedValues.shared.listIdentifier!.documentID)").collection("items").document()
-        self.ownID = itemRef.documentID
-        itemRef.setData([
-            "name": self.name,
-            "category": self.category!,
-            "store": self.store!,
-            "user": Auth.auth().currentUser?.displayName as Any,
-            "selected": self.selected,
-            "systemItem": "\(self.systemItem ?? .other)",
-            "systemCategory": "\(self.systemCategory ?? .other)",
-            "quantity": self.quantity as Any
-        ]) { err in
-            if let err = err {
-                print("Error writing document: \(err)")
-            } else {
-                print("Document successfully written")
-            }
-        }
-    }
-    
-    
-    func writeToFirestoreForStorage(db: Firestore!, docID: String) {
-       let reference = db.collection("storages").document(docID).collection("items").document()
-        reference.setData([
-            "name": self.name,
-            "selected": false,
-            "category": self.category!,
-            "store": self.store as Any,
-            "user": Auth.auth().currentUser?.displayName as Any,
-            "ownID": reference.documentID,
-            "storageSection": self.storageSection?.string ?? FoodStorageType.unsorted.string,
-            "timeAdded": Date().timeIntervalSince1970,
-            "timeExpires": self.timeExpires as Any,
-            "systemItem": "\(self.systemItem ?? .other)",
-            "systemCategory": "\(self.systemCategory ?? .other)",
-            "quantity": self.quantity as Any
-        ])
-    }
-    
-    
-    func selectedItem(db: Firestore) { db.collection("lists").document("\(SharedValues.shared.listIdentifier!.documentID)").collection("items").document(self.ownID!).updateData([
-            "selected": self.selected
-        ])
-    }
-    
-    
-    func switchItemToSegment(named: String, db: Firestore/*, storageID: String*/) {
-        let documentRef = db.collection("storages").document(SharedValues.shared.foodStorageID ?? " ").collection("items").document(self.ownID ?? " ")
-        documentRef.updateData([
-            "storageSection": named
-        ])
-    }
-    func addExpirationDateToItem(db: Firestore, timeIntervalSince1970: TimeInterval) {
-        let documentRef = db.collection("storages").document(SharedValues.shared.foodStorageID ?? " ").collection("items").document(self.ownID ?? " ")
-        documentRef.updateData([
-            "timeExpires": timeIntervalSince1970
-        ])
-    }
     
     
     
-    func deleteItemFromStorage(db: Firestore, storageID: String) {
-        print(storageID)
-        let documentRef = db.collection("storages").document(SharedValues.shared.foodStorageID ?? " ").collection("items").document(self.ownID ?? " ")
-        documentRef.delete()
-    }
     
-    func deleteItemFromStorageFromSpecificStorageID(db: Firestore, storageID: String) {
-        let documentRef = db.collection("storages").document(storageID).collection("items").document(self.ownID ?? " ")
-        documentRef.delete()
-    }
     
-    func deleteItemFromList(db: Firestore, listID: String) {
-        let documentRef = db.collection("lists").document(listID).collection("items").document(self.ownID ?? " ")
-        documentRef.delete()
-    }
+    
+    
+    
 }
 
 
+// MARK: Sequence
 extension Sequence where Element == Item {
     func sortItemsForTableView(segment: FoodStorageType, searchText: String) -> [Item] {
         var returnSorted = self.filter({$0.storageSection == segment})
@@ -334,7 +345,7 @@ extension Sequence where Element == Item {
 }
 
 
-
+// MARK: QueryDocumentSnapshot
 extension QueryDocumentSnapshot {
     func getItem() -> Item {
         let systemItem = GenericItem(rawValue: self.get("systemItem") as? String ?? "other")

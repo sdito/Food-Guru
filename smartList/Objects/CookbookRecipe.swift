@@ -23,7 +23,8 @@ class CookbookRecipe: Object {
     
 
     func setUp(name: String, servings: RealmOptional<Int>, cookTime: RealmOptional<Int>, prepTime: RealmOptional<Int>, calories: RealmOptional<Int>, ingredients: List<String>, instructions: List<String>, notes: String?) {
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
+        
+//        print(Realm.Configuration.defaultConfiguration.fileURL!)
         self.name = name
         self.servings = servings
         self.cookTime = cookTime
@@ -44,11 +45,6 @@ class CookbookRecipe: Object {
         }
     }
     
-    
-    
-}
-
-extension CookbookRecipe {
     func write() {
         let realm = try! Realm()
         try! realm.write {
@@ -63,6 +59,8 @@ extension CookbookRecipe {
     }
     
     
+    // MARK: UI
+    // Used to set up the UI for when the recipe is in cookbook rather than a regular recipe
     func addButtonIngredientViewsTo(stackView: UIStackView, delegateVC: UIViewController) {
         for item in self.ingredients {
             let v = Bundle.main.loadNibNamed("ButtonIngredientView", owner: nil, options: nil)?.first as! ButtonIngredientView
@@ -72,6 +70,8 @@ extension CookbookRecipe {
             stackView.insertArrangedSubview(v, at: 1)
         }
     }
+    
+    // Used to set up the UI for when the recipe is in cookbook rather than a regular recipe
     func addInstructionsToInstructionStackView(stackView: UIStackView) {
         var counter = 1
         for item in self.instructions {
@@ -83,26 +83,3 @@ extension CookbookRecipe {
     }
     
 }
-
-
-
-//extension Array where Element: CookbookRecipe {
-//    func filterRecipes(from searches: [String]) -> [CookbookRecipe] {
-//        if searches.isEmpty {
-//            return self
-//        } else {
-//            var matchedRecipes: [CookbookRecipe] = []
-//            let correctedSearches = searches.map({"has_\($0)"})
-//            for recipe in self {
-//                for search in correctedSearches {
-//                    if recipe.systemItems.contains(search) {
-//                        matchedRecipes.append(recipe)
-//                        break
-//                    }
-//                }
-//            }
-//            return matchedRecipes
-//        }
-//        
-//    }
-//}

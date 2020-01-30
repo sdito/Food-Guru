@@ -73,7 +73,7 @@ class RecipeCell: UICollectionViewCell {
         }
         
     }
-    
+    // MARK: Button pressed
     @objc func favoriteButtonPressed() {
         let db = Firestore.firestore()
         let path = self.recipe?.imagePath ?? " "

@@ -12,29 +12,8 @@ import FirebaseAuth
 
 struct User {
     
-    static func writeNewUserDocumentIfApplicable(db: Firestore) {
-        if let uid = Auth.auth().currentUser?.uid {
-            let reference = db.collection("users").document(uid)
-            reference.getDocument { (documentSnapshot, error) in
-                if documentSnapshot?.exists == false {
-                    reference.setData([
-                        "uid": uid,
-                        "email": Auth.auth().currentUser?.email as Any,
-                        "name": Auth.auth().currentUser?.displayName as Any
-                    ])
-                }
-            }
-        }
-    }
     
-    static func setDisplayNameInFirebaseDocument(db: Firestore, displayName: String) {
-        if let uid = Auth.auth().currentUser?.uid {
-            let reference = db.collection("users").document(uid)
-            reference.updateData([
-                "name": displayName
-            ])
-        }
-    }
+    // MARK: Utility
     
     static func getNameFromUid(db: Firestore, uid: String, namereturned: @escaping (_ name: String?) -> Void) {
         var name: String?
@@ -43,99 +22,6 @@ struct User {
                 name = docSnapshot.get("name") as? String
             }
             namereturned(name)
-        }
-    }
-
-    
-    
-    static func editedGroupInfo(db: Firestore, initialEmails: [String], updatedEmails: [String], groupID: String, storageID: String) {
-        //first need to find out of the storage is part of a group
-        db.collection("storages").document(storageID).getDocument { (docSnapshot, error) in
-            if let doc = docSnapshot {
-                let isGroup = doc.get("isGroup") as? Bool
-                switch isGroup {
-                // STORAGE IS WITH THE GROUP
-                case true:
-                    // 1: update the group (email only)
-                    db.collection("groups").document(groupID).updateData([
-                        "emails": updatedEmails
-                    ])
-                    
-                    // 2: update the storage (emails and uid)
-                    db.collection("storages").document(storageID).updateData([
-                        "emails": updatedEmails
-                    ])
-                    
-                    var uids: [String] = []
-                    for person in updatedEmails {
-                        turnEmailToUid(db: db, email: person) { (uid) in
-                            uids.append(uid ?? " ")
-                            if uids.count == updatedEmails.count {
-                                db.collection("storages").document(storageID).updateData([
-                                    "shared" : uids
-                                ])
-                            }
-                        }
-                    }
-                    // 3: update each user
-                        // deleted users
-                    initialEmails.forEach { (email) in
-                        if !updatedEmails.contains(email) {
-                            print("need to delete: \(email)")
-                            turnEmailToUid(db: db, email: email) { (uid) in
-                                db.collection("users").document(uid ?? " ").updateData([
-                                    "storageID": FieldValue.delete(),
-                                    "groupID": FieldValue.delete()
-                                ])
-                            }
-                        }
-                    }
-                    
-                        // new users
-                    updatedEmails.forEach { (email) in
-                        if !initialEmails.contains(email) {
-                            print("need to add: \(email)")
-                            turnEmailToUid(db: db, email: email) { (uid) in
-                                db.collection("users").document(uid ?? " ").updateData([
-                                    "storageID": storageID,
-                                    "groupID": groupID
-                                ])
-                            }
-                        }
-                    }
-                // STORAGE IS NOT WITH THE GROUP
-                case false:
-                    // works for adding
-                    updatedEmails.forEach { (email) in
-                        if !initialEmails.contains(email) {
-                            print("need to add: \(email)")
-                            turnEmailToUid(db: db, email: email) { (uid) in
-                                db.collection("users").document(uid ?? " ").updateData([
-                                    "groupID": groupID
-                                ])
-                            }
-                        }
-                    }
-                    
-                    initialEmails.forEach { (email) in
-                        if !updatedEmails.contains(email) {
-                            print("need to delete: \(email)")
-                            turnEmailToUid(db: db, email: email) { (uid) in
-                                db.collection("users").document(uid ?? " ").updateData([
-                                    "groupID": FieldValue.delete()
-                                ])
-                            }
-                        }
-                    }
-                    
-                    db.collection("groups").document(groupID).updateData([
-                        "emails": updatedEmails
-                    ])
-                    
-                default:
-                    return
-                }
-            }
         }
     }
     
@@ -194,6 +80,61 @@ struct User {
             emailCheckReturned(emailCheck)
         }
     }
+    
+    static func resetSharedValues() {
+        SharedValues.shared.listIdentifier = nil
+        SharedValues.shared.userID = nil
+        SharedValues.shared.recipeType = nil
+        SharedValues.shared.cuisineType = nil
+        SharedValues.shared.currText = nil
+        SharedValues.shared.groupID = nil
+        SharedValues.shared.groupEmails = nil
+        SharedValues.shared.groupDate = nil
+        SharedValues.shared.foodStorageEmails = nil
+        SharedValues.shared.savedRecipes = nil
+        SharedValues.shared.foodStorageID = nil
+        SharedValues.shared.sentRecipesInfo = nil
+        SharedValues.shared.currentItemsInStorage = nil
+        SharedValues.shared.newUsername = nil
+        SharedValues.shared.previouslyViewedRecipes = nil
+        SharedValues.shared.isStorageWithGroup = nil
+    }
+    
+    // MARK: Individual
+    
+    static func writeNewUserDocumentIfApplicable(db: Firestore) {
+        if let uid = Auth.auth().currentUser?.uid {
+            let reference = db.collection("users").document(uid)
+            reference.getDocument { (documentSnapshot, error) in
+                if documentSnapshot?.exists == false {
+                    reference.setData([
+                        "uid": uid,
+                        "email": Auth.auth().currentUser?.email as Any,
+                        "name": Auth.auth().currentUser?.displayName as Any
+                    ])
+                }
+            }
+        }
+    }
+    
+    static func setDisplayNameInFirebaseDocument(db: Firestore, displayName: String) {
+        if let uid = Auth.auth().currentUser?.uid {
+            let reference = db.collection("users").document(uid)
+            reference.updateData([
+                "name": displayName
+            ])
+        }
+    }
+    
+    static func writeAnonymousUser(db: Firestore, userID: String) {
+        let reference = db.collection("users").document(userID)
+        reference.setData([
+            "uid": userID
+        ])
+        
+    }
+    
+    // MARK: Group
     
     static func writeGroupToFirestoreAndAddToUsers(db: Firestore, emails: [String]) {
         // write the group to firestore first
@@ -316,33 +257,97 @@ struct User {
         }
     }
     
-    static func writeAnonymousUser(db: Firestore, userID: String) {
-        let reference = db.collection("users").document(userID)
-        reference.setData([
-            "uid": userID
-        ])
-        
+    static func editedGroupInfo(db: Firestore, initialEmails: [String], updatedEmails: [String], groupID: String, storageID: String) {
+        //first need to find out of the storage is part of a group
+        db.collection("storages").document(storageID).getDocument { (docSnapshot, error) in
+            if let doc = docSnapshot {
+                let isGroup = doc.get("isGroup") as? Bool
+                switch isGroup {
+                // STORAGE IS WITH THE GROUP
+                case true:
+                    // 1: update the group (email only)
+                    db.collection("groups").document(groupID).updateData([
+                        "emails": updatedEmails
+                    ])
+                    
+                    // 2: update the storage (emails and uid)
+                    db.collection("storages").document(storageID).updateData([
+                        "emails": updatedEmails
+                    ])
+                    
+                    var uids: [String] = []
+                    for person in updatedEmails {
+                        turnEmailToUid(db: db, email: person) { (uid) in
+                            uids.append(uid ?? " ")
+                            if uids.count == updatedEmails.count {
+                                db.collection("storages").document(storageID).updateData([
+                                    "shared" : uids
+                                ])
+                            }
+                        }
+                    }
+                    // 3: update each user
+                        // deleted users
+                    initialEmails.forEach { (email) in
+                        if !updatedEmails.contains(email) {
+                            print("need to delete: \(email)")
+                            turnEmailToUid(db: db, email: email) { (uid) in
+                                db.collection("users").document(uid ?? " ").updateData([
+                                    "storageID": FieldValue.delete(),
+                                    "groupID": FieldValue.delete()
+                                ])
+                            }
+                        }
+                    }
+                    
+                        // new users
+                    updatedEmails.forEach { (email) in
+                        if !initialEmails.contains(email) {
+                            print("need to add: \(email)")
+                            turnEmailToUid(db: db, email: email) { (uid) in
+                                db.collection("users").document(uid ?? " ").updateData([
+                                    "storageID": storageID,
+                                    "groupID": groupID
+                                ])
+                            }
+                        }
+                    }
+                // STORAGE IS NOT WITH THE GROUP
+                case false:
+                    // works for adding
+                    updatedEmails.forEach { (email) in
+                        if !initialEmails.contains(email) {
+                            print("need to add: \(email)")
+                            turnEmailToUid(db: db, email: email) { (uid) in
+                                db.collection("users").document(uid ?? " ").updateData([
+                                    "groupID": groupID
+                                ])
+                            }
+                        }
+                    }
+                    
+                    initialEmails.forEach { (email) in
+                        if !updatedEmails.contains(email) {
+                            print("need to delete: \(email)")
+                            turnEmailToUid(db: db, email: email) { (uid) in
+                                db.collection("users").document(uid ?? " ").updateData([
+                                    "groupID": FieldValue.delete()
+                                ])
+                            }
+                        }
+                    }
+                    
+                    db.collection("groups").document(groupID).updateData([
+                        "emails": updatedEmails
+                    ])
+                    
+                default:
+                    return
+                }
+            }
+        }
     }
     
-    static func resetSharedValues() {
-        SharedValues.shared.listIdentifier = nil
-        SharedValues.shared.userID = nil
-        SharedValues.shared.recipeType = nil
-        SharedValues.shared.cuisineType = nil
-        SharedValues.shared.currText = nil
-        SharedValues.shared.groupID = nil
-        SharedValues.shared.groupEmails = nil
-        SharedValues.shared.groupDate = nil
-        SharedValues.shared.foodStorageEmails = nil
-        SharedValues.shared.savedRecipes = nil
-        SharedValues.shared.foodStorageID = nil
-        SharedValues.shared.sentRecipesInfo = nil
-        SharedValues.shared.currentItemsInStorage = nil
-        SharedValues.shared.newUsername = nil
-        SharedValues.shared.previouslyViewedRecipes = nil
-        SharedValues.shared.isStorageWithGroup = nil
-    }
-    
-    
+
     
 }

@@ -118,7 +118,7 @@ class RecipeHomeVC: UIViewController {
             collectionView?.reloadData()
         }
     }
-    
+    // MARK: override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.dataSource = self
@@ -178,7 +178,7 @@ class RecipeHomeVC: UIViewController {
     }
     
    
-    
+    // MARK: @IBAction funcs
     @IBAction func createRecipePressed(_ sender: Any) {
         if SharedValues.shared.anonymousUser == false {
             performSegue(withIdentifier: "toCreateRecipe", sender: nil)
@@ -217,7 +217,7 @@ class RecipeHomeVC: UIViewController {
     @IBAction func goToCookbook(_ sender: Any) {
         tabBarController?.selectedIndex = 1
     }
-    
+    // MARK: functions
     private func handleNeedingMoreRecipes() {
         
         Recipe.getPuppyRecipesFromSearches(activeSearches: self.activeSearches, expiringItems: expiringItems) { (puppyRecipes) in
@@ -345,7 +345,7 @@ class RecipeHomeVC: UIViewController {
 }
 
 
-
+// MARK: RecipesFoundFromSearchingDelegate
 extension RecipeHomeVC: RecipesFoundFromSearchingDelegate {
     func recipesFound(ingredients: [String]) {
         self.imageCache.removeAllObjects()
@@ -354,13 +354,14 @@ extension RecipeHomeVC: RecipesFoundFromSearchingDelegate {
     }
 }
 
+// MARK: CurrentSearchesDelegate
 extension RecipeHomeVC: CurrentSearchesViewDelegate {
     func buttonPressedToDeleteSearch(index: Int) {
         activeSearches.remove(at: index)
     }
 }
 
-
+// MARK: DynamicHeightLayoutDelegate
 extension RecipeHomeVC: DynamicHeightLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForTextAtIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
         let minForDescription = heightForText("str", width: CGFloat(MAXFLOAT), font: UIFont(name: "futura", size: 13)!) * 5.0
@@ -386,7 +387,7 @@ extension RecipeHomeVC: DynamicHeightLayoutDelegate {
     }
 }
 
-
+// MARK: Collection view
 extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -512,6 +513,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
 }
 
+// MARK: Search bar
 extension RecipeHomeVC: UISearchBarDelegate {
     @objc func keyboardDismissed() {
         searchBar.endEditing(true)

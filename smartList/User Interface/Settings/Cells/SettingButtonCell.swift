@@ -8,6 +8,7 @@
 
 import UIKit
 
+// Not just used in settings related VCs
 class SettingButtonCell: UITableViewCell {
 
     override func awakeFromNib() {

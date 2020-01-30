@@ -42,7 +42,7 @@ class GiveRatingView: UIView {
         imageSelectOutlet.clipsToBounds = true
     }
     
-    
+    // MARK: @IBAction funcs
     @IBAction func tapped(_ sender: UIButton) {
         ratingButton.isUserInteractionEnabled = true
         rating = sender.tag
@@ -77,7 +77,7 @@ class GiveRatingView: UIView {
         }
         
     }
-    
+    // MARK: functions
     private func cameraOption() {
         print("Camera option")
         imagePicker.sourceType = .camera
@@ -103,7 +103,7 @@ class GiveRatingView: UIView {
     }
     
 }
-
+// MARK: Picker controller
 extension GiveRatingView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if picker == imagePicker {
@@ -124,7 +124,7 @@ extension GiveRatingView: UIImagePickerControllerDelegate, UINavigationControlle
     }
 }
 
-
+// MARK: Text view
 extension GiveRatingView: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.alpha = 1.0

@@ -51,7 +51,7 @@ class CreateRecipeVC: UIViewController {
             recipeDescriptionOutlet.setTitle(self.recipeType?.joined(separator: ", "), for: .normal)
         }
     }
-    
+    // MARK: Override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
@@ -118,7 +118,7 @@ class CreateRecipeVC: UIViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
-    
+    // MARK: @IBAction funcs
     @IBAction func linkToRecipe(_ sender: Any) {
         urlView.isHidden = !urlView.isHidden
     }
@@ -224,7 +224,7 @@ class CreateRecipeVC: UIViewController {
     @IBAction func selectDescriptions(_ sender: Any) {
         pushToPopUp()
     }
-    
+    // MARK: functions
     private func createObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(recipeDataReceivedFromURL), name: .recipeDataFromURLReceived, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(noRecipeFound), name: .recipeNotFoundFromURLalert, object: nil)
@@ -269,7 +269,6 @@ class CreateRecipeVC: UIViewController {
                 let difference = keyboardPosition - viewPosition
                 print("Need to move: \(difference)")
                 #warning("need to scroll down the scroll view by the difference here")
-//                scrollView.scrollRectToVisible(<#T##rect: CGRect##CGRect#>, animated: true)
             }
         }
     }
@@ -424,7 +423,7 @@ class CreateRecipeVC: UIViewController {
 
 
 
-
+// MARK: Text field
 extension CreateRecipeVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == nameTextField {
@@ -459,7 +458,7 @@ extension CreateRecipeVC: UITextFieldDelegate {
     }
 }
 
-
+// MARK: Text view
 extension CreateRecipeVC: UITextViewDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         SharedValues.shared.currText = textView
@@ -483,7 +482,7 @@ extension CreateRecipeVC: UITextViewDelegate {
 }
 
 
-
+// MARK: Picker controller
 extension CreateRecipeVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if picker == imagePicker {

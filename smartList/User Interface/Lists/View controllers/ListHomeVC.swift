@@ -58,14 +58,14 @@ class ListHomeVC: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+    // MARK: @IBAction funcs
     @IBAction func setUpList(_ sender: Any) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "setUpList") as! SetUpListVC
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
 
     }
-    
+    // MARK: functions
     private func createObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(observerSelectorGroupID), name: .groupIDchanged, object: nil)
     }
@@ -76,6 +76,8 @@ class ListHomeVC: UIViewController {
     }
     
 }
+
+// MARK: Table view
 extension ListHomeVC: UITableViewDataSource, UITableViewDelegate {
     func createEmptyListCells() -> [UITableViewCell] {
         let one = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell

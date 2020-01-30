@@ -55,7 +55,7 @@ class SelectRecipeTypeVC: UIViewController {
         searchBar.resignFirstResponder()
         
     }
-    
+    // MARK: @IBAction funcs
     @IBAction func exit(_ sender: Any) {
         // collect the RecipeType and CuisineType from storyboard here before removeFromSuperview -- should be in enum type
         if cuisineType != nil && recipeType.isEmpty == false && cuisineType != " - " {
@@ -78,7 +78,7 @@ class SelectRecipeTypeVC: UIViewController {
 
     
 }
-
+// MARK: Search bar
 extension SelectRecipeTypeVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         allTypes = RecipeType.allItems
@@ -90,7 +90,7 @@ extension SelectRecipeTypeVC: UISearchBarDelegate {
         searchBar.resignFirstResponder()
     }
 }
-
+// MARK: Picker view
 extension SelectRecipeTypeVC: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -114,7 +114,7 @@ extension SelectRecipeTypeVC: UIPickerViewDelegate, UIPickerViewDataSource {
         cuisineType = CuisineType.allItems[row]
     }
 }
-
+// MARK: Table view
 extension SelectRecipeTypeVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return allTypes.count

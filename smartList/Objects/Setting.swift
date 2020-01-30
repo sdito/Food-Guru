@@ -46,7 +46,7 @@ struct Setting {
     
     
 }
-
+// MARK: Setting.SettingName
 extension Setting.SettingName {
     func description() -> String {
         switch self {

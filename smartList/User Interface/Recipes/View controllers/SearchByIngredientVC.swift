@@ -55,7 +55,7 @@ class SearchByIngredientVC: UIViewController {
             tableView.reloadData()
         }
     }
-    
+    // MARK: override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
@@ -77,7 +77,7 @@ class SearchByIngredientVC: UIViewController {
         newItemButtonOutlet.shadowAndRounded(cornerRadius: 10, border: false)
     }
     
-    
+    // MARK: @IBAction funcs
     @IBAction func buttonAction(_ sender: Any) {
         let ingredients = selectedItems.map { (itm) -> GenericItem in
             itm.systemItem!
@@ -114,7 +114,7 @@ class SearchByIngredientVC: UIViewController {
         vc.delegate = self
         delegate = vc
     }
-    
+    // MARK: functions
     @objc private func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
@@ -123,7 +123,7 @@ class SearchByIngredientVC: UIViewController {
     }
     
 }
-
+// MARK: CreateNewItemDelegate
 extension SearchByIngredientVC: CreateNewItemDelegate {
     func itemCreated(item: Item) {
         possibleItems.append(item)
@@ -140,7 +140,7 @@ extension SearchByIngredientVC: CreateNewItemDelegate {
         //tableView.selectRow(at: IndexPath(row: possibleItems.count - 1, section: 0), animated: false, scrollPosition: .none)
     }
 }
-
+// MARK: Search bar
 extension SearchByIngredientVC: UISearchBarDelegate {
     @objc private func cancelSelector() {
         searchBar.endEditing(true)
@@ -179,7 +179,7 @@ extension SearchByIngredientVC: UISearchBarDelegate {
         
     }
 }
-
+// MARK: Table view
 extension SearchByIngredientVC: UITableViewDataSource, UITableViewDelegate {
     private func handleCellSelection(indexPathRow: Int) {
         if selectedItems.contains(possibleItems[indexPathRow]) {

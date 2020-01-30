@@ -43,7 +43,7 @@ class EditItemInfoView: UIView {
         }
     }
     
-    
+    // MARK: @IBAction funcs
     @IBAction func donePressed(_ sender: Any) {
         if forCategory == true {
 //            #error("need to get this to the enum text representation")
@@ -68,7 +68,7 @@ class EditItemInfoView: UIView {
 }
 
 
-
+// MARK: Picker view
 extension EditItemInfoView: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1

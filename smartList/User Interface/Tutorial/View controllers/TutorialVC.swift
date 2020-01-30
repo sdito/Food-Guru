@@ -34,7 +34,7 @@ class TutorialVC: UIPageViewController {
                 self.newVc(viewController: "End")
         ]
     }()
-    
+    // MARK: functions
     private func newVc(viewController: String) -> UIViewController {
         return UIStoryboard(name: "Tutorial", bundle: nil).instantiateViewController(withIdentifier: viewController)
     }
@@ -79,7 +79,7 @@ class TutorialVC: UIPageViewController {
 }
 
 
-
+// MARK: Page view controller
 extension TutorialVC: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = pages.firstIndex(of: viewController) else { return nil }

@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+// Not just used in settings related VCs
 class SettingBasicCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     

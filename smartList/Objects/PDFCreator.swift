@@ -29,7 +29,7 @@ class PDFCreator: NSObject {
     func createPDF() -> Data {
         let pdfMetaData = [
             kCGPDFContextCreator: "Recipe PDF",
-            kCGPDFContextAuthor: "Steven Dito",
+            kCGPDFContextAuthor: "Food Guru",
             kCGPDFContextTitle: title
         ]
         let format = UIGraphicsPDFRendererFormat()
@@ -38,20 +38,22 @@ class PDFCreator: NSObject {
         let pageHeight = 11 * 72.0
         let pageRect = CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight)
         let renderer = UIGraphicsPDFRenderer(bounds: pageRect, format: format)
+        
+        // need to take the ending location of the previous section in order to know where to layout the next section
         let data = renderer.pdfData { (context) in
             context.beginPage()
-            let titleBottom = addTitle(pageRect: pageRect)
-            let ingredientsBottom = addSectionTitle(pageRect: pageRect, sectionTitle: "Ingredients", textTop: titleBottom + 18.0)
-            let ingredientSectionBottom = addBodyText(pageRect: pageRect, textTop: ingredientsBottom + 9.0, text: ingredients, ingredients: true)
-            let instructionsBottom = addSectionTitle(pageRect: pageRect, sectionTitle: "Instructions", textTop: ingredientSectionBottom + 18.0)
-            _ = addBodyText(pageRect: pageRect, textTop: instructionsBottom + 9.0, text: instructions, ingredients: false)
-            addLogo(pageRect: pageRect, image: UIImage(named: "__logoOpposite")!)
+            let titleBottom = addTitleToPDF(pageRect: pageRect)
+            let ingredientsBottom = addSectionTitleToPDF(pageRect: pageRect, sectionTitle: "Ingredients", textTop: titleBottom + 18.0)
+            let ingredientSectionBottom = addBodyTextToPDF(pageRect: pageRect, textTop: ingredientsBottom + 9.0, text: ingredients, ingredients: true)
+            let instructionsBottom = addSectionTitleToPDF(pageRect: pageRect, sectionTitle: "Instructions", textTop: ingredientSectionBottom + 18.0)
+            _ = addBodyTextToPDF(pageRect: pageRect, textTop: instructionsBottom + 9.0, text: instructions, ingredients: false)
+            addLogoToPDF(pageRect: pageRect, image: UIImage(named: "__logoOpposite")!)
         }
 
       return data
     }
     
-    func addSectionTitle(pageRect: CGRect, sectionTitle: String, textTop: CGFloat) -> CGFloat {
+    func addSectionTitleToPDF(pageRect: CGRect, sectionTitle: String, textTop: CGFloat) -> CGFloat {
         let font = UIFont(name: "futura", size: 15)
         let attributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: font!]
         let attributedTitle = NSAttributedString(string: sectionTitle, attributes: attributes)
@@ -67,7 +69,7 @@ class PDFCreator: NSObject {
         return titleStringRect.origin.y + titleStringRect.size.height
     }
     
-    func addTitle(pageRect: CGRect) -> CGFloat {
+    func addTitleToPDF(pageRect: CGRect) -> CGFloat {
         let titleFont = UIFont(name: "futura", size: 18)
         let titleAttributes: [NSAttributedString.Key: Any] = [NSAttributedString.Key.font: titleFont!]
         let attributedTitle = NSAttributedString(string: title, attributes: titleAttributes)
@@ -82,13 +84,14 @@ class PDFCreator: NSObject {
         return titleStringRect.origin.y + titleStringRect.size.height
     }
     
-    func addLogo(pageRect: CGRect, image: UIImage) {
+    func addLogoToPDF(pageRect: CGRect, image: UIImage) {
         let imageRect = CGRect(x: pageRect.width - 30 - 40, y: 30, width: 40, height: 40)
         
         image.draw(in: imageRect)
     }
     
-    func addBodyText(pageRect: CGRect, textTop: CGFloat, text: [String], ingredients: Bool) -> CGFloat {
+    // set up so this will work for both ingredients and instructions
+    func addBodyTextToPDF(pageRect: CGRect, textTop: CGFloat, text: [String], ingredients: Bool) -> CGFloat {
         
         let textFont = UIFont(name: "futura", size: 12)
         let paragraphStyle = NSMutableParagraphStyle()
