@@ -75,6 +75,8 @@
 		E291CBFE23C9BA1B00F0FF56 /* SuggestTutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E291CBFD23C9BA1B00F0FF56 /* SuggestTutorialView.xib */; };
 		E291CC0023C9BA3100F0FF56 /* SuggestTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E291CBFF23C9BA3100F0FF56 /* SuggestTutorialView.swift */; };
 		E29BB2C423D172C1000BD145 /* Int-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29BB2C323D172C1000BD145 /* Int-Extension.swift */; };
+		E29FDE1023E554CF005CE08B /* CalendarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29FDE0F23E554CF005CE08B /* CalendarView.xib */; };
+		E29FDE1223E554E1005CE08B /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E29FDE1123E554E1005CE08B /* CalendarView.swift */; };
 		E2A26C3C234D7A0200D954C0 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A26C3B234D7A0200D954C0 /* Category.swift */; };
 		E2A26C3E234D953700D954C0 /* GenericItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A26C3D234D953700D954C0 /* GenericItem.swift */; };
 		E2A54E1D2318553400BEBF39 /* InstructionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2A54E1B2318553300BEBF39 /* InstructionView.xib */; };
@@ -228,6 +230,8 @@
 		E291CBFD23C9BA1B00F0FF56 /* SuggestTutorialView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SuggestTutorialView.xib; sourceTree = "<group>"; };
 		E291CBFF23C9BA3100F0FF56 /* SuggestTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestTutorialView.swift; sourceTree = "<group>"; };
 		E29BB2C323D172C1000BD145 /* Int-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int-Extension.swift"; sourceTree = "<group>"; };
+		E29FDE0F23E554CF005CE08B /* CalendarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarView.xib; sourceTree = "<group>"; };
+		E29FDE1123E554E1005CE08B /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		E2A26C3B234D7A0200D954C0 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		E2A26C3D234D953700D954C0 /* GenericItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericItem.swift; sourceTree = "<group>"; };
 		E2A54E1B2318553300BEBF39 /* InstructionView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstructionView.xib; sourceTree = "<group>"; };
@@ -582,6 +586,7 @@
 			children = (
 				E28A4CC423DE840D00C94DF9 /* MealPlanner.storyboard */,
 				E28A4CC823DE842400C94DF9 /* View controllers */,
+				E29FDE1323E554E5005CE08B /* CalendarView */,
 			);
 			path = "Meal planner";
 			sourceTree = "<group>";
@@ -600,6 +605,15 @@
 				E28A4CD023DEB64700C94DF9 /* Meal planner */,
 			);
 			path = "User Interface";
+			sourceTree = "<group>";
+		};
+		E29FDE1323E554E5005CE08B /* CalendarView */ = {
+			isa = PBXGroup;
+			children = (
+				E29FDE0F23E554CF005CE08B /* CalendarView.xib */,
+				E29FDE1123E554E1005CE08B /* CalendarView.swift */,
+			);
+			path = CalendarView;
 			sourceTree = "<group>";
 		};
 		E2A54E1F23186DEB00BEBF39 /* InstructionView */ = {
@@ -932,6 +946,7 @@
 				E291CBFE23C9BA1B00F0FF56 /* SuggestTutorialView.xib in Resources */,
 				E28A4CBF23DE818100C94DF9 /* Recipes.storyboard in Resources */,
 				E28A4CBD23DE817800C94DF9 /* Lists.storyboard in Resources */,
+				E29FDE1023E554CF005CE08B /* CalendarView.xib in Resources */,
 				E2E980CE238E3A5600FAD549 /* ReviewImagesView.xib in Resources */,
 				E2DC0F2723B1DF920094FDB2 /* EditItemInfoView.xib in Resources */,
 				E2DA80D02349BB6100BD7101 /* GiveRatingView.xib in Resources */,
@@ -1128,6 +1143,7 @@
 				E2445CF22321D8F90089582F /* RecipeHomeVC.swift in Sources */,
 				E2E940DE23DEB9FD009C4BED /* SettingsDetailVC.swift in Sources */,
 				E20F2AD823258A4B00CD907A /* StorageCell.swift in Sources */,
+				E29FDE1223E554E1005CE08B /* CalendarView.swift in Sources */,
 				E2C5EC3D239A0B280030E3CD /* InitialLogInVC.swift in Sources */,
 				E2C5EC3B239A0A4B0030E3CD /* SignInVC.swift in Sources */,
 				E2EB7FBE22FF5ACF003948A6 /* SharedValues.swift in Sources */,

@@ -16,28 +16,58 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="gia-SY-1wr">
-                                <rect key="frame" x="10" y="98" width="394" height="705"/>
-                                <mutableString key="text">Need to have a calendar here, decide if that should be a traditional calendar style or one in a table view. When the user selects the row/day, have it push to the scheduled meals for that day. This planner should be shared with the user's group, and the recipes &amp; dates could either just be stored in the group document with the recipe ID and name, and only pull the data once a user selects it. Could handle cookbook recipes (since they're only on one device) by creating a new collection in firestore to store transferred cookbook recipes in planner</mutableString>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="27"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hHr-jE-GA5">
+                                <rect key="frame" x="0.0" y="502.5" width="414" height="310.5"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDK-Ns-Gu9">
+                                <rect key="frame" x="0.0" y="88" width="414" height="406.5"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="WNy-1t-7fT">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="406.5"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Khd-Oh-Mz1">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="406.5"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="WNy-1t-7fT" firstAttribute="leading" secondItem="eDK-Ns-Gu9" secondAttribute="leading" id="6jg-zX-3U4"/>
+                                    <constraint firstItem="Khd-Oh-Mz1" firstAttribute="width" secondItem="eDK-Ns-Gu9" secondAttribute="width" id="JwA-zP-G1G"/>
+                                    <constraint firstItem="WNy-1t-7fT" firstAttribute="top" secondItem="eDK-Ns-Gu9" secondAttribute="top" id="TD0-J6-Dpl"/>
+                                    <constraint firstAttribute="trailing" secondItem="WNy-1t-7fT" secondAttribute="trailing" id="vbd-4J-ImT"/>
+                                    <constraint firstItem="Khd-Oh-Mz1" firstAttribute="height" secondItem="eDK-Ns-Gu9" secondAttribute="height" id="yaL-r6-j7d"/>
+                                    <constraint firstAttribute="bottom" secondItem="WNy-1t-7fT" secondAttribute="bottom" id="z6g-sz-qUy"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="sGR-kr-huM"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="mXp-jH-isN"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="gia-SY-1wr" firstAttribute="leading" secondItem="Kxp-qA-AEX" secondAttribute="leading" constant="10" id="0KI-Js-tsR"/>
-                            <constraint firstItem="Kxp-qA-AEX" firstAttribute="trailing" secondItem="gia-SY-1wr" secondAttribute="trailing" constant="10" id="2jh-Cm-5MQ"/>
-                            <constraint firstItem="gia-SY-1wr" firstAttribute="top" secondItem="Kxp-qA-AEX" secondAttribute="top" constant="10" id="O4V-uV-njh"/>
-                            <constraint firstItem="Kxp-qA-AEX" firstAttribute="bottom" secondItem="gia-SY-1wr" secondAttribute="bottom" constant="10" id="yBa-h5-Y8P"/>
+                            <constraint firstItem="hHr-jE-GA5" firstAttribute="leading" secondItem="Kxp-qA-AEX" secondAttribute="leading" id="0sB-ii-qlT"/>
+                            <constraint firstItem="eDK-Ns-Gu9" firstAttribute="top" secondItem="Kxp-qA-AEX" secondAttribute="top" id="5Cp-Am-xjG"/>
+                            <constraint firstItem="hHr-jE-GA5" firstAttribute="height" secondItem="Kxp-qA-AEX" secondAttribute="height" multiplier="3:7" id="Age-wo-n0C"/>
+                            <constraint firstItem="Kxp-qA-AEX" firstAttribute="trailing" secondItem="hHr-jE-GA5" secondAttribute="trailing" id="Fku-zT-SRo"/>
+                            <constraint firstItem="eDK-Ns-Gu9" firstAttribute="leading" secondItem="Kxp-qA-AEX" secondAttribute="leading" id="Phs-ev-ooa"/>
+                            <constraint firstItem="eDK-Ns-Gu9" firstAttribute="trailing" secondItem="Kxp-qA-AEX" secondAttribute="trailing" id="qzs-1S-oW3"/>
+                            <constraint firstItem="Kxp-qA-AEX" firstAttribute="bottom" secondItem="hHr-jE-GA5" secondAttribute="bottom" id="tjY-SN-aSf"/>
+                            <constraint firstItem="hHr-jE-GA5" firstAttribute="top" secondItem="eDK-Ns-Gu9" secondAttribute="bottom" constant="8" symbolic="YES" id="yze-im-7Jb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Kxp-qA-AEX"/>
                     </view>
                     <navigationItem key="navigationItem" id="9nU-z8-PDE"/>
+                    <connections>
+                        <outlet property="baseView" destination="Khd-Oh-Mz1" id="IC5-ME-tcm"/>
+                        <outlet property="calendarStackView" destination="WNy-1t-7fT" id="n9V-na-50I"/>
+                        <outlet property="scrollView" destination="eDK-Ns-Gu9" id="bh7-pY-w6R"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="unp-bn-axB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1133" y="-410"/>
+            <point key="canvasLocation" x="1131.8840579710145" y="-410.49107142857139"/>
         </scene>
         <!--Planner-->
         <scene sceneID="24a-OP-aen">
