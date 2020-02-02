@@ -22,19 +22,22 @@ class MealPlannerHomeVC: UIViewController {
         
         let view = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
         let view2 = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
+        let view3 = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
         
         calendarStackView.addArrangedSubview(view)
         calendarStackView.addArrangedSubview(view2)
+        calendarStackView.addArrangedSubview(view3)
         
         view.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 1.0).isActive = true
         view.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1.0).isActive = true
         
-        view.setUI(monthsInFuture: 0)
-        view2.setUI(monthsInFuture: 1)
-        
-        
+        view.setUI(monthsInFuture: -1)
+        view2.setUI(monthsInFuture: 0)
+        view3.setUI(monthsInFuture: 1)
         
         baseView.removeFromSuperview()
+        
+        
     }
     
     

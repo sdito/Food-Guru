@@ -127,6 +127,8 @@
 		E2E980CE238E3A5600FAD549 /* ReviewImagesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E980CD238E3A5600FAD549 /* ReviewImagesView.xib */; };
 		E2E980D0238E3A6D00FAD549 /* ReviewImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E980CF238E3A6D00FAD549 /* ReviewImagesView.swift */; };
 		E2EA019C2370E27300DD55C9 /* CookbookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EA019B2370E27300DD55C9 /* CookbookCell.swift */; };
+		E2EAE38623E6350A001EDD72 /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EAE38523E6350A001EDD72 /* Calendar-Extension.swift */; };
+		E2EAE38823E63656001EDD72 /* MealPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EAE38723E63656001EDD72 /* MealPlanner.swift */; };
 		E2EB7FBE22FF5ACF003948A6 /* SharedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB7FBD22FF5ACF003948A6 /* SharedValues.swift */; };
 		E2EB7FC022FFAD7C003948A6 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB7FBF22FFAD7C003948A6 /* ItemCell.swift */; };
 		E2EB7FC322FFB29A003948A6 /* String-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB7FC222FFB29A003948A6 /* String-Extension.swift */; };
@@ -282,6 +284,8 @@
 		E2E980CD238E3A5600FAD549 /* ReviewImagesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReviewImagesView.xib; sourceTree = "<group>"; };
 		E2E980CF238E3A6D00FAD549 /* ReviewImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewImagesView.swift; sourceTree = "<group>"; };
 		E2EA019B2370E27300DD55C9 /* CookbookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookbookCell.swift; sourceTree = "<group>"; };
+		E2EAE38523E6350A001EDD72 /* Calendar-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar-Extension.swift"; sourceTree = "<group>"; };
+		E2EAE38723E63656001EDD72 /* MealPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlanner.swift; sourceTree = "<group>"; };
 		E2EB7FBD22FF5ACF003948A6 /* SharedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedValues.swift; sourceTree = "<group>"; };
 		E2EB7FBF22FFAD7C003948A6 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		E2EB7FC222FFB29A003948A6 /* String-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Extension.swift"; sourceTree = "<group>"; };
@@ -637,6 +641,7 @@
 		E2B4695522F79748006BA77D /* Objects */ = {
 			isa = PBXGroup;
 			children = (
+				E2EAE38723E63656001EDD72 /* MealPlanner.swift */,
 				E2A97669236FFF8000BF039F /* CookbookRecipe.swift */,
 				E2B4695922F7F485006BA77D /* Colors.swift */,
 				E2E6A19A2326FF6A00477AB1 /* FoodStorage.swift */,
@@ -656,6 +661,7 @@
 		E2B4695822F7F19C006BA77D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				E2EAE38523E6350A001EDD72 /* Calendar-Extension.swift */,
 				E29BB2C323D172C1000BD145 /* Int-Extension.swift */,
 				E2B68D6C232EBD92006A3B58 /* Notification.Name-Extension.swift */,
 				E2EB7FC222FFB29A003948A6 /* String-Extension.swift */,
@@ -1177,9 +1183,11 @@
 				E2149CF7235ADCAB002BF2D0 /* CreateNewItemVC.swift in Sources */,
 				E20BC6E2232AE13300F1E5E7 /* UIStackView-Extension.swift in Sources */,
 				E2DC0F2923B1DFA60094FDB2 /* EditItemInfoView.swift in Sources */,
+				E2EAE38823E63656001EDD72 /* MealPlanner.swift in Sources */,
 				E2B6273323C278AC0039459B /* OneTutorialVC.swift in Sources */,
 				E20BC6D1232752A600F1E5E7 /* Setting.swift in Sources */,
 				E2B68D6D232EBD92006A3B58 /* Notification.Name-Extension.swift in Sources */,
+				E2EAE38623E6350A001EDD72 /* Calendar-Extension.swift in Sources */,
 				E25F071723146CC600E6738E /* RecipeType.swift in Sources */,
 				E2A9766A236FFF8000BF039F /* CookbookRecipe.swift in Sources */,
 				E2A8A635234CF75400A676FA /* Search.swift in Sources */,
