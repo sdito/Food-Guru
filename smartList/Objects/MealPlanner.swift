@@ -15,8 +15,10 @@ class MealPlanner {
     
     
     
-    // MARK: UI
     
+    
+    
+    // MARK: UI
     // To get the int value for the first day of the example month from the specific day and weekday from a selected date
     class func getWeekdayForFirstDay(dayNumber: Int, weekday: Int) -> Int {
         guard dayNumber > 7 else { return 1 + (((weekday + 7) - dayNumber) % 7) }

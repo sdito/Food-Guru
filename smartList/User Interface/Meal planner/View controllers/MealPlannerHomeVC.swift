@@ -10,11 +10,12 @@ import UIKit
 import Foundation
 
 
-class MealPlannerHomeVC: UIViewController {
+class MealPlannerHomeVC: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var calendarStackView: UIStackView!
     @IBOutlet weak var baseView: UIView!
+    @IBOutlet weak var selectedDayLabel: UILabel!
     
     
     override func viewDidLoad() {
@@ -28,15 +29,24 @@ class MealPlannerHomeVC: UIViewController {
         calendarStackView.addArrangedSubview(view2)
         calendarStackView.addArrangedSubview(view3)
         
-        view.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 1.0).isActive = true
-        view.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1.0).isActive = true
+        view.delegate = self
+        view2.delegate = self
+        view3.delegate = self
+        
+        view2.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 1.0).isActive = true
+        view2.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1.0).isActive = true
         
         view.setUI(monthsInFuture: -1)
         view2.setUI(monthsInFuture: 0)
         view3.setUI(monthsInFuture: 1)
         
+        
+        
         baseView.removeFromSuperview()
         
+        DispatchQueue.main.async {
+            self.scrollView.setContentOffset(CGPoint(x: self.view.bounds.width, y: 0), animated: false)
+        }
         
     }
     
@@ -44,11 +54,6 @@ class MealPlannerHomeVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        let calendar = Calendar.autoupdatingCurrent
-        
-        print(calendar.monthSymbols)
-        print(calendar.weekdaySymbols)
-//        print(calendar.range(of: .day, in: .month, for: Date()))
         
         
     }
@@ -59,4 +64,18 @@ class MealPlannerHomeVC: UIViewController {
         
     }
 
+}
+
+
+
+// MARK: CalendarViewDelegate
+extension MealPlannerHomeVC: CalendarViewDelegate {
+    func dateButtonSelected(month: Month, day: Int, year: Int) {
+        let shortDate = "\(month.int).\(day).\(year)"
+        print(shortDate)
+        selectedDayLabel.text = "\(month.description) \(day)"
+        #warning("need to use these values to pull the recipes and set the UI")
+    }
+    
+    
 }
