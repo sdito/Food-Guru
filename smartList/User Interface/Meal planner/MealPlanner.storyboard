@@ -19,17 +19,40 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hHr-jE-GA5">
                                 <rect key="frame" x="0.0" y="502.5" width="414" height="310.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jQt-m7-BMn">
-                                        <rect key="frame" x="186" y="5" width="42" height="22.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jQt-m7-BMn">
+                                        <rect key="frame" x="50" y="5" width="314" height="25"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YYz-Zv-Uqe">
+                                        <rect key="frame" x="0.0" y="30" width="414" height="280.5"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                    </tableView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ty-Ev-ry8">
+                                        <rect key="frame" x="374" y="0.0" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="fvp-vL-pw3"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="40"/>
+                                        <state key="normal" title="+"/>
+                                        <connections>
+                                            <action selector="addRecipePressed:" destination="ofe-mX-Vru" eventType="touchUpInside" id="0F2-Uy-lQ8"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="YYz-Zv-Uqe" secondAttribute="trailing" id="ANe-r0-JWj"/>
+                                    <constraint firstItem="1ty-Ev-ry8" firstAttribute="top" secondItem="hHr-jE-GA5" secondAttribute="top" id="F5r-CD-ks2"/>
                                     <constraint firstItem="jQt-m7-BMn" firstAttribute="centerX" secondItem="hHr-jE-GA5" secondAttribute="centerX" id="GZt-pO-9gY"/>
+                                    <constraint firstAttribute="trailing" secondItem="jQt-m7-BMn" secondAttribute="trailing" constant="50" id="Otk-0T-OKf"/>
                                     <constraint firstItem="jQt-m7-BMn" firstAttribute="top" secondItem="hHr-jE-GA5" secondAttribute="top" constant="5" id="QMc-eQ-uTc"/>
+                                    <constraint firstItem="YYz-Zv-Uqe" firstAttribute="leading" secondItem="hHr-jE-GA5" secondAttribute="leading" id="cPT-QS-XxP"/>
+                                    <constraint firstAttribute="trailing" secondItem="1ty-Ev-ry8" secondAttribute="trailing" constant="10" id="t30-0s-MMF"/>
+                                    <constraint firstAttribute="bottom" secondItem="YYz-Zv-Uqe" secondAttribute="bottom" id="ukB-hY-AW6"/>
+                                    <constraint firstItem="YYz-Zv-Uqe" firstAttribute="top" secondItem="jQt-m7-BMn" secondAttribute="bottom" id="vVe-bb-6bU"/>
+                                    <constraint firstItem="YYz-Zv-Uqe" firstAttribute="top" secondItem="1ty-Ev-ry8" secondAttribute="bottom" id="zm8-vt-Dgh"/>
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDK-Ns-Gu9">
@@ -76,11 +99,41 @@
                         <outlet property="calendarStackView" destination="WNy-1t-7fT" id="n9V-na-50I"/>
                         <outlet property="scrollView" destination="eDK-Ns-Gu9" id="bh7-pY-w6R"/>
                         <outlet property="selectedDayLabel" destination="jQt-m7-BMn" id="iyb-ep-o9U"/>
+                        <segue destination="1es-ME-DC8" kind="show" identifier="addRecipe" id="nji-2w-bl5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="unp-bn-axB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1131.8840579710145" y="-410.49107142857139"/>
+            <point key="canvasLocation" x="1054" y="-410"/>
+        </scene>
+        <!--Add Recipe To Meal PlannerVC-->
+        <scene sceneID="Ekv-u6-I4i">
+            <objects>
+                <viewController id="1es-ME-DC8" customClass="AddRecipeToMealPlannerVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Cil-zb-aXI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Have a menu here to select a new recipe, either from general, cookbook, or link from all recipes" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hs7-Be-xd8">
+                                <rect key="frame" x="10" y="762" width="394" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="8jt-uT-Bav" firstAttribute="bottom" secondItem="hs7-Be-xd8" secondAttribute="bottom" constant="10" id="MNU-aq-Bgd"/>
+                            <constraint firstItem="8jt-uT-Bav" firstAttribute="trailing" secondItem="hs7-Be-xd8" secondAttribute="trailing" constant="10" id="kzE-eb-Ung"/>
+                            <constraint firstItem="hs7-Be-xd8" firstAttribute="leading" secondItem="8jt-uT-Bav" secondAttribute="leading" constant="10" id="uX6-16-xMm"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="8jt-uT-Bav"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="qIa-Hi-Acz"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2iM-YD-zjs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2062" y="-410"/>
         </scene>
         <!--Planner-->
         <scene sceneID="24a-OP-aen">

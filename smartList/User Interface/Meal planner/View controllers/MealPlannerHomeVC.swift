@@ -10,17 +10,19 @@ import UIKit
 import Foundation
 
 
-class MealPlannerHomeVC: UIViewController, UIScrollViewDelegate {
+class MealPlannerHomeVC: UIViewController {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var calendarStackView: UIStackView!
     @IBOutlet weak var baseView: UIView!
     @IBOutlet weak var selectedDayLabel: UILabel!
     
+    private var shortDate: String?
+    private var monthsNeededToAdd = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        scrollView.delegate = self
         let view = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
         let view2 = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
         let view3 = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
@@ -39,8 +41,6 @@ class MealPlannerHomeVC: UIViewController, UIScrollViewDelegate {
         view.setUI(monthsInFuture: -1)
         view2.setUI(monthsInFuture: 0)
         view3.setUI(monthsInFuture: 1)
-        
-        
         
         baseView.removeFromSuperview()
         
@@ -63,7 +63,21 @@ class MealPlannerHomeVC: UIViewController, UIScrollViewDelegate {
         navigationController?.setNavigationBarHidden(false, animated: animated)
         
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addRecipe" {
+            let destVC = segue.destination as! AddRecipeToMealPlannerVC
+            destVC.shortDate = shortDate
+        }
+    }
+    
+    // MARK: IBAction funcs
+    @IBAction func addRecipePressed(_ sender: Any) {
+        print("add recipe pressed")
+        performSegue(withIdentifier: "addRecipe", sender: shortDate)
+        
+    }
+    
 }
 
 
@@ -71,11 +85,33 @@ class MealPlannerHomeVC: UIViewController, UIScrollViewDelegate {
 // MARK: CalendarViewDelegate
 extension MealPlannerHomeVC: CalendarViewDelegate {
     func dateButtonSelected(month: Month, day: Int, year: Int) {
-        let shortDate = "\(month.int).\(day).\(year)"
-        print(shortDate)
+        shortDate = "\(month.int).\(day).\(year)"
+        // use short date for database
+        print(shortDate ?? "")
         selectedDayLabel.text = "\(month.description) \(day)"
-        #warning("need to use these values to pull the recipes and set the UI")
     }
     
-    
+}
+
+
+// MARK: Scroll view
+extension MealPlannerHomeVC: UIScrollViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let bounds = scrollView.bounds.minX
+        let size = scrollView.frame.width
+        let count = CGFloat(calendarStackView.subviews.count - 1)
+        
+        if bounds == size * count {
+            let view = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)?.first as! CalendarView
+            view.setUI(monthsInFuture: monthsNeededToAdd)
+            view.delegate = self
+            calendarStackView.addArrangedSubview(view)
+            monthsNeededToAdd += 1
+        } else if size * count - bounds >= size*2 && calendarStackView.subviews.count > 2  {
+            calendarStackView.subviews.last?.removeFromSuperview()
+            monthsNeededToAdd -= 1
+        }
+        
+        
+    }
 }

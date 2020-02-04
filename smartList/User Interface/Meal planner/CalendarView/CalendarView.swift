@@ -29,6 +29,7 @@ class CalendarView: UIView {
     @IBOutlet var day: [UIButton]!
     @IBOutlet weak var monthYearLabel: UILabel!
     
+    var monthsInFuture: Int?
     weak var delegate: CalendarViewDelegate!
     private var isCurrentMonth = false
     private var year: Int?
@@ -37,6 +38,7 @@ class CalendarView: UIView {
     
     
     func setUI(monthsInFuture: Int) {
+        self.monthsInFuture = monthsInFuture
         if monthsInFuture == 0 {
             isCurrentMonth = true
         }
@@ -99,8 +101,8 @@ class CalendarView: UIView {
                 yearInt += 1
             }
         }
-        
         let month = Month.monthFromInt(int: monthInt)
+        
         delegate.dateButtonSelected(month: month, day: Int(sender.titleLabel!.text!)!, year: yearInt)
     }
     

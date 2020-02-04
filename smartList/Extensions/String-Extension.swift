@@ -66,6 +66,13 @@ extension String {
         
     }
     
+    func shortDateToDisplay() -> String {
+        let parts = self.split(separator: ".").map({String($0)})
+        let month = Month.monthFromInt(int: Int(parts[0])!).description
+        let day = parts[1]
+        return "\(month) \(day)"
+    }
+    
     func containsLetters() -> Bool {
         for char in self {
             if char.isLetter {
