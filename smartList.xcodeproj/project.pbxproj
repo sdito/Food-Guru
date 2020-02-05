@@ -395,7 +395,6 @@
 				E2B4695522F79748006BA77D /* Objects */,
 				E25F071523146C9A00E6738E /* Enum */,
 				E2B4695822F7F19C006BA77D /* Extensions */,
-				E27D70C023403A6D009C68B3 /* Layout */,
 				E216204D22F658D20074A0DF /* Assets.xcassets */,
 				E216205222F658D20074A0DF /* Info.plist */,
 				E216207422F659860074A0DF /* GoogleService-Info.plist */,
@@ -556,6 +555,7 @@
 				E2445CF82321DDA20089582F /* View controllers */,
 				E2E940DF23DF4F3E009C4BED /* Cells */,
 				E2E940E723DF8CF2009C4BED /* Views */,
+				E27D70C023403A6D009C68B3 /* Layout */,
 			);
 			path = Recipes;
 			sourceTree = "<group>";

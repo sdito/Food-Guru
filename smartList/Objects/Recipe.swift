@@ -542,83 +542,87 @@ extension Recipe {
     }
     
     static func getPuppyRecipesFromSearches(activeSearches: [(String, SearchType)], expiringItems: [String], recipesFound: @escaping (_ recipes: [Recipe.Puppy]) -> Void) {
-           // recipes that come form the 'More recipes' pop up bottom from RecipeHomeVC
-           var puppyRecipes: [Recipe.Puppy] = []
-           var itemsToSearch: [String] {
-               if activeSearches.contains(where: {$0 == ("Expiring", .other)}) {
-                   return expiringItems
-               } else {
-                   return activeSearches.filter({$0.1 == .ingredient}).map { (str) -> String in
-                       (GenericItem(rawValue: str.0)?.description ?? "")
-                   }.filter({$0 != ""})
-               }
-           }
+        // recipes that come form the 'More recipes' pop up bottom from RecipeHomeVC
+        var puppyRecipes: [Recipe.Puppy] = []
+        var itemsToSearch: [String] {
+            if activeSearches.contains(where: {$0 == ("Expiring", .other)}) {
+                return expiringItems
+            } else {
+                return activeSearches.filter({$0.1 == .ingredient}).map { (str) -> String in
+                    (GenericItem(rawValue: str.0)?.description ?? "")
+                }.filter({$0 != ""})
+            }
+        }
            
-           let ingredientText = itemsToSearch.map { (str) -> String in
-               str.replacingOccurrences(of: " ", with: "%20")
-           }.joined(separator: ",")
+        let ingredientText = itemsToSearch.map { (str) -> String in
+            str.replacingOccurrences(of: " ", with: "%20")
+        }.joined(separator: ",")
            
            
-           var potentialOtherThanIngredientText: String {
-               let otherSearches = activeSearches.filter({$0.1 != .ingredient})
-               if otherSearches.isEmpty == false {
-                   return "&q=\(otherSearches.first!.0)"
-               } else {
-                   return ""
-               }
-           }
+        var potentialOtherThanIngredientText: String {
+            let otherSearches = activeSearches.filter({$0.1 != .ingredient})
+            if otherSearches.isEmpty == false {
+                return "&q=\(otherSearches.first!.0)"
+            } else {
+                return ""
+            }
+        }
            
-           // if there is a search for something such as 'Italian' food, then need to add that on to after the ingredientText through potentialOtherThanIngredientText
-           var searchURL: URL? {
-               if ingredientText != "" {
-                   return URL(string: "http://www.recipepuppy.com/api/?i=\(ingredientText)\(potentialOtherThanIngredientText)")
-               } else {
-                   print("Doing general query")
-                   let txt = (activeSearches.first?.0)?.replacingOccurrences(of: " ", with: "%20")
-                   return URL(string: "http://www.recipepuppy.com/api/?q=\(txt ?? "\(GenericItem.all.randomElement() ?? "")")")
-               }
-           }
+        // if there is a search for something such as 'Italian' food, then need to add that on to after the ingredientText through potentialOtherThanIngredientText
+        var searchURL: URL? {
+            if ingredientText != "" {
+                return URL(string: "http://www.recipepuppy.com/api/?i=\(ingredientText)\(potentialOtherThanIngredientText)")
+            } else {
+                print("Doing general query")
+                let txt = (activeSearches.first?.0)?.replacingOccurrences(of: " ", with: "%20")
+                return URL(string: "http://www.recipepuppy.com/api/?q=\(txt ?? "\(GenericItem.all.randomElement() ?? "")")")
+            }
+        }
+            
+        guard let url = searchURL else {
+            return
+        }
            
-           guard let url = searchURL else {
-               return
-           }
-           
-           let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-               DispatchQueue.main.async {
-                   guard let data = data else {
-                       print("Data was nil")
-                       return
-                   }
-                   
-                   let json = try? JSONSerialization.jsonObject(with: data, options: [])
-                   
-                   if let dictionary = json as? [String:Any] {
-                       let newData = dictionary["results"] as? [Any]
-                       
-                       if let newData = newData {
-                           for recipeData in newData {
-                               let recipeDataDict = recipeData as? [String:Any]
-                               if let recipeDataDict = recipeDataDict {
-                                   // only need title, ingredients, and URL for displaying in OtherRecipes VC
-                                   let title = recipeDataDict["title"] as? String
-                                   let trimTitle = title?.trim()
-                                   let ingredients = recipeDataDict["ingredients"] as? String
-                                   let url = recipeDataDict["href"] as? String
-                                   let puppyRecipe = Recipe.Puppy(title: trimTitle, ingredients: ingredients, url: URL(string: url ?? ""))
-                                   puppyRecipes.append(puppyRecipe)
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            DispatchQueue.main.async {
+                guard let data = data else {
+                    print("Data was nil")
+                    return
+                }
+                
+                #warning("json data is nil, need to fix, there is non JSON now at the end of the data...")
+                
+                
+                let json = try? JSONSerialization.jsonObject(with: data, options: [])
+                
+                
+                if let dictionary = json as? [String:Any] {
+                    let newData = dictionary["results"] as? [Any]
+                    
+                    if let newData = newData {
+                        for recipeData in newData {
+                            let recipeDataDict = recipeData as? [String:Any]
+                            if let recipeDataDict = recipeDataDict {
+                                // only need title, ingredients, and URL for displaying in OtherRecipes VC
+                                let title = recipeDataDict["title"] as? String
+                                let trimTitle = title?.trim()
+                                let ingredients = recipeDataDict["ingredients"] as? String
+                                let url = recipeDataDict["href"] as? String
+                                let puppyRecipe = Recipe.Puppy(title: trimTitle, ingredients: ingredients, url: URL(string: url ?? ""))
+                                puppyRecipes.append(puppyRecipe)
                                    
-                               }
+                            }
                                
-                           }
-                           recipesFound(puppyRecipes)
-                       }
-                   } else {
-                       recipesFound([])
-                   }
-               }
-           }
-           task.resume()
-       }
+                        }
+                        recipesFound(puppyRecipes)
+                    }
+                } else {
+                    recipesFound([])
+                }
+            }
+        }
+        task.resume()
+    }
     
 }
 
