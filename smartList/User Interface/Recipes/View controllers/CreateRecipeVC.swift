@@ -31,8 +31,11 @@ class CreateRecipeVC: UIViewController {
     @IBOutlet weak var urlView: UIView!
     @IBOutlet weak var urlTextField: UITextField!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var recipeTypeStackView: UIStackView!
     
     var db: Firestore!
+    var fromPlanner = false
+    
     private var storage: Storage!
     private let imagePicker = UIImagePickerController()
     private var image: Data?
@@ -88,6 +91,10 @@ class CreateRecipeVC: UIViewController {
         
         handleUI()
         createObserver()
+        
+        if fromPlanner {
+            recipeTypeStackView.removeFromSuperview()
+        }
         
         notesTextView.setUpDoneToolbar(action: #selector(removeFirstResponder), style: .done)
         taglineTextView.setUpDoneToolbar(action: #selector(removeFirstResponder), style: .done)

@@ -10,10 +10,6 @@ import UIKit
 
 
 
-// needs a lot of updating, a VERY rough draft now
-
-
-
 class PDFCreator: NSObject {
     
     let title: String

@@ -525,6 +525,7 @@
                         <outlet property="notesTextView" destination="QY0-8n-l7M" id="gzJ-M1-auy"/>
                         <outlet property="prepTimeTextField" destination="Nv6-ji-1uS" id="wJc-12-2iW"/>
                         <outlet property="recipeDescriptionOutlet" destination="jis-8J-aDr" id="cUV-UM-FLr"/>
+                        <outlet property="recipeTypeStackView" destination="Mfb-we-BiP" id="9ox-oc-pZu"/>
                         <outlet property="scrollView" destination="h87-Sk-JtE" id="0D7-gK-Wcx"/>
                         <outlet property="segmentedControl" destination="GCY-st-nCT" id="hoH-fn-x1q"/>
                         <outlet property="selectimageOutlet" destination="MlL-sN-X9G" id="UOG-PT-BRM"/>

@@ -10,14 +10,18 @@ import UIKit
 
 class AddRecipeToMealPlannerVC: UIViewController {
     
-    var shortDate: String? {
-        didSet {
-            self.title = self.shortDate!.shortDateToDisplay()
-        }
-    }
+    var shortDate: String?
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
+    @IBAction func addNewRecipe(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Recipes", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
+        self.navigationController?.pushViewController(vc, animated: true)
+        vc.fromPlanner = true
+    }
+    
 }

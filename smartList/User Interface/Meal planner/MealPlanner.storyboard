@@ -106,30 +106,29 @@
             </objects>
             <point key="canvasLocation" x="1054" y="-410"/>
         </scene>
-        <!--Add Recipe To Meal PlannerVC-->
+        <!--Select recipe-->
         <scene sceneID="Ekv-u6-I4i">
             <objects>
                 <viewController id="1es-ME-DC8" customClass="AddRecipeToMealPlannerVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Cil-zb-aXI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Have a menu here to select a new recipe, either from general, cookbook, or link from all recipes" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hs7-Be-xd8">
-                                <rect key="frame" x="10" y="762" width="394" height="41"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="8jt-uT-Bav" firstAttribute="bottom" secondItem="hs7-Be-xd8" secondAttribute="bottom" constant="10" id="MNU-aq-Bgd"/>
-                            <constraint firstItem="8jt-uT-Bav" firstAttribute="trailing" secondItem="hs7-Be-xd8" secondAttribute="trailing" constant="10" id="kzE-eb-Ung"/>
-                            <constraint firstItem="hs7-Be-xd8" firstAttribute="leading" secondItem="8jt-uT-Bav" secondAttribute="leading" constant="10" id="uX6-16-xMm"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="8jt-uT-Bav"/>
                     </view>
-                    <navigationItem key="navigationItem" id="qIa-Hi-Acz"/>
+                    <navigationItem key="navigationItem" title="Select recipe" id="qIa-Hi-Acz">
+                        <barButtonItem key="rightBarButtonItem" style="done" id="D12-br-iEf">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oof-me-13W">
+                                <rect key="frame" x="304" y="4.5" width="90" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                <state key="normal" title="New recipe"/>
+                                <connections>
+                                    <action selector="addNewRecipe:" destination="1es-ME-DC8" eventType="touchUpInside" id="oQg-ic-ELt"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2iM-YD-zjs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
