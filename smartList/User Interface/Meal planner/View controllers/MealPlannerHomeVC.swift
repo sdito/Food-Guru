@@ -65,16 +65,41 @@ class MealPlannerHomeVC: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "addRecipe" {
-            let destVC = segue.destination as! AddRecipeToMealPlannerVC
-            destVC.shortDate = shortDate
+        if segue.identifier == "selectMealPlanRecipe" {
+            let destVC = segue.destination as! SelectMealPlanRecipeVC
+            destVC.recipeSelection = sender as! RecipeSelection
         }
     }
     
     // MARK: IBAction funcs
     @IBAction func addRecipePressed(_ sender: Any) {
-        print("add recipe pressed")
-        performSegue(withIdentifier: "addRecipe", sender: shortDate)
+        #warning("need to add case here for if device is iPad")
+        
+        var title: String? {
+            if let sd = shortDate {
+                return "Add meal on \(sd.shortDateToDisplay()) to planner"
+            } else {
+                return nil
+            }
+        }
+        let actionSheet = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(.init(title: "Add new recipe", style: .default, handler: { action in
+            let sb = UIStoryboard(name: "Recipes", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
+            vc.fromPlanner = true
+            self.navigationController?.pushViewController(vc, animated: true)
+        }))
+        actionSheet.addAction(.init(title: "Cookbook", style: .default, handler: { action in
+            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: RecipeSelection.cookbook)
+        }))
+        actionSheet.addAction(.init(title: "Browse all recipes", style: .default, handler: { action in
+            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: RecipeSelection.all)
+        }))
+        actionSheet.addAction(.init(title: "Saved recipes", style: .default, handler: { action in
+            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: RecipeSelection.saved)
+        }))
+        actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        present(actionSheet, animated: true)
         
     }
     

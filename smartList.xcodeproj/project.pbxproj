@@ -37,6 +37,8 @@
 		E22A0EF423AC03C5007D7272 /* OutsideRecipesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A0EF323AC03C5007D7272 /* OutsideRecipesVC.swift */; };
 		E22A0EF623AC064F007D7272 /* RecipePuppyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A0EF523AC064F007D7272 /* RecipePuppyCell.swift */; };
 		E22A0EF823AD9238007D7272 /* SettingViewedRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A0EF723AD9238007D7272 /* SettingViewedRecipeCell.swift */; };
+		E2369B7323EE5D2F00A2293D /* SelectMealPlanRecipeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2369B7223EE5D2F00A2293D /* SelectMealPlanRecipeVC.swift */; };
+		E2369B7523EE5E3400A2293D /* RecipeSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2369B7423EE5E3400A2293D /* RecipeSelection.swift */; };
 		E242494923BFDD5E007C03F5 /* Tutorial.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E242494823BFDD5E007C03F5 /* Tutorial.storyboard */; };
 		E242494B23BFDE4B007C03F5 /* TutorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E242494A23BFDE4B007C03F5 /* TutorialVC.swift */; };
 		E2445CEE2321D6500089582F /* TabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CED2321D6500089582F /* TabVC.swift */; };
@@ -130,7 +132,6 @@
 		E2EAE38623E6350A001EDD72 /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EAE38523E6350A001EDD72 /* Calendar-Extension.swift */; };
 		E2EAE38823E63656001EDD72 /* MealPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EAE38723E63656001EDD72 /* MealPlanner.swift */; };
 		E2EAE38A23E8FE0A001EDD72 /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EAE38923E8FE0A001EDD72 /* Month.swift */; };
-		E2EAE38C23E9393F001EDD72 /* AddRecipeToMealPlannerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EAE38B23E9393F001EDD72 /* AddRecipeToMealPlannerVC.swift */; };
 		E2EB7FBE22FF5ACF003948A6 /* SharedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB7FBD22FF5ACF003948A6 /* SharedValues.swift */; };
 		E2EB7FC022FFAD7C003948A6 /* ItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB7FBF22FFAD7C003948A6 /* ItemCell.swift */; };
 		E2EB7FC322FFB29A003948A6 /* String-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EB7FC222FFB29A003948A6 /* String-Extension.swift */; };
@@ -195,6 +196,8 @@
 		E22A0EF323AC03C5007D7272 /* OutsideRecipesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutsideRecipesVC.swift; sourceTree = "<group>"; };
 		E22A0EF523AC064F007D7272 /* RecipePuppyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePuppyCell.swift; sourceTree = "<group>"; };
 		E22A0EF723AD9238007D7272 /* SettingViewedRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewedRecipeCell.swift; sourceTree = "<group>"; };
+		E2369B7223EE5D2F00A2293D /* SelectMealPlanRecipeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMealPlanRecipeVC.swift; sourceTree = "<group>"; };
+		E2369B7423EE5E3400A2293D /* RecipeSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSelection.swift; sourceTree = "<group>"; };
 		E242494823BFDD5E007C03F5 /* Tutorial.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Tutorial.storyboard; sourceTree = "<group>"; };
 		E242494A23BFDE4B007C03F5 /* TutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialVC.swift; sourceTree = "<group>"; };
 		E2445CED2321D6500089582F /* TabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabVC.swift; sourceTree = "<group>"; };
@@ -289,7 +292,6 @@
 		E2EAE38523E6350A001EDD72 /* Calendar-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar-Extension.swift"; sourceTree = "<group>"; };
 		E2EAE38723E63656001EDD72 /* MealPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlanner.swift; sourceTree = "<group>"; };
 		E2EAE38923E8FE0A001EDD72 /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
-		E2EAE38B23E9393F001EDD72 /* AddRecipeToMealPlannerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeToMealPlannerVC.swift; sourceTree = "<group>"; };
 		E2EB7FBD22FF5ACF003948A6 /* SharedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedValues.swift; sourceTree = "<group>"; };
 		E2EB7FBF22FFAD7C003948A6 /* ItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemCell.swift; sourceTree = "<group>"; };
 		E2EB7FC222FFB29A003948A6 /* String-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Extension.swift"; sourceTree = "<group>"; };
@@ -491,6 +493,7 @@
 			isa = PBXGroup;
 			children = (
 				E2A26C3B234D7A0200D954C0 /* Category.swift */,
+				E2369B7423EE5E3400A2293D /* RecipeSelection.swift */,
 				E2EAE38923E8FE0A001EDD72 /* Month.swift */,
 				E2A26C3D234D953700D954C0 /* GenericItem.swift */,
 				E25F071623146CC600E6738E /* RecipeType.swift */,
@@ -514,7 +517,7 @@
 			isa = PBXGroup;
 			children = (
 				E28A4CC623DE841D00C94DF9 /* MealPlannerHomeVC.swift */,
-				E2EAE38B23E9393F001EDD72 /* AddRecipeToMealPlannerVC.swift */,
+				E2369B7223EE5D2F00A2293D /* SelectMealPlanRecipeVC.swift */,
 			);
 			path = "View controllers";
 			sourceTree = "<group>";
@@ -1122,6 +1125,7 @@
 				E22A0EF623AC064F007D7272 /* RecipePuppyCell.swift in Sources */,
 				E25DEC722362B4BF0007535C /* CurrentSearchesView.swift in Sources */,
 				E25F071923146E5E00E6738E /* CuisineType.swift in Sources */,
+				E2369B7323EE5D2F00A2293D /* SelectMealPlanRecipeVC.swift in Sources */,
 				E26B9C50234A6F960039E9EE /* UITextView-Extension.swift in Sources */,
 				E20BC6D323275BC200F1E5E7 /* SettingBasicCell.swift in Sources */,
 				E216204722F658D10074A0DF /* AppDelegate.swift in Sources */,
@@ -1145,7 +1149,6 @@
 				E29BB2C423D172C1000BD145 /* Int-Extension.swift in Sources */,
 				E2B8E943237C81160051B07D /* RecipePDFVC.swift in Sources */,
 				E242494B23BFDE4B007C03F5 /* TutorialVC.swift in Sources */,
-				E2EAE38C23E9393F001EDD72 /* AddRecipeToMealPlannerVC.swift in Sources */,
 				E20BC6CB2327376000F1E5E7 /* SettingCell.swift in Sources */,
 				E2088BD22369EF9000370D09 /* SearchType.swift in Sources */,
 				E2E980D0238E3A6D00FAD549 /* ReviewImagesView.swift in Sources */,
@@ -1203,6 +1206,7 @@
 				E22A0EF423AC03C5007D7272 /* OutsideRecipesVC.swift in Sources */,
 				E291CC0023C9BA3100F0FF56 /* SuggestTutorialView.swift in Sources */,
 				E273F211235A60F4007B54E2 /* SearchByIngredientVC.swift in Sources */,
+				E2369B7523EE5E3400A2293D /* RecipeSelection.swift in Sources */,
 				E2D8462D231264CD004B19C2 /* Recipe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

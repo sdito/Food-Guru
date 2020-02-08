@@ -99,40 +99,49 @@
                         <outlet property="calendarStackView" destination="WNy-1t-7fT" id="n9V-na-50I"/>
                         <outlet property="scrollView" destination="eDK-Ns-Gu9" id="bh7-pY-w6R"/>
                         <outlet property="selectedDayLabel" destination="jQt-m7-BMn" id="iyb-ep-o9U"/>
-                        <segue destination="1es-ME-DC8" kind="show" identifier="addRecipe" id="nji-2w-bl5"/>
+                        <segue destination="ZbS-2S-eEP" kind="show" identifier="selectMealPlanRecipe" id="KOc-de-yyc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="unp-bn-axB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1054" y="-410"/>
         </scene>
-        <!--Select recipe-->
-        <scene sceneID="Ekv-u6-I4i">
+        <!--Select Meal Plan RecipeVC-->
+        <scene sceneID="0lb-c1-2Kh">
             <objects>
-                <viewController id="1es-ME-DC8" customClass="AddRecipeToMealPlannerVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Cil-zb-aXI">
+                <viewController id="ZbS-2S-eEP" customClass="SelectMealPlanRecipeVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="beK-zq-qqQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="5mE-a6-TEu">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="88" id="CRK-nb-PEQ">
+                                        <rect key="frame" x="20" y="55.5" width="374" height="88"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CRK-nb-PEQ" id="zyJ-IT-SgK">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="88"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <viewLayoutGuide key="safeArea" id="8jt-uT-Bav"/>
+                        <constraints>
+                            <constraint firstItem="8rR-Qi-9bv" firstAttribute="bottom" secondItem="5mE-a6-TEu" secondAttribute="bottom" id="J6g-Ec-Nxp"/>
+                            <constraint firstItem="5mE-a6-TEu" firstAttribute="top" secondItem="8rR-Qi-9bv" secondAttribute="top" id="gRu-Vt-fEJ"/>
+                            <constraint firstItem="8rR-Qi-9bv" firstAttribute="trailing" secondItem="5mE-a6-TEu" secondAttribute="trailing" id="sow-bX-d2M"/>
+                            <constraint firstItem="5mE-a6-TEu" firstAttribute="leading" secondItem="8rR-Qi-9bv" secondAttribute="leading" id="w0I-ch-WqJ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="8rR-Qi-9bv"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Select recipe" id="qIa-Hi-Acz">
-                        <barButtonItem key="rightBarButtonItem" style="done" id="D12-br-iEf">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oof-me-13W">
-                                <rect key="frame" x="304" y="4.5" width="90" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                <state key="normal" title="New recipe"/>
-                                <connections>
-                                    <action selector="addNewRecipe:" destination="1es-ME-DC8" eventType="touchUpInside" id="oQg-ic-ELt"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="1pg-rK-yjF"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2iM-YD-zjs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="013-hg-LrX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2062" y="-410"/>
+            <point key="canvasLocation" x="2013.0434782608697" y="-410.49107142857139"/>
         </scene>
         <!--Planner-->
         <scene sceneID="24a-OP-aen">
