@@ -12,7 +12,6 @@ import UIKit
 
 extension String {
     
-    #warning("didnt work correctly on '1 (12 fluid ounce) can or bottle root beer', fixed by adding 'fluid' to measurenets, should probably alter function to not take anthing between parentheses")
     func getQuantityFromIngredient() -> (ingredient: String, quantity: String) {
         var ing: [String] = []
         var qua: [String] = []

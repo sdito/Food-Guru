@@ -106,7 +106,7 @@
             </objects>
             <point key="canvasLocation" x="1054" y="-410"/>
         </scene>
-        <!--Select Meal Plan RecipeVC-->
+        <!--Select recipe-->
         <scene sceneID="0lb-c1-2Kh">
             <objects>
                 <viewController id="ZbS-2S-eEP" customClass="SelectMealPlanRecipeVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
@@ -114,16 +114,39 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="5mE-a6-TEu">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5mE-a6-TEu">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="88" id="CRK-nb-PEQ">
-                                        <rect key="frame" x="20" y="55.5" width="374" height="88"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="selectRecipeCell" rowHeight="88" id="CRK-nb-PEQ" customClass="SelectRecipeCell" customModule="Food_Guru" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="88"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CRK-nb-PEQ" id="zyJ-IT-SgK">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="88"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IKO-m1-ekT">
+                                                    <rect key="frame" x="20" y="21" width="344" height="46"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AhP-H0-Wf5">
+                                                    <rect key="frame" x="369" y="32" width="25" height="24"/>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="IKO-m1-ekT" firstAttribute="centerY" secondItem="zyJ-IT-SgK" secondAttribute="centerY" id="2CB-Gh-gAU"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="IKO-m1-ekT" secondAttribute="bottom" constant="10" id="4tK-6l-67U"/>
+                                                <constraint firstItem="AhP-H0-Wf5" firstAttribute="leading" secondItem="IKO-m1-ekT" secondAttribute="trailing" constant="5" id="SZJ-bx-pbG"/>
+                                                <constraint firstItem="AhP-H0-Wf5" firstAttribute="centerY" secondItem="zyJ-IT-SgK" secondAttribute="centerY" id="cOX-kI-oN3"/>
+                                                <constraint firstItem="AhP-H0-Wf5" firstAttribute="trailing" secondItem="zyJ-IT-SgK" secondAttribute="trailingMargin" id="oZb-DU-mC7"/>
+                                                <constraint firstItem="IKO-m1-ekT" firstAttribute="top" secondItem="zyJ-IT-SgK" secondAttribute="topMargin" constant="10" id="olL-ri-hmC"/>
+                                                <constraint firstItem="IKO-m1-ekT" firstAttribute="leading" secondItem="zyJ-IT-SgK" secondAttribute="leadingMargin" id="spD-2k-gYw"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="IKO-m1-ekT" id="3vw-R9-iUb"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -137,7 +160,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8rR-Qi-9bv"/>
                     </view>
-                    <navigationItem key="navigationItem" id="1pg-rK-yjF"/>
+                    <navigationItem key="navigationItem" title="Select recipe" id="1pg-rK-yjF"/>
+                    <connections>
+                        <outlet property="tableView" destination="5mE-a6-TEu" id="4JE-ct-q1t"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="013-hg-LrX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

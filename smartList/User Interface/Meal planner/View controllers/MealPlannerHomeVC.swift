@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 
+#warning("need to address issue of the UI for the current day not resetting when app is kept in memory")
 
 class MealPlannerHomeVC: UIViewController {
     
@@ -67,7 +68,7 @@ class MealPlannerHomeVC: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "selectMealPlanRecipe" {
             let destVC = segue.destination as! SelectMealPlanRecipeVC
-            destVC.recipeSelection = sender as! RecipeSelection
+            destVC.recipeSelection = sender as! (RecipeSelection, String?)
         }
     }
     
@@ -90,13 +91,13 @@ class MealPlannerHomeVC: UIViewController {
             self.navigationController?.pushViewController(vc, animated: true)
         }))
         actionSheet.addAction(.init(title: "Cookbook", style: .default, handler: { action in
-            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: RecipeSelection.cookbook)
+            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.cookbook, self.shortDate))
         }))
         actionSheet.addAction(.init(title: "Browse all recipes", style: .default, handler: { action in
-            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: RecipeSelection.all)
+            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.all, self.shortDate))
         }))
         actionSheet.addAction(.init(title: "Saved recipes", style: .default, handler: { action in
-            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: RecipeSelection.saved)
+            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.saved, self.shortDate))
         }))
         actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         present(actionSheet, animated: true)

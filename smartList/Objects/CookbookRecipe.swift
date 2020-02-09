@@ -24,7 +24,6 @@ class CookbookRecipe: Object {
 
     func setUp(name: String, servings: RealmOptional<Int>, cookTime: RealmOptional<Int>, prepTime: RealmOptional<Int>, calories: RealmOptional<Int>, ingredients: List<String>, instructions: List<String>, notes: String?) {
         
-//        print(Realm.Configuration.defaultConfiguration.fileURL!)
         self.name = name
         self.servings = servings
         self.cookTime = cookTime
