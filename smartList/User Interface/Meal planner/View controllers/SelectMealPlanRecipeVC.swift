@@ -28,7 +28,7 @@ class SelectMealPlanRecipeVC: UIViewController {
         db = Firestore.firestore()
         tableView.delegate = self
         tableView.dataSource = self
-        setRecipesForCells(recipeSelection: recipeSelection.0 ?? .all)
+        setRecipesForCells(recipeSelection: recipeSelection.0 ?? .cookbook)
         
         if let date = recipeSelection.1?.shortDateToDisplay() {
             self.navigationItem.prompt = date
@@ -45,15 +45,17 @@ class SelectMealPlanRecipeVC: UIViewController {
             Recipe.readUserSavedRecipes(db: db) { (rcps) in
                 self.recipes = rcps
             }
-        case .all:
-            #warning("need to do")
-            return
         }
     }
 }
 
 // MARK: SelectRecipeCellDelegate
 extension SelectMealPlanRecipeVC: SelectRecipeCellDelegate {
+    func recipeToAdd(recipe: Any) {
+        print(recipe)
+        // need to use this to write to the DB
+    }
+    
     func presentRecipeDetail(cookbookRecipe: CookbookRecipe?, recipe: Recipe?) {
         let sb = UIStoryboard(name: "Recipes", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC
@@ -85,5 +87,7 @@ extension SelectMealPlanRecipeVC: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }

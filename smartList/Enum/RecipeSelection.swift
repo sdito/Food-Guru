@@ -8,10 +8,8 @@
 
 import Foundation
 
-#warning("decide if i want to use this for meal planner recipe selection")
 
 enum RecipeSelection {
     case cookbook
     case saved
-    case all
 }

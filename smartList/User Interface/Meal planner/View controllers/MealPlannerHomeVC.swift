@@ -17,6 +17,7 @@ class MealPlannerHomeVC: UIViewController {
     @IBOutlet weak var calendarStackView: UIStackView!
     @IBOutlet weak var baseView: UIView!
     @IBOutlet weak var selectedDayLabel: UILabel!
+    @IBOutlet weak var addRecipeButtonOutlet: UIButton!
     
     private var shortDate: String?
     private var monthsNeededToAdd = 2
@@ -74,7 +75,6 @@ class MealPlannerHomeVC: UIViewController {
     
     // MARK: IBAction funcs
     @IBAction func addRecipePressed(_ sender: Any) {
-        #warning("need to add case here for if device is iPad")
         
         var title: String? {
             if let sd = shortDate {
@@ -89,18 +89,25 @@ class MealPlannerHomeVC: UIViewController {
             let vc = sb.instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
             vc.fromPlanner = true
             self.navigationController?.pushViewController(vc, animated: true)
+            #warning("need to implement the adding of the recipe once its created")
         }))
         actionSheet.addAction(.init(title: "Cookbook", style: .default, handler: { action in
             self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.cookbook, self.shortDate))
-        }))
-        actionSheet.addAction(.init(title: "Browse all recipes", style: .default, handler: { action in
-            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.all, self.shortDate))
         }))
         actionSheet.addAction(.init(title: "Saved recipes", style: .default, handler: { action in
             self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.saved, self.shortDate))
         }))
         actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
-        present(actionSheet, animated: true)
+        
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            present(actionSheet, animated: true)
+        } else {
+            actionSheet.popoverPresentationController?.sourceView = self.view
+            actionSheet.popoverPresentationController?.sourceRect = addRecipeButtonOutlet.frame
+            present(actionSheet, animated: true, completion: nil)
+        }
+        
+        
         
     }
     

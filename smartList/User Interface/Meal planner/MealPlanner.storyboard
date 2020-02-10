@@ -95,6 +95,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="9nU-z8-PDE"/>
                     <connections>
+                        <outlet property="addRecipeButtonOutlet" destination="1ty-Ev-ry8" id="4ZD-bd-2G4"/>
                         <outlet property="baseView" destination="Khd-Oh-Mz1" id="IC5-ME-tcm"/>
                         <outlet property="calendarStackView" destination="WNy-1t-7fT" id="n9V-na-50I"/>
                         <outlet property="scrollView" destination="eDK-Ns-Gu9" id="bh7-pY-w6R"/>
@@ -132,6 +133,9 @@
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AhP-H0-Wf5">
                                                     <rect key="frame" x="369" y="32" width="25" height="24"/>
+                                                    <connections>
+                                                        <action selector="recipeSelected:" destination="CRK-nb-PEQ" eventType="touchUpInside" id="8r8-rW-6EL"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>

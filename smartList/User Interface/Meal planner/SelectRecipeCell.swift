@@ -13,6 +13,7 @@ import UIKit
 
 protocol SelectRecipeCellDelegate: class {
     func presentRecipeDetail(cookbookRecipe: CookbookRecipe?, recipe: Recipe?)
+    func recipeToAdd(recipe: Any)
 }
 
 
@@ -47,6 +48,9 @@ class SelectRecipeCell: UITableViewCell {
         delegate.presentRecipeDetail(cookbookRecipe: cbr, recipe: r)
     }
     
+    @IBAction func recipeSelected(_ sender: Any) {
+        delegate.recipeToAdd(recipe: (cbr != nil) ? cbr as Any : r as Any)
+    }
     
     
 }
