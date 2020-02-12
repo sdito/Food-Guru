@@ -34,7 +34,7 @@ class CreateRecipeVC: UIViewController {
     @IBOutlet weak var recipeTypeStackView: UIStackView!
     
     var db: Firestore!
-    var fromPlanner = false
+    var fromPlanner: (Bool, String?)?
     
     private var storage: Storage!
     private let imagePicker = UIImagePickerController()
@@ -92,7 +92,7 @@ class CreateRecipeVC: UIViewController {
         handleUI()
         createObserver()
         
-        if fromPlanner {
+        if fromPlanner != nil && fromPlanner!.0 {
             recipeTypeStackView.removeFromSuperview()
         }
         
@@ -172,6 +172,8 @@ class CreateRecipeVC: UIViewController {
         }
         // end
         
+        
+        
         switch forCookbook {
         case false:
             guard let img = image else {
@@ -213,6 +215,10 @@ class CreateRecipeVC: UIViewController {
             let cookbookRecipe = CookbookRecipe()
             cookbookRecipe.setUp(name: nameTextField.text!, servings: RealmOptional(servingsTextField.toInt()), cookTime: RealmOptional(cookTimeTextField.toInt()), prepTime: RealmOptional(prepTimeTextField.toInt()), calories: RealmOptional(caloriesTextField.toInt()), ingredients: ingredients, instructions: instructions, notes: notesTextView.text)
             cookbookRecipe.write()
+            
+            if fromPlanner?.0 == true {
+                #warning("need to do adding to planner stuff here, date is 1 in fromPlanner tuple")
+            }
             
             navigationController?.popToRootViewController(animated: true)
         }

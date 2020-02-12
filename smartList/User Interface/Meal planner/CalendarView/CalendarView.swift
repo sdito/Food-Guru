@@ -17,7 +17,6 @@ month in the calendar
 */
 
 
-
 protocol CalendarViewDelegate: class {
     func dateButtonSelected(month: Month, day: Int, year: Int)
 }

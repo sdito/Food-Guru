@@ -87,7 +87,7 @@ class MealPlannerHomeVC: UIViewController {
         actionSheet.addAction(.init(title: "Add new recipe", style: .default, handler: { action in
             let sb = UIStoryboard(name: "Recipes", bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
-            vc.fromPlanner = true
+            vc.fromPlanner = (true, self.shortDate)
             self.navigationController?.pushViewController(vc, animated: true)
             #warning("need to implement the adding of the recipe once its created")
         }))
