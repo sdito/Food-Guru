@@ -52,8 +52,16 @@ class SelectMealPlanRecipeVC: UIViewController {
 // MARK: SelectRecipeCellDelegate
 extension SelectMealPlanRecipeVC: SelectRecipeCellDelegate {
     func recipeToAdd(recipe: Any) {
-        print(recipe)
-        // need to use this to write to the DB
+        if let r = recipe as? CookbookRecipe {
+            let mpr = MPCookbookRecipe()
+            mpr.setUp(name: r.name, servings: r.servings, cookTime: r.cookTime, prepTime: r.prepTime, calories: r.calories, ingredients: r.ingredients, instructions: r.instructions, notes: r.notes)
+            mpr.id = "TEST_ID"
+            mpr.date = "02.12.2020"
+            mpr.write()
+            self.navigationController?.createMessageView(color: Colors.messageGreen, text: "Recipe added to planner!")
+        }
+        
+        self.navigationController?.popViewController(animated: true)
     }
     
     func presentRecipeDetail(cookbookRecipe: CookbookRecipe?, recipe: Recipe?) {

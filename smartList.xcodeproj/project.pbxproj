@@ -139,6 +139,8 @@
 		E2EBE5D322FD25060019BB0F /* AddItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EBE5D222FD25060019BB0F /* AddItemsVC.swift */; };
 		E2F380AD2319847A003857F7 /* IngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F380AC2319847A003857F7 /* IngredientView.swift */; };
 		E2F380B023198496003857F7 /* IngredientView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2F380AF23198496003857F7 /* IngredientView.xib */; };
+		E2FCD09023F507BC00C172CD /* MealType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FCD08F23F507BC00C172CD /* MealType.swift */; };
+		E2FCD09223F50B8B00C172CD /* MPCookbookRecipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2FCD09123F50B8B00C172CD /* MPCookbookRecipe.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -300,6 +302,8 @@
 		E2EBE5D222FD25060019BB0F /* AddItemsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemsVC.swift; sourceTree = "<group>"; };
 		E2F380AC2319847A003857F7 /* IngredientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
 		E2F380AF23198496003857F7 /* IngredientView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IngredientView.xib; sourceTree = "<group>"; };
+		E2FCD08F23F507BC00C172CD /* MealType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealType.swift; sourceTree = "<group>"; };
+		E2FCD09123F50B8B00C172CD /* MPCookbookRecipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPCookbookRecipe.swift; sourceTree = "<group>"; };
 		EA1C8AC62AFAE75802B4FD76 /* Pods-smartListUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smartListUITests.release.xcconfig"; path = "Target Support Files/Pods-smartListUITests/Pods-smartListUITests.release.xcconfig"; sourceTree = "<group>"; };
 		F30C0C4898D5DF1DF11A7E59 /* Pods_smartList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_smartList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -495,6 +499,7 @@
 			isa = PBXGroup;
 			children = (
 				E2A26C3B234D7A0200D954C0 /* Category.swift */,
+				E2FCD08F23F507BC00C172CD /* MealType.swift */,
 				E2369B7423EE5E3400A2293D /* RecipeSelection.swift */,
 				E2EAE38923E8FE0A001EDD72 /* Month.swift */,
 				E2A26C3D234D953700D954C0 /* GenericItem.swift */,
@@ -654,6 +659,7 @@
 			isa = PBXGroup;
 			children = (
 				E2EAE38723E63656001EDD72 /* MealPlanner.swift */,
+				E2FCD09123F50B8B00C172CD /* MPCookbookRecipe.swift */,
 				E2A97669236FFF8000BF039F /* CookbookRecipe.swift */,
 				E2B4695922F7F485006BA77D /* Colors.swift */,
 				E2E6A19A2326FF6A00477AB1 /* FoodStorage.swift */,
@@ -1146,6 +1152,7 @@
 				E24ADB0A23386E69008F2F9F /* StorageNewItemVC.swift in Sources */,
 				E2B4695722F7F18E006BA77D /* UITextField-Extension.swift in Sources */,
 				E291CBFC23C85B9100F0FF56 /* UIImage-Extension.swift in Sources */,
+				E2FCD09223F50B8B00C172CD /* MPCookbookRecipe.swift in Sources */,
 				E2E6A19B2326FF6A00477AB1 /* FoodStorage.swift in Sources */,
 				E252283223A34B220036F604 /* CreateDisplayNameVC.swift in Sources */,
 				E2C49349230B45E4002907C2 /* CreateRecipeVC.swift in Sources */,
@@ -1211,6 +1218,7 @@
 				E291CC0023C9BA3100F0FF56 /* SuggestTutorialView.swift in Sources */,
 				E273F211235A60F4007B54E2 /* SearchByIngredientVC.swift in Sources */,
 				E2369B7523EE5E3400A2293D /* RecipeSelection.swift in Sources */,
+				E2FCD09023F507BC00C172CD /* MealType.swift in Sources */,
 				E2D8462D231264CD004B19C2 /* Recipe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

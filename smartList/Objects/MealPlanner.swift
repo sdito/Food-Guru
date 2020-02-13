@@ -8,6 +8,10 @@
 
 import Foundation
 import FirebaseFirestore
+import RealmSwift
+
+#warning("subclass cookbook recipe, add an enum for meal type with a var and have a new date variable, write to realm if not saved on device, otherwise just read from firebase, sync")
+
 
 
 
@@ -26,21 +30,40 @@ class MealPlanner {
     
     
     
-    func addRecipeToPlanner(recipe: CookbookRecipe) {
-        #warning("need to have something with recipe ID")
-        for uid in userIDs {
-            let reference = db.collection("mealPlanners").document(id).collection("\(uid)-add")
+    func addRecipeToPlanner(recipe: MPCookbookRecipe, shortDate: String, mealType: MealType) {
+        let date = shortDate.shortDateToMonthYear()
+        let reference = db.collection("mealPlanners").document(id).collection(date)
             reference.addDocument(data: [
-                "name": recipe.name,
-                "ingredients": recipe.ingredients,
-                "instructions": recipe.instructions,
-                "cookTime": recipe.cookTime,
-                "prepTime": recipe.prepTime,
-                "numServes": recipe.servings,
-                "calories": recipe.calories,
-                "notes": recipe.notes as Any
-            ])
+               "name": recipe.name,
+               "ingredients": recipe.ingredients,
+               "instructions": recipe.instructions,
+               "cookTime": recipe.cookTime,
+               "prepTime": recipe.prepTime,
+               "numServes": recipe.servings,
+               "calories": recipe.calories,
+               "notes": recipe.notes as Any,
+               "date": shortDate,
+               "mealType": mealType.rawValue
+        ])
+    }
+    
+    
+    class func createIndividualMealPlanner(db: Firestore) {
+        if let id = SharedValues.shared.userID {
+            let reference = db.collection("mealPlanners")
+            reference.addDocument(data: [
+                "userIDs": [id],
+                "createdOn": Date().timeIntervalSince1970
+            ]) { (error) in
+                if error == nil {
+                    // Write the data to the user's profile
+                } else {
+                    print("Error creating meal planner: \(String(describing: error))")
+                }
+            }
+            
         }
+        
     }
     
     

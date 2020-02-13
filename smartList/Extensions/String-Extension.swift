@@ -72,6 +72,14 @@ extension String {
         return "\(month) \(day)"
     }
     
+    #warning("make sure this is being used")
+    func shortDateToMonthYear() -> String {
+        let parts = self.split(separator: ".").map({String($0)})
+        let month = parts[0]
+        let year = parts[2]
+        return "\(month).\(year)"
+    }
+    
     func containsLetters() -> Bool {
         for char in self {
             if char.isLetter {

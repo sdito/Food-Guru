@@ -21,7 +21,6 @@ class CookbookRecipe: Object {
     var systemItems = List<String>()
     @objc dynamic var notes: String? = nil
     
-
     func setUp(name: String, servings: RealmOptional<Int>, cookTime: RealmOptional<Int>, prepTime: RealmOptional<Int>, calories: RealmOptional<Int>, ingredients: List<String>, instructions: List<String>, notes: String?) {
         
         self.name = name
