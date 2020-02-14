@@ -8,6 +8,7 @@
 
 import UIKit
 import Foundation
+import FirebaseFirestore
 
 #warning("need to address issue of the UI for the current day not resetting when app is kept in memory")
 
@@ -19,12 +20,16 @@ class MealPlannerHomeVC: UIViewController {
     @IBOutlet weak var selectedDayLabel: UILabel!
     @IBOutlet weak var addRecipeButtonOutlet: UIButton!
     
+    var db: Firestore!
+    private var mealPlanner = MealPlanner()
     private var shortDate: String?
     private var monthsNeededToAdd = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        db = Firestore.firestore()
         scrollView.delegate = self
+        mealPlanner.delegate = self
         let view = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
         let view2 = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
         let view3 = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
@@ -49,6 +54,7 @@ class MealPlannerHomeVC: UIViewController {
         DispatchQueue.main.async {
             self.scrollView.setContentOffset(CGPoint(x: self.view.bounds.width, y: 0), animated: false)
         }
+        mealPlanner.readIfUserHasMealPlanner()
         
     }
     
@@ -106,10 +112,8 @@ class MealPlannerHomeVC: UIViewController {
             actionSheet.popoverPresentationController?.sourceRect = addRecipeButtonOutlet.frame
             present(actionSheet, animated: true, completion: nil)
         }
-        
-        
-        
     }
+    
     
 }
 
@@ -125,6 +129,26 @@ extension MealPlannerHomeVC: CalendarViewDelegate {
     }
     
 }
+
+
+
+// MARK: MealPlannerDelegate
+extension MealPlannerHomeVC: MealPlannerDelegate {
+    func exists(bool: Bool) {
+        print("MealPlanner now exists (t or f): \(bool)")
+        if bool == false {
+            // Automatically create the new meal planner, then set UI
+            #warning("option to create the meal planner here, ask for group stuff")
+            let alert = UIAlertController(title: "No Meal Planner", message: "Create a meal planner to share your recipes with friends and family.", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+        } else if bool == true {
+            // Update the UI
+        }
+    }
+}
+
+
 
 
 // MARK: Scroll view

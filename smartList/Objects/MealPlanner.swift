@@ -13,50 +13,84 @@ import RealmSwift
 #warning("subclass cookbook recipe, add an enum for meal type with a var and have a new date variable, write to realm if not saved on device, otherwise just read from firebase, sync")
 
 
+protocol MealPlannerDelegate: class {
+    func exists(bool: Bool)
+}
 
 
 class MealPlanner {
-    
-    let id: String
-    var userIDs: [String]
-    var group: Bool
-    private var db = Firestore.firestore()
-    
-    init(userIDs: [String], group: Bool, id: String) {
-        self.userIDs = userIDs
-        self.group = group
-        self.id = id
+    weak var delegate: MealPlannerDelegate?
+    var id: String?
+    var exists: Bool? {
+        didSet {
+            delegate?.exists(bool: self.exists!)
+        }
     }
-    
-    
+    var userIDs: [String]?
+    var group: Bool?
+    private var db = Firestore.firestore()
     
     func addRecipeToPlanner(recipe: MPCookbookRecipe, shortDate: String, mealType: MealType) {
         let date = shortDate.shortDateToMonthYear()
-        let reference = db.collection("mealPlanners").document(id).collection(date)
-            reference.addDocument(data: [
-               "name": recipe.name,
-               "ingredients": recipe.ingredients,
-               "instructions": recipe.instructions,
-               "cookTime": recipe.cookTime,
-               "prepTime": recipe.prepTime,
-               "numServes": recipe.servings,
-               "calories": recipe.calories,
-               "notes": recipe.notes as Any,
-               "date": shortDate,
-               "mealType": mealType.rawValue
-        ])
+        if let id = id {
+            let reference = db.collection("mealPlanners").document(id).collection(date)
+                reference.addDocument(data: [
+                   "name": recipe.name,
+                   "ingredients": recipe.ingredients,
+                   "instructions": recipe.instructions,
+                   "cookTime": recipe.cookTime,
+                   "prepTime": recipe.prepTime,
+                   "numServes": recipe.servings,
+                   "calories": recipe.calories,
+                   "notes": recipe.notes as Any,
+                   "date": shortDate,
+                   "mealType": mealType.rawValue
+            ])
+        }
+        
+    }
+    #warning("needs more testing")
+    func readIfUserHasMealPlanner() {
+        if let id = SharedValues.shared.userID {
+            let reference = db.collection("users").document(id)
+            reference.getDocument { (documentSnapshot, error) in
+                guard let docSnapshot = documentSnapshot else { self.exists = false; return }
+                if let mealPlannerID = docSnapshot.get("mealPlannerID") as? String {
+                    self.exists = true
+                    let ref = self.db.collection("mealPlanners").document(mealPlannerID)
+                    ref.getDocument { (mealPlannerSnapshot, error) in
+                        guard let mp = mealPlannerSnapshot else { self.exists = false; return }
+                        if let uids = mp.get("userIDs") as? [String], let isGroup = mp.get("group") as? Bool {
+                            self.id = mp.documentID
+                            self.userIDs = uids
+                            self.group = isGroup
+                            self.exists = true
+                        } else {
+                            self.exists = false
+                        }
+                    }
+                } else {
+                    self.exists = false
+                }
+            }
+        }
     }
     
-    
-    class func createIndividualMealPlanner(db: Firestore) {
+    func createIndividualMealPlanner(db: Firestore) {
         if let id = SharedValues.shared.userID {
             let reference = db.collection("mealPlanners")
             reference.addDocument(data: [
                 "userIDs": [id],
-                "createdOn": Date().timeIntervalSince1970
+                "group": false
             ]) { (error) in
                 if error == nil {
-                    // Write the data to the user's profile
+                    self.exists = true
+                    self.userIDs = [id]
+                    self.group = false
+                    let reference = db.collection("users").document(id)
+                    reference.updateData([
+                        "mealPlannerID": reference.documentID
+                    ])
                 } else {
                     print("Error creating meal planner: \(String(describing: error))")
                 }
