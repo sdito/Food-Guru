@@ -65,7 +65,7 @@ class SharedValues {
     
     var isStorageWithGroup: Bool?
     
-    
+    var mealPlannerID: String?
     
     static let shared = SharedValues()
     

@@ -98,6 +98,7 @@ struct User {
         SharedValues.shared.newUsername = nil
         SharedValues.shared.previouslyViewedRecipes = nil
         SharedValues.shared.isStorageWithGroup = nil
+        SharedValues.shared.mealPlannerID = nil
     }
     
     // MARK: Individual
@@ -204,6 +205,12 @@ struct User {
                     SharedValues.shared.savedRecipes = savedRecipes
                 } else {
                     SharedValues.shared.savedRecipes = nil
+                }
+                
+                if let mealPlannerID = docSnapshot.get("mealPlannerID") as? String {
+                    SharedValues.shared.mealPlannerID = mealPlannerID
+                } else {
+                    SharedValues.shared.mealPlannerID = nil
                 }
             }
         }

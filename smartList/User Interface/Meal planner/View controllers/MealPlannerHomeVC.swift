@@ -29,7 +29,6 @@ class MealPlannerHomeVC: UIViewController {
         super.viewDidLoad()
         db = Firestore.firestore()
         scrollView.delegate = self
-        mealPlanner.delegate = self
         let view = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
         let view2 = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
         let view3 = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
@@ -64,6 +63,15 @@ class MealPlannerHomeVC: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
         
         
+        if SharedValues.shared.mealPlannerID == nil {
+            
+            if SharedValues.shared.groupID == nil {
+                #warning("need to initialize new meal planner with group here")
+            } else {
+                mealPlanner.createIndividualMealPlanner(db: db)
+            }
+            
+        }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -131,22 +139,6 @@ extension MealPlannerHomeVC: CalendarViewDelegate {
 }
 
 
-
-// MARK: MealPlannerDelegate
-extension MealPlannerHomeVC: MealPlannerDelegate {
-    func exists(bool: Bool) {
-        print("MealPlanner now exists (t or f): \(bool)")
-        if bool == false {
-            // Automatically create the new meal planner, then set UI
-            #warning("option to create the meal planner here, ask for group stuff")
-            let alert = UIAlertController(title: "No Meal Planner", message: "Create a meal planner to share your recipes with friends and family.", preferredStyle: .alert)
-            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-            present(alert, animated: true)
-        } else if bool == true {
-            // Update the UI
-        }
-    }
-}
 
 
 

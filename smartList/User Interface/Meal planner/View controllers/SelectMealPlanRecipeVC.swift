@@ -56,7 +56,7 @@ extension SelectMealPlanRecipeVC: SelectRecipeCellDelegate {
             let mpr = MPCookbookRecipe()
             mpr.setUp(name: r.name, servings: r.servings, cookTime: r.cookTime, prepTime: r.prepTime, calories: r.calories, ingredients: r.ingredients, instructions: r.instructions, notes: r.notes)
             mpr.id = "TEST_ID"
-            mpr.date = "02.12.2020"
+            mpr.date = "02.17.2020"
             mpr.write()
             self.navigationController?.createMessageView(color: Colors.messageGreen, text: "Recipe added to planner!")
         }

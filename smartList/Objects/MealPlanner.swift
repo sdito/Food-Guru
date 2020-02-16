@@ -13,19 +13,9 @@ import RealmSwift
 #warning("subclass cookbook recipe, add an enum for meal type with a var and have a new date variable, write to realm if not saved on device, otherwise just read from firebase, sync")
 
 
-protocol MealPlannerDelegate: class {
-    func exists(bool: Bool)
-}
-
-
 class MealPlanner {
-    weak var delegate: MealPlannerDelegate?
     var id: String?
-    var exists: Bool? {
-        didSet {
-            delegate?.exists(bool: self.exists!)
-        }
-    }
+    var exists: Bool?
     var userIDs: [String]?
     var group: Bool?
     private var db = Firestore.firestore()
@@ -49,7 +39,8 @@ class MealPlanner {
         }
         
     }
-    #warning("needs more testing")
+    
+    
     func readIfUserHasMealPlanner() {
         if let id = SharedValues.shared.userID {
             let reference = db.collection("users").document(id)
