@@ -59,12 +59,12 @@ struct User {
             if let doc = querySnapshot?.documents.first {
                 if let id = doc.get("uid") as? String {
                     uid = id
-                    
                 }
             }
             uidReturned(uid)
         }
     }
+    
     static func checkIfEmailIsValid(db: Firestore, email: String, emailCheckReturned: @escaping (_ check: EmailCheck?) -> Void) {
         var emailCheck: EmailCheck = .noUser
         db.collection("users").whereField("email", isEqualTo: email).getDocuments { (querySnapshot, error) in
@@ -152,9 +152,6 @@ struct User {
                 print("Document successfully written")
             }
         }
-        
-        
-        
         // change the user data to add their id to their group
         emails.forEach { (email) in
             db.collection("users").whereField("email", isEqualTo: email).getDocuments(completion: { (querySnapshot, error) in

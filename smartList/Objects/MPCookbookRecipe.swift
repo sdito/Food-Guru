@@ -9,10 +9,16 @@
 import Foundation
 import RealmSwift
 
-#warning("make sure this is being used")
+
 
 class MPCookbookRecipe: CookbookRecipe {
-    @objc dynamic var id: String = ""
+    
+    @objc dynamic var id: String = "" {
+        didSet {
+            
+            write()
+        }
+    }
     @objc dynamic var date: String = ""
     
     func setUp(cookbookRecipe: CookbookRecipe, id: String, date: String) {
@@ -23,7 +29,9 @@ class MPCookbookRecipe: CookbookRecipe {
     
     
     override func write() {
+        print("Writing recipe to realm for MPCookbookRecipe")
         let realm = try! Realm()
+        
         print(Realm.Configuration.defaultConfiguration.fileURL as Any)
         try! realm.write {
             realm.add(self)

@@ -12,11 +12,32 @@ import FirebaseFirestore
 
 class SelectMealPlanRecipeVC: UIViewController {
     
+    var mealPlanner: MealPlanner?
+    
     @IBOutlet weak var tableView: UITableView!
     
     private var recipes: [Any] = [] {
         didSet {
             tableView.reloadData()
+            if self.recipes.isEmpty {
+                var txt: String {
+                    if let rs = recipeSelection.0 {
+                        switch rs {
+                        case .cookbook:
+                            return "No recipes in your cookbook. To add recipes to your coobook select 'download' from a recipe or create your own recipe. Cookbook recipes are saved on your device."
+                        case .saved:
+                            return "You don't have any saved recipes. To save a recipe, press the heart on the top of a recipe in the recipes feed!"
+                        }
+                    } else {
+                        return "Couldn't find your recipes."
+                    }
+                }
+                let alert = UIAlertController(title: txt, message: nil, preferredStyle: .alert)
+                alert.addAction(.init(title: "Ok", style: .default, handler: { (alert) in
+                    self.navigationController?.popViewController(animated: true)
+                }))
+                self.present(alert, animated: true)
+            }
         }
     }
     
@@ -55,10 +76,19 @@ extension SelectMealPlanRecipeVC: SelectRecipeCellDelegate {
         if let r = recipe as? CookbookRecipe {
             let mpr = MPCookbookRecipe()
             mpr.setUp(name: r.name, servings: r.servings, cookTime: r.cookTime, prepTime: r.prepTime, calories: r.calories, ingredients: r.ingredients, instructions: r.instructions, notes: r.notes)
-            mpr.id = "TEST_ID"
-            mpr.date = "02.17.2020"
-            mpr.write()
+            
+            #warning("need to write this to firebase, code is already in meal planner class")
+            
+            if let date = recipeSelection.1 {
+                mpr.date = date
+            }
+            if let shortDate = recipeSelection.1 {
+                mealPlanner?.addRecipeToPlanner(db: db, recipe: mpr, shortDate: shortDate, mealType: .none)
+            }
+            
             self.navigationController?.createMessageView(color: Colors.messageGreen, text: "Recipe added to planner!")
+        } else if let r = recipe as? Recipe {
+            print("Normal Recipe type, need to add: \(r.name) to stuff here")
         }
         
         self.navigationController?.popViewController(animated: true)
@@ -77,7 +107,6 @@ extension SelectMealPlanRecipeVC: SelectRecipeCellDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
-
 
 
 

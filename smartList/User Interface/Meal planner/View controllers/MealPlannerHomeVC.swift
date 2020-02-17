@@ -67,10 +67,15 @@ class MealPlannerHomeVC: UIViewController {
             
             if SharedValues.shared.groupID == nil {
                 #warning("need to initialize new meal planner with group here")
+                
+                mealPlanner.createIndividualMealPlanner()
             } else {
-                mealPlanner.createIndividualMealPlanner(db: db)
+                print("Creating group meal planner automatically")
+                mealPlanner.createGroupMealPlanner()
             }
             
+        } else {
+            print("Already has meal planner")
         }
     }
 
@@ -84,6 +89,7 @@ class MealPlannerHomeVC: UIViewController {
         if segue.identifier == "selectMealPlanRecipe" {
             let destVC = segue.destination as! SelectMealPlanRecipeVC
             destVC.recipeSelection = sender as! (RecipeSelection, String?)
+            destVC.mealPlanner = mealPlanner
         }
     }
     
@@ -121,8 +127,6 @@ class MealPlannerHomeVC: UIViewController {
             present(actionSheet, animated: true, completion: nil)
         }
     }
-    
-    
 }
 
 
@@ -137,8 +141,6 @@ extension MealPlannerHomeVC: CalendarViewDelegate {
     }
     
 }
-
-
 
 
 
