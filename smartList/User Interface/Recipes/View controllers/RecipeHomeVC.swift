@@ -440,12 +440,10 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 cell.recipeImage.image = cachedImage
                 print("Cache for \(indexPath.row)")
             } else {
-                DispatchQueue.main.async {
-                    recipe.getImageFromStorage(thumb: true) { (img) in
-                        cell.recipeImage.image = img
-                        self.imageCache.setObject(img!, forKey: "\(indexPath.row)" as NSString)
-                        print("Read for \(indexPath.row)")
-                    }
+                recipe.getImageFromStorage(thumb: true) { (img) in
+                    cell.recipeImage.image = img
+                    self.imageCache.setObject(img!, forKey: "\(indexPath.row)" as NSString)
+                    print("Read for \(indexPath.row)")
                 }
             }
             
@@ -459,14 +457,11 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 cell.recipeImage.image = cachedImage
                 print("Cache for \(indexPath.row)")
             } else {
-                DispatchQueue.main.async {
-                    recipe.getImageFromStorage(thumb: true) { (img) in
-                        cell.recipeImage.image = img
-                        self.imageCache.setObject(img!, forKey: "\(indexPath.row)" as NSString)
-                        print("Read for \(indexPath.row)")
-                    }
+                recipe.getImageFromStorage(thumb: true) { (img) in
+                    cell.recipeImage.image = img
+                    self.imageCache.setObject(img!, forKey: "\(indexPath.row)" as NSString)
+                    print("Read for \(indexPath.row)")
                 }
-                
             }
             
             return cell
