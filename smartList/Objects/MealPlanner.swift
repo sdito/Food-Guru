@@ -10,7 +10,6 @@ import Foundation
 import FirebaseFirestore
 import RealmSwift
 
-#warning("subclass cookbook recipe, add an enum for meal type with a var and have a new date variable, write to realm if not saved on device, otherwise just read from firebase, sync")
 
 
 class MealPlanner {
@@ -19,8 +18,6 @@ class MealPlanner {
     var userIDs: [String]?
     var group: Bool?
     private var db = Firestore.firestore()
-    
-    
     
     
     func readIfUserHasMealPlanner() {
@@ -79,12 +76,14 @@ class MealPlanner {
                 "group": true
             ]) { error in
                 if error == nil {
+                    var uids: [String]? = []
                     self.exists = true
                     self.group = true
                     for email in groupEmails {
                         // need to get the user's id
                         User.turnEmailToUid(db: self.db, email: email) { (uid) in
                             if let uid = uid {
+                                uids?.append(uid)
                                 // need to add the user's id to the main meal planner document
                                 reference.updateData([
                                     "userIDs" : FieldValue.arrayUnion([uid])
@@ -98,8 +97,9 @@ class MealPlanner {
                                     }
                                 }
                             }
-                            self.userIDs?.append(email)
+                            self.userIDs = uids
                         }
+                        
                     }
                 } else {
                     print("Error creating group meal planner: \(String(describing: error))")
@@ -108,7 +108,7 @@ class MealPlanner {
         }
     }
     
-    func addRecipeToPlanner(db: Firestore, recipe: MPCookbookRecipe, shortDate: String, mealType: MealType) {
+    func addRecipeToPlanner(recipe: MPCookbookRecipe, shortDate: String, mealType: MealType) {
         let date = shortDate.shortDateToMonthYear()
         print("Writing meal plan recipe to firestore on \(date)")
         if let id = SharedValues.shared.mealPlannerID {
@@ -128,10 +128,11 @@ class MealPlanner {
             ]) { error in
                 if error == nil {
                     recipe.id = reference.documentID
+                    recipe.write()
                     if self.group == true, let uids = self.userIDs {
                         for id in uids {
                             if id != SharedValues.shared.userID {
-                                MealPlanner.writeRecipeToUsersProfile(db: db, id: reference.documentID, recipe: recipe, shortDate: shortDate, mealType: mealType, userID: id)
+                                MealPlanner.writeRecipeToUsersProfile(db: self.db, id: reference.documentID, recipe: recipe, shortDate: shortDate, mealType: mealType, userID: id)
                             }
                         }
                     }
@@ -140,10 +141,24 @@ class MealPlanner {
         }
     }
     
+    func listenForNewRecipesAddedToMealPlannerToWriteToRealm() {
+        #warning("need to use a unique device identifier here, or in the user's profile, to ensure each device could download them, in realm need to seperate them by account")
+        if let uid = SharedValues.shared.userID {
+            let reference = db.collection("users").document(uid).collection("mealPlanner-new")
+            reference.addSnapshotListener { (querySnapshot, error) in
+                guard let docs = querySnapshot?.documents else { print(error as Any); return }
+                for doc in docs {
+                    let mpCookbookRecipe = doc.getMPCookbookRecipe()
+                    mpCookbookRecipe.write()
+                }
+            }
+        }
+    }
+    
+    
     class func writeRecipeToUsersProfile(db: Firestore, id: String, recipe: MPCookbookRecipe, shortDate: String, mealType: MealType, userID: String) {
-        #warning("need to do additional testing on this")
         print("Need to add to user's document: \(userID)")
-        let reference = db.collection("users").document(id).collection("mealPlanner-new").document(recipe.id)
+        let reference = db.collection("users").document(userID).collection("mealPlanner-new").document(recipe.id)
         reference.setData([
             "name": recipe.name,
             "ingredients": Array(recipe.ingredients),
@@ -155,7 +170,7 @@ class MealPlanner {
             "notes": recipe.notes as Any,
             "date": shortDate,
             "mealType": mealType.rawValue,
-            "id": reference.documentID
+            "id": id
         ])
     }
     

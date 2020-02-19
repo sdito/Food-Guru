@@ -10,6 +10,11 @@ import UIKit
 import FirebaseFirestore
 import StoreKit
 
+
+
+#warning("need to get the unique device identifier, if that device has not been seen yet then need to create a new document, else just save what device is what")
+
+
 class TabVC: UITabBarController {
     
     var db: Firestore!

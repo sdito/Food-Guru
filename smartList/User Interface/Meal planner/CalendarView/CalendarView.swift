@@ -28,8 +28,8 @@ class CalendarView: UIView {
     @IBOutlet var day: [UIButton]!
     @IBOutlet weak var monthYearLabel: UILabel!
     
-    var monthsInFuture: Int?
     weak var delegate: CalendarViewDelegate!
+    var monthsInFuture: Int?
     private var isCurrentMonth = false
     private var year: Int?
     private var date: Date?
@@ -70,8 +70,6 @@ class CalendarView: UIView {
                     
                     // tell the delegate what the current day is
                     delegate.dateButtonSelected(month: Month.monthFromInt(int: calendar.component(.month, from: date ?? Date())), day: Int(d.titleLabel!.text!)!, year: calendar.component(.year, from: date ?? Date()))
-                    
-                    
                 }
             } else {
                 // from the 'next' month, so new tag will be 2

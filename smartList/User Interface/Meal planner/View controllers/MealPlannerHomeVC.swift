@@ -54,7 +54,7 @@ class MealPlannerHomeVC: UIViewController {
             self.scrollView.setContentOffset(CGPoint(x: self.view.bounds.width, y: 0), animated: false)
         }
         mealPlanner.readIfUserHasMealPlanner()
-        
+        mealPlanner.listenForNewRecipesAddedToMealPlannerToWriteToRealm()
     }
     
     
@@ -135,7 +135,7 @@ class MealPlannerHomeVC: UIViewController {
 extension MealPlannerHomeVC: CalendarViewDelegate {
     func dateButtonSelected(month: Month, day: Int, year: Int) {
         shortDate = "\(month.int).\(day).\(year)"
-        // use short date for database
+        // use short date for database, load the associated recipes into the table view here
         print(shortDate ?? "")
         selectedDayLabel.text = "\(month.description) \(day)"
     }

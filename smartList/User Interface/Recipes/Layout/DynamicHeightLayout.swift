@@ -18,7 +18,7 @@ class DynamicHeightLayout: UICollectionViewLayout {
     var delegate: DynamicHeightLayoutDelegate!
     var numberOfColumns = 2
     var cellPadding: CGFloat = 2
-    var headerHeight: CGFloat = 50 //not really used yet probbaly delete
+    var headerHeight: CGFloat = 50 // decide if should use
     
     var cache = [UICollectionViewLayoutAttributes]()
     fileprivate var contentHeight: CGFloat = 0

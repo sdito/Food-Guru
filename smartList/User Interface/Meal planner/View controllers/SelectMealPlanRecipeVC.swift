@@ -46,6 +46,7 @@ class SelectMealPlanRecipeVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(Realm.Configuration.defaultConfiguration.fileURL)
         db = Firestore.firestore()
         tableView.delegate = self
         tableView.dataSource = self
@@ -83,7 +84,7 @@ extension SelectMealPlanRecipeVC: SelectRecipeCellDelegate {
                 mpr.date = date
             }
             if let shortDate = recipeSelection.1 {
-                mealPlanner?.addRecipeToPlanner(db: db, recipe: mpr, shortDate: shortDate, mealType: .none)
+                mealPlanner?.addRecipeToPlanner(recipe: mpr, shortDate: shortDate, mealType: .none)
             }
             
             self.navigationController?.createMessageView(color: Colors.messageGreen, text: "Recipe added to planner!")

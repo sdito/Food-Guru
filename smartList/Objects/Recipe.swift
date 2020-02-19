@@ -365,7 +365,11 @@ struct Recipe {
             NotificationCenter.default.post(name: .recipeDataFromURLReceived, object: nil, userInfo: dict)
 
         }
-        task.resume()
+        
+        DispatchQueue.global(qos: .background).async {
+            task.resume()
+        }
+        
     }
     
    
@@ -584,77 +588,78 @@ extension Recipe {
         }
            
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            DispatchQueue.main.async {
-                guard let data = data else {
-                    print("Data was nil")
-                    return
-                }
-                
-                if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
-                    if let dictionary = json as? [String:Any] {
-                        let newData = dictionary["results"] as? [Any]
-                        
-                        if let newData = newData {
-                            for recipeData in newData {
-                                let recipeDataDict = recipeData as? [String:Any]
-                                if let recipeDataDict = recipeDataDict {
-                                    // only need title, ingredients, and URL for displaying in OtherRecipes VC
-                                    let title = recipeDataDict["title"] as? String
-                                    let trimTitle = title?.trim()
-                                    let ingredients = recipeDataDict["ingredients"] as? String
-                                    let url = recipeDataDict["href"] as? String
-                                    let puppyRecipe = Recipe.Puppy(title: trimTitle, ingredients: ingredients, url: URL(string: url ?? ""))
-                                    puppyRecipes.append(puppyRecipe)
-                                       
-                                }
+            
+            guard let data = data else {
+                print("Data was nil")
+                return
+            }
+            
+            if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
+                if let dictionary = json as? [String:Any] {
+                    let newData = dictionary["results"] as? [Any]
+                    
+                    if let newData = newData {
+                        for recipeData in newData {
+                            let recipeDataDict = recipeData as? [String:Any]
+                            if let recipeDataDict = recipeDataDict {
+                                // only need title, ingredients, and URL for displaying in OtherRecipes VC
+                                let title = recipeDataDict["title"] as? String
+                                let trimTitle = title?.trim()
+                                let ingredients = recipeDataDict["ingredients"] as? String
+                                let url = recipeDataDict["href"] as? String
+                                let puppyRecipe = Recipe.Puppy(title: trimTitle, ingredients: ingredients, url: URL(string: url ?? ""))
+                                puppyRecipes.append(puppyRecipe)
                                    
                             }
-                            recipesFound(puppyRecipes)
+                               
                         }
-                    } else {
-                        recipesFound([])
+                        recipesFound(puppyRecipes)
                     }
                 } else {
-                    // Need to account for API format being changed here
-                    // Create a new function with the similar logic in both
-                    guard let htmlString = String(data: data, encoding: .utf8) else { return }
-                    let lowerRange = htmlString.startIndex
-                    guard let upperRange = htmlString.range(of: "<!DOCTYPE")?.lowerBound else { return }
-                    let range = lowerRange..<upperRange
-                    let str = String(htmlString[range])
+                    recipesFound([])
+                }
+            } else {
+                // Need to account for API format being changed here
+                // Create a new function with the similar logic in both
+                guard let htmlString = String(data: data, encoding: .utf8) else { return }
+                let lowerRange = htmlString.startIndex
+                guard let upperRange = htmlString.range(of: "<!DOCTYPE")?.lowerBound else { return }
+                let range = lowerRange..<upperRange
+                let str = String(htmlString[range])
+                
+                let newData = Data(str.utf8)
+                
+                
+                
+                let json = try? JSONSerialization.jsonObject(with: newData, options: [])
+                if let dictionary = json as? [String:Any] {
+                    let newData = dictionary["results"] as? [Any]
                     
-                    let newData = Data(str.utf8)
-                    
-                    
-                    
-                    let json = try? JSONSerialization.jsonObject(with: newData, options: [])
-                    if let dictionary = json as? [String:Any] {
-                        let newData = dictionary["results"] as? [Any]
-                        
-                        if let newData = newData {
-                            for recipeData in newData {
-                                let recipeDataDict = recipeData as? [String:Any]
-                                if let recipeDataDict = recipeDataDict {
-                                    // only need title, ingredients, and URL for displaying in OtherRecipes VC
-                                    let title = recipeDataDict["title"] as? String
-                                    let trimTitle = title?.trim()
-                                    let ingredients = recipeDataDict["ingredients"] as? String
-                                    let url = recipeDataDict["href"] as? String
-                                    let puppyRecipe = Recipe.Puppy(title: trimTitle, ingredients: ingredients, url: URL(string: url ?? ""))
-                                    puppyRecipes.append(puppyRecipe)
-                                       
-                                }
+                    if let newData = newData {
+                        for recipeData in newData {
+                            let recipeDataDict = recipeData as? [String:Any]
+                            if let recipeDataDict = recipeDataDict {
+                                // only need title, ingredients, and URL for displaying in OtherRecipes VC
+                                let title = recipeDataDict["title"] as? String
+                                let trimTitle = title?.trim()
+                                let ingredients = recipeDataDict["ingredients"] as? String
+                                let url = recipeDataDict["href"] as? String
+                                let puppyRecipe = Recipe.Puppy(title: trimTitle, ingredients: ingredients, url: URL(string: url ?? ""))
+                                puppyRecipes.append(puppyRecipe)
                                    
                             }
-                            recipesFound(puppyRecipes)
+                               
                         }
-                    } else {
-                        recipesFound([])
+                        recipesFound(puppyRecipes)
                     }
-                    
+                } else {
+                    recipesFound([])
                 }
+                
             }
         }
+        
+        
         task.resume()
     }
     
