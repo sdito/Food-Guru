@@ -53,6 +53,44 @@ class CalendarView: UIView {
         let daysInPreviousMonth = calendar.daysInMonth(date: date ?? Date(), monthsDifference: -1)
         
         for d in day {
+            
+            if d.tag == 1 {
+                // test for setting ui for when there are recipes on that day, a small dot for each recipe on that day, up to 3 dots
+                d.translatesAutoresizingMaskIntoConstraints = false
+                
+                let sv = UIStackView()
+                sv.translatesAutoresizingMaskIntoConstraints = false
+                sv.axis = .horizontal
+                sv.alignment = .center
+                sv.distribution = .fillEqually
+                sv.spacing = 5.0
+                
+                let view = UIView()
+                let view2 = UIView()
+                let view3 = UIView()
+                
+                sv.insertArrangedSubview(view, at: 0)
+                sv.insertArrangedSubview(view2, at: 0)
+                sv.insertArrangedSubview(view3, at: 0)
+                
+                view.backgroundColor = .red; view2.backgroundColor = .red; view3.backgroundColor = .red
+                view.heightAnchor.constraint(equalToConstant: 7.5).isActive = true
+                view2.heightAnchor.constraint(equalToConstant: 7.5).isActive = true
+                view3.heightAnchor.constraint(equalToConstant: 7.5).isActive = true
+                view.widthAnchor.constraint(equalToConstant: 7.5).isActive = true
+                view2.widthAnchor.constraint(equalToConstant: 7.5).isActive = true
+                view3.widthAnchor.constraint(equalToConstant: 7.5).isActive = true
+                
+                d.addSubview(sv)
+                d.bringSubviewToFront(sv)
+//                sv.heightAnchor.constraint(equalToConstant: d.bounds.height / 3).isActive = true
+                sv.leadingAnchor.constraint(greaterThanOrEqualTo: d.leadingAnchor).isActive = true
+                sv.trailingAnchor.constraint(greaterThanOrEqualTo: d.trailingAnchor).isActive = true
+                sv.bottomAnchor.constraint(equalTo: d.bottomAnchor).isActive = true
+                
+                
+            }
+            
             d.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
             if d.tag < firstWeekday {
                 // from the 'before' month, so new tag will be 0

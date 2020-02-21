@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 import FirebaseFirestore
+import RealmSwift
 
 #warning("need to address issue of the UI for the current day not resetting when app is kept in memory")
 
@@ -21,14 +22,24 @@ class MealPlannerHomeVC: UIViewController {
     @IBOutlet weak var addRecipeButtonOutlet: UIButton!
     
     var db: Firestore!
+    private var mpCookbookRecipes: [MPCookbookRecipe] = [] {
+        didSet {
+            print(self.mpCookbookRecipes.map({$0.date}))
+        }
+    }
+    private var realm: Realm?
     private var mealPlanner = MealPlanner()
     private var shortDate: String?
     private var monthsNeededToAdd = 2
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         db = Firestore.firestore()
+        realm = try? Realm()
         scrollView.delegate = self
+        getMealPlannerRecipes()
+        
         let view = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
         let view2 = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
         let view3 = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
@@ -91,6 +102,15 @@ class MealPlannerHomeVC: UIViewController {
             destVC.recipeSelection = sender as! (RecipeSelection, String?)
             destVC.mealPlanner = mealPlanner
         }
+    }
+    
+    // MARK: Funcs
+    private func getMealPlannerRecipes() {
+        if let realm = realm {
+            // Should use a listener to automatically update the objects
+            mpCookbookRecipes = Array(realm.objects(MPCookbookRecipe.self))
+        }
+        
     }
     
     // MARK: IBAction funcs

@@ -12,10 +12,9 @@ import FirebaseFirestore
 
 
 class MPCookbookRecipe: CookbookRecipe {
-    
+
     @objc dynamic var id: String = ""
     @objc dynamic var date: String = ""
-    
 
     override func write() {
         print("Writing recipe to realm for MPCookbookRecipe")
