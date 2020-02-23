@@ -11,17 +11,11 @@ import FirebaseCore
 import FirebaseFirestore
 
 
-
-
-
 /// Each time a value is added, need to set it to nil in User.resetSharedValues()
 
 
-
-
-
 class SharedValues {
-    //var currentCategory: String = ""
+
     var listIdentifier: DocumentReference?
     var userID: String?
     var recipeType: [String]?

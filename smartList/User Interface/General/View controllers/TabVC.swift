@@ -35,7 +35,7 @@ class TabVC: UITabBarController {
         User.setAndPersistGroupDataInSharedValues(db: db)
         
         let uuid = UIDevice().identifierForVendor?.uuidString
-        print(uuid)
+        print(uuid as Any)
         
         let defaults = UserDefaults.standard
         let numTimesRan = defaults.integer(forKey: "timesOpened")

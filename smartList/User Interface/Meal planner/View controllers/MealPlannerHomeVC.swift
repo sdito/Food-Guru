@@ -20,13 +20,9 @@ class MealPlannerHomeVC: UIViewController {
     @IBOutlet weak var baseView: UIView!
     @IBOutlet weak var selectedDayLabel: UILabel!
     @IBOutlet weak var addRecipeButtonOutlet: UIButton!
+    @IBOutlet weak var tableView: UITableView!
     
     var db: Firestore!
-    private var mpCookbookRecipes: [MPCookbookRecipe] = [] {
-        didSet {
-            print(self.mpCookbookRecipes.map({$0.date}))
-        }
-    }
     private var realm: Realm?
     private var mealPlanner = MealPlanner()
     private var shortDate: String?
@@ -37,8 +33,8 @@ class MealPlannerHomeVC: UIViewController {
         
         db = Firestore.firestore()
         realm = try? Realm()
-        scrollView.delegate = self
-        getMealPlannerRecipes()
+        scrollView.delegate = self; tableView.delegate = self; tableView.dataSource = self
+        
         
         let view = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
         let view2 = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
@@ -48,16 +44,17 @@ class MealPlannerHomeVC: UIViewController {
         calendarStackView.addArrangedSubview(view2)
         calendarStackView.addArrangedSubview(view3)
         
-        view.delegate = self
-        view2.delegate = self
-        view3.delegate = self
+        view.delegate = self; view2.delegate = self; view3.delegate = self
         
         view2.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 1.0).isActive = true
         view2.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1.0).isActive = true
         
-        view.setUI(monthsInFuture: -1)
-        view2.setUI(monthsInFuture: 0)
-        view3.setUI(monthsInFuture: 1)
+        
+        mealPlanner.getMealPlannerRecipes()
+        
+        view.setUI(monthsInFuture: -1, recipes: mealPlanner.recipes)
+        view2.setUI(monthsInFuture: 0, recipes: mealPlanner.recipes)
+        view3.setUI(monthsInFuture: 1, recipes: mealPlanner.recipes)
         
         baseView.removeFromSuperview()
         
@@ -66,6 +63,8 @@ class MealPlannerHomeVC: UIViewController {
         }
         mealPlanner.readIfUserHasMealPlanner()
         mealPlanner.listenForNewRecipesAddedToMealPlannerToWriteToRealm()
+        
+        
     }
     
     
@@ -77,7 +76,8 @@ class MealPlannerHomeVC: UIViewController {
         if SharedValues.shared.mealPlannerID == nil {
             
             if SharedValues.shared.groupID == nil {
-                #warning("need to initialize new meal planner with group here")
+                #warning("need to initialize new meal planner with individual here")
+                
                 
                 mealPlanner.createIndividualMealPlanner()
             } else {
@@ -104,14 +104,6 @@ class MealPlannerHomeVC: UIViewController {
         }
     }
     
-    // MARK: Funcs
-    private func getMealPlannerRecipes() {
-        if let realm = realm {
-            // Should use a listener to automatically update the objects
-            mpCookbookRecipes = Array(realm.objects(MPCookbookRecipe.self))
-        }
-        
-    }
     
     // MARK: IBAction funcs
     @IBAction func addRecipePressed(_ sender: Any) {
@@ -123,6 +115,7 @@ class MealPlannerHomeVC: UIViewController {
                 return nil
             }
         }
+        
         let actionSheet = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
         actionSheet.addAction(.init(title: "Add new recipe", style: .default, handler: { action in
             let sb = UIStoryboard(name: "Recipes", bundle: nil)
@@ -162,7 +155,17 @@ extension MealPlannerHomeVC: CalendarViewDelegate {
     
 }
 
-
+extension MealPlannerHomeVC: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 20
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = "\(indexPath.row)"
+        return cell
+    }
+}
 
 
 // MARK: Scroll view
@@ -174,7 +177,7 @@ extension MealPlannerHomeVC: UIScrollViewDelegate {
         
         if bounds == size * count {
             let view = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)?.first as! CalendarView
-            view.setUI(monthsInFuture: monthsNeededToAdd)
+            view.setUI(monthsInFuture: monthsNeededToAdd, recipes: mealPlanner.recipes)
             view.delegate = self
             calendarStackView.addArrangedSubview(view)
             monthsNeededToAdd += 1

@@ -27,17 +27,20 @@ class CalendarView: UIView {
     
     @IBOutlet var day: [UIButton]!
     @IBOutlet weak var monthYearLabel: UILabel!
-    
+
     weak var delegate: CalendarViewDelegate!
     var monthsInFuture: Int?
+    var recipes: [MPCookbookRecipe]?
     private var isCurrentMonth = false
     private var year: Int?
     private var date: Date?
     private let calendar = Calendar.current
     
     
-    func setUI(monthsInFuture: Int) {
+    func setUI(monthsInFuture: Int, recipes: [MPCookbookRecipe]?) {
         self.monthsInFuture = monthsInFuture
+        self.recipes = recipes
+        
         if monthsInFuture == 0 {
             isCurrentMonth = true
         }
@@ -53,69 +56,104 @@ class CalendarView: UIView {
         let daysInPreviousMonth = calendar.daysInMonth(date: date ?? Date(), monthsDifference: -1)
         
         for d in day {
-            
-            if d.tag == 1 {
-                // test for setting ui for when there are recipes on that day, a small dot for each recipe on that day, up to 3 dots
-                d.translatesAutoresizingMaskIntoConstraints = false
-                
-                let sv = UIStackView()
-                sv.translatesAutoresizingMaskIntoConstraints = false
-                sv.axis = .horizontal
-                sv.alignment = .center
-                sv.distribution = .fillEqually
-                sv.spacing = 5.0
-                
-                let view = UIView()
-                let view2 = UIView()
-                let view3 = UIView()
-                
-                sv.insertArrangedSubview(view, at: 0)
-                sv.insertArrangedSubview(view2, at: 0)
-                sv.insertArrangedSubview(view3, at: 0)
-                
-                view.backgroundColor = .red; view2.backgroundColor = .red; view3.backgroundColor = .red
-                view.heightAnchor.constraint(equalToConstant: 7.5).isActive = true
-                view2.heightAnchor.constraint(equalToConstant: 7.5).isActive = true
-                view3.heightAnchor.constraint(equalToConstant: 7.5).isActive = true
-                view.widthAnchor.constraint(equalToConstant: 7.5).isActive = true
-                view2.widthAnchor.constraint(equalToConstant: 7.5).isActive = true
-                view3.widthAnchor.constraint(equalToConstant: 7.5).isActive = true
-                
-                d.addSubview(sv)
-                d.bringSubviewToFront(sv)
-//                sv.heightAnchor.constraint(equalToConstant: d.bounds.height / 3).isActive = true
-                sv.leadingAnchor.constraint(greaterThanOrEqualTo: d.leadingAnchor).isActive = true
-                sv.trailingAnchor.constraint(greaterThanOrEqualTo: d.trailingAnchor).isActive = true
-                sv.bottomAnchor.constraint(equalTo: d.bottomAnchor).isActive = true
-                
-                
-            }
+            var dayButtonDate: String?
+            d.layer.borderWidth = 1.0
+            d.layer.borderColor = Colors.label.cgColor
             
             d.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
             if d.tag < firstWeekday {
                 // from the 'before' month, so new tag will be 0
                 d.alpha = 0.4
-                d.setTitle("\(d.tag + daysInPreviousMonth - firstWeekday + 1)", for: .normal)
+                let dayNum = d.tag + daysInPreviousMonth - firstWeekday + 1
+                d.setTitle("\(dayNum)", for: .normal)
                 d.tag = 0
-                
+                dayButtonDate = "\(calendar.component(.month, from: data.dateUsed) - 1).\(dayNum).\(calendar.component(.year, from: data.dateUsed))"
             } else if d.tag < firstWeekday + numDays {
-                let dateNumber = d.tag - firstWeekday + 1
-                d.setTitle("\(dateNumber)", for: .normal)
+                // from the 'current' month
+                let dayNum = d.tag - firstWeekday + 1
+                d.setTitle("\(dayNum)", for: .normal)
                 d.tag = 1
                 
-                if isCurrentMonth && dateNumber == calendar.component(.day, from: date ?? Date()) {
+                if isCurrentMonth && dayNum == calendar.component(.day, from: date ?? Date()) {
                     d.setTitleColor(.systemGreen, for: .normal)
                     
                     // tell the delegate what the current day is
                     delegate.dateButtonSelected(month: Month.monthFromInt(int: calendar.component(.month, from: date ?? Date())), day: Int(d.titleLabel!.text!)!, year: calendar.component(.year, from: date ?? Date()))
                 }
+                dayButtonDate = "\(calendar.component(.month, from: data.dateUsed)).\(dayNum).\(calendar.component(.year, from: data.dateUsed))"
             } else {
                 // from the 'next' month, so new tag will be 2
                 d.alpha = 0.4
-                d.setTitle("\(d.tag - numDays - firstWeekday + 1)", for: .normal)
+                let dayNum = d.tag - numDays - firstWeekday + 1
+                d.setTitle("\(dayNum)", for: .normal)
                 d.tag = 2
+                dayButtonDate = "\(calendar.component(.month, from: data.dateUsed) + 1).\(dayNum).\(calendar.component(.year, from: data.dateUsed))"
             }
+            
+            setRecipeOnDayUI(b: d, shortDate: dayButtonDate)
+            
         }
+    }
+    
+    private func setRecipeOnDayUI(b: UIButton, shortDate: String?) {
+        
+        // need to get the number of recipes with a matching data
+        // add up to three views to the date for how many recipes that date has
+        if let shortDate = shortDate, let recipes = recipes {
+            var counter = 0
+            for recipe in recipes {
+                if recipe.date == shortDate {
+                    counter += 1
+                    if counter == 3 {
+                        break
+                    }
+                }
+            }
+            
+            if counter > 0 {
+                print("\(shortDate) has \(counter) recipes")
+                counter = min(3, counter)
+                b.translatesAutoresizingMaskIntoConstraints = false
+                        
+                let sv = UIStackView()
+                sv.translatesAutoresizingMaskIntoConstraints = false
+                sv.axis = .horizontal
+                sv.distribution = .fill
+                sv.spacing = 5.0
+                
+                
+                
+                for _ in 1...counter {
+                    let view = UIView()
+                    sv.insertArrangedSubview(view, at: 0)
+                    view.backgroundColor = Colors.label
+                    view.heightAnchor.constraint(equalToConstant: 5).isActive = true
+                    view.widthAnchor.constraint(equalToConstant: 5).isActive = true
+                }
+                
+                
+                b.addSubview(sv)
+                sv.bottomAnchor.constraint(equalTo: b.bottomAnchor, constant: -5).isActive = true
+                sv.leadingAnchor.constraint(equalTo: b.leadingAnchor).isActive = true
+                sv.trailingAnchor.constraint(equalTo: b.trailingAnchor).isActive = true
+                
+                let v1 = UIView(); let v2 = UIView()
+                v1.backgroundColor = .clear
+                v2.backgroundColor = .clear
+                sv.insertArrangedSubview(v1, at: 0)
+                sv.addArrangedSubview(v2)
+                v1.widthAnchor.constraint(equalTo: v2.widthAnchor).isActive = true
+            }
+            
+        }
+        
+        
+        
+        
+        
+        
+        
+        
     }
     
     // MARK: Button action

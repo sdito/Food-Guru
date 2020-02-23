@@ -20,6 +20,13 @@ struct Colors {
     static let lightGray = UIColor(red: 200.0/255.0, green: 200.0/255.0, blue: 200.0/255.0, alpha: 1.0)
     static let messageGreen = UIColor(red: 0.0/255.0, green: 128.0/255.0, blue: 0.0/255.0, alpha: 1.0)
     
+    static var label: UIColor {
+        if #available(iOS 13.0, *) {
+            return UIColor.label
+        } else {
+            return .black
+        }
+    }
 
     // Used for the crcle status view for item with expiration date
     static func getRGBcolorFromPercentage(double: Double) -> UIColor {

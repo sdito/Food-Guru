@@ -17,7 +17,9 @@ class MealPlanner {
     var exists: Bool?
     var userIDs: [String]?
     var group: Bool?
+    var recipes: [MPCookbookRecipe]?
     private var db = Firestore.firestore()
+    
     
     
     func readIfUserHasMealPlanner() {
@@ -43,6 +45,15 @@ class MealPlanner {
                     self.exists = false
                 }
             }
+        }
+    }
+    
+    func getMealPlannerRecipes() {
+        let realm = try? Realm()
+        if let realm = realm {
+            // Should use a listener to automatically update the objects
+            recipes = Array(realm.objects(MPCookbookRecipe.self))
+            
         }
     }
     
