@@ -77,7 +77,6 @@ extension SelectMealPlanRecipeVC: SelectRecipeCellDelegate {
             let mpr = MPCookbookRecipe()
             mpr.setUp(name: r.name, servings: r.servings, cookTime: r.cookTime, prepTime: r.prepTime, calories: r.calories, ingredients: r.ingredients, instructions: r.instructions, notes: r.notes)
             
-            #warning("need to write this to firebase, code is already in meal planner class")
             
             if let date = recipeSelection.1 {
                 mpr.date = date
@@ -88,7 +87,18 @@ extension SelectMealPlanRecipeVC: SelectRecipeCellDelegate {
             
             self.navigationController?.createMessageView(color: Colors.messageGreen, text: "Recipe added to planner!")
         } else if let r = recipe as? Recipe {
+//            #error("need to complete this now")
+            let cbr = r.turnRecipeIntoCookbookRecipe()
+            let mpr = MPCookbookRecipe()
+            mpr.setUp(name: cbr.name, servings: cbr.servings, cookTime: cbr.cookTime, prepTime: cbr.prepTime, calories: cbr.calories, ingredients: cbr.ingredients, instructions: cbr.instructions, notes: cbr.notes)
+            if let date = recipeSelection.1 {
+                mpr.date = date
+            }
+            if let shortDate = recipeSelection.1 {
+                mealPlanner?.addRecipeToPlanner(recipe: mpr, shortDate: shortDate, mealType: .none)
+            }
             print("Normal Recipe type, need to add: \(r.name) to stuff here")
+            self.navigationController?.createMessageView(color: Colors.messageGreen, text: "Recipe added to planner!")
         }
         
         self.navigationController?.popViewController(animated: true)

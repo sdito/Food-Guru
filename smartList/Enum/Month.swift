@@ -54,7 +54,6 @@ enum Month {
         }
     }
     
-    #warning("not used yet -- will be used for writing to database")
     var int: Int {
         switch self {
         

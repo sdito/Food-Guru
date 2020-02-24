@@ -156,11 +156,13 @@ class MealPlanner {
         #warning("need to use a unique device identifier here, or in the user's profile, to ensure each device could download them, in realm need to seperate them by account")
         if let uid = SharedValues.shared.userID {
             let reference = db.collection("users").document(uid).collection("mealPlanner-new")
-            reference.addSnapshotListener { (querySnapshot, error) in
+            reference.getDocuments { (querySnapshot, error) in
                 guard let docs = querySnapshot?.documents else { print(error as Any); return }
                 for doc in docs {
                     let mpCookbookRecipe = doc.getMPCookbookRecipe()
                     mpCookbookRecipe.write()
+                    let refToDelete = self.db.collection("users").document(uid).collection("mealPlanner-new").document(doc.documentID)
+                    refToDelete.delete()
                 }
             }
         }
@@ -184,6 +186,8 @@ class MealPlanner {
             "id": id
         ])
     }
+    
+    
     
     // MARK: UI
     // To get the int value for the first day of the example month from the specific day and weekday from a selected date

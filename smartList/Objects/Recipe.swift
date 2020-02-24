@@ -287,87 +287,89 @@ struct Recipe {
     
     
     static func getRecipeInfoFromURLallRecipes(recipeURL: String) {
-        
-        guard let url = URL(string: recipeURL) else {
-            NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
-            return
-        }
-        
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
-                return
-            }
-            guard let htmlString = String(data: data, encoding: .utf8) else {
-                NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
-                return
-            }
-            
-            guard let leftSideIngredients = htmlString.range(of: "=\"lst_ingredients_1\">") else {
-                print("Trouble finding left side -- ingredients")
-                Recipe.getRecipeInfoFromURL_allRecipesTwo(recipeURL: recipeURL)
-                return
-            }
-            guard let rightSideIngredients = htmlString.range(of: ">Add all ingredients to list</span>") else {
-                NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
-                return
-            }
-            
-            guard let leftSideDirections = htmlString.range(of: "<div class=\"directions--section\">") else {
-                NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
-                return
-            }
-            
-            guard let rightSideDirections = htmlString.range(of: "<div class=\"directions--section__right-side\">") else {
-                NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
-                return
-            }
-            
-            let rangeOfIngredientText = leftSideIngredients.upperBound..<rightSideIngredients.lowerBound
-            
-            
-            let ingredientText = String(htmlString[rangeOfIngredientText])
-            print(ingredientText)
-            var finalIngredients: [String] = []
-            
-            DispatchQueue.main.async {
-                print(ingredientText)
-                finalIngredients = ingredientText.getIngredientsFromString(ingredients: [])
-            }
-            
-            
-            
-            let rangeOfDirectionText = leftSideDirections.upperBound..<rightSideDirections.lowerBound
-            let instructionText = String(htmlString[rangeOfDirectionText])
-            let finalInstructions = instructionText.getInstructionsFromString(instructions: [])
-            
-            
-            let cookTime = instructionText.getCookTime()
-            let prepTime = instructionText.getPrepTime()
-            
-            let title = htmlString.getTitleFromHTML()
-            
-            let calories = htmlString.getCaloriesFromHTML()
-            
-            let servings = htmlString.getServingsFromHTML()
-            
-            
-            let dict: [String:Any] = [
-                "title": title,
-                "ingredients": finalIngredients,
-                "instructions": finalInstructions,
-                "cookTime": cookTime as Any,
-                "prepTime": prepTime as Any,
-                "calories": calories as Any,
-                "servings": servings as Any
-            ]
-            
-            NotificationCenter.default.post(name: .recipeDataFromURLReceived, object: nil, userInfo: dict)
-
-        }
-        
         DispatchQueue.global(qos: .background).async {
+            
+            guard let url = URL(string: recipeURL) else {
+                NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
+                return
+            }
+            
+            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+                guard let data = data else {
+                    NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
+                    return
+                }
+                guard let htmlString = String(data: data, encoding: .utf8) else {
+                    NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
+                    return
+                }
+                
+                guard let leftSideIngredients = htmlString.range(of: "=\"lst_ingredients_1\">") else {
+                    print("Trouble finding left side -- ingredients")
+                    Recipe.getRecipeInfoFromURL_allRecipesTwo(recipeURL: recipeURL)
+                    return
+                }
+                guard let rightSideIngredients = htmlString.range(of: ">Add all ingredients to list</span>") else {
+                    NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
+                    return
+                }
+                
+                guard let leftSideDirections = htmlString.range(of: "<div class=\"directions--section\">") else {
+                    NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
+                    return
+                }
+                
+                guard let rightSideDirections = htmlString.range(of: "<div class=\"directions--section__right-side\">") else {
+                    NotificationCenter.default.post(name: .recipeNotFoundFromURLalert, object: nil)
+                    return
+                }
+                
+                let rangeOfIngredientText = leftSideIngredients.upperBound..<rightSideIngredients.lowerBound
+                
+                
+                let ingredientText = String(htmlString[rangeOfIngredientText])
+                print(ingredientText)
+                var finalIngredients: [String] = []
+                
+                DispatchQueue.main.async {
+                    print(ingredientText)
+                    finalIngredients = ingredientText.getIngredientsFromString(ingredients: [])
+                }
+                
+                
+                
+                let rangeOfDirectionText = leftSideDirections.upperBound..<rightSideDirections.lowerBound
+                let instructionText = String(htmlString[rangeOfDirectionText])
+                let finalInstructions = instructionText.getInstructionsFromString(instructions: [])
+                
+                
+                let cookTime = instructionText.getCookTime()
+                let prepTime = instructionText.getPrepTime()
+                
+                let title = htmlString.getTitleFromHTML()
+                
+                let calories = htmlString.getCaloriesFromHTML()
+                
+                let servings = htmlString.getServingsFromHTML()
+                
+                
+                let dict: [String:Any] = [
+                    "title": title,
+                    "ingredients": finalIngredients,
+                    "instructions": finalInstructions,
+                    "cookTime": cookTime as Any,
+                    "prepTime": prepTime as Any,
+                    "calories": calories as Any,
+                    "servings": servings as Any
+                ]
+                
+                NotificationCenter.default.post(name: .recipeDataFromURLReceived, object: nil, userInfo: dict)
+
+            }
+            
             task.resume()
+        
+            
         }
         
     }

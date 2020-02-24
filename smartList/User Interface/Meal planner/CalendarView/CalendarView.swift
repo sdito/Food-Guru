@@ -57,8 +57,10 @@ class CalendarView: UIView {
         
         for d in day {
             var dayButtonDate: String?
-            d.layer.borderWidth = 1.0
+            d.layer.borderWidth = 0.5
             d.layer.borderColor = Colors.label.cgColor
+            d.layer.cornerRadius = 5.0
+            d.clipsToBounds = true
             
             d.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchUpInside)
             if d.tag < firstWeekday {
@@ -76,7 +78,6 @@ class CalendarView: UIView {
                 
                 if isCurrentMonth && dayNum == calendar.component(.day, from: date ?? Date()) {
                     d.setTitleColor(.systemGreen, for: .normal)
-                    
                     // tell the delegate what the current day is
                     delegate.dateButtonSelected(month: Month.monthFromInt(int: calendar.component(.month, from: date ?? Date())), day: Int(d.titleLabel!.text!)!, year: calendar.component(.year, from: date ?? Date()))
                 }
@@ -146,18 +147,16 @@ class CalendarView: UIView {
             }
             
         }
-        
-        
-        
-        
-        
-        
-        
-        
     }
     
     // MARK: Button action
     @objc func buttonPressed(_ sender: UIButton) {
+        if #available(iOS 13.0, *) {
+            sender.backgroundColor = .secondarySystemBackground
+        } else {
+            sender.backgroundColor = .systemGray
+        }
+        
         var monthInt = calendar.component(.month, from: date ?? Date())
         var yearInt = calendar.component(.year, from: date ?? Date())
         

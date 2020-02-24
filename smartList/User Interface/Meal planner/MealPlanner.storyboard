@@ -19,7 +19,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hHr-jE-GA5">
                                 <rect key="frame" x="0.0" y="502.5" width="414" height="310.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jQt-m7-BMn">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="jQt-m7-BMn">
                                         <rect key="frame" x="50" y="5" width="314" height="25"/>
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -28,6 +28,33 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YYz-Zv-Uqe">
                                         <rect key="frame" x="0.0" y="30" width="414" height="280.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="mealPlannerCell" rowHeight="85" id="j6h-a7-Z2O" customClass="MealPlannerCell" customModule="Food_Guru" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="414" height="85"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="j6h-a7-Z2O" id="IGI-9h-vuP">
+                                                    <rect key="frame" x="0.0" y="0.0" width="383" height="85"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bj-eR-9Pw">
+                                                            <rect key="frame" x="20" y="21" width="345" height="43"/>
+                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="0bj-eR-9Pw" firstAttribute="leading" secondItem="IGI-9h-vuP" secondAttribute="leadingMargin" id="Mrh-cf-mNh"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="0bj-eR-9Pw" secondAttribute="trailing" constant="10" id="Sew-oB-ylW"/>
+                                                        <constraint firstItem="0bj-eR-9Pw" firstAttribute="top" secondItem="IGI-9h-vuP" secondAttribute="topMargin" constant="10" id="bco-Sq-1Ty"/>
+                                                        <constraint firstAttribute="bottomMargin" secondItem="0bj-eR-9Pw" secondAttribute="bottom" constant="10" id="sJx-qJ-TF5"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="title" destination="0bj-eR-9Pw" id="K65-td-e7o"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
                                     </tableView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ty-Ev-ry8">
                                         <rect key="frame" x="374" y="0.0" width="30" height="30"/>
@@ -106,7 +133,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="unp-bn-axB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1054" y="-410"/>
+            <point key="canvasLocation" x="1053.6231884057972" y="-410.49107142857139"/>
         </scene>
         <!--Select recipe-->
         <scene sceneID="0lb-c1-2Kh">

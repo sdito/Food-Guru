@@ -11,6 +11,7 @@ import RealmSwift
 import FirebaseFirestore
 
 
+
 class MPCookbookRecipe: CookbookRecipe {
 
     @objc dynamic var id: String = ""
@@ -25,6 +26,18 @@ class MPCookbookRecipe: CookbookRecipe {
             realm.add(self)
         }
     }
+    
+    func set(cookbookRecipe: CookbookRecipe, date: String) {
+        setUp(name: cookbookRecipe.name, servings: cookbookRecipe.servings, cookTime: cookbookRecipe.cookTime, prepTime: cookbookRecipe.prepTime, calories: cookbookRecipe.calories, ingredients: cookbookRecipe.ingredients, instructions: cookbookRecipe.instructions, notes: cookbookRecipe.notes)
+        self.date = date
+    }
+    
+    func toCookbookRecipe() -> CookbookRecipe {
+        let cbr = CookbookRecipe()
+        cbr.setUp(name: self.name, servings: self.servings, cookTime: self.cookTime, prepTime: self.prepTime, calories: self.calories, ingredients: self.ingredients, instructions: self.instructions, notes: self.notes)
+        return cbr
+    }
+    
 }
 
 
@@ -53,4 +66,11 @@ extension QueryDocumentSnapshot {
         
         return recipe
     }
+}
+
+
+
+
+class UserDevice: Object {
+    @objc dynamic var uid: String = ""
 }

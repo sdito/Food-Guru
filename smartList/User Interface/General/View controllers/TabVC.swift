@@ -9,10 +9,10 @@
 import UIKit
 import FirebaseFirestore
 import StoreKit
+import RealmSwift
+import FirebaseAuth
 
-
-
-#warning("need to get the unique device identifier, if that device has not been seen yet then need to create a new document, else just save what device is what")
+#warning("need to get the unique device identifier, if that device has not been seen yet then need to create a new document, else just save what device is what, also need to handle logging into a new account on realm, i.e. delete the recipes or what")
 
 
 class TabVC: UITabBarController {
@@ -61,6 +61,19 @@ class TabVC: UITabBarController {
         }
         print(numTimesRan)
         defaults.set(numTimesRan + 1, forKey: "timesOpened")
+        
+        
+        #warning("just temporary, need to read the current object, if empty, then write to with uid, if not, make sure they are the same, if they are the same then good to go, if not need to delete everything from realm and see if the meal planner has recipes, if the meal planner has recipes need to downlaod all of them")
+        if let id = Auth.auth().currentUser?.uid {
+            print(Realm.Configuration.defaultConfiguration.fileURL)
+            let ud = UserDevice()
+            ud.uid = id
+            let realm = try? Realm()
+            try? realm?.write {
+                realm?.add(ud)
+            }
+        }
+        
         
     }
     

@@ -11,6 +11,13 @@ import Firebase
 import RealmSwift
 
 
+
+protocol CreateRecipeForMealPlannerDelegate: class {
+    func recipeCreated(recipe: CookbookRecipe)
+}
+
+
+
 class CreateRecipeVC: UIViewController {
     
     @IBOutlet var stackViewsToHide: [UIStackView]!
@@ -35,6 +42,7 @@ class CreateRecipeVC: UIViewController {
     
     var db: Firestore!
     var fromPlanner: (Bool, String?)?
+    weak var mealPlannerRecipeDelegate: CreateRecipeForMealPlannerDelegate!
     
     private var storage: Storage!
     private let imagePicker = UIImagePickerController()
@@ -170,12 +178,13 @@ class CreateRecipeVC: UIViewController {
             self.present(alert, animated: true)
             return
         }
-        // end
-        
-        
         
         switch forCookbook {
         case false:
+            if fromPlanner?.0 == true {
+                forCookbook = true
+                fallthrough
+            }
             guard let img = image else {
                 let alert = UIAlertController(title: "Error", message: "Missing recipe image", preferredStyle: .alert)
                 alert.addAction(.init(title: "Ok", style: .default, handler: nil))
@@ -200,6 +209,9 @@ class CreateRecipeVC: UIViewController {
             
             var recipe = Recipe(name: nameTextField.text!, recipeType: rType, cuisineType: cType, cookTime: cookTime, prepTime: prepTime, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servings, userID: uid, numReviews: nil, numStars: nil, notes: notesTextView.text, tagline: taglineTextView.text, recipeImage: img, imagePath: nil, reviewImagePaths: nil)
             recipe.writeToFirestore(db: db, storage: storage)
+            
+            
+            
             navigationController?.popToRootViewController(animated: true)
             
         case true:
@@ -216,11 +228,20 @@ class CreateRecipeVC: UIViewController {
             cookbookRecipe.setUp(name: nameTextField.text!, servings: RealmOptional(servingsTextField.toInt()), cookTime: RealmOptional(cookTimeTextField.toInt()), prepTime: RealmOptional(prepTimeTextField.toInt()), calories: RealmOptional(caloriesTextField.toInt()), ingredients: ingredients, instructions: instructions, notes: notesTextView.text)
             cookbookRecipe.write()
             
+            navigationController?.popToRootViewController(animated: true)
+            
+            
             if fromPlanner?.0 == true {
                 #warning("need to do adding to planner stuff here, date is 1 in fromPlanner tuple")
+                if mealPlannerRecipeDelegate != nil {
+                    mealPlannerRecipeDelegate.recipeCreated(recipe: cookbookRecipe)
+                } else {
+                    print("Something went wrong... mealPlannerRecipeDelegate is nil on CreateRecipeVC")
+                }
+                
             }
             
-            navigationController?.popToRootViewController(animated: true)
+            
         }
     }
     
@@ -237,7 +258,7 @@ class CreateRecipeVC: UIViewController {
     @IBAction func selectDescriptions(_ sender: Any) {
         pushToPopUp()
     }
-    // MARK: functions
+    // MARK: Functions
     private func createObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(recipeDataReceivedFromURL), name: .recipeDataFromURLReceived, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(noRecipeFound), name: .recipeNotFoundFromURLalert, object: nil)

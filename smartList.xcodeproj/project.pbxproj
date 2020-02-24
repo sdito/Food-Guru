@@ -68,6 +68,7 @@
 		E27D70B4233F24A5009C68B3 /* UISearchBar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */; };
 		E27D70B62340079D009C68B3 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70B52340079D009C68B3 /* RecipeCell.swift */; };
 		E27D70C223404414009C68B3 /* DynamicHeightLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27D70C123404414009C68B3 /* DynamicHeightLayout.swift */; };
+		E2872422240319FE000FBBB0 /* MealPlannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2872421240319FE000FBBB0 /* MealPlannerCell.swift */; };
 		E28A4CBD23DE817800C94DF9 /* Lists.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E28A4CBC23DE817800C94DF9 /* Lists.storyboard */; };
 		E28A4CBF23DE818100C94DF9 /* Recipes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E28A4CBE23DE818100C94DF9 /* Recipes.storyboard */; };
 		E28A4CC123DE818B00C94DF9 /* Storage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E28A4CC023DE818B00C94DF9 /* Storage.storyboard */; };
@@ -231,6 +232,7 @@
 		E27D70B3233F24A5009C68B3 /* UISearchBar-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UISearchBar-Extension.swift"; sourceTree = "<group>"; };
 		E27D70B52340079D009C68B3 /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
 		E27D70C123404414009C68B3 /* DynamicHeightLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightLayout.swift; sourceTree = "<group>"; };
+		E2872421240319FE000FBBB0 /* MealPlannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlannerCell.swift; sourceTree = "<group>"; };
 		E28A4CBC23DE817800C94DF9 /* Lists.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Lists.storyboard; sourceTree = "<group>"; };
 		E28A4CBE23DE818100C94DF9 /* Recipes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Recipes.storyboard; sourceTree = "<group>"; };
 		E28A4CC023DE818B00C94DF9 /* Storage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storage.storyboard; sourceTree = "<group>"; };
@@ -520,6 +522,15 @@
 			path = Layout;
 			sourceTree = "<group>";
 		};
+		E287242324031A02000FBBB0 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E2872421240319FE000FBBB0 /* MealPlannerCell.swift */,
+				E2369B7623EF9A7600A2293D /* SelectRecipeCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		E28A4CC823DE842400C94DF9 /* View controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -607,7 +618,7 @@
 				E28A4CC423DE840D00C94DF9 /* MealPlanner.storyboard */,
 				E28A4CC823DE842400C94DF9 /* View controllers */,
 				E29FDE1323E554E5005CE08B /* CalendarView */,
-				E2369B7623EF9A7600A2293D /* SelectRecipeCell.swift */,
+				E287242324031A02000FBBB0 /* Cells */,
 			);
 			path = "Meal planner";
 			sourceTree = "<group>";
@@ -1220,6 +1231,7 @@
 				E2369B7523EE5E3400A2293D /* RecipeSelection.swift in Sources */,
 				E2FCD09023F507BC00C172CD /* MealType.swift in Sources */,
 				E2D8462D231264CD004B19C2 /* Recipe.swift in Sources */,
+				E2872422240319FE000FBBB0 /* MealPlannerCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

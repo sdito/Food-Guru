@@ -25,7 +25,17 @@ class MealPlannerHomeVC: UIViewController {
     var db: Firestore!
     private var realm: Realm?
     private var mealPlanner = MealPlanner()
-    private var shortDate: String?
+    private var shortDate: String? {
+        didSet {
+            let newRecipes = mealPlanner.recipes?.filter({$0.date == self.shortDate})
+            if dateRecipes != newRecipes {
+                dateRecipes = newRecipes
+                UIView.transition(with: tableView, duration: 0.4, options: .transitionFlipFromTop, animations: self.tableView.reloadData)
+            }
+            
+        }
+    }
+    private var dateRecipes: [MPCookbookRecipe]?
     private var monthsNeededToAdd = 2
     
     override func viewDidLoad() {
@@ -76,8 +86,6 @@ class MealPlannerHomeVC: UIViewController {
         if SharedValues.shared.mealPlannerID == nil {
             
             if SharedValues.shared.groupID == nil {
-                #warning("need to initialize new meal planner with individual here")
-                
                 
                 mealPlanner.createIndividualMealPlanner()
             } else {
@@ -122,7 +130,7 @@ class MealPlannerHomeVC: UIViewController {
             let vc = sb.instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
             vc.fromPlanner = (true, self.shortDate)
             self.navigationController?.pushViewController(vc, animated: true)
-            #warning("need to implement the adding of the recipe once its created")
+            vc.mealPlannerRecipeDelegate = self
         }))
         actionSheet.addAction(.init(title: "Cookbook", style: .default, handler: { action in
             self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.cookbook, self.shortDate))
@@ -142,6 +150,18 @@ class MealPlannerHomeVC: UIViewController {
     }
 }
 
+// MARK: CreateRecipeForMealPlannerDelegate
+extension MealPlannerHomeVC: CreateRecipeForMealPlannerDelegate {
+    func recipeCreated(recipe: CookbookRecipe) {
+        
+        if let shortDate = shortDate {
+            let mpcbr = MPCookbookRecipe()
+            mpcbr.set(cookbookRecipe: recipe, date: shortDate)
+            mealPlanner.addRecipeToPlanner(recipe: mpcbr, shortDate: shortDate, mealType: .none)
+        }
+        
+    }
+}
 
 
 // MARK: CalendarViewDelegate
@@ -150,20 +170,48 @@ extension MealPlannerHomeVC: CalendarViewDelegate {
         shortDate = "\(month.int).\(day).\(year)"
         // use short date for database, load the associated recipes into the table view here
         print(shortDate ?? "")
-        selectedDayLabel.text = "\(month.description) \(day)"
+        
+        if selectedDayLabel.text != "Date" {
+            UIView.animate(withDuration: 0.1, animations: {
+                self.selectedDayLabel.alpha = 0.3
+            }) { (complete) in
+                self.selectedDayLabel.text = "\(month.description) \(day)"
+                UIView.animate(withDuration: 0.1) {
+                    self.selectedDayLabel.alpha = 1.0
+                }
+            }
+        } else {
+            selectedDayLabel.text = "\(month.description) \(day)"
+        }
+        
+        
+        
     }
     
 }
 
+// MARK: Table view
 extension MealPlannerHomeVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return dateRecipes?.count ?? 0
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = "\(indexPath.row)"
+        let cell = tableView.dequeueReusableCell(withIdentifier: "mealPlannerCell") as! MealPlannerCell
+        let recipe = dateRecipes![indexPath.row]
+        cell.setUI(recipe: recipe)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.cellForRow(at: indexPath)?.isSelected = false
+        let recipe = dateRecipes![indexPath.row].toCookbookRecipe()
+        let sb = UIStoryboard(name: "Recipes", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC
+        vc.cookbookRecipe = recipe
+        self.navigationController?.pushViewController(vc, animated: true)
+        
     }
 }
 
@@ -171,21 +219,21 @@ extension MealPlannerHomeVC: UITableViewDataSource, UITableViewDelegate {
 // MARK: Scroll view
 extension MealPlannerHomeVC: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let bounds = scrollView.bounds.minX
-        let size = scrollView.frame.width
-        let count = CGFloat(calendarStackView.subviews.count - 1)
-        
-        if bounds == size * count {
-            let view = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)?.first as! CalendarView
-            view.setUI(monthsInFuture: monthsNeededToAdd, recipes: mealPlanner.recipes)
-            view.delegate = self
-            calendarStackView.addArrangedSubview(view)
-            monthsNeededToAdd += 1
-        } else if size * count - bounds >= size*2 && calendarStackView.subviews.count > 2  {
-            calendarStackView.subviews.last?.removeFromSuperview()
-            monthsNeededToAdd -= 1
+        if scrollView != tableView {
+            let bounds = scrollView.bounds.minX
+            let size = scrollView.frame.width
+            let count = CGFloat(calendarStackView.subviews.count - 1)
+            
+            if bounds == size * count {
+                let view = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)?.first as! CalendarView
+                view.setUI(monthsInFuture: monthsNeededToAdd, recipes: mealPlanner.recipes)
+                view.delegate = self
+                calendarStackView.addArrangedSubview(view)
+                monthsNeededToAdd += 1
+            } else if size * count - bounds >= size*2 && calendarStackView.subviews.count > 2  {
+                calendarStackView.subviews.last?.removeFromSuperview()
+                monthsNeededToAdd -= 1
+            }
         }
-        
-        
     }
 }
