@@ -42,7 +42,7 @@ class PDFCreator: NSObject {
             let ingredientsBottom = addSectionTitleToPDF(pageRect: pageRect, sectionTitle: "Ingredients", textTop: titleBottom + 18.0)
             let ingredientSectionBottom = addBodyTextToPDF(pageRect: pageRect, textTop: ingredientsBottom + 9.0, text: ingredients, ingredients: true)
             let instructionsBottom = addSectionTitleToPDF(pageRect: pageRect, sectionTitle: "Instructions", textTop: ingredientSectionBottom + 18.0)
-            _ = addBodyTextToPDF(pageRect: pageRect, textTop: instructionsBottom + 9.0, text: instructions, ingredients: false)
+            addBodyTextToPDF(pageRect: pageRect, textTop: instructionsBottom + 9.0, text: instructions, ingredients: false)
             addLogoToPDF(pageRect: pageRect, image: UIImage(named: "__logoOpposite")!)
         }
 
@@ -87,6 +87,7 @@ class PDFCreator: NSObject {
     }
     
     // set up so this will work for both ingredients and instructions
+    @discardableResult
     func addBodyTextToPDF(pageRect: CGRect, textTop: CGFloat, text: [String], ingredients: Bool) -> CGFloat {
         
         let textFont = UIFont(name: "futura", size: 12)

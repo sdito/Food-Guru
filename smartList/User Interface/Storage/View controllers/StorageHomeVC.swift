@@ -97,6 +97,7 @@ class StorageHomeVC: UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         emptyCells = createEmptyStorageCells()
         tableView.reloadData()
         
@@ -108,6 +109,7 @@ class StorageHomeVC: UIViewController {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         searchBar.isHidden = true
         segmentedControl.isHidden = false
         searchBar.placeholder = ""

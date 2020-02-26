@@ -20,7 +20,7 @@ class SplashVC: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        
+        super.viewDidAppear(animated)
         var nextVC: UIViewController {
             switch logIn {
             case true:

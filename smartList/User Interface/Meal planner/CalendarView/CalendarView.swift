@@ -151,11 +151,11 @@ class CalendarView: UIView {
     
     // MARK: Button action
     @objc func buttonPressed(_ sender: UIButton) {
-        if #available(iOS 13.0, *) {
-            sender.backgroundColor = .secondarySystemBackground
-        } else {
+        
+        UIView.animate(withDuration: 0.2) {
             sender.backgroundColor = .systemGray
         }
+        
         
         var monthInt = calendar.component(.month, from: date ?? Date())
         var yearInt = calendar.component(.year, from: date ?? Date())

@@ -45,6 +45,7 @@ class OneTutorialVC: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         imageView.pulsateView()
         
         timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false, block: { (tmr) in
@@ -56,6 +57,7 @@ class OneTutorialVC: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         imageView.disappearAnimation()
         arrow.setIsHidden(true, animated: true)
         timer?.invalidate()

@@ -28,10 +28,12 @@ class FiveTutorialVC: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         imageView.pulsateView()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         imageView.disappearAnimation()
     }
     

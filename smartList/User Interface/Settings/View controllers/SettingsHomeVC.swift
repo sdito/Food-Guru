@@ -24,6 +24,7 @@
     }
     
     override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         tableView.visibleCells.forEach { (cell) in
             cell.isSelected = false
         }

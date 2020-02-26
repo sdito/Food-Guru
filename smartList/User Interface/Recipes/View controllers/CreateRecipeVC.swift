@@ -115,6 +115,7 @@ class CreateRecipeVC: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if SharedValues.shared.recipeType != nil && SharedValues.shared.cuisineType != nil {
             cuisineType = SharedValues.shared.cuisineType
             recipeType = SharedValues.shared.recipeType

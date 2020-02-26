@@ -17,6 +17,7 @@ class EndTutorialVC: UIViewController {
     private var rotationCount = 1
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         timer = Timer.scheduledTimer(withTimeInterval: 1.5, repeats: true, block: { (tmr) in
             self.logoAnimation(degrees: self.rotation * CGFloat(self.rotationCount))
             self.rotationCount += 1
@@ -29,6 +30,7 @@ class EndTutorialVC: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         timer?.invalidate()
         
     }
