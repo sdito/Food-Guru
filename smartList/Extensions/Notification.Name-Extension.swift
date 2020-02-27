@@ -19,4 +19,5 @@ extension Notification.Name {
     static let recipeDataFromURLReceived = Notification.Name("stevenDito.recipeDataFromURLReceived")
     static let expiringItemsFromFoodStorage = Notification.Name("stevenDito.expiringItemsFromFoodStorage")
     static let recipeNotFoundFromURLalert = Notification.Name("stevenDito.recipeNotFoundFromURLalert")
+    static let dayButtonSelectedFromCalendar = Notification.Name("stevenDito.dayButtonSelectedFromCalendar")
 }

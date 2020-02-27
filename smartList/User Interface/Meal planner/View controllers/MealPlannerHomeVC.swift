@@ -23,6 +23,7 @@ class MealPlannerHomeVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var db: Firestore!
+    private var selectedDayButton: UIButton?
     private var realm: Realm?
     private var mealPlanner = MealPlanner()
     private var shortDate: String? {
@@ -166,10 +167,13 @@ extension MealPlannerHomeVC: CreateRecipeForMealPlannerDelegate {
 
 // MARK: CalendarViewDelegate
 extension MealPlannerHomeVC: CalendarViewDelegate {
+    
+    
     func dateButtonSelected(month: Month, day: Int, year: Int) {
         shortDate = "\(month.int).\(day).\(year)"
-        // use short date for database, load the associated recipes into the table view here
-        print(shortDate ?? "")
+        #warning("need to post this with a notification to the calendar views so the views could 'select' that day if applicable, starting now make sure i dont forget i already started")
+        NotificationCenter.default.post(.init(name: .dayButtonSelectedFromCalendar, object: nil, userInfo: ["shortDate": shortDate as Any]))
+        
         
         if selectedDayLabel.text != "Date" {
             UIView.animate(withDuration: 0.1, animations: {
@@ -183,8 +187,12 @@ extension MealPlannerHomeVC: CalendarViewDelegate {
         } else {
             selectedDayLabel.text = "\(month.description) \(day)"
         }
-        
-        
+    }
+    
+    func selectedDay(button: UIButton) {
+        selectedDayButton?.backgroundColor = Colors.systemBackground
+        selectedDayButton?.layer.borderColor = Colors.label.cgColor
+        selectedDayButton = button
         
     }
     
@@ -213,12 +221,18 @@ extension MealPlannerHomeVC: UITableViewDataSource, UITableViewDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let v = UIView()
+        v.backgroundColor = .clear
+        return v
+    }
 }
 
 
 // MARK: Scroll view
 extension MealPlannerHomeVC: UIScrollViewDelegate {
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
         if scrollView != tableView {
             let bounds = scrollView.bounds.minX
             let size = scrollView.frame.width
@@ -234,6 +248,10 @@ extension MealPlannerHomeVC: UIScrollViewDelegate {
                 calendarStackView.subviews.last?.removeFromSuperview()
                 monthsNeededToAdd -= 1
             }
+            
+            
+            
         }
     }
+    
 }

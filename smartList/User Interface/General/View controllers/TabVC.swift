@@ -65,7 +65,6 @@ class TabVC: UITabBarController {
         
         #warning("just temporary, need to read the current object, if empty, then write to with uid, if not, make sure they are the same, if they are the same then good to go, if not need to delete everything from realm and see if the meal planner has recipes, if the meal planner has recipes need to downlaod all of them")
         if let id = Auth.auth().currentUser?.uid {
-            print(Realm.Configuration.defaultConfiguration.fileURL)
             let ud = UserDevice()
             ud.uid = id
             let realm = try? Realm()

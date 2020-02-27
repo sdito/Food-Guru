@@ -19,6 +19,7 @@ month in the calendar
 
 protocol CalendarViewDelegate: class {
     func dateButtonSelected(month: Month, day: Int, year: Int)
+    func selectedDay(button: UIButton)
 }
 
 
@@ -31,13 +32,21 @@ class CalendarView: UIView {
     weak var delegate: CalendarViewDelegate!
     var monthsInFuture: Int?
     var recipes: [MPCookbookRecipe]?
+    
+    private var monthYear: (Int, Int)?
     private var isCurrentMonth = false
     private var year: Int?
     private var date: Date?
     private let calendar = Calendar.current
     
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .dayButtonSelectedFromCalendar, object: nil)
+    }
+    
+    
     func setUI(monthsInFuture: Int, recipes: [MPCookbookRecipe]?) {
+        NotificationCenter.default.addObserver(self, selector: #selector(dateButtonChangedSelector(_:)), name: .dayButtonSelectedFromCalendar, object: nil)
         self.monthsInFuture = monthsInFuture
         self.recipes = recipes
         
@@ -46,13 +55,14 @@ class CalendarView: UIView {
         }
         let data = calendar.monthsInFutureData(monthsInFuture)
         monthYearLabel.text = "\(data.month) \(data.year)"
+        monthYear = (calendar.component(.month, from: data.dateUsed), data.year)
+        
         date = data.dateUsed
         let numDays = data.nDays
         let weekday = calendar.weekDayFrom(date: date!)
         let dayNumber = calendar.dayComponentFrom(date: date!)
         year = data.year
         let firstWeekday = MealPlanner.getWeekdayForFirstDay(dayNumber: dayNumber, weekday: weekday)
-        
         let daysInPreviousMonth = calendar.daysInMonth(date: date ?? Date(), monthsDifference: -1)
         
         for d in day {
@@ -78,6 +88,7 @@ class CalendarView: UIView {
                 
                 if isCurrentMonth && dayNum == calendar.component(.day, from: date ?? Date()) {
                     d.setTitleColor(.systemGreen, for: .normal)
+                    d.tag = 11
                     // tell the delegate what the current day is
                     delegate.dateButtonSelected(month: Month.monthFromInt(int: calendar.component(.month, from: date ?? Date())), day: Int(d.titleLabel!.text!)!, year: calendar.component(.year, from: date ?? Date()))
                 }
@@ -149,11 +160,12 @@ class CalendarView: UIView {
         }
     }
     
-    // MARK: Button action
+    // MARK: @objc funcs
     @objc func buttonPressed(_ sender: UIButton) {
         
         UIView.animate(withDuration: 0.2) {
-            sender.backgroundColor = .systemGray
+            sender.backgroundColor = Colors.secondarySystemBackground
+            sender.layer.borderColor = UIColor.clear.cgColor//Colors.secondary.cgColor
         }
         
         
@@ -176,8 +188,50 @@ class CalendarView: UIView {
         let month = Month.monthFromInt(int: monthInt)
         
         delegate.dateButtonSelected(month: month, day: Int(sender.titleLabel!.text!)!, year: yearInt)
+        delegate.selectedDay(button: sender)
     }
     
+    @objc func dateButtonChangedSelector(_ notification: Notification) {
+        if let dict = notification.userInfo as? [String:Any] {
+            if let shortDate = dict["shortDate"] as? String {
+                let shortDateComponents = shortDate.split(separator: ".").map({Int($0)})
+                print("Worked from notification, date is: \(shortDate), this calendar is: \(monthYear?.0), \(monthYear?.1)") // prints multiple times since it is once per each view
+                // need to use this date to alter the UI for the correct day buttons
+                // need to rememebr what buttons were changed, and then change them back when a new date is selected
+                // delegate.selectedDay(button: <#T##UIButton#>) <- use this, and alter the implementation so that it has multiple selected days in VC
+                
+                var januaryIsNextMonth = false
+                var decemberIsPreviousMonth = false
+                
+                let monthFromButton = shortDateComponents[0]!
+                var monthsToTest: [Int] = []
+                monthsToTest.append(monthFromButton)
+                
+                if monthFromButton + 1 == 13 {
+                    monthsToTest.append(1)
+                    januaryIsNextMonth = true
+                } else {
+                    monthsToTest.append(monthFromButton + 1)
+                }
+                
+                if monthFromButton - 1 == 0 {
+                    monthsToTest.append(12)
+                    decemberIsPreviousMonth = true
+                } else {
+                    monthsToTest.append(monthFromButton - 1)
+                }
+                
+                if monthsToTest.contains(monthYear?.0 ?? -1) {
+                    // then there is a chance the button UI needs to change
+                    // find if the new date from the button
+                    // first find what tag i should be looking for
+                    let dayFromButton = shortDateComponents[1]!
+                    
+                }
+                
+            }
+        }
+    }
     
 }
 

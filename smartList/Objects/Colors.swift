@@ -27,7 +27,22 @@ struct Colors {
             return .black
         }
     }
-
+    static var systemBackground: UIColor {
+        if #available(iOS 13.0, *) {
+            return .systemBackground
+        } else {
+            return .white
+        }
+    }
+    
+    static var secondarySystemBackground: UIColor {
+        if #available(iOS 13.0, *) {
+            return .secondarySystemBackground
+        } else {
+            return .lightGray
+        }
+    }
+    
     // Used for the crcle status view for item with expiration date
     static func getRGBcolorFromPercentage(double: Double) -> UIColor {
         let ratio = 1.0 / 13.0
