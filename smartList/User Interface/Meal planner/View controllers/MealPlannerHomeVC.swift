@@ -11,7 +11,6 @@ import Foundation
 import FirebaseFirestore
 import RealmSwift
 
-#warning("need to address issue of the UI for the current day not resetting when app is kept in memory")
 
 class MealPlannerHomeVC: UIViewController {
     
@@ -24,6 +23,7 @@ class MealPlannerHomeVC: UIViewController {
     
     var db: Firestore!
     private var selectedDayButton: UIButton?
+    private var secondarySelectedButton: UIButton?
     private var realm: Realm?
     private var mealPlanner = MealPlanner()
     private var shortDate: String? {
@@ -45,36 +45,9 @@ class MealPlannerHomeVC: UIViewController {
         db = Firestore.firestore()
         realm = try? Realm()
         scrollView.delegate = self; tableView.delegate = self; tableView.dataSource = self
-        
-        
-        let view = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
-        let view2 = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
-        let view3 = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
-        
-        calendarStackView.addArrangedSubview(view)
-        calendarStackView.addArrangedSubview(view2)
-        calendarStackView.addArrangedSubview(view3)
-        
-        view.delegate = self; view2.delegate = self; view3.delegate = self
-        
-        view2.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 1.0).isActive = true
-        view2.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1.0).isActive = true
-        
-        
-        mealPlanner.getMealPlannerRecipes()
-        
-        view.setUI(monthsInFuture: -1, recipes: mealPlanner.recipes)
-        view2.setUI(monthsInFuture: 0, recipes: mealPlanner.recipes)
-        view3.setUI(monthsInFuture: 1, recipes: mealPlanner.recipes)
-        
-        baseView.removeFromSuperview()
-        
-        DispatchQueue.main.async {
-            self.scrollView.setContentOffset(CGPoint(x: self.view.bounds.width, y: 0), animated: false)
-        }
+        setUpInitialUI()
         mealPlanner.readIfUserHasMealPlanner()
         mealPlanner.listenForNewRecipesAddedToMealPlannerToWriteToRealm()
-        
         
     }
     
@@ -113,6 +86,34 @@ class MealPlannerHomeVC: UIViewController {
         }
     }
     
+    // MARK: Funcs
+    private func setUpInitialUI() {
+        let view = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
+        let view2 = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
+        let view3 = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)!.first as! CalendarView
+        
+        calendarStackView.addArrangedSubview(view)
+        calendarStackView.addArrangedSubview(view2)
+        calendarStackView.addArrangedSubview(view3)
+        
+        view.delegate = self; view2.delegate = self; view3.delegate = self
+        
+        view2.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 1.0).isActive = true
+        view2.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1.0).isActive = true
+        
+        
+        mealPlanner.getMealPlannerRecipes()
+        
+        view.setUI(monthsInFuture: -1, recipes: mealPlanner.recipes)
+        view2.setUI(monthsInFuture: 0, recipes: mealPlanner.recipes)
+        view3.setUI(monthsInFuture: 1, recipes: mealPlanner.recipes)
+        
+        baseView.removeFromSuperview()
+        
+        DispatchQueue.main.async {
+            self.scrollView.setContentOffset(CGPoint(x: self.view.bounds.width, y: 0), animated: false)
+        }
+    }
     
     // MARK: IBAction funcs
     @IBAction func addRecipePressed(_ sender: Any) {
@@ -167,34 +168,53 @@ extension MealPlannerHomeVC: CreateRecipeForMealPlannerDelegate {
 
 // MARK: CalendarViewDelegate
 extension MealPlannerHomeVC: CalendarViewDelegate {
-    
-    
-    func dateButtonSelected(month: Month, day: Int, year: Int) {
-        shortDate = "\(month.int).\(day).\(year)"
-        #warning("need to post this with a notification to the calendar views so the views could 'select' that day if applicable, starting now make sure i dont forget i already started")
-        NotificationCenter.default.post(.init(name: .dayButtonSelectedFromCalendar, object: nil, userInfo: ["shortDate": shortDate as Any]))
+    func dateButtonSelected(month: Month, day: Int, year: Int, buttonTag: Int) {
+        let newDate = "\(month.int).\(day).\(year)"
         
-        
-        if selectedDayLabel.text != "Date" {
-            UIView.animate(withDuration: 0.1, animations: {
-                self.selectedDayLabel.alpha = 0.3
-            }) { (complete) in
-                self.selectedDayLabel.text = "\(month.description) \(day)"
-                UIView.animate(withDuration: 0.1) {
-                    self.selectedDayLabel.alpha = 1.0
+        if shortDate != newDate {
+            shortDate = newDate
+            // to reset the value of the other button that was in 'selected' mode
+            secondarySelectedButton?.backgroundColor = Colors.systemBackground
+            secondarySelectedButton?.layer.borderColor = Colors.label.cgColor
+            NotificationCenter.default.post(.init(name: .dayButtonSelectedFromCalendar, object: nil, userInfo: ["shortDate": shortDate as Any, "tagFromNoti": buttonTag]))
+            
+                if selectedDayLabel.text != "Date" {
+                    UIView.animate(withDuration: 0.1, animations: {
+                        self.selectedDayLabel.alpha = 0.3
+                    }) { (complete) in
+                        self.selectedDayLabel.text = "\(month.description) \(day)"
+                        UIView.animate(withDuration: 0.1) {
+                            self.selectedDayLabel.alpha = 1.0
+                        }
+                    }
+                } else {
+                    selectedDayLabel.text = "\(month.description) \(day)"
                 }
-            }
-        } else {
-            selectedDayLabel.text = "\(month.description) \(day)"
         }
     }
     
     func selectedDay(button: UIButton) {
-        selectedDayButton?.backgroundColor = Colors.systemBackground
-        selectedDayButton?.layer.borderColor = Colors.label.cgColor
-        selectedDayButton = button
+        if selectedDayButton != button {
+            selectedDayButton?.backgroundColor = Colors.systemBackground
+            selectedDayButton?.layer.borderColor = Colors.label.cgColor
+            selectedDayButton = button
+            
+        }
         
     }
+    
+    func associatedToSelectedDay(button: UIButton) {
+        
+        UIView.animate(withDuration: 0.2) {
+            button.backgroundColor = Colors.secondarySystemBackground
+            button.layer.borderColor = UIColor.clear.cgColor
+            
+        }
+        // UI resetting for secondarySelectionButton happens before notification is posted in dateButtonSelected
+        secondarySelectedButton = button
+        
+    }
+    
     
 }
 

@@ -18,8 +18,9 @@ month in the calendar
 
 
 protocol CalendarViewDelegate: class {
-    func dateButtonSelected(month: Month, day: Int, year: Int)
+    func dateButtonSelected(month: Month, day: Int, year: Int, buttonTag: Int)
     func selectedDay(button: UIButton)
+    func associatedToSelectedDay(button: UIButton)
 }
 
 
@@ -88,9 +89,8 @@ class CalendarView: UIView {
                 
                 if isCurrentMonth && dayNum == calendar.component(.day, from: date ?? Date()) {
                     d.setTitleColor(.systemGreen, for: .normal)
-                    d.tag = 11
                     // tell the delegate what the current day is
-                    delegate.dateButtonSelected(month: Month.monthFromInt(int: calendar.component(.month, from: date ?? Date())), day: Int(d.titleLabel!.text!)!, year: calendar.component(.year, from: date ?? Date()))
+                    delegate.dateButtonSelected(month: Month.monthFromInt(int: calendar.component(.month, from: date ?? Date())), day: Int(d.titleLabel!.text!)!, year: calendar.component(.year, from: date ?? Date()), buttonTag: d.tag)
                 }
                 dayButtonDate = "\(calendar.component(.month, from: data.dateUsed)).\(dayNum).\(calendar.component(.year, from: data.dateUsed))"
             } else {
@@ -187,48 +187,59 @@ class CalendarView: UIView {
         }
         let month = Month.monthFromInt(int: monthInt)
         
-        delegate.dateButtonSelected(month: month, day: Int(sender.titleLabel!.text!)!, year: yearInt)
+        delegate.dateButtonSelected(month: month, day: Int(sender.titleLabel!.text!)!, year: yearInt, buttonTag: sender.tag)
         delegate.selectedDay(button: sender)
     }
     
     @objc func dateButtonChangedSelector(_ notification: Notification) {
         if let dict = notification.userInfo as? [String:Any] {
-            if let shortDate = dict["shortDate"] as? String {
+            if let shortDate = dict["shortDate"] as? String, let tagFromNoti = dict["tagFromNoti"] as? Int {
                 let shortDateComponents = shortDate.split(separator: ".").map({Int($0)})
-                print("Worked from notification, date is: \(shortDate), this calendar is: \(monthYear?.0), \(monthYear?.1)") // prints multiple times since it is once per each view
                 // need to use this date to alter the UI for the correct day buttons
                 // need to rememebr what buttons were changed, and then change them back when a new date is selected
-                // delegate.selectedDay(button: <#T##UIButton#>) <- use this, and alter the implementation so that it has multiple selected days in VC
+                // delegate.associatedToSelectedDay(button: <#T##UIButton#>)
                 
-                var januaryIsNextMonth = false
-                var decemberIsPreviousMonth = false
-                
-                let monthFromButton = shortDateComponents[0]!
-                var monthsToTest: [Int] = []
-                monthsToTest.append(monthFromButton)
-                
-                if monthFromButton + 1 == 13 {
-                    monthsToTest.append(1)
-                    januaryIsNextMonth = true
-                } else {
-                    monthsToTest.append(monthFromButton + 1)
-                }
-                
-                if monthFromButton - 1 == 0 {
-                    monthsToTest.append(12)
-                    decemberIsPreviousMonth = true
-                } else {
-                    monthsToTest.append(monthFromButton - 1)
-                }
-                
-                if monthsToTest.contains(monthYear?.0 ?? -1) {
-                    // then there is a chance the button UI needs to change
-                    // find if the new date from the button
-                    // first find what tag i should be looking for
-                    let dayFromButton = shortDateComponents[1]!
+                let availableTags = [0,1,2].filter({$0 != tagFromNoti})
+                let monthComponent = shortDateComponents[0]!
+                // need to use these tags to find what specific tag i should look for, by seeing if this view's months will match up
+                for tag in availableTags {
+                    if tag == 0 {
+                        #warning("believe these are working correctly, just need to actually implement now")
+                        if (monthYear?.0 ?? -1) - 1 == monthComponent {
+                            // check if the date matches up for previous month
+                            print("Check if the data matches up for previous month from \(monthYear!.0)")
+                            for d in day {
+                                if d.tag == 0 && d.titleLabel?.text == "\(shortDateComponents[1]!)" {
+                                    delegate.associatedToSelectedDay(button: d)
+                                }
+                            }
+                        }
+                    } else if tag == 1 {
+                        if monthYear?.0 == monthComponent {
+                            // check if the data matches up for current month
+                            print("Check if the data matches up for current month from \(monthYear!.0)")
+                            for d in day {
+                                if d.tag == 1 && d.titleLabel?.text == "\(shortDateComponents[1]!)" {
+                                    delegate.associatedToSelectedDay(button: d)
+                                }
+                            }
+                            
+                        }
+                    } else if tag == 2 {
+                        if (monthYear?.0 ?? -1) + 1 == monthComponent {
+                            // check if the data matches up for the next month
+                            print("Check if the data matches up for next month from \(monthYear!.0)")
+                            for d in day {
+                                if d.tag == 2 && d.titleLabel?.text == "\(shortDateComponents[1]!)" {
+                                    delegate.associatedToSelectedDay(button: d)
+                                }
+                            }
+                            
+                        }
+                    }
+                    
                     
                 }
-                
             }
         }
     }
