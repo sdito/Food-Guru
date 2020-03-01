@@ -120,6 +120,26 @@ class MealPlanner {
     }
     
     func addRecipeToPlanner(recipe: MPCookbookRecipe, shortDate: String, mealType: MealType) {
+        
+        // going to switch it up
+        // need to write it to a dict like this for eery month -> if var dict = data["recentlyViewedRecipes"] as? [String:[String:Any]]
+        // would need to edit the dict for every recipe that is added or deleted to it
+        // would also need to write each recipe (with the id) to a general collection where the recipes could be downloaded from
+        // have the user read the dict, when they select a recipe if they dont have it in realm then they need to downlaod teh recipe, else just show the recipe
+        // _recipeDict will be for the general dict of all recipe IDs, in the same collection each recipe will be written with the ID
+        
+        /*
+         let dict: [String:[String:Any]] = ["\(Date().timeIntervalSince1970)":["name": self.name, "path": self.imagePath as Any, "timeIntervalSince1970": Date().timeIntervalSince1970]]
+         reference.updateData([
+             "recentlyViewedRecipes" : dict
+         ])
+         */
+        let date = shortDate.shortDateToMonthYear()
+        if let id = SharedValues.shared.mealPlannerID {
+            let reference = db.collection("mealPlanners").document(id).collection(date).document("_recipeDict")
+            
+        }
+        /*
         let date = shortDate.shortDateToMonthYear()
         print("Writing meal plan recipe to firestore on \(date)")
         if let id = SharedValues.shared.mealPlannerID {
@@ -139,17 +159,12 @@ class MealPlanner {
             ]) { error in
                 if error == nil {
                     recipe.id = reference.documentID
-                    recipe.write()
-                    if self.group == true, let uids = self.userIDs {
-                        for id in uids {
-                            if id != SharedValues.shared.userID {
-                                MealPlanner.writeRecipeToUsersProfile(db: self.db, id: reference.documentID, recipe: recipe, shortDate: shortDate, mealType: mealType, userID: id)
-                            }
-                        }
-                    }
+                    
                 }
             }
         }
+        */
+        
     }
     
     func listenForNewRecipesAddedToMealPlannerToWriteToRealm() {
@@ -168,24 +183,6 @@ class MealPlanner {
         }
     }
     
-    
-    class func writeRecipeToUsersProfile(db: Firestore, id: String, recipe: MPCookbookRecipe, shortDate: String, mealType: MealType, userID: String) {
-        print("Need to add to user's document: \(userID)")
-        let reference = db.collection("users").document(userID).collection("mealPlanner-new").document(recipe.id)
-        reference.setData([
-            "name": recipe.name,
-            "ingredients": Array(recipe.ingredients),
-            "instructions": Array(recipe.instructions),
-            "cookTime": recipe.cookTime.value as Any,
-            "prepTime": recipe.prepTime.value as Any,
-            "numServes": recipe.servings.value as Any,
-            "calories": recipe.calories.value as Any,
-            "notes": recipe.notes as Any,
-            "date": shortDate,
-            "mealType": mealType.rawValue,
-            "id": id
-        ])
-    }
     
     
     

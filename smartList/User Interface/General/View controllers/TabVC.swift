@@ -21,7 +21,7 @@ class TabVC: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(Realm.Configuration.defaultConfiguration.fileURL)
         let listsTab = UIStoryboard(name: "Lists", bundle: nil).instantiateViewController(withIdentifier: "ListsTab")
         let recipesTab = UIStoryboard(name: "Recipes", bundle: nil).instantiateViewController(withIdentifier: "RecipesTab")
         let storageTab = UIStoryboard(name: "Storage", bundle: nil).instantiateViewController(withIdentifier: "StorageTab")
@@ -63,15 +63,6 @@ class TabVC: UITabBarController {
         defaults.set(numTimesRan + 1, forKey: "timesOpened")
         
         
-        #warning("just temporary, need to read the current object, if empty, then write to with uid, if not, make sure they are the same, if they are the same then good to go, if not need to delete everything from realm and see if the meal planner has recipes, if the meal planner has recipes need to downlaod all of them")
-        if let id = Auth.auth().currentUser?.uid {
-            let ud = UserDevice()
-            ud.uid = id
-            let realm = try? Realm()
-            try? realm?.write {
-                realm?.add(ud)
-            }
-        }
         
         
     }
