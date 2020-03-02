@@ -32,31 +32,33 @@ class CalendarView: UIView {
 
     weak var delegate: CalendarViewDelegate!
     var monthsInFuture: Int?
-    var recipes: [MPCookbookRecipe]?
+    
     
     private var monthYear: (Int, Int)?
     private var isCurrentMonth = false
     private var year: Int?
     private var date: Date?
     private let calendar = Calendar.current
-    
+    private var recipes: [MealPlanner.RecipeTransfer] = []
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: .dayButtonSelectedFromCalendar, object: nil)
     }
     
     
-    func setUI(monthsInFuture: Int, recipes: [MPCookbookRecipe]?) {
+    func setUI(monthsInFuture: Int, recipes: [String:Set<MealPlanner.RecipeTransfer>]) {
         NotificationCenter.default.addObserver(self, selector: #selector(dateButtonChangedSelector(_:)), name: .dayButtonSelectedFromCalendar, object: nil)
+        let data = calendar.monthsInFutureData(monthsInFuture)
+        monthYear = (calendar.component(.month, from: data.dateUsed), data.year)
+        
         self.monthsInFuture = monthsInFuture
-        self.recipes = recipes
+        self.recipes = Array<MealPlanner.RecipeTransfer>(recipes["\(monthYear!.0).\(monthYear!.1)"] ?? Set<MealPlanner.RecipeTransfer>())
         
         if monthsInFuture == 0 {
             isCurrentMonth = true
         }
-        let data = calendar.monthsInFutureData(monthsInFuture)
+        
         monthYearLabel.text = "\(data.month) \(data.year)"
-        monthYear = (calendar.component(.month, from: data.dateUsed), data.year)
         
         date = data.dateUsed
         let numDays = data.nDays
@@ -111,7 +113,7 @@ class CalendarView: UIView {
         
         // need to get the number of recipes with a matching data
         // add up to three views to the date for how many recipes that date has
-        if let shortDate = shortDate, let recipes = recipes {
+        if let shortDate = shortDate {
             var counter = 0
             for recipe in recipes {
                 if recipe.date == shortDate {

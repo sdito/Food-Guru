@@ -17,10 +17,14 @@ class MealPlanner {
     var exists: Bool?
     var userIDs: [String]?
     var group: Bool?
-    var recipes: [MPCookbookRecipe]?
+    var mealPlanDict: [String:Set<RecipeTransfer>] = [:]
     private var db = Firestore.firestore()
     
-    
+    struct RecipeTransfer: Hashable {
+        var date: String
+        var id: String
+        var name: String
+    }
     
     func readIfUserHasMealPlanner() {
         if let id = SharedValues.shared.userID {
@@ -48,14 +52,6 @@ class MealPlanner {
         }
     }
     
-    func getMealPlannerRecipes() {
-        let realm = try? Realm()
-        if let realm = realm {
-            // Should use a listener to automatically update the objects
-            recipes = Array(realm.objects(MPCookbookRecipe.self))
-            
-        }
-    }
     
     func createIndividualMealPlanner() {
         if let id = SharedValues.shared.userID {
@@ -126,64 +122,67 @@ class MealPlanner {
         // would need to edit the dict for every recipe that is added or deleted to it
         // would also need to write each recipe (with the id) to a general collection where the recipes could be downloaded from
         // have the user read the dict, when they select a recipe if they dont have it in realm then they need to downlaod teh recipe, else just show the recipe
-        // _recipeDict will be for the general dict of all recipe IDs, in the same collection each recipe will be written with the ID
+        // recipeDict will be for the general dict of all recipe IDs, in the same collection each recipe will be written with the ID
         
-        /*
-         let dict: [String:[String:Any]] = ["\(Date().timeIntervalSince1970)":["name": self.name, "path": self.imagePath as Any, "timeIntervalSince1970": Date().timeIntervalSince1970]]
-         reference.updateData([
-             "recentlyViewedRecipes" : dict
-         ])
-         */
         let date = shortDate.shortDateToMonthYear()
         if let id = SharedValues.shared.mealPlannerID {
-            let reference = db.collection("mealPlanners").document(id).collection(date).document("_recipeDict")
-            
-        }
-        /*
-        let date = shortDate.shortDateToMonthYear()
-        print("Writing meal plan recipe to firestore on \(date)")
-        if let id = SharedValues.shared.mealPlannerID {
-            let reference = db.collection("mealPlanners").document(id).collection(date).document()
+            let recipeDocReference = db.collection("mealPlanners").document(id).collection("recipes").document()
+            recipe.id = recipeDocReference.documentID
+            let reference = db.collection("mealPlanners").document(id).collection("schedule").document(date) // use an array, have the date before ID 7.1.19-THISISTHEIDHERE
             reference.setData([
-               "name": recipe.name,
-               "ingredients": Array(recipe.ingredients),
-               "instructions": Array(recipe.instructions),
-               "cookTime": recipe.cookTime.value as Any,
-               "prepTime": recipe.prepTime.value as Any,
-               "numServes": recipe.servings.value as Any,
-               "calories": recipe.calories.value as Any,
-               "notes": recipe.notes as Any,
-               "date": shortDate,
-               "mealType": mealType.rawValue,
-               "id": reference.documentID
-            ]) { error in
+                "recipes": FieldValue.arrayUnion(["\(shortDate)__\(recipe.id)__\(recipe.name)"])
+            ], merge: true) { (error) in
                 if error == nil {
-                    recipe.id = reference.documentID
-                    
+                    self.addRecipeDocumentoPlanner(reference: recipeDocReference, recipe: recipe, shortDate: shortDate)
+                } else {
+                    print("Error writing recipe to meal planner: \(error as Any)")
                 }
             }
         }
-        */
-        
     }
     
-    func listenForNewRecipesAddedToMealPlannerToWriteToRealm() {
-        #warning("need to use a unique device identifier here, or in the user's profile, to ensure each device could download them, in realm need to seperate them by account")
-        if let uid = SharedValues.shared.userID {
-            let reference = db.collection("users").document(uid).collection("mealPlanner-new")
-            reference.getDocuments { (querySnapshot, error) in
-                guard let docs = querySnapshot?.documents else { print(error as Any); return }
+    // helper to addRecipeToPlanner
+    func addRecipeDocumentoPlanner(reference: DocumentReference, recipe: MPCookbookRecipe, shortDate: String) {
+        let ingredients = Array<String>(recipe.ingredients)
+        let instructions = Array<String>(recipe.instructions)
+        reference.setData([
+            "name": recipe.name,
+            "cookTime": recipe.cookTime.value as Any,
+            "prepTime": recipe.prepTime.value as Any,
+            "ingredients": ingredients,
+            "instructions": instructions,
+            "calories": recipe.calories.value as Any,
+            "numServes": recipe.servings.value as Any,
+            "notes": recipe.notes as Any,
+            "date": recipe.date,
+            "ownID": reference.documentID
+        ])
+    }
+    
+    //emailsReturned: @escaping (_ emails: [String]?) -> Void)
+    
+    func listenForMealPlannerRecipes(complete: @escaping (_ bool: Bool) -> Void) {
+        if let id = SharedValues.shared.mealPlannerID {
+            let refernece = db.collection("mealPlanners").document(id).collection("schedule")
+            refernece.getDocuments { (querySnapshot, error) in
+                guard let docs = querySnapshot?.documents else { return }
+                
                 for doc in docs {
-                    let mpCookbookRecipe = doc.getMPCookbookRecipe()
-                    mpCookbookRecipe.write()
-                    let refToDelete = self.db.collection("users").document(uid).collection("mealPlanner-new").document(doc.documentID)
-                    refToDelete.delete()
+                    guard let recipes = doc.get("recipes") as? [String] else { continue }
+                    let monthYear = doc.documentID
+                    for recipe in recipes {
+                        let recipeParts = recipe.mealPlanReadRecipeHelper()
+                        if self.mealPlanDict[monthYear] != nil {
+                            self.mealPlanDict[monthYear]!.insert(recipeParts)
+                        } else {
+                            self.mealPlanDict[monthYear] = [recipeParts]
+                        }
+                    }
                 }
+                complete(true)
             }
         }
     }
-    
-    
     
     
     // MARK: UI

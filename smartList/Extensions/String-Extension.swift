@@ -12,6 +12,12 @@ import UIKit
 
 extension String {
     
+    func mealPlanReadRecipeHelper() -> MealPlanner.RecipeTransfer {
+        let parts = self.components(separatedBy: "__")
+        return MealPlanner.RecipeTransfer(date: parts[0], id: parts[1], name: parts[2])
+    }
+    
+    
     func getQuantityFromIngredient() -> (ingredient: String, quantity: String) {
         var ing: [String] = []
         var qua: [String] = []

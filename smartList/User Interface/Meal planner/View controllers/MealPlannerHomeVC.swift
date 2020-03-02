@@ -28,15 +28,24 @@ class MealPlannerHomeVC: UIViewController {
     private var mealPlanner = MealPlanner()
     private var shortDate: String? {
         didSet {
-            let newRecipes = mealPlanner.recipes?.filter({$0.date == self.shortDate})
-            if dateRecipes != newRecipes {
-                dateRecipes = newRecipes
-                UIView.transition(with: tableView, duration: 0.4, options: .transitionFlipFromTop, animations: self.tableView.reloadData)
+            //let newRecipes = mealPlanner.recipes?.filter({$0.date == self.shortDate})
+//            let newRecipes = Array<MealPlanner.RecipeTransfer>(mealPlanner.mealPlanDict[self.shortDate!.shortDateToMonthYear()]?.filter({$0.date == self.shortDate}))
+            if let monthRecipes = mealPlanner.mealPlanDict[self.shortDate!.shortDateToMonthYear()] {
+                
+                let newRecipes = Array<MealPlanner.RecipeTransfer>(monthRecipes.filter({$0.date == self.shortDate!}))
+                
+                if dateRecipes != newRecipes {
+                    dateRecipes = newRecipes
+                    UIView.transition(with: tableView, duration: 0.4, options: .transitionFlipFromTop, animations: self.tableView.reloadData)
+                }
             }
+            
+            
             
         }
     }
-    private var dateRecipes: [MPCookbookRecipe]?
+    
+    private var dateRecipes: [MealPlanner.RecipeTransfer] = []
     private var monthsNeededToAdd = 2
     
     override func viewDidLoad() {
@@ -45,9 +54,13 @@ class MealPlannerHomeVC: UIViewController {
         db = Firestore.firestore()
         realm = try? Realm()
         scrollView.delegate = self; tableView.delegate = self; tableView.dataSource = self
-        setUpInitialUI()
         mealPlanner.readIfUserHasMealPlanner()
-        mealPlanner.listenForNewRecipesAddedToMealPlannerToWriteToRealm()
+        
+        mealPlanner.listenForMealPlannerRecipes { (done) in
+            if done == true {
+                self.setUpInitialUI()
+            }
+        }
         
     }
     
@@ -101,12 +114,9 @@ class MealPlannerHomeVC: UIViewController {
         view2.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 1.0).isActive = true
         view2.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 1.0).isActive = true
         
-        
-        mealPlanner.getMealPlannerRecipes()
-        
-        view.setUI(monthsInFuture: -1, recipes: mealPlanner.recipes)
-        view2.setUI(monthsInFuture: 0, recipes: mealPlanner.recipes)
-        view3.setUI(monthsInFuture: 1, recipes: mealPlanner.recipes)
+        view.setUI(monthsInFuture: -1, recipes: mealPlanner.mealPlanDict)
+        view2.setUI(monthsInFuture: 0, recipes: mealPlanner.mealPlanDict)
+        view3.setUI(monthsInFuture: 1, recipes: mealPlanner.mealPlanDict)
         
         baseView.removeFromSuperview()
         
@@ -221,26 +231,28 @@ extension MealPlannerHomeVC: CalendarViewDelegate {
 // MARK: Table view
 extension MealPlannerHomeVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dateRecipes?.count ?? 0
+        return dateRecipes.count
         
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mealPlannerCell") as! MealPlannerCell
-        let recipe = dateRecipes![indexPath.row]
-        cell.setUI(recipe: recipe)
+        let recipe = dateRecipes[indexPath.row]
+        cell.setUI(recipeName: recipe.name)
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.cellForRow(at: indexPath)?.isSelected = false
-        let recipe = dateRecipes![indexPath.row].toCookbookRecipe()
-        let sb = UIStoryboard(name: "Recipes", bundle: nil)
-        let vc = sb.instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC
-        vc.cookbookRecipe = recipe
-        self.navigationController?.pushViewController(vc, animated: true)
-        
-    }
+    #warning("need to re-implement")
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        tableView.cellForRow(at: indexPath)?.isSelected = false
+//        let recipe = dateRecipes[indexPath.row].toCookbookRecipe()
+//        let sb = UIStoryboard(name: "Recipes", bundle: nil)
+//        let vc = sb.instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC
+//        vc.cookbookRecipe = recipe
+//        self.navigationController?.pushViewController(vc, animated: true)
+//
+//    }
+    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let v = UIView()
         v.backgroundColor = .clear
@@ -260,7 +272,7 @@ extension MealPlannerHomeVC: UIScrollViewDelegate {
             
             if bounds == size * count {
                 let view = Bundle.main.loadNibNamed("CalendarView", owner: nil, options: nil)?.first as! CalendarView
-                view.setUI(monthsInFuture: monthsNeededToAdd, recipes: mealPlanner.recipes)
+                view.setUI(monthsInFuture: monthsNeededToAdd, recipes: mealPlanner.mealPlanDict)
                 view.delegate = self
                 calendarStackView.addArrangedSubview(view)
                 monthsNeededToAdd += 1

@@ -12,7 +12,7 @@ class MealPlannerCell: UITableViewCell {
     
     @IBOutlet weak var title: UILabel!
     
-    func setUI(recipe: MPCookbookRecipe) {
-        title.text = recipe.name
+    func setUI(recipeName: String) {
+        title.text = recipeName
     }
 }
