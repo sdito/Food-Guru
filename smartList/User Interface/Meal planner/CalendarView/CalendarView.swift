@@ -32,9 +32,7 @@ class CalendarView: UIView {
 
     weak var delegate: CalendarViewDelegate!
     var monthsInFuture: Int?
-    
-    
-    private var monthYear: (Int, Int)?
+    var monthYear: (Int, Int)?
     private var isCurrentMonth = false
     private var year: Int?
     private var date: Date?
@@ -109,7 +107,36 @@ class CalendarView: UIView {
         }
     }
     
+    func updateUI(recipes: [String:Set<MealPlanner.RecipeTransfer>]) {
+        self.recipes = Array<MealPlanner.RecipeTransfer>(recipes["\(monthYear!.0).\(monthYear!.1)"] ?? Set<MealPlanner.RecipeTransfer>())
+        if let date = date {
+            for d in day {
+                //d.subviews.forEach({$0.removeFromSuperview()})
+                var dayButtonDate: String?
+                let dayNum = Int(d.titleLabel!.text!)!
+                if d.tag == 0 {
+                    dayButtonDate = "\(calendar.component(.month, from: date) - 1).\(dayNum).\(calendar.component(.year, from: date))"
+                } else if d.tag == 1 {
+                    dayButtonDate = "\(calendar.component(.month, from: date)).\(dayNum).\(calendar.component(.year, from: date))"
+                } else if d.tag == 2 {
+                    dayButtonDate = "\(calendar.component(.month, from: date) + 1).\(dayNum).\(calendar.component(.year, from: date))"
+                }
+                setRecipeOnDayUI(b: d, shortDate: dayButtonDate)
+                
+            }
+            
+            
+        }
+    }
+    
+    
     private func setRecipeOnDayUI(b: UIButton, shortDate: String?) {
+        /*
+ 
+        use this if i use this function again when the UI is being changed after the initual set-up
+        b.subviews.forEach({$0.removeFromSuperview()})
+        
+        */
         
         // need to get the number of recipes with a matching data
         // add up to three views to the date for how many recipes that date has
@@ -206,7 +233,6 @@ class CalendarView: UIView {
                 // need to use these tags to find what specific tag i should look for, by seeing if this view's months will match up
                 for tag in availableTags {
                     if tag == 0 {
-                        #warning("believe these are working correctly, just need to actually implement now")
                         if (monthYear?.0 ?? -1) - 1 == monthComponent {
                             // check if the date matches up for previous month
                             for d in day {

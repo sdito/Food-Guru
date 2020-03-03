@@ -28,13 +28,7 @@ class MealPlannerHomeVC: UIViewController {
     private var mealPlanner = MealPlanner()
     private var shortDate: String? {
         didSet {
-            if let monthRecipes = mealPlanner.mealPlanDict[self.shortDate!.shortDateToMonthYear()] {
-                let newRecipes = Array<MealPlanner.RecipeTransfer>(monthRecipes.filter({$0.date == self.shortDate!}))
-                if dateRecipes != newRecipes {
-                    dateRecipes = newRecipes
-                    UIView.transition(with: tableView, duration: 0.4, options: .transitionFlipFromTop, animations: self.tableView.reloadData)
-                }
-            }
+            handleShortDateChange()
         }
     }
     
@@ -46,7 +40,7 @@ class MealPlannerHomeVC: UIViewController {
         
         db = Firestore.firestore()
         realm = try? Realm()
-        scrollView.delegate = self; tableView.delegate = self; tableView.dataSource = self
+        mealPlanner.delegate = self; scrollView.delegate = self; tableView.delegate = self; tableView.dataSource = self
         mealPlanner.readIfUserHasMealPlanner()
         
         self.createLoadingView()
@@ -120,6 +114,16 @@ class MealPlannerHomeVC: UIViewController {
         }
     }
     
+    func handleShortDateChange() {
+        if let sd = shortDate, let monthRecipes = mealPlanner.mealPlanDict[sd.shortDateToMonthYear()]  {
+            let newRecipes = Array<MealPlanner.RecipeTransfer>(monthRecipes.filter({$0.date == sd}))
+            if dateRecipes != newRecipes {
+                dateRecipes = newRecipes
+                UIView.transition(with: tableView, duration: 0.4, options: .transitionFlipFromTop, animations: self.tableView.reloadData)
+            }
+        }
+    }
+    
     // MARK: IBAction funcs
     @IBAction func addRecipePressed(_ sender: Any) {
         
@@ -155,6 +159,30 @@ class MealPlannerHomeVC: UIViewController {
             present(actionSheet, animated: true, completion: nil)
         }
     }
+}
+
+
+// MARK: MealPlanRecipeChangedDelegate
+extension MealPlannerHomeVC: MealPlanRecipeChangedDelegate {
+    func recipesChanged(month: String) {
+        handleShortDateChange()
+        for calendarView in calendarStackView.subviews {
+            guard let view = calendarView as? CalendarView else { continue }
+            if let dateTuple = view.monthYear {
+                if month == "\(dateTuple.0).\(dateTuple.1)" {
+                    print("Need to update UI for \(month)")
+                    if let monthsInFuture = view.monthsInFuture {
+                        #warning("need to have a different function here that ahndles the resetting of the UI")
+                        view.updateUI(recipes: mealPlanner.mealPlanDict)
+                    }
+                    
+                }
+            }
+        }
+        
+    }
+    
+    
 }
 
 // MARK: CreateRecipeForMealPlannerDelegate
@@ -237,7 +265,7 @@ extension MealPlannerHomeVC: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    #warning("need to re-implement")
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let sb = UIStoryboard(name: "Recipes", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC

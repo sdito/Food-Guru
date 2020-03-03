@@ -12,14 +12,22 @@ import RealmSwift
 
 
 
+
+protocol MealPlanRecipeChangedDelegate: class {
+    func recipesChanged(month: String)
+}
+
+
+
 class MealPlanner {
     var id: String?
     var exists: Bool?
     var userIDs: [String]?
     var group: Bool?
     var mealPlanDict: [String:Set<RecipeTransfer>] = [:]
-    
+    weak var delegate: MealPlanRecipeChangedDelegate?
     private var db = Firestore.firestore()
+    
     
     struct RecipeTransfer: Hashable {
         var date: String
@@ -165,8 +173,7 @@ class MealPlanner {
         if let id = SharedValues.shared.mealPlannerID {
             let refernece = db.collection("mealPlanners").document(id).collection("schedule")
             
-            
-            
+            #warning("probbaly for the best if i merge the two calls in this function")
             
             refernece.getDocuments { (querySnapshot, error) in
                 guard let docs = querySnapshot?.documents else { complete(false); return }
@@ -187,24 +194,25 @@ class MealPlanner {
             }
             
             
-            #warning("left off here")
-            /*
             refernece.addSnapshotListener { (querySnapshot, error) in
                 guard let snapshot = querySnapshot else { return }
                 snapshot.documentChanges.forEach { (diff) in
                     let doc = diff.document
-                    let recipes = doc.get("recipes") as? [String]
                     let monthYear = doc.documentID
-                    if diff.type == .added {
-                        
-                    } else if diff.type == .modified {
-                        
-                    } else if diff.type == .removed {
-                        self.mealPlanDict.removeValue(forKey: monthYear)
+                    var setToCompareForMonth = Set<MealPlanner.RecipeTransfer>()
+                    if let recipes = doc.get("recipes") as? [String] {
+                        for recipe in recipes {
+                            let recipeParts = recipe.mealPlanReadRecipeHelper()
+                            setToCompareForMonth.insert(recipeParts)
+                        }
+                        // Here, set the new value in the dict, set the different UI on the calendar view, make sure recipes are going to be set, dont need to handle individual recipes
+                        // Could have something like a dict of months with the associated view, then could pinpoint the specific new that needed to be updated)
+                        self.mealPlanDict[monthYear] = setToCompareForMonth
+                        self.delegate?.recipesChanged(month: monthYear)
                     }
                 }
             }
-            */
+            
             
             
         } else {
