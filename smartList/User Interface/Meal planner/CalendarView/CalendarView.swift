@@ -209,7 +209,6 @@ class CalendarView: UIView {
                         #warning("believe these are working correctly, just need to actually implement now")
                         if (monthYear?.0 ?? -1) - 1 == monthComponent {
                             // check if the date matches up for previous month
-                            print("Check if the data matches up for previous month from \(monthYear!.0)")
                             for d in day {
                                 if d.tag == 0 && d.titleLabel?.text == "\(shortDateComponents[1]!)" {
                                     delegate.associatedToSelectedDay(button: d)
@@ -219,7 +218,6 @@ class CalendarView: UIView {
                     } else if tag == 1 {
                         if monthYear?.0 == monthComponent {
                             // check if the data matches up for current month
-                            print("Check if the data matches up for current month from \(monthYear!.0)")
                             for d in day {
                                 if d.tag == 1 && d.titleLabel?.text == "\(shortDateComponents[1]!)" {
                                     delegate.associatedToSelectedDay(button: d)
@@ -230,7 +228,6 @@ class CalendarView: UIView {
                     } else if tag == 2 {
                         if (monthYear?.0 ?? -1) + 1 == monthComponent {
                             // check if the data matches up for the next month
-                            print("Check if the data matches up for next month from \(monthYear!.0)")
                             for d in day {
                                 if d.tag == 2 && d.titleLabel?.text == "\(shortDateComponents[1]!)" {
                                     delegate.associatedToSelectedDay(button: d)

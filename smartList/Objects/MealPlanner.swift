@@ -18,6 +18,7 @@ class MealPlanner {
     var userIDs: [String]?
     var group: Bool?
     var mealPlanDict: [String:Set<RecipeTransfer>] = [:]
+    
     private var db = Firestore.firestore()
     
     struct RecipeTransfer: Hashable {
@@ -159,13 +160,16 @@ class MealPlanner {
         ])
     }
     
-    //emailsReturned: @escaping (_ emails: [String]?) -> Void)
     
     func listenForMealPlannerRecipes(complete: @escaping (_ bool: Bool) -> Void) {
         if let id = SharedValues.shared.mealPlannerID {
             let refernece = db.collection("mealPlanners").document(id).collection("schedule")
+            
+            
+            
+            
             refernece.getDocuments { (querySnapshot, error) in
-                guard let docs = querySnapshot?.documents else { return }
+                guard let docs = querySnapshot?.documents else { complete(false); return }
                 
                 for doc in docs {
                     guard let recipes = doc.get("recipes") as? [String] else { continue }
@@ -181,6 +185,30 @@ class MealPlanner {
                 }
                 complete(true)
             }
+            
+            
+            #warning("left off here")
+            /*
+            refernece.addSnapshotListener { (querySnapshot, error) in
+                guard let snapshot = querySnapshot else { return }
+                snapshot.documentChanges.forEach { (diff) in
+                    let doc = diff.document
+                    let recipes = doc.get("recipes") as? [String]
+                    let monthYear = doc.documentID
+                    if diff.type == .added {
+                        
+                    } else if diff.type == .modified {
+                        
+                    } else if diff.type == .removed {
+                        self.mealPlanDict.removeValue(forKey: monthYear)
+                    }
+                }
+            }
+            */
+            
+            
+        } else {
+            complete(false)
         }
     }
     

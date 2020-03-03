@@ -28,20 +28,13 @@ class MealPlannerHomeVC: UIViewController {
     private var mealPlanner = MealPlanner()
     private var shortDate: String? {
         didSet {
-            //let newRecipes = mealPlanner.recipes?.filter({$0.date == self.shortDate})
-//            let newRecipes = Array<MealPlanner.RecipeTransfer>(mealPlanner.mealPlanDict[self.shortDate!.shortDateToMonthYear()]?.filter({$0.date == self.shortDate}))
             if let monthRecipes = mealPlanner.mealPlanDict[self.shortDate!.shortDateToMonthYear()] {
-                
                 let newRecipes = Array<MealPlanner.RecipeTransfer>(monthRecipes.filter({$0.date == self.shortDate!}))
-                
                 if dateRecipes != newRecipes {
                     dateRecipes = newRecipes
                     UIView.transition(with: tableView, duration: 0.4, options: .transitionFlipFromTop, animations: self.tableView.reloadData)
                 }
             }
-            
-            
-            
         }
     }
     
@@ -56,7 +49,9 @@ class MealPlannerHomeVC: UIViewController {
         scrollView.delegate = self; tableView.delegate = self; tableView.dataSource = self
         mealPlanner.readIfUserHasMealPlanner()
         
+        self.createLoadingView()
         mealPlanner.listenForMealPlannerRecipes { (done) in
+            self.dismiss(animated: false, completion: nil)
             if done == true {
                 self.setUpInitialUI()
             }
@@ -243,15 +238,40 @@ extension MealPlannerHomeVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     #warning("need to re-implement")
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.cellForRow(at: indexPath)?.isSelected = false
-//        let recipe = dateRecipes[indexPath.row].toCookbookRecipe()
-//        let sb = UIStoryboard(name: "Recipes", bundle: nil)
-//        let vc = sb.instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC
-//        vc.cookbookRecipe = recipe
-//        self.navigationController?.pushViewController(vc, animated: true)
-//
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let sb = UIStoryboard(name: "Recipes", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC
+
+        let mealPlanRecipeID = dateRecipes[indexPath.row].id
+        
+        if let realmMealPlanRecipe = realm?.object(ofType: MPCookbookRecipe.self, forPrimaryKey: mealPlanRecipeID) {
+            print("Already have recipe downlaoded, need to present from Realm")
+            vc.cookbookRecipe = realmMealPlanRecipe.toCookbookRecipe()
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            // need to download the recipe, then write it to realm, then push the VC
+            print("Need to download the recipe from Firebase")
+            self.createLoadingView()
+            if let id = SharedValues.shared.mealPlannerID {
+                let refernece = db.collection("mealPlanners").document(id).collection("recipes").document(mealPlanRecipeID)
+                refernece.getDocument { (documentSnapshot, error) in
+                    guard let doc = documentSnapshot else { return }
+                    let recipe = doc.getMPCookbookRecipe()
+                    recipe.write()
+                    vc.cookbookRecipe = recipe
+                    self.dismiss(animated: false) {
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                    
+                }
+            } else {
+                self.dismiss(animated: false, completion: nil)
+            }
+            
+        }
+        
+        
+    }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let v = UIView()
@@ -280,9 +300,6 @@ extension MealPlannerHomeVC: UIScrollViewDelegate {
                 calendarStackView.subviews.last?.removeFromSuperview()
                 monthsNeededToAdd -= 1
             }
-            
-            
-            
         }
     }
     

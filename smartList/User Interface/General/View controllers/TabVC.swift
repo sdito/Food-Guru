@@ -21,7 +21,6 @@ class TabVC: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(Realm.Configuration.defaultConfiguration.fileURL)
         let listsTab = UIStoryboard(name: "Lists", bundle: nil).instantiateViewController(withIdentifier: "ListsTab")
         let recipesTab = UIStoryboard(name: "Recipes", bundle: nil).instantiateViewController(withIdentifier: "RecipesTab")
         let storageTab = UIStoryboard(name: "Storage", bundle: nil).instantiateViewController(withIdentifier: "StorageTab")

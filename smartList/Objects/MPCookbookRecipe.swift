@@ -16,12 +16,15 @@ class MPCookbookRecipe: CookbookRecipe {
 
     @objc dynamic var id: String = ""
     @objc dynamic var date: String = ""
-
+    
+    override static func primaryKey() -> String? {
+        return "id"
+    }
+    
     override func write() {
         print("Writing recipe to realm for MPCookbookRecipe")
         let realm = try! Realm()
         
-        print(Realm.Configuration.defaultConfiguration.fileURL as Any)
         try! realm.write {
             realm.add(self)
         }
@@ -41,7 +44,7 @@ class MPCookbookRecipe: CookbookRecipe {
 }
 
 
-extension QueryDocumentSnapshot {
+extension DocumentSnapshot {
     func getMPCookbookRecipe() -> MPCookbookRecipe {
         // need to use this in MealPlanner recipe to add new recipes from user's document
         let recipe = MPCookbookRecipe()
@@ -62,7 +65,7 @@ extension QueryDocumentSnapshot {
         
         recipe.setUp(name: self.get("name") as! String, servings: servings, cookTime: cookTime, prepTime: prepTime, calories: calories, ingredients: realmIngredients, instructions: realmInstructions, notes: self.get("notes") as? String)
         recipe.date = self.get("date") as! String
-        recipe.id = self.get("id") as! String
+        recipe.id = self.get("ownID") as! String
         
         return recipe
     }
