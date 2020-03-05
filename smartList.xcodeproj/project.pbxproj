@@ -825,8 +825,8 @@
 		E2E940E623DF5D78009C4BED /* View controllers */ = {
 			isa = PBXGroup;
 			children = (
-				E2E940DD23DEB9FD009C4BED /* SettingsDetailVC.swift */,
 				E2E940E423DF57A2009C4BED /* SettingsHomeVC.swift */,
+				E2E940DD23DEB9FD009C4BED /* SettingsDetailVC.swift */,
 			);
 			path = "View controllers";
 			sourceTree = "<group>";

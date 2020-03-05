@@ -12,6 +12,32 @@ import UIKit
 
 extension String {
     
+    func getPreviousMonth() -> String {
+        var monthYear = self.split(separator: ".").map({Int($0)!})
+        
+        if monthYear[0] - 1 == 0 {
+            monthYear[0] = 12
+            monthYear[1] -= 1
+        } else {
+            monthYear[0] -= 1
+        }
+        
+        return "\(monthYear[0]).\(monthYear[1])"
+    }
+    
+    func getNextMonth() -> String {
+        var monthYear = self.split(separator: ".").map({Int($0)!})
+        
+        if monthYear[0] + 1 == 13 {
+            monthYear[0] = 1
+            monthYear[1] += 1
+        } else {
+            monthYear[0] += 1
+        }
+        
+        return "\(monthYear[0]).\(monthYear[1])"
+    }
+    
     func mealPlanReadRecipeHelper() -> MealPlanner.RecipeTransfer {
         let parts = self.components(separatedBy: "__")
         return MealPlanner.RecipeTransfer(date: parts[0], id: parts[1], name: parts[2])

@@ -233,7 +233,6 @@ class CreateRecipeVC: UIViewController {
             
             
             if fromPlanner?.0 == true {
-                #warning("need to do adding to planner stuff here, date is 1 in fromPlanner tuple")
                 if mealPlannerRecipeDelegate != nil {
                     mealPlannerRecipeDelegate.recipeCreated(recipe: cookbookRecipe)
                 } else {

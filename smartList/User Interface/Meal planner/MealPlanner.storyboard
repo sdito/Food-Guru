@@ -36,17 +36,26 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="383" height="85"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bj-eR-9Pw">
-                                                            <rect key="frame" x="20" y="21" width="345" height="43"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bj-eR-9Pw">
+                                                            <rect key="frame" x="20" y="21" width="325.5" height="43"/>
                                                             <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UWY-hb-uT6">
+                                                            <rect key="frame" x="355.5" y="31.5" width="17.5" height="22"/>
+                                                            <state key="normal" image="pencil" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="editMealPlanRecipePressed:" destination="j6h-a7-Z2O" eventType="touchUpInside" id="lIx-Tk-R6R"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                     <constraints>
+                                                        <constraint firstItem="UWY-hb-uT6" firstAttribute="leading" secondItem="0bj-eR-9Pw" secondAttribute="trailing" constant="10" id="9bm-Z2-fUg"/>
                                                         <constraint firstItem="0bj-eR-9Pw" firstAttribute="leading" secondItem="IGI-9h-vuP" secondAttribute="leadingMargin" id="Mrh-cf-mNh"/>
-                                                        <constraint firstAttribute="trailingMargin" secondItem="0bj-eR-9Pw" secondAttribute="trailing" constant="10" id="Sew-oB-ylW"/>
+                                                        <constraint firstAttribute="trailing" secondItem="UWY-hb-uT6" secondAttribute="trailing" constant="10" id="OLq-R1-7ut"/>
                                                         <constraint firstItem="0bj-eR-9Pw" firstAttribute="top" secondItem="IGI-9h-vuP" secondAttribute="topMargin" constant="10" id="bco-Sq-1Ty"/>
+                                                        <constraint firstItem="UWY-hb-uT6" firstAttribute="centerY" secondItem="IGI-9h-vuP" secondAttribute="centerY" id="cKj-xz-A65"/>
                                                         <constraint firstAttribute="bottomMargin" secondItem="0bj-eR-9Pw" secondAttribute="bottom" constant="10" id="sJx-qJ-TF5"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
@@ -224,6 +233,7 @@
     </scenes>
     <resources>
         <image name="calendar" width="24" height="24"/>
+        <image name="pencil" catalog="system" width="64" height="56"/>
     </resources>
     <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

@@ -12,7 +12,6 @@ import StoreKit
 import RealmSwift
 import FirebaseAuth
 
-#warning("need to get the unique device identifier, if that device has not been seen yet then need to create a new document, else just save what device is what, also need to handle logging into a new account on realm, i.e. delete the recipes or what")
 
 
 class TabVC: UITabBarController {

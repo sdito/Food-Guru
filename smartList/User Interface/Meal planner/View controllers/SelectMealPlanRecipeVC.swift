@@ -82,7 +82,7 @@ extension SelectMealPlanRecipeVC: SelectRecipeCellDelegate {
                 mpr.date = date
             }
             if let shortDate = recipeSelection.1 {
-                mealPlanner?.addRecipeToPlanner(recipe: mpr, shortDate: shortDate, mealType: .none)
+                mealPlanner?.addRecipeToPlanner(recipe: mpr, shortDate: shortDate, mealType: .none, previousID: nil)
             }
             
             self.navigationController?.createMessageView(color: Colors.messageGreen, text: "Recipe added to planner!")
@@ -95,7 +95,7 @@ extension SelectMealPlanRecipeVC: SelectRecipeCellDelegate {
                 mpr.date = date
             }
             if let shortDate = recipeSelection.1 {
-                mealPlanner?.addRecipeToPlanner(recipe: mpr, shortDate: shortDate, mealType: .none)
+                mealPlanner?.addRecipeToPlanner(recipe: mpr, shortDate: shortDate, mealType: .none, previousID: r.imagePath?.imagePathToDocID())
             }
             print("Normal Recipe type, need to add: \(r.name) to stuff here")
             self.navigationController?.createMessageView(color: Colors.messageGreen, text: "Recipe added to planner!")

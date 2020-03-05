@@ -165,17 +165,22 @@ class MealPlannerHomeVC: UIViewController {
 // MARK: MealPlanRecipeChangedDelegate
 extension MealPlannerHomeVC: MealPlanRecipeChangedDelegate {
     func recipesChanged(month: String) {
+        
         handleShortDateChange()
+        let previous = month.getPreviousMonth()
+        let next = month.getNextMonth()
+        print(previous, next)
         for calendarView in calendarStackView.subviews {
             guard let view = calendarView as? CalendarView else { continue }
+            
             if let dateTuple = view.monthYear {
-                if month == "\(dateTuple.0).\(dateTuple.1)" {
-                    print("Need to update UI for \(month)")
-                    if let monthsInFuture = view.monthsInFuture {
-                        #warning("need to have a different function here that ahndles the resetting of the UI")
-                        view.updateUI(recipes: mealPlanner.mealPlanDict)
-                    }
+                let dateTupleFormatted = "\(dateTuple.0).\(dateTuple.1)"
+                print(dateTupleFormatted, month, previous, next)
+                if month == dateTupleFormatted || previous == dateTupleFormatted || next == dateTupleFormatted {
                     
+                    print("Need to update UI for \(dateTupleFormatted)")
+                    view.updateUI(recipes: mealPlanner.mealPlanDict)
+
                 }
             }
         }
@@ -188,11 +193,32 @@ extension MealPlannerHomeVC: MealPlanRecipeChangedDelegate {
 // MARK: CreateRecipeForMealPlannerDelegate
 extension MealPlannerHomeVC: CreateRecipeForMealPlannerDelegate {
     func recipeCreated(recipe: CookbookRecipe) {
-        
         if let shortDate = shortDate {
             let mpcbr = MPCookbookRecipe()
             mpcbr.set(cookbookRecipe: recipe, date: shortDate)
-            mealPlanner.addRecipeToPlanner(recipe: mpcbr, shortDate: shortDate, mealType: .none)
+            mealPlanner.addRecipeToPlanner(recipe: mpcbr, shortDate: shortDate, mealType: .none, previousID: nil)
+        }
+    }
+}
+
+// MARK: MealPlannerCellDelegate
+extension MealPlannerHomeVC: MealPlannerCellDelegate {
+    func cellSelected(recipe: MealPlanner.RecipeTransfer?) {
+        // Need to have a pop up or action sheet here for editing, deleting, shareing recipe (i.e. have pdf show up)
+        print("Recipe selected, printing from delegate: \(recipe?.name ?? "recipe is nil :(")")
+        if let recipe = recipe {
+            #warning("need to complete")
+            let actionSheet = UIAlertController(title: "Edit \(recipe.name)", message: nil, preferredStyle: .actionSheet)
+            actionSheet.addAction(.init(title: "Change date", style: .default, handler: nil))
+            actionSheet.addAction(.init(title: "Delete recipe", style: .destructive, handler: { action in
+                self.mealPlanner.removeRecipeFromPlanner(recipe: recipe)
+            }))
+            actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: { action in
+                
+                
+                
+            }))
+            present(actionSheet, animated: true)
         }
         
     }
@@ -261,12 +287,16 @@ extension MealPlannerHomeVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "mealPlannerCell") as! MealPlannerCell
         let recipe = dateRecipes[indexPath.row]
-        cell.setUI(recipeName: recipe.name)
+        cell.setUI(recipe: recipe)
+        cell.delegate = self
         return cell
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.cellForRow(at: indexPath)?.isSelected = false
+        
         let sb = UIStoryboard(name: "Recipes", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC
 
@@ -297,9 +327,8 @@ extension MealPlannerHomeVC: UITableViewDataSource, UITableViewDelegate {
             }
             
         }
-        
-        
     }
+    
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let v = UIView()

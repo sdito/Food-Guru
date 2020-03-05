@@ -124,7 +124,7 @@ class MealPlanner {
         }
     }
     
-    func addRecipeToPlanner(recipe: MPCookbookRecipe, shortDate: String, mealType: MealType) {
+    func addRecipeToPlanner(recipe: MPCookbookRecipe, shortDate: String, mealType: MealType, previousID: String?) {
         
         // going to switch it up
         // need to write it to a dict like this for eery month -> if var dict = data["recentlyViewedRecipes"] as? [String:[String:Any]]
@@ -135,7 +135,15 @@ class MealPlanner {
         
         let date = shortDate.shortDateToMonthYear()
         if let id = SharedValues.shared.mealPlannerID {
-            let recipeDocReference = db.collection("mealPlanners").document(id).collection("recipes").document()
+            
+            var recipeDocReference: DocumentReference {
+                if previousID != nil {
+                    return db.collection("mealPlanners").document(id).collection("recipes").document(previousID!)
+                } else {
+                    return db.collection("mealPlanners").document(id).collection("recipes").document()
+                }
+            }
+            
             recipe.id = recipeDocReference.documentID
             let reference = db.collection("mealPlanners").document(id).collection("schedule").document(date) // use an array, have the date before ID 7.1.19-THISISTHEIDHERE
             reference.setData([
@@ -151,7 +159,7 @@ class MealPlanner {
     }
     
     // helper to addRecipeToPlanner
-    func addRecipeDocumentoPlanner(reference: DocumentReference, recipe: MPCookbookRecipe, shortDate: String) {
+    private func addRecipeDocumentoPlanner(reference: DocumentReference, recipe: MPCookbookRecipe, shortDate: String) {
         let ingredients = Array<String>(recipe.ingredients)
         let instructions = Array<String>(recipe.instructions)
         reference.setData([
@@ -167,6 +175,38 @@ class MealPlanner {
             "ownID": reference.documentID
         ])
     }
+    
+    func removeRecipeFromPlanner(recipe: RecipeTransfer) {
+        
+        // delete recipe from both schedule in meal planners and recipes in meal planners
+        
+        if let id = SharedValues.shared.mealPlannerID {
+            // delete from schedule
+            let documentMonthYear = recipe.date.shortDateToMonthYear()
+            let firebaseRecipeFormat = "\(recipe.date)__\(recipe.id)__\(recipe.name)"
+            let scheduleReference = db.collection("mealPlanners").document(id).collection("schedule").document(documentMonthYear)
+            scheduleReference.updateData([
+                "recipes": FieldValue.arrayRemove([firebaseRecipeFormat])
+            ]) { err in
+                if err == nil {
+                    // delete from recipes in meal planner
+                    let recipeReference = self.db.collection("mealPlanners").document("id").collection("recipes").document(recipe.id)
+                    recipeReference.delete() { err in
+                        if err == nil {
+                            print("Both successfully deleted from recipes and scheudle")
+                        } else {
+                            print("Recipe not successfully deleted from recipes, but deleted from schedule")
+                        }
+                    }
+                } else {
+                    print("Error deleting recipe from schedule: \(err as Any)")
+                }
+            }
+            
+        }
+        
+    }
+    
     
     
     func listenForMealPlannerRecipes(complete: @escaping (_ bool: Bool) -> Void) {

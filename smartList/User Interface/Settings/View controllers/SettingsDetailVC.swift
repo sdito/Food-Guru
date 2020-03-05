@@ -227,6 +227,9 @@ class SettingsDetailVC: UIViewController {
             return cells
         case .tutorial:
             return []
+        case .mealPlanner:
+            #warning("need to impelment settings for meal planner")
+            return [UITableViewCell()]
         }
     }
     

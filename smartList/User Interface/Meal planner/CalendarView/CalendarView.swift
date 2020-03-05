@@ -50,7 +50,7 @@ class CalendarView: UIView {
         monthYear = (calendar.component(.month, from: data.dateUsed), data.year)
         
         self.monthsInFuture = monthsInFuture
-        self.recipes = Array<MealPlanner.RecipeTransfer>(recipes["\(monthYear!.0).\(monthYear!.1)"] ?? Set<MealPlanner.RecipeTransfer>())
+        self.recipes = Array(recipes.values.joined())//Array<MealPlanner.RecipeTransfer>(recipes["\(monthYear!.0).\(monthYear!.1)"] ?? Set<MealPlanner.RecipeTransfer>())
         
         if monthsInFuture == 0 {
             isCurrentMonth = true
@@ -108,10 +108,11 @@ class CalendarView: UIView {
     }
     
     func updateUI(recipes: [String:Set<MealPlanner.RecipeTransfer>]) {
-        self.recipes = Array<MealPlanner.RecipeTransfer>(recipes["\(monthYear!.0).\(monthYear!.1)"] ?? Set<MealPlanner.RecipeTransfer>())
+        self.recipes = Array(recipes.values.joined())
+        
         if let date = date {
             for d in day {
-                //d.subviews.forEach({$0.removeFromSuperview()})
+                
                 var dayButtonDate: String?
                 let dayNum = Int(d.titleLabel!.text!)!
                 if d.tag == 0 {
@@ -124,22 +125,16 @@ class CalendarView: UIView {
                 setRecipeOnDayUI(b: d, shortDate: dayButtonDate)
                 
             }
-            
-            
         }
+        
     }
     
     
     private func setRecipeOnDayUI(b: UIButton, shortDate: String?) {
-        /*
- 
-        use this if i use this function again when the UI is being changed after the initual set-up
-        b.subviews.forEach({$0.removeFromSuperview()})
         
-        */
+        // For resetting the UI, to remove the previously added stack view so there is not a duplicate, the tag is previously set to 44
+        b.subviews.filter({$0.tag == 44}).forEach({$0.removeFromSuperview()})
         
-        // need to get the number of recipes with a matching data
-        // add up to three views to the date for how many recipes that date has
         if let shortDate = shortDate {
             var counter = 0
             for recipe in recipes {
@@ -152,7 +147,6 @@ class CalendarView: UIView {
             }
             
             if counter > 0 {
-                print("\(shortDate) has \(counter) recipes")
                 counter = min(3, counter)
                 b.translatesAutoresizingMaskIntoConstraints = false
                         
@@ -163,7 +157,6 @@ class CalendarView: UIView {
                 sv.spacing = 5.0
                 
                 
-                
                 for _ in 1...counter {
                     let view = UIView()
                     sv.insertArrangedSubview(view, at: 0)
@@ -172,8 +165,8 @@ class CalendarView: UIView {
                     view.widthAnchor.constraint(equalToConstant: 5).isActive = true
                 }
                 
-                
                 b.addSubview(sv)
+                            
                 sv.bottomAnchor.constraint(equalTo: b.bottomAnchor, constant: -5).isActive = true
                 sv.leadingAnchor.constraint(equalTo: b.leadingAnchor).isActive = true
                 sv.trailingAnchor.constraint(equalTo: b.trailingAnchor).isActive = true
@@ -184,6 +177,7 @@ class CalendarView: UIView {
                 sv.insertArrangedSubview(v1, at: 0)
                 sv.addArrangedSubview(v2)
                 v1.widthAnchor.constraint(equalTo: v2.widthAnchor).isActive = true
+                sv.tag = 44
             }
             
         }
