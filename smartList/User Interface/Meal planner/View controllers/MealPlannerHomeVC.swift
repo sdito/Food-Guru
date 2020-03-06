@@ -205,25 +205,35 @@ extension MealPlannerHomeVC: CreateRecipeForMealPlannerDelegate {
 extension MealPlannerHomeVC: MealPlannerCellDelegate {
     func cellSelected(recipe: MealPlanner.RecipeTransfer?) {
         // Need to have a pop up or action sheet here for editing, deleting, shareing recipe (i.e. have pdf show up)
+        
         print("Recipe selected, printing from delegate: \(recipe?.name ?? "recipe is nil :(")")
         if let recipe = recipe {
-            #warning("need to complete")
+            #warning("need to handle iPad case")
             let actionSheet = UIAlertController(title: "Edit \(recipe.name)", message: nil, preferredStyle: .actionSheet)
-            actionSheet.addAction(.init(title: "Change date", style: .default, handler: nil))
+            actionSheet.addAction(.init(title: "Change date", style: .default, handler: { action in
+                print("Need to offer date picker to change the date here")
+                self.createDatePickerView(delegateVC: self, recipe: recipe)
+                
+            }))
             actionSheet.addAction(.init(title: "Delete recipe", style: .destructive, handler: { action in
                 self.mealPlanner.removeRecipeFromPlanner(recipe: recipe)
             }))
-            actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: { action in
-                
-                
-                
-            }))
+            actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+            
             present(actionSheet, animated: true)
         }
         
     }
 }
 
+// MARK: SelectDateViewDelegate
+extension MealPlannerHomeVC: SelectDateViewDelegate {
+    func dateSelected(date: Date, recipe: MealPlanner.RecipeTransfer?) {
+        if let recipe = recipe {
+            mealPlanner.changeDateForRecipe(recipe: recipe, newDate: date)
+        }
+    }
+}
 
 // MARK: CalendarViewDelegate
 extension MealPlannerHomeVC: CalendarViewDelegate {
@@ -361,3 +371,5 @@ extension MealPlannerHomeVC: UIScrollViewDelegate {
     }
     
 }
+
+

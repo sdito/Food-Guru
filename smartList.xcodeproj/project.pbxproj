@@ -22,6 +22,8 @@
 		E20BC6DE2329A43300F1E5E7 /* SettingTwoLevelCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6DD2329A43300F1E5E7 /* SettingTwoLevelCell.swift */; };
 		E20BC6E0232AB39F00F1E5E7 /* SetUpListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6DF232AB39F00F1E5E7 /* SetUpListVC.swift */; };
 		E20BC6E2232AE13300F1E5E7 /* UIStackView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6E1232AE13300F1E5E7 /* UIStackView-Extension.swift */; };
+		E20D7E2F2410D2450037C22A /* SelectDateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E20D7E2E2410D2450037C22A /* SelectDateView.xib */; };
+		E20D7E312410D2560037C22A /* SelectDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20D7E302410D2560037C22A /* SelectDateView.swift */; };
 		E20F2AD823258A4B00CD907A /* StorageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F2AD723258A4B00CD907A /* StorageCell.swift */; };
 		E2149CF7235ADCAB002BF2D0 /* CreateNewItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2149CF6235ADCAB002BF2D0 /* CreateNewItemVC.swift */; };
 		E2149CF9235B9587002BF2D0 /* CreateNewItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2149CF8235B9587002BF2D0 /* CreateNewItemCell.swift */; };
@@ -37,6 +39,7 @@
 		E22A0EF423AC03C5007D7272 /* OutsideRecipesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A0EF323AC03C5007D7272 /* OutsideRecipesVC.swift */; };
 		E22A0EF623AC064F007D7272 /* RecipePuppyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A0EF523AC064F007D7272 /* RecipePuppyCell.swift */; };
 		E22A0EF823AD9238007D7272 /* SettingViewedRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A0EF723AD9238007D7272 /* SettingViewedRecipeCell.swift */; };
+		E22AABE124119629000AEEB5 /* Date-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22AABE024119629000AEEB5 /* Date-Extension.swift */; };
 		E2369B7323EE5D2F00A2293D /* SelectMealPlanRecipeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2369B7223EE5D2F00A2293D /* SelectMealPlanRecipeVC.swift */; };
 		E2369B7523EE5E3400A2293D /* RecipeSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2369B7423EE5E3400A2293D /* RecipeSelection.swift */; };
 		E2369B7723EF9A7600A2293D /* SelectRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2369B7623EF9A7600A2293D /* SelectRecipeCell.swift */; };
@@ -181,6 +184,8 @@
 		E20BC6DD2329A43300F1E5E7 /* SettingTwoLevelCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTwoLevelCell.swift; sourceTree = "<group>"; };
 		E20BC6DF232AB39F00F1E5E7 /* SetUpListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetUpListVC.swift; sourceTree = "<group>"; };
 		E20BC6E1232AE13300F1E5E7 /* UIStackView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView-Extension.swift"; sourceTree = "<group>"; };
+		E20D7E2E2410D2450037C22A /* SelectDateView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectDateView.xib; sourceTree = "<group>"; };
+		E20D7E302410D2560037C22A /* SelectDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectDateView.swift; sourceTree = "<group>"; };
 		E20F2AD723258A4B00CD907A /* StorageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageCell.swift; sourceTree = "<group>"; };
 		E2149CF6235ADCAB002BF2D0 /* CreateNewItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewItemVC.swift; sourceTree = "<group>"; };
 		E2149CF8235B9587002BF2D0 /* CreateNewItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewItemCell.swift; sourceTree = "<group>"; };
@@ -200,6 +205,7 @@
 		E22A0EF323AC03C5007D7272 /* OutsideRecipesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutsideRecipesVC.swift; sourceTree = "<group>"; };
 		E22A0EF523AC064F007D7272 /* RecipePuppyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePuppyCell.swift; sourceTree = "<group>"; };
 		E22A0EF723AD9238007D7272 /* SettingViewedRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewedRecipeCell.swift; sourceTree = "<group>"; };
+		E22AABE024119629000AEEB5 /* Date-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date-Extension.swift"; sourceTree = "<group>"; };
 		E2369B7223EE5D2F00A2293D /* SelectMealPlanRecipeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMealPlanRecipeVC.swift; sourceTree = "<group>"; };
 		E2369B7423EE5E3400A2293D /* RecipeSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeSelection.swift; sourceTree = "<group>"; };
 		E2369B7623EF9A7600A2293D /* SelectRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRecipeCell.swift; sourceTree = "<group>"; };
@@ -372,6 +378,15 @@
 				E22A0EF723AD9238007D7272 /* SettingViewedRecipeCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		E20D7E322410D2770037C22A /* SelectDateView */ = {
+			isa = PBXGroup;
+			children = (
+				E20D7E2E2410D2450037C22A /* SelectDateView.xib */,
+				E20D7E302410D2560037C22A /* SelectDateView.swift */,
+			);
+			path = SelectDateView;
 			sourceTree = "<group>";
 		};
 		E216203A22F658D10074A0DF = {
@@ -618,6 +633,7 @@
 				E28A4CC423DE840D00C94DF9 /* MealPlanner.storyboard */,
 				E28A4CC823DE842400C94DF9 /* View controllers */,
 				E29FDE1323E554E5005CE08B /* CalendarView */,
+				E20D7E322410D2770037C22A /* SelectDateView */,
 				E287242324031A02000FBBB0 /* Cells */,
 			);
 			path = "Meal planner";
@@ -691,6 +707,7 @@
 			isa = PBXGroup;
 			children = (
 				E2EAE38523E6350A001EDD72 /* Calendar-Extension.swift */,
+				E22AABE024119629000AEEB5 /* Date-Extension.swift */,
 				E29BB2C323D172C1000BD145 /* Int-Extension.swift */,
 				E2B68D6C232EBD92006A3B58 /* Notification.Name-Extension.swift */,
 				E2EB7FC222FFB29A003948A6 /* String-Extension.swift */,
@@ -998,6 +1015,7 @@
 				E2E29036234C3F1300620576 /* RatingView.xib in Resources */,
 				E2DA80BB2347F0E400BD7101 /* SortItemView.xib in Resources */,
 				E216204C22F658D10074A0DF /* Main.storyboard in Resources */,
+				E20D7E2F2410D2450037C22A /* SelectDateView.xib in Resources */,
 				E2A54E1D2318553400BEBF39 /* InstructionView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1213,6 +1231,8 @@
 				E2B8E947237C865D0051B07D /* PDFCreator.swift in Sources */,
 				E2A54E1E2318553400BEBF39 /* InstructionView.swift in Sources */,
 				E2F380AD2319847A003857F7 /* IngredientView.swift in Sources */,
+				E22AABE124119629000AEEB5 /* Date-Extension.swift in Sources */,
+				E20D7E312410D2560037C22A /* SelectDateView.swift in Sources */,
 				E2149CF7235ADCAB002BF2D0 /* CreateNewItemVC.swift in Sources */,
 				E20BC6E2232AE13300F1E5E7 /* UIStackView-Extension.swift in Sources */,
 				E2DC0F2923B1DFA60094FDB2 /* EditItemInfoView.swift in Sources */,

@@ -91,6 +91,11 @@ class CalendarView: UIView {
                     d.setTitleColor(.systemGreen, for: .normal)
                     // tell the delegate what the current day is
                     delegate.dateButtonSelected(month: Month.monthFromInt(int: calendar.component(.month, from: date ?? Date())), day: Int(d.titleLabel!.text!)!, year: calendar.component(.year, from: date ?? Date()), buttonTag: d.tag)
+                    
+                    // set the ui as selected for the current day
+                    d.backgroundColor = Colors.secondarySystemBackground
+                    d.layer.borderColor = UIColor.clear.cgColor
+                    
                 }
                 dayButtonDate = "\(calendar.component(.month, from: data.dateUsed)).\(dayNum).\(calendar.component(.year, from: data.dateUsed))"
             } else {
@@ -220,7 +225,6 @@ class CalendarView: UIView {
                 let shortDateComponents = shortDate.split(separator: ".").map({Int($0)})
                 // need to use this date to alter the UI for the correct day buttons
                 // need to rememebr what buttons were changed, and then change them back when a new date is selected
-                // delegate.associatedToSelectedDay(button: <#T##UIButton#>)
                 
                 let availableTags = [0,1,2].filter({$0 != tagFromNoti})
                 let monthComponent = shortDateComponents[0]!

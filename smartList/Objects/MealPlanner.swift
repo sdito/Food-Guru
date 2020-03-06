@@ -178,9 +178,22 @@ class MealPlanner {
     
     func removeRecipeFromPlanner(recipe: RecipeTransfer) {
         
-        // delete recipe from both schedule in meal planners and recipes in meal planners
+        // delete recipe from (3 things) [first], schedule in meal planners [second], recipes in meal planners [third], delete from realm
         
         if let id = SharedValues.shared.mealPlannerID {
+            
+            // delete from realm, if exists in realm
+            let realm = try? Realm()
+            do {
+                try realm?.write {
+                    if let object = realm?.object(ofType: MPCookbookRecipe.self, forPrimaryKey: recipe.id) {
+                        realm?.delete(object)
+                    }
+                }
+            } catch {
+                print("Error deleting from realm: \(error)")
+            }
+            
             // delete from schedule
             let documentMonthYear = recipe.date.shortDateToMonthYear()
             let firebaseRecipeFormat = "\(recipe.date)__\(recipe.id)__\(recipe.name)"
@@ -207,6 +220,38 @@ class MealPlanner {
         
     }
     
+    func changeDateForRecipe(recipe: MealPlanner.RecipeTransfer, newDate: Date) {
+        if let id = SharedValues.shared.mealPlannerID {
+            // first delete the recipe with the old informaiton
+            let oldMonthYear = recipe.date.shortDateToMonthYear()
+            let oldScheduleReference = db.collection("mealPlanners").document(id).collection("schedule").document(oldMonthYear)
+            let oldDbFormat = "\(recipe.date)__\(recipe.id)__\(recipe.name)"
+            oldScheduleReference.updateData([
+                "recipes": FieldValue.arrayRemove([oldDbFormat])
+            ])
+            
+            // then write the recipe with the new information to schedule
+            let newShortDate = newDate.dbFormat()
+            let newMonthYear = newShortDate.shortDateToMonthYear()
+            let newScheduleReference = db.collection("mealPlanners").document(id).collection("schedule").document(newMonthYear)
+            let newDbFormat = "\(newShortDate)__\(recipe.id)__\(recipe.name)"
+            newScheduleReference.updateData([
+                "recipes" : FieldValue.arrayUnion([newDbFormat])
+            ]) { (err) in
+                if err != nil {
+                    // update failed becuase document didnt exist, need to create new scheudle document and write the data there
+                    newScheduleReference.setData([
+                        "recipes": [newDbFormat]
+                    ])
+                }
+            }
+            
+        }
+        
+        
+        
+        
+    }
     
     
     func listenForMealPlannerRecipes(complete: @escaping (_ bool: Bool) -> Void) {
@@ -259,6 +304,8 @@ class MealPlanner {
             complete(false)
         }
     }
+    
+    #error("need to implement the changing of groups")
     
     
     // MARK: UI
