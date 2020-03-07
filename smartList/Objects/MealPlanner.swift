@@ -305,8 +305,18 @@ class MealPlanner {
         }
     }
     
-    #error("need to implement the changing of groups")
+    #warning("need to implement the changing of groups by implementing this")
+    func handleMealPlannerForGroupChangeOrNewGroup(oldUids: [String], newUids: [String], mealPlannerID: String, groupID: String) {
+        
+    }
     
+    class func deleteAllItems(db: Firestore, id: String) {
+        #warning("need to implement")
+        let recipeReference = db.collection("mealPlanners").document(id).collection("recipes")
+        let scheduleReference = db.collection("mealPlanners").document(id).collection("schedule")
+        
+        recipeReference.do
+    }
     
     // MARK: UI
     // To get the int value for the first day of the example month from the specific day and weekday from a selected date

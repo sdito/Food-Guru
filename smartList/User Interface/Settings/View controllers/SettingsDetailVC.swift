@@ -21,6 +21,7 @@ class SettingsDetailVC: UIViewController {
         super.viewDidLoad()
         tableView.dataSource = self
         tableView.delegate = self
+        
         createObserver()
         db = Firestore.firestore()
         self.createNavigationBarTextAttributes()
@@ -228,8 +229,16 @@ class SettingsDetailVC: UIViewController {
         case .tutorial:
             return []
         case .mealPlanner:
-            #warning("need to impelment settings for meal planner")
-            return [UITableViewCell()]
+            
+            let topCell = tableView.dequeueReusableCell(withIdentifier: "settingTwoLevelCell") as! SettingTwoLevelCell
+            let top = "Meal planner members"
+            topCell.setUI(top: top, emails: SharedValues.shared.groupEmails ?? [(Auth.auth().currentUser?.email ?? "This device")])
+            let button1 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+            button1.setUI(title: "Delete all items from meal planner")
+            button1.button.addTarget(self, action: #selector(deleteItemsFromMealPlanner), for: .touchUpInside)
+            
+            
+            return [topCell, button1]
         }
     }
     
@@ -366,6 +375,18 @@ class SettingsDetailVC: UIViewController {
         }))
         alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         present(alert, animated: true)
+    }
+    
+    @objc private func deleteItemsFromMealPlanner() {
+        print("Delete items from meal planner")
+        
+        if let id = SharedValues.shared.mealPlannerID {
+            MealPlanner.deleteAllItems(db: db, id: id)
+        } else {
+            let alert = UIAlertController(title: "You haven't created a meal planner yet.", message: "Go to the meal planner tab to create your meal planner.", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            present(alert, animated: true)
+        }
     }
     
     @objc private func deleteStorage() {
