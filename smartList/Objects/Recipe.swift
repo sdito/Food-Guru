@@ -549,6 +549,9 @@ extension Recipe {
     
     static func getPuppyRecipesFromSearches(activeSearches: [(String, SearchType)], expiringItems: [String], recipesFound: @escaping (_ recipes: [Recipe.Puppy]) -> Void) {
         // recipes that come form the 'More recipes' pop up bottom from RecipeHomeVC
+        
+        DispatchQueue.global(qos: .background).async {
+        
         var puppyRecipes: [Recipe.Puppy] = []
         var itemsToSearch: [String] {
             if activeSearches.contains(where: {$0 == ("Expiring", .other)}) {
@@ -664,6 +667,9 @@ extension Recipe {
         
         task.resume()
     }
+    
+    }
+    
     
 }
 

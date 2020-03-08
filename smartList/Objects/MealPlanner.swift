@@ -315,7 +315,22 @@ class MealPlanner {
         let recipeReference = db.collection("mealPlanners").document(id).collection("recipes")
         let scheduleReference = db.collection("mealPlanners").document(id).collection("schedule")
         
-        recipeReference.do
+        recipeReference.getDocuments { (querySnapshot, error) in
+            if let documents = querySnapshot?.documents {
+                documents.forEach { (doc) in
+                    recipeReference.document(doc.documentID).delete()
+                }
+            }
+        }
+        
+        scheduleReference.getDocuments { (querySnapshot, error) in
+            if let documents = querySnapshot?.documents {
+                documents.forEach { (doc) in
+                    scheduleReference.document(doc.documentID).delete()
+                }
+            }
+        }
+        
     }
     
     // MARK: UI

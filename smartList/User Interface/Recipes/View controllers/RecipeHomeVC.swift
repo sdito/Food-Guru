@@ -221,20 +221,29 @@ class RecipeHomeVC: UIViewController {
     private func handleNeedingMoreRecipes() {
         
         Recipe.getPuppyRecipesFromSearches(activeSearches: self.activeSearches, expiringItems: expiringItems) { (puppyRecipes) in
-            let vc = self.storyboard?.instantiateViewController(withIdentifier: "outsideRecipesVC") as! OutsideRecipesVC
-            vc.puppyRecipes = puppyRecipes
-            if vc.puppyRecipes?.isEmpty == false {
-                self.present(vc, animated: true, completion: nil)
-            } else {
-                // to only allow this messageview if the user specifically pressed the more recipes button
-                if self.userWantsMoreRecipes == true {
-                    self.createMessageView(color: .red, text: "Couldn't find more recipes")
-                    self.userWantsMoreRecipes = false
+            
+            DispatchQueue.main.async {
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "outsideRecipesVC") as! OutsideRecipesVC
+                vc.puppyRecipes = puppyRecipes
+                if vc.puppyRecipes?.isEmpty == false {
+                    
+                    self.present(vc, animated: true, completion: nil)
+                } else {
+                    // to only allow this messageview if the user specifically pressed the more recipes button
+                    if self.userWantsMoreRecipes == true {
+                        self.createMessageView(color: .red, text: "Couldn't find more recipes")
+                        self.userWantsMoreRecipes = false
+                    }
+                    
                 }
-                
             }
             
+            
+        
         }
+        
+        
+        
     }
     
     private func createObserver() {
