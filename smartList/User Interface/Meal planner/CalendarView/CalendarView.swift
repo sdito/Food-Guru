@@ -95,6 +95,7 @@ class CalendarView: UIView {
                     // set the ui as selected for the current day
                     d.backgroundColor = Colors.secondarySystemBackground
                     d.layer.borderColor = UIColor.clear.cgColor
+                    delegate.selectedDay(button: d)
                     
                 }
                 dayButtonDate = "\(calendar.component(.month, from: data.dateUsed)).\(dayNum).\(calendar.component(.year, from: data.dateUsed))"
@@ -188,9 +189,7 @@ class CalendarView: UIView {
         }
     }
     
-    // MARK: @objc funcs
-    @objc func buttonPressed(_ sender: UIButton) {
-        
+    func buttonPressedHelper(sender: UIButton) {
         UIView.animate(withDuration: 0.2) {
             sender.backgroundColor = Colors.secondarySystemBackground
             sender.layer.borderColor = UIColor.clear.cgColor//Colors.secondary.cgColor
@@ -217,6 +216,12 @@ class CalendarView: UIView {
         
         delegate.dateButtonSelected(month: month, day: Int(sender.titleLabel!.text!)!, year: yearInt, buttonTag: sender.tag)
         delegate.selectedDay(button: sender)
+    }
+    
+    // MARK: @objc funcs
+    @objc func buttonPressed(_ sender: UIButton) {
+        buttonPressedHelper(sender: sender)
+        
     }
     
     @objc func dateButtonChangedSelector(_ notification: Notification) {

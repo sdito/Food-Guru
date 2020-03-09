@@ -12,6 +12,8 @@ import UIKit
 
 extension String {
     
+    
+    
     func getPreviousMonth() -> String {
         var monthYear = self.split(separator: ".").map({Int($0)!})
         
@@ -563,3 +565,16 @@ extension Sequence where Element == String {
 }
 
 
+
+extension Optional where Wrapped == String {
+    func plusOne() -> String? {
+        guard let str = self else { return "-1" }
+        guard let int = Int(str) else { return "-1" }
+        return "\(int + 1)"
+    }
+    func minusOne() -> String? {
+        guard let str = self else { return "-1" }
+        guard let int = Int(str) else { return "-1" }
+        return "\(int - 1)"
+    }
+}

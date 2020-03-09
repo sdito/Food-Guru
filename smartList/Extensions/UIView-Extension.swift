@@ -149,7 +149,13 @@ extension UIView {
         self.layer.addSublayer(circleShape)
     }
 
-    
+    func findCalendarView() -> CalendarView? {
+        if type(of: self) == CalendarView.self {
+            return self as? CalendarView
+        } else {
+            return self.superview?.findCalendarView()
+        }
+    }
 }
 
 

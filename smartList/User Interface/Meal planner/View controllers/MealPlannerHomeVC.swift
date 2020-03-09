@@ -112,6 +112,54 @@ class MealPlannerHomeVC: UIViewController {
         DispatchQueue.main.async {
             self.scrollView.setContentOffset(CGPoint(x: self.view.bounds.width, y: 0), animated: false)
         }
+        
+        // to have a gestrue recognizer to allow user to swipe to get to the next or previous day
+        let swipeGestureRecognizerLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipeSwiped))
+        let swipeGestureRecognizerRight = UISwipeGestureRecognizer(target: self, action: #selector(swipeSwiped))
+        swipeGestureRecognizerLeft.direction = UISwipeGestureRecognizer.Direction.left
+        swipeGestureRecognizerRight.direction = UISwipeGestureRecognizer.Direction.right
+        tableView.addGestureRecognizer(swipeGestureRecognizerRight)
+        tableView.addGestureRecognizer(swipeGestureRecognizerLeft)
+    }
+    
+    @objc private func swipeSwiped(_ recognizer: UISwipeGestureRecognizer) {
+        // left direction for next day, rigth direction for previous day
+        // get the alpha of the button, and then find the next button incremented with the same alpha, if no such button exists take the next alpha with next of '1', reverse for previous
+        recognizer.isEnabled = false
+        
+        
+        if let currCalendarView = selectedDayButton?.findCalendarView() {
+            
+            if recognizer.direction == .left {
+                // Next day
+                
+                for d in currCalendarView.day {
+                    if d.tag == selectedDayButton?.tag && d.titleLabel?.text == selectedDayButton?.titleLabel?.text.plusOne() {
+                        d.backgroundColor = Colors.secondarySystemBackground
+                        d.layer.borderColor = UIColor.clear.cgColor
+                        selectedDay(button: d)
+                        currCalendarView.buttonPressedHelper(sender: d)
+                        break
+                    }
+                }
+                
+            } else if recognizer.direction == .right {
+                // Prev day
+                for d in currCalendarView.day {
+                    if d.tag == selectedDayButton?.tag && d.titleLabel?.text == selectedDayButton?.titleLabel?.text.minusOne() {
+                        d.backgroundColor = Colors.secondarySystemBackground
+                        d.layer.borderColor = UIColor.clear.cgColor
+                        selectedDay(button: d)
+                        currCalendarView.buttonPressedHelper(sender: d)
+                        break
+                    }
+                }
+                
+            }
+        }
+        recognizer.isEnabled = true
+        
+        
     }
     
     func handleShortDateChange() {
