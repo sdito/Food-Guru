@@ -378,15 +378,23 @@ class SettingsDetailVC: UIViewController {
     }
     
     @objc private func deleteItemsFromMealPlanner() {
-        print("Delete items from meal planner")
         
+        #warning("dont think this is working, also need to wrap it in an alert")
+    
         if let id = SharedValues.shared.mealPlannerID {
-            MealPlanner.deleteAllItems(db: db, id: id)
+            
+            let alert = UIAlertController(title: "Are you sure you want to delete all recipes from your meal planner?", message: "This action cannot be undone.", preferredStyle: .alert)
+            alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(.init(title: "Delete", style: .destructive, handler: { (action) in
+                MealPlanner.deleteAllItems(db: self.db, id: id)
+            }))
+            present(alert, animated: true)
         } else {
             let alert = UIAlertController(title: "You haven't created a meal planner yet.", message: "Go to the meal planner tab to create your meal planner.", preferredStyle: .alert)
             alert.addAction(.init(title: "Ok", style: .default, handler: nil))
             present(alert, animated: true)
         }
+        
     }
     
     @objc private func deleteStorage() {

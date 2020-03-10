@@ -70,10 +70,3 @@ extension DocumentSnapshot {
         return recipe
     }
 }
-
-
-
-
-class UserDevice: Object {
-    @objc dynamic var uid: String = ""
-}

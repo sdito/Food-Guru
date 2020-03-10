@@ -44,6 +44,7 @@ class MealPlannerHomeVC: UIViewController {
         mealPlanner.readIfUserHasMealPlanner()
         
         self.createLoadingView()
+        
         mealPlanner.listenForMealPlannerRecipes { (done) in
             self.dismiss(animated: false, completion: nil)
             if done == true {
@@ -125,39 +126,72 @@ class MealPlannerHomeVC: UIViewController {
     @objc private func swipeSwiped(_ recognizer: UISwipeGestureRecognizer) {
         // left direction for next day, rigth direction for previous day
         // get the alpha of the button, and then find the next button incremented with the same alpha, if no such button exists take the next alpha with next of '1', reverse for previous
-        recognizer.isEnabled = false
+        
         
         
         if let currCalendarView = selectedDayButton?.findCalendarView() {
             
             if recognizer.direction == .left {
                 // Next day
-                
+                var nextDayFound = false
                 for d in currCalendarView.day {
                     if d.tag == selectedDayButton?.tag && d.titleLabel?.text == selectedDayButton?.titleLabel?.text.plusOne() {
                         d.backgroundColor = Colors.secondarySystemBackground
                         d.layer.borderColor = UIColor.clear.cgColor
                         selectedDay(button: d)
                         currCalendarView.buttonPressedHelper(sender: d)
+                        nextDayFound = true
                         break
+                    }
+                }
+                
+                if nextDayFound == false {
+                    // was the last day of the month, see if day '1' for the next alpha exists
+                    for d in currCalendarView.day {
+                        if d.tag == (selectedDayButton?.tag ?? -3) + 1 && d.titleLabel?.text == "1" {
+                            selectedDay(button: d)
+                            currCalendarView.buttonPressedHelper(sender: d)
+                            break
+                        }
                     }
                 }
                 
             } else if recognizer.direction == .right {
                 // Prev day
+                var prevDayFound = false
                 for d in currCalendarView.day {
                     if d.tag == selectedDayButton?.tag && d.titleLabel?.text == selectedDayButton?.titleLabel?.text.minusOne() {
                         d.backgroundColor = Colors.secondarySystemBackground
                         d.layer.borderColor = UIColor.clear.cgColor
                         selectedDay(button: d)
                         currCalendarView.buttonPressedHelper(sender: d)
+                        prevDayFound = true
                         break
                     }
                 }
                 
+                if prevDayFound == false {
+                    var lastButton: (button: UIButton, date: Int)?
+                    print("Need to get last day of previous month")
+                    for d in currCalendarView.day {
+                        if d.tag == (selectedDayButton?.tag ?? -3) - 1 {
+                            if let str = d.titleLabel?.text, let int = Int(str) {
+                                if int > lastButton?.date ?? 0 {
+                                    lastButton = (d, int)
+                                }
+                            }
+                        }
+                    }
+                    
+                    if let d = lastButton?.button {
+                        selectedDay(button: d)
+                        currCalendarView.buttonPressedHelper(sender: d)
+                    }
+                    
+                }
             }
         }
-        recognizer.isEnabled = true
+        
         
         
     }
@@ -258,9 +292,12 @@ extension MealPlannerHomeVC: MealPlannerCellDelegate {
         if let recipe = recipe {
             #warning("need to handle iPad case")
             let actionSheet = UIAlertController(title: "Edit \(recipe.name)", message: nil, preferredStyle: .actionSheet)
+            actionSheet.addAction(.init(title: "Copy to another date", style: .default, handler: { action in
+                self.createDatePickerView(delegateVC: self, recipe: recipe, copyRecipe: true)
+            }))
             actionSheet.addAction(.init(title: "Change date", style: .default, handler: { action in
                 print("Need to offer date picker to change the date here")
-                self.createDatePickerView(delegateVC: self, recipe: recipe)
+                self.createDatePickerView(delegateVC: self, recipe: recipe, copyRecipe: false)
                 
             }))
             actionSheet.addAction(.init(title: "Delete recipe", style: .destructive, handler: { action in
@@ -276,11 +313,15 @@ extension MealPlannerHomeVC: MealPlannerCellDelegate {
 
 // MARK: SelectDateViewDelegate
 extension MealPlannerHomeVC: SelectDateViewDelegate {
-    func dateSelected(date: Date, recipe: MealPlanner.RecipeTransfer?) {
+    func dateSelected(date: Date, recipe: MealPlanner.RecipeTransfer?, copyRecipe: Bool) {
+        
         if let recipe = recipe {
-            mealPlanner.changeDateForRecipe(recipe: recipe, newDate: date)
+            mealPlanner.changeDateForRecipe(recipe: recipe, newDate: date, copyRecipe: copyRecipe)
         }
+        
+        
     }
+    
 }
 
 // MARK: CalendarViewDelegate

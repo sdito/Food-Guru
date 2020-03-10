@@ -220,15 +220,19 @@ class MealPlanner {
         
     }
     
-    func changeDateForRecipe(recipe: MealPlanner.RecipeTransfer, newDate: Date) {
+    func changeDateForRecipe(recipe: MealPlanner.RecipeTransfer, newDate: Date, copyRecipe: Bool) {
         if let id = SharedValues.shared.mealPlannerID {
-            // first delete the recipe with the old informaiton
-            let oldMonthYear = recipe.date.shortDateToMonthYear()
-            let oldScheduleReference = db.collection("mealPlanners").document(id).collection("schedule").document(oldMonthYear)
-            let oldDbFormat = "\(recipe.date)__\(recipe.id)__\(recipe.name)"
-            oldScheduleReference.updateData([
-                "recipes": FieldValue.arrayRemove([oldDbFormat])
-            ])
+            
+            // first delete the recipe with the old informaiton, only if copy is false which means original needs to be deleted
+            if copyRecipe == false {
+                let oldMonthYear = recipe.date.shortDateToMonthYear()
+                let oldScheduleReference = db.collection("mealPlanners").document(id).collection("schedule").document(oldMonthYear)
+                let oldDbFormat = "\(recipe.date)__\(recipe.id)__\(recipe.name)"
+                oldScheduleReference.updateData([
+                    "recipes": FieldValue.arrayRemove([oldDbFormat])
+                ])
+            }
+            
             
             // then write the recipe with the new information to schedule
             let newShortDate = newDate.dbFormat()
@@ -247,11 +251,8 @@ class MealPlanner {
             }
             
         }
-        
-        
-        
-        
     }
+    
     
     
     func listenForMealPlannerRecipes(complete: @escaping (_ bool: Bool) -> Void) {
@@ -305,13 +306,44 @@ class MealPlanner {
         }
     }
     
-    #warning("need to implement the changing of groups by implementing this")
-    func handleMealPlannerForGroupChangeOrNewGroup(oldUids: [String], newUids: [String], mealPlannerID: String, groupID: String) {
+    
+    func handleMealPlannerForGroupChangeOrNewGroup(oldEmails: [String]?, newEmails: [String], mealPlannerID: String) {
+        #warning("need to implement the changing of groups by implementing this, also need to do some testing on this")
+        // If old emails is nil, then this was a brand new group, use the users meal planner (if it exists) for the new meal planner
+        // If old emails exist, need to nil out every meal planner ID
+        // For both cases, in newEmails need to write the mealPlannerID to every user's profile
+        
+        
+        // to remove the old mealPlannerID value from the previous emails
+        if let oldEmails = oldEmails {
+            oldEmails.forEach { (oldEmail) in
+                User.turnEmailToUid(db: db, email: oldEmail) { (oldUid) in
+                    if let oldUid = oldUid {
+                        let reference = self.db.collection("users").document(oldUid)
+                        reference.updateData([
+                            "mealPlannerID": FieldValue.delete()
+                        ])
+                    }
+                }
+            }
+        }
+        
+        newEmails.forEach { (newEmail) in
+            User.turnEmailToUid(db: db, email: newEmail) { (newUid) in
+                if let newUid = newUid {
+                    let reference = self.db.collection("users").document(newUid)
+                    reference.updateData([
+                        "mealPlannerID": mealPlannerID
+                    ])
+                }
+            }
+        }
         
     }
     
+    
     class func deleteAllItems(db: Firestore, id: String) {
-        #warning("need to implement")
+        
         let recipeReference = db.collection("mealPlanners").document(id).collection("recipes")
         let scheduleReference = db.collection("mealPlanners").document(id).collection("schedule")
         
@@ -326,10 +358,14 @@ class MealPlanner {
         scheduleReference.getDocuments { (querySnapshot, error) in
             if let documents = querySnapshot?.documents {
                 documents.forEach { (doc) in
-                    scheduleReference.document(doc.documentID).delete()
+                    let ref = scheduleReference.document(doc.documentID)
+                    ref.updateData([
+                        "recipes" : FieldValue.delete()
+                    ])
                 }
             }
         }
+        
         
     }
     

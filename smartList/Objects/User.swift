@@ -262,6 +262,9 @@ struct User {
     }
     
     static func editedGroupInfo(db: Firestore, initialEmails: [String], updatedEmails: [String], groupID: String, storageID: String) {
+        
+        
+        
         //first need to find out of the storage is part of a group
         db.collection("storages").document(storageID).getDocument { (docSnapshot, error) in
             if let doc = docSnapshot {
@@ -316,6 +319,7 @@ struct User {
                             }
                         }
                     }
+                    
                 // STORAGE IS NOT WITH THE GROUP
                 case false:
                     // works for adding
