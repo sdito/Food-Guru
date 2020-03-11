@@ -45,7 +45,7 @@ class MealPlannerHomeVC: UIViewController {
         
         self.createLoadingView()
         
-        mealPlanner.listenForMealPlannerRecipes { (done) in
+        mealPlanner.getMealPlannerRecipes { (done) in
             self.dismiss(animated: false, completion: nil)
             if done == true {
                 self.setUpInitialUI()
@@ -53,6 +53,15 @@ class MealPlannerHomeVC: UIViewController {
         }
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if mealPlanner.recipeListener == nil {
+            print("Need to create new listener")
+            mealPlanner.listenForMealPlanRecipes()
+        }
+    }
+    
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -291,7 +300,8 @@ extension MealPlannerHomeVC: MealPlannerCellDelegate {
         print("Recipe selected, printing from delegate: \(recipe?.name ?? "recipe is nil :(")")
         if let recipe = recipe {
             #warning("need to handle iPad case")
-            let actionSheet = UIAlertController(title: "Edit \(recipe.name)", message: nil, preferredStyle: .actionSheet)
+            let actionSheet = UIAlertController(title: recipe.name, message: nil, preferredStyle: .actionSheet)
+        
             actionSheet.addAction(.init(title: "Copy to another date", style: .default, handler: { action in
                 self.createDatePickerView(delegateVC: self, recipe: recipe, copyRecipe: true)
             }))

@@ -25,6 +25,7 @@ class MealPlanner {
     var userIDs: [String]?
     var group: Bool?
     var mealPlanDict: [String:Set<RecipeTransfer>] = [:]
+    var recipeListener: ListenerRegistration?
     weak var delegate: MealPlanRecipeChangedDelegate?
     private var db = Firestore.firestore()
     
@@ -255,7 +256,7 @@ class MealPlanner {
     
     
     
-    func listenForMealPlannerRecipes(complete: @escaping (_ bool: Bool) -> Void) {
+    func getMealPlannerRecipes(complete: @escaping (_ bool: Bool) -> Void) {
         if let id = SharedValues.shared.mealPlannerID {
             let refernece = db.collection("mealPlanners").document(id).collection("schedule")
             
@@ -280,7 +281,18 @@ class MealPlanner {
             }
             
             
-            refernece.addSnapshotListener { (querySnapshot, error) in
+            listenForMealPlanRecipes()
+
+        } else {
+            complete(false)
+        }
+    }
+    
+    func listenForMealPlanRecipes() {
+        
+        if let id = SharedValues.shared.mealPlannerID {
+            let refernece = db.collection("mealPlanners").document(id).collection("schedule")
+            recipeListener = refernece.addSnapshotListener { (querySnapshot, error) in
                 guard let snapshot = querySnapshot else { return }
                 snapshot.documentChanges.forEach { (diff) in
                     let doc = diff.document
@@ -298,14 +310,9 @@ class MealPlanner {
                     }
                 }
             }
-            
-            
-            
-        } else {
-            complete(false)
         }
+        
     }
-    
     
     func handleMealPlannerForGroupChangeOrNewGroup(oldEmails: [String]?, newEmails: [String], mealPlannerID: String) {
         #warning("need to implement the changing of groups by implementing this, also need to do some testing on this")
@@ -338,6 +345,10 @@ class MealPlanner {
                 }
             }
         }
+        
+        
+        
+        
         
     }
     
