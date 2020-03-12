@@ -70,6 +70,11 @@ class CreateGroupVC: UIViewController {
     @IBAction func createGroup(_ sender: Any) {
         doneCreatingOutlet.isUserInteractionEnabled = false
         doneCreatingOutlet.alpha = 0.4
+        
+        print("Prev group id: \(previousGroupID ?? "none")")
+        print("Previous emails: \(SharedValues.shared.groupEmails?.joined(separator: ", ") ?? "none")")
+        print("New emails: \(emails.joined(separator: ", "))")
+        
         if previousGroupID == nil {
             // create a new group, nothing to do with editing
             User.writeGroupToFirestoreAndAddToUsers(db: db, emails: emails)
@@ -84,7 +89,10 @@ class CreateGroupVC: UIViewController {
             
         }
         
+        
     }
+    
+    
     // MARK: functions
     @objc private func addItem() {
         let email = textField.text!

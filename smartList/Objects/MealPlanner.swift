@@ -15,6 +15,7 @@ import RealmSwift
 
 protocol MealPlanRecipeChangedDelegate: class {
     func recipesChanged(month: String)
+    func mealPlannerCreated()
 }
 
 
@@ -72,6 +73,7 @@ class MealPlanner {
             ]) { (error) in
                 if error == nil {
                     self.exists = true
+                    self.delegate?.mealPlannerCreated()
                     self.userIDs = [id]
                     self.group = false
                     let reference = self.db.collection("users").document(id)
@@ -93,9 +95,11 @@ class MealPlanner {
                 "group": true
             ]) { error in
                 if error == nil {
+                    
                     var uids: [String]? = []
                     self.exists = true
                     self.group = true
+                    self.delegate?.mealPlannerCreated()
                     for email in groupEmails {
                         // need to get the user's id
                         User.turnEmailToUid(db: self.db, email: email) { (uid) in
@@ -314,8 +318,8 @@ class MealPlanner {
         
     }
     
-    func handleMealPlannerForGroupChangeOrNewGroup(oldEmails: [String]?, newEmails: [String], mealPlannerID: String) {
-        #warning("need to implement the changing of groups by implementing this, also need to do some testing on this")
+    class func handleMealPlannerForGroupChangeOrNewGroup(db: Firestore, oldEmails: [String]?, newEmails: [String], mealPlannerID: String?) {
+        #warning("need to get this working")
         // If old emails is nil, then this was a brand new group, use the users meal planner (if it exists) for the new meal planner
         // If old emails exist, need to nil out every meal planner ID
         // For both cases, in newEmails need to write the mealPlannerID to every user's profile
@@ -326,7 +330,7 @@ class MealPlanner {
             oldEmails.forEach { (oldEmail) in
                 User.turnEmailToUid(db: db, email: oldEmail) { (oldUid) in
                     if let oldUid = oldUid {
-                        let reference = self.db.collection("users").document(oldUid)
+                        let reference = db.collection("users").document(oldUid)
                         reference.updateData([
                             "mealPlannerID": FieldValue.delete()
                         ])
@@ -338,13 +342,21 @@ class MealPlanner {
         newEmails.forEach { (newEmail) in
             User.turnEmailToUid(db: db, email: newEmail) { (newUid) in
                 if let newUid = newUid {
-                    let reference = self.db.collection("users").document(newUid)
-                    reference.updateData([
-                        "mealPlannerID": mealPlannerID
-                    ])
+                    let reference = db.collection("users").document(newUid)
+                    if let mealPlannerID = mealPlannerID {
+                        reference.updateData([
+                            "mealPlannerID": mealPlannerID
+                        ])
+                    } else {
+                        reference.updateData([
+                            "mealPlannerID": FieldValue.delete()
+                        ])
+                    }
+                    
                 }
             }
         }
+        
         
         
         

@@ -72,7 +72,7 @@ class MealPlannerHomeVC: UIViewController {
         if SharedValues.shared.mealPlannerID == nil {
             
             if SharedValues.shared.groupID == nil {
-                
+                print("Creating individual meal planner")
                 mealPlanner.createIndividualMealPlanner()
             } else {
                 print("Creating group meal planner automatically")
@@ -116,6 +116,7 @@ class MealPlannerHomeVC: UIViewController {
         view.setUI(monthsInFuture: -1, recipes: mealPlanner.mealPlanDict)
         view2.setUI(monthsInFuture: 0, recipes: mealPlanner.mealPlanDict)
         view3.setUI(monthsInFuture: 1, recipes: mealPlanner.mealPlanDict)
+        
         
         baseView.removeFromSuperview()
         
@@ -255,6 +256,10 @@ class MealPlannerHomeVC: UIViewController {
 
 // MARK: MealPlanRecipeChangedDelegate
 extension MealPlannerHomeVC: MealPlanRecipeChangedDelegate {
+    func mealPlannerCreated() {
+        setUpInitialUI()
+    }
+    
     func recipesChanged(month: String) {
         
         handleShortDateChange()
