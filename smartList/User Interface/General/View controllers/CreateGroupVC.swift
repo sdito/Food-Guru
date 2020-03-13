@@ -78,12 +78,15 @@ class CreateGroupVC: UIViewController {
         if previousGroupID == nil {
             // create a new group, nothing to do with editing
             User.writeGroupToFirestoreAndAddToUsers(db: db, emails: emails)
+//            MealPlanner.handleMealPlannerForGroupChangeOrNewGroup(db: db, oldEmails: nil, newEmails: emails, mealPlannerID: SharedValues.shared.mealPlannerID)
             self.presentingViewController?.createMessageView(color: Colors.messageGreen, text: "Group created")
             self.dismiss(animated: true, completion: nil)
             
         } else {
             // need to edit the group
+            #error("not properly updating the group info, and not updating the new group info on the user's profiles")
             User.editedGroupInfo(db: db, initialEmails: SharedValues.shared.groupEmails ?? [""], updatedEmails: emails, groupID: SharedValues.shared.groupID ?? " ", storageID: SharedValues.shared.foodStorageID ?? " ")
+//            MealPlanner.handleMealPlannerForGroupChangeOrNewGroup(db: db, oldEmails: SharedValues.shared.groupEmails, newEmails: emails, mealPlannerID: SharedValues.shared.mealPlannerID)
             self.presentingViewController?.createMessageView(color: Colors.messageGreen, text: "Group edited")
             self.dismiss(animated: true, completion: nil)
             

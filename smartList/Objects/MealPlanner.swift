@@ -323,9 +323,25 @@ class MealPlanner {
         // If old emails is nil, then this was a brand new group, use the users meal planner (if it exists) for the new meal planner
         // If old emails exist, need to nil out every meal planner ID
         // For both cases, in newEmails need to write the mealPlannerID to every user's profile
+        print("MP Change being called: oldEmails: \(oldEmails?.joined(separator: ", ") ?? " none"), newEmails: \(newEmails.joined(separator: ", "))")
+        
         
         
         // to remove the old mealPlannerID value from the previous emails
+        if let oldEmails = oldEmails {
+            oldEmails.forEach { (email) in
+                db.collection("users").whereField("email", isEqualTo: email).getDocuments { (querySnapshot, error) in
+                    guard let doc = querySnapshot?.documents.first else { return }
+                    if let uid = doc.get("uid") as? String {
+                        let userRef = db.collection("users").document(uid)
+                        userRef.updateData([
+                            "mealPlannerID" : FieldValue.delete()
+                        ])
+                    }
+                }
+            }
+        }
+        /*
         if let oldEmails = oldEmails {
             oldEmails.forEach { (oldEmail) in
                 User.turnEmailToUid(db: db, email: oldEmail) { (oldUid) in
@@ -338,7 +354,33 @@ class MealPlanner {
                 }
             }
         }
+        */
+        if let mealPlannerID = mealPlannerID {
+            // update the mealPlanner document
+            let mpRef = db.collection("mealPlanners").document(mealPlannerID)
+            mpRef.updateData([
+                "userIDs" : FieldValue.delete()
+            ])
+            // update the user's profiles
+            newEmails.forEach { (email) in
+                db.collection("users").whereField("email", isEqualTo: email).getDocuments { (querySnapshot, error) in
+                    guard let doc = querySnapshot?.documents.first else { return }
+                    if let uid = doc.get("uid") as? String {
+                        let userRef = db.collection("users").document(uid)
+                        userRef.updateData([
+                            "mealPlannerID" : mealPlannerID
+                        ])
+                        // add uid to ref
+                        mpRef.updateData([
+                            "userIDs" : FieldValue.arrayUnion([uid])
+                        ])
+                    }
+                }
+            }
+        }
         
+        
+        /*
         newEmails.forEach { (newEmail) in
             User.turnEmailToUid(db: db, email: newEmail) { (newUid) in
                 if let newUid = newUid {
@@ -352,11 +394,10 @@ class MealPlanner {
                             "mealPlannerID": FieldValue.delete()
                         ])
                     }
-                    
                 }
             }
         }
-        
+        */
         
         
         
