@@ -156,6 +156,29 @@ extension UIView {
             return self.superview?.findCalendarView()
         }
     }
+    
+    func addLoadingView() {
+        let view = UIActivityIndicatorView(style: .whiteLarge)
+        view.startAnimating()
+        view.tag = 89 // used for removing
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.addSubview(view)
+        view.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        view.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        
+        
+    }
+    
+    func removeLoadingView() {
+        self.subviews.forEach { (v) in
+            if v.tag == 89 {
+                v.removeFromSuperview()
+            }
+        }
+    }
+    
+    
 }
 
 

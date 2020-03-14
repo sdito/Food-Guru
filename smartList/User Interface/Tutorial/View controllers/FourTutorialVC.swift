@@ -38,8 +38,11 @@ class FourTutorialVC: UIViewController {
         if SharedValues.shared.isPhone == false {
             topLabel.font = UIFont(name: "futura", size: 17)
         }
+        
+        imageView.addLoadingView()
         self.getImageForTutorial(imageText: "four") { (img) in
             self.imageView.image = img
+            self.imageView.removeLoadingView()
         }
         
     }

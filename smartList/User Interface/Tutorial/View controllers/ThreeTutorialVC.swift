@@ -36,8 +36,10 @@ class ThreeTutorialVC: UIViewController {
             topLabel.font = UIFont(name: "futura", size: 17)
         }
         
+        imageView.addLoadingView()
         self.getImageForTutorial(imageText: "three") { (img) in
             self.imageView.image = img
+            self.imageView.removeLoadingView()
         }
     }
     

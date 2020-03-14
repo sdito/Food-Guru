@@ -42,9 +42,15 @@ class OneTutorialVC: UIViewController {
             topLabel.font = UIFont(name: "futura", size: 17)
         }
         
+        
+        
+        #warning("need to indicate loading for image views")
+        imageView.addLoadingView()
         self.getImageForTutorial(imageText: "one") { (img) in
+            self.imageView.removeLoadingView()
             self.imageView.image = img
         }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -70,7 +76,6 @@ class OneTutorialVC: UIViewController {
     
 
 }
-
 
 
 

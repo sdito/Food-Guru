@@ -22,6 +22,7 @@ class TutorialVC: UIPageViewController {
         if let firstViewController = pages.first {
             setViewControllers([firstViewController], direction: .forward, animated: true, completion: nil)
         }
+        
     }
     
     lazy private var pages: [UIViewController] = {
@@ -42,7 +43,7 @@ class TutorialVC: UIPageViewController {
     
     private func configurePageControl() {
         // The total number of pages that are available is based on how many available colors we have.
-        
+        pages.forEach({$0.loadViewIfNeeded()}) // start the loading process for all of the imageView images that need to be downloaded
         pageControl = UIPageControl(frame: CGRect(x: 0,y: UIScreen.main.bounds.maxY - 45, width: UIScreen.main.bounds.width,height: 50))
         self.pageControl.numberOfPages = pages.count
         self.pageControl.currentPage = 0

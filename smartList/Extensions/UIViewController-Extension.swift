@@ -14,7 +14,7 @@ import AVFoundation
 extension UIViewController {
     
     func getImageForTutorial(imageText: String, imageReturned: @escaping (_ image: UIImage) -> Void) {
-        #warning("need to complete, use these images (either dark or light depending on what user has) for the entire tutorial")
+        print("Image downloading starting to happen")
         let storage = Storage.storage()
         
         var lightOrDark: String {
@@ -35,6 +35,7 @@ extension UIViewController {
                 return
             }
             guard let image = UIImage(data: data) else { return }
+            
             imageReturned(image)
             
         }
