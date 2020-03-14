@@ -38,6 +38,9 @@ class FourTutorialVC: UIViewController {
         if SharedValues.shared.isPhone == false {
             topLabel.font = UIFont(name: "futura", size: 17)
         }
+        self.getImageForTutorial(imageText: "four") { (img) in
+            self.imageView.image = img
+        }
         
     }
     override func viewDidAppear(_ animated: Bool) {

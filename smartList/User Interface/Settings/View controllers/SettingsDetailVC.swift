@@ -229,16 +229,21 @@ class SettingsDetailVC: UIViewController {
         case .tutorial:
             return []
         case .mealPlanner:
+            // If the user has a meal planner
+            if SharedValues.shared.mealPlannerID != nil {
+                let topCell = tableView.dequeueReusableCell(withIdentifier: "settingTwoLevelCell") as! SettingTwoLevelCell
+                let top = "Meal planner members"
+                topCell.setUI(top: top, emails: SharedValues.shared.groupEmails ?? [(Auth.auth().currentUser?.email ?? "This device")])
+                let button1 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
+                button1.setUI(title: "Delete all items from meal planner")
+                button1.button.addTarget(self, action: #selector(deleteItemsFromMealPlanner), for: .touchUpInside)
+                return [topCell, button1]
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
+                cell.setUI(str: "You haven't created a meal planner yet. Go to the meal planner tab to create one!")
+                return [cell]
+            }
             
-            let topCell = tableView.dequeueReusableCell(withIdentifier: "settingTwoLevelCell") as! SettingTwoLevelCell
-            let top = "Meal planner members"
-            topCell.setUI(top: top, emails: SharedValues.shared.groupEmails ?? [(Auth.auth().currentUser?.email ?? "This device")])
-            let button1 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
-            button1.setUI(title: "Delete all items from meal planner")
-            button1.button.addTarget(self, action: #selector(deleteItemsFromMealPlanner), for: .touchUpInside)
-            
-            
-            return [topCell, button1]
         }
     }
     
@@ -378,8 +383,6 @@ class SettingsDetailVC: UIViewController {
     }
     
     @objc private func deleteItemsFromMealPlanner() {
-        
-        #warning("dont think this is working, also need to wrap it in an alert")
     
         if let id = SharedValues.shared.mealPlannerID {
             

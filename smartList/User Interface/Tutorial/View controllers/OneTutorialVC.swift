@@ -42,6 +42,9 @@ class OneTutorialVC: UIViewController {
             topLabel.font = UIFont(name: "futura", size: 17)
         }
         
+        self.getImageForTutorial(imageText: "one") { (img) in
+            self.imageView.image = img
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -55,6 +58,8 @@ class OneTutorialVC: UIViewController {
         
         (self.parent as? TutorialVC)?.button.isHidden = false
     }
+    
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)

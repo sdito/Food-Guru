@@ -319,7 +319,7 @@ class MealPlanner {
     }
     
     class func handleMealPlannerForGroupChangeOrNewGroup(db: Firestore, oldEmails: [String]?, newEmails: [String], mealPlannerID: String?) {
-        #warning("need to get this working")
+        #warning("need to do slightly more testing to ensure this is working as intended")
         // If old emails is nil, then this was a brand new group, use the users meal planner (if it exists) for the new meal planner
         // If old emails exist, need to nil out every meal planner ID
         // For both cases, in newEmails need to write the mealPlannerID to every user's profile
@@ -341,20 +341,8 @@ class MealPlanner {
                 }
             }
         }
-        /*
-        if let oldEmails = oldEmails {
-            oldEmails.forEach { (oldEmail) in
-                User.turnEmailToUid(db: db, email: oldEmail) { (oldUid) in
-                    if let oldUid = oldUid {
-                        let reference = db.collection("users").document(oldUid)
-                        reference.updateData([
-                            "mealPlannerID": FieldValue.delete()
-                        ])
-                    }
-                }
-            }
-        }
-        */
+        
+        
         if let mealPlannerID = mealPlannerID {
             // update the mealPlanner document
             let mpRef = db.collection("mealPlanners").document(mealPlannerID)
@@ -378,29 +366,6 @@ class MealPlanner {
                 }
             }
         }
-        
-        
-        /*
-        newEmails.forEach { (newEmail) in
-            User.turnEmailToUid(db: db, email: newEmail) { (newUid) in
-                if let newUid = newUid {
-                    let reference = db.collection("users").document(newUid)
-                    if let mealPlannerID = mealPlannerID {
-                        reference.updateData([
-                            "mealPlannerID": mealPlannerID
-                        ])
-                    } else {
-                        reference.updateData([
-                            "mealPlannerID": FieldValue.delete()
-                        ])
-                    }
-                }
-            }
-        }
-        */
-        
-        
-        
         
         
     }

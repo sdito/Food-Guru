@@ -25,6 +25,9 @@ class FiveTutorialVC: UIViewController {
             topLabel.font = UIFont(name: "futura", size: 17)
         }
         
+        self.getImageForTutorial(imageText: "five") { (img) in
+            self.imageView.image = img
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

@@ -263,6 +263,11 @@ struct User {
     
     static func editedGroupInfo(db: Firestore, initialEmails: [String], updatedEmails: [String], groupID: String, storageID: String) {
         
+        // update the group document with the new emails
+        db.collection("groups").document(groupID).updateData([
+            "emails": updatedEmails
+        ])
+    
         //first need to find out of the storage is part of a group
         db.collection("storages").document(storageID).getDocument { (docSnapshot, error) in
             if let doc = docSnapshot {
@@ -271,9 +276,7 @@ struct User {
                 // STORAGE IS WITH THE GROUP
                 case true:
                     // 1: update the group (email only)
-                    db.collection("groups").document(groupID).updateData([
-                        "emails": updatedEmails
-                    ])
+                   
                     
                     // 2: update the storage (emails and uid)
                     db.collection("storages").document(storageID).updateData([
@@ -343,9 +346,7 @@ struct User {
                         }
                     }
                     
-                    db.collection("groups").document(groupID).updateData([
-                        "emails": updatedEmails
-                    ])
+                    
                     
                 default:
                     return
@@ -353,6 +354,8 @@ struct User {
             }
         }
     }
+    
+    
     
 
     

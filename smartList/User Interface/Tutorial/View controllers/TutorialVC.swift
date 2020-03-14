@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseStorage
 
 class TutorialVC: UIPageViewController {
     
@@ -18,7 +19,6 @@ class TutorialVC: UIPageViewController {
         self.dataSource = self
         self.delegate = self
         configurePageControl()
-        
         if let firstViewController = pages.first {
             setViewControllers([firstViewController], direction: .forward, animated: true, completion: nil)
         }
@@ -34,10 +34,12 @@ class TutorialVC: UIPageViewController {
                 self.newVc(viewController: "End")
         ]
     }()
+    
     // MARK: functions
     private func newVc(viewController: String) -> UIViewController {
         return UIStoryboard(name: "Tutorial", bundle: nil).instantiateViewController(withIdentifier: viewController)
     }
+    
     private func configurePageControl() {
         // The total number of pages that are available is based on how many available colors we have.
         
@@ -71,6 +73,8 @@ class TutorialVC: UIPageViewController {
         button.titleLabel?.textAlignment = .center
         self.view.addSubview(button)
     }
+    
+    
     
     @objc private func dismissTutorial() {
         print("dismissTutorial was called")
