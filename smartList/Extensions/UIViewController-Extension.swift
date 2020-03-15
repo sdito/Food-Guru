@@ -72,7 +72,7 @@ extension UIViewController {
         vc.view.insertSubview(view, at: 1)
         
         
-        let spinner = UIActivityIndicatorView(style: .whiteLarge)
+        let spinner = Bundle.main.loadNibNamed("LoadingView", owner: nil, options: nil)?.first as! LoadingView
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.startAnimating()
         view.addSubview(spinner)

@@ -122,6 +122,8 @@
 		E2DC0F2723B1DF920094FDB2 /* EditItemInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2DC0F2623B1DF920094FDB2 /* EditItemInfoView.xib */; };
 		E2DC0F2923B1DFA60094FDB2 /* EditItemInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DC0F2823B1DFA60094FDB2 /* EditItemInfoView.swift */; };
 		E2DC33D0241DE0B8001A01C1 /* SevenTutorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DC33CF241DE0B8001A01C1 /* SevenTutorialVC.swift */; };
+		E2DC33D2241EDD66001A01C1 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2DC33D1241EDD66001A01C1 /* LoadingView.xib */; };
+		E2DC33D4241EDD84001A01C1 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DC33D3241EDD84001A01C1 /* LoadingView.swift */; };
 		E2E29034234C3EFB00620576 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E29033234C3EFB00620576 /* RatingView.swift */; };
 		E2E29036234C3F1300620576 /* RatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E29035234C3F1300620576 /* RatingView.xib */; };
 		E2E29038234C490D00620576 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E29037234C490D00620576 /* Review.swift */; };
@@ -290,6 +292,8 @@
 		E2DC0F2623B1DF920094FDB2 /* EditItemInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditItemInfoView.xib; sourceTree = "<group>"; };
 		E2DC0F2823B1DFA60094FDB2 /* EditItemInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemInfoView.swift; sourceTree = "<group>"; };
 		E2DC33CF241DE0B8001A01C1 /* SevenTutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenTutorialVC.swift; sourceTree = "<group>"; };
+		E2DC33D1241EDD66001A01C1 /* LoadingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
+		E2DC33D3241EDD84001A01C1 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		E2E29033234C3EFB00620576 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		E2E29035234C3F1300620576 /* RatingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingView.xib; sourceTree = "<group>"; };
 		E2E29037234C490D00620576 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
@@ -626,6 +630,7 @@
 				E2E940E223DF5014009C4BED /* View controllers */,
 				E2E940E323DF5022009C4BED /* Cells */,
 				E2AE35D123CA36C800D19E38 /* SuggestTutorialView */,
+				E2DC33D5241EDD90001A01C1 /* LoadingView */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -773,6 +778,15 @@
 				E2DC0F2823B1DFA60094FDB2 /* EditItemInfoView.swift */,
 			);
 			path = EditItemInfoView;
+			sourceTree = "<group>";
+		};
+		E2DC33D5241EDD90001A01C1 /* LoadingView */ = {
+			isa = PBXGroup;
+			children = (
+				E2DC33D1241EDD66001A01C1 /* LoadingView.xib */,
+				E2DC33D3241EDD84001A01C1 /* LoadingView.swift */,
+			);
+			path = LoadingView;
 			sourceTree = "<group>";
 		};
 		E2E29039234C5C9500620576 /* RatingView */ = {
@@ -1018,6 +1032,7 @@
 				E2E29036234C3F1300620576 /* RatingView.xib in Resources */,
 				E2DA80BB2347F0E400BD7101 /* SortItemView.xib in Resources */,
 				E216204C22F658D10074A0DF /* Main.storyboard in Resources */,
+				E2DC33D2241EDD66001A01C1 /* LoadingView.xib in Resources */,
 				E20D7E2F2410D2450037C22A /* SelectDateView.xib in Resources */,
 				E2A54E1D2318553400BEBF39 /* InstructionView.xib in Resources */,
 			);
@@ -1238,6 +1253,7 @@
 				E22AABE124119629000AEEB5 /* Date-Extension.swift in Sources */,
 				E20D7E312410D2560037C22A /* SelectDateView.swift in Sources */,
 				E2149CF7235ADCAB002BF2D0 /* CreateNewItemVC.swift in Sources */,
+				E2DC33D4241EDD84001A01C1 /* LoadingView.swift in Sources */,
 				E20BC6E2232AE13300F1E5E7 /* UIStackView-Extension.swift in Sources */,
 				E2DC0F2923B1DFA60094FDB2 /* EditItemInfoView.swift in Sources */,
 				E2EAE38823E63656001EDD72 /* MealPlanner.swift in Sources */,

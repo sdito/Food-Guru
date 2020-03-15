@@ -158,7 +158,9 @@ extension UIView {
     }
     
     func addLoadingView() {
-        let view = UIActivityIndicatorView(style: .whiteLarge)
+//        let view = UIActivityIndicatorView(style: .whiteLarge)
+//        view.startAnimating()
+        let view = Bundle.main.loadNibNamed("LoadingView", owner: nil, options: nil)?.first as! LoadingView
         view.startAnimating()
         view.tag = 89 // used for removing
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -172,7 +174,7 @@ extension UIView {
     
     func removeLoadingView() {
         self.subviews.forEach { (v) in
-            if v.tag == 89 {
+            if v.tag == 89, let v = (v as? LoadingView) {
                 v.removeFromSuperview()
             }
         }
