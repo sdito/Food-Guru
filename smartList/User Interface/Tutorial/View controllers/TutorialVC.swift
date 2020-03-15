@@ -32,6 +32,7 @@ class TutorialVC: UIPageViewController {
                 self.newVc(viewController: "Four"),
                 self.newVc(viewController: "Five"),
                 self.newVc(viewController: "Six"),
+                self.newVc(viewController: "Seven"),
                 self.newVc(viewController: "End")
         ]
     }()

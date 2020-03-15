@@ -302,9 +302,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Lg-NU-3T0">
-                                <rect key="frame" x="0.0" y="144" width="414" height="688"/>
-                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1DE-0v-oJT">
                                 <rect key="frame" x="10" y="49" width="394" height="90"/>
                                 <subviews>
@@ -324,6 +321,9 @@
                                     <constraint firstAttribute="bottom" secondItem="Ef4-dt-NwB" secondAttribute="bottom" constant="5" id="rCo-x2-rgT"/>
                                 </constraints>
                             </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Lg-NU-3T0">
+                                <rect key="frame" x="0.0" y="144" width="414" height="688"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -346,7 +346,61 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aEP-pS-phn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4449" y="-33"/>
+            <point key="canvasLocation" x="4459" y="-32"/>
+        </scene>
+        <!--Seven TutorialVC-->
+        <scene sceneID="f5J-c9-4gd">
+            <objects>
+                <viewController storyboardIdentifier="Seven" id="WU6-5o-9WI" customClass="SevenTutorialVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="x0I-Fn-fH3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1XP-m1-L5w">
+                                <rect key="frame" x="0.0" y="144" width="414" height="688"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AVP-Ig-uSy">
+                                <rect key="frame" x="10" y="54" width="394" height="85"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9uV-yB-DQh">
+                                        <rect key="frame" x="5" y="5" width="384" height="75"/>
+                                        <string key="text">Use your meal planner to track items with your group. Select + to add a new recipe to the selected date. You can add recipes from saved recipes, your cookbook, or you can create a new recipe.</string>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="9uV-yB-DQh" firstAttribute="leading" secondItem="AVP-Ig-uSy" secondAttribute="leading" constant="5" id="2r2-6P-GQO"/>
+                                    <constraint firstAttribute="trailing" secondItem="9uV-yB-DQh" secondAttribute="trailing" constant="5" id="Wvn-cu-I6b"/>
+                                    <constraint firstAttribute="bottom" secondItem="9uV-yB-DQh" secondAttribute="bottom" constant="5" id="eb9-Kl-7tR"/>
+                                    <constraint firstItem="9uV-yB-DQh" firstAttribute="top" secondItem="AVP-Ig-uSy" secondAttribute="top" constant="5" id="hjS-PE-3ZE"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Y5B-MF-fle" firstAttribute="trailing" secondItem="1XP-m1-L5w" secondAttribute="trailing" id="JUu-tT-MGc"/>
+                            <constraint firstItem="1XP-m1-L5w" firstAttribute="top" secondItem="AVP-Ig-uSy" secondAttribute="bottom" constant="5" id="Lff-37-BKd"/>
+                            <constraint firstItem="1XP-m1-L5w" firstAttribute="leading" secondItem="Y5B-MF-fle" secondAttribute="leading" id="N9e-uT-gFK"/>
+                            <constraint firstItem="AVP-Ig-uSy" firstAttribute="top" secondItem="Y5B-MF-fle" secondAttribute="top" constant="10" id="NLM-FW-Fms"/>
+                            <constraint firstItem="1XP-m1-L5w" firstAttribute="top" secondItem="Y5B-MF-fle" secondAttribute="top" constant="100" id="OIz-Yf-eit"/>
+                            <constraint firstItem="AVP-Ig-uSy" firstAttribute="leading" secondItem="Y5B-MF-fle" secondAttribute="leading" constant="10" id="SqN-l3-JBS"/>
+                            <constraint firstItem="Y5B-MF-fle" firstAttribute="trailing" secondItem="AVP-Ig-uSy" secondAttribute="trailing" constant="10" id="YRg-h9-1Sg"/>
+                            <constraint firstItem="Y5B-MF-fle" firstAttribute="bottom" secondItem="1XP-m1-L5w" secondAttribute="bottom" constant="30" id="w48-gI-z1e"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Y5B-MF-fle"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="1XP-m1-L5w" id="8Ge-Xk-wYc"/>
+                        <outlet property="topLabel" destination="9uV-yB-DQh" id="jPM-d5-2kg"/>
+                        <outlet property="topView" destination="AVP-Ig-uSy" id="Bzr-hp-ZW0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QF9-ab-K8n" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5187" y="-32"/>
         </scene>
         <!--End TutorialVC-->
         <scene sceneID="NH1-w4-v3f">
@@ -389,7 +443,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Prg-bP-MPa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5202" y="-36"/>
+            <point key="canvasLocation" x="5923" y="-32"/>
         </scene>
     </scenes>
     <resources>

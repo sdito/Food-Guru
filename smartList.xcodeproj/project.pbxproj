@@ -121,6 +121,7 @@
 		E2DA80D22349BB9000BD7101 /* GiveRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA80D12349BB9000BD7101 /* GiveRatingView.swift */; };
 		E2DC0F2723B1DF920094FDB2 /* EditItemInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2DC0F2623B1DF920094FDB2 /* EditItemInfoView.xib */; };
 		E2DC0F2923B1DFA60094FDB2 /* EditItemInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DC0F2823B1DFA60094FDB2 /* EditItemInfoView.swift */; };
+		E2DC33D0241DE0B8001A01C1 /* SevenTutorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DC33CF241DE0B8001A01C1 /* SevenTutorialVC.swift */; };
 		E2E29034234C3EFB00620576 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E29033234C3EFB00620576 /* RatingView.swift */; };
 		E2E29036234C3F1300620576 /* RatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E29035234C3F1300620576 /* RatingView.xib */; };
 		E2E29038234C490D00620576 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E29037234C490D00620576 /* Review.swift */; };
@@ -288,6 +289,7 @@
 		E2DA80D12349BB9000BD7101 /* GiveRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveRatingView.swift; sourceTree = "<group>"; };
 		E2DC0F2623B1DF920094FDB2 /* EditItemInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditItemInfoView.xib; sourceTree = "<group>"; };
 		E2DC0F2823B1DFA60094FDB2 /* EditItemInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemInfoView.swift; sourceTree = "<group>"; };
+		E2DC33CF241DE0B8001A01C1 /* SevenTutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenTutorialVC.swift; sourceTree = "<group>"; };
 		E2E29033234C3EFB00620576 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		E2E29035234C3F1300620576 /* RatingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingView.xib; sourceTree = "<group>"; };
 		E2E29037234C490D00620576 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
@@ -455,6 +457,7 @@
 				E2B6273823C2F2B70039459B /* FourTutorialVC.swift */,
 				E2B6273A23C2FB0A0039459B /* FiveTutorialVC.swift */,
 				E2B6273C23C307890039459B /* SixTutorialVC.swift */,
+				E2DC33CF241DE0B8001A01C1 /* SevenTutorialVC.swift */,
 				E24F4EA123CA452F00C85DA7 /* EndTutorialVC.swift */,
 			);
 			path = "View controllers";
@@ -1199,6 +1202,7 @@
 				E2445CF22321D8F90089582F /* RecipeHomeVC.swift in Sources */,
 				E2E940DE23DEB9FD009C4BED /* SettingsDetailVC.swift in Sources */,
 				E20F2AD823258A4B00CD907A /* StorageCell.swift in Sources */,
+				E2DC33D0241DE0B8001A01C1 /* SevenTutorialVC.swift in Sources */,
 				E29FDE1223E554E1005CE08B /* CalendarView.swift in Sources */,
 				E2C5EC3D239A0B280030E3CD /* InitialLogInVC.swift in Sources */,
 				E2C5EC3B239A0A4B0030E3CD /* SignInVC.swift in Sources */,
