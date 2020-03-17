@@ -11,9 +11,12 @@ import UIKit
 class LoadingView: UIView {
     
     @IBOutlet weak var logo: UIImageView!
+    @IBOutlet weak var background: UIView!
+    
     private var timer: Timer?
     
     func startAnimating() {
+        setUpInitialUI()
         timer = Timer.scheduledTimer(withTimeInterval: 0.55, repeats: true, block: { (tmr) in
             self.spinAnimation()
         })
@@ -36,5 +39,15 @@ class LoadingView: UIView {
         }
     }
     
+    private func setUpInitialUI() {
+        background.layer.cornerRadius = background.frame.width / 8
+        self.shadow()
+        if #available(iOS 13.0, *) {
+            background.backgroundColor = UIColor.secondarySystemBackground.withAlphaComponent(0.65)
+        } else {
+            background.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        }
+        
+    }
     
 }

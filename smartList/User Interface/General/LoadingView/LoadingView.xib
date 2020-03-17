@@ -14,39 +14,55 @@
             <rect key="frame" x="0.0" y="0.0" width="111" height="118"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="sX2-CN-ZFe">
-                    <rect key="frame" x="30.5" y="26" width="50" height="66"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kHa-sr-baz">
+                    <rect key="frame" x="11" y="14.5" width="89.5" height="89.5"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="__logo" translatesAutoresizingMaskIntoConstraints="NO" id="Iaj-V6-Brr">
-                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="Iaj-V6-Brr" secondAttribute="height" multiplier="1:1" id="3zs-8k-9Jq"/>
-                                <constraint firstAttribute="height" constant="50" id="zap-0n-afn"/>
-                            </constraints>
-                        </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40e-za-nji">
-                            <rect key="frame" x="3" y="50" width="44" height="16"/>
-                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="12"/>
-                            <color key="textColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="sX2-CN-ZFe">
+                            <rect key="frame" x="15" y="15" width="59.5" height="59.5"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="__logoOpposite" translatesAutoresizingMaskIntoConstraints="NO" id="Iaj-V6-Brr">
+                                    <rect key="frame" x="7" y="0.0" width="45" height="45"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="Iaj-V6-Brr" secondAttribute="height" multiplier="1:1" id="3zs-8k-9Jq"/>
+                                        <constraint firstAttribute="height" constant="45" id="zap-0n-afn"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="40e-za-nji">
+                                    <rect key="frame" x="9.5" y="45" width="40.5" height="14.5"/>
+                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="11"/>
+                                    <color key="textColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                        </stackView>
                     </subviews>
-                </stackView>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstItem="sX2-CN-ZFe" firstAttribute="leading" secondItem="kHa-sr-baz" secondAttribute="leading" constant="15" id="1X5-s8-go2"/>
+                        <constraint firstAttribute="trailing" secondItem="sX2-CN-ZFe" secondAttribute="trailing" constant="15" id="2Oi-0h-D3d"/>
+                        <constraint firstItem="sX2-CN-ZFe" firstAttribute="top" secondItem="kHa-sr-baz" secondAttribute="top" constant="15" id="CGl-sO-MXl"/>
+                        <constraint firstAttribute="bottom" secondItem="sX2-CN-ZFe" secondAttribute="bottom" constant="15" id="EtG-fa-dbY"/>
+                        <constraint firstItem="sX2-CN-ZFe" firstAttribute="centerX" secondItem="kHa-sr-baz" secondAttribute="centerX" id="bSQ-TE-Bdy"/>
+                        <constraint firstItem="sX2-CN-ZFe" firstAttribute="centerY" secondItem="kHa-sr-baz" secondAttribute="centerY" id="bZa-bI-A89"/>
+                        <constraint firstAttribute="width" secondItem="kHa-sr-baz" secondAttribute="height" id="i81-8V-qAO"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="sX2-CN-ZFe" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="TLq-UE-u8Z"/>
-                <constraint firstItem="sX2-CN-ZFe" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="rxT-Bm-f9y"/>
+                <constraint firstItem="kHa-sr-baz" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="04e-Mw-h85"/>
+                <constraint firstItem="kHa-sr-baz" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Ptm-7C-TTf"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
+                <outlet property="background" destination="kHa-sr-baz" id="rib-jo-pc4"/>
                 <outlet property="logo" destination="Iaj-V6-Brr" id="oQc-R4-aT6"/>
             </connections>
             <point key="canvasLocation" x="41" y="-137"/>
         </view>
     </objects>
     <resources>
-        <image name="__logo" width="512" height="512"/>
+        <image name="__logoOpposite" width="512" height="512"/>
     </resources>
 </document>

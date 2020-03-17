@@ -67,8 +67,7 @@ extension UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
         view.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
-        view.backgroundColor = .black
-        view.alpha = 0.9
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
         vc.view.insertSubview(view, at: 1)
         
         
@@ -95,8 +94,8 @@ extension UIViewController {
         vc.modalPresentationStyle = .overFullScreen
         self.present(vc, animated: false)
         
-        
     }
+    
     
     func createRatingView(delegateVC: UIViewController) {
         let vc = UIViewController()
