@@ -262,8 +262,11 @@ struct User {
     }
     
     static func editedGroupInfo(db: Firestore, initialEmails: [String], updatedEmails: [String], groupID: String, storageID: String) {
-        
+        #warning("also need to modify this function to update each user's profile with the group ID")
         // update the group document with the new emails
+        
+        updateUsersProfilesForNewGroup(db: db, initialEmails: initialEmails, updatedEmails: updatedEmails, groupID: groupID)
+        
         db.collection("groups").document(groupID).updateData([
             "emails": updatedEmails
         ])
@@ -346,8 +349,6 @@ struct User {
                         }
                     }
                     
-                    
-                    
                 default:
                     return
                 }
@@ -355,7 +356,42 @@ struct User {
         }
     }
     
-    
+    private static func updateUsersProfilesForNewGroup(db: Firestore, initialEmails: [String], updatedEmails: [String], groupID: String) {
+        #warning("need to complete")
+        
+        // for all the initial emails, if initial email is not in updated email, then remove the field value, else do nothing to it since theyre still in the group
+        initialEmails.forEach { (initialEmail) in
+            if !updatedEmails.contains(initialEmail) {
+                User.turnEmailToUid(db: db, email: initialEmail) { (oldUid) in
+                    if let uid = oldUid {
+                        let deleteUserReference = db.collection("users").document(uid)
+                        deleteUserReference.updateData([
+                            "groupID": FieldValue.delete()
+                        ])
+                    }
+                }
+            }
+        }
+        
+        
+        // if the updated email is not in the previous emails, then update the user's document with the group ID
+        updatedEmails.forEach { (updatedEmail) in
+            if !initialEmails.contains(updatedEmail) {
+                User.turnEmailToUid(db: db, email: updatedEmail) { (newUid) in
+                    if let uid = newUid {
+                        let updateUserReference = db.collection("users").document(uid)
+                        updateUserReference.updateData([
+                            "groupID": groupID
+                        ])
+                    }
+                }
+            }
+        }
+        
+        
+        
+        
+    }
     
 
     

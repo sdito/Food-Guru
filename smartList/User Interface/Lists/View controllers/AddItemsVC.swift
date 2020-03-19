@@ -27,6 +27,7 @@ class AddItemsVC: UIViewController {
     
     
     var db: Firestore!
+    private var ran = false
     private var arrayArrayItems: [[Item]] = []
     private var sortedCategories: [String] = []
     private var delegate: SearchAssistantDelegate!
@@ -57,6 +58,9 @@ class AddItemsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
+        tableView.delegate = self
+        tableView.dataSource = self
+        textField.delegate = self
         textField.setUpCancelAndAddToolbar(cancelAction: #selector(dismissKeyboardPressed), addAction: #selector(addItemAction))
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         
@@ -71,11 +75,8 @@ class AddItemsVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         super.viewWillAppear(animated)
-        tableView.delegate = self
-        tableView.dataSource = self
-        textField.delegate = self
         
-        setUIfrom(list: list!)
+//        setUIfrom(list: list!)
         
         GroceryList.listenerOnListWithDocID(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (lst) in
             //self.list = lst
@@ -106,6 +107,7 @@ class AddItemsVC: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+    
     // MARK: @IBAction funcs
     @IBAction func addItem(_ sender: Any) {
         addItemAction()
@@ -260,26 +262,48 @@ class AddItemsVC: UIViewController {
 
     private func setUIfrom(list: GroceryList) {
         //segmented control set up
-        segmentedControl.removeAllSegments()
         
-        list.stores?.forEach({ (store) in
-            segmentedControl.insertSegment(withTitle: store, at: 0, animated: false)
-        })
-        
-        segmentedControl.selectedSegmentIndex = 0
-        if list.stores?.isEmpty == true {
-            segmentedControl.isHidden = true
-            
-            tableViewToTopView.priority = UILayoutPriority(rawValue: 1000)
-            tableViewToStoresView.priority = UILayoutPriority(rawValue: 999)
-        } else {
-            segmentedControl.isHidden = false
-            
-            tableViewToTopView.priority = UILayoutPriority(rawValue: 999)
-            tableViewToStoresView.priority = UILayoutPriority(rawValue: 1000)
+        var prevStores: [String] = []
+        let numOfSegments = segmentedControl.numberOfSegments
+        if numOfSegments > 0 {
+            for i in 0..<numOfSegments {
+                prevStores.append(segmentedControl.titleForSegment(at: i)!)
+            }
         }
         
+        
+        if prevStores.sorted() != list.stores?.sorted() ?? ["_"] {
+            
+            segmentedControl.removeAllSegments()
+            
+            list.stores?.forEach({ (store) in
+                segmentedControl.insertSegment(withTitle: store, at: 0, animated: false)
+            })
+            
+            segmentedControl.selectedSegmentIndex = 0
+            
+            if list.stores?.isEmpty == true {
+                segmentedControl.isHidden = true
+                
+                tableViewToTopView.priority = UILayoutPriority(rawValue: 1000)
+                tableViewToStoresView.priority = UILayoutPriority(rawValue: 999)
+            } else {
+                segmentedControl.isHidden = false
+                
+                tableViewToTopView.priority = UILayoutPriority(rawValue: 999)
+                tableViewToStoresView.priority = UILayoutPriority(rawValue: 1000)
+            }
+        }
+        
+        
+        
+        
+        
+        
     }
+    
+    
+    
     
     @objc private func addItemAction() {
         if textField.text != "" {

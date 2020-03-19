@@ -265,9 +265,9 @@
                                         <rect key="frame" x="0.0" y="40" width="414" height="40"/>
                                         <subviews>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="7A3-iR-2Kq">
-                                                <rect key="frame" x="57.5" y="4.5" width="299" height="32"/>
+                                                <rect key="frame" x="56" y="4.5" width="302" height="32"/>
                                                 <segments>
-                                                    <segment title="Trader Joe's"/>
+                                                    <segment title="_Trader Joe's"/>
                                                     <segment title="Whole Foods"/>
                                                     <segment title="Target"/>
                                                 </segments>
