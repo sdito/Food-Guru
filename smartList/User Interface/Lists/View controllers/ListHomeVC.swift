@@ -19,7 +19,6 @@ class ListHomeVC: UIViewController {
     private var sections: [String]?
     private var listsForSections: [[GroceryList]]?
     lazy private var emptyCells: [UITableViewCell] = createEmptyListCells()
-    
     private var items: [Item] = []
     private var lists: [GroceryList]? {
         didSet {
@@ -37,9 +36,7 @@ class ListHomeVC: UIViewController {
         GroceryList.readAllUserLists(db: db, userID: SharedValues.shared.userID ?? " ") { (dbLists) in
             self.lists = dbLists
         }
-        
         bottomView.shadowAndRounded(cornerRadius: 10, border: false)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,6 +56,7 @@ class ListHomeVC: UIViewController {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+    
     // MARK: @IBAction funcs
     @IBAction func setUpList(_ sender: Any) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "setUpList") as! SetUpListVC
@@ -66,6 +64,7 @@ class ListHomeVC: UIViewController {
         present(vc, animated: true, completion: nil)
 
     }
+    
     // MARK: functions
     private func createObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(observerSelectorGroupID), name: .groupIDchanged, object: nil)
@@ -152,11 +151,11 @@ extension ListHomeVC: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //let l = lists![indexPath.row]
-        
         if lists?.count != 0 {
             let l = listsForSections?[indexPath.section][indexPath.row]
             SharedValues.shared.listIdentifier = self.db.collection("lists").document("\(l?.docID! ?? " ")")
             self.performSegue(withIdentifier: "listSelected", sender: l)
+            
         }
         
     }

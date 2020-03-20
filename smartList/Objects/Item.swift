@@ -44,28 +44,8 @@ struct Item: Equatable {
     // MARK: Lists
     
     //correctly reads the ownID of the document of items
-    static func readItemsForList(db: Firestore, docID: String, itemsChanged: @escaping (_ items: [Item]) -> Void) {
-        var listItems: [Item] = []
-        db.collection("lists").document(docID).collection("items").addSnapshotListener { (querySnapshot, error) in
-            listItems.removeAll()
-            guard let documents = querySnapshot?.documents else {
-                print("Error fetching documents: \(String(describing: error))")
-                return
-            }
-            
-            for doc in documents {
-                let systemItem = GenericItem(rawValue: doc.get("systemItem") as? String ?? "other")
-                let systemCategory = Category(rawValue: doc.get("systemCategory") as? String ?? "other")
-                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as? String), ownID: doc.documentID, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: systemCategory, quantity: doc.get("quantity") as? String)
-                if listItems.isEmpty == false {
-                    listItems.append(i)
-                } else {
-                    listItems = [i]
-                }
-            }
-            itemsChanged(listItems)
-        }
-    }
+    
+    
     static func updateItemForListQuantity(quantity: String, itemID: String, listID: String, db: Firestore) {
         let reference = db.collection("lists").document(listID).collection("items").document(itemID)
         reference.updateData([

@@ -136,9 +136,6 @@ class MealPlannerHomeVC: UIViewController {
     @objc private func swipeSwiped(_ recognizer: UISwipeGestureRecognizer) {
         // left direction for next day, rigth direction for previous day
         // get the alpha of the button, and then find the next button incremented with the same alpha, if no such button exists take the next alpha with next of '1', reverse for previous
-        
-        
-        
         if let currCalendarView = selectedDayButton?.findCalendarView() {
             
             if recognizer.direction == .left {
@@ -228,6 +225,9 @@ class MealPlannerHomeVC: UIViewController {
         }
         
         let actionSheet = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(.init(title: "Browse recipes", style: .default, handler: { (action) in
+            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.all, self.shortDate))
+        }))
         actionSheet.addAction(.init(title: "Add new recipe", style: .default, handler: { action in
             let sb = UIStoryboard(name: "Recipes", bundle: nil)
             let vc = sb.instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC

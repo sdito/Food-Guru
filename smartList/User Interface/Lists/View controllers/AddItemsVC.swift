@@ -42,18 +42,12 @@ class AddItemsVC: UIViewController {
         }
         
     }
-    
-    
     var list: GroceryList? {
         didSet {
-            if list?.items?.isEmpty == false {
-                (sortedCategories, arrayArrayItems) = (list?.sortForTableView(from: currentStore))!
-                tableView.reloadData()
-            } else {
-                arrayArrayItems = []
-            }
+            self.list?.delegate = self
         }
     }
+    
     // MARK: override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,32 +70,22 @@ class AddItemsVC: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         super.viewWillAppear(animated)
         
-//        setUIfrom(list: list!)
+        list?.listenerOnListWithDocID(db: db, docID: SharedValues.shared.listIdentifier!.documentID)
         
-        GroceryList.listenerOnListWithDocID(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (lst) in
-            //self.list = lst
-            self.list?.name = lst?.name ?? "No name"
-            self.list?.people = lst?.people
-            self.list?.stores = lst?.stores
-            
-            let listForChanging = self.list
-            self.list?.items = listForChanging?.removeItemsThatNoLongerBelong()
-            
-            self.setUIfrom(list: self.list!)
-        }
-        
-        
-        Item.readItemsForList(db: db, docID: SharedValues.shared.listIdentifier!.documentID) { (itm) in
-            self.list?.items = itm
-        }
+        list?.readItemsForList(db: db, docID: SharedValues.shared.listIdentifier!.documentID)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         super.viewWillDisappear(animated)
+        
         SharedValues.shared.listIdentifier?.updateData([
             "numItems": list?.items?.count as Any
         ])
+        
+        list?.itemListener = nil
+        list?.items = nil
+        list?.listListener = nil
     }
     
     deinit {
@@ -260,8 +244,8 @@ class AddItemsVC: UIViewController {
         }
     }
 
-    private func setUIfrom(list: GroceryList) {
-        //segmented control set up
+    func setUIfrom(list: GroceryList) {
+        //segmented control set up, only update the segmented controls if the stores changed
         
         var prevStores: [String] = []
         let numOfSegments = segmentedControl.numberOfSegments
@@ -270,8 +254,6 @@ class AddItemsVC: UIViewController {
                 prevStores.append(segmentedControl.titleForSegment(at: i)!)
             }
         }
-        
-        
         if prevStores.sorted() != list.stores?.sorted() ?? ["_"] {
             
             segmentedControl.removeAllSegments()
@@ -294,12 +276,6 @@ class AddItemsVC: UIViewController {
                 tableViewToStoresView.priority = UILayoutPriority(rawValue: 1000)
             }
         }
-        
-        
-        
-        
-        
-        
     }
     
     
@@ -495,6 +471,29 @@ extension AddItemsVC: ItemCellDelegate {
         present(alert, animated: true)
     }
 }
+
+extension AddItemsVC: GroceryListDelegate {
+    func updateListUI() {
+        setUIfrom(list: self.list!)
+    }
+    
+    func itemsUpdated() {
+        
+        if list?.items?.isEmpty == false {
+            (sortedCategories, arrayArrayItems) = (list?.sortForTableView(from: currentStore))!
+            tableView.reloadData()
+        } else {
+            arrayArrayItems = []
+        }
+        
+    }
+    func reloadTable() {
+        tableView.reloadData()
+    }
+    
+    
+}
+
 
 // MARK: Text field delegate
 extension AddItemsVC: UITextFieldDelegate {

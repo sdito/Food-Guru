@@ -10,7 +10,18 @@ import Foundation
 import FirebaseFirestore
 import FirebaseAuth
 
-struct GroceryList {
+
+
+protocol GroceryListDelegate: class {
+    func itemsUpdated()
+    func reloadTable()
+    func updateListUI()
+}
+
+
+
+class GroceryList {
+    
     var name: String
     var isGroup: Bool?
     var stores: [String]?
@@ -24,12 +35,14 @@ struct GroceryList {
     var systemCategories: [String] = Category.allCases.map { (ctgry) -> String in
         "\(ctgry)"
     }
+    var itemListener: ListenerRegistration?
+    var listListener: ListenerRegistration?
+    weak var delegate: GroceryListDelegate!
     
-    init(name: String, isGroup: Bool?, stores: [String]?, /*categories: [String]?, */people: [String]?, items: [Item]?, numItems: Int?, docID: String?, timeIntervalSince1970: TimeInterval?, groupID: String?, ownID: String?) {
+    init(name: String, isGroup: Bool?, stores: [String]?, people: [String]?, items: [Item]?, numItems: Int?, docID: String?, timeIntervalSince1970: TimeInterval?, groupID: String?, ownID: String?) {
         self.name = name
         self.isGroup = isGroup
         self.stores = stores
-        //self.categories = categories
         self.people = people
         self.items = items
         self.numItems = numItems
@@ -41,22 +54,22 @@ struct GroceryList {
     
     // MARK: General
     
-    static func listenerOnListWithDocID(db: Firestore, docID: String, listReturned: @escaping (_ list: GroceryList?) -> Void) {
+    func listenerOnListWithDocID(db: Firestore, docID: String) {
         let reference = db.collection("lists").document(docID)
-        var l: GroceryList?
-        reference.addSnapshotListener { (docSnapshot, error) in
+        listListener = reference.addSnapshotListener { (docSnapshot, error) in
             if let doc = docSnapshot {
                 if doc.get("name") != nil {
-                    l = GroceryList(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
+                    self.name = doc.get("name") as! String
+                    self.people = doc.get("people") as? [String]
+                    self.stores = doc.get("stores") as? [String]
+                    self.items = self.removeItemsThatNoLongerBelong()
+                    self.delegate!.updateListUI()
                 }
             }
-            listReturned(l)
         }
     }
     
     // to update list information i.e. if stores changed
-    
-    
     
     func editListToFirestore(db: Firestore!, listID: String) {
         
@@ -144,17 +157,46 @@ struct GroceryList {
     
     
     
-    static func updateListTimeIntervalTime(db: Firestore, listID: String, timeToSetTo timeInterval: TimeInterval) {
+    class func updateListTimeIntervalTime(db: Firestore, listID: String, timeToSetTo timeInterval: TimeInterval) {
         let reference = db.collection("lists").document(listID)
         reference.updateData([
             "timeIntervalSince1970": timeInterval
         ])
     }
     
+    // MARK: Items
+    
+    func readItemsForList(db: Firestore, docID: String) {
+        itemListener = db.collection("lists").document(docID).collection("items").addSnapshotListener { (querySnapshot, error) in
+
+            guard let docs = querySnapshot?.documentChanges else {
+                self.items = nil
+                return
+            }
+            docs.forEach { (doc) in
+                switch doc.type {
+                case .added, .modified:
+                    self.items?.removeAll(where: { (itm) -> Bool in
+                        itm.ownID == doc.document.documentID
+                    })
+                    let item = doc.document.getItem()
+                    self.items?.append(item)
+                    print("Item added/modified: \(item.name)")
+                    
+                case .removed:
+                    self.items?.removeAll(where: { (itm) -> Bool in
+                        itm.ownID == doc.document.documentID
+                    })
+                    print("Item removed")
+                }
+            }
+            self.delegate!.itemsUpdated()
+        }
+    }
     
     // MARK: User
     
-    static func getUsersCurrentList(db: Firestore, userID: String, listReturned: @escaping (_ list: GroceryList?) -> Void) {
+    class func getUsersCurrentList(db: Firestore, userID: String, listReturned: @escaping (_ list: GroceryList?) -> Void) {
         var listID: GroceryList?
         db.collection("lists").whereField("shared", arrayContains: userID).order(by: "timeIntervalSince1970", descending: true).limit(to: 1).getDocuments { (querySnapshot, error) in
             if let doc = querySnapshot?.documents.first {
@@ -165,7 +207,7 @@ struct GroceryList {
     }
     
     // used for ListHomeVC to allow user to select all posible lists
-    static func readAllUserLists(db: Firestore, userID: String, listsChanged: @escaping (_ lists: [GroceryList]) -> Void) {
+    class func readAllUserLists(db: Firestore, userID: String, listsChanged: @escaping (_ lists: [GroceryList]) -> Void) {
         var lists: [GroceryList] = []
         db.collection("lists").whereField("shared", arrayContains: userID).addSnapshotListener { (querySnapshot, error) in
             lists.removeAll()
@@ -174,7 +216,7 @@ struct GroceryList {
                 return
             }
             for doc in documents {
-                let l = GroceryList(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as! Int?), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
+                let l = GroceryList(name: doc.get("name") as! String, isGroup: doc.get("isGroup") as? Bool, stores: (doc.get("stores") as! [String]), people: (doc.get("people") as! [String]), items: nil, numItems: (doc.get("numItems") as? Int), docID: doc.documentID, timeIntervalSince1970: doc.get("timeIntervalSince1970") as? TimeInterval, groupID: doc.get("groupID") as? String, ownID: doc.get("ownID") as? String)
                 
                 if lists.isEmpty == false {
                     lists.append(l)
@@ -190,7 +232,7 @@ struct GroceryList {
     }
     
     // MARK: Recipe
-    static func handleProcessForAutomaticallyGeneratedListFromRecipe(db: Firestore, items: [String]) {
+    class func handleProcessForAutomaticallyGeneratedListFromRecipe(db: Firestore, items: [String]) {
         let reference = db.collection("lists").document()
         let uid = Auth.auth().currentUser?.uid
         SharedValues.shared.listIdentifier = reference

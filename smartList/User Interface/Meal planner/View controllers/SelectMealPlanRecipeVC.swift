@@ -27,6 +27,8 @@ class SelectMealPlanRecipeVC: UIViewController {
                             return "No recipes in your cookbook. To add recipes to your coobook select 'download' from a recipe or create your own recipe. Cookbook recipes are saved on your device."
                         case .saved:
                             return "You don't have any saved recipes. To save a recipe, press the heart on the top of a recipe in the recipes feed!"
+                        case .all:
+                            return "Error finding recipes, please try again."
                         }
                     } else {
                         return "Couldn't find your recipes."
@@ -64,6 +66,11 @@ class SelectMealPlanRecipeVC: UIViewController {
             }
         case .saved:
             Recipe.readUserSavedRecipes(db: db) { (rcps) in
+                self.recipes = rcps
+            }
+        case .all:
+            #warning("need to complete this")
+            Recipe.readNumRecipeTitleAndID(num: 25, db: db) { (rcps) in
                 self.recipes = rcps
             }
         }

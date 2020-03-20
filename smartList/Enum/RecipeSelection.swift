@@ -12,4 +12,5 @@ import Foundation
 enum RecipeSelection {
     case cookbook
     case saved
+    case all
 }

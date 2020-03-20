@@ -113,7 +113,7 @@ struct Recipe {
         let reference = db.collection("recipes").document(id)
         reference.getDocument { (documentSnapshot, error) in
             guard let doc = documentSnapshot else { return }
-            let recipe = Recipe(name: doc.get("name") as! String, recipeType: doc.get("recipeType") as! [String], cuisineType: doc.get("cuisineType") as! String, cookTime: doc.get("cookTime") as! Int, prepTime: doc.get("prepTime") as! Int, ingredients: doc.get("ingredients") as! [String], instructions: doc.get("instructions") as! [String], calories: doc.get("calories") as? Int, numServes: doc.get("numServes") as! Int, userID: doc.get("userID") as? String, numReviews: doc.get("numReviews") as? Int, numStars: doc.get("numStars") as? Int, notes: doc.get("notes") as? String, tagline: doc.get("tagline") as? String, recipeImage: nil, imagePath: doc.get("path") as? String, reviewImagePaths: doc.get("reviewImagePaths") as? [String])
+            let recipe = doc.getRecipe()
             recipeReturned(recipe)
         }
     }
@@ -150,8 +150,24 @@ struct Recipe {
             imageReturned(image)
         }
     }
-    // MARK: Save recipes
     
+    static func readNumRecipeTitleAndID(num: Int, db: Firestore, recipesReturned: @escaping (_ recipe: [Recipe]) -> Void) {
+        var recipes: [Recipe] = []
+        let reference = db.collection("recipes").limit(to: num)
+        reference.getDocuments { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documents else {
+                print("Error fetching documents: \(String(describing: error))")
+                return
+            }
+            for doc in documents {
+                let r = doc.getRecipe()
+                recipes.append(r)
+            }
+            recipesReturned(recipes)
+        }
+    }
+    
+    // MARK: Saved recipes
     
     static func addRecipeToSavedRecipes(db: Firestore, str: String) {
         let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ")
@@ -175,7 +191,7 @@ struct Recipe {
                 return
             }
             for doc in documents {
-                let r = Recipe(name: doc.get("name") as! String, recipeType: doc.get("recipeType") as! [String], cuisineType: doc.get("cuisineType") as! String, cookTime: doc.get("cookTime") as! Int, prepTime: doc.get("prepTime") as! Int, ingredients: doc.get("ingredients") as! [String], instructions: doc.get("instructions") as! [String], calories: doc.get("calories") as? Int, numServes: doc.get("numServes") as! Int, userID: doc.get("userID") as? String, numReviews: doc.get("numReviews") as? Int, numStars: doc.get("numStars") as? Int, notes: doc.get("notes") as? String, tagline: doc.get("tagline") as? String, recipeImage: nil, imagePath: doc.get("path") as? String, reviewImagePaths: doc.get("reviewImagePaths") as? [String])
+                let r = doc.getRecipe()
                 recipes.append(r)
             }
             recipesReturned(recipes)
@@ -667,9 +683,15 @@ extension Recipe {
         
         task.resume()
     }
-    
     }
     
-    
 }
+
+extension DocumentSnapshot {
+    func getRecipe() -> Recipe {
+        let r = Recipe(name: self.get("name") as! String, recipeType: self.get("recipeType") as! [String], cuisineType: self.get("cuisineType") as! String, cookTime: self.get("cookTime") as! Int, prepTime: self.get("prepTime") as! Int, ingredients: self.get("ingredients") as! [String], instructions: self.get("instructions") as! [String], calories: self.get("calories") as? Int, numServes: self.get("numServes") as! Int, userID: self.get("userID") as? String, numReviews: self.get("numReviews") as? Int, numStars: self.get("numStars") as? Int, notes: self.get("notes") as? String, tagline: self.get("tagline") as? String, recipeImage: nil, imagePath: self.get("path") as? String, reviewImagePaths: self.get("reviewImagePaths") as? [String])
+        return r
+    }
+}
+
 

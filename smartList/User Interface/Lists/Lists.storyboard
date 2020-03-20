@@ -218,7 +218,7 @@
                                                         <rect key="frame" x="79" y="0.0" width="233" height="30"/>
                                                         <color key="textColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="no"/>
                                                         <connections>
                                                             <action selector="textDidChange:" destination="pCh-jG-4Ip" eventType="editingChanged" id="sSz-Er-qow"/>
                                                         </connections>
