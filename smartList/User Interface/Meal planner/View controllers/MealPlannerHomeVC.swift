@@ -20,6 +20,8 @@ class MealPlannerHomeVC: UIViewController {
     @IBOutlet weak var selectedDayLabel: UILabel!
     @IBOutlet weak var addRecipeButtonOutlet: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var viewHeightRatio: NSLayoutConstraint!
+    @IBOutlet weak var bottomView: UIView!
     
     var db: Firestore!
     private var selectedDayButton: UIButton?
@@ -105,7 +107,8 @@ class MealPlannerHomeVC: UIViewController {
         
         var title: String? {
             if let sd = shortDate {
-                return "Add meal on \(sd.shortDateToDisplay()) to planner"
+                let dayEnding = sd.shortDateGetDateEnding()
+                return "Add meal on \(sd.shortDateToDisplay())\(dayEnding)"
             } else {
                 return nil
             }
@@ -177,6 +180,8 @@ class MealPlannerHomeVC: UIViewController {
     private func iPadUiIfApplicable() {
         if !SharedValues.shared.isPhone {
             selectedDayLabel.font = UIFont(name: "futura", size: 22)
+            viewHeightRatio.isActive = false
+            bottomView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.3).isActive = true
             
         }
     }
@@ -252,13 +257,17 @@ class MealPlannerHomeVC: UIViewController {
     }
     
     func handleShortDateChange() {
-        if let sd = shortDate, let monthRecipes = mealPlanner.mealPlanDict[sd.shortDateToMonthYear()]  {
+        if let sd = shortDate, let monthRecipes = mealPlanner.mealPlanDict[sd.shortDateToMonthYear()] {
+            print(sd, monthRecipes)
             let newRecipes = Array<MealPlanner.RecipeTransfer>(monthRecipes.filter({$0.date == sd}))
             if dateRecipes != newRecipes {
                 dateRecipes = newRecipes
+                tableView.reloadData()
                 UIView.transition(with: tableView, duration: 0.2, options: .transitionCrossDissolve, animations: self.tableView.reloadData)
-                
             }
+        } else {
+            dateRecipes = []
+            tableView.reloadData()
         }
     }
     
@@ -313,7 +322,6 @@ extension MealPlannerHomeVC: MealPlannerCellDelegate {
     func cellSelected(recipe: MealPlanner.RecipeTransfer?, sender: UIView) {
         // Need to have a pop up or action sheet here for editing, deleting, shareing recipe (i.e. have pdf show up)
         
-        print("Recipe selected, printing from delegate: \(recipe?.name ?? "recipe is nil :(")")
         if let recipe = recipe {
             
             let actionSheet = UIAlertController(title: recipe.name, message: nil, preferredStyle: .actionSheet)
@@ -361,7 +369,7 @@ extension MealPlannerHomeVC: SelectDateViewDelegate {
 extension MealPlannerHomeVC: CalendarViewDelegate {
     func dateButtonSelected(month: Month, day: Int, year: Int, buttonTag: Int) {
         let newDate = "\(month.int).\(day).\(year)"
-        
+        print(newDate)
         if shortDate != newDate {
             shortDate = newDate
             // to reset the value of the other button that was in 'selected' mode

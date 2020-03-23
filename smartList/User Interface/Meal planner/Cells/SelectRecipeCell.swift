@@ -41,6 +41,10 @@ class SelectRecipeCell: UITableViewCell {
         let gr = UILongPressGestureRecognizer(target: self, action: #selector(grSelector(gesture:)))
         
         self.addGestureRecognizer(gr)
+        
+        if !SharedValues.shared.isPhone {
+            titleLabel.font = UIFont(name: "futura", size: 21)
+        }
     }
     
     @objc func grSelector(gesture: UIGestureRecognizer) {

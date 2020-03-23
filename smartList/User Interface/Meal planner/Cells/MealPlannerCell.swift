@@ -24,12 +24,17 @@ class MealPlannerCell: UITableViewCell {
     
     weak var delegate: MealPlannerCellDelegate!
     private var recipe: MealPlanner.RecipeTransfer?
+    private var initial = true
     
     func setUI(recipe: MealPlanner.RecipeTransfer) {
         self.recipe = recipe
         title.text = recipe.name
-        
-        if !SharedValues.shared.isPhone {
+        setUpInitialUI()
+        initial = false
+    }
+    
+    func setUpInitialUI() {
+        if !SharedValues.shared.isPhone && initial == true {
             buttonHeight.isActive = false
             buttonOutlet.heightAnchor.constraint(equalToConstant: 25).isActive = true
             title.font = UIFont(name: "futura", size: 23)

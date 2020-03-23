@@ -27,6 +27,7 @@ protocol CalendarViewDelegate: class {
 
 class CalendarView: UIView {
     
+    @IBOutlet var stackViews: [UIStackView]!
     @IBOutlet var day: [UIButton]!
     @IBOutlet var weekdayLabels: [UILabel]!
     @IBOutlet weak var monthYearLabel: UILabel!
@@ -74,7 +75,14 @@ class CalendarView: UIView {
             }
             
             var dayButtonDate: String?
-            d.layer.borderWidth = 0.5
+            var borderWidthDay: CGFloat {
+                if SharedValues.shared.isPhone {
+                    return 0.5
+                } else {
+                    return 1
+                }
+            }
+            d.layer.borderWidth = borderWidthDay
             d.layer.borderColor = Colors.label.cgColor
             d.layer.cornerRadius = 5.0
             d.clipsToBounds = true
@@ -235,6 +243,7 @@ class CalendarView: UIView {
         if !SharedValues.shared.isPhone {
             monthYearLabel.font = UIFont(name: "futura", size: 19)
             weekdayLabels.forEach({$0.font = UIFont(name: "futura", size: 20)})
+            stackViews.forEach({$0.spacing = 12.5})
         }
     }
         
@@ -250,7 +259,7 @@ class CalendarView: UIView {
             if let shortDate = dict["shortDate"] as? String, let tagFromNoti = dict["tagFromNoti"] as? Int {
                 let shortDateComponents = shortDate.split(separator: ".").map({Int($0)})
                 // need to use this date to alter the UI for the correct day buttons
-                // need to rememebr what buttons were changed, and then change them back when a new date is selected
+                // need to rememeber what buttons were changed, and then change them back when a new date is selected
                 
                 let availableTags = [0,1,2].filter({$0 != tagFromNoti})
                 let monthComponent = shortDateComponents[0]!
@@ -286,8 +295,6 @@ class CalendarView: UIView {
                             
                         }
                     }
-                    
-                    
                 }
             }
         }

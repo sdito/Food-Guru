@@ -24,7 +24,7 @@
                     </date>
                 </datePicker>
                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uSi-zh-akw">
-                    <rect key="frame" x="345" y="261" width="49" height="38"/>
+                    <rect key="frame" x="330" y="261" width="49" height="38"/>
                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                     <state key="normal" title="Done">
                         <color key="titleColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -49,7 +49,7 @@
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="uSi-zh-akw" secondAttribute="bottom" constant="10" id="TUt-iM-ugH"/>
                 <constraint firstItem="78j-J1-5lm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="cPr-t6-gjH"/>
                 <constraint firstAttribute="trailing" secondItem="mJf-fz-5Wa" secondAttribute="trailing" constant="10" id="hxk-yY-kV2"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="uSi-zh-akw" secondAttribute="trailing" constant="10" id="ksG-S9-zGR"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="uSi-zh-akw" secondAttribute="trailing" constant="25" id="ksG-S9-zGR"/>
                 <constraint firstItem="78j-J1-5lm" firstAttribute="top" secondItem="mJf-fz-5Wa" secondAttribute="bottom" constant="10" id="q4C-GP-ZfK"/>
                 <constraint firstItem="mJf-fz-5Wa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="qpE-ho-a6j"/>
             </constraints>

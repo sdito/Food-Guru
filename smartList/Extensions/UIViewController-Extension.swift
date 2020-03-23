@@ -14,7 +14,6 @@ import AVFoundation
 extension UIViewController {
     
     func getImageForTutorial(imageText: String, imageReturned: @escaping (_ image: UIImage) -> Void) {
-        print("Image downloading starting to happen")
         let storage = Storage.storage()
         
         var lightOrDark: String {

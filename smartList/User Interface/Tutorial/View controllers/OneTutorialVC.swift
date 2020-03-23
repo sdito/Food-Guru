@@ -44,7 +44,6 @@ class OneTutorialVC: UIViewController {
         
         
         
-        #warning("need to indicate loading for image views")
         imageView.addLoadingView()
         self.getImageForTutorial(imageText: "one") { (img) in
             self.imageView.removeLoadingView()
@@ -57,7 +56,7 @@ class OneTutorialVC: UIViewController {
         super.viewDidAppear(animated)
         imageView.pulsateView()
         
-        timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false, block: { (tmr) in
+        timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false, block: { (tmr) in
             print("Timer was fired")
             self.arrow.setIsHidden(false, animated: true)
         })

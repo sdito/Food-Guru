@@ -139,10 +139,12 @@
                     <connections>
                         <outlet property="addRecipeButtonOutlet" destination="1ty-Ev-ry8" id="4ZD-bd-2G4"/>
                         <outlet property="baseView" destination="Khd-Oh-Mz1" id="IC5-ME-tcm"/>
+                        <outlet property="bottomView" destination="hHr-jE-GA5" id="jFH-vs-j0y"/>
                         <outlet property="calendarStackView" destination="WNy-1t-7fT" id="n9V-na-50I"/>
                         <outlet property="scrollView" destination="eDK-Ns-Gu9" id="bh7-pY-w6R"/>
                         <outlet property="selectedDayLabel" destination="jQt-m7-BMn" id="iyb-ep-o9U"/>
                         <outlet property="tableView" destination="YYz-Zv-Uqe" id="xtQ-DN-1jU"/>
+                        <outlet property="viewHeightRatio" destination="Age-wo-n0C" id="wZd-0G-hNJ"/>
                         <segue destination="ZbS-2S-eEP" kind="show" identifier="selectMealPlanRecipe" id="KOc-de-yyc"/>
                     </connections>
                 </viewController>

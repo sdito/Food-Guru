@@ -486,6 +486,13 @@
                 <outletCollection property="weekdayLabels" destination="C97-5r-4vJ" collectionClass="NSMutableArray" id="7xM-eV-y1c"/>
                 <outletCollection property="weekdayLabels" destination="pnQ-gZ-lqU" collectionClass="NSMutableArray" id="jHv-w5-sDZ"/>
                 <outletCollection property="weekdayLabels" destination="A6e-uC-Z7u" collectionClass="NSMutableArray" id="XHb-to-sc8"/>
+                <outletCollection property="stackViews" destination="YBm-4q-sKW" collectionClass="NSMutableArray" id="kPB-IE-Hge"/>
+                <outletCollection property="stackViews" destination="m7Q-te-wNe" collectionClass="NSMutableArray" id="Z3u-Ue-L9g"/>
+                <outletCollection property="stackViews" destination="VDV-oe-adW" collectionClass="NSMutableArray" id="xOX-Qz-Ic8"/>
+                <outletCollection property="stackViews" destination="Lpg-cd-NRH" collectionClass="NSMutableArray" id="DUk-kH-X4e"/>
+                <outletCollection property="stackViews" destination="VKb-P9-kvz" collectionClass="NSMutableArray" id="U9Y-VW-0Ab"/>
+                <outletCollection property="stackViews" destination="OLc-5P-3wf" collectionClass="NSMutableArray" id="xBT-s6-H0X"/>
+                <outletCollection property="stackViews" destination="tcH-Gt-hau" collectionClass="NSMutableArray" id="TEU-jg-5vR"/>
             </connections>
             <point key="canvasLocation" x="121.0144927536232" y="-53.236607142857139"/>
         </view>

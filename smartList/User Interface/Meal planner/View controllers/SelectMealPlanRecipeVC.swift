@@ -65,13 +65,16 @@ class SelectMealPlanRecipeVC: UIViewController {
                 recipes = Array(realm.objects(CookbookRecipe.self))
             }
         case .saved:
+            self.createLoadingView()
             Recipe.readUserSavedRecipes(db: db) { (rcps) in
                 self.recipes = rcps
+                self.dismiss(animated: false, completion: nil)
             }
         case .all:
-            #warning("need to complete this")
+            self.createLoadingView()
             Recipe.readNumRecipeTitleAndID(num: 25, db: db) { (rcps) in
                 self.recipes = rcps
+                self.dismiss(animated: false, completion: nil)
             }
         }
     }
@@ -143,5 +146,20 @@ extension SelectMealPlanRecipeVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row + 1 == recipes.count {
+            print("load more recipes")
+            #warning("need to complete if it is for all recipes, to insert more recipes")
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let v = UIView()
+        v.backgroundColor = .clear
+        v.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        return v
     }
 }

@@ -55,7 +55,6 @@ struct Recipe {
     
     // MARK: General
     
-    #warning("should probably not allow users to write directly to the main collection...")
     mutating func writeToFirestore(db: Firestore!, storage: Storage) {
         let ingredients = self.ingredients
         let doc = db.collection("recipes-external").document()

@@ -106,6 +106,15 @@ extension String {
         return "\(month) \(day)"
     }
     
+    func shortDateGetDateEnding() -> String {
+        let parts = self.split(separator: ".").map({String($0)})
+        if let day = Int(parts[1]) {
+            return day.getMonthDayEnding()
+        } else {
+            return ""
+        }
+        
+    }
     
     func shortDateToMonthYear() -> String {
         let parts = self.split(separator: ".").map({String($0)})

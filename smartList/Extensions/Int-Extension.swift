@@ -10,6 +10,22 @@ import Foundation
 
 
 extension Int {
+    
+    func getMonthDayEnding() -> String {
+        switch self {
+        case 1, 21, 31:
+            return "st"
+        case 2, 22:
+            return "nd"
+        case 3, 23:
+            return "rd"
+        case 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 24, 25, 26, 27, 28, 29, 30:
+            return "th"
+        default:
+            return ""
+        }
+    }
+    
     func getDisplayHoursAndMinutes() -> String {
         guard self > 59 else { return "\(self) m" }
         
