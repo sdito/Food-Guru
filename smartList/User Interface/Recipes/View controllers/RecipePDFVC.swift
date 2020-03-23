@@ -32,7 +32,9 @@ class RecipePDFVC: UIViewController {
             } else {
                 // do other stuff for iPad
                 vc.popoverPresentationController?.sourceView = self.view
-                vc.popoverPresentationController?.sourceRect = pdfView.frame
+                // To center the action sheet
+                vc.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+                vc.popoverPresentationController?.permittedArrowDirections = []
                 present(vc, animated: true, completion: nil)
             }
         }

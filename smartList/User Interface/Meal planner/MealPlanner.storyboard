@@ -37,14 +37,18 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0bj-eR-9Pw">
-                                                            <rect key="frame" x="20" y="21" width="325.5" height="43"/>
-                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                                            <rect key="frame" x="20" y="21" width="323" height="43"/>
+                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UWY-hb-uT6">
-                                                            <rect key="frame" x="355.5" y="31.5" width="17.5" height="22"/>
-                                                            <state key="normal" image="pencil" catalog="system"/>
+                                                            <rect key="frame" x="353" y="32.5" width="20" height="20"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="UWY-hb-uT6" secondAttribute="height" multiplier="1:1" id="wAu-UB-pUa"/>
+                                                                <constraint firstAttribute="height" constant="20" id="wjZ-AM-gN1"/>
+                                                            </constraints>
+                                                            <state key="normal" image="icons8-pencil-60"/>
                                                             <connections>
                                                                 <action selector="editMealPlanRecipePressed:" destination="j6h-a7-Z2O" eventType="touchUpInside" id="lIx-Tk-R6R"/>
                                                             </connections>
@@ -60,6 +64,8 @@
                                                     </constraints>
                                                 </tableViewCellContentView>
                                                 <connections>
+                                                    <outlet property="buttonHeight" destination="wjZ-AM-gN1" id="2GP-bM-ng1"/>
+                                                    <outlet property="buttonOutlet" destination="UWY-hb-uT6" id="Kux-uQ-QUI"/>
                                                     <outlet property="title" destination="0bj-eR-9Pw" id="K65-td-e7o"/>
                                                 </connections>
                                             </tableViewCell>
@@ -233,7 +239,7 @@
     </scenes>
     <resources>
         <image name="calendar" width="24" height="24"/>
-        <image name="pencil" catalog="system" width="64" height="56"/>
+        <image name="icons8-pencil-60" width="60" height="60"/>
     </resources>
     <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

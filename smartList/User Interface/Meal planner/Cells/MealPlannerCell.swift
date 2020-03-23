@@ -11,7 +11,7 @@ import UIKit
 
 
 protocol MealPlannerCellDelegate: class {
-    func cellSelected(recipe: MealPlanner.RecipeTransfer?)
+    func cellSelected(recipe: MealPlanner.RecipeTransfer?, sender: UIView)
 }
 
 
@@ -19,6 +19,8 @@ protocol MealPlannerCellDelegate: class {
 class MealPlannerCell: UITableViewCell {
     
     @IBOutlet weak var title: UILabel!
+    @IBOutlet weak var buttonOutlet: UIButton!
+    @IBOutlet weak var buttonHeight: NSLayoutConstraint!
     
     weak var delegate: MealPlannerCellDelegate!
     private var recipe: MealPlanner.RecipeTransfer?
@@ -26,11 +28,17 @@ class MealPlannerCell: UITableViewCell {
     func setUI(recipe: MealPlanner.RecipeTransfer) {
         self.recipe = recipe
         title.text = recipe.name
+        
+        if !SharedValues.shared.isPhone {
+            buttonHeight.isActive = false
+            buttonOutlet.heightAnchor.constraint(equalToConstant: 25).isActive = true
+            title.font = UIFont(name: "futura", size: 23)
+        }
     }
     
     
     @IBAction func editMealPlanRecipePressed(_ sender: Any) {
-        delegate.cellSelected(recipe: recipe)
+        delegate.cellSelected(recipe: recipe, sender: buttonOutlet)
     }
     
     

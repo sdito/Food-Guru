@@ -37,6 +37,7 @@ class MealPlanner {
         var name: String
     }
     
+    // MARK: Creation
     func readIfUserHasMealPlanner() {
         if let id = SharedValues.shared.userID {
             let reference = db.collection("users").document(id)
@@ -128,6 +129,8 @@ class MealPlanner {
             }
         }
     }
+    
+    // MARK: Recipes
     
     func addRecipeToPlanner(recipe: MPCookbookRecipe, shortDate: String, mealType: MealType, previousID: String?) {
         
@@ -318,7 +321,36 @@ class MealPlanner {
         
     }
     
+    class func deleteAllItems(db: Firestore, id: String) {
+        
+        let recipeReference = db.collection("mealPlanners").document(id).collection("recipes")
+        let scheduleReference = db.collection("mealPlanners").document(id).collection("schedule")
+        
+        recipeReference.getDocuments { (querySnapshot, error) in
+            if let documents = querySnapshot?.documents {
+                documents.forEach { (doc) in
+                    recipeReference.document(doc.documentID).delete()
+                }
+            }
+        }
+        
+        scheduleReference.getDocuments { (querySnapshot, error) in
+            if let documents = querySnapshot?.documents {
+                documents.forEach { (doc) in
+                    let ref = scheduleReference.document(doc.documentID)
+                    ref.updateData([
+                        "recipes" : FieldValue.delete()
+                    ])
+                }
+            }
+        }
+        
+        
+    }
+    
+    // MARK: Changes
     class func handleMealPlannerForGroupChangeOrNewGroup(db: Firestore, oldEmails: [String]?, newEmails: [String], mealPlannerID: String?) {
+        
         #warning("need to do slightly more testing to ensure this is working as intended")
         // If old emails is nil, then this was a brand new group, use the users meal planner (if it exists) for the new meal planner
         // If old emails exist, need to nil out every meal planner ID
@@ -366,37 +398,8 @@ class MealPlanner {
                 }
             }
         }
-        
-        
     }
     
-    
-    class func deleteAllItems(db: Firestore, id: String) {
-        
-        let recipeReference = db.collection("mealPlanners").document(id).collection("recipes")
-        let scheduleReference = db.collection("mealPlanners").document(id).collection("schedule")
-        
-        recipeReference.getDocuments { (querySnapshot, error) in
-            if let documents = querySnapshot?.documents {
-                documents.forEach { (doc) in
-                    recipeReference.document(doc.documentID).delete()
-                }
-            }
-        }
-        
-        scheduleReference.getDocuments { (querySnapshot, error) in
-            if let documents = querySnapshot?.documents {
-                documents.forEach { (doc) in
-                    let ref = scheduleReference.document(doc.documentID)
-                    ref.updateData([
-                        "recipes" : FieldValue.delete()
-                    ])
-                }
-            }
-        }
-        
-        
-    }
     
     // MARK: UI
     // To get the int value for the first day of the example month from the specific day and weekday from a selected date

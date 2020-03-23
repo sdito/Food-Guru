@@ -122,7 +122,9 @@ class AddItemsVC: UIViewController {
         actionSheet.addAction(.init(title: "Delete items from list (and keep list)", style: .destructive, handler: { action in
             if let items = self.list?.items {
                 for item in items {
-                    item.deleteItemFromList(db: self.db, listID: self.list?.ownID ?? " ")
+                    if let listID = self.list?.ownID {
+                        item.deleteItemFromList(db: self.db, listID: listID)
+                    }
                 }
             }
         }))
@@ -241,6 +243,8 @@ class AddItemsVC: UIViewController {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             keyboardHeight = keyboardRectangle.height
+            
+            
         }
     }
 
@@ -397,7 +401,7 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: ItemCellDelegate
 extension AddItemsVC: ItemCellDelegate {
-    func edit(item: Item) {
+    func edit(item: Item, sender: UIView) {
         
         var text: String? {
             if item.user != nil {
@@ -433,8 +437,8 @@ extension AddItemsVC: ItemCellDelegate {
         if UIDevice.current.userInterfaceIdiom == .phone {
             present(actionSheet, animated: true)
         } else {
-            actionSheet.popoverPresentationController?.sourceView = self.view
-            actionSheet.popoverPresentationController?.sourceRect = segmentedControl.frame
+            actionSheet.popoverPresentationController?.sourceView = sender
+            actionSheet.popoverPresentationController?.sourceRect = sender.bounds
             present(actionSheet, animated: true, completion: nil)
         }
     }

@@ -44,56 +44,14 @@ class SetUpListVC: UIViewController {
     private var returnGroupID: String?
     private var usingGroup: Bool? {
         didSet {
-            if self.usingGroup == true {
-                switchOutlet.isOn = true
-            } else if self.usingGroup == false {
-                switchOutlet.isOn = false
-            }
-            switch self.usingGroup {
-            case true:
-                peopleStackView.subviews.forEach { (view) in
-                    if peopleStackView.subviews.firstIndex(of: view)! > 0 {
-                        view.removeFromSuperview()
-                    }
-                }
-                groupOrNotLabel.text = "Using group"
-                for person in SharedValues.shared.groupEmails ?? [""] {
-                    print(person)
-                    insertTextFieldIn(stackView: peopleStackView, text: person, userInteraction: false)
-                }
-                for view in peopleStackView.subviews {
-                    if (view as? UITextField)?.text == "" {
-                        view.removeFromSuperview()
-                    }
-                }
-            default:
-                groupOrNotLabel.text = "Not using group"
-                peopleStackView.subviews.forEach { (view) in
-                    if peopleStackView.subviews.firstIndex(of: view)! > 0 {
-                        view.removeFromSuperview()
-                        
-                    } else {
-                        if type(of: view) == UITextField.self {
-                            (view as! UITextField).text = ""
-                            (view as! UITextField).isUserInteractionEnabled = true
-                            (view as! UITextField).setUpListToolbar(action: #selector(handleTextFieldForPlus), arrowAction: #selector(handleTextFieldForArrow))
-                        }
-                        
-                    }
-                }
-                for person in listToEdit?.people ?? [] {
-                    insertTextFieldIn(stackView: peopleStackView, text: person, userInteraction: true)
-                }
-                insertTextFieldIn(stackView: peopleStackView, text: "", userInteraction: true)
-            }
+            handleGroupChangeOrSet()
         }
     }
     // MARK: override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
         db = Firestore.firestore()
-        nameTextField.delegate = self
-        storesTextField.delegate = self
+        nameTextField.delegate = self; storesTextField.delegate = self
         
         nameTextField.setUpListToolbar(action: #selector(handleTextFieldForPlus), arrowAction: #selector(handleTextFieldForArrow))
         storesTextField.setUpListToolbar(action: #selector(handleTextFieldForPlus), arrowAction: #selector(handleTextFieldForArrow))
@@ -104,14 +62,11 @@ class SetUpListVC: UIViewController {
             setUIifListIsBeingEdited(list: listToEdit!)
         }
         
-        
         if SharedValues.shared.groupID == nil || listToEdit?.isGroup == false {
             usingGroup = false
         } else {
             usingGroup = true
         }
-        
-        
         if SharedValues.shared.anonymousUser == true {
             switchOutlet.isUserInteractionEnabled = false
         }
@@ -192,6 +147,49 @@ class SetUpListVC: UIViewController {
         
     }
     
+    private func handleGroupChangeOrSet() {
+        if self.usingGroup == true {
+            switchOutlet.isOn = true
+        } else if self.usingGroup == false {
+            switchOutlet.isOn = false
+        }
+        switch self.usingGroup {
+        case true:
+            peopleStackView.subviews.forEach { (view) in
+                if peopleStackView.subviews.firstIndex(of: view)! > 0 {
+                    view.removeFromSuperview()
+                }
+            }
+            groupOrNotLabel.text = "Using group"
+            for person in SharedValues.shared.groupEmails ?? [""] {
+                print(person)
+                insertTextFieldIn(stackView: peopleStackView, text: person, userInteraction: false)
+            }
+            for view in peopleStackView.subviews {
+                if (view as? UITextField)?.text == "" {
+                    view.removeFromSuperview()
+                }
+            }
+        default:
+            groupOrNotLabel.text = "Not using group"
+            peopleStackView.subviews.forEach { (view) in
+                if peopleStackView.subviews.firstIndex(of: view)! > 0 {
+                    view.removeFromSuperview()
+                    
+                } else {
+                    if type(of: view) == UITextField.self {
+                        (view as! UITextField).text = ""
+                        (view as! UITextField).isUserInteractionEnabled = true
+                        (view as! UITextField).setUpListToolbar(action: #selector(handleTextFieldForPlus), arrowAction: #selector(handleTextFieldForArrow))
+                    }
+                }
+            }
+            for person in listToEdit?.people ?? [] {
+                insertTextFieldIn(stackView: peopleStackView, text: person, userInteraction: true)
+            }
+            insertTextFieldIn(stackView: peopleStackView, text: "", userInteraction: true)
+        }
+    }
     
     private func insertTextFieldIn(stackView: UIStackView, text: String, userInteraction: Bool) {
         let textField = UITextField()

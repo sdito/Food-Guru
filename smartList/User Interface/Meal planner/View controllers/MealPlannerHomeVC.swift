@@ -35,6 +35,7 @@ class MealPlannerHomeVC: UIViewController {
     private var dateRecipes: [MealPlanner.RecipeTransfer] = []
     private var monthsNeededToAdd = 2
     
+    // MARK: Override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,7 +52,7 @@ class MealPlannerHomeVC: UIViewController {
                 self.setUpInitialUI()
             }
         }
-        
+        iPadUiIfApplicable()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -67,8 +68,8 @@ class MealPlannerHomeVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
-        
-        
+        // To not have any cells still be highlited for no reason
+        tableView.visibleCells.forEach({$0.isSelected = false})
         if SharedValues.shared.mealPlannerID == nil {
             
             if SharedValues.shared.groupID == nil {
@@ -95,6 +96,46 @@ class MealPlannerHomeVC: UIViewController {
             let destVC = segue.destination as! SelectMealPlanRecipeVC
             destVC.recipeSelection = sender as! (RecipeSelection, String?)
             destVC.mealPlanner = mealPlanner
+        }
+    }
+    
+    
+    // MARK: IBAction funcs
+    @IBAction func addRecipePressed(_ sender: Any) {
+        
+        var title: String? {
+            if let sd = shortDate {
+                return "Add meal on \(sd.shortDateToDisplay()) to planner"
+            } else {
+                return nil
+            }
+        }
+        
+        let actionSheet = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(.init(title: "Browse recipes", style: .default, handler: { (action) in
+            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.all, self.shortDate))
+        }))
+        actionSheet.addAction(.init(title: "Add new recipe", style: .default, handler: { action in
+            let sb = UIStoryboard(name: "Recipes", bundle: nil)
+            let vc = sb.instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
+            vc.fromPlanner = (true, self.shortDate)
+            self.navigationController?.pushViewController(vc, animated: true)
+            vc.mealPlannerRecipeDelegate = self
+        }))
+        actionSheet.addAction(.init(title: "Cookbook", style: .default, handler: { action in
+            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.cookbook, self.shortDate))
+        }))
+        actionSheet.addAction(.init(title: "Saved recipes", style: .default, handler: { action in
+            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.saved, self.shortDate))
+        }))
+        actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            present(actionSheet, animated: true)
+        } else {
+            actionSheet.popoverPresentationController?.sourceView = addRecipeButtonOutlet
+            actionSheet.popoverPresentationController?.sourceRect = addRecipeButtonOutlet.bounds
+            present(actionSheet, animated: true, completion: nil)
         }
     }
     
@@ -131,6 +172,13 @@ class MealPlannerHomeVC: UIViewController {
         swipeGestureRecognizerRight.direction = UISwipeGestureRecognizer.Direction.right
         tableView.addGestureRecognizer(swipeGestureRecognizerRight)
         tableView.addGestureRecognizer(swipeGestureRecognizerLeft)
+    }
+    
+    private func iPadUiIfApplicable() {
+        if !SharedValues.shared.isPhone {
+            selectedDayLabel.font = UIFont(name: "futura", size: 22)
+            
+        }
     }
     
     @objc private func swipeSwiped(_ recognizer: UISwipeGestureRecognizer) {
@@ -208,49 +256,12 @@ class MealPlannerHomeVC: UIViewController {
             let newRecipes = Array<MealPlanner.RecipeTransfer>(monthRecipes.filter({$0.date == sd}))
             if dateRecipes != newRecipes {
                 dateRecipes = newRecipes
-                UIView.transition(with: tableView, duration: 0.4, options: .transitionFlipFromTop, animations: self.tableView.reloadData)
+                UIView.transition(with: tableView, duration: 0.2, options: .transitionCrossDissolve, animations: self.tableView.reloadData)
+                
             }
         }
     }
     
-    // MARK: IBAction funcs
-    @IBAction func addRecipePressed(_ sender: Any) {
-        
-        var title: String? {
-            if let sd = shortDate {
-                return "Add meal on \(sd.shortDateToDisplay()) to planner"
-            } else {
-                return nil
-            }
-        }
-        
-        let actionSheet = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
-        actionSheet.addAction(.init(title: "Browse recipes", style: .default, handler: { (action) in
-            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.all, self.shortDate))
-        }))
-        actionSheet.addAction(.init(title: "Add new recipe", style: .default, handler: { action in
-            let sb = UIStoryboard(name: "Recipes", bundle: nil)
-            let vc = sb.instantiateViewController(withIdentifier: "cRecipe") as! CreateRecipeVC
-            vc.fromPlanner = (true, self.shortDate)
-            self.navigationController?.pushViewController(vc, animated: true)
-            vc.mealPlannerRecipeDelegate = self
-        }))
-        actionSheet.addAction(.init(title: "Cookbook", style: .default, handler: { action in
-            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.cookbook, self.shortDate))
-        }))
-        actionSheet.addAction(.init(title: "Saved recipes", style: .default, handler: { action in
-            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.saved, self.shortDate))
-        }))
-        actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
-        
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            present(actionSheet, animated: true)
-        } else {
-            actionSheet.popoverPresentationController?.sourceView = self.view
-            actionSheet.popoverPresentationController?.sourceRect = addRecipeButtonOutlet.frame
-            present(actionSheet, animated: true, completion: nil)
-        }
-    }
 }
 
 
@@ -299,12 +310,12 @@ extension MealPlannerHomeVC: CreateRecipeForMealPlannerDelegate {
 
 // MARK: MealPlannerCellDelegate
 extension MealPlannerHomeVC: MealPlannerCellDelegate {
-    func cellSelected(recipe: MealPlanner.RecipeTransfer?) {
+    func cellSelected(recipe: MealPlanner.RecipeTransfer?, sender: UIView) {
         // Need to have a pop up or action sheet here for editing, deleting, shareing recipe (i.e. have pdf show up)
         
         print("Recipe selected, printing from delegate: \(recipe?.name ?? "recipe is nil :(")")
         if let recipe = recipe {
-            #warning("need to handle iPad case")
+            
             let actionSheet = UIAlertController(title: recipe.name, message: nil, preferredStyle: .actionSheet)
         
             actionSheet.addAction(.init(title: "Copy to another date", style: .default, handler: { action in
@@ -320,7 +331,14 @@ extension MealPlannerHomeVC: MealPlannerCellDelegate {
             }))
             actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
             
-            present(actionSheet, animated: true)
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                present(actionSheet, animated: true)
+            } else {
+                actionSheet.popoverPresentationController?.sourceView = sender
+                actionSheet.popoverPresentationController?.sourceRect = sender.bounds
+                present(actionSheet, animated: true, completion: nil)
+            }
+//            present(actionSheet, animated: true)
         }
         
     }
@@ -353,7 +371,7 @@ extension MealPlannerHomeVC: CalendarViewDelegate {
             
                 if selectedDayLabel.text != "Date" {
                     UIView.animate(withDuration: 0.1, animations: {
-                        self.selectedDayLabel.alpha = 0.3
+                        self.selectedDayLabel.alpha = 0.55
                     }) { (complete) in
                         self.selectedDayLabel.text = "\(month.description) \(day)"
                         UIView.animate(withDuration: 0.1) {
@@ -408,8 +426,6 @@ extension MealPlannerHomeVC: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        tableView.cellForRow(at: indexPath)?.isSelected = false
         
         let sb = UIStoryboard(name: "Recipes", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC

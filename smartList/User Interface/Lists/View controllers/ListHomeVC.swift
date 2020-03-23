@@ -118,8 +118,8 @@ extension ListHomeVC: UITableViewDataSource, UITableViewDelegate {
         default:
             return sections?.count ?? 1
         }
-        
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch lists?.count {
         case 0:

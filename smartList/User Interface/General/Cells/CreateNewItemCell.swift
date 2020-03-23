@@ -14,5 +14,13 @@ class CreateNewItemCell: UITableViewCell {
     
     func setUI(text: String) {
         label.text = text
+        
+        // if iPad, then make the font slightly bigger
+        if !SharedValues.shared.isPhone {
+            label.font = UIFont(name: "futura", size: 23)
+        }
     }
+    
+    
+    
 }

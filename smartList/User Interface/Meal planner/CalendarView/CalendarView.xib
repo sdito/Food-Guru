@@ -479,6 +479,13 @@
                 <outletCollection property="day" destination="3Dz-FL-DVP" collectionClass="NSMutableArray" id="4eZ-Wi-3YA"/>
                 <outletCollection property="day" destination="kXc-WB-UII" collectionClass="NSMutableArray" id="tNs-Q3-938"/>
                 <outletCollection property="day" destination="WSr-fG-zkY" collectionClass="NSMutableArray" id="dEt-8E-77t"/>
+                <outletCollection property="weekdayLabels" destination="8fk-O0-BP0" collectionClass="NSMutableArray" id="80E-CB-v4M"/>
+                <outletCollection property="weekdayLabels" destination="X28-xN-iu9" collectionClass="NSMutableArray" id="g1M-aY-1tY"/>
+                <outletCollection property="weekdayLabels" destination="dBq-i6-fbh" collectionClass="NSMutableArray" id="lsd-Vp-gLg"/>
+                <outletCollection property="weekdayLabels" destination="7vv-rC-riv" collectionClass="NSMutableArray" id="Bug-4A-SQ0"/>
+                <outletCollection property="weekdayLabels" destination="C97-5r-4vJ" collectionClass="NSMutableArray" id="7xM-eV-y1c"/>
+                <outletCollection property="weekdayLabels" destination="pnQ-gZ-lqU" collectionClass="NSMutableArray" id="jHv-w5-sDZ"/>
+                <outletCollection property="weekdayLabels" destination="A6e-uC-Z7u" collectionClass="NSMutableArray" id="XHb-to-sc8"/>
             </connections>
             <point key="canvasLocation" x="121.0144927536232" y="-53.236607142857139"/>
         </view>

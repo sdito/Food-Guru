@@ -10,7 +10,7 @@ import UIKit
 
 
 protocol ItemCellDelegate {
-    func edit(item: Item)
+    func edit(item: Item, sender: UIView)
 }
 
 
@@ -18,6 +18,7 @@ class ItemCell: UITableViewCell {
     
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var quantityLabel: UILabel!
+    @IBOutlet weak var buttonOutlet: UIButton!
     
     var delegate: ItemCellDelegate!
     private var item: Item?
@@ -55,7 +56,7 @@ class ItemCell: UITableViewCell {
     // MARK: @IBAction func
     @IBAction func editItemAction(_ sender: Any) {
         if let item = item {
-            delegate.edit(item: item)
+            delegate.edit(item: item, sender: buttonOutlet)
         }
     }
     

@@ -28,6 +28,7 @@ protocol CalendarViewDelegate: class {
 class CalendarView: UIView {
     
     @IBOutlet var day: [UIButton]!
+    @IBOutlet var weekdayLabels: [UILabel]!
     @IBOutlet weak var monthYearLabel: UILabel!
 
     weak var delegate: CalendarViewDelegate!
@@ -48,7 +49,7 @@ class CalendarView: UIView {
         NotificationCenter.default.addObserver(self, selector: #selector(dateButtonChangedSelector(_:)), name: .dayButtonSelectedFromCalendar, object: nil)
         let data = calendar.monthsInFutureData(monthsInFuture)
         monthYear = (calendar.component(.month, from: data.dateUsed), data.year)
-        
+        iPadUiIfNeeded()
         self.monthsInFuture = monthsInFuture
         self.recipes = Array(recipes.values.joined())//Array<MealPlanner.RecipeTransfer>(recipes["\(monthYear!.0).\(monthYear!.1)"] ?? Set<MealPlanner.RecipeTransfer>())
         
@@ -67,6 +68,11 @@ class CalendarView: UIView {
         let daysInPreviousMonth = calendar.daysInMonth(date: date ?? Date(), monthsDifference: -1)
         
         for d in day {
+            
+            if !SharedValues.shared.isPhone {
+                d.titleLabel?.font = UIFont(name: "futura", size: 25)
+            }
+            
             var dayButtonDate: String?
             d.layer.borderWidth = 0.5
             d.layer.borderColor = Colors.label.cgColor
@@ -162,13 +168,20 @@ class CalendarView: UIView {
                 sv.distribution = .fill
                 sv.spacing = 5.0
                 
+                var blockSize: CGFloat {
+                    if SharedValues.shared.isPhone {
+                        return 5
+                    } else {
+                        return 6.75
+                    }
+                }
                 
                 for _ in 1...counter {
                     let view = UIView()
                     sv.insertArrangedSubview(view, at: 0)
                     view.backgroundColor = Colors.label
-                    view.heightAnchor.constraint(equalToConstant: 5).isActive = true
-                    view.widthAnchor.constraint(equalToConstant: 5).isActive = true
+                    view.heightAnchor.constraint(equalToConstant: blockSize).isActive = true
+                    view.widthAnchor.constraint(equalToConstant: blockSize).isActive = true
                 }
                 
                 b.addSubview(sv)
@@ -217,6 +230,14 @@ class CalendarView: UIView {
         delegate.dateButtonSelected(month: month, day: Int(sender.titleLabel!.text!)!, year: yearInt, buttonTag: sender.tag)
         delegate.selectedDay(button: sender)
     }
+    
+    private func iPadUiIfNeeded() {
+        if !SharedValues.shared.isPhone {
+            monthYearLabel.font = UIFont(name: "futura", size: 19)
+            weekdayLabels.forEach({$0.font = UIFont(name: "futura", size: 20)})
+        }
+    }
+        
     
     // MARK: @objc funcs
     @objc func buttonPressed(_ sender: UIButton) {
