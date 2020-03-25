@@ -221,7 +221,16 @@ struct Item: Equatable {
     }
     
     
-    
+    func findIndexPathIn(_ items: [[Item]]) -> IndexPath? {
+        for (a, array) in items.enumerated() {
+            for (b, item) in array.enumerated() {
+                if item == self {
+                    return IndexPath(row: b, section: a)
+                }
+            }
+        }
+        return nil
+    }
     
     
     // MARK: Open Food Facts API

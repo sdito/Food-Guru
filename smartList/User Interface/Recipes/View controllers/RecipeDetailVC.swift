@@ -444,8 +444,6 @@ extension RecipeDetailVC: ReviewImagesViewDelegate {
 // MARK: GiveRatingViewDelegate
 extension RecipeDetailVC: GiveRatingViewDelegate {
     
-    #warning("need to make sure this works with new implementation")
-    
     func writeImageForReview(image: UIImage) {
         if let r = data?.recipe {
             Review.writeImageForReview(image: image, recipe: r, db: db)

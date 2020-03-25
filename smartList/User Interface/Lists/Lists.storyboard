@@ -379,6 +379,7 @@
                         <outlet property="segmentedControl" destination="7A3-iR-2Kq" id="BoS-DG-Ati"/>
                         <outlet property="storesView" destination="U12-Ga-sFs" id="gAT-p4-WxR"/>
                         <outlet property="tableView" destination="wDa-85-i4O" id="n4R-8t-gAM"/>
+                        <outlet property="tableViewBottom" destination="Kip-8B-deg" id="bib-aF-Vdg"/>
                         <outlet property="tableViewToStoresView" destination="S8S-UC-naW" id="xzz-Y1-YOc"/>
                         <outlet property="tableViewToTopView" destination="ehC-hd-JP2" id="1Zc-3T-V88"/>
                         <outlet property="textField" destination="Pvh-zj-UFE" id="Wgd-bv-KDd"/>

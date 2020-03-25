@@ -110,7 +110,7 @@ extension GiveRatingView: UIImagePickerControllerDelegate, UINavigationControlle
             if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
                 imageForReview = pickedImage
                 imageSelectOutlet.setBackgroundImage(pickedImage, for: .normal)
-                imageSelectOutlet.tintColor = .clear
+                imageSelectOutlet.setImage(nil, for: .normal)
                 imagePicker.dismiss(animated: true, completion: nil)
             }
         }
@@ -128,7 +128,6 @@ extension GiveRatingView: UIImagePickerControllerDelegate, UINavigationControlle
 extension GiveRatingView: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.alpha = 1.0
-        //textView.text = ""
         if textView.text == placeholder {
             textView.text = ""
         }

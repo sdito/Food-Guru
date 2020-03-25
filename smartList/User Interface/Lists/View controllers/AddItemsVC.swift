@@ -10,7 +10,6 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
-
 class AddItemsVC: UIViewController {
     
     @IBOutlet weak var plusButton: UIButton!
@@ -24,9 +23,11 @@ class AddItemsVC: UIViewController {
     
     @IBOutlet weak var tableViewToStoresView: NSLayoutConstraint!
     @IBOutlet weak var tableViewToTopView: NSLayoutConstraint!
-    
+    @IBOutlet weak var tableViewBottom: NSLayoutConstraint?
+    private var keyboardTableViewBottom: NSLayoutConstraint?
     
     var db: Firestore!
+    private var initialItemsAdded = false
     private var ran = false
     private var arrayArrayItems: [[Item]] = []
     private var sortedCategories: [String] = []
@@ -56,7 +57,7 @@ class AddItemsVC: UIViewController {
         tableView.dataSource = self
         textField.delegate = self
         textField.setUpCancelAndAddToolbar(cancelAction: #selector(dismissKeyboardPressed), addAction: #selector(addItemAction))
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        addObservers()
         
         if SharedValues.shared.isPhone == false {
             topViewHeight.isActive = false
@@ -239,14 +240,29 @@ class AddItemsVC: UIViewController {
         }
     }
     // MARK: functions
+    
+    private func addObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     @objc private func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             keyboardHeight = keyboardRectangle.height
-            
+            tableViewBottom?.isActive = false
+            keyboardTableViewBottom = tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -(keyboardHeight ?? 0.0))
+            keyboardTableViewBottom?.isActive = true
             
         }
     }
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        keyboardTableViewBottom?.isActive = false
+        tableViewBottom = tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -(self.tabBarController?.tabBar.bounds.height ?? 0.0))
+        tableViewBottom!.isActive = true
+    }
+    
+    
 
     func setUIfrom(list: GroceryList) {
         //segmented control set up, only update the segmented controls if the stores changed
@@ -477,11 +493,24 @@ extension AddItemsVC: ItemCellDelegate {
 }
 
 extension AddItemsVC: GroceryListDelegate {
+    // Scroll to the new item added (if not already visible), then highlight the cell momentarily/maybe do other ui stuff
+    func potentialUiForRow(item: Item) {
+        if initialItemsAdded == true {
+            
+            #warning("here, isnt working")
+            // need to momentarily highlight the row for the cell
+            
+            
+        }
+    }
+    
     func updateListUI() {
         setUIfrom(list: self.list!)
     }
     
     func itemsUpdated() {
+        initialItemsAdded = true
+        // have a boolean value, before the first run the individual rows will not update, after that, then they will, delegate in other function
         
         if list?.items?.isEmpty == false {
             (sortedCategories, arrayArrayItems) = (list?.sortForTableView(from: currentStore))!
@@ -489,8 +518,8 @@ extension AddItemsVC: GroceryListDelegate {
         } else {
             arrayArrayItems = []
         }
-        
     }
+    
     func reloadTable() {
         tableView.reloadData()
     }

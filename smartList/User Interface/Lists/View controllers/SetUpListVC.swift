@@ -75,13 +75,18 @@ class SetUpListVC: UIViewController {
     // MARK: @IBAction funcs
     @IBAction func writeToFirestoreIfValid() {
         gatherListData()
-        let list = GroceryList(name: name ?? "", isGroup: usingGroup, stores: stores, people: people, items: nil, numItems: nil, docID: nil, timeIntervalSince1970: Date().timeIntervalSince1970, groupID: returnGroupID, ownID: "")
+        
         
         if name != "" {
             if listToEdit == nil {
+                let list = GroceryList(name: name ?? "", isGroup: usingGroup, stores: stores, people: people, items: nil, numItems: nil, docID: nil, timeIntervalSince1970: Date().timeIntervalSince1970, groupID: returnGroupID, ownID: "")
                 list.writeToFirestore(db: db)
             } else {
-                list.editListToFirestore(db: db, listID: listToEdit!.docID!)
+                listToEdit?.stores = stores
+                listToEdit?.people = people
+                listToEdit?.isGroup = usingGroup
+                listToEdit?.name = name ?? listToEdit?.name ?? "Grocery List"
+                listToEdit?.editListToFirestore(db: db, listID: listToEdit!.docID!)
             }
             self.dismiss(animated: true, completion: nil)
         } else {

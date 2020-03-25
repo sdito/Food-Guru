@@ -16,6 +16,7 @@ protocol GroceryListDelegate: class {
     func itemsUpdated()
     func reloadTable()
     func updateListUI()
+    func potentialUiForRow(item: Item)
 }
 
 
@@ -63,7 +64,7 @@ class GroceryList {
                     self.people = doc.get("people") as? [String]
                     self.stores = doc.get("stores") as? [String]
                     self.items = self.removeItemsThatNoLongerBelong()
-                    self.delegate!.updateListUI()
+                    self.delegate?.updateListUI()
                 }
             }
         }
@@ -72,7 +73,7 @@ class GroceryList {
     // to update list information i.e. if stores changed
     
     func editListToFirestore(db: Firestore!, listID: String) {
-        
+        #warning("maybe do a little more testing on this stuff, changed most of it after User.emailToUid")
         db.collection("lists").document(listID).updateData([
             "name": self.name,
             "stores": self.stores!,
@@ -84,24 +85,59 @@ class GroceryList {
             } else {
                 print("Document sucessfully updated")
                 User.emailToUid(emails: self.people, db: db, listID: listID)
-                if self.stores?.isEmpty == false {
-                    // Need to get the items that do not have a store associated with them, from there make the user either sort all those items or just move them all to one store
-                    let itemsReference = db.collection("lists").document(listID).collection("items").whereField("store", isEqualTo: "")
-                    
-                    itemsReference.getDocuments { (querySnapshot, error) in
-                        guard let documents = querySnapshot?.documents else {
-                            print("Error reading documents: \(error?.localizedDescription ?? "error")")
-                            return
-                        }
-                        
-                        // documents are the items that have no store
-                        for doc in documents {
-                            let id = doc.documentID
-                            if let store = self.stores?.last {
-                                let specificItemReference = db.collection("lists").document(listID).collection("items").document(id)
-                                specificItemReference.updateData([
-                                    "store" : store
+                
+                var storeForItems: String {
+                    if self.stores?.isEmpty == false && self.stores != nil {
+                        return self.stores!.first!
+                    } else {
+                        return ""
+                    }
+                }
+                
+                // Need to get the items that do not have a store associated with them, from there make the user either sort all those items or just move them all to one store
+                if self.stores?.isEmpty == false && self.stores != nil {
+                    if let items = self.items {
+                        for item in items {
+                            if item.store == "", let itemID = item.ownID {
+                                let itemRef = db.collection("lists").document(listID).collection("items").document(itemID)
+                                itemRef.updateData([
+                                    "store": storeForItems
                                 ])
+                            }
+                        }
+                    }
+                }
+                
+                if let items = self.items {
+                    if let stores = self.stores {
+                        for item in items {
+                            if let store = item.store {
+                                if !stores.contains(store) {
+                                    if let itemID = item.ownID {
+                                        let itemRef = db.collection("lists").document(listID).collection("items").document(itemID)
+                                        itemRef.updateData([
+                                            "store": storeForItems
+                                        ])
+                                    }
+                                }
+                            } else {
+                                if let itemID = item.ownID {
+                                    let itemRef = db.collection("lists").document(listID).collection("items").document(itemID)
+                                    itemRef.updateData([
+                                        "store": storeForItems
+                                    ])
+                                }
+                            }
+                        }
+                    } else {
+                        for item in items {
+                            if item.store != "" {
+                                if let itemID = item.ownID {
+                                    let itemRef = db.collection("lists").document(listID).collection("items").document(itemID)
+                                    itemRef.updateData([
+                                        "store": storeForItems
+                                    ])
+                                }
                             }
                         }
                     }
@@ -168,7 +204,6 @@ class GroceryList {
     
     func readItemsForList(db: Firestore, docID: String) {
         itemListener = db.collection("lists").document(docID).collection("items").addSnapshotListener { (querySnapshot, error) in
-
             guard let docs = querySnapshot?.documentChanges else {
                 self.items = nil
                 return
@@ -181,13 +216,14 @@ class GroceryList {
                     })
                     let item = doc.document.getItem()
                     self.items?.append(item)
-                    print("Item added/modified: \(item.name)")
                     
+                    if doc.type == .added {
+                        self.delegate.potentialUiForRow(item: item)
+                    }
                 case .removed:
                     self.items?.removeAll(where: { (itm) -> Bool in
                         itm.ownID == doc.document.documentID
                     })
-                    print("Item removed")
                 }
             }
             self.delegate!.itemsUpdated()
