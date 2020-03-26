@@ -17,9 +17,7 @@ class SignInVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if #available(iOS 13.0, *) {
-            overrideUserInterfaceStyle = .dark
-        }
+        
         logInOutlet.border(cornerRadius: 15.0)
         
         emailTextField.setUpDoneToolbar(action: #selector(dismissKeyboard), style: .done)

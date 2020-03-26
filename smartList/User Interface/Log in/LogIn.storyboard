@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,44 +16,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="NO0-Ap-8pM">
-                                <rect key="frame" x="20" y="329.5" width="374" height="237"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k21-CV-YCN">
+                                <rect key="frame" x="110" y="351" width="194" height="194"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jID-ru-mkL" customClass="GIDSignInButton">
-                                        <rect key="frame" x="172" y="0.0" width="30" height="48"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ahw-27-aw8">
-                                        <rect key="frame" x="100" y="63" width="174" height="48"/>
-                                        <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="48" id="WMu-WE-QmD"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
-                                        <state key="normal" title="  Create email account  ">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="createAccount:" destination="2rE-ug-UMF" eventType="touchUpInside" id="3o4-Ic-x3d"/>
-                                        </connections>
-                                    </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wqu-58-4hJ">
-                                        <rect key="frame" x="67" y="126" width="240" height="48"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ij-Uc-CM5">
-                                        <rect key="frame" x="134.5" y="189" width="105" height="48"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
-                                        <state key="normal" title="Continue as guest">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="continueAsGuest:" destination="2rE-ug-UMF" eventType="touchUpInside" id="Asl-LK-GGk"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="NO0-Ap-8pM">
+                                        <rect key="frame" x="10" y="10" width="174" height="174"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jID-ru-mkL" customClass="GIDSignInButton">
+                                                <rect key="frame" x="72" y="0.0" width="30" height="48"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ahw-27-aw8">
+                                                <rect key="frame" x="0.0" y="63" width="174" height="48"/>
+                                                <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="WMu-WE-QmD"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
+                                                <state key="normal" title="  Create email account  ">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="createAccount:" destination="2rE-ug-UMF" eventType="touchUpInside" id="3o4-Ic-x3d"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ij-Uc-CM5">
+                                                <rect key="frame" x="34.5" y="126" width="105" height="48"/>
+                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                                <state key="normal" title="Continue as guest">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="continueAsGuest:" destination="2rE-ug-UMF" eventType="touchUpInside" id="Asl-LK-GGk"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
-                            </stackView>
+                                <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="NO0-Ap-8pM" secondAttribute="bottom" constant="10" id="3nW-EK-Gb1"/>
+                                    <constraint firstItem="NO0-Ap-8pM" firstAttribute="top" secondItem="k21-CV-YCN" secondAttribute="top" constant="10" id="OfK-y9-mVG"/>
+                                    <constraint firstAttribute="trailing" secondItem="NO0-Ap-8pM" secondAttribute="trailing" constant="10" id="otK-bg-u8h"/>
+                                    <constraint firstItem="NO0-Ap-8pM" firstAttribute="leading" secondItem="k21-CV-YCN" secondAttribute="leading" constant="10" id="pHJ-ya-NE4"/>
+                                </constraints>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="vFL-sX-JeG">
                                 <rect key="frame" x="84" y="800" width="246.5" height="32"/>
                                 <subviews>
@@ -78,16 +86,16 @@
                         </subviews>
                         <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="NO0-Ap-8pM" firstAttribute="centerY" secondItem="qxg-NU-w3p" secondAttribute="centerY" id="EoF-f4-EBV"/>
-                            <constraint firstItem="NO0-Ap-8pM" firstAttribute="leading" secondItem="UJb-rF-uzA" secondAttribute="leading" constant="20" id="Mmr-oe-ijz"/>
+                            <constraint firstItem="k21-CV-YCN" firstAttribute="centerY" secondItem="qxg-NU-w3p" secondAttribute="centerY" id="J11-bC-fWo"/>
                             <constraint firstItem="vFL-sX-JeG" firstAttribute="centerX" secondItem="qxg-NU-w3p" secondAttribute="centerX" id="NY6-kr-TAb"/>
-                            <constraint firstItem="UJb-rF-uzA" firstAttribute="trailing" secondItem="NO0-Ap-8pM" secondAttribute="trailing" constant="20" id="Sem-BT-Zr2"/>
+                            <constraint firstItem="k21-CV-YCN" firstAttribute="centerX" secondItem="qxg-NU-w3p" secondAttribute="centerX" id="PFL-A6-ycP"/>
                             <constraint firstItem="UJb-rF-uzA" firstAttribute="bottom" secondItem="vFL-sX-JeG" secondAttribute="bottom" constant="30" id="aEQ-M1-1Tl"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UJb-rF-uzA"/>
                     </view>
                     <navigationItem key="navigationItem" id="nTT-mI-daf"/>
                     <connections>
+                        <outlet property="backgroundView" destination="k21-CV-YCN" id="Bp4-fI-FrN"/>
                         <outlet property="createAccountOutlet" destination="ahw-27-aw8" id="ghA-va-1uT"/>
                         <outlet property="googleSignInButton" destination="jID-ru-mkL" id="hcT-xf-7Tr"/>
                         <outlet property="stackView" destination="NO0-Ap-8pM" id="DOk-id-F2n"/>
@@ -105,8 +113,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HkH-nW-Rq4" userLabel="Back">
+                                <rect key="frame" x="20" y="64" width="33" height="32"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                <state key="normal" title="Back">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="backPressed:" destination="ESS-79-oPP" eventType="touchUpInside" id="egc-rT-nav"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New email account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UU2-gf-L5l">
+                                <rect key="frame" x="104" y="158" width="206" height="26"/>
+                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ZNh-I2-QYM">
-                                <rect key="frame" x="20" y="144" width="374" height="76"/>
+                                <rect key="frame" x="20" y="194" width="374" height="76"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iMk-1D-VL5">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="34"/>
@@ -121,7 +145,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqM-uy-biH">
-                                <rect key="frame" x="43.5" y="230" width="327" height="35"/>
+                                <rect key="frame" x="43.5" y="280" width="327" height="35"/>
                                 <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <state key="normal" title="Create account">
@@ -162,22 +186,6 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HkH-nW-Rq4" userLabel="Back">
-                                <rect key="frame" x="20" y="64" width="33" height="32"/>
-                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                <state key="normal" title="Back">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="backPressed:" destination="ESS-79-oPP" eventType="touchUpInside" id="egc-rT-nav"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New email account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UU2-gf-L5l">
-                                <rect key="frame" x="104" y="108" width="206" height="26"/>
-                                <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="20"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -189,7 +197,7 @@
                             <constraint firstItem="XXQ-4M-Yx5" firstAttribute="centerX" secondItem="KLl-UG-GbU" secondAttribute="centerX" id="OT4-nv-Xra"/>
                             <constraint firstItem="KsI-8C-uNV" firstAttribute="trailing" secondItem="ZNh-I2-QYM" secondAttribute="trailing" constant="20" id="b5V-dd-v4j"/>
                             <constraint firstItem="8kQ-G8-9Fz" firstAttribute="centerX" secondItem="KLl-UG-GbU" secondAttribute="centerX" id="ceP-xl-bKk"/>
-                            <constraint firstItem="ZNh-I2-QYM" firstAttribute="top" secondItem="KsI-8C-uNV" secondAttribute="top" constant="100" id="nFD-sY-DZq"/>
+                            <constraint firstItem="ZNh-I2-QYM" firstAttribute="top" secondItem="KsI-8C-uNV" secondAttribute="top" constant="150" id="nFD-sY-DZq"/>
                             <constraint firstItem="ZNh-I2-QYM" firstAttribute="top" secondItem="UU2-gf-L5l" secondAttribute="bottom" constant="10" id="nyT-Oe-IM0"/>
                             <constraint firstItem="XXQ-4M-Yx5" firstAttribute="top" secondItem="8kQ-G8-9Fz" secondAttribute="bottom" constant="10" id="pFh-Vh-3xr"/>
                             <constraint firstItem="HkH-nW-Rq4" firstAttribute="top" secondItem="KsI-8C-uNV" secondAttribute="top" constant="20" id="rMY-KU-cHS"/>
@@ -217,12 +225,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Create display name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pad-dE-wlg">
-                                <rect key="frame" x="20" y="106" width="374" height="34"/>
+                                <rect key="frame" x="20" y="194" width="374" height="34"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UMd-XY-U9h">
-                                <rect key="frame" x="43.5" y="170" width="327" height="35"/>
+                                <rect key="frame" x="43.5" y="258" width="327" height="35"/>
                                 <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <state key="normal" title="Create username">
@@ -245,14 +253,15 @@
                         </subviews>
                         <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="iIV-3P-PX4" firstAttribute="top" secondItem="Sml-6h-eQ4" secondAttribute="top" constant="20" id="4bz-GV-Tfl"/>
                             <constraint firstItem="Sml-6h-eQ4" firstAttribute="trailing" secondItem="Pad-dE-wlg" secondAttribute="trailing" constant="20" id="FZr-9y-0OF"/>
                             <constraint firstItem="UMd-XY-U9h" firstAttribute="centerX" secondItem="Ica-KC-aec" secondAttribute="centerX" id="Iu1-tN-6ev"/>
+                            <constraint firstItem="iIV-3P-PX4" firstAttribute="leading" secondItem="Sml-6h-eQ4" secondAttribute="leading" constant="20" id="Kf8-ov-ywR"/>
                             <constraint firstItem="UMd-XY-U9h" firstAttribute="top" secondItem="Pad-dE-wlg" secondAttribute="bottom" constant="30" id="NKt-vK-BgA"/>
                             <constraint firstItem="Pad-dE-wlg" firstAttribute="leading" secondItem="Sml-6h-eQ4" secondAttribute="leading" constant="20" id="XUc-E5-18U"/>
+                            <constraint firstItem="Pad-dE-wlg" firstAttribute="top" secondItem="Sml-6h-eQ4" secondAttribute="top" constant="150" id="Xm2-ID-oyw"/>
                             <constraint firstItem="iIV-3P-PX4" firstAttribute="leading" secondItem="Sml-6h-eQ4" secondAttribute="leading" constant="20" id="gph-OX-VoI"/>
-                            <constraint firstItem="iIV-3P-PX4" firstAttribute="top" secondItem="Sml-6h-eQ4" secondAttribute="top" constant="20" id="l4n-ex-FHf"/>
                             <constraint firstItem="UMd-XY-U9h" firstAttribute="width" secondItem="Pad-dE-wlg" secondAttribute="width" multiplier="7:8" id="qNw-u1-B0W"/>
-                            <constraint firstItem="Pad-dE-wlg" firstAttribute="top" secondItem="iIV-3P-PX4" secondAttribute="bottom" constant="10" id="yBZ-y0-7CT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Sml-6h-eQ4"/>
                     </view>
@@ -275,7 +284,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="n1c-ff-ugb">
-                                <rect key="frame" x="20" y="144" width="374" height="76"/>
+                                <rect key="frame" x="20" y="194" width="374" height="76"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bdm-iq-AL8">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="34"/>
@@ -290,7 +299,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eTV-Mb-3Vp">
-                                <rect key="frame" x="43.5" y="230" width="327" height="35"/>
+                                <rect key="frame" x="43.5" y="280" width="327" height="35"/>
                                 <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <state key="normal" title="Log in">
@@ -352,7 +361,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log in to email account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LpI-uL-FGd">
-                                <rect key="frame" x="83" y="108" width="248" height="26"/>
+                                <rect key="frame" x="83" y="158" width="248" height="26"/>
                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -374,7 +383,7 @@
                             <constraint firstItem="eTV-Mb-3Vp" firstAttribute="top" secondItem="n1c-ff-ugb" secondAttribute="bottom" constant="10" id="WHY-Ga-atq"/>
                             <constraint firstItem="8nk-Yy-OJl" firstAttribute="centerX" secondItem="22t-jT-QIM" secondAttribute="centerX" id="aCn-7n-A1n"/>
                             <constraint firstItem="eTV-Mb-3Vp" firstAttribute="width" secondItem="n1c-ff-ugb" secondAttribute="width" multiplier="7:8" id="bz2-1I-Yk2"/>
-                            <constraint firstItem="n1c-ff-ugb" firstAttribute="top" secondItem="Fc7-Kz-sbO" secondAttribute="top" constant="100" id="n3j-4c-QlR"/>
+                            <constraint firstItem="n1c-ff-ugb" firstAttribute="top" secondItem="Fc7-Kz-sbO" secondAttribute="top" constant="150" id="n3j-4c-QlR"/>
                             <constraint firstItem="8nk-Yy-OJl" firstAttribute="top" secondItem="TsM-yl-Mh4" secondAttribute="bottom" constant="10" id="wC4-Cc-DI8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Fc7-Kz-sbO"/>
@@ -398,7 +407,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="es2-sW-ce6">
-                                <rect key="frame" x="43.5" y="188" width="327" height="35"/>
+                                <rect key="frame" x="43.5" y="238" width="327" height="35"/>
                                 <color key="backgroundColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <state key="normal" title="Get password">
@@ -409,18 +418,18 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Account email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Y2i-db-Kcw">
-                                <rect key="frame" x="20" y="144" width="374" height="34"/>
+                                <rect key="frame" x="20" y="194" width="374" height="34"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reset email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rHj-Ek-vJd">
-                                <rect key="frame" x="145" y="108" width="124" height="26"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reset password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rHj-Ek-vJd">
+                                <rect key="frame" x="122" y="158" width="170.5" height="26"/>
                                 <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYC-xK-CJO">
-                                <rect key="frame" x="20" y="64" width="33" height="70"/>
+                                <rect key="frame" x="20" y="64" width="33" height="32"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                 <state key="normal" title="Back">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -434,13 +443,12 @@
                         <constraints>
                             <constraint firstItem="es2-sW-ce6" firstAttribute="centerX" secondItem="qOM-mR-mVh" secondAttribute="centerX" id="F8T-0v-6eB"/>
                             <constraint firstItem="Y2i-db-Kcw" firstAttribute="top" secondItem="rHj-Ek-vJd" secondAttribute="bottom" constant="10" id="ILo-fd-AGK"/>
-                            <constraint firstItem="Y2i-db-Kcw" firstAttribute="top" secondItem="l3L-rM-Czu" secondAttribute="top" constant="100" id="MEm-fi-Gey"/>
+                            <constraint firstItem="Y2i-db-Kcw" firstAttribute="top" secondItem="l3L-rM-Czu" secondAttribute="top" constant="150" id="MEm-fi-Gey"/>
                             <constraint firstItem="RYC-xK-CJO" firstAttribute="top" secondItem="l3L-rM-Czu" secondAttribute="top" constant="20" id="OaM-Hc-DYB"/>
                             <constraint firstItem="RYC-xK-CJO" firstAttribute="leading" secondItem="l3L-rM-Czu" secondAttribute="leading" constant="20" id="Pst-o9-BzT"/>
                             <constraint firstItem="l3L-rM-Czu" firstAttribute="trailing" secondItem="Y2i-db-Kcw" secondAttribute="trailing" constant="20" id="QII-Dm-5sX"/>
                             <constraint firstItem="rHj-Ek-vJd" firstAttribute="centerX" secondItem="qOM-mR-mVh" secondAttribute="centerX" id="Rg7-Fa-RoC"/>
                             <constraint firstItem="es2-sW-ce6" firstAttribute="width" secondItem="Y2i-db-Kcw" secondAttribute="width" multiplier="7:8" id="oXl-5j-Ecc"/>
-                            <constraint firstItem="Y2i-db-Kcw" firstAttribute="top" secondItem="RYC-xK-CJO" secondAttribute="bottom" constant="10" id="rhW-dm-m7o"/>
                             <constraint firstItem="es2-sW-ce6" firstAttribute="top" secondItem="Y2i-db-Kcw" secondAttribute="bottom" constant="10" id="sNX-om-Ycu"/>
                             <constraint firstItem="Y2i-db-Kcw" firstAttribute="leading" secondItem="l3L-rM-Czu" secondAttribute="leading" constant="20" id="vDh-rG-HEA"/>
                         </constraints>

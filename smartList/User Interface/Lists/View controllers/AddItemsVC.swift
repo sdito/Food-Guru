@@ -19,10 +19,11 @@ class AddItemsVC: UIViewController {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var footerChangeHeight: UIView!
     @IBOutlet weak var topViewHeight: NSLayoutConstraint!
     
-    @IBOutlet weak var tableViewToStoresView: NSLayoutConstraint!
-    @IBOutlet weak var tableViewToTopView: NSLayoutConstraint!
+    @IBOutlet weak var tableViewToStoresView: NSLayoutConstraint?
+    @IBOutlet weak var tableViewToTopView: NSLayoutConstraint?
     @IBOutlet weak var tableViewBottom: NSLayoutConstraint?
     private var keyboardTableViewBottom: NSLayoutConstraint?
     
@@ -35,6 +36,7 @@ class AddItemsVC: UIViewController {
     private var storeText: String = "none"
     private var textAssistantViewActive = false
     private var keyboardHeight: CGFloat?
+    private var animateIndexPath: IndexPath?
     private var currentStore: String {
         if segmentedControl.numberOfSegments == 0 {
             return ""
@@ -56,9 +58,12 @@ class AddItemsVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         textField.delegate = self
+        
+        
         textField.setUpCancelAndAddToolbar(cancelAction: #selector(dismissKeyboardPressed), addAction: #selector(addItemAction))
         addObservers()
-        
+        footerChangeHeight.translatesAutoresizingMaskIntoConstraints = false
+        footerChangeHeight.heightAnchor.constraint(equalToConstant: 1).isActive = true
         if SharedValues.shared.isPhone == false {
             topViewHeight.isActive = false
             topView.heightAnchor.constraint(equalToConstant: 55).isActive = true
@@ -287,13 +292,17 @@ class AddItemsVC: UIViewController {
             if list.stores?.isEmpty == true {
                 segmentedControl.isHidden = true
                 
-                tableViewToTopView.priority = UILayoutPriority(rawValue: 1000)
-                tableViewToStoresView.priority = UILayoutPriority(rawValue: 999)
+                tableViewToTopView = tableView.topAnchor.constraint(equalTo: topView.bottomAnchor)
+                tableViewToStoresView!.isActive = false
+                tableViewToTopView?.isActive = true
             } else {
                 segmentedControl.isHidden = false
                 
-                tableViewToTopView.priority = UILayoutPriority(rawValue: 999)
-                tableViewToStoresView.priority = UILayoutPriority(rawValue: 1000)
+                tableViewToStoresView = tableView.topAnchor.constraint(equalTo: storesView.bottomAnchor)
+                tableViewToTopView?.isActive = false
+                tableViewToStoresView!.isActive = true
+                
+                print(segmentedControl.bounds.height)
             }
         }
     }
@@ -326,6 +335,15 @@ class AddItemsVC: UIViewController {
         textField.text = ""
     }
     
+    private func animateNewCell(cell: UITableViewCell) {
+        UIView.animate(withDuration: 0.6, animations: {
+            cell.contentView.backgroundColor = Colors.secondary
+        }) { (complete) in
+            UIView.animate(withDuration: 0.3) {
+                cell.contentView.backgroundColor = .clear
+            }
+        }
+    }
     
     
     @objc func dismissKeyboardPressed() {
@@ -405,12 +423,21 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let item = arrayArrayItems[indexPath.section][indexPath.row]
-        
         tableView.beginUpdates()
         self.tableView.deleteRows(at: [indexPath], with: .automatic)
         arrayArrayItems[indexPath.section].remove(at: indexPath.row)
         tableView.endUpdates()
         item.deleteItemFromList(db: db, listID: list?.docID ?? " ")
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if let ip = animateIndexPath {
+            if let cell = self.tableView.cellForRow(at: ip) {
+                print("Cell visible")
+                animateIndexPath = nil
+                animateNewCell(cell: cell)
+            }
+        }
     }
 
 }
@@ -495,12 +522,23 @@ extension AddItemsVC: ItemCellDelegate {
 extension AddItemsVC: GroceryListDelegate {
     // Scroll to the new item added (if not already visible), then highlight the cell momentarily/maybe do other ui stuff
     func potentialUiForRow(item: Item) {
+        
         if initialItemsAdded == true {
             
-            #warning("here, isnt working")
+            
             // need to momentarily highlight the row for the cell
             
-            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                print("Update row ui for: \(item.name)")
+                if let ip = item.findIndexPathIn(self.arrayArrayItems) {
+                    self.tableView.scrollToRow(at: ip, at: .none, animated: true)
+                    if let cell = self.tableView.cellForRow(at: ip) {
+                        self.animateNewCell(cell: cell)
+                    } else {
+                        self.animateIndexPath = ip
+                    }
+                }
+            }
         }
     }
     

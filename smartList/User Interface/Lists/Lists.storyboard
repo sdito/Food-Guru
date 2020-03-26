@@ -168,7 +168,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N9N-y7-o7P" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-409" y="-1599"/>
+            <point key="canvasLocation" x="-417" y="-1594"/>
         </scene>
         <!--Add ItemsVC-->
         <scene sceneID="Ljp-TA-yQ1">
@@ -288,6 +288,11 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wDa-85-i4O">
                                         <rect key="frame" x="0.0" y="80" width="414" height="694"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <view key="tableFooterView" contentMode="scaleToFill" id="aDv-Mi-unh">
+                                            <rect key="frame" x="0.0" y="130" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </view>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="itemCell" rowHeight="74" id="tU5-3K-qjl" customClass="ItemCell" customModule="Food_Guru" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="414" height="74"/>
@@ -328,6 +333,7 @@
                                                             </connections>
                                                         </button>
                                                     </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="4q9-xt-cBd" firstAttribute="leading" secondItem="eG3-YT-jDN" secondAttribute="trailing" constant="10" id="BnJ-U8-4T1"/>
                                                         <constraint firstItem="eG3-YT-jDN" firstAttribute="leading" secondItem="rMg-XJ-PBW" secondAttribute="leadingMargin" constant="10" id="Fvr-gU-O1l"/>
@@ -375,6 +381,7 @@
                     <navigationItem key="navigationItem" id="Qhc-Pu-jmF"/>
                     <connections>
                         <outlet property="backView" destination="POu-pj-0nE" id="WGT-v4-nHD"/>
+                        <outlet property="footerChangeHeight" destination="aDv-Mi-unh" id="e8i-BN-Ywq"/>
                         <outlet property="plusButton" destination="7go-3P-hnd" id="UZa-5X-hWO"/>
                         <outlet property="segmentedControl" destination="7A3-iR-2Kq" id="BoS-DG-Ati"/>
                         <outlet property="storesView" destination="U12-Ga-sFs" id="gAT-p4-WxR"/>

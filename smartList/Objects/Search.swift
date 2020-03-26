@@ -1119,7 +1119,7 @@ struct Search {
             return .kiwi
         } else if item.contains("pear") || item.contains("pears") {
             return .pear
-        } else if item.contains("apricot") {
+        } else if item.contains("apricot") || item.contains("apricots") {
             return .apricot
         } else if item.contains("blackberries") {
             return .blackberry
@@ -1139,9 +1139,9 @@ struct Search {
             } else {
                 return .cranberry
             }
-        } else if item.contains("grapefruit") {
+        } else if item.contains("grapefruit") || item.contains("grapefruits") {
             return .grapefruit
-        } else if item.contains("guava") {
+        } else if item.contains("guava") || item.contains("guavas") {
             return .guava
         } else if item.contains("mango") || item.contains("mangoes") || item.contains("mangos") {
             if item.contains("dried") {
@@ -1149,13 +1149,17 @@ struct Search {
             } else {
                 return .mango
             }
-        } else if item.contains("melon") {
+        } else if item.contains("melon") || item.contains("melons") {
             return .melon
-        } else if item.contains("pineapple") {
+        } else if item.contains("pineapple") || item.contains("pineapples") {
             return .pineapple
-        } else if item.contains("pomegranate") {
-            return .pomegranate
-        } else if item.contains("raspberry") {
+        } else if item.contains("pomegranate") || item.contains("pomegranates") {
+            if item.contains("seeds") {
+                return .pomegranateSeeds
+            } else {
+                return .pomegranate
+            }
+        } else if item.contains("raspberry") || item.contains("raspberries") {
             return .raspberry
         } else if item.contains("tomato") || item.contains("tomatoes") || item.contains("tomatos") {
             if item.contains("paste") {

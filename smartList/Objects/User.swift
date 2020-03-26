@@ -235,9 +235,23 @@ struct User {
         reference.updateData([
             "emails": newEmails as Any
         ])
-        db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").updateData([
-            "groupID": FieldValue.delete()
+        
+        db.collection("users").document(SharedValues.shared.userID ?? " ").updateData([
+            "groupID": FieldValue.delete(),
+            "mealPlanID": FieldValue.delete()
         ])
+        
+        
+        if let mealPlannerID = SharedValues.shared.mealPlannerID {
+            if let uid = SharedValues.shared.userID {
+                let mealPlanRef = db.collection("mealPlanners").document(mealPlannerID)
+                mealPlanRef.updateData([
+                    "AnyHashable": FieldValue.arrayRemove([uid])
+                ])
+            }
+        }
+        
+        
         db.collection("storages").document(storageID ?? " ").getDocument { (docSnapshot, error) in
             if let doc = docSnapshot {
                 let isGroup = doc.get("isGroup") as? Bool

@@ -311,7 +311,6 @@ class RecipeHomeVC: UIViewController {
             }
         } else {
             recipes = SharedValues.shared.sentRecipesInfo!.recipes
-            print(recipes)
             activeSearches = SharedValues.shared.sentRecipesInfo!.ingredients.map({($0, .ingredient)})
             imageCache.removeAllObjects()
             SharedValues.shared.sentRecipesInfo = nil

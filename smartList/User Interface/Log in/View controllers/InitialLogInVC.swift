@@ -21,6 +21,7 @@ class InitialLogInVC: UIViewController {
     @IBOutlet weak var createAccountOutlet: UIButton!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var googleSignInButton: GIDSignInButton!
+    @IBOutlet weak var backgroundView: UIView!
     
     fileprivate var currentNonce: String?
     var db: Firestore!
@@ -28,7 +29,7 @@ class InitialLogInVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if #available(iOS 13.0, *) {
-            overrideUserInterfaceStyle = .dark
+            overrideUserInterfaceStyle = .light
         }
         createAccountOutlet.border(cornerRadius: 5.0)
         db = Firestore.firestore()
@@ -48,6 +49,10 @@ class InitialLogInVC: UIViewController {
         googleSignInButton.widthAnchor.constraint(equalTo: createAccountOutlet.widthAnchor).isActive = true
         googleSignInButton.style = .wide
         
+        // view behind the main stack view
+        backgroundView.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+        backgroundView.layer.cornerRadius = 10.0
+        backgroundView.clipsToBounds = true
     }
     
     // MARK: @IBAction funcs

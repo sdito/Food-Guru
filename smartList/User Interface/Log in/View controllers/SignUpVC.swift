@@ -21,9 +21,7 @@ class SignUpVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if #available(iOS 13.0, *) {
-            overrideUserInterfaceStyle = .dark
-        }
+        
         db = Firestore.firestore()
         createAccountOutlet.border(cornerRadius: 15.0)
         emailTextField.delegate = self

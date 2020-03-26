@@ -55,6 +55,8 @@ struct Recipe {
     
     // MARK: General
     
+    
+    
     mutating func writeToFirestore(db: Firestore!, storage: Storage) {
         let ingredients = self.ingredients
         let doc = db.collection("recipes-external").document()
@@ -110,6 +112,7 @@ struct Recipe {
     
     static func readOneRecipeFrom(id: String, db: Firestore, recipeReturned: @escaping(_ recipe: Recipe) -> Void) {
         let reference = db.collection("recipes").document(id)
+        
         reference.getDocument { (documentSnapshot, error) in
             guard let doc = documentSnapshot else { return }
             let recipe = doc.getRecipe()
@@ -150,19 +153,28 @@ struct Recipe {
         }
     }
     
-    static func readNumRecipeTitleAndID(num: Int, db: Firestore, recipesReturned: @escaping (_ recipe: [Recipe]) -> Void) {
+    static func getNRecipes(num: Int, db: Firestore, lastDoc: QueryDocumentSnapshot?, recipesReturned: @escaping (_ recipe: [Recipe], _ lastDoc: QueryDocumentSnapshot?) -> Void) {
         var recipes: [Recipe] = []
-        let reference = db.collection("recipes").limit(to: num)
+        
+        var reference: Query {
+            if let lastDoc = lastDoc {
+                return db.collection("recipes").limit(to: num).start(afterDocument: lastDoc)
+            } else {
+                return db.collection("recipes").limit(to: num)
+            }
+        }
+        
         reference.getDocuments { (querySnapshot, error) in
             guard let documents = querySnapshot?.documents else {
                 print("Error fetching documents: \(String(describing: error))")
                 return
             }
+            
             for doc in documents {
                 let r = doc.getRecipe()
                 recipes.append(r)
             }
-            recipesReturned(recipes)
+            recipesReturned(recipes, documents.last)
         }
     }
     

@@ -13,12 +13,15 @@ import FirebaseFirestore
 class SelectMealPlanRecipeVC: UIViewController {
     
     var mealPlanner: MealPlanner?
-    
+    private let pageCount = 25
+    @IBOutlet weak var bottomViewChangeHeight: UIView!
     @IBOutlet weak var tableView: UITableView!
     
     private var recipes: [Any] = [] {
         didSet {
-            tableView.reloadData()
+            if self.recipes.count <= pageCount {
+                tableView.reloadData()
+            }
             if self.recipes.isEmpty {
                 var txt: String {
                     if let rs = recipeSelection.0 {
@@ -45,6 +48,7 @@ class SelectMealPlanRecipeVC: UIViewController {
     
     var db: Firestore!
     var recipeSelection: (RecipeSelection?, String?)
+    private var lastDocument: QueryDocumentSnapshot?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +56,7 @@ class SelectMealPlanRecipeVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         setRecipesForCells(recipeSelection: recipeSelection.0 ?? .cookbook)
-        
+        bottomViewChangeHeight.translatesAutoresizingMaskIntoConstraints = false; bottomViewChangeHeight.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
         if let date = recipeSelection.1?.shortDateToDisplay() {
             self.navigationItem.prompt = date
         }
@@ -72,8 +76,9 @@ class SelectMealPlanRecipeVC: UIViewController {
             }
         case .all:
             self.createLoadingView()
-            Recipe.readNumRecipeTitleAndID(num: 25, db: db) { (rcps) in
+            Recipe.getNRecipes(num: pageCount, db: db, lastDoc: lastDocument) { (rcps, lastDocument)  in
                 self.recipes = rcps
+                self.lastDocument = lastDocument
                 self.dismiss(animated: false, completion: nil)
             }
         }
@@ -152,14 +157,26 @@ extension SelectMealPlanRecipeVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row + 1 == recipes.count {
             print("load more recipes")
-            #warning("need to complete if it is for all recipes, to insert more recipes")
+            
+            Recipe.getNRecipes(num: pageCount, db: db, lastDoc: lastDocument) { (rcps, lastDocument) in
+                
+                if !rcps.isEmpty {
+                    self.recipes += rcps
+                    self.lastDocument = lastDocument
+                    
+                    self.tableView.beginUpdates()
+                    #warning("do a little more testing")
+                    // get the index of the first newly added item, and the indexPath of the last item
+                    let lastIdx = self.recipes.count
+                    let prevIdx = lastIdx - rcps.count
+                    
+                    let indexPaths: [IndexPath] = (prevIdx..<lastIdx).map({IndexPath(row: $0, section: 0)})
+                    self.tableView.insertRows(at: indexPaths, with: .automatic)
+                    
+                    self.tableView.endUpdates()
+                    
+                }
+            }
         }
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let v = UIView()
-        v.backgroundColor = .clear
-        v.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        return v
     }
 }

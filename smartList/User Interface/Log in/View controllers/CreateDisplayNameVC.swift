@@ -21,13 +21,12 @@ class CreateDisplayNameVC: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if #available(iOS 13.0, *) {
-            overrideUserInterfaceStyle = .dark
-        }
+        
         db = Firestore.firestore()
         createUsernameOutlet.border(cornerRadius: 15.0)
         getCurrentNameOrSuggested()
         usernameTextField.setUpDoneToolbar(action: #selector(dismissKeyboard), style: .done)
+        usernameTextField.becomeFirstResponder()
     }
     // MARK: @IBAction funcs
     @IBAction func backPressed(_ sender: Any) {
