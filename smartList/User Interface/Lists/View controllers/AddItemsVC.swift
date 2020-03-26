@@ -10,6 +10,12 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 
+
+#warning("need to handle issue with constraints messing up from stores to no stores") // think is fixed, test more
+#warning("need to make sure black box from keyboad does not appear")
+#warning("need to handle issue of selecting button when CreateNewItemVC is visible") // happens when stores are changed, probbly other times too
+
+
 class AddItemsVC: UIViewController {
     
     @IBOutlet weak var plusButton: UIButton!
@@ -77,9 +83,11 @@ class AddItemsVC: UIViewController {
         super.viewWillAppear(animated)
         
         list?.listenerOnListWithDocID(db: db, docID: SharedValues.shared.listIdentifier!.documentID)
-        
         list?.readItemsForList(db: db, docID: SharedValues.shared.listIdentifier!.documentID)
+        
     }
+    
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
@@ -89,9 +97,15 @@ class AddItemsVC: UIViewController {
             "numItems": list?.items?.count as Any
         ])
         
-        list?.itemListener = nil
+        list?.itemListener?.remove()
         list?.items = nil
-        list?.listListener = nil
+        list?.listListener?.remove()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        initialItemsAdded = false
     }
     
     deinit {
@@ -109,6 +123,7 @@ class AddItemsVC: UIViewController {
     }
     
     @IBAction func editList(_ sender: Any) {
+        textField.resignFirstResponder()
         let vc = storyboard?.instantiateViewController(withIdentifier: "setUpList") as! SetUpListVC
         if list?.docID == nil {
             list?.docID = SharedValues.shared.listIdentifier?.documentID
@@ -116,6 +131,7 @@ class AddItemsVC: UIViewController {
         vc.listToEdit = list
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
+        
         
     }
     
@@ -262,11 +278,15 @@ class AddItemsVC: UIViewController {
         }
     }
     @objc private func keyboardWillHide(_ notification: Notification) {
+        kbwh()
+    }
+    
+    private func kbwh() {
+        print("Keyboard will hide is being called")
         keyboardTableViewBottom?.isActive = false
         tableViewBottom = tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -(self.tabBarController?.tabBar.bounds.height ?? 0.0))
         tableViewBottom!.isActive = true
     }
-    
     
 
     func setUIfrom(list: GroceryList) {
@@ -524,8 +544,6 @@ extension AddItemsVC: GroceryListDelegate {
     func potentialUiForRow(item: Item) {
         
         if initialItemsAdded == true {
-            
-            
             // need to momentarily highlight the row for the cell
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {

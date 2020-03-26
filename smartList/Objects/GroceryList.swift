@@ -57,6 +57,7 @@ class GroceryList {
     
     func listenerOnListWithDocID(db: Firestore, docID: String) {
         let reference = db.collection("lists").document(docID)
+        itemListener?.remove()
         listListener = reference.addSnapshotListener { (docSnapshot, error) in
             if let doc = docSnapshot {
                 if doc.get("name") != nil {
@@ -99,6 +100,7 @@ class GroceryList {
                     if let items = self.items {
                         for item in items {
                             if item.store == "", let itemID = item.ownID {
+                                print("Should be chaning the store to: \(storeForItems)")
                                 let itemRef = db.collection("lists").document(listID).collection("items").document(itemID)
                                 itemRef.updateData([
                                     "store": storeForItems
@@ -203,6 +205,7 @@ class GroceryList {
     // MARK: Items
     
     func readItemsForList(db: Firestore, docID: String) {
+        itemListener?.remove()
         itemListener = db.collection("lists").document(docID).collection("items").addSnapshotListener { (querySnapshot, error) in
             guard let docs = querySnapshot?.documentChanges else {
                 self.items = nil
@@ -371,8 +374,16 @@ class GroceryList {
                     itms.append(itm)
                 }
             })
+            
             let itmsInOrder = itms.sorted(by: { (i1, i2) -> Bool in
-                i1.name < i2.name
+                
+                if i1.name != i2.name {
+                    return i1.name < i2.name
+                } else {
+                    return i1.ownID ?? "b" < i2.ownID ?? "a"
+                }
+                
+                
             })
             if itmsInOrder.isEmpty == false {
                 sortedItems.append(itmsInOrder)

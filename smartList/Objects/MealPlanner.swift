@@ -286,8 +286,7 @@ class MealPlanner {
                 }
                 complete(true)
             }
-            
-            
+
             listenForMealPlanRecipes()
 
         } else {
@@ -299,6 +298,7 @@ class MealPlanner {
         
         if let id = SharedValues.shared.mealPlannerID {
             let refernece = db.collection("mealPlanners").document(id).collection("schedule")
+            recipeListener?.remove()
             recipeListener = refernece.addSnapshotListener { (querySnapshot, error) in
                 guard let snapshot = querySnapshot else { return }
                 snapshot.documentChanges.forEach { (diff) in
