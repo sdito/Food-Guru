@@ -12,7 +12,7 @@ import FirebaseFirestore
 
 
 #warning("need to handle issue with constraints messing up from stores to no stores") // think is fixed, test more
-#warning("need to make sure black box from keyboad does not appear")
+#warning("need to make sure black box from keyboad does not appear") // also happens when keyboard was not originally visible
 #warning("need to handle issue of selecting button when CreateNewItemVC is visible") // happens when stores are changed, probbly other times too
 
 
@@ -60,6 +60,9 @@ class AddItemsVC: UIViewController {
     // MARK: override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("View did load is being called")
+        
         db = Firestore.firestore()
         tableView.delegate = self
         tableView.dataSource = self
@@ -67,7 +70,7 @@ class AddItemsVC: UIViewController {
         
         
         textField.setUpCancelAndAddToolbar(cancelAction: #selector(dismissKeyboardPressed), addAction: #selector(addItemAction))
-        addObservers()
+        
         footerChangeHeight.translatesAutoresizingMaskIntoConstraints = false
         footerChangeHeight.heightAnchor.constraint(equalToConstant: 1).isActive = true
         if SharedValues.shared.isPhone == false {
@@ -78,10 +81,18 @@ class AddItemsVC: UIViewController {
         }
     }
     
+    
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        initialItemsAdded = false
+        
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: animated)
         super.viewWillAppear(animated)
-        
+        addObservers()
         list?.listenerOnListWithDocID(db: db, docID: SharedValues.shared.listIdentifier!.documentID)
         list?.readItemsForList(db: db, docID: SharedValues.shared.listIdentifier!.documentID)
         
@@ -92,6 +103,7 @@ class AddItemsVC: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
         
         SharedValues.shared.listIdentifier?.updateData([
             "numItems": list?.items?.count as Any
@@ -100,13 +112,10 @@ class AddItemsVC: UIViewController {
         list?.itemListener?.remove()
         list?.items = nil
         list?.listListener?.remove()
+        
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        initialItemsAdded = false
-    }
+   
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -123,6 +132,7 @@ class AddItemsVC: UIViewController {
     }
     
     @IBAction func editList(_ sender: Any) {
+        print("this is being called")
         textField.resignFirstResponder()
         let vc = storyboard?.instantiateViewController(withIdentifier: "setUpList") as! SetUpListVC
         if list?.docID == nil {
@@ -268,6 +278,7 @@ class AddItemsVC: UIViewController {
     }
     
     @objc private func keyboardWillShow(_ notification: Notification) {
+        print("Keyboard will show is being called")
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
             keyboardHeight = keyboardRectangle.height
@@ -286,6 +297,7 @@ class AddItemsVC: UIViewController {
         keyboardTableViewBottom?.isActive = false
         tableViewBottom = tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -(self.tabBarController?.tabBar.bounds.height ?? 0.0))
         tableViewBottom!.isActive = true
+        
     }
     
 
@@ -565,6 +577,7 @@ extension AddItemsVC: GroceryListDelegate {
     }
     
     func itemsUpdated() {
+        
         initialItemsAdded = true
         // have a boolean value, before the first run the individual rows will not update, after that, then they will, delegate in other function
         

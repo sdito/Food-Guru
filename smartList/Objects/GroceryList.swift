@@ -57,7 +57,7 @@ class GroceryList {
     
     func listenerOnListWithDocID(db: Firestore, docID: String) {
         let reference = db.collection("lists").document(docID)
-        itemListener?.remove()
+        listListener?.remove()
         listListener = reference.addSnapshotListener { (docSnapshot, error) in
             if let doc = docSnapshot {
                 if doc.get("name") != nil {
@@ -66,6 +66,7 @@ class GroceryList {
                     self.stores = doc.get("stores") as? [String]
                     self.items = self.removeItemsThatNoLongerBelong()
                     self.delegate?.updateListUI()
+
                 }
             }
         }

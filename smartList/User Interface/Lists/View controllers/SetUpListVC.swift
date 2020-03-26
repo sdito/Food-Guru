@@ -74,8 +74,8 @@ class SetUpListVC: UIViewController {
 
     // MARK: @IBAction funcs
     @IBAction func writeToFirestoreIfValid() {
-        gatherListData()
         
+        gatherListData()
         
         if name != "" {
             if listToEdit == nil {
@@ -87,14 +87,15 @@ class SetUpListVC: UIViewController {
                 listToEdit?.isGroup = usingGroup
                 listToEdit?.name = name ?? listToEdit?.name ?? "Grocery List"
                 listToEdit?.editListToFirestore(db: db, listID: listToEdit!.docID!)
+                
             }
             self.dismiss(animated: true, completion: nil)
+            
         } else {
             let alert = UIAlertController(title: "Missing name", message: "Please enter a name to finish creating the list", preferredStyle: .alert)
             alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
             present(alert, animated: true)
         }
-        
     }
     
     @IBAction func dismiss(_ sender: Any) {
