@@ -280,7 +280,7 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="7A3-iR-2Kq" secondAttribute="trailing" constant="5" id="6Tx-eo-TZS"/>
                                             <constraint firstItem="7A3-iR-2Kq" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="U12-Ga-sFs" secondAttribute="leading" constant="5" id="KIR-sn-INZ"/>
-                                            <constraint firstItem="7A3-iR-2Kq" firstAttribute="top" secondItem="U12-Ga-sFs" secondAttribute="top" constant="4.5" id="bEI-9p-aF4"/>
+                                            <constraint firstItem="7A3-iR-2Kq" firstAttribute="top" secondItem="U12-Ga-sFs" secondAttribute="top" priority="999" constant="4.5" id="bEI-9p-aF4"/>
                                             <constraint firstItem="7A3-iR-2Kq" firstAttribute="centerX" secondItem="U12-Ga-sFs" secondAttribute="centerX" id="bn9-D0-puH"/>
                                             <constraint firstAttribute="bottom" secondItem="7A3-iR-2Kq" secondAttribute="bottom" constant="4.5" id="zqQ-lk-Xec"/>
                                         </constraints>

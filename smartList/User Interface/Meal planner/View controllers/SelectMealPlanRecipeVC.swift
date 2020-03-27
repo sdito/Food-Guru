@@ -165,7 +165,7 @@ extension SelectMealPlanRecipeVC: UITableViewDelegate, UITableViewDataSource {
                     self.lastDocument = lastDocument
                     
                     self.tableView.beginUpdates()
-                    #warning("do a little more testing")
+                    
                     // get the index of the first newly added item, and the indexPath of the last item
                     let lastIdx = self.recipes.count
                     let prevIdx = lastIdx - rcps.count

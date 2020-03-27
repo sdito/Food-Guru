@@ -11,10 +11,6 @@ import FirebaseAuth
 import FirebaseFirestore
 
 
-#warning("need to handle issue with constraints messing up from stores to no stores") // think is fixed, test more
-#warning("need to make sure black box from keyboad does not appear") // also happens when keyboard was not originally visible
-#warning("need to handle issue of selecting button when CreateNewItemVC is visible") // happens when stores are changed, probbly other times too
-
 
 class AddItemsVC: UIViewController {
     
@@ -61,13 +57,10 @@ class AddItemsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("View did load is being called")
-        
         db = Firestore.firestore()
         tableView.delegate = self
         tableView.dataSource = self
         textField.delegate = self
-        
         
         textField.setUpCancelAndAddToolbar(cancelAction: #selector(dismissKeyboardPressed), addAction: #selector(addItemAction))
         
@@ -132,8 +125,7 @@ class AddItemsVC: UIViewController {
     }
     
     @IBAction func editList(_ sender: Any) {
-        print("this is being called")
-        textField.resignFirstResponder()
+        dismissKeyboardPressed()
         let vc = storyboard?.instantiateViewController(withIdentifier: "setUpList") as! SetUpListVC
         if list?.docID == nil {
             list?.docID = SharedValues.shared.listIdentifier?.documentID
@@ -146,6 +138,7 @@ class AddItemsVC: UIViewController {
     }
     
     @IBAction func deleteList(_ sender: Any) {
+        dismissKeyboardPressed()
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         actionSheet.addAction(.init(title: "Delete list", style: .destructive, handler: { action in
             self.list?.deleteListToFirestore(db: self.db)
@@ -204,6 +197,7 @@ class AddItemsVC: UIViewController {
     }
     
     @IBAction func doneWithList(_ sender: Any) {
+        dismissKeyboardPressed()
         if SharedValues.shared.foodStorageID != nil {
             var gottenEmails: [String]?
             FoodStorage.getEmailsfromStorageID(storageID: SharedValues.shared.foodStorageID ?? " ", db: db) { (emails) in
@@ -320,13 +314,17 @@ class AddItemsVC: UIViewController {
             })
             
             segmentedControl.selectedSegmentIndex = 0
+                
+            tableViewToStoresView?.isActive = false
+            tableViewToTopView?.isActive = false
             
             if list.stores?.isEmpty == true {
                 segmentedControl.isHidden = true
                 
                 tableViewToTopView = tableView.topAnchor.constraint(equalTo: topView.bottomAnchor)
-                tableViewToStoresView!.isActive = false
-                tableViewToTopView?.isActive = true
+                tableViewToStoresView?.isActive = false
+                tableViewToTopView!.isActive = true
+                
             } else {
                 segmentedControl.isHidden = false
                 
@@ -334,7 +332,6 @@ class AddItemsVC: UIViewController {
                 tableViewToTopView?.isActive = false
                 tableViewToStoresView!.isActive = true
                 
-                print(segmentedControl.bounds.height)
             }
         }
     }
@@ -471,7 +468,6 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
-
 }
 
 // MARK: ItemCellDelegate
@@ -487,8 +483,6 @@ extension AddItemsVC: ItemCellDelegate {
         }
         
         let actionSheet = UIAlertController(title: nil, message: text, preferredStyle: .actionSheet)
-        
-        
         actionSheet.addAction(.init(title: "Change quantity", style: .default, handler: { (alert) in
             print("Need to change quantity here")
             self.quantityAlert(item: item)
@@ -670,7 +664,5 @@ extension AddItemsVC {
             alert.addAction(.init(title: "Ok", style: .default, handler: nil))
             present(alert, animated: true)
         }
-        
-        
     }
 }

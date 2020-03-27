@@ -75,7 +75,6 @@ class GroceryList {
     // to update list information i.e. if stores changed
     
     func editListToFirestore(db: Firestore!, listID: String) {
-        #warning("maybe do a little more testing on this stuff, changed most of it after User.emailToUid")
         db.collection("lists").document(listID).updateData([
             "name": self.name,
             "stores": self.stores!,
