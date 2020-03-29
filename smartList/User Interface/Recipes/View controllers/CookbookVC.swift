@@ -18,16 +18,8 @@ class CookbookVC: UIViewController {
     @IBOutlet weak var scrollBackUpView: UIView!
     
     private var lastContentOffset: CGFloat = 0
-    private var filteredRecipes: [CookbookRecipe] = [] {
-        didSet {
-            tableView.reloadData()
-        }
-    }
-    private var recipes: [CookbookRecipe] = [] {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    private var filteredRecipes: [CookbookRecipe] = []
+    private var recipes: [CookbookRecipe] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +29,7 @@ class CookbookVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         recipes = Array(realm.objects(CookbookRecipe.self))
-        
+        tableView.reloadData()
         scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
         
         
@@ -178,8 +170,14 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     private func deleteSelectedRecipe(recipe: CookbookRecipe, idx: IndexPath) {
+        let realm = try! Realm()
         recipe.delete()
-        tableView.cellForRow(at: idx)?.isHidden = true
+        filteredRecipes = Array(realm.objects(CookbookRecipe.self))
+        searchBar.text = ""
+        searchBar.endEditing(true)
+        tableView.reloadData()
+        
+//        tableView.cellForRow(at: idx)?.isHidden = true
         
     }
 }
@@ -192,8 +190,10 @@ extension CookbookVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
             filteredRecipes = recipes
+            tableView.reloadData()
         } else {
             filteredRecipes = recipes.filter({$0.name.lowercased().contains(searchBar.text!.lowercased())})
+            tableView.reloadData()
         }
     }
     

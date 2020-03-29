@@ -14,6 +14,7 @@ class SelectMealPlanRecipeVC: UIViewController {
     
     var mealPlanner: MealPlanner?
     private let pageCount = 25
+    private var recipeSelectionUsed: RecipeSelection?
     @IBOutlet weak var bottomViewChangeHeight: UIView!
     @IBOutlet weak var tableView: UITableView!
     
@@ -63,6 +64,7 @@ class SelectMealPlanRecipeVC: UIViewController {
     }
     
     private func setRecipesForCells(recipeSelection: RecipeSelection) {
+        self.recipeSelectionUsed = recipeSelection
         switch recipeSelection {
         case .cookbook:
             if let realm = try? Realm() {
@@ -155,28 +157,37 @@ extension SelectMealPlanRecipeVC: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row + 1 == recipes.count {
-            print("load more recipes")
-            
-            Recipe.getNRecipes(num: pageCount, db: db, lastDoc: lastDocument) { (rcps, lastDocument) in
-                
-                if !rcps.isEmpty {
-                    self.recipes += rcps
-                    self.lastDocument = lastDocument
+        
+        if let rs = recipeSelectionUsed {
+            if rs == .all {
+                if indexPath.row + 1 == recipes.count {
+                    print("load more recipes")
                     
-                    self.tableView.beginUpdates()
-                    
-                    // get the index of the first newly added item, and the indexPath of the last item
-                    let lastIdx = self.recipes.count
-                    let prevIdx = lastIdx - rcps.count
-                    
-                    let indexPaths: [IndexPath] = (prevIdx..<lastIdx).map({IndexPath(row: $0, section: 0)})
-                    self.tableView.insertRows(at: indexPaths, with: .automatic)
-                    
-                    self.tableView.endUpdates()
-                    
+                    Recipe.getNRecipes(num: pageCount, db: db, lastDoc: lastDocument) { (rcps, lastDocument) in
+                        
+                        if !rcps.isEmpty {
+                            self.recipes += rcps
+                            self.lastDocument = lastDocument
+                            
+                            self.tableView.beginUpdates()
+                            
+                            // get the index of the first newly added item, and the indexPath of the last item
+                            let lastIdx = self.recipes.count
+                            let prevIdx = lastIdx - rcps.count
+                            
+                            let indexPaths: [IndexPath] = (prevIdx..<lastIdx).map({IndexPath(row: $0, section: 0)})
+                            self.tableView.insertRows(at: indexPaths, with: .automatic)
+                            
+                            self.tableView.endUpdates()
+                            
+                        }
+                    }
                 }
             }
         }
+        
+        
+        
+        
     }
 }

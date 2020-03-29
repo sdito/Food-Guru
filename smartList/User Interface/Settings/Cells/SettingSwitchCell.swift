@@ -16,7 +16,7 @@ class SettingSwitchCell: UITableViewCell {
     private var defaults = UserDefaults.standard
     
     func setUIforMealPlanner() {
-        #warning("need to finish setting this up")
+        
         label.text = "Don't ask before adding ingredients from meal planner to list"
         
         let value = defaults.bool(forKey: "dontAskBeforeAddingToMP")

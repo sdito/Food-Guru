@@ -322,7 +322,9 @@ class MealPlannerHomeVC: UIViewController {
 
 
 // MARK: MealPlanRecipeChangedDelegate
-extension MealPlannerHomeVC: MealPlanRecipeChangedDelegate {
+extension MealPlannerHomeVC: MealPlanDelegate {
+    
+    
     func mealPlannerCreated() {
         setUpInitialUI()
     }

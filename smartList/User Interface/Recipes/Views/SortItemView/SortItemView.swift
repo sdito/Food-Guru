@@ -17,7 +17,7 @@ protocol DisableAddAllItemsDelegate {
 
 
 class SortItemView: UIView {
-    var delegate: DisableAddAllItemsDelegate!
+    var delegate: DisableAddAllItemsDelegate?
     @IBOutlet weak var pickerView: UIPickerView!
     @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var nameLabel: UILabel!
@@ -103,7 +103,7 @@ extension SortItemView: UIPickerViewDelegate, UIPickerViewDataSource {
             let vc = self.findViewController()
             vc?.dismiss(animated: true, completion: nil)
             // do not let add all items to list be pressed again
-            delegate.disableButton()
+            delegate?.disableButton()
         default:
             GroceryList.addItemToListFromRecipe(db: Firestore.firestore(), listID: listID ?? " ", name: items?.first ?? "Item", userID: uid, store: stores?[storesIndex] ?? "")
             multipleItemStackView.subviews.first?.removeFromSuperview()

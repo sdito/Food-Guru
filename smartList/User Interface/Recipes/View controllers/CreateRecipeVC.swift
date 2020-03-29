@@ -234,6 +234,7 @@ class CreateRecipeVC: UIViewController {
             
             if fromPlanner?.0 == true {
                 if mealPlannerRecipeDelegate != nil {
+                    print("This is being called")
                     mealPlannerRecipeDelegate.recipeCreated(recipe: cookbookRecipe)
                 } else {
                     print("Something went wrong... mealPlannerRecipeDelegate is nil on CreateRecipeVC")

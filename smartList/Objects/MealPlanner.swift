@@ -13,7 +13,7 @@ import RealmSwift
 
 
 
-protocol MealPlanRecipeChangedDelegate: class {
+protocol MealPlanDelegate: class {
     func recipesChanged(month: String)
     func mealPlannerCreated()
 }
@@ -27,7 +27,7 @@ class MealPlanner {
     var group: Bool?
     var mealPlanDict: [String:Set<RecipeTransfer>] = [:]
     var recipeListener: ListenerRegistration?
-    weak var delegate: MealPlanRecipeChangedDelegate?
+    weak var delegate: MealPlanDelegate?
     private var db = Firestore.firestore()
     
     
@@ -153,6 +153,7 @@ class MealPlanner {
             }
             
             recipe.id = recipeDocReference.documentID
+            
             let reference = db.collection("mealPlanners").document(id).collection("schedule").document(date) // use an array, have the date before ID 7.1.19-THISISTHEIDHERE
             reference.setData([
                 "recipes": FieldValue.arrayUnion(["\(shortDate)__\(recipe.id)__\(recipe.name)"])
@@ -168,20 +169,47 @@ class MealPlanner {
     
     // helper to addRecipeToPlanner
     private func addRecipeDocumentoPlanner(reference: DocumentReference, recipe: MPCookbookRecipe, shortDate: String) {
+        print("This should be called")
+        for _ in 1...20 {
+            print(reference.documentID, recipe.id)
+        }
         let ingredients = Array<String>(recipe.ingredients)
         let instructions = Array<String>(recipe.instructions)
-        reference.setData([
-            "name": recipe.name,
-            "cookTime": recipe.cookTime.value as Any,
-            "prepTime": recipe.prepTime.value as Any,
-            "ingredients": ingredients,
-            "instructions": instructions,
-            "calories": recipe.calories.value as Any,
-            "numServes": recipe.servings.value as Any,
-            "notes": recipe.notes as Any,
-            "date": recipe.date,
-            "ownID": reference.documentID
-        ])
+        
+        if reference.documentID == recipe.id {
+            reference.setData([
+                "name": recipe.name,
+                "cookTime": recipe.cookTime.value as Any,
+                "prepTime": recipe.prepTime.value as Any,
+                "ingredients": ingredients,
+                "instructions": instructions,
+                "calories": recipe.calories.value as Any,
+                "numServes": recipe.servings.value as Any,
+                "notes": recipe.notes as Any,
+                "date": recipe.date,
+                "ownID": reference.documentID
+            ])
+        } else {
+            if let id = SharedValues.shared.mealPlannerID {
+                let correctedReference = db.collection("mealPlanners").document(id).collection("recipes").document(recipe.id)
+                correctedReference.setData([
+                    "name": recipe.name,
+                    "cookTime": recipe.cookTime.value as Any,
+                    "prepTime": recipe.prepTime.value as Any,
+                    "ingredients": ingredients,
+                    "instructions": instructions,
+                    "calories": recipe.calories.value as Any,
+                    "numServes": recipe.servings.value as Any,
+                    "notes": recipe.notes as Any,
+                    "date": recipe.date,
+                    "ownID": reference.documentID
+                ])
+            }
+            
+            
+        }
+        
+        
     }
     
     func removeRecipeFromPlanner(recipe: RecipeTransfer) {
@@ -349,14 +377,50 @@ class MealPlanner {
     // MARK: Lists
     
     
+    
+    
     func addItemsToListFromCertainDay(shortDate: String, calledFrom: UIViewController) {
         
-        #warning("need to implement, test, all that jazz")
+        #warning("test more, have a message show that the items have been added")
         
         // First, get all the items that need to be added
+        getIngredientsForMPlistAdding(shortDate: shortDate) { (ingredientsToAddToList) in
+            // seems like this works
+            // Second, add all the items to the list
+            print(ingredientsToAddToList)
+            if let uid = SharedValues.shared.userID {
+                GroceryList.getUsersCurrentList(db: self.db, userID: uid) { (list) in
+                    if let list = list {
+                        if list.stores?.isEmpty == true {
+                            for item in ingredientsToAddToList {
+                                GroceryList.addItemToListFromRecipe(db: self.db, listID: list.ownID ?? " ", name: item, userID: uid, store: "")
+                            }
+                            calledFrom.createMessageView(color: Colors.messageGreen, text: "Items added to list!")
+                        } else if list.stores?.count == 1 {
+                            for item in ingredientsToAddToList {
+                                GroceryList.addItemToListFromRecipe(db: self.db, listID: list.ownID ?? " ", name: item, userID: uid, store: list.stores!.first!)
+                            }
+                            calledFrom.createMessageView(color: Colors.messageGreen, text: "Items added to list!")
+                        } else {
+
+                            calledFrom.createPickerView(itemNames: ingredientsToAddToList, itemStores: list.stores, itemListID: list.ownID ?? " ", singleItem: false, delegateVC: calledFrom)
+                        }
+                    } else {
+                        GroceryList.handleProcessForAutomaticallyGeneratedListFromRecipe(db: self.db, items: ingredientsToAddToList)
+                        calledFrom.createMessageView(color: Colors.messageGreen, text: "List created and items added!")
+                    }
+                }
+            }
+        }
+        
+        
+    }
+    
+    private func getIngredientsForMPlistAdding(shortDate: String, ingredientsReturned: @escaping (_ ingredients: [String]) -> Void) {
         let realm = try? Realm()
         var ingredientsToAddToList: [String] = []
         let recipes = self.mealPlanDict[shortDate.shortDateToMonthYear()]?.filter({$0.date == shortDate})
+        var count = 0
         
         if let recipes = recipes {
             for recipe in recipes {
@@ -364,6 +428,10 @@ class MealPlanner {
                     // recipe is already downloaded
                     let ings = Array(realmRecipe.ingredients)
                     ingredientsToAddToList += ings
+                    count += 1
+                    if count == recipes.count {
+                        ingredientsReturned(ingredientsToAddToList)
+                    }
                 } else {
                     // need to download recipe (and might as well write to realm), then add the ingredients
                     if let id = SharedValues.shared.mealPlannerID {
@@ -373,46 +441,16 @@ class MealPlanner {
                             let newRecipe = doc.getMPCookbookRecipe()
                             newRecipe.write()
                             ingredientsToAddToList += Array(newRecipe.ingredients)
+                            count += 1
+                            if count == recipes.count {
+                                ingredientsReturned(ingredientsToAddToList)
+                            }
                         }
                     }
                 }
             }
         }
-        #warning("not working, completing before all recipes are read")
-        
-        print(ingredientsToAddToList)
-        
-        
-        // Second, add all those items to the list
-        
-
-        if let uid = SharedValues.shared.userID {
-            GroceryList.getUsersCurrentList(db: db, userID: uid) { (list) in
-                if let list = list {
-                    if list.stores?.isEmpty == true {
-                        for item in ingredientsToAddToList {
-                            GroceryList.addItemToListFromRecipe(db: self.db, listID: list.ownID ?? " ", name: item, userID: uid, store: "")
-                        }
-//                            self.createMessageView(color: Colors.messageGreen, text: "Items added to list!")
-                    } else if list.stores?.count == 1 {
-                        for item in ingredientsToAddToList {
-                            GroceryList.addItemToListFromRecipe(db: self.db, listID: list.ownID ?? " ", name: item, userID: uid, store: list.stores!.first!)
-                        }
-//                            self.createMessageView(color: Colors.messageGreen, text: "Items added to list!")
-                    } else {
-
-                        calledFrom.createPickerView(itemNames: ingredientsToAddToList, itemStores: list.stores, itemListID: list.ownID ?? " ", singleItem: false, delegateVC: calledFrom)
-                    }
-                } else {
-                    GroceryList.handleProcessForAutomaticallyGeneratedListFromRecipe(db: self.db, items: ingredientsToAddToList)
-
-//                        self.createMessageView(color: Colors.messageGreen, text: "List created and items added!")
-                }
-            }
-        }
-        
     }
-    
     
     // MARK: Changes
     class func handleMealPlannerForGroupChangeOrNewGroup(db: Firestore, oldEmails: [String]?, newEmails: [String], mealPlannerID: String?) {
