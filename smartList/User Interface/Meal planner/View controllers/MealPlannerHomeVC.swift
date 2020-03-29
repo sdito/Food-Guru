@@ -22,6 +22,7 @@ class MealPlannerHomeVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var viewHeightRatio: NSLayoutConstraint!
     @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var addItemsToListOutlet: UIButton!
     
     var db: Firestore!
     private var selectedDayButton: UIButton?
@@ -140,6 +141,45 @@ class MealPlannerHomeVC: UIViewController {
             actionSheet.popoverPresentationController?.sourceRect = addRecipeButtonOutlet.bounds
             present(actionSheet, animated: true, completion: nil)
         }
+    }
+    
+    @IBAction func addItemsToList(_ sender: Any) {
+        #warning("need to complete")
+        
+        if dateRecipes.count >= 1, let sd = shortDate {
+            let dontAskBeforeAdding = UserDefaults.standard.bool(forKey: "dontAskBeforeAddingToMP")
+            
+            if dontAskBeforeAdding == false {
+                let end = sd.shortDateGetDateEnding()
+                let actionSheet = UIAlertController(title: "Do you want to add items from \(sd.shortDateToDisplay())\(end) to your grocery list?", message: nil, preferredStyle: .actionSheet)
+                actionSheet.addAction(.init(title: "Add items", style: .default, handler: { action in
+                    print("Add items")
+                    self.mealPlanner.addItemsToListFromCertainDay(shortDate: sd, calledFrom: self)
+                }))
+                actionSheet.addAction(.init(title: "Add items, dont ask before adding", style: .default, handler: { action in
+                    print("Add items, dont ask before adding")
+                    UserDefaults.standard.set(true, forKey: "dontAskBeforeAddingToMP")
+                    self.mealPlanner.addItemsToListFromCertainDay(shortDate: sd, calledFrom: self)
+                }))
+                actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+                
+                if UIDevice.current.userInterfaceIdiom == .phone {
+                    present(actionSheet, animated: true)
+                } else {
+                    if let presenter = actionSheet.popoverPresentationController {
+                        presenter.sourceView = addItemsToListOutlet
+                        presenter.sourceRect = addItemsToListOutlet.bounds
+                    }
+                    present(actionSheet, animated: true)
+                }
+            } else {
+                // Just add everything here, by doing the action from Add Items from the action sheet without asking before
+                mealPlanner.addItemsToListFromCertainDay(shortDate: sd, calledFrom: self)
+            }
+            
+            
+        }
+        
     }
     
     // MARK: Funcs
@@ -269,6 +309,13 @@ class MealPlannerHomeVC: UIViewController {
             dateRecipes = []
             tableView.reloadData()
         }
+        
+        if dateRecipes.count >= 1 {
+            addItemsToListOutlet.setIsHidden(false, animated: true, duration: 0.15)
+        } else {
+            addItemsToListOutlet.setIsHidden(true, animated: true, duration: 0.15)
+        }
+        
     }
     
 }

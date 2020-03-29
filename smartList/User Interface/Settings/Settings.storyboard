@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -275,6 +275,40 @@
                                             <outlet property="time" destination="OFM-ph-1hG" id="y54-SG-EZE"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingSwitchCell" rowHeight="95" id="qzs-Ad-yHV" customClass="SettingSwitchCell" customModule="Food_Guru" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="749.5" width="414" height="95"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qzs-Ad-yHV" id="x7y-3t-clO">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="95"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rRS-63-3HJ">
+                                                    <rect key="frame" x="30" y="16" width="300" height="63"/>
+                                                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Xt-nk-1GV">
+                                                    <rect key="frame" x="335" y="32" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="49" id="Ooy-eS-woT"/>
+                                                    </constraints>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="1Xt-nk-1GV" firstAttribute="leading" secondItem="rRS-63-3HJ" secondAttribute="trailing" constant="5" id="Cmk-ji-7b4"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="rRS-63-3HJ" secondAttribute="bottom" constant="5" id="Pea-pK-o0k"/>
+                                                <constraint firstItem="rRS-63-3HJ" firstAttribute="top" secondItem="x7y-3t-clO" secondAttribute="topMargin" constant="5" id="asS-LG-MIQ"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="1Xt-nk-1GV" secondAttribute="trailing" constant="10" id="kPz-X2-whb"/>
+                                                <constraint firstItem="1Xt-nk-1GV" firstAttribute="centerY" secondItem="x7y-3t-clO" secondAttribute="centerY" id="tjE-uY-X3E"/>
+                                                <constraint firstItem="rRS-63-3HJ" firstAttribute="centerY" secondItem="x7y-3t-clO" secondAttribute="centerY" id="y7J-ah-4wi"/>
+                                                <constraint firstItem="rRS-63-3HJ" firstAttribute="leading" secondItem="x7y-3t-clO" secondAttribute="leadingMargin" constant="10" id="ynD-PV-hOp"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="actionSwitch" destination="1Xt-nk-1GV" id="peM-pa-fBH"/>
+                                            <outlet property="label" destination="rRS-63-3HJ" id="ZPG-ZG-CBM"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
@@ -318,8 +352,8 @@
             <point key="canvasLocation" x="-2084" y="1898"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="services" width="30" height="30"/>
     </resources>
-    <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

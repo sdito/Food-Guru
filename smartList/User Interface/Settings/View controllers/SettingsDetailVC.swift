@@ -237,7 +237,9 @@ class SettingsDetailVC: UIViewController {
                 let button1 = tableView.dequeueReusableCell(withIdentifier: "settingButtonCell") as! SettingButtonCell
                 button1.setUI(title: "Delete all items from meal planner")
                 button1.button.addTarget(self, action: #selector(deleteItemsFromMealPlanner), for: .touchUpInside)
-                return [topCell, button1]
+                let switchCell = tableView.dequeueReusableCell(withIdentifier: "settingSwitchCell") as! SettingSwitchCell
+                switchCell.setUIforMealPlanner()
+                return [topCell, switchCell, button1]
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
                 cell.setUI(str: "You haven't created a meal planner yet. Go to the meal planner tab to create one!")

@@ -115,13 +115,13 @@ extension UIView {
     }
     
     
-    func setIsHidden(_ hidden: Bool, animated: Bool) {
+    func setIsHidden(_ hidden: Bool, animated: Bool, duration: Double = 0.2) {
         if animated {
             if self.isHidden && !hidden {
                 self.alpha = 0.0
                 self.isHidden = false
             }
-            UIView.animate(withDuration: 0.2, animations: {
+            UIView.animate(withDuration: duration, animations: {
                 self.alpha = hidden ? 0.0 : 1.0
             }) { (complete) in
                 self.isHidden = hidden
@@ -130,6 +130,7 @@ extension UIView {
             self.isHidden = hidden
         }
     }
+    
     func circularPercentageView(endStrokeAt: CGFloat, color: CGColor) {
         self.layer.cornerRadius = self.frame.size.width / 2
         

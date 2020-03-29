@@ -88,7 +88,10 @@
                                             <constraint firstAttribute="height" constant="30" id="gND-0n-EP3"/>
                                             <constraint firstAttribute="width" constant="30" id="iUa-Jc-Bx8"/>
                                         </constraints>
-                                        <state key="normal" title="Button" image="order"/>
+                                        <state key="normal" title="Button" image="order_main"/>
+                                        <connections>
+                                            <action selector="addItemsToList:" destination="ofe-mX-Vru" eventType="touchUpInside" id="18I-0x-VB7"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -148,6 +151,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="9nU-z8-PDE"/>
                     <connections>
+                        <outlet property="addItemsToListOutlet" destination="vSb-xH-npB" id="tbe-2G-9zo"/>
                         <outlet property="addRecipeButtonOutlet" destination="1ty-Ev-ry8" id="4ZD-bd-2G4"/>
                         <outlet property="baseView" destination="Khd-Oh-Mz1" id="IC5-ME-tcm"/>
                         <outlet property="bottomView" destination="hHr-jE-GA5" id="jFH-vs-j0y"/>
@@ -260,6 +264,6 @@
     <resources>
         <image name="calendar" width="24" height="24"/>
         <image name="icons8-pencil-60" width="60" height="60"/>
-        <image name="order" width="30" height="30"/>
+        <image name="order_main" width="30" height="30"/>
     </resources>
 </document>
