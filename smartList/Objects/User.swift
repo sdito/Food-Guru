@@ -246,7 +246,7 @@ struct User {
             if let uid = SharedValues.shared.userID {
                 let mealPlanRef = db.collection("mealPlanners").document(mealPlannerID)
                 mealPlanRef.updateData([
-                    "AnyHashable": FieldValue.arrayRemove([uid])
+                    "userIDs": FieldValue.arrayRemove([uid])
                 ])
             }
         }

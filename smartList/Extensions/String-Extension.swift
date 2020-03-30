@@ -42,7 +42,15 @@ extension String {
     
     func mealPlanReadRecipeHelper() -> MealPlanner.RecipeTransfer {
         let parts = self.components(separatedBy: "__")
-        return MealPlanner.RecipeTransfer(date: parts[0], id: parts[1], name: parts[2])
+        
+        var metadata: String? {
+            if parts.count >= 4 {
+                return parts[3]
+            } else {
+                return nil
+            }
+        }
+        return MealPlanner.RecipeTransfer(date: parts[0], id: parts[1], name: parts[2], metadata: metadata)
     }
     
     
@@ -50,7 +58,7 @@ extension String {
         var ing: [String] = []
         var qua: [String] = []
     
-        var leftParen = false
+//        var leftParen = false
         var doneWithQuantity = false
         
         let measurements = ["cup", "ounce", "pound", "gallon", "packet", "cups", "ounces", "pounds", "packets", "gallons", "teaspoon", "teaspoons", "tablespoons", "tablespoon", "clove", "cloves", "cubes", "cube", "package", "packages", "can", "cans", "pinch", "bottle", "bottles", "bag", "bags", "slice", "slices", "quarts", "quart", "box", "boxes", "fluid"]
@@ -64,11 +72,11 @@ extension String {
                 
                 else if word.contains("(") {
                     if word.contains(")") == false {
-                        leftParen = true
+//                        leftParen = true
                     }
                     qua.append(word)
                 } else if word.contains(")") {
-                    leftParen = false
+//                    leftParen = false
                     qua.append(word)
                 } else {
                     if measurements.contains(word.lowercased()) {

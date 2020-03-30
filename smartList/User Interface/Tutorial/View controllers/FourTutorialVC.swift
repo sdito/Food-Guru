@@ -39,10 +39,12 @@ class FourTutorialVC: UIViewController {
             topLabel.font = UIFont(name: "futura", size: 17)
         }
         
+        topView.alpha = 0.3
         imageView.addLoadingView()
         self.getImageForTutorial(imageText: "four") { (img) in
             self.imageView.image = img
             self.imageView.removeLoadingView()
+            self.topView.alpha = 1.0
         }
         
     }

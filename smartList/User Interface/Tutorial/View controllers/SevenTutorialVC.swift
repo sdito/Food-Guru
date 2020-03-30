@@ -25,8 +25,18 @@ class SevenTutorialVC: UIViewController {
         let str = NSMutableAttributedString(string: "Use your meal planner to track items with your group. Select ")
         let plus = NSAttributedString(string: "+", attributes: [NSAttributedString.Key.foregroundColor: Colors.main])
         str.append(plus)
-        let end = NSAttributedString(string: " to add a new recipe to the selected date. You can add recipes from saved recipes, your cookbook, or you can create a new recipe.")
+        let end = NSAttributedString(string: " to add a new recipe or note to the selected date. Select ")
         str.append(end)
+        
+        let image = NSTextAttachment()
+        let img = UIImage(named: "order_main")
+        let imageString = NSAttributedString(attachment: image)
+        let resized = img!.resizeImage(targetSize: CGSize(width: 15, height: 15))
+        image.image = resized
+        str.append(imageString)
+        
+        str.append(NSAttributedString(string: " to add the ingredients from the recipes on that date to your shopping list."))
+        
         topLabel.attributedText = str
         
         
@@ -34,10 +44,12 @@ class SevenTutorialVC: UIViewController {
             topLabel.font = UIFont(name: "futura", size: 17)
         }
         
+        topView.alpha = 0.3
         imageView.addLoadingView()
         self.getImageForTutorial(imageText: "seven") { (img) in
             self.imageView.image = img
             self.imageView.removeLoadingView()
+            self.topView.alpha = 1.0
         }
     }
     

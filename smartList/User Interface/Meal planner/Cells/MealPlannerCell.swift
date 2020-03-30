@@ -28,9 +28,26 @@ class MealPlannerCell: UITableViewCell {
     
     func setUI(recipe: MealPlanner.RecipeTransfer) {
         self.recipe = recipe
+        initial = false
         title.text = recipe.name
         setUpInitialUI()
-        initial = false
+        
+        if recipe.metadata == "note" {
+            self.accessoryType = .none
+            if #available(iOS 13.0, *) {
+                title.textColor = .secondaryLabel
+            } else {
+                title.textColor = .lightGray
+            }
+        } else {
+            self.accessoryType = .disclosureIndicator
+            if #available(iOS 13.0, *) {
+                title.textColor = .label
+            } else {
+                title.textColor = .black
+            }
+        }
+        
     }
     
     func setUpInitialUI() {
@@ -39,6 +56,7 @@ class MealPlannerCell: UITableViewCell {
             buttonOutlet.heightAnchor.constraint(equalToConstant: 25).isActive = true
             title.font = UIFont(name: "futura", size: 23)
         }
+        
     }
     
     

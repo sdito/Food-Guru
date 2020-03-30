@@ -35,6 +35,7 @@ class MealPlanner {
         var date: String
         var id: String
         var name: String
+        var metadata: String?
     }
     
     // MARK: Creation
@@ -151,7 +152,7 @@ class MealPlanner {
                     return db.collection("mealPlanners").document(id).collection("recipes").document()
                 }
             }
-            
+
             recipe.id = recipeDocReference.documentID
             
             let reference = db.collection("mealPlanners").document(id).collection("schedule").document(date) // use an array, have the date before ID 7.1.19-THISISTHEIDHERE
@@ -167,12 +168,28 @@ class MealPlanner {
         }
     }
     
+    func addNoteToPlanner(shortDate: String, note: String) {
+        print("From note func: \(shortDate), \(note)")
+        if let id = SharedValues.shared.mealPlannerID {
+            let date = shortDate.shortDateToMonthYear()
+            let reference = db.collection("mealPlanners").document(id).collection("schedule").document(date)
+            let noteID = String.randomString(length: 20)
+            reference.setData([
+                "recipes": FieldValue.arrayUnion(["\(shortDate)__\(noteID)__\(note)__note"])
+            ], merge: true) { (error) in
+                if error == nil {
+                    print("Note successfully written to meal planner")
+                } else {
+                    print("Error writing note to meal planner")
+                }
+            }
+            
+        }
+    }
+    
     // helper to addRecipeToPlanner
     private func addRecipeDocumentoPlanner(reference: DocumentReference, recipe: MPCookbookRecipe, shortDate: String) {
-        print("This should be called")
-        for _ in 1...20 {
-            print(reference.documentID, recipe.id)
-        }
+        
         let ingredients = Array<String>(recipe.ingredients)
         let instructions = Array<String>(recipe.instructions)
         
@@ -232,14 +249,25 @@ class MealPlanner {
             
             // delete from schedule
             let documentMonthYear = recipe.date.shortDateToMonthYear()
-            let firebaseRecipeFormat = "\(recipe.date)__\(recipe.id)__\(recipe.name)"
+            
+            var firebaseRecipeFormat: String {
+                if recipe.metadata == "note" {
+                    return "\(recipe.date)__\(recipe.id)__\(recipe.name)__note"
+                } else {
+                    return "\(recipe.date)__\(recipe.id)__\(recipe.name)"
+                }
+            }
+            
+            
             let scheduleReference = db.collection("mealPlanners").document(id).collection("schedule").document(documentMonthYear)
             scheduleReference.updateData([
                 "recipes": FieldValue.arrayRemove([firebaseRecipeFormat])
             ]) { err in
                 if err == nil {
                     // delete from recipes in meal planner
-                    let recipeReference = self.db.collection("mealPlanners").document("id").collection("recipes").document(recipe.id)
+                    
+                    let recipeReference = self.db.collection("mealPlanners").document(id).collection("recipes").document(recipe.id)
+                    
                     recipeReference.delete() { err in
                         if err == nil {
                             print("Both successfully deleted from recipes and scheudle")
@@ -247,6 +275,7 @@ class MealPlanner {
                             print("Recipe not successfully deleted from recipes, but deleted from schedule")
                         }
                     }
+                    
                 } else {
                     print("Error deleting recipe from schedule: \(err as Any)")
                 }
@@ -263,7 +292,15 @@ class MealPlanner {
             if copyRecipe == false {
                 let oldMonthYear = recipe.date.shortDateToMonthYear()
                 let oldScheduleReference = db.collection("mealPlanners").document(id).collection("schedule").document(oldMonthYear)
-                let oldDbFormat = "\(recipe.date)__\(recipe.id)__\(recipe.name)"
+                
+                var oldDbFormat: String {
+                    if recipe.metadata == "note" {
+                        return "\(recipe.date)__\(recipe.id)__\(recipe.name)__note"
+                    } else {
+                        return "\(recipe.date)__\(recipe.id)__\(recipe.name)"
+                    }
+                }
+                
                 oldScheduleReference.updateData([
                     "recipes": FieldValue.arrayRemove([oldDbFormat])
                 ])
@@ -274,7 +311,15 @@ class MealPlanner {
             let newShortDate = newDate.dbFormat()
             let newMonthYear = newShortDate.shortDateToMonthYear()
             let newScheduleReference = db.collection("mealPlanners").document(id).collection("schedule").document(newMonthYear)
-            let newDbFormat = "\(newShortDate)__\(recipe.id)__\(recipe.name)"
+            
+            var newDbFormat: String {
+                if recipe.metadata == "note" {
+                    return "\(newShortDate)__\(recipe.id)__\(recipe.name)__note"
+                } else {
+                    return "\(newShortDate)__\(recipe.id)__\(recipe.name)"
+                }
+            }
+            
             newScheduleReference.updateData([
                 "recipes" : FieldValue.arrayUnion([newDbFormat])
             ]) { (err) in
@@ -294,8 +339,6 @@ class MealPlanner {
     func getMealPlannerRecipes(complete: @escaping (_ bool: Bool) -> Void) {
         if let id = SharedValues.shared.mealPlannerID {
             let refernece = db.collection("mealPlanners").document(id).collection("schedule")
-            
-            #warning("probbaly for the best if i merge the two calls in this function")
             
             refernece.getDocuments { (querySnapshot, error) in
                 guard let docs = querySnapshot?.documents else { complete(false); return }
@@ -381,7 +424,7 @@ class MealPlanner {
     
     func addItemsToListFromCertainDay(shortDate: String, calledFrom: UIViewController) {
         
-        #warning("test more, have a message show that the items have been added")
+        
         
         // First, get all the items that need to be added
         getIngredientsForMPlistAdding(shortDate: shortDate) { (ingredientsToAddToList) in
@@ -419,7 +462,7 @@ class MealPlanner {
     private func getIngredientsForMPlistAdding(shortDate: String, ingredientsReturned: @escaping (_ ingredients: [String]) -> Void) {
         let realm = try? Realm()
         var ingredientsToAddToList: [String] = []
-        let recipes = self.mealPlanDict[shortDate.shortDateToMonthYear()]?.filter({$0.date == shortDate})
+        let recipes = self.mealPlanDict[shortDate.shortDateToMonthYear()]?.filter({$0.date == shortDate && $0.metadata != "note"})
         var count = 0
         
         if let recipes = recipes {
@@ -515,3 +558,36 @@ class MealPlanner {
     
 }
 
+
+extension Array where Element == MealPlanner.RecipeTransfer {
+    func sortNoteFirstAlphabetical() -> [MealPlanner.RecipeTransfer] {
+        // Have notes first, sort everything alphabetically, if same letters then sort by ID
+        var notes: [MealPlanner.RecipeTransfer] = []
+        var recipes: [MealPlanner.RecipeTransfer] = []
+        
+        for a in self {
+            if a.metadata == "note" {
+                notes.append(a)
+            } else {
+                recipes.append(a)
+            }
+        }
+        notes = notes.sorted(by: { (one, two) -> Bool in
+            if one.name != two.name {
+                return one.name < two.name
+            } else {
+                return one.id < two.id
+            }
+        })
+        
+        recipes = recipes.sorted(by: { (one, two) -> Bool in
+            if one.name != two.name {
+                return one.name < two.name
+            } else {
+                return one.id < two.id
+            }
+        })
+        
+        return notes + recipes
+    }
+}

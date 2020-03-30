@@ -106,6 +106,7 @@ class MealPlannerHomeVC: UIViewController {
     // MARK: IBAction funcs
     @IBAction func addRecipePressed(_ sender: Any) {
         
+        
         var title: String? {
             if let sd = shortDate {
                 let dayEnding = sd.shortDateGetDateEnding()
@@ -116,8 +117,32 @@ class MealPlannerHomeVC: UIViewController {
         }
         
         let actionSheet = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+        
+        
+        actionSheet.addAction(.init(title: "Add note", style: .default, handler: { (action) in
+            print("Add note")
+            guard let sd = self.shortDate else { return }
+            let alert = UIAlertController(title: "Add note on \(sd.shortDateToDisplay())\(sd.shortDateGetDateEnding())", message: nil, preferredStyle: .alert)
+            alert.addTextField { (txtField) in
+                txtField.textColor = Colors.main
+            }
+            alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+            alert.addAction(.init(title: "Done", style: .default, handler: { (action) in
+                guard let note = alert.textFields?.first?.text else { return }
+                self.mealPlanner.addNoteToPlanner(shortDate: sd, note: note)
+            }))
+            self.present(alert, animated: true)
+        }))
+        
+        
         actionSheet.addAction(.init(title: "Browse recipes", style: .default, handler: { (action) in
             self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.all, self.shortDate))
+        }))
+        actionSheet.addAction(.init(title: "Cookbook", style: .default, handler: { action in
+            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.cookbook, self.shortDate))
+        }))
+        actionSheet.addAction(.init(title: "Saved recipes", style: .default, handler: { action in
+            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.saved, self.shortDate))
         }))
         actionSheet.addAction(.init(title: "Add new recipe", style: .default, handler: { action in
             let sb = UIStoryboard(name: "Recipes", bundle: nil)
@@ -125,12 +150,6 @@ class MealPlannerHomeVC: UIViewController {
             vc.fromPlanner = (true, self.shortDate)
             self.navigationController?.pushViewController(vc, animated: true)
             vc.mealPlannerRecipeDelegate = self
-        }))
-        actionSheet.addAction(.init(title: "Cookbook", style: .default, handler: { action in
-            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.cookbook, self.shortDate))
-        }))
-        actionSheet.addAction(.init(title: "Saved recipes", style: .default, handler: { action in
-            self.performSegue(withIdentifier: "selectMealPlanRecipe", sender: (RecipeSelection.saved, self.shortDate))
         }))
         actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
         
@@ -144,8 +163,6 @@ class MealPlannerHomeVC: UIViewController {
     }
     
     @IBAction func addItemsToList(_ sender: Any) {
-        #warning("need to complete")
-        
         if dateRecipes.count >= 1, let sd = shortDate {
             let dontAskBeforeAdding = UserDefaults.standard.bool(forKey: "dontAskBeforeAddingToMP")
             
@@ -299,7 +316,7 @@ class MealPlannerHomeVC: UIViewController {
     func handleShortDateChange() {
         if let sd = shortDate, let monthRecipes = mealPlanner.mealPlanDict[sd.shortDateToMonthYear()] {
             print(sd, monthRecipes)
-            let newRecipes = Array<MealPlanner.RecipeTransfer>(monthRecipes.filter({$0.date == sd}))
+            let newRecipes = Array<MealPlanner.RecipeTransfer>(monthRecipes.filter({$0.date == sd})).sortNoteFirstAlphabetical()
             if dateRecipes != newRecipes {
                 dateRecipes = newRecipes
                 tableView.reloadData()
@@ -310,7 +327,7 @@ class MealPlannerHomeVC: UIViewController {
             tableView.reloadData()
         }
         
-        if dateRecipes.count >= 1 {
+        if dateRecipes.filter({$0.metadata != "note"}).count >= 1 {
             addItemsToListOutlet.setIsHidden(false, animated: true, duration: 0.15)
         } else {
             addItemsToListOutlet.setIsHidden(true, animated: true, duration: 0.15)
@@ -383,7 +400,14 @@ extension MealPlannerHomeVC: MealPlannerCellDelegate {
                 self.createDatePickerView(delegateVC: self, recipe: recipe, copyRecipe: false)
                 
             }))
-            actionSheet.addAction(.init(title: "Delete recipe", style: .destructive, handler: { action in
+            var recipeOrNote: String {
+                if recipe.metadata == "note" {
+                    return "note"
+                } else {
+                    return "recipe"
+                }
+            }
+            actionSheet.addAction(.init(title: "Delete \(recipeOrNote)", style: .destructive, handler: { action in
                 self.mealPlanner.removeRecipeFromPlanner(recipe: recipe)
             }))
             actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
@@ -484,10 +508,18 @@ extension MealPlannerHomeVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        let mealPlanRecipe = dateRecipes[indexPath.row]
+        
+        guard mealPlanRecipe.metadata != "note" else {
+            tableView.deselectRow(at: indexPath, animated: false)
+            return
+        }
+        
+        let mealPlanRecipeID = mealPlanRecipe.id
         let sb = UIStoryboard(name: "Recipes", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC
 
-        let mealPlanRecipeID = dateRecipes[indexPath.row].id
+        
         
         if let realmMealPlanRecipe = realm?.object(ofType: MPCookbookRecipe.self, forPrimaryKey: mealPlanRecipeID) {
             print("Already have recipe downlaoded, need to present from Realm")
@@ -512,8 +544,10 @@ extension MealPlannerHomeVC: UITableViewDataSource, UITableViewDelegate {
             } else {
                 self.dismiss(animated: false, completion: nil)
             }
-            
         }
+        
+        
+        
     }
     
     
@@ -548,5 +582,6 @@ extension MealPlannerHomeVC: UIScrollViewDelegate {
     }
     
 }
+
 
 

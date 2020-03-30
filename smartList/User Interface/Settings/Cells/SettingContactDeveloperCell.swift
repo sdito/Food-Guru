@@ -32,6 +32,7 @@ class SettingContactDeveloperCell: UITableViewCell {
         textView.border(cornerRadius: 5.0)
     }
     
+    
     @IBAction func sendFeedback(_ sender: Any) {
         
         if textView.text != "" {
@@ -58,8 +59,9 @@ class SettingContactDeveloperCell: UITableViewCell {
             alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
             UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true)
         }
-        
     }
+    
+    
 }
 
 

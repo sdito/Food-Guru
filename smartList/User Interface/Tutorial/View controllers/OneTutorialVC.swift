@@ -45,10 +45,13 @@ class OneTutorialVC: UIViewController {
         
         
         imageView.addLoadingView()
+        topView.alpha = 0.3
         self.getImageForTutorial(imageText: "one") { (img) in
             self.imageView.removeLoadingView()
             self.imageView.image = img
+            self.topView.alpha = 1.0
         }
+        
         
     }
     
