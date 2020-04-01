@@ -49,10 +49,12 @@ enum GenericItem: String, CaseIterable {
     case bison
     case blackBeans
     case blackberry
+    case blackEyedPeas
     case blackOlive
     case blackPepper
     case bleuCheese
     case blueberries
+    case bourbon
     case bread
     case breadCrumbs
     case breadFlour
@@ -63,7 +65,9 @@ enum GenericItem: String, CaseIterable {
     case brusselsSprouts
     case butter
     case buttermilk
+    case burrataCheese
     case cabbage
+    case calamari
     case cannedTomato
     case cannelliniBeans
     case canolaOil
@@ -77,10 +81,14 @@ enum GenericItem: String, CaseIterable {
     case cayenne
     case celery
     case cereal
+    case chard
     case champagne
     case cheddar
     case cheese
     case cherries
+    case cherryTomato
+    case chestnuts
+    case chiaSeeds
     case chicken
     case chickenWings
     case chili
@@ -88,22 +96,33 @@ enum GenericItem: String, CaseIterable {
     case chips
     case chives
     case chocolate
+    case chutney
     case cilantro
     case cinnamon
     case clam
+    case clamJuice
+    case cocoaPowder
+    case coconut
     case coconutMilk
+    case coconutOil
     case cod
     case coffee
+    case coleslaw
+    case condensedMilk
     case cookingWine
+    case cookingSpray
+    case coriander
     case corn
     case cornedBeef
     case cornbread
     case cornmeal
     case cornstarch
     case cottageCheese
+    case couscous
     case crab
     case cracker
     case cranberry
+    case cranberryJuice
     case cranberrySauce
     case cream
     case creamCheese
@@ -111,10 +130,14 @@ enum GenericItem: String, CaseIterable {
     case creamOfMushroomSoup
     case cucumber
     case cumin
+    case currants
+    case curryPaste
     case curryPowder
+    case dates
     case dip
     case dijonMustard
     case dillWeed
+    case dough
     case driedBasil
     case driedMango
     case driedParsley
@@ -122,11 +145,18 @@ enum GenericItem: String, CaseIterable {
     case egg
     case eggNoodles
     case eggplant
+    case elk
+    case enchiladaSauce
+    case evaporatedMilk
     case favaBeans
     case fennelSeeds
     case feta
+    case fishSauce
+    case flax
     case flounder
     case flour
+    case garamMasala
+    case garbanzoBeans
     case garlic
     case garlicBread
     case garlicPowder
@@ -144,6 +174,9 @@ enum GenericItem: String, CaseIterable {
     case greenOlive
     case greenOnion
     case groundBeef
+    case groundCloves
+    case groundMustard
+    case groundPork
     case groundTurkey
     case gruyere
     case guava
@@ -153,6 +186,7 @@ enum GenericItem: String, CaseIterable {
     case ham
     case hamburgerBuns
     case hamburgerPatties
+    case hazelnuts
     case heavyCream
     case honey
     case honeydew
@@ -167,12 +201,14 @@ enum GenericItem: String, CaseIterable {
     case jelly
     case juice
     case kale
+    case kefir
     case ketchup
     case kidneyBeans
     case kiwi
     case lamb
     case lasagnaNoodles
     case lemon
+    case lemongrass
     case lemonJuice
     case lentil
     case lettuce
@@ -180,29 +216,36 @@ enum GenericItem: String, CaseIterable {
     case lime
     case limeJuice
     case lobster
+    case macadamiaNuts
     case macAndCheese
     case mahiMahi
     case mango
     case margarine
     case marinara
-    case melon
+    case marshmallows
+    case mascarpone
     case mayonnaise
+    case melon
     case milk
+    case mint
     case montereyJackCheese
     case mozzarella
     case mushroom
     case mussels
     case mustard
+    case mustardGreens
     case nectarine
     case nutmeg
     case nutella
     case oatmeal
     case oats
+    case octopus
     case oil
     case oliveOil
     case onion
     case onionPowder
     case orange
+    case orangeJuice
     case oregano
     case oreoCookies
     case oyster
@@ -210,6 +253,7 @@ enum GenericItem: String, CaseIterable {
     case paprika
     case parmesan
     case parsley
+    case parsnips
     case pasta
     case pastrami
     case peach
@@ -220,11 +264,15 @@ enum GenericItem: String, CaseIterable {
     case peas
     case pecan
     case pepper
+    case pepperjack
     case pepperoni
     case pestoSauce
     case pickle
+    case pieCrust
     case pineapple
+    case pineNuts
     case pintoBeans
+    case pistachio
     case pitaBread
     case pizza
     case plum
@@ -233,11 +281,16 @@ enum GenericItem: String, CaseIterable {
     case popcorn
     case poppySeed
     case pork
+    case porkRinds
     case portobelloMushroom
     case potRoast
     case potato
     case powderedSugar
+    case prawn
     case provolone
+    case puffPastry
+    case pumpkin
+    case pumpkinSeeds
     case quinoa
     case raisin
     case ranch
@@ -246,11 +299,14 @@ enum GenericItem: String, CaseIterable {
     case redPepper
     case redWine
     case relish
+    case rhubarb
+    case ribs
     case rice
     case ricotta
     case romanoCheese
     case rosemary
     case rum
+    case saffron
     case sage
     case salad
     case saladDressing
@@ -276,6 +332,9 @@ enum GenericItem: String, CaseIterable {
     case sparklingWater
     case spinach
     case squash
+    case squid
+    case sriracha
+    case steak
     case steakSauce
     case strawberry
     case sugar
@@ -287,10 +346,13 @@ enum GenericItem: String, CaseIterable {
     case swordfish
     case syrup
     case tacoSeasoning
+    case tahini
     case taterTots
+    case tarragon
     case tartarSauce
     case tea
     case teriyakiSauce
+    case tequila
     case thyme
     case tilapia
     case tofu
@@ -310,10 +372,14 @@ enum GenericItem: String, CaseIterable {
     case vinegar
     case vodka
     case walnuts
+    case wasabi
     case water
+    case waterChestnuts
     case watermelon
+    case wheatGerm
     case whippedCream
     case whiskey
+    case whitePepper
     case whiteWine
     case worcestershireSauce
     case yeast
@@ -943,6 +1009,138 @@ enum GenericItem: String, CaseIterable {
             return "Taco seasoning"
         case .pomegranateSeeds:
             return "Pomegranate seeds"
+        case .prawn:
+            return "Prawns"
+        case .whitePepper:
+            return "White pepper"
+        case .groundMustard:
+            return "Ground mustard"
+        case .blackEyedPeas:
+            return "Black eyed peas"
+        case .bourbon:
+            return "Bourbon"
+        case .burrataCheese:
+            return "Burrata cheese"
+        case .calamari:
+            return "Calamari"
+        case .chard:
+            return "Chard"
+        case .cherryTomato:
+            return "Cherry tomatoes"
+        case .chestnuts:
+            return "Chestnuts"
+        case .chiaSeeds:
+            return "Chia seeds"
+        case .chutney:
+            return "Chutney"
+        case .clamJuice:
+            return "Clam juice"
+        case .cocoaPowder:
+            return "Cocoa powder"
+        case .coconut:
+            return "Coconut"
+        case .coconutOil:
+            return "Coconut oil"
+        case .coleslaw:
+            return "Coleslaw"
+        case .condensedMilk:
+            return "Condensed milk"
+        case .cookingSpray:
+            return "Cooking spray"
+        case .coriander:
+            return "Coriander"
+        case .couscous:
+            return "Couscous"
+        case .cranberryJuice:
+            return "Cranberry juice"
+        case .currants:
+            return "Currants"
+        case .curryPaste:
+            return "Curry paste"
+        case .dates:
+            return "Dates"
+        case .dough:
+            return "Dough"
+        case .elk:
+            return "Elk"
+        case .enchiladaSauce:
+            return "Enchilada sauce"
+        case .evaporatedMilk:
+            return "Evaporated milk"
+        case .fishSauce:
+            return "Fish sauce"
+        case .flax:
+            return "Flax seeds"
+        case .garamMasala:
+            return "Garam masala"
+        case .garbanzoBeans:
+            return "Garbanzo beans"
+        case .groundCloves:
+            return "Ground cloves"
+        case .groundPork:
+            return "Ground pork"
+        case .hazelnuts:
+            return "Hazelnuts"
+        case .kefir:
+            return "Kefir"
+        case .lemongrass:
+            return "Lemongrass"
+        case .macadamiaNuts:
+            return "Macadamia nuts"
+        case .marshmallows:
+            return "Marshmallows"
+        case .mascarpone:
+            return "Mascarpone cheese"
+        case .mint:
+            return "Mint"
+        case .mustardGreens:
+            return "Mustard greens"
+        case .octopus:
+            return "Octopus"
+        case .orangeJuice:
+            return "Orange juice"
+        case .parsnips:
+            return "Parsnips"
+        case .pepperjack:
+            return "Pepperjack cheese"
+        case .pieCrust:
+            return "Pie crust"
+        case .pineNuts:
+            return "Pine nuts"
+        case .pistachio:
+            return "Pistachio"
+        case .porkRinds:
+            return "Pork rinds"
+        case .puffPastry:
+            return "Puff pastry"
+        case .pumpkin:
+            return "Pumpkin"
+        case .pumpkinSeeds:
+            return "Pumpkin sedds"
+        case .rhubarb:
+            return "Rhubarb"
+        case .ribs:
+            return "Ribs"
+        case .saffron:
+            return "Saffron"
+        case .squid:
+            return "Squid"
+        case .sriracha:
+            return "Sriracha"
+        case .tahini:
+            return "Tahini"
+        case .tarragon:
+            return "Tarragon"
+        case .tequila:
+            return "Tequila"
+        case .wasabi:
+            return "Wasabi"
+        case .waterChestnuts:
+            return "Water chestnuts"
+        case .wheatGerm:
+            return "Wheat germ"
+        case .steak:
+            return "Steak"
         }
     }
     
@@ -1575,6 +1773,138 @@ enum GenericItem: String, CaseIterable {
                 return .pantry
             case .pomegranateSeeds:
                 return .fridge
+            case .prawn:
+                return .fridge
+            case .groundMustard:
+                return .pantry
+            case .whitePepper:
+                return .pantry
+            case .blackEyedPeas:
+                return .pantry
+            case .bourbon:
+                return .pantry
+            case .burrataCheese:
+                return .fridge
+            case .calamari:
+                return .fridge
+            case .chard:
+                return .fridge
+            case .cherryTomato:
+                return .pantry
+            case .chestnuts:
+                return .pantry
+            case .chiaSeeds:
+                return .pantry
+            case .chutney:
+                return .fridge
+            case .clamJuice:
+                return .fridge
+            case .cocoaPowder:
+                return .pantry
+            case .coconut:
+                return .fridge
+            case .coconutOil:
+                return .pantry
+            case .coleslaw:
+                return .fridge
+            case .condensedMilk:
+                return .pantry
+            case .cookingSpray:
+                return .pantry
+            case .coriander:
+                return .pantry
+            case .couscous:
+                return .pantry
+            case .cranberryJuice:
+                return .pantry
+            case .currants:
+                return .pantry
+            case .curryPaste:
+                return .pantry
+            case .dates:
+                return .pantry
+            case .dough:
+                return .fridge
+            case .elk:
+                return .fridge
+            case .enchiladaSauce:
+                return .pantry
+            case .evaporatedMilk:
+                return .pantry
+            case .fishSauce:
+                return .pantry
+            case .flax:
+                return .pantry
+            case .garamMasala:
+                return .pantry
+            case .garbanzoBeans:
+                return .pantry
+            case .groundCloves:
+                return .pantry
+            case .groundPork:
+                return .fridge
+            case .hazelnuts:
+                return .pantry
+            case .kefir:
+                return .fridge
+            case .lemongrass:
+                return .pantry
+            case .macadamiaNuts:
+                return .pantry
+            case .marshmallows:
+                return .pantry
+            case .mascarpone:
+                return .fridge
+            case .mint:
+                return .pantry
+            case .mustardGreens:
+                return .fridge
+            case .octopus:
+                return .fridge
+            case .orangeJuice:
+                return .fridge
+            case .parsnips:
+                return .fridge
+            case .pepperjack:
+                return .fridge
+            case .pieCrust:
+                return .fridge
+            case .pineNuts:
+                return .pantry
+            case .pistachio:
+                return .pantry
+            case .porkRinds:
+                return .pantry
+            case .puffPastry:
+                return .fridge
+            case .pumpkin:
+                return .pantry
+            case .pumpkinSeeds:
+                return .pantry
+            case .rhubarb:
+                return .fridge
+            case .ribs:
+                return .fridge
+            case .saffron:
+                return .pantry
+            case .squid:
+                return .fridge
+            case .sriracha:
+                return .fridge
+            case .steak:
+                return .fridge
+            case .tahini:
+                return .pantry
+            case .tarragon:
+                return .pantry
+            case .tequila:
+                return .pantry
+            case .wasabi:
+                return .pantry
+            case .waterChestnuts:
+                return .pantry
+            case .wheatGerm:
+                return .pantry
             }
         }
         
@@ -2237,6 +2567,142 @@ enum GenericItem: String, CaseIterable {
                 return .cookingBakingSpices
             case .pomegranateSeeds:
                 return .produce
+            case .prawn:
+                return .seafood
+            case .groundMustard:
+                return .cookingBakingSpices
+            case .whitePepper:
+                return .cookingBakingSpices
+            case .blackEyedPeas:
+                return .canned
+            case .bourbon:
+                return .beverages
+            case .burrataCheese:
+                return .dairy
+            case .calamari:
+                return .seafood
+            case .chard:
+                return .produce
+            case .cherryTomato:
+                return .produce
+            case .chestnuts:
+                return .snacks
+            case .chiaSeeds:
+                return .cookingBakingSpices
+            case .chutney:
+                return .cookingBakingSpices
+            case .clamJuice:
+                return .beverages
+            case .cocoaPowder:
+                return .cookingBakingSpices
+            case .coconut:
+                return .produce
+            case .coconutOil:
+                return .condimentsAndDressings
+            case .coleslaw:
+                return .produce
+            case .condensedMilk:
+                return .cookingBakingSpices
+            case .cookingSpray:
+                return .cookingBakingSpices
+            case .coriander:
+                return .cookingBakingSpices
+            case .couscous:
+                return .grainsPastaSides
+            case .cranberryJuice:
+                return .beverages
+            case .currants:
+                return .produce
+            case .curryPaste:
+                return .cookingBakingSpices
+            case .dates:
+                return .produce
+            case .dough:
+                return .dairy
+            case .elk:
+                return .meat
+            case .enchiladaSauce:
+                return .condimentsAndDressings
+            case .evaporatedMilk:
+                return .cookingBakingSpices
+            case .fishSauce:
+                return .condimentsAndDressings
+            case .flax:
+                return .cookingBakingSpices
+            case .garamMasala:
+                return .cookingBakingSpices
+            case .garbanzoBeans:
+                return .canned
+            case .groundCloves:
+                return .cookingBakingSpices
+            case .groundPork:
+                return .meat
+            case .hazelnuts:
+                return .snacks
+            case .kefir:
+                return .dairy
+            case .lemongrass:
+                return .cookingBakingSpices
+            case .macadamiaNuts:
+                return .snacks
+            case .marshmallows:
+                return .snacks
+            case .mascarpone:
+                return .dairy
+            case .mint:
+                return .cookingBakingSpices
+            case .mustardGreens:
+                return .produce
+            case .octopus:
+                return .seafood
+            case .orangeJuice:
+                return .beverages
+            case .parsnips:
+                return .produce
+            case .pepperjack:
+                return .dairy
+            case .pieCrust:
+                return .cookingBakingSpices
+            case .pineNuts:
+                return .snacks
+            case .pistachio:
+                return .snacks
+            case .porkRinds:
+                return .snacks
+            case .puffPastry:
+                return .frozenFoods
+            case .pumpkin:
+                if words.contains("canned") || words.contains("can") {
+                    return .canned
+                } else {
+                    return .produce
+                }
+            case .pumpkinSeeds:
+                return .snacks
+            case .rhubarb:
+                return .produce
+            case .ribs:
+                return .meat
+            case .saffron:
+                return .cookingBakingSpices
+            case .squid:
+                return .seafood
+            case .sriracha:
+                return .condimentsAndDressings
+            case .steak:
+                return .meat
+            case .tahini:
+                return .cookingBakingSpices
+            case .tarragon:
+                return .cookingBakingSpices
+            case .tequila:
+                return .beverages
+            case .wasabi:
+                return .cookingBakingSpices
+            case .waterChestnuts:
+                return .canned
+            case .wheatGerm:
+                return .breakfast
             }
         }
         
@@ -3333,6 +3799,163 @@ enum GenericItem: String, CaseIterable {
             return month*18
         case .pomegranateSeeds:
             return week
+        case .prawn:
+            return day*5
+        case .groundMustard:
+            return year*2
+        case .whitePepper:
+            return year*2
+        case .blackEyedPeas:
+            return week*3
+        case .bourbon:
+            return year
+        case .burrataCheese:
+            return week*3
+        case .calamari:
+            if storageType == .freezer {
+                return month
+            } else {
+                return day*4
+            }
+        case .chard:
+            return day*10
+        case .cherryTomato:
+            return day*8
+        case .chestnuts:
+            return week*3
+        case .chiaSeeds:
+            return year*3
+        case .chutney:
+            return month
+        case .clamJuice:
+            return month*2
+        case .cocoaPowder:
+            return year*2
+        case .coconut:
+            if storageType == .freezer {
+                return month*7
+            } else {
+                return week
+            }
+        case .coconutOil:
+            return year*2
+        case .coleslaw:
+            return day*5
+        case .condensedMilk:
+            return year*3
+        case .cookingSpray:
+            return year*2
+        case .coriander:
+            return year*3
+        case .couscous:
+            return year
+        case .cranberryJuice:
+            return year
+        case .currants:
+            return month*9
+        case .curryPaste:
+            return week*3
+        case .dates:
+            return month*8
+        case .dough:
+            return month
+        case .elk:
+            if storageType == .freezer {
+                return month*3
+            } else {
+                return day*4
+            }
+        case .enchiladaSauce:
+            return month*7
+        case .evaporatedMilk:
+            return year*3
+        case .fishSauce:
+            return month*3
+        case .flax:
+            return month*6
+        case .garamMasala:
+            return month*6
+        case .garbanzoBeans:
+            return year*2
+        case .groundCloves:
+            return year*3
+        case .groundPork:
+            if storageType == .freezer {
+                return month*6
+            } else {
+                return day*6
+            }
+        case .hazelnuts:
+            return month*5
+        case .kefir:
+            return week*3
+        case .lemongrass:
+            return year*3
+        case .macadamiaNuts:
+            return month*6
+        case .marshmallows:
+            return month*15
+        case .mascarpone:
+            return day*5
+        case .mint:
+            return day*8
+        case .mustardGreens:
+            return day*3
+        case .octopus:
+            if storageType == .freezer {
+                return month
+            } else {
+                return day*3
+            }
+        case .orangeJuice:
+            return day*10
+        case .parsnips:
+            return week*2
+        case .pepperjack:
+            return week*4
+        case .pieCrust:
+            return day*4
+        case .pineNuts:
+            return month*2
+        case .pistachio:
+            return month*3
+        case .porkRinds:
+            return week
+        case .puffPastry:
+            return month
+        case .pumpkin:
+            return (month*2) + (week*2)
+        case .pumpkinSeeds:
+            return month*3
+        case .rhubarb:
+            return week
+        case .ribs:
+            return day*4
+        case .saffron:
+            return year*2
+        case .squid:
+            if storageType == .freezer {
+                return month
+            } else {
+                return day*3
+            }
+            
+        case .sriracha:
+            return year*2
+        case .steak:
+            return week
+        case .tahini:
+            return month*6
+        case .tarragon:
+            return day*12
+        case .tequila:
+            return year
+        case .wasabi:
+            return year
+        case .waterChestnuts:
+            return year*3
+        case .wheatGerm:
+            return week*2
         }
     }
 }

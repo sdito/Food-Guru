@@ -425,6 +425,7 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
         l.alpha = 0.9
         l.textAlignment = .center
         return l
+        
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return arrayArrayItems[section].count

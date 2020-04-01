@@ -389,8 +389,14 @@ extension MealPlannerHomeVC: MealPlannerCellDelegate {
         // Need to have a pop up or action sheet here for editing, deleting, shareing recipe (i.e. have pdf show up)
         
         if let recipe = recipe {
-            
-            let actionSheet = UIAlertController(title: recipe.name, message: nil, preferredStyle: .actionSheet)
+            var beginning: String {
+                if recipe.metadata == "note" {
+                    return "Note: "
+                } else {
+                    return "Recipe: "
+                }
+            }
+            let actionSheet = UIAlertController(title: "\(beginning)\(recipe.name)", message: nil, preferredStyle: .actionSheet)
         
             actionSheet.addAction(.init(title: "Copy to another date", style: .default, handler: { action in
                 self.createDatePickerView(delegateVC: self, recipe: recipe, copyRecipe: true)
