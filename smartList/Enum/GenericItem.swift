@@ -54,6 +54,7 @@ enum GenericItem: String, CaseIterable {
     case blackPepper
     case bleuCheese
     case blueberries
+    case bokChoy
     case bourbon
     case bread
     case breadCrumbs
@@ -103,8 +104,10 @@ enum GenericItem: String, CaseIterable {
     case clamJuice
     case cocoaPowder
     case coconut
+    case coconutCream
     case coconutMilk
     case coconutOil
+    case coconutWater
     case cod
     case coffee
     case coleslaw
@@ -292,6 +295,7 @@ enum GenericItem: String, CaseIterable {
     case pumpkin
     case pumpkinSeeds
     case quinoa
+    case rabbit
     case raisin
     case ranch
     case raspberry
@@ -1141,6 +1145,14 @@ enum GenericItem: String, CaseIterable {
             return "Wheat germ"
         case .steak:
             return "Steak"
+        case .bokChoy:
+            return "Bok choy"
+        case .coconutCream:
+            return "Coconut cream"
+        case .coconutWater:
+            return "Coconut water"
+        case .rabbit:
+            return "Rabbit"
         }
     }
     
@@ -1905,6 +1917,14 @@ enum GenericItem: String, CaseIterable {
                 return .pantry
             case .wheatGerm:
                 return .pantry
+            case .bokChoy:
+                return .fridge
+            case .coconutCream:
+                return .pantry
+            case .coconutWater:
+                return .pantry
+            case .rabbit:
+                return .fridge
             }
         }
         
@@ -2703,6 +2723,14 @@ enum GenericItem: String, CaseIterable {
                 return .canned
             case .wheatGerm:
                 return .breakfast
+            case .bokChoy:
+                return .produce
+            case .coconutCream:
+                return .canned
+            case .coconutWater:
+                return .beverages
+            case .rabbit:
+                return .meat
             }
         }
         
@@ -3956,6 +3984,18 @@ enum GenericItem: String, CaseIterable {
             return year*3
         case .wheatGerm:
             return week*2
+        case .bokChoy:
+            return day*5
+        case .coconutCream:
+            return year*2
+        case .coconutWater:
+            return year*2
+        case .rabbit:
+            if storageType == .freezer {
+                return month
+            } else {
+                return day*3
+            }
         }
     }
 }
