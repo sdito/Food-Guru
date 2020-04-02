@@ -30,6 +30,8 @@ class AddItemsVC: UIViewController {
     private var keyboardTableViewBottom: NSLayoutConstraint?
     
     var db: Firestore!
+    
+    private var newItemVC: CreateNewItemVC?
     private var initialItemsAdded = false
     private var ran = false
     private var arrayArrayItems: [[Item]] = []
@@ -172,9 +174,16 @@ class AddItemsVC: UIViewController {
         if textAssistantViewActive == false {
             // add the view here
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
+            self.newItemVC = vc
             self.addChild(vc)
             self.view.addSubview(vc.tableView)
             vc.didMove(toParent: self)
+            
+            if let listItems = self.list?.items {
+                vc.itemsFromList = listItems.map({$0.name})
+            } else {
+                vc.itemsFromList = []
+            }
             
             vc.tableView.translatesAutoresizingMaskIntoConstraints = false
             
@@ -397,6 +406,7 @@ extension AddItemsVC: CreateNewItemDelegate {
     
 }
 
+
 // MARK: Table view
 // have the cells organized by
 extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
@@ -412,8 +422,6 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
         } else {
             l.font = UIFont(name: "futura", size: 22.5)
         }
-        
-        
         
         if #available(iOS 13.0, *) {
             l.backgroundColor = .secondarySystemBackground
@@ -546,6 +554,8 @@ extension AddItemsVC: ItemCellDelegate {
     }
 }
 
+// MARK: GroceryListDelegate
+
 extension AddItemsVC: GroceryListDelegate {
     // Scroll to the new item added (if not already visible), then highlight the cell momentarily/maybe do other ui stuff
     func potentialUiForRow(item: Item) {
@@ -581,6 +591,15 @@ extension AddItemsVC: GroceryListDelegate {
             tableView.reloadData()
         } else {
             arrayArrayItems = []
+        }
+        
+        if let listItems = list?.items {
+            let nItems = listItems.map({$0.name})
+            self.newItemVC?.itemsFromList = nItems
+            self.newItemVC?.tableView.reloadData()
+        } else {
+            self.newItemVC?.itemsFromList = []
+            self.newItemVC?.tableView.reloadData()
         }
     }
     

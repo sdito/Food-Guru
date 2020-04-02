@@ -11,10 +11,16 @@ import UIKit
 class CreateNewItemCell: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var img: UIImageView!
     
-    func setUI(text: String) {
+    
+    func setUI(text: String, inItems: Bool) {
         label.text = text
-        
+        if inItems {
+            img.isHidden = false
+        } else {
+            img.isHidden = true
+        }
         // if iPad, then make the font slightly bigger
         if !SharedValues.shared.isPhone {
             label.font = UIFont(name: "futura", size: 23)

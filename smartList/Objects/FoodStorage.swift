@@ -10,7 +10,8 @@ import Foundation
 import FirebaseFirestore
 import FirebaseAuth
 
-struct FoodStorage {
+class FoodStorage {
+    
     var isGroup: Bool?
     var groupID: String?
     var peopleEmails: [String]?
@@ -198,7 +199,7 @@ struct FoodStorage {
         }
     }
     
-    /*
+        /*
         used (from settings) for combining multiple individual storages into a group storage, this will edit each individual's profile if necessary throghh addForStorageInformationToGroupMembersProfile
         this will also update the storage information
     
