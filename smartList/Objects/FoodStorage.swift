@@ -10,13 +10,25 @@ import Foundation
 import FirebaseFirestore
 import FirebaseAuth
 
+
+
+
+protocol FoodStorageDelegate: class {
+    func itemsUpdated()
+}
+
+
+
 class FoodStorage {
     
     var isGroup: Bool?
     var groupID: String?
     var peopleEmails: [String]?
-    var items: [Item]?
+    var items: [Item]? = []
     var numberOfPeople: Int?
+    var itemListener: ListenerRegistration?
+    
+    weak var delegate: FoodStorageDelegate!
     
     init(isGroup: Bool?, groupID: String?, peopleEmails: [String]?, items: [Item]?, numberOfPeople: Int?) {
         self.isGroup = isGroup
@@ -144,6 +156,7 @@ class FoodStorage {
        }
        
    }
+    
     static func updateDataInStorageDocument(db: Firestore, foodStorageID: String, emails: [String]) {
         // uids are added to 'shared' in the addForStorageInformationToGroupMembersProfile function
         // need to update 'numPeople' and 'emails'
@@ -157,7 +170,35 @@ class FoodStorage {
         
         
     }
+    
     // MARK: Items
+    
+    func readItemsForStorage(db: Firestore!, storageID: String) {
+        self.items = []
+        
+        itemListener = db.collection("storages").document(storageID).collection("items").addSnapshotListener { (querySnapshot, error) in
+            guard let documents = querySnapshot?.documentChanges else {
+                print("Error fetching documents: \(String(describing: error))")
+                return
+            }
+            for d in documents {
+                let doc = d.document
+                switch d.type {
+                case .added, .modified:
+                    let systemItem = GenericItem(rawValue: doc.get("systemItem") as? String ?? "other")
+                    let systemCategory = Category(rawValue: doc.get("systemCategory") as? String ?? "other")
+                    let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as? String), ownID: doc.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (doc.get("storageSection") as? String ?? " ")), timeAdded: doc.get("timeAdded") as? TimeInterval, timeExpires: doc.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory, quantity: doc.get("quantity") as? String)
+                    self.items?.append(i)
+                    
+                case .removed:
+                    self.items = self.items?.filter({$0.ownID != doc.documentID})
+                }
+            }
+            self.delegate.itemsUpdated()
+        }
+    }
+    
+    
     static func addItemsFromListintoFoodStorage(sendList: GroceryList, storageID: String, db: Firestore) {
         for item in sendList.items ?? [] {
             if item.selected == true {
@@ -179,6 +220,8 @@ class FoodStorage {
     }
     
     // used to have real-time updates for the items that are in the user's storage, either individual or shared storage
+    
+    #warning("can clean this up with keeping track of the listener")
     static func readAndPersistSystemItemsFromStorageWithListener(db: Firestore, storageID: String) {
         let reference = db.collection("storages").document(storageID).collection("items")
         reference.addSnapshotListener { (querySnapshot, error) in

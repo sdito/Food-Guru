@@ -16,6 +16,7 @@ class RecipeDetailVC: UIViewController {
     
     @IBOutlet weak var wholeSV: UIStackView!
     @IBOutlet weak var servingsFromSliderLabel: UILabel!
+    @IBOutlet weak var servingSliderNumber: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var mainStackView: UIStackView!
     @IBOutlet weak var reviewRecipeOutlet: UIButton!
@@ -161,7 +162,11 @@ class RecipeDetailVC: UIViewController {
     @IBAction func scaleSlider(_ sender: Any) {
         newServingsValue = Int(scaleSlider.value.rounded())
         if let value = newServingsValue {
-            servingsFromSliderLabel.text = "Servings: \(value)"
+            UIView.performWithoutAnimation {
+                self.servingSliderNumber.setTitle("\(value)", for: .normal)
+                self.servingSliderNumber.layoutIfNeeded()
+            }
+            
         }
         
         
@@ -170,32 +175,9 @@ class RecipeDetailVC: UIViewController {
     
     @IBAction func editingOnSliderDone(_ sender: Any) {
         print("Editing on slider done")
-        
-        if let i = originalIngredients, let os = originalServings, let ns = newServingsValue {
-            let newIngredients = i.changeRecipeIngredientScale(ratio: (ns, os))
-            ingredientsStackView.subviews.forEach { (view) in
-                if type(of: view) == ButtonIngredientView.self {
-                    view.removeFromSuperview()
-                }
-            }
-            
-            if cookbookRecipe != nil {
-                let realmIngredients = List<String>()
-                newIngredients.forEach({realmIngredients.append($0)})
-                let realmServings = RealmOptional(ns)
-                
-                cookbookRecipe?.ingredients = realmIngredients
-                cookbookRecipe?.servings = realmServings
-                cookbookRecipe?.addButtonIngredientViewsTo(stackView: ingredientsStackView, delegateVC: self)
-            } else {
-                data?.recipe.ingredients = newIngredients
-                data?.recipe.numServes = ns
-                data?.recipe.addButtonIngredientViewsTo(stackView: ingredientsStackView, delegateVC: self)
-            }
-            
-            
-        }
+        editingOnSliderDoneHelper()
     }
+    
     
     
     @IBAction func downloadRecipe(_ sender: Any) {
@@ -229,7 +211,48 @@ class RecipeDetailVC: UIViewController {
         saveRecipeOutlet.setTitle("✓ Save", for: .normal)
         
     }
+    
+    @IBAction func changeServingsButton(_ sender: Any) {
+        print("Change to specific number of servings")
+        var recipeTitle: String {
+            if let cbr = cookbookRecipe {
+                return cbr.name
+            } else if let r = data?.recipe {
+                return r.name
+            } else {
+                return "recipe"
+            }
+        }
+        let alert = UIAlertController(title: "Change servings number for \(recipeTitle)", message: nil, preferredStyle: .alert)
+        alert.addTextField { (txtField) in
+            txtField.keyboardType = .numberPad
+            txtField.textColor = Colors.main
+        }
+        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(.init(title: "Done", style: .default, handler: { (action) in
+            guard let text = alert.textFields?.first?.text else { return }
+            if text != "", let num = Int(text) {
+                self.scaleSlider.maximumValue = Float(num * 2)
+                self.scaleSlider.value = Float(num)
+                
+                UIView.performWithoutAnimation {
+                    self.servingSliderNumber.setTitle("\(num)", for: .normal)
+                    self.servingSliderNumber.layoutIfNeeded()
+                }
+                self.newServingsValue = num
+                self.editingOnSliderDoneHelper()
+                #warning("left off here, value is not updating ingredients")
+            }
+            
+        }))
+        present(alert, animated: true)
+        
+    }
+    
+    
     // MARK: functions
+    
+    
     private func setUI(recipe: CookbookRecipe) {
         viewsToRemoveForCookbook.forEach { (v) in
             v.removeFromSuperview()
@@ -263,12 +286,16 @@ class RecipeDetailVC: UIViewController {
         if let s = recipe.servings.value {
             servings.text = "\(s)"
             scaleSlider.minimumValue = 1.0
-            scaleSlider.maximumValue = Float(s * recipeSliderScaleMax)
+            scaleSlider.maximumValue = Float(max(20, (s * 4)))
             scaleSlider.value = Float(s)
             
             originalServings = s
             originalIngredients = Array(recipe.ingredients)
-            servingsFromSliderLabel.text = "Servings: \(s)"
+            
+            UIView.performWithoutAnimation {
+                self.servingSliderNumber.setTitle("\(s)", for: .normal)
+                self.servingSliderNumber.layoutIfNeeded()
+            }
             
         } else {
             servingsSV.removeFromSuperview()
@@ -315,12 +342,16 @@ class RecipeDetailVC: UIViewController {
         calories.text = "\(recipe.calories!)"
         
         scaleSlider.minimumValue = 1
-        scaleSlider.maximumValue = Float(recipe.numServes * recipeSliderScaleMax)
+        scaleSlider.maximumValue = Float(max(20, (recipe.numServes * 4)))
         scaleSlider.value = Float(recipe.numServes)
         
         originalServings = recipe.numServes
         originalIngredients = recipe.ingredients
-        servingsFromSliderLabel.text = "Servings: \(recipe.numServes)"
+        
+        UIView.performWithoutAnimation {
+            self.servingSliderNumber.setTitle("\(recipe.numServes)", for: .normal)
+            self.servingSliderNumber.layoutIfNeeded()
+        }
         
         if let n = recipe.notes {
             if n != "" {
@@ -364,6 +395,34 @@ class RecipeDetailVC: UIViewController {
         recipe.addRecipeToRecentlyViewedRecipes(db: db)
         
     }
+    
+    private func editingOnSliderDoneHelper() {
+        if let i = originalIngredients, let os = originalServings, let ns = newServingsValue {
+            let newIngredients = i.changeRecipeIngredientScale(ratio: (ns, os))
+            ingredientsStackView.subviews.forEach { (view) in
+                if type(of: view) == ButtonIngredientView.self {
+                    view.removeFromSuperview()
+                }
+            }
+            
+            if cookbookRecipe != nil {
+                let realmIngredients = List<String>()
+                newIngredients.forEach({realmIngredients.append($0)})
+                let realmServings = RealmOptional(ns)
+                
+                cookbookRecipe?.ingredients = realmIngredients
+                cookbookRecipe?.servings = realmServings
+                cookbookRecipe?.addButtonIngredientViewsTo(stackView: ingredientsStackView, delegateVC: self)
+            } else {
+                data?.recipe.ingredients = newIngredients
+                data?.recipe.numServes = ns
+                data?.recipe.addButtonIngredientViewsTo(stackView: ingredientsStackView, delegateVC: self)
+            }
+            
+            
+        }
+    }
+    
     private func addStarRatingViewIfApplicable(recipe: Recipe) {
         if let nr = recipe.numReviews, let ns = recipe.numStars {
             let v = Bundle.main.loadNibNamed("StarRatingView", owner: nil, options: nil)?.first as! StarRatingView
@@ -387,6 +446,12 @@ class RecipeDetailVC: UIViewController {
         addAllToListOutlet.setTitle("✓ Add all to list", for: .normal)
         addAllToListOutlet.isUserInteractionEnabled = false
     }
+    
+    
+    @objc private func tapServingRecognizer() {
+        print("Tap is being called")
+    }
+    
     @objc private func itemAddedSelector(_ notification: NSNotification) {
         if let dict = notification.userInfo as NSDictionary? {
             if let name = dict["itemName"] as? String {

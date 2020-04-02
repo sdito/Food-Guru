@@ -28,6 +28,11 @@ class StorageHomeVC: UIViewController {
     @IBOutlet weak var popUpViewWidth: NSLayoutConstraint!
     
     var db: Firestore!
+    private var foodStorage: FoodStorage? {
+        didSet {
+            self.foodStorage?.delegate = self
+        }
+    }
     lazy private var emptyCells: [UITableViewCell] = []
     private var searchActive = false
     private var currentlySelectedItems: [Item] = [] {
@@ -36,18 +41,7 @@ class StorageHomeVC: UIViewController {
         }
     }
     
-    private var items: [Item] = [] {
-        didSet {
-            segmentedControl.setTitle("None \(self.items.filter({$0.storageSection == .unsorted}).count)", forSegmentAt: 0)
-            segmentedControl.setTitle("Fridge \(self.items.filter({$0.storageSection == .fridge}).count)", forSegmentAt: 1)
-            segmentedControl.setTitle("Freezer \(self.items.filter({$0.storageSection == .freezer}).count)", forSegmentAt: 2)
-            segmentedControl.setTitle("Pantry \(self.items.filter({$0.storageSection == .pantry}).count)", forSegmentAt: 3)
-            let itms = self.items.map({$0.storageSection})
-            let boolean = FoodStorageType.isUnsortedSegmentNeeded(types: itms as! [FoodStorageType])
-            haveNeededSectionsInSegmentedControl(unsortedNeeded: boolean, segmentedControl: segmentedControl)
-            sortedItems = self.items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: searchBar.text ?? "")
-        }
-    }
+
     
     private var sortedItems: [Item] = [] {
         didSet {
@@ -55,6 +49,7 @@ class StorageHomeVC: UIViewController {
             handlePopUpView()
         }
     }
+    
     // MARK: override funcs
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,11 +62,11 @@ class StorageHomeVC: UIViewController {
         createObserver()
         
         if let id = SharedValues.shared.foodStorageID {
-            Item.readItemsForStorage(db: db, storageID: id) { (itms) in
-                self.items = itms
-            }
+            foodStorage = FoodStorage(isGroup: SharedValues.shared.isStorageWithGroup, groupID: id, peopleEmails: SharedValues.shared.groupEmails, items: nil, numberOfPeople: nil)
+            foodStorage?.readItemsForStorage(db: db, storageID: id)
+            
         } else {
-            self.items = []
+            foodStorage = nil
         }
         
         popUpView.shadow()
@@ -116,7 +111,13 @@ class StorageHomeVC: UIViewController {
         searchOutlet.setImage(UIImage(named: "search-3-xl"), for: .normal)
         searchBar.resignFirstResponder()
         searchBar.text = ""
-        sortedItems = items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: "")
+        
+        if let itms = foodStorage?.items {
+            sortedItems = itms.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: "")
+        } else {
+            sortedItems = []
+        }
+        
         
         currentlySelectedItems.removeAll()
     }
@@ -142,13 +143,20 @@ class StorageHomeVC: UIViewController {
             searchOutlet.setImage(UIImage(named: "search-3-xl"), for: .normal)
             searchBar.resignFirstResponder()
             segmentedControl.isHidden = false
-            sortedItems = items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: "")
+            
+            if let itms = foodStorage?.items {
+                sortedItems = itms.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: "")
+            } else {
+                sortedItems = []
+            }
+            
             searchBar.text = ""
         }
     }
     
     @IBAction func plusWasPressed(_ sender: Any) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "storageNewItem") as! StorageNewItemVC
+        vc.foodStorage = foodStorage
         var idx: Int {
             switch segmentedControl.selectedSegmentIndex {
             case 0:
@@ -185,7 +193,12 @@ class StorageHomeVC: UIViewController {
     }
     
     @IBAction func segmentedControlPressed(_ sender: Any) {
-        sortedItems = self.items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: searchBar.text ?? "")
+        if let itms = foodStorage?.items {
+            sortedItems = itms.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: searchBar.text ?? "")
+        } else {
+            sortedItems = []
+        }
+        
     }
     
     @IBAction func findRecipes(_ sender: Any) {
@@ -383,12 +396,49 @@ class StorageHomeVC: UIViewController {
     
     @objc private func observerSelectorFoodStorageID() {
         // food storage id changed
-        Item.readItemsForStorage(db: db, storageID: SharedValues.shared.foodStorageID ?? " ") { (itms) in
-            self.items = itms
+        foodStorage?.itemListener?.remove()
+        foodStorage?.items = []
+        
+        if let id = SharedValues.shared.foodStorageID {
+            foodStorage = FoodStorage(isGroup: SharedValues.shared.isStorageWithGroup, groupID: id, peopleEmails: SharedValues.shared.groupEmails, items: nil, numberOfPeople: nil)
+            foodStorage?.readItemsForStorage(db: db, storageID: id)
         }
+        
         tableView.reloadData()
     }
 }
+
+
+extension StorageHomeVC: FoodStorageDelegate {
+    func itemsUpdated() {
+        
+        segmentedControl.setTitle("None \(foodStorage?.items?.filter({$0.storageSection == .unsorted}).count ?? 0)", forSegmentAt: 0)
+        segmentedControl.setTitle("Fridge \(foodStorage?.items?.filter({$0.storageSection == .fridge}).count ?? 0)", forSegmentAt: 1)
+        segmentedControl.setTitle("Freezer \(foodStorage?.items?.filter({$0.storageSection == .freezer}).count ?? 0)", forSegmentAt: 2)
+        segmentedControl.setTitle("Pantry \(foodStorage?.items?.filter({$0.storageSection == .pantry}).count ?? 0)", forSegmentAt: 3)
+//        let itms = foodStorage?.items.map({$0.storageSection})
+        
+        var itms: [FoodStorageType] {
+            if let i = foodStorage?.items {
+                return i.map({($0.storageSection ?? .unsorted)})
+            } else {
+                return []
+            }
+        }
+        
+        let boolean = FoodStorageType.isUnsortedSegmentNeeded(types: itms)
+        haveNeededSectionsInSegmentedControl(unsortedNeeded: boolean, segmentedControl: segmentedControl)
+        
+        if let itms = foodStorage?.items {
+            sortedItems = itms.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: searchBar.text ?? "")
+        } else {
+            sortedItems = []
+        }
+        
+        
+    }
+}
+
 
 // MARK: Search bar
 extension StorageHomeVC: UISearchBarDelegate {
@@ -396,7 +446,12 @@ extension StorageHomeVC: UISearchBarDelegate {
         searchBar.resignFirstResponder()
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        sortedItems = items.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: searchBar.text ?? "")
+        if let itms = foodStorage?.items {
+            sortedItems = itms.sortItemsForTableView(segment: FoodStorageType.selectedSegment(segmentedControl: segmentedControl), searchText: searchBar.text ?? "")
+        } else {
+            sortedItems = []
+        }
+        
     }
 }
 
@@ -460,7 +515,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if SharedValues.shared.foodStorageID != nil {
-            if items.isEmpty == false {
+            if foodStorage?.items?.isEmpty == false {
                 return sortedItems.count
             } else {
                 return 1
@@ -473,7 +528,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if SharedValues.shared.foodStorageID != nil {
-            if items.isEmpty == false {
+            if foodStorage?.items?.isEmpty == false {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "storageCell") as! StorageCell
                 let item = sortedItems[indexPath.row]
                 cell.setUI(item: item)
@@ -497,7 +552,7 @@ extension StorageHomeVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if SharedValues.shared.foodStorageID != nil && !items.isEmpty {
+        if SharedValues.shared.foodStorageID != nil && !(foodStorage?.items?.isEmpty ?? true) {
             return true
         } else {
             return false

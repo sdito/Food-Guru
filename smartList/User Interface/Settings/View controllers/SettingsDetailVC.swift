@@ -346,7 +346,7 @@ class SettingsDetailVC: UIViewController {
     @objc private func leaveGroupAction() {
         let alert = UIAlertController(title: "Are you sure you want to leave your group?", message: nil, preferredStyle: .alert)
         
-        alert.addAction(.init(title: "Leave group?", style: .destructive, handler: {(alert: UIAlertAction!) in User.leaveGroupUser(db: self.db, groupID: SharedValues.shared.groupID ?? " ")}))
+        alert.addAction(.init(title: "Leave group", style: .destructive, handler: {(alert: UIAlertAction!) in User.leaveGroupUser(db: self.db, groupID: SharedValues.shared.groupID ?? " ")}))
         alert.addAction(.init(title: "Back", style: .cancel, handler: nil))
         present(alert, animated: true)
     }

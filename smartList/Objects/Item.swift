@@ -119,28 +119,9 @@ struct Item: Equatable {
         ])
     }
     
-    static func readItemsForStorage(db: Firestore!, storageID: String, itemsChanged: @escaping (_ items: [Item]) -> Void) {
-        var storageItems: [Item] = []
-        db.collection("storages").document(storageID).collection("items").addSnapshotListener { (querySnapshot, error) in
-            storageItems.removeAll()
-            guard let documents = querySnapshot?.documents else {
-                print("Error fetching documents: \(String(describing: error))")
-                return
-            }
-            
-            for doc in documents {
-                let systemItem = GenericItem(rawValue: doc.get("systemItem") as? String ?? "other")
-                let systemCategory = Category(rawValue: doc.get("systemCategory") as? String ?? "other")
-                let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as? String), ownID: doc.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (doc.get("storageSection") as? String ?? " ")), timeAdded: doc.get("timeAdded") as? TimeInterval, timeExpires: doc.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory, quantity: doc.get("quantity") as? String)
-                if storageItems.isEmpty == false {
-                    storageItems.append(i)
-                } else {
-                    storageItems = [i]
-                }
-            }
-            itemsChanged(storageItems)
-        }
-    }
+    
+    
+    
     static func readItemsForStorageNoListener(db: Firestore, storageID: String, itemsReturned: @escaping (_ items: [Item]) -> Void) {
         var storageItems: [Item] = []
         db.collection("storages").document(storageID).collection("items").getDocuments { (querySnapshot, error) in

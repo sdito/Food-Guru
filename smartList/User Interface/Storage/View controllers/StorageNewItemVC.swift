@@ -18,6 +18,9 @@ class StorageNewItemVC: UIViewController {
     @IBOutlet weak var switchOutlet: UISwitch!
     
     var db: Firestore!
+    
+    var foodStorage: FoodStorage?
+    private var newItemVC: CreateNewItemVC?
     private var keyboardHeight: CGFloat?
     private var delegate: SearchAssistantDelegate!
     private var textAssistantViewActive = false
@@ -42,7 +45,9 @@ class StorageNewItemVC: UIViewController {
         nameTextField.becomeFirstResponder()
         nameTextField.setUpDoneToolbar(action: #selector(doneAction), style: .done)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
     }
+    
     // MARK: @IBAction funcs
     @IBAction func switchAction(_ sender: Any) {
         switch switchOutlet.isOn {
@@ -56,6 +61,12 @@ class StorageNewItemVC: UIViewController {
     @IBAction func textDidChange(_ sender: Any) {
         if textAssistantViewActive == false {
             let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
+            self.newItemVC = vc
+            vc.isForList = false
+            if let itms = foodStorage?.items {
+                vc.itemsFromList = itms.map({$0.name})
+            }
+        
             self.addChild(vc)
             self.view.addSubview(vc.tableView)
             vc.didMove(toParent: self)
@@ -102,6 +113,8 @@ class StorageNewItemVC: UIViewController {
     
     // MARK: functions
     @objc private func doneAction() {
+        nameTextField.text = ""
+        delegate.searchTextChanged(text: "")
         nameTextField.resignFirstResponder()
     }
     

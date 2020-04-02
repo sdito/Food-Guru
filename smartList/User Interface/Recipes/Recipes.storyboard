@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -1125,13 +1125,41 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="qHI-gP-i0G">
                                                 <rect key="frame" x="0.0" y="569" width="414" height="62.5"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Servings: 8" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGk-bM-ZyD">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HqK-5s-MhH">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="22.5"/>
-                                                        <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" verticalHuggingPriority="247" translatesAutoresizingMaskIntoConstraints="NO" id="XPw-RX-Ow1">
+                                                                <rect key="frame" x="0.0" y="0.0" width="156.5" height="22.5"/>
+                                                                <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </view>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Servings:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGk-bM-ZyD">
+                                                                <rect key="frame" x="156.5" y="0.0" width="71" height="22.5"/>
+                                                                <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="22.5" id="RaJ-uO-mNQ"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ToZ-1Z-3N2">
+                                                                <rect key="frame" x="227.5" y="0.0" width="30" height="22.5"/>
+                                                                <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                                                <state key="normal" title="8"/>
+                                                                <connections>
+                                                                    <action selector="changeServingsButton:" destination="1BH-AS-PDt" eventType="touchUpInside" id="k5N-U1-BJN"/>
+                                                                </connections>
+                                                            </button>
+                                                            <view contentMode="scaleToFill" verticalHuggingPriority="247" verticalCompressionResistancePriority="748" translatesAutoresizingMaskIntoConstraints="NO" id="zDl-85-AoH">
+                                                                <rect key="frame" x="257.5" y="0.0" width="156.5" height="22.5"/>
+                                                                <color key="backgroundColor" systemColor="secondarySystemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.16" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </view>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="XPw-RX-Ow1" firstAttribute="width" secondItem="zDl-85-AoH" secondAttribute="width" id="obH-sm-bcw"/>
+                                                        </constraints>
+                                                    </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d8L-PA-viT">
                                                         <rect key="frame" x="0.0" y="22.5" width="414" height="40"/>
                                                         <subviews>
@@ -1346,6 +1374,7 @@
                         <outlet property="scaleSV" destination="qHI-gP-i0G" id="hqv-ql-sZZ"/>
                         <outlet property="scaleSlider" destination="nVP-oK-RAZ" id="yf7-mR-xxn"/>
                         <outlet property="scrollView" destination="SRZ-od-WWc" id="rXZ-Jv-f4j"/>
+                        <outlet property="servingSliderNumber" destination="ToZ-1Z-3N2" id="AJH-Uq-nL9"/>
                         <outlet property="servings" destination="jWd-O3-jHu" id="IYl-8g-HxL"/>
                         <outlet property="servingsFromSliderLabel" destination="PGk-bM-ZyD" id="ivo-6e-pU5"/>
                         <outlet property="servingsSV" destination="o6c-Da-6hE" id="snr-4y-Gsw"/>
@@ -1665,6 +1694,11 @@
             <point key="canvasLocation" x="-610" y="394"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="egj-PB-qyh"/>
+        <segue reference="zuL-PG-4um"/>
+    </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>
         <image name="add-file-xl" width="64" height="64"/>
         <image name="arrow.up" width="50" height="50"/>
@@ -1672,9 +1706,4 @@
         <image name="heart.black.white" width="100" height="100"/>
         <image name="link-5-xl" width="26" height="26"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="egj-PB-qyh"/>
-        <segue reference="zuL-PG-4um"/>
-    </inferredMetricsTieBreakers>
-    <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

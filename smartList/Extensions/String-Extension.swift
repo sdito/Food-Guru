@@ -528,7 +528,7 @@ extension Sequence where Element == String {
                                 runningAmount.0 += (number * runningAmount.1)
                             }
                         } else {
-                            print("Unable to cast to number")
+                            print("Unable to cast to number: \(num)")
                         }
                     }
                 }

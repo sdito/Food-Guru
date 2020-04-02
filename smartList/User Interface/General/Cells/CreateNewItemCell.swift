@@ -14,8 +14,23 @@ class CreateNewItemCell: UITableViewCell {
     @IBOutlet weak var img: UIImageView!
     
     
-    func setUI(text: String, inItems: Bool) {
+    func setUI(text: String, inItems: Bool, list: Bool) {
+        print("Is for list: \(list)")
+        
+        
         label.text = text
+        
+        var iconImage: UIImage {
+            switch list {
+            case true:
+                return UIImage(named: "list_icon")!
+            case false:
+                return UIImage(named: "storage_icon")!
+            }
+        }
+        
+        img.image = iconImage
+        
         if inItems {
             img.isHidden = false
         } else {

@@ -238,7 +238,7 @@ struct User {
         
         db.collection("users").document(SharedValues.shared.userID ?? " ").updateData([
             "groupID": FieldValue.delete(),
-            "mealPlanID": FieldValue.delete()
+            "mealPlannerID": FieldValue.delete()
         ])
         
         

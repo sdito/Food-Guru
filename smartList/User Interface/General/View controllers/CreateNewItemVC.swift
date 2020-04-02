@@ -18,7 +18,7 @@ protocol CreateNewItemDelegate {
 class CreateNewItemVC: UITableViewController {
     
     var delegate: CreateNewItemDelegate!
-    
+    var isForList: Bool = true
     private var searchText: String = "" {
         didSet {
             if self.searchText == "" {
@@ -57,8 +57,6 @@ class CreateNewItemVC: UITableViewController {
         tableView.isHidden = true
     }
     
-    
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return searchedItems.count
     }
@@ -70,7 +68,7 @@ class CreateNewItemVC: UITableViewController {
         var contains: Bool {
             return itemsFromList.map({$0.lowercased()}).contains(text.lowercased())
         }
-        cell.setUI(text: text, inItems: contains)
+        cell.setUI(text: text, inItems: contains, list: isForList)
         
         return cell
     }
