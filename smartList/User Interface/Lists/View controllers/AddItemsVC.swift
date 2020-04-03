@@ -411,11 +411,28 @@ extension AddItemsVC: CreateNewItemDelegate {
 // have the cells organized by
 extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sortedCategories.count
+        let completeCount = arrayArrayItems.joined().count
+        if completeCount == 0 {
+            return 1
+        } else {
+            return sortedCategories.count
+        }
     }
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let completeCount = arrayArrayItems.joined().count
+        
+        
+        var sectionTitle: String {
+            if completeCount == 0 {
+                return "Items"
+            } else {
+                return sortedCategories[section]
+            }
+        }
+        
         let l = UILabel()
-        l.text = sortedCategories[section]
+        l.text = sectionTitle
         
         if SharedValues.shared.isPhone == true {
             l.font = UIFont(name: "futura", size: 15)
@@ -434,19 +451,40 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
         l.textAlignment = .center
         return l
         
+        
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrayArrayItems[section].count
+        let completeCount = arrayArrayItems.joined().count
+        if completeCount == 0 {
+            // Need to have something telling the user that there are no items for this store, if there are stores, etc
+            return 1
+        } else {
+            return arrayArrayItems[section].count
+        }
+        
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if arrayArrayItems.isEmpty == false {
+        let completeCount = arrayArrayItems.joined().count
+        if completeCount != 0 {
             let item = arrayArrayItems[indexPath.section][indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell") as! ItemCell
             cell.setUI(item: item)
             cell.delegate = self
             return cell
         } else {
-            return UITableViewCell()
+            var cellText: String {
+                if currentStore == "" || list?.stores?.count == 1 || currentStore == "_Trader Joe's" {
+                    return "No items in list yet!"
+                } else {
+                    return "\(currentStore) doesn't have any items yet!"
+                }
+            }
+            let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
+            cell.textLabel?.text = cellText
+            cell.textLabel?.font = UIFont(name: "futura", size: 17)
+            cell.textLabel?.textAlignment = .center
+            cell.textLabel?.numberOfLines = 0
+            return cell
         }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -456,16 +494,21 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
         tableView.reloadData()
     }
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+        let completeCount = arrayArrayItems.joined().count
+        if completeCount == 0 {
+            return false
+        } else {
+            return true
+        }
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let item = arrayArrayItems[indexPath.section][indexPath.row]
-        tableView.beginUpdates()
-        self.tableView.deleteRows(at: [indexPath], with: .automatic)
-        arrayArrayItems[indexPath.section].remove(at: indexPath.row)
-        tableView.endUpdates()
         item.deleteItemFromList(db: db, listID: list?.docID ?? " ")
+//        list?.items?.removeAll(where: { (itm) -> Bool in
+//            itm.ownID == item.ownID
+//        })
+        tableView.reloadData()
     }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
@@ -590,7 +633,8 @@ extension AddItemsVC: GroceryListDelegate {
             (sortedCategories, arrayArrayItems) = (list?.sortForTableView(from: currentStore))!
             tableView.reloadData()
         } else {
-            arrayArrayItems = []
+            (sortedCategories, arrayArrayItems) = ([], [])
+            tableView.reloadData()
         }
         
         if let listItems = list?.items {

@@ -258,7 +258,6 @@ class RecipeDetailVC: UIViewController {
             v.removeFromSuperview()
         }
         
-        
         self.title = recipe.name
         
         let v = UIView()

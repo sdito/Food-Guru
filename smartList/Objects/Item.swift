@@ -102,7 +102,7 @@ struct Item: Equatable {
     // MARK: Storage
     
     func writeToFirestoreForStorage(db: Firestore!, docID: String) {
-       let reference = db.collection("storages").document(docID).collection("items").document()
+        let reference = db.collection("storages").document(docID).collection("items").document()
         reference.setData([
             "name": self.name,
             "selected": false,
