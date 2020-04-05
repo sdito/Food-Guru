@@ -396,16 +396,6 @@ class AddItemsVC: UIViewController {
 
 }
 
-// MARK: CreateNewItemDelegate
-extension AddItemsVC: CreateNewItemDelegate {
-    func itemCreated(item: Item) {
-        toAddItem(text: item.name)
-        textField.text = ""
-        textAssistantViewActive = false
-    }
-    
-}
-
 
 // MARK: Table view
 // have the cells organized by
@@ -522,6 +512,16 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: CreateNewItemDelegate
+extension AddItemsVC: CreateNewItemDelegate {
+    func itemCreated(item: Item) {
+        toAddItem(text: item.name)
+        textField.text = ""
+        textAssistantViewActive = false
+    }
+    
+}
+
 // MARK: ItemCellDelegate
 extension AddItemsVC: ItemCellDelegate {
     func edit(item: Item, sender: UIView) {
@@ -537,7 +537,8 @@ extension AddItemsVC: ItemCellDelegate {
         let actionSheet = UIAlertController(title: nil, message: text, preferredStyle: .actionSheet)
         actionSheet.addAction(.init(title: "Change quantity", style: .default, handler: { (alert) in
             print("Need to change quantity here")
-            self.quantityAlert(item: item)
+//            self.quantityAlert(item: item)
+            self.createEditQuantityView(currQuantity: item.quantity)
         }))
         
         actionSheet.addAction(.init(title: "Edit name", style: .default, handler: { alert in
@@ -564,21 +565,21 @@ extension AddItemsVC: ItemCellDelegate {
         }
     }
     
-    private func quantityAlert(item: Item) {
-        // could clean up string presenting format
-        let alert = UIAlertController(title: nil, message: "Add quantity for \(item.name)", preferredStyle: .alert)
-        alert.addTextField { (txtField) in
-            txtField.keyboardType = .numbersAndPunctuation
-            txtField.textColor = Colors.main
-        }
-        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(.init(title: "Done", style: .default, handler: { (action) in
-            if let itemID = item.ownID, let listID = self.list?.ownID, let quantity = alert.textFields?.first?.text {
-                Item.updateItemForListQuantity(quantity: quantity, itemID: itemID, listID: listID, db: self.db)
-            }
-        }))
-        present(alert, animated: true)
-    }
+//    private func quantityAlert(item: Item) {
+//        // could clean up string presenting format
+//        let alert = UIAlertController(title: nil, message: "Add quantity for \(item.name)", preferredStyle: .alert)
+//        alert.addTextField { (txtField) in
+//            txtField.keyboardType = .numbersAndPunctuation
+//            txtField.textColor = Colors.main
+//        }
+//        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+//        alert.addAction(.init(title: "Done", style: .default, handler: { (action) in
+//            if let itemID = item.ownID, let listID = self.list?.ownID, let quantity = alert.textFields?.first?.text {
+//                Item.updateItemForListQuantity(quantity: quantity, itemID: itemID, listID: listID, db: self.db)
+//            }
+//        }))
+//        present(alert, animated: true)
+//    }
     
     private func nameAlert(item: Item) {
         let alert = UIAlertController(title: nil, message: "Edit name for \(item.name)", preferredStyle: .alert)
@@ -651,8 +652,17 @@ extension AddItemsVC: GroceryListDelegate {
         tableView.reloadData()
     }
     
-    
 }
+
+
+// MARK: EditQuantityViewDelegate
+extension AddItemsVC: EditQuantityViewDelegate {
+    func newQuantity(_ quantity: String?) {
+        #warning("need to finish implementation, also need to do for storage")
+        print("Quantity recieved from delegate: \(quantity!)")
+    }
+}
+
 
 
 // MARK: Text field delegate

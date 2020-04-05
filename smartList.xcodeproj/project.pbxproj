@@ -36,6 +36,8 @@
 		E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
 		E216207622F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
 		E216207722F659860074A0DF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E216207422F659860074A0DF /* GoogleService-Info.plist */; };
+		E226317224392BD000DCBB1A /* EditQuantityView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E226317124392BD000DCBB1A /* EditQuantityView.xib */; };
+		E226317424392BDE00DCBB1A /* EditQuantityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E226317324392BDE00DCBB1A /* EditQuantityView.swift */; };
 		E22A0EF423AC03C5007D7272 /* OutsideRecipesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A0EF323AC03C5007D7272 /* OutsideRecipesVC.swift */; };
 		E22A0EF623AC064F007D7272 /* RecipePuppyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A0EF523AC064F007D7272 /* RecipePuppyCell.swift */; };
 		E22A0EF823AD9238007D7272 /* SettingViewedRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22A0EF723AD9238007D7272 /* SettingViewedRecipeCell.swift */; };
@@ -206,6 +208,8 @@
 		E216206622F658D20074A0DF /* smartListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = smartListUITests.swift; sourceTree = "<group>"; };
 		E216206822F658D20074A0DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E216207422F659860074A0DF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E226317124392BD000DCBB1A /* EditQuantityView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditQuantityView.xib; sourceTree = "<group>"; };
+		E226317324392BDE00DCBB1A /* EditQuantityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditQuantityView.swift; sourceTree = "<group>"; };
 		E22A0EF323AC03C5007D7272 /* OutsideRecipesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutsideRecipesVC.swift; sourceTree = "<group>"; };
 		E22A0EF523AC064F007D7272 /* RecipePuppyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipePuppyCell.swift; sourceTree = "<group>"; };
 		E22A0EF723AD9238007D7272 /* SettingViewedRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewedRecipeCell.swift; sourceTree = "<group>"; };
@@ -454,6 +458,15 @@
 			path = smartListUITests;
 			sourceTree = "<group>";
 		};
+		E226317524392BE300DCBB1A /* EditQuantityView */ = {
+			isa = PBXGroup;
+			children = (
+				E226317124392BD000DCBB1A /* EditQuantityView.xib */,
+				E226317324392BDE00DCBB1A /* EditQuantityView.swift */,
+			);
+			path = EditQuantityView;
+			sourceTree = "<group>";
+		};
 		E242494C23BFF809007C03F5 /* View controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -634,6 +647,7 @@
 				E2E940E323DF5022009C4BED /* Cells */,
 				E2AE35D123CA36C800D19E38 /* SuggestTutorialView */,
 				E2DC33D5241EDD90001A01C1 /* LoadingView */,
+				E226317524392BE300DCBB1A /* EditQuantityView */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -1028,6 +1042,7 @@
 				E2F380B023198496003857F7 /* IngredientView.xib in Resources */,
 				E28A4CC323DE819400C94DF9 /* Settings.storyboard in Resources */,
 				E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */,
+				E226317224392BD000DCBB1A /* EditQuantityView.xib in Resources */,
 				E28A4CC523DE840D00C94DF9 /* MealPlanner.storyboard in Resources */,
 				E216204E22F658D20074A0DF /* Assets.xcassets in Resources */,
 				E242494923BFDD5E007C03F5 /* Tutorial.storyboard in Resources */,
@@ -1250,6 +1265,7 @@
 				E2E529D222FA7F9100C55DA0 /* GroceryList.swift in Sources */,
 				E28A4CC723DE841D00C94DF9 /* MealPlannerHomeVC.swift in Sources */,
 				E2B6273D23C307890039459B /* SixTutorialVC.swift in Sources */,
+				E226317424392BDE00DCBB1A /* EditQuantityView.swift in Sources */,
 				E2C49343230887F3002907C2 /* User.swift in Sources */,
 				E2B8E947237C865D0051B07D /* PDFCreator.swift in Sources */,
 				E2A54E1E2318553400BEBF39 /* InstructionView.swift in Sources */,

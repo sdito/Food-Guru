@@ -12,7 +12,13 @@ import UIKit
 
 extension String {
     
-    
+    func splitIngredientToNumberAndQuantity() -> (wholeNumber: String, fraction: String, quantity: String) {
+        #warning("left off here")
+        if let idx = self.first(where: {$0.isLetter}) {
+            
+        }
+        return ("", "", "")
+    }
     
     func getPreviousMonth() -> String {
         var monthYear = self.split(separator: ".").map({Int($0)!})
