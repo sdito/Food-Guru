@@ -12,12 +12,155 @@ import UIKit
 
 extension String {
     
-    func splitIngredientToNumberAndQuantity() -> (wholeNumber: String, fraction: String, quantity: String) {
-        #warning("left off here")
-        if let idx = self.first(where: {$0.isLetter}) {
-            
+    func splitIngredientToNumberAndQuantity() -> (wholeNumber: String?, fraction: String?, quantity: String) {
+        var idx: String.Index {
+            let one = self.firstIndex(where: {$0.isLetter})
+            if one != nil {
+                return one!
+            } else {
+                return self.endIndex
+            }
         }
-        return ("", "", "")
+            
+        let numberString = String(self[self.startIndex..<idx])
+        let numberParts = numberString.split(separator: " ").map({String($0)})
+        let endPart = String(self[idx...])
+        if numberParts.count == 0 {
+            return (nil, nil, self)
+        } else if numberParts.count == 1 {
+            let part = numberParts[0]
+            if part.contains("/") {
+                return ("0", part, endPart)
+            } else {
+                return (part, nil, endPart)
+            }
+            
+        } else if numberParts.count == 2 {
+            
+            return (numberParts[0], numberParts[1], endPart)
+        } else {
+            return (nil, nil, self)
+        }
+    }
+    
+    func getMeasurement(wholeNumber: String?, fraction: String?) -> String {
+        
+        var isPlural: Bool {
+            if wholeNumber == "0" || (wholeNumber == "1" && (fraction == nil || fraction == "")) {
+                return false
+            } else {
+                return true
+            }
+        }
+        
+        switch self {
+        case "cup":
+            switch isPlural {
+            case true:
+                return "cups"
+            case false:
+                return "cup"
+            }
+        case "can":
+            switch isPlural {
+            case true:
+                return "cans"
+            case false:
+                return "can"
+            }
+        case "oz":
+            switch isPlural {
+            case true:
+                return "ounces"
+            case false:
+                return "ounce"
+            }
+        case "gal":
+            switch isPlural {
+            case true:
+                return "gallons"
+            case false:
+                return "gallon"
+            }
+        case "lb":
+            switch isPlural {
+            case true:
+                return "pound"
+            case false:
+                return "pounds"
+            }
+        case "tsp":
+            switch isPlural {
+            case true:
+                return "teaspoon"
+            case false:
+                return "teaspoons"
+            }
+        case "tbsp":
+            switch isPlural {
+            case true:
+                return "tablespoons"
+            case false:
+                return "tablespoon"
+            }
+        case "bag":
+            switch isPlural {
+            case true:
+                return "bags"
+            case false:
+                return "bag"
+            }
+        case "jar":
+            switch isPlural {
+            case true:
+                return "jars"
+            case false:
+                return "jar"
+            }
+        case "box":
+            switch isPlural {
+            case true:
+                return "boxes"
+            case false:
+                return "box"
+            }
+        case "bttl":
+            switch isPlural {
+            case true:
+                return "bottles"
+            case false:
+                return "bottle"
+            }
+        case "pckg":
+            switch isPlural {
+            case true:
+                return "packages"
+            case false:
+                return "package"
+            }
+        case "g":
+            switch isPlural {
+            case true:
+                return "grams"
+            case false:
+                return "gram"
+            }
+        case "L":
+            switch isPlural {
+            case true:
+                return "liters"
+            case false:
+                return "liter"
+            }
+        case "kg":switch isPlural {
+        case true:
+            return "kilograms"
+        case false:
+            return "kilogram"
+        }
+        default:
+            return self
+        }
     }
     
     func getPreviousMonth() -> String {

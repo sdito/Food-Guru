@@ -188,6 +188,11 @@ class FoodStorage {
                     let systemItem = GenericItem(rawValue: doc.get("systemItem") as? String ?? "other")
                     let systemCategory = Category(rawValue: doc.get("systemCategory") as? String ?? "other")
                     let i = Item(name: doc.get("name") as! String, selected: doc.get("selected")! as! Bool, category: (doc.get("category") as! String), store: (doc.get("store") as! String), user: (doc.get("user") as? String), ownID: doc.documentID, storageSection: FoodStorageType.stringToFoodStorageType(string: (doc.get("storageSection") as? String ?? " ")), timeAdded: doc.get("timeAdded") as? TimeInterval, timeExpires: doc.get("timeExpires") as? TimeInterval, systemItem: systemItem, systemCategory: systemCategory, quantity: doc.get("quantity") as? String)
+                    
+                    if d.type == .modified {
+                        self.items?.removeAll(where: {$0.ownID == i.ownID})
+                    }
+                    
                     self.items?.append(i)
                     
                 case .removed:

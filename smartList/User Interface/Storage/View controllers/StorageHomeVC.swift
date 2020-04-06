@@ -297,7 +297,7 @@ class StorageHomeVC: UIViewController {
     }
     @IBAction func editQuantityPressed(_ sender: Any) {
         if let itm = currentlySelectedItems.first {
-            quantityAlert(item: itm)
+            self.createEditQuantityView(item: itm)
         }
     }
     // MARK: functions
@@ -335,31 +335,13 @@ class StorageHomeVC: UIViewController {
                 if name != "" {
                     Item.updateItemForStorageName(name: name, itemID: itemID, storageID: storageID, db: self.db)
                     self.currentlySelectedItems.removeAll()
-                    self.tableView.reloadData()
+                    
                 }
             }
         }))
         present(alert, animated: true)
     }
     
-    private func quantityAlert(item: Item) {
-        let alert = UIAlertController(title: nil, message: "Edit quantity for \(item.name)", preferredStyle: .alert)
-        alert.addTextField { (txtField) in
-            txtField.text = item.quantity
-            txtField.textColor = Colors.main
-        }
-        
-        alert.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
-        alert.addAction(.init(title: "Done", style: .default, handler: { action in
-            
-            if let storageID = SharedValues.shared.foodStorageID, let itemID = item.ownID, let quantity = alert.textFields?.first?.text {
-                Item.updateItemForStorageQuantity(quantity: quantity, itemID: itemID, storageID: storageID, db: self.db)
-                self.currentlySelectedItems.removeAll()
-                self.tableView.reloadData()
-            }
-        }))
-        present(alert, animated: true)
-    }
     
     private func handleCellSortingTo(segment: String) {
         
@@ -614,5 +596,25 @@ extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationController
             Item.getItemFromBarcode(image: image, vc: self, picker: picker, db: db)
 
         }
+    }
+}
+
+
+extension StorageHomeVC: EditQuantityViewDelegate {
+    func newQuantity(item: Item, quantity: String?) {
+        
+        var qua: String {
+            if let q = quantity {
+                return q
+            } else {
+                return ""
+            }
+        }
+        
+        if let storageID = SharedValues.shared.foodStorageID, let itemID = item.ownID {
+            self.currentlySelectedItems.removeAll()
+            Item.updateItemForStorageQuantity(quantity: qua, itemID: itemID, storageID: storageID, db: self.db)
+        }
+        
     }
 }

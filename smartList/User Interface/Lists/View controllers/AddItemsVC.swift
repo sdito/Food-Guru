@@ -538,7 +538,7 @@ extension AddItemsVC: ItemCellDelegate {
         actionSheet.addAction(.init(title: "Change quantity", style: .default, handler: { (alert) in
             print("Need to change quantity here")
 //            self.quantityAlert(item: item)
-            self.createEditQuantityView(currQuantity: item.quantity)
+            self.createEditQuantityView(item: item)
         }))
         
         actionSheet.addAction(.init(title: "Edit name", style: .default, handler: { alert in
@@ -657,10 +657,24 @@ extension AddItemsVC: GroceryListDelegate {
 
 // MARK: EditQuantityViewDelegate
 extension AddItemsVC: EditQuantityViewDelegate {
-    func newQuantity(_ quantity: String?) {
-        #warning("need to finish implementation, also need to do for storage")
-        print("Quantity recieved from delegate: \(quantity!)")
+    func newQuantity(item: Item, quantity: String?) {
+        var qua: String {
+            if let q = quantity {
+                return q
+            } else {
+                return ""
+            }
+        }
+        
+        print("\(item.name)'s new quantity is \(qua)")
+        
+        if let itemID = item.ownID, let listID = list?.ownID {
+            Item.updateItemForListQuantity(quantity: qua, itemID: itemID, listID: listID, db: db)
+        }
+        
+        
     }
+    
 }
 
 

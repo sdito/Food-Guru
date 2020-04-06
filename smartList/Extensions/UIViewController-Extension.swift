@@ -153,7 +153,7 @@ extension UIViewController {
         }
     }
     
-    func createEditQuantityView(currQuantity: String?) {
+    func createEditQuantityView(item: Item) {
         let vc = UIViewController()
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -165,7 +165,7 @@ extension UIViewController {
         vc.view.insertSubview(button, at: 1)
         
         let v = Bundle.main.loadNibNamed("EditQuantityView", owner: nil, options: nil)?.first as! EditQuantityView
-        v.setUI(quantity: currQuantity, fromVC: self)
+        v.setUI(item: item, fromVC: self)
 //        v.delegate = delegateVC as? SelectDateViewDelegate
         v.center.x = vc.view.center.x
         v.center.y = vc.view.center.y
