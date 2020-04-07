@@ -26,10 +26,13 @@ class EditQuantityView: UIView {
     
     weak var delegate: EditQuantityViewDelegate!
     
+    @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var cancelOutlet: UIButton!
     @IBOutlet weak var doneOutlet: UIButton!
     
+    
+    @IBOutlet var wholeNumberButtons: [UIButton]!
     @IBOutlet var quantityButtons: [UIButton]!
     @IBOutlet var measurementButtons: [UIButton]!
     
@@ -46,7 +49,7 @@ class EditQuantityView: UIView {
         
         [cancelOutlet, doneOutlet].forEach { (btn) in
             btn?.layer.cornerRadius = 5.0
-            btn?.layer.borderWidth = 2.0
+            btn?.layer.borderWidth = 1.0
             btn?.layer.borderColor = Colors.secondary.cgColor
             btn?.clipsToBounds = true
         }
@@ -58,12 +61,16 @@ class EditQuantityView: UIView {
             btn.layer.cornerRadius = 5.0
             btn.addTarget(self, action: #selector(measurementOutlet(_:)), for: .touchUpInside)
         }
+        wholeNumberButtons.forEach { (btn) in
+            btn.layer.cornerRadius = 5.0
+            btn.addTarget(self, action: #selector(wholeNumberAction(_:)), for: .touchUpInside)
+        }
         
         let useMetricForQuantity = defaults.bool(forKey: "useMetricForQuantity")
         if useMetricForQuantity {
             turnToMetric()
         }
-        
+        topLabel.text = "Set quantity for \(item.name)"
     }
     
     // MARK: IBAction funcs
@@ -78,7 +85,7 @@ class EditQuantityView: UIView {
     }
     
     @IBAction func minusQuantity(_ sender: Any) {
-        if let text = wholeNumberPart, let number = Int(text) {
+        if let text = wholeNumberPart, let number = Int(text), number != 0 {
             wholeNumberPart = "\(number - 1)"
             setTextFieldText()
         }
@@ -121,7 +128,6 @@ class EditQuantityView: UIView {
     // MARK: Functions
     
     private func turnToMetric() {
-        #warning("need to complete and implement")
         for btn in measurementButtons {
             if btn.titleLabel?.text == "oz" {
                 btn.setTitle("g", for: .normal)
@@ -135,7 +141,6 @@ class EditQuantityView: UIView {
     }
     
     private func turnToStandard() {
-        #warning("need to complete and implement")
         for btn in measurementButtons {
             if btn.titleLabel?.text == "g" {
                 btn.setTitle("oz", for: .normal)
@@ -143,6 +148,32 @@ class EditQuantityView: UIView {
                 btn.setTitle("gal", for: .normal)
             } else if btn.titleLabel?.text == "kg" {
                 btn.setTitle("lb", for: .normal)
+            }
+        }
+        
+    }
+    
+    @objc private func wholeNumberAction(_ sender: UIButton) {
+        // each button's tag represents the number, tag of 10 is for the delete button
+        let tag = sender.tag
+        if tag == 10 {
+            if wholeNumberPart != nil && wholeNumberPart!.count > 0 {
+                wholeNumberPart?.removeLast()
+                if wholeNumberPart == "" {
+                    wholeNumberPart = "0"
+                }
+                setTextFieldText()
+            }
+        } else {
+            if wholeNumberPart != nil {
+                wholeNumberPart?.append("\(tag)")
+                if wholeNumberPart?.first == "0" {
+                    wholeNumberPart?.removeFirst()
+                }
+                setTextFieldText()
+            } else {
+                wholeNumberPart = "\(tag)"
+                setTextFieldText()
             }
         }
         
@@ -182,7 +213,7 @@ class EditQuantityView: UIView {
                 str = "\(str) \(partTwo)"
             }
         }
-        
+
         let displayQuantity = quantityPart.getMeasurement(wholeNumber: wholeNumberPart, fraction: fractionPart)
         if str == "" {
             str = displayQuantity

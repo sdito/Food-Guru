@@ -22,14 +22,21 @@ class SelectDateView: UIView {
     @IBOutlet weak var recipeNameLabel: UILabel!
     @IBOutlet weak var datePicker: UIDatePicker!
     
+    var forRecipeDetail = false
     var copyRecipe = false
     weak var delegate: SelectDateViewDelegate!
     private var recipe: MealPlanner.RecipeTransfer?
     
-    func setUI(recipe: MealPlanner.RecipeTransfer, copyRecipe: Bool) {
+    func setUI(recipe: MealPlanner.RecipeTransfer, copyRecipe: Bool, forRecipeDetail: Bool = false) {
         self.recipe = recipe
         self.copyRecipe = copyRecipe
-        recipeNameLabel.text = "Change date for \(recipe.name)"
+        
+        if forRecipeDetail {
+            recipeNameLabel.text = "Add \(recipe.name) to your meal planner"
+        } else {
+            recipeNameLabel.text = "Change date for \(recipe.name)"
+        }
+        
     }
     
     @IBAction func doneButtonPressed(_ sender: Any) {

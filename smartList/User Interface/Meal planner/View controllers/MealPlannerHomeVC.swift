@@ -378,7 +378,7 @@ extension MealPlannerHomeVC: CreateRecipeForMealPlannerDelegate {
         if let shortDate = shortDate {
             let mpcbr = MPCookbookRecipe()
             mpcbr.set(cookbookRecipe: recipe, date: shortDate)
-            mealPlanner.addRecipeToPlanner(recipe: mpcbr, shortDate: shortDate, mealType: .none, previousID: nil)
+            MealPlanner.addRecipeToPlanner(db: db, recipe: mpcbr, shortDate: shortDate, mealType: .none, previousID: nil)
         }
     }
 }

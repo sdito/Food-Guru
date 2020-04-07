@@ -52,7 +52,6 @@ extension String {
                 return true
             }
         }
-        
         switch self {
         case "cup":
             switch isPlural {

@@ -212,6 +212,21 @@ class RecipeDetailVC: UIViewController {
         
     }
     
+    #warning("button to add recipe to meal planner from recipe detail vc is needed")
+    @IBAction func addToMealPlanner(_ sender: Any) {
+        print("Need to add the recipe to the meal planner")
+        var recipeTitle: String {
+            if let cbr = cookbookRecipe {
+                return cbr.name
+            } else if let recipe = data?.recipe {
+                return recipe.name
+            } else {
+                return "recipe"
+            }
+        }
+        self.createDatePickerView(delegateVC: self, recipe: MealPlanner.RecipeTransfer(date: "date", id: "id", name: recipeTitle), copyRecipe: false, forRecipeDetail: true)
+    }
+    
     @IBAction func changeServingsButton(_ sender: Any) {
         print("Change to specific number of servings")
         var recipeTitle: String {
@@ -241,8 +256,7 @@ class RecipeDetailVC: UIViewController {
                 }
                 self.newServingsValue = num
                 self.editingOnSliderDoneHelper()
-                #warning("left off here, value is not updating ingredients")
-            }
+            } 
             
         }))
         present(alert, animated: true)
@@ -549,17 +563,35 @@ extension RecipeDetailVC: GiveRatingViewDelegate {
                         self.createMessageView(color: Colors.messageGreen, text: "Wrote over your previous review")
                     }
                 }
-                
-                
-                
             }
         }
-        
-        
-        
-        
+    }
+}
+
+
+// MARK: SelectDateViewDelegate
+extension RecipeDetailVC: SelectDateViewDelegate {
+    func dateSelected(date: Date, recipe: MealPlanner.RecipeTransfer?, copyRecipe: Bool) {
+        let formattedDate = date.dbFormat()
+        if SharedValues.shared.mealPlannerID != nil {
+            // can add the recipe to the meal planner
+            var mpCookbookRecipe: MPCookbookRecipe {
+                let mpcbr = MPCookbookRecipe()
+                if let cbr = cookbookRecipe {
+                    mpcbr.set(cookbookRecipe: cbr, date: formattedDate)
+                    return mpcbr
+                } else {
+                    let cbr = (data?.recipe.turnRecipeIntoCookbookRecipe())!
+                    mpcbr.set(cookbookRecipe: cbr, date: formattedDate)
+                    return mpcbr
+                }
+            }
+            MealPlanner.addRecipeToPlanner(db: db, recipe: mpCookbookRecipe, shortDate: formattedDate, mealType: .none, previousID: nil)
+        } else {
+            // would need to create a meal planner
+            #warning("need to complete")
+        }
         
     }
     
 }
-

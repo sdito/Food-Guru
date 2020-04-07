@@ -1235,7 +1235,7 @@
                                                 <rect key="frame" x="0.0" y="838.5" width="414" height="32"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ID-Wh-Tfi">
-                                                        <rect key="frame" x="0.0" y="0.0" width="138" height="32"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="103.5" height="32"/>
                                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                                         <state key="normal" title="PDF"/>
                                                         <connections>
@@ -1243,7 +1243,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i0N-fb-OlL">
-                                                        <rect key="frame" x="138" y="0.0" width="138" height="32"/>
+                                                        <rect key="frame" x="103.5" y="0.0" width="103.5" height="32"/>
                                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                                         <state key="normal" title="Download"/>
                                                         <connections>
@@ -1251,11 +1251,19 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DZF-Sb-Aiq">
-                                                        <rect key="frame" x="276" y="0.0" width="138" height="32"/>
+                                                        <rect key="frame" x="207" y="0.0" width="103.5" height="32"/>
                                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                                         <state key="normal" title="Save"/>
                                                         <connections>
                                                             <action selector="saveRecipe:" destination="1BH-AS-PDt" eventType="touchUpInside" id="HE3-u6-bED"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejU-dX-idp">
+                                                        <rect key="frame" x="310.5" y="0.0" width="103.5" height="32"/>
+                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                                        <state key="normal" title="Planner"/>
+                                                        <connections>
+                                                            <action selector="addToMealPlanner:" destination="1BH-AS-PDt" eventType="touchUpInside" id="Pie-dL-FE7"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>

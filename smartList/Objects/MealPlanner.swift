@@ -133,7 +133,7 @@ class MealPlanner {
     
     // MARK: Recipes
     
-    func addRecipeToPlanner(recipe: MPCookbookRecipe, shortDate: String, mealType: MealType, previousID: String?) {
+    static func addRecipeToPlanner(db: Firestore, recipe: MPCookbookRecipe, shortDate: String, mealType: MealType, previousID: String?) {
         
         // going to switch it up
         // need to write it to a dict like this for eery month -> if var dict = data["recentlyViewedRecipes"] as? [String:[String:Any]]
@@ -160,7 +160,7 @@ class MealPlanner {
                 "recipes": FieldValue.arrayUnion(["\(shortDate)__\(recipe.id)__\(recipe.name)"])
             ], merge: true) { (error) in
                 if error == nil {
-                    self.addRecipeDocumentoPlanner(reference: recipeDocReference, recipe: recipe, shortDate: shortDate)
+                    MealPlanner.addRecipeDocumentoPlanner(db: db, reference: recipeDocReference, recipe: recipe, shortDate: shortDate)
                 } else {
                     print("Error writing recipe to meal planner: \(error as Any)")
                 }
@@ -188,7 +188,7 @@ class MealPlanner {
     }
     
     // helper to addRecipeToPlanner
-    private func addRecipeDocumentoPlanner(reference: DocumentReference, recipe: MPCookbookRecipe, shortDate: String) {
+    private static func addRecipeDocumentoPlanner(db: Firestore, reference: DocumentReference, recipe: MPCookbookRecipe, shortDate: String) {
         
         let ingredients = Array<String>(recipe.ingredients)
         let instructions = Array<String>(recipe.instructions)

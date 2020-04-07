@@ -124,7 +124,7 @@ extension UIViewController {
         }
     }
     
-    func createDatePickerView(delegateVC: UIViewController, recipe: MealPlanner.RecipeTransfer, copyRecipe: Bool) {
+    func createDatePickerView(delegateVC: UIViewController, recipe: MealPlanner.RecipeTransfer, copyRecipe: Bool, forRecipeDetail: Bool = false) {
         let vc = UIViewController()
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -136,7 +136,7 @@ extension UIViewController {
         vc.view.insertSubview(button, at: 1)
         
         let v = Bundle.main.loadNibNamed("SelectDateView", owner: nil, options: nil)?.first as! SelectDateView
-        v.setUI(recipe: recipe, copyRecipe: copyRecipe)
+        v.setUI(recipe: recipe, copyRecipe: copyRecipe, forRecipeDetail: forRecipeDetail)
         v.delegate = delegateVC as? SelectDateViewDelegate
         v.center.x = vc.view.center.x
         v.center.y = vc.view.center.y
