@@ -125,6 +125,7 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.tableView.deselectRow(at: indexPath, animated: true)
         if recipes.count != 0 {
             let recipe = filteredRecipes[indexPath.row]
             performSegue(withIdentifier: "showFromCookbook", sender: recipe)

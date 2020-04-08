@@ -987,11 +987,51 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="h5k-oF-6nd">
+                                <rect key="frame" x="0.0" y="88" width="414" height="40"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ID-Wh-Tfi">
+                                        <rect key="frame" x="0.0" y="0.0" width="103.5" height="40"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                        <state key="normal" title="PDF"/>
+                                        <connections>
+                                            <segue destination="E6t-NB-wfD" kind="show" identifier="viewPDV" id="qrU-d9-oi4"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i0N-fb-OlL">
+                                        <rect key="frame" x="103.5" y="0.0" width="103.5" height="40"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                        <state key="normal" title="Download"/>
+                                        <connections>
+                                            <action selector="downloadRecipe:" destination="1BH-AS-PDt" eventType="touchUpInside" id="5Pe-cX-ASb"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DZF-Sb-Aiq">
+                                        <rect key="frame" x="207" y="0.0" width="103.5" height="40"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                        <state key="normal" title="Save"/>
+                                        <connections>
+                                            <action selector="saveRecipe:" destination="1BH-AS-PDt" eventType="touchUpInside" id="HE3-u6-bED"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejU-dX-idp">
+                                        <rect key="frame" x="310.5" y="0.0" width="103.5" height="40"/>
+                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
+                                        <state key="normal" title="Planner"/>
+                                        <connections>
+                                            <action selector="addToMealPlanner:" destination="1BH-AS-PDt" eventType="touchUpInside" id="Pie-dL-FE7"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="FnO-sr-Vyc"/>
+                                </constraints>
+                            </stackView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SRZ-od-WWc">
-                                <rect key="frame" x="0.0" y="88" width="414" height="1029"/>
+                                <rect key="frame" x="0.0" y="128" width="414" height="989"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="1gv-Tq-hzU">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="1016.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="961.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LjC-gm-bTF">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="449"/>
@@ -1231,45 +1271,8 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="h5k-oF-6nd">
-                                                <rect key="frame" x="0.0" y="838.5" width="414" height="32"/>
-                                                <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ID-Wh-Tfi">
-                                                        <rect key="frame" x="0.0" y="0.0" width="103.5" height="32"/>
-                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                                        <state key="normal" title="PDF"/>
-                                                        <connections>
-                                                            <segue destination="E6t-NB-wfD" kind="show" identifier="viewPDV" id="qrU-d9-oi4"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i0N-fb-OlL">
-                                                        <rect key="frame" x="103.5" y="0.0" width="103.5" height="32"/>
-                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                                        <state key="normal" title="Download"/>
-                                                        <connections>
-                                                            <action selector="downloadRecipe:" destination="1BH-AS-PDt" eventType="touchUpInside" id="5Pe-cX-ASb"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DZF-Sb-Aiq">
-                                                        <rect key="frame" x="207" y="0.0" width="103.5" height="32"/>
-                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                                        <state key="normal" title="Save"/>
-                                                        <connections>
-                                                            <action selector="saveRecipe:" destination="1BH-AS-PDt" eventType="touchUpInside" id="HE3-u6-bED"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejU-dX-idp">
-                                                        <rect key="frame" x="310.5" y="0.0" width="103.5" height="32"/>
-                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                                        <state key="normal" title="Planner"/>
-                                                        <connections>
-                                                            <action selector="addToMealPlanner:" destination="1BH-AS-PDt" eventType="touchUpInside" id="Pie-dL-FE7"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                            </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="uI5-1m-TYf">
-                                                <rect key="frame" x="0.0" y="893.5" width="414" height="50"/>
+                                                <rect key="frame" x="0.0" y="838.5" width="414" height="50"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CGL-3t-d2d">
                                                         <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -1307,7 +1310,7 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rRN-b2-201">
-                                                <rect key="frame" x="0.0" y="966.5" width="10" height="50"/>
+                                                <rect key="frame" x="0.0" y="911.5" width="10" height="50"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="CgT-XM-Vnk"/>
@@ -1325,7 +1328,6 @@
                                             <constraint firstItem="LY7-JY-bYU" firstAttribute="leading" secondItem="1gv-Tq-hzU" secondAttribute="leading" id="aYJ-89-DWi"/>
                                             <constraint firstAttribute="trailing" secondItem="jO8-ep-LZk" secondAttribute="trailing" id="cLf-Yf-nDr"/>
                                             <constraint firstItem="dko-8O-hVH" firstAttribute="leading" secondItem="1gv-Tq-hzU" secondAttribute="leading" id="ek6-2t-wZt"/>
-                                            <constraint firstAttribute="trailing" secondItem="h5k-oF-6nd" secondAttribute="trailing" id="fAy-gC-obf"/>
                                             <constraint firstItem="ftq-5R-vpQ" firstAttribute="leading" secondItem="1gv-Tq-hzU" secondAttribute="leading" id="g1z-Yn-BZJ"/>
                                             <constraint firstAttribute="trailing" secondItem="LjC-gm-bTF" secondAttribute="trailing" id="kBk-I1-i5o"/>
                                             <constraint firstItem="2Hh-DR-nlP" firstAttribute="leading" secondItem="1gv-Tq-hzU" secondAttribute="leading" id="lv5-Rg-Ycj"/>
@@ -1348,9 +1350,12 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="UWq-Dg-ole" firstAttribute="trailing" secondItem="SRZ-od-WWc" secondAttribute="trailing" id="FRq-4j-Duh"/>
+                            <constraint firstItem="h5k-oF-6nd" firstAttribute="top" secondItem="UWq-Dg-ole" secondAttribute="top" id="FcH-fg-Cmb"/>
+                            <constraint firstItem="UWq-Dg-ole" firstAttribute="trailing" secondItem="h5k-oF-6nd" secondAttribute="trailing" id="Ib5-pV-km4"/>
                             <constraint firstItem="SRZ-od-WWc" firstAttribute="leading" secondItem="30N-S5-C1W" secondAttribute="leading" id="NAO-x0-351"/>
-                            <constraint firstItem="SRZ-od-WWc" firstAttribute="top" secondItem="UWq-Dg-ole" secondAttribute="top" id="Piv-Jb-UPd"/>
+                            <constraint firstItem="SRZ-od-WWc" firstAttribute="top" secondItem="UWq-Dg-ole" secondAttribute="top" constant="40" id="Piv-Jb-UPd"/>
                             <constraint firstItem="UWq-Dg-ole" firstAttribute="bottom" secondItem="SRZ-od-WWc" secondAttribute="bottom" id="YFO-6A-r59"/>
+                            <constraint firstItem="h5k-oF-6nd" firstAttribute="leading" secondItem="UWq-Dg-ole" secondAttribute="leading" id="gi0-gg-SPW"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UWq-Dg-ole"/>
                     </view>

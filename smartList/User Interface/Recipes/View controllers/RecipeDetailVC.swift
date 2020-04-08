@@ -212,19 +212,29 @@ class RecipeDetailVC: UIViewController {
         
     }
     
-    #warning("button to add recipe to meal planner from recipe detail vc is needed")
     @IBAction func addToMealPlanner(_ sender: Any) {
         print("Need to add the recipe to the meal planner")
-        var recipeTitle: String {
-            if let cbr = cookbookRecipe {
-                return cbr.name
-            } else if let recipe = data?.recipe {
-                return recipe.name
-            } else {
-                return "recipe"
+        if SharedValues.shared.mealPlannerID != nil {
+            var recipeTitle: String {
+                if let cbr = cookbookRecipe {
+                    return cbr.name
+                } else if let recipe = data?.recipe {
+                    return recipe.name
+                } else {
+                    return "recipe"
+                }
             }
+            self.createDatePickerView(delegateVC: self, recipe: MealPlanner.RecipeTransfer(date: "date", id: "id", name: recipeTitle), copyRecipe: false, forRecipeDetail: true)
+        } else {
+            let alert = UIAlertController(title: "No meal planner", message: "Go to the planner tab to get started and create one. You can use your meal planner to track all the recipes and food you plan to have.", preferredStyle: .alert)
+            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                self.present(alert, animated: true)
+            }
+            
+            
         }
-        self.createDatePickerView(delegateVC: self, recipe: MealPlanner.RecipeTransfer(date: "date", id: "id", name: recipeTitle), copyRecipe: false, forRecipeDetail: true)
+        
     }
     
     @IBAction func changeServingsButton(_ sender: Any) {
@@ -573,6 +583,7 @@ extension RecipeDetailVC: GiveRatingViewDelegate {
 extension RecipeDetailVC: SelectDateViewDelegate {
     func dateSelected(date: Date, recipe: MealPlanner.RecipeTransfer?, copyRecipe: Bool) {
         let formattedDate = date.dbFormat()
+        
         if SharedValues.shared.mealPlannerID != nil {
             // can add the recipe to the meal planner
             var mpCookbookRecipe: MPCookbookRecipe {
@@ -587,9 +598,6 @@ extension RecipeDetailVC: SelectDateViewDelegate {
                 }
             }
             MealPlanner.addRecipeToPlanner(db: db, recipe: mpCookbookRecipe, shortDate: formattedDate, mealType: .none, previousID: nil)
-        } else {
-            // would need to create a meal planner
-            #warning("need to complete")
         }
         
     }
