@@ -133,10 +133,7 @@ class RecipeDetailVC: UIViewController {
                     self.createMessageView(color: Colors.messageGreen, text: "Items added to list!")
                 } else {
                     var allItems = ingredientsToAddToList
-                    print(allItems)
                     allItems = allItems.filter({self.itemsAddedToList?.contains($0) == false})
-                    print(allItems)
-                    
                     self.createPickerView(itemNames: allItems, itemStores: list.stores, itemListID: list.ownID ?? " ", singleItem: false, delegateVC: self)
                 }
             } else {

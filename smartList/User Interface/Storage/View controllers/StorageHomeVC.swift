@@ -300,6 +300,41 @@ class StorageHomeVC: UIViewController {
             self.createEditQuantityView(item: itm)
         }
     }
+    
+    @IBAction func addToListPressed(_ sender: Any) {
+        print("Add the items to the list")
+        let ingredientsToAddToList = currentlySelectedItems.map({$0.name})
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        GroceryList.getUsersCurrentList(db: db, userID: uid) { (list) in
+            if let list = list {
+                if list.stores?.isEmpty == true {
+                    for item in ingredientsToAddToList {
+                        GroceryList.addItemToListFromRecipe(db: self.db, listID: list.ownID ?? " ", name: item, userID: uid, store: "")
+                    }
+                    self.createMessageView(color: Colors.messageGreen, text: "Items added to list!")
+                } else if list.stores?.count == 1 {
+                    for item in ingredientsToAddToList {
+                        GroceryList.addItemToListFromRecipe(db: self.db, listID: list.ownID ?? " ", name: item, userID: uid, store: list.stores!.first!)
+                    }
+                    self.createMessageView(color: Colors.messageGreen, text: "Items added to list!")
+                } else {
+                    
+                    
+                    self.createPickerView(itemNames: ingredientsToAddToList, itemStores: list.stores, itemListID: list.ownID ?? " ", singleItem: (ingredientsToAddToList.count == 1), delegateVC: self)
+                }
+            } else {
+                GroceryList.handleProcessForAutomaticallyGeneratedListFromRecipe(db: self.db, items: ingredientsToAddToList)
+                
+                self.createMessageView(color: Colors.messageGreen, text: "List created and items added!")
+            }
+        }
+        
+        
+        currentlySelectedItems.removeAll()
+        tableView.reloadData()
+    }
+    
+    
     // MARK: functions
     @objc private func createGroupSelector() {
         if SharedValues.shared.anonymousUser == false {
@@ -390,6 +425,7 @@ class StorageHomeVC: UIViewController {
     }
 }
 
+// MARK: FoodStorageDelegate
 
 extension StorageHomeVC: FoodStorageDelegate {
     func itemsUpdated() {
@@ -599,7 +635,7 @@ extension StorageHomeVC: UIImagePickerControllerDelegate, UINavigationController
     }
 }
 
-
+// MARK: EditQuantityViewDelegate
 extension StorageHomeVC: EditQuantityViewDelegate {
     func newQuantity(item: Item, quantity: String?) {
         

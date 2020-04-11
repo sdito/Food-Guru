@@ -525,6 +525,8 @@ extension AddItemsVC: CreateNewItemDelegate {
 // MARK: ItemCellDelegate
 extension AddItemsVC: ItemCellDelegate {
     func edit(item: Item, sender: UIView) {
+
+        dismissKeyboardPressed()
         
         var text: String? {
             if item.user != nil {

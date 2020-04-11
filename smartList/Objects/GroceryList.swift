@@ -325,7 +325,6 @@ class GroceryList {
                         }
                     }
                 }
-                
             }
         }
     }

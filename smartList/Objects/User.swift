@@ -370,8 +370,6 @@ struct User {
     }
     
     private static func updateUsersProfilesForNewGroup(db: Firestore, initialEmails: [String], updatedEmails: [String], groupID: String) {
-        #warning("need to make sure this is working correctly")
-        
         // for all the initial emails, if initial email is not in updated email, then remove the field value, else do nothing to it since theyre still in the group
         initialEmails.forEach { (initialEmail) in
             if !updatedEmails.contains(initialEmail) {
