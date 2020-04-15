@@ -63,7 +63,10 @@ class SharedValues {
     
     static let shared = SharedValues()
     
-    
+    func updateUiIfApplicable() {
+        print("Need to update the ui if applicable")
+        #warning("need to use to update MealPlannerHomeVC when current date could change")
+    }
     
     private init() {}
 }

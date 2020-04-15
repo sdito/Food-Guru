@@ -30,7 +30,7 @@ class SelectDateView: UIView {
     func setUI(recipe: MealPlanner.RecipeTransfer, copyRecipe: Bool, forRecipeDetail: Bool = false) {
         self.recipe = recipe
         self.copyRecipe = copyRecipe
-        
+        self.forRecipeDetail = forRecipeDetail
         if forRecipeDetail {
             recipeNameLabel.text = "Add \(recipe.name) to your meal planner"
         } else {
@@ -43,7 +43,17 @@ class SelectDateView: UIView {
         // send the new value to the delegate, then dismiss
         delegate.dateSelected(date: datePicker.date, recipe: recipe, copyRecipe: copyRecipe)
         
+        if forRecipeDetail {
+            for _ in 1...10 {
+                print("This is being called right now")
+                
+            }
+            (self.delegate as? UIViewController)?.createMessageView(color: Colors.messageGreen, text: "Recipe added to meal planner!")
+        }
+        
         self.findViewController()?.dismiss(animated: true, completion: nil)
+        
     }
+    
     
 }

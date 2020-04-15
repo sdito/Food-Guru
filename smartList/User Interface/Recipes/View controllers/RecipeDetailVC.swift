@@ -468,10 +468,6 @@ class RecipeDetailVC: UIViewController {
     }
     
     
-    @objc private func tapServingRecognizer() {
-        print("Tap is being called")
-    }
-    
     @objc private func itemAddedSelector(_ notification: NSNotification) {
         if let dict = notification.userInfo as NSDictionary? {
             if let name = dict["itemName"] as? String {

@@ -244,7 +244,7 @@ class MealPlannerHomeVC: UIViewController {
     }
     
     @objc private func swipeSwiped(_ recognizer: UISwipeGestureRecognizer) {
-        // left direction for next day, rigth direction for previous day
+        // left direction for next day, right direction for previous day
         // get the alpha of the button, and then find the next button incremented with the same alpha, if no such button exists take the next alpha with next of '1', reverse for previous
         if let currCalendarView = selectedDayButton?.findCalendarView() {
             
@@ -274,7 +274,7 @@ class MealPlannerHomeVC: UIViewController {
                 }
                 
             } else if recognizer.direction == .right {
-                // Prev day
+                // Previous day
                 var prevDayFound = false
                 for d in currCalendarView.day {
                     if d.tag == selectedDayButton?.tag && d.titleLabel?.text == selectedDayButton?.titleLabel?.text.minusOne() {
@@ -513,7 +513,7 @@ extension MealPlannerHomeVC: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+
         let mealPlanRecipe = dateRecipes[indexPath.row]
         
         guard mealPlanRecipe.metadata != "note" else {
@@ -524,11 +524,10 @@ extension MealPlannerHomeVC: UITableViewDataSource, UITableViewDelegate {
         let mealPlanRecipeID = mealPlanRecipe.id
         let sb = UIStoryboard(name: "Recipes", bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC
-
-        
         
         if let realmMealPlanRecipe = realm?.object(ofType: MPCookbookRecipe.self, forPrimaryKey: mealPlanRecipeID) {
-            print("Already have recipe downlaoded, need to present from Realm")
+            
+            print("Already have recipe downloaded, need to present from Realm")
             vc.cookbookRecipe = realmMealPlanRecipe.toCookbookRecipe()
             self.navigationController?.pushViewController(vc, animated: true)
         } else {

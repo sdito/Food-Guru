@@ -24,7 +24,6 @@ class MPCookbookRecipe: CookbookRecipe {
     override func write() {
         print("Writing recipe to realm for MPCookbookRecipe")
         let realm = try! Realm()
-        
         try! realm.write {
             realm.add(self)
         }
@@ -65,7 +64,7 @@ extension DocumentSnapshot {
         
         recipe.setUp(name: self.get("name") as! String, servings: servings, cookTime: cookTime, prepTime: prepTime, calories: calories, ingredients: realmIngredients, instructions: realmInstructions, notes: self.get("notes") as? String)
         recipe.date = self.get("date") as! String
-        recipe.id = self.get("ownID") as! String
+        recipe.id = self.documentID
         
         return recipe
     }

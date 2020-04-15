@@ -160,7 +160,7 @@ class MealPlanner {
                 "recipes": FieldValue.arrayUnion(["\(shortDate)__\(recipe.id)__\(recipe.name)"])
             ], merge: true) { (error) in
                 if error == nil {
-                    MealPlanner.addRecipeDocumentoPlanner(db: db, reference: recipeDocReference, recipe: recipe, shortDate: shortDate)
+                    MealPlanner.addRecipeDocumentToPlanner(db: db, reference: recipeDocReference, recipe: recipe, shortDate: shortDate)
                 } else {
                     print("Error writing recipe to meal planner: \(error as Any)")
                 }
@@ -188,7 +188,7 @@ class MealPlanner {
     }
     
     // helper to addRecipeToPlanner
-    private static func addRecipeDocumentoPlanner(db: Firestore, reference: DocumentReference, recipe: MPCookbookRecipe, shortDate: String) {
+    private static func addRecipeDocumentToPlanner(db: Firestore, reference: DocumentReference, recipe: MPCookbookRecipe, shortDate: String) {
         
         let ingredients = Array<String>(recipe.ingredients)
         let instructions = Array<String>(recipe.instructions)
@@ -203,8 +203,7 @@ class MealPlanner {
                 "calories": recipe.calories.value as Any,
                 "numServes": recipe.servings.value as Any,
                 "notes": recipe.notes as Any,
-                "date": recipe.date,
-                "ownID": reference.documentID
+                "date": recipe.date
             ])
         } else {
             if let id = SharedValues.shared.mealPlannerID {
@@ -218,8 +217,7 @@ class MealPlanner {
                     "calories": recipe.calories.value as Any,
                     "numServes": recipe.servings.value as Any,
                     "notes": recipe.notes as Any,
-                    "date": recipe.date,
-                    "ownID": reference.documentID
+                    "date": recipe.date
                 ])
             }
             
