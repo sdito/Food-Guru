@@ -8,10 +8,9 @@
 
 import UIKit
 import FirebaseFirestore
-import StoreKit
 import RealmSwift
 import FirebaseAuth
-
+import StoreKit
 
 
 class TabVC: UITabBarController {
@@ -30,12 +29,15 @@ class TabVC: UITabBarController {
         
         db = Firestore.firestore()
         User.writeNewUserDocumentIfApplicable(db: db)
+        
+        #warning("make sure this works after coming back after a while")
         User.setAndPersistGroupDataInSharedValues(db: db)
 
+        
         let defaults = UserDefaults.standard
         let numTimesRan = defaults.integer(forKey: "timesOpened")
-        
-        if numTimesRan < 2 {
+        defaults.set(numTimesRan + 1, forKey: "timesOpened")
+        if numTimesRan <= 1 {
             // Have a small pop up to alert the user that they can view the tutioral, center that view in the display and present it after two seconds
             let view = Bundle.main.loadNibNamed("SuggestTutorialView", owner: nil, options: nil)?.first as! SuggestTutorialView
             let width = view.bounds.width
@@ -50,12 +52,6 @@ class TabVC: UITabBarController {
             }
         }
         
-        if numTimesRan == 8 {
-            SKStoreReviewController.requestReview()
-            
-        }
-        print(numTimesRan)
-        defaults.set(numTimesRan + 1, forKey: "timesOpened")
         
         
         

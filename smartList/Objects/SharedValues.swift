@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseCore
 import FirebaseFirestore
-
+import StoreKit
 
 /// Each time a value is added, need to set it to nil in User.resetSharedValues()
 
@@ -64,9 +64,23 @@ class SharedValues {
     static let shared = SharedValues()
     
     func updateUiIfApplicable() {
-        print("Need to update the ui if applicable")
-        #warning("need to use to update MealPlannerHomeVC when current date could change")
+        
+        mealPlannerHomeVC?.updateUiIfApplicable()
+        
+        // To eventually ask for app store review
+        let defaults = UserDefaults.standard
+        let numTimesRan = defaults.integer(forKey: "timesOpened")
+        
+        
+        defaults.set(numTimesRan + 1, forKey: "timesOpened")
+        if numTimesRan == 4 {
+            SKStoreReviewController.requestReview()
+        }
+        print(numTimesRan)
+        
     }
+    
+    var mealPlannerHomeVC: MealPlannerHomeVC?
     
     private init() {}
 }

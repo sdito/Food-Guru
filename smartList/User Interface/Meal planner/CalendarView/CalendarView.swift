@@ -146,9 +146,37 @@ class CalendarView: UIView {
                 
             }
         }
-        
     }
     
+    func potentiallyUpdateUI(with date: Date, isPreviousMonth: Bool) {
+        // Used to update what the current day is as displayed on the meal planner, if it needs to be updated (the 'green' day)
+        print("Potentially updating the UI with: \(date.dbFormat()), is previous month: \(isPreviousMonth), view's month represented: \(self.monthYear!.0)")
+        
+        // 'Default' color is Colors.mail, current day color is .systemGreen
+        
+        switch isPreviousMonth {
+        case true:
+            // set the color back to the base for all of them
+            for button in day {
+                button.setTitleColor(Colors.main, for: .normal)
+            }
+        case false:
+            // set the color to green for the current day, else it is basic
+            let currentDayPart = String(date.dbFormat().split(separator: ".")[1])
+            for button in day {
+                // set all to Colors.main besides the current day
+                let buttonDay = button.titleLabel?.text
+                print(buttonDay)
+                if buttonDay == currentDayPart && button.tag == 1 {
+                    // needs to be green
+                    button.setTitleColor(.systemGreen, for: .normal)
+                } else {
+                    button.setTitleColor(Colors.main, for: .normal)
+                }
+            }
+        }
+        
+    }
     
     private func setRecipeOnDayUI(b: UIButton, shortDate: String?) {
         

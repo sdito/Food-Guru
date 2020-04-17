@@ -56,6 +56,10 @@ class MealPlannerHomeVC: UIViewController {
             }
         }
         iPadUiIfApplicable()
+        
+        SharedValues.shared.mealPlannerHomeVC = self
+        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -225,13 +229,38 @@ class MealPlannerHomeVC: UIViewController {
             self.scrollView.setContentOffset(CGPoint(x: self.view.bounds.width, y: 0), animated: false)
         }
         
-        // to have a gestrue recognizer to allow user to swipe to get to the next or previous day
+        // to have a gesture recognizer to allow user to swipe to get to the next or previous day
         let swipeGestureRecognizerLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipeSwiped))
         let swipeGestureRecognizerRight = UISwipeGestureRecognizer(target: self, action: #selector(swipeSwiped))
         swipeGestureRecognizerLeft.direction = UISwipeGestureRecognizer.Direction.left
         swipeGestureRecognizerRight.direction = UISwipeGestureRecognizer.Direction.right
         tableView.addGestureRecognizer(swipeGestureRecognizerRight)
         tableView.addGestureRecognizer(swipeGestureRecognizerLeft)
+    }
+    
+    func updateUiIfApplicable() {
+        // first need to get what the current day is
+        let currentDate = Date()
+        let calendar = Calendar.current
+        
+        // would need to check the current month and the previous month (could be the first of the month)
+        let currentMonthYear = (calendar.component(.month, from: currentDate), calendar.component(.year, from: currentDate))
+        let monthBeforeDate = calendar.date(byAdding: .month, value: -1, to: currentDate)!
+        let previousMonthYear = (calendar.component(.month, from: monthBeforeDate), calendar.component(.year, from: monthBeforeDate))
+        
+        
+        // then need to update the UI with the current day from those views
+        for v in calendarStackView.subviews {
+            if let calendarView = v as? CalendarView, let cvMonthYear =  calendarView.monthYear {
+                if cvMonthYear == currentMonthYear || cvMonthYear == previousMonthYear {
+                    // Need to (potentially) update the UI for this month's view
+                    calendarView.potentiallyUpdateUI(with: currentDate, isPreviousMonth: cvMonthYear == previousMonthYear)
+                } else {
+                    // Don't need to update the UI for this month's view
+                }
+            }
+        }
+        
     }
     
     private func iPadUiIfApplicable() {

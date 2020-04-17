@@ -218,6 +218,15 @@ class RecipeHomeVC: UIViewController {
         tabBarController?.selectedIndex = 1
     }
     // MARK: functions
+    
+    
+    func updateUiForNewDayChange() {
+        for _ in 1...25 {
+            print("Potentially need to update the UI on RecipeHomeVC")
+        }
+    }
+    
+    
     private func handleNeedingMoreRecipes() {
         
         Recipe.getPuppyRecipesFromSearches(activeSearches: self.activeSearches, expiringItems: expiringItems) { (puppyRecipes) in
@@ -229,7 +238,7 @@ class RecipeHomeVC: UIViewController {
                     
                     self.present(vc, animated: true, completion: nil)
                 } else {
-                    // to only allow this messageview if the user specifically pressed the more recipes button
+                    // to only allow this message view if the user specifically pressed the more recipes button
                     if self.userWantsMoreRecipes == true {
                         self.createMessageView(color: .red, text: "Couldn't find more recipes")
                         self.userWantsMoreRecipes = false

@@ -99,6 +99,7 @@ struct User {
         SharedValues.shared.previouslyViewedRecipes = nil
         SharedValues.shared.isStorageWithGroup = nil
         SharedValues.shared.mealPlannerID = nil
+        SharedValues.shared.mealPlannerHomeVC = nil
     }
     
     // MARK: Individual

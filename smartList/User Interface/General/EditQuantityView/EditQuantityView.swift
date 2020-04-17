@@ -22,7 +22,7 @@ class EditQuantityView: UIView {
     private var fractionPart: String?
     private var quantityPart: String = ""
     private var item: Item!
-    private let defaults = UserDefaults.standard ;#warning("make sure this is being used, will be used for metric or imperial")
+    private let defaults = UserDefaults.standard
     
     weak var delegate: EditQuantityViewDelegate!
     
