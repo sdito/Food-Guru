@@ -34,18 +34,10 @@ class MealPlannerCell: UITableViewCell {
         
         if recipe.metadata == "note" {
             self.accessoryType = .none
-            if #available(iOS 13.0, *) {
-                title.textColor = .secondaryLabel
-            } else {
-                title.textColor = .lightGray
-            }
+            title.textColor = Colors.secondaryLabel
         } else {
+            title.textColor = Colors.label
             self.accessoryType = .disclosureIndicator
-            if #available(iOS 13.0, *) {
-                title.textColor = .label
-            } else {
-                title.textColor = .black
-            }
         }
         
     }

@@ -42,11 +42,7 @@ class SearchByIngredientVC: UIViewController {
             } else {
                 buttonOutlet.setTitle("Select or add ingredients", for: .normal)
                 buttonOutlet.isUserInteractionEnabled = false
-                if #available(iOS 13.0, *) {
-                    buttonOutlet.setTitleColor(.label, for: .normal)
-                } else {
-                    buttonOutlet.setTitleColor(.black, for: .normal)
-                }
+                buttonOutlet.setTitleColor(Colors.label, for: .normal)
             }
         }
     }

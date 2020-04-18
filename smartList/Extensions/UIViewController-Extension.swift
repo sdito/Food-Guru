@@ -314,11 +314,7 @@ extension UIViewController {
         let text = "Why didnt all the ingredients appear in my search?"
         let font = UIFont(name: "futura", size: 14)
         let distanceToTop: CGFloat = 150
-        if #available(iOS 13.0, *) {
-            button.setTitleColor(.systemBackground, for: .normal)
-        } else {
-            button.setTitleColor(.white, for: .normal)
-        }
+        button.setTitleColor(Colors.systemBackground, for: .normal)
         button.setTitle(text, for: .normal)
         button.titleLabel?.font = font
         button.titleLabel?.textAlignment = .center
@@ -328,7 +324,7 @@ extension UIViewController {
         button.border(cornerRadius: 5.0)
         
         
-        button.addTarget(self, action: #selector(whyDidntAllIngredintsShow), for: .touchUpInside)
+        button.addTarget(self, action: #selector(whyDidNotAllIngredientsAppear), for: .touchUpInside)
         
         
         self.view.addSubview(button)
@@ -378,7 +374,7 @@ extension UIViewController {
         }
     }
     
-    @objc func whyDidntAllIngredintsShow(_ sender: UIButton) {
+    @objc func whyDidNotAllIngredientsAppear(_ sender: UIButton) {
         let alert = UIAlertController(title: "Search", message: "Some items did not appear in your search since this application has not supported those specific ingredients yet in order to enable search. There will always be more ingredients added in the future! If you this this specific ingredient should been in the application, send me a message from settings.", preferredStyle: .alert)
         alert.addAction(.init(title: "Don't show this again", style: .default, handler: {alert in
             UserDefaults.standard.set(true, forKey: "doneSeeingNoIngredientView")

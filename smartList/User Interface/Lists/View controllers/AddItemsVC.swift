@@ -430,13 +430,8 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
             l.font = UIFont(name: "futura", size: 22.5)
         }
         
-        if #available(iOS 13.0, *) {
-            l.backgroundColor = .secondarySystemBackground
-            l.textColor = .label
-        } else {
-            l.backgroundColor = .lightGray
-            l.textColor = .white
-        }
+        l.backgroundColor = Colors.secondarySystemBackground
+        l.textColor = Colors.label
         l.alpha = 0.9
         l.textAlignment = .center
         return l

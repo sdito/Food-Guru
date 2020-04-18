@@ -22,23 +22,14 @@ class RecipeSearchCell: UITableViewCell {
             self.accessoryType = .checkmark
         } else {
             self.accessoryType = .none
-            if #available(iOS 13.0, *) {
-                label.textColor = .label
-            } else {
-                label.textColor = .black
-            }
+            label.textColor = Colors.label
         }
     }
     
     func setUI(item: Item) {
         self.selectionStyle = .none
         label.text = item.name
-        if #available(iOS 13.0, *) {
-            label.textColor = .label
-        } else {
-            label.textColor = .black
-        }
-        
+        label.textColor = Colors.label
     }
     
 }

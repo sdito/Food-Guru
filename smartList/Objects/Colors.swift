@@ -43,7 +43,31 @@ struct Colors {
         }
     }
     
-    // Used for the crcle status view for item with expiration date
+    static var secondaryLabel: UIColor {
+        if #available(iOS 13.0, *) {
+            return .secondaryLabel
+        } else {
+            return .lightGray
+        }
+    }
+    
+    static var tertiaryLabel: UIColor {
+        if #available(iOS 13.0, *) {
+            return .tertiaryLabel
+        } else {
+            return .gray
+        }
+    }
+    
+    static var systemGray: UIColor {
+        if #available(iOS 13.0, *) {
+            return .systemGray
+        } else {
+            return .gray
+        }
+    }
+    
+    // Used for the circle status view for item with expiration date
     static func getRGBcolorFromPercentage(double: Double) -> UIColor {
         let ratio = 1.0 / 13.0
         switch double {

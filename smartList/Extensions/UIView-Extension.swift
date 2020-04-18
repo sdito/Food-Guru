@@ -14,11 +14,7 @@ extension UIView {
     func setUpTutorialLabel() {
         self.layer.cornerRadius = 5.0
         self.layer.borderWidth = 1
-        if #available(iOS 13.0, *) {
-            self.layer.borderColor = UIColor.label.cgColor
-        } else {
-            self.layer.borderColor = UIColor.black.cgColor
-        }
+        self.layer.borderColor = Colors.label.cgColor
         self.clipsToBounds = true
     }
     func pulsateView() {
@@ -59,12 +55,7 @@ extension UIView {
         self.layer.shadowPath = UIBezierPath(roundedRect: self.bounds, cornerRadius: self.layer.cornerRadius).cgPath
         
         if border == true {
-            print("border time")
-            if #available(iOS 13.0, *) {
-                self.layer.borderColor = UIColor.label.cgColor
-            } else {
-                self.layer.borderColor = UIColor.black.cgColor
-            }
+            self.layer.borderColor = Colors.label.cgColor
         } else {
             self.layer.borderColor = UIColor.clear.cgColor
         }

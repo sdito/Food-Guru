@@ -31,13 +31,7 @@ class CookbookVC: UIViewController {
         recipes = Array(realm.objects(CookbookRecipe.self))
         tableView.reloadData()
         scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
-        
-        
-        if #available(iOS 13.0, *) {
-            self.view.backgroundColor = .systemBackground
-        } else {
-            self.view.backgroundColor = .white
-        }
+        self.view.backgroundColor = Colors.systemBackground
         searchBar.setUpAddItemToolbar(cancelAction: #selector(cancelSelector), addAction: #selector(addSelector))
         
     }

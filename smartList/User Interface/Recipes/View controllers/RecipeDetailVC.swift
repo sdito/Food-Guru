@@ -478,18 +478,15 @@ class RecipeDetailVC: UIViewController {
                         let txt = (item as! ButtonIngredientView).label.text
                         if txt == name {
                             let itm = (item as! ButtonIngredientView)
+                            itm.label.textColor = .systemGreen
+                            itm.button.tintColor = .systemGreen
+                            itm.button.isUserInteractionEnabled = false
                             if #available(iOS 13.0, *) {
                                 itm.button.setImage(.strokedCheckmark, for: .normal)
-                                itm.label.textColor = .systemGreen
-                                itm.button.tintColor = .systemGreen
-                                itm.button.isUserInteractionEnabled = false
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                     itm.label.textColor = .secondaryLabel
                                 }
                             } else {
-                                itm.label.textColor = .systemGreen
-                                itm.button.tintColor = .systemGreen
-                                itm.button.isUserInteractionEnabled = false
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                     itm.label.textColor = .lightGray
                                 }

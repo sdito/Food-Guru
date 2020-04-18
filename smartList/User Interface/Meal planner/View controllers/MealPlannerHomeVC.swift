@@ -483,6 +483,7 @@ extension MealPlannerHomeVC: CalendarViewDelegate {
             // to reset the value of the other button that was in 'selected' mode
             secondarySelectedButton?.backgroundColor = Colors.systemBackground
             secondarySelectedButton?.layer.borderColor = Colors.label.cgColor
+            
             NotificationCenter.default.post(.init(name: .dayButtonSelectedFromCalendar, object: nil, userInfo: ["shortDate": shortDate as Any, "tagFromNoti": buttonTag]))
             
                 if selectedDayLabel.text != "Date" {
@@ -502,8 +503,10 @@ extension MealPlannerHomeVC: CalendarViewDelegate {
     
     func selectedDay(button: UIButton) {
         if selectedDayButton != button {
-            selectedDayButton?.backgroundColor = Colors.systemBackground
+            
             selectedDayButton?.layer.borderColor = Colors.label.cgColor
+            selectedDayButton?.backgroundColor = Colors.systemBackground
+            
             selectedDayButton = button
             
         }
@@ -515,7 +518,6 @@ extension MealPlannerHomeVC: CalendarViewDelegate {
         UIView.animate(withDuration: 0.2) {
             button.backgroundColor = Colors.secondarySystemBackground
             button.layer.borderColor = UIColor.clear.cgColor
-            
         }
         // UI resetting for secondarySelectionButton happens before notification is posted in dateButtonSelected
         secondarySelectedButton = button

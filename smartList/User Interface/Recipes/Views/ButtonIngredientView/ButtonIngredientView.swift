@@ -39,8 +39,8 @@ class ButtonIngredientView: UIView {
         }
         
         if #available(iOS 13.0, *) {
-            let img = UIImage(systemName: "plus")
-            button.setImage(img, for: .normal)
+            let plusImage = UIImage(systemName: "plus")
+            button.setImage(plusImage, for: .normal)
         } else {
             button.setTitle("+", for: .normal)
             button.setTitleColor(Colors.main, for: .normal)

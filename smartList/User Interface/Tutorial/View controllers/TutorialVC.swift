@@ -63,11 +63,7 @@ class TutorialVC: UIPageViewController {
         button.titleEdgeInsets = UIEdgeInsets(top: 0.0, left: padding/2, bottom: 0.0, right: padding/2)
         button.titleLabel?.widthAnchor.constraint(equalToConstant: size.width + padding).isActive = true
         button.setTitleColor(.systemRed, for: .normal)
-        if #available(iOS 13.0, *) {
-            button.titleLabel?.backgroundColor = .systemBackground
-        } else {
-            button.titleLabel?.backgroundColor = .white
-        }
+        button.titleLabel?.backgroundColor = Colors.systemBackground
         button.addTarget(self, action: #selector(dismissTutorial), for: .touchUpInside)
         button.layer.cornerRadius = 5.0
         button.layer.borderColor = UIColor.systemRed.cgColor

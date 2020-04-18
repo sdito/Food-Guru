@@ -54,13 +54,9 @@ class StorageCell: UITableViewCell {
                 viewForCircle.circularPercentageView(endStrokeAt: 1, color: UIColor.red.cgColor)
             //third, if item is still fine, then show the date
             } else {
-               expires.text = "Expires - \(time.dateFormatted(style: .short))"
-                if #available(iOS 13.0, *) {
-                    expires.textColor = .tertiaryLabel
-                } else {
-                    expires.textColor = .lightGray
-                }
-               viewForCircle.circularPercentageView(endStrokeAt: CGFloat(pct), color: Colors.getRGBcolorFromPercentage(double: pct).cgColor)
+                expires.textColor = Colors.tertiaryLabel
+                expires.text = "Expires - \(time.dateFormatted(style: .short))"
+                viewForCircle.circularPercentageView(endStrokeAt: CGFloat(pct), color: Colors.getRGBcolorFromPercentage(double: pct).cgColor)
             }
  
         } else {

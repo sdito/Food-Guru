@@ -42,11 +42,7 @@ class LoadingView: UIView {
     private func setUpInitialUI() {
         background.layer.cornerRadius = background.frame.width / 8
         self.shadow()
-        if #available(iOS 13.0, *) {
-            background.backgroundColor = UIColor.secondarySystemBackground.withAlphaComponent(0.65)
-        } else {
-            background.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        }
+        background.backgroundColor = Colors.secondarySystemBackground.withAlphaComponent(0.65)
         
     }
     

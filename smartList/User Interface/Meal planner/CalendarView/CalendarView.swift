@@ -166,7 +166,6 @@ class CalendarView: UIView {
             for button in day {
                 // set all to Colors.main besides the current day
                 let buttonDay = button.titleLabel?.text
-                print(buttonDay)
                 if buttonDay == currentDayPart && button.tag == 1 {
                     // needs to be green
                     button.setTitleColor(.systemGreen, for: .normal)
