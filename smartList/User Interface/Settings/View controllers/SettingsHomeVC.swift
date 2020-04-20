@@ -7,6 +7,7 @@
   //  Copyright © 2019 Steven Dito. All rights reserved.
   //
   import UIKit
+  import StoreKit
   
   class SettingsHomeVC: UIViewController {
     
@@ -64,9 +65,8 @@ extension SettingsHomeVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let setting = cells[indexPath.section][indexPath.row].settingName
         
-        if setting != .tutorial {
-            performSegue(withIdentifier: "settingDetail", sender: setting)
-        } else {
+        switch setting {
+        case .tutorial:
             tableView.visibleCells.forEach { (c) in
                 c.isSelected = false
             }
@@ -74,7 +74,13 @@ extension SettingsHomeVC: UITableViewDataSource, UITableViewDelegate {
             let vc = sb.instantiateViewController(withIdentifier: "tutorialVC") as! TutorialVC
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
-            
+        case .review:
+            SKStoreReviewController.requestReview()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
+        default:
+            performSegue(withIdentifier: "settingDetail", sender: setting)
         }
     }
     

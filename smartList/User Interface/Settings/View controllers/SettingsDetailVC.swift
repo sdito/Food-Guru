@@ -133,7 +133,7 @@ class SettingsDetailVC: UIViewController {
  
             
         case .licences:
-            self.title = "Software licences"
+            self.title = "Software licenses"
             let cell1 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
             cell1.setUI(str: "recipepuppy.com")
             let cell2 = tableView.dequeueReusableCell(withIdentifier: "settingBasicCell") as! SettingBasicCell
@@ -246,6 +246,8 @@ class SettingsDetailVC: UIViewController {
                 return [cell]
             }
             
+        case .review:
+            return []
         }
     }
     

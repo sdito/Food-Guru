@@ -21,6 +21,7 @@ struct Setting {
     enum SettingName {
         case account
         case group
+        case review
         case recentlyViewedRecipes
         case storage
         case mealPlanner
@@ -34,6 +35,7 @@ struct Setting {
     static func createSettings() -> ([String], [[Setting]]) {
         let account_ = Setting(name: "Account", settingName: .account)
         let group = Setting(name: "Group", settingName: .group)
+        let review = Setting(name: "Rate app in app store", settingName: .review)
         let recentlyViewedRecipes = Setting(name: "Recently viewed recipes", settingName: .recentlyViewedRecipes)
         let storage = Setting(name: "Storage", settingName: .storage)
         let mealPlanner = Setting(name: "Meal planner", settingName: .mealPlanner)
@@ -43,7 +45,7 @@ struct Setting {
         let about = Setting(name: "About", settingName: .about)
         let tutorial = Setting(name: "Tutorial", settingName: .tutorial)
         
-        return (["Users & Accounts", "Application", "Settings", "Support & About"], [[account_, group], [tutorial, recentlyViewedRecipes, storage, mealPlanner], [darkMode], [contact, licences, about]])
+        return (["Users & Accounts", "Application", "Settings", "Support & About"], [[account_, group, review], [tutorial, recentlyViewedRecipes, storage, mealPlanner], [darkMode], [contact, licences, about]])
     }
     
     
@@ -56,6 +58,8 @@ extension Setting.SettingName {
             return "Account"
         case .group:
             return "Group"
+        case .review:
+            return "Rate app in app store"
         case .recentlyViewedRecipes:
             return "Recently viewed recipes"
         case .storage:
