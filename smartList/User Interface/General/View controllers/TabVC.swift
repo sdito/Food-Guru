@@ -29,10 +29,7 @@ class TabVC: UITabBarController {
         
         db = Firestore.firestore()
         User.writeNewUserDocumentIfApplicable(db: db)
-        
-        #warning("make sure this works after coming back after a while")
         User.setAndPersistGroupDataInSharedValues(db: db)
-
         
         let defaults = UserDefaults.standard
         let numTimesRan = defaults.integer(forKey: "timesOpened")

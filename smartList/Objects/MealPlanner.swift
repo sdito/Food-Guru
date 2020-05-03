@@ -495,14 +495,10 @@ class MealPlanner {
     
     // MARK: Changes
     class func handleMealPlannerForGroupChangeOrNewGroup(db: Firestore, oldEmails: [String]?, newEmails: [String], mealPlannerID: String?) {
-        
-        #warning("need to do slightly more testing to ensure this is working as intended")
         // If old emails is nil, then this was a brand new group, use the users meal planner (if it exists) for the new meal planner
         // If old emails exist, need to nil out every meal planner ID
         // For both cases, in newEmails need to write the mealPlannerID to every user's profile
         print("MP Change being called: oldEmails: \(oldEmails?.joined(separator: ", ") ?? " none"), newEmails: \(newEmails.joined(separator: ", "))")
-        
-        
         
         // to remove the old mealPlannerID value from the previous emails
         if let oldEmails = oldEmails {

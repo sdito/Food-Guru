@@ -226,7 +226,7 @@ class FoodStorage {
     
     // used to have real-time updates for the items that are in the user's storage, either individual or shared storage
     
-    #warning("can clean this up with keeping track of the listener")
+    
     static func readAndPersistSystemItemsFromStorageWithListener(db: Firestore, storageID: String) {
         let reference = db.collection("storages").document(storageID).collection("items")
         reference.addSnapshotListener { (querySnapshot, error) in
