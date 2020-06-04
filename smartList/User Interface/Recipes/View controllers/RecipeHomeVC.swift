@@ -14,15 +14,15 @@ import AVFoundation
 
 class RecipeHomeVC: UIViewController {
     
-    @IBOutlet weak var savedAndAllRecipesOutlet: UIButton!
-    @IBOutlet weak var backUpOutlet: UIButton!
+    @IBOutlet weak var homeRecipesOutlet: UIButton!
+    @IBOutlet weak var savedRecipesOutlet: UIButton!
+    
     @IBOutlet weak var wholeStackView: UIStackView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var searchHelperView: UIView!
     @IBOutlet weak var searchButtonStackView: UIStackView!
     @IBOutlet weak var scrollBackUpView: UIView!
-    @IBOutlet weak var moreRecipesView: UIView!
     @IBOutlet weak var searchBarHeight: NSLayoutConstraint!
     
     var db: Firestore!
@@ -43,12 +43,10 @@ class RecipeHomeVC: UIViewController {
             switch self.savedRecipesActive {
             case true:
                 searchBar.placeholder = "Filter saved recipes"
-                savedAndAllRecipesOutlet.setTitle("All recipes", for: .normal)
                 currentSearchesView.isHidden = true
                 searchHelperView.isHidden = true
             case false:
                 searchBar.placeholder = "Search all recipes"
-                savedAndAllRecipesOutlet.setTitle("Saved", for: .normal)
                 currentSearchesView.isHidden = false
             }
         }
@@ -96,12 +94,8 @@ class RecipeHomeVC: UIViewController {
             
             if self.recipes.isEmpty {
                 self.createMessageView(color: .red, text: "No recipes found")
-                handleNeedingMoreRecipes()
             }
             
-            if self.recipes.count < 2 {
-                moreRecipesView.isHidden = false
-            }
         }
     }
     
@@ -144,9 +138,7 @@ class RecipeHomeVC: UIViewController {
         searchButtonStackView.setUpQuickSearchButtons()
         createObserver()
         scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
-        moreRecipesView.shadowAndRounded(cornerRadius: 10, border: false)
-        backUpOutlet.alpha = 0
-        
+        homeRecipesOutlet.handleSelectedForBottomTab(selected: true)
         
         FoodStorage.readAndPersistSystemItemsFromStorageWithListener(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
     }
@@ -159,7 +151,19 @@ class RecipeHomeVC: UIViewController {
         timer?.tolerance = 0.2
         
     }
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        switch savedRecipesActive {
+        case true:
+            savedRecipesOutlet.handleSelectedForBottomTab(selected: true)
+            homeRecipesOutlet.handleSelectedForBottomTab(selected: false)
+        case false:
+            savedRecipesOutlet.handleSelectedForBottomTab(selected: false)
+            homeRecipesOutlet.handleSelectedForBottomTab(selected: true)
+        }
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         navigationController?.setNavigationBarHidden(false, animated: animated)
@@ -189,30 +193,26 @@ class RecipeHomeVC: UIViewController {
         }
     }
     
-    @IBAction func scrollBackUp(_ sender: Any) {
-        allowButtonToBeShowed = false
-        collectionView.setContentOffset(.init(x: 0, y: 0), animated: true)
-        lastContentOffset = 0
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.allowButtonToBeShowed = true
+    @IBAction func homeRecipes(_ sender: Any) {
+        if savedRecipesActive {
+            savedRecipesActive = false
+            homeRecipesOutlet.handleSelectedForBottomTab(selected: true)
+            savedRecipesOutlet.handleSelectedForBottomTab(selected: false)
         }
     }
+    
     @IBAction func savedRecipes(_ sender: Any) {
-        savedRecipesActive = !savedRecipesActive
-        print("SavedRecipesActive?: \(savedRecipesActive)")
-        if savedRecipesActive == true {
+        if !savedRecipesActive {
+            savedRecipesActive = true
+            homeRecipesOutlet.handleSelectedForBottomTab(selected: false)
+            savedRecipesOutlet.handleSelectedForBottomTab(selected: true)
             Recipe.readUserSavedRecipes(db: db) { (rcps) in
                 self.savedRecipes = rcps
             }
         }
-    }
-    
-    
-    @IBAction func moreRecipesPressed(_ sender: Any) {
-        userWantsMoreRecipes = true
-        handleNeedingMoreRecipes()
         
     }
+
     
     @IBAction func goToCookbook(_ sender: Any) {
         tabBarController?.selectedIndex = 1
@@ -226,34 +226,7 @@ class RecipeHomeVC: UIViewController {
         }
     }
     
-    
-    private func handleNeedingMoreRecipes() {
-        
-        Recipe.getPuppyRecipesFromSearches(activeSearches: self.activeSearches, expiringItems: expiringItems) { (puppyRecipes) in
-            
-            DispatchQueue.main.async {
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "outsideRecipesVC") as! OutsideRecipesVC
-                vc.puppyRecipes = puppyRecipes
-                if vc.puppyRecipes?.isEmpty == false {
-                    
-                    self.present(vc, animated: true, completion: nil)
-                } else {
-                    // to only allow this message view if the user specifically pressed the more recipes button
-                    if self.userWantsMoreRecipes == true {
-                        self.createMessageView(color: .red, text: "Couldn't find more recipes")
-                        self.userWantsMoreRecipes = false
-                    }
-                    
-                }
-            }
-            
-            
-        
-        }
-        
-        
-        
-    }
+
     
     private func createObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(recipeButtonPressed), name: .recipeSearchButtonPressed, object: nil)
@@ -428,23 +401,6 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if savedRecipesActive == false {
-            if indexPath.row == 1 {
-                if collectionView.contentSize.height < collectionView.bounds.height {
-                    print("Need to make the view visible")
-                    moreRecipesView.isHidden = false
-                } else {
-                    print("Need to make the view hidden")
-                    moreRecipesView.isHidden = true
-                }
-    //            print(collectionView.contentSize.height, collectionView.bounds.height)
-            }
-        } else {
-            moreRecipesView.isHidden = true
-        }
-        
-    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch savedRecipesActive {
@@ -493,10 +449,6 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             if allowButtonToBeShowed == true && scrollView.contentOffset.y >= 0 {
                 scrollBackUpView.setIsHidden(false, animated: true)
             }
-            backUpOutlet.alpha = 1
-        }
-        else if scrollView.contentOffset.y <= 0 {
-            backUpOutlet.alpha = 0
         }
         
         else if (self.lastContentOffset < scrollView.contentOffset.y) {
@@ -505,26 +457,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         self.lastContentOffset = scrollView.contentOffset.y
         
-        if self.lastContentOffset < 400 {
-            backUpOutlet.alpha = 0.0
-        }
-        
-        if savedRecipesActive == false {
-            let svContentOffset = scrollView.contentOffset.y
-            let bottonOfSV = contentSizeHeight-scrollView.bounds.height
-            
-            if svContentOffset > bottonOfSV - 500 {
-                if moreRecipesView.isHidden == true {
-                    moreRecipesView.setIsHidden(false, animated: true)
-                }
-            } else {
-                if moreRecipesView.isHidden == false {
-                    moreRecipesView.setIsHidden(true, animated: true)
-                }
-            }
-        } else {
-            moreRecipesView.isHidden = true
-        }
+       
     }
 
     

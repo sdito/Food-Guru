@@ -30,10 +30,10 @@ struct Recipe {
     var notes: String?
     var tagline: String?
     var recipeImage: Data?
-    var imagePath: String?
+    var mainImage: String?
     var reviewImagePaths: [String]?
     
-    init(name: String, recipeType: [String], cuisineType: String, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, userID: String?, numReviews: Int?, numStars: Int?, notes: String?, tagline: String?, recipeImage: Data?, imagePath: String?, reviewImagePaths: [String]?) {
+    init(name: String, recipeType: [String], cuisineType: String, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, userID: String?, numReviews: Int?, numStars: Int?, notes: String?, tagline: String?, recipeImage: Data?, mainImage: String?, reviewImagePaths: [String]?) {
         self.name = name
         self.recipeType = recipeType
         self.cuisineType = cuisineType
@@ -49,7 +49,7 @@ struct Recipe {
         self.notes = notes
         self.tagline = tagline
         self.recipeImage = recipeImage
-        self.imagePath = imagePath
+        self.mainImage = mainImage
         self.reviewImagePaths = reviewImagePaths
     }
     
@@ -60,7 +60,7 @@ struct Recipe {
     mutating func writeToFirestore(db: Firestore!, storage: Storage) {
         let ingredients = self.ingredients
         let doc = db.collection("recipes-external").document()
-        self.imagePath = "recipe/\(doc.documentID).jpg"
+        self.mainImage = "recipe/\(doc.documentID).jpg"
         doc.setData([
             "name": self.name,
             "recipeType": self.recipeType,
@@ -76,7 +76,7 @@ struct Recipe {
             "numReviews": self.numReviews as Any,
             "numStars": self.numStars as Any,
             "notes": self.notes as Any,
-            "path": self.imagePath as Any,
+            "path": self.mainImage as Any,
             "tagline": self.tagline as Any,
             "reviewImagePaths": self.reviewImagePaths as Any,
             "numberIngredients": self.ingredients.count as Any
@@ -99,7 +99,7 @@ struct Recipe {
                 }
             }
         }
-        let uploadReference = Storage.storage().reference(withPath: imagePath ?? "")
+        let uploadReference = Storage.storage().reference(withPath: mainImage ?? "")
         guard let imageData = self.recipeImage else { return }
         let newMetadata = StorageMetadata()
         newMetadata.contentType = "image/jpeg"
@@ -132,7 +132,7 @@ struct Recipe {
     
     func getImageFromStorage(thumb: Bool, imageReturned: @escaping (_ image: UIImage?) -> Void) {
         var image: UIImage?
-        var thumbPath = self.imagePath
+        var thumbPath = self.mainImage
         if thumb == true {
             thumbPath?.removeLast(4)
             thumbPath?.append(contentsOf: "_200x200.jpg")
@@ -238,7 +238,7 @@ struct Recipe {
                     if var dict = data["recentlyViewedRecipes"] as? [String:[String:Any]] {
                         // update the data, already have saved recipes
                         print(dict.keys.count)
-                        dict["\(Date().timeIntervalSince1970)"] = ["name": self.name, "path": self.imagePath as Any, "timeIntervalSince1970": Date().timeIntervalSince1970]
+                        dict["\(Date().timeIntervalSince1970)"] = ["name": self.name, "path": self.mainImage as Any, "timeIntervalSince1970": Date().timeIntervalSince1970]
                         // should have the dict, just would need to write over the previous dict with this new dict, also might need to delete the oldest entry
                         
                         print(dict.keys.count)
@@ -253,7 +253,7 @@ struct Recipe {
                         ])
                     } else {
                         // no saved recipes, need to create the dictionary
-                        let dict: [String:[String:Any]] = ["\(Date().timeIntervalSince1970)":["name": self.name, "path": self.imagePath as Any, "timeIntervalSince1970": Date().timeIntervalSince1970]]
+                        let dict: [String:[String:Any]] = ["\(Date().timeIntervalSince1970)":["name": self.name, "path": self.mainImage as Any, "timeIntervalSince1970": Date().timeIntervalSince1970]]
                         reference.updateData([
                             "recentlyViewedRecipes" : dict
                         ])
@@ -276,7 +276,7 @@ struct Recipe {
     
     
     func addRecipeDocumentToUserProfile(db: Firestore) {
-        guard let id = self.imagePath?.imagePathToDocID() else { return }
+        guard let id = self.mainImage?.imagePathToDocID() else { return }
         let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").collection("savedRecipes").document(id)
         reference.setData([
             "name": self.name,
@@ -293,7 +293,7 @@ struct Recipe {
             "numReviews": self.numReviews as Any,
             "numStars": self.numStars as Any,
             "notes": self.notes as Any,
-            "path": self.imagePath as Any,
+            "path": self.mainImage as Any,
             "tagline": self.tagline as Any,
             "reviewImagePaths": self.reviewImagePaths as Any
         ]) { err in
@@ -306,7 +306,7 @@ struct Recipe {
     }
     
     func removeRecipeDocumentFromUserProfile(db: Firestore) {
-        guard let id = self.imagePath?.imagePathToDocID() else { return }
+        guard let id = self.mainImage?.imagePathToDocID() else { return }
         let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").collection("savedRecipes").document(id)
         reference.delete()
     }
@@ -480,7 +480,7 @@ struct Recipe {
     
     func updateRecipeReviewInfo(stars: Int, reviews: Int, db: Firestore) {
         
-        let recipeID = self.imagePath?.imagePathToDocID()
+        let recipeID = self.mainImage?.imagePathToDocID()
         let starsValue = self.numStars
         let reviewsValue = self.numReviews
         
@@ -504,7 +504,7 @@ struct Recipe {
     }
     
     func addReviewToRecipe(stars: Int, review: String?, db: Firestore) {
-        let recipeID = self.imagePath?.imagePathToDocID()
+        let recipeID = self.mainImage?.imagePathToDocID()
         var hasTextReview: Bool {
             if review == nil || review == "" {
                 return false
@@ -559,148 +559,9 @@ struct Recipe {
     }
 }
 
-
-// MARK: Recipe.Puppy
-extension Recipe {
-    struct Puppy {
-        var title: String?
-        var ingredients: String?
-        var url: URL?
-        
-        init(title: String?, ingredients: String?, url: URL?) {
-            self.title = title
-            self.ingredients = ingredients
-            self.url = url
-        }
-    }
-    
-    static func getPuppyRecipesFromSearches(activeSearches: [(String, SearchType)], expiringItems: [String], recipesFound: @escaping (_ recipes: [Recipe.Puppy]) -> Void) {
-        // recipes that come form the 'More recipes' pop up bottom from RecipeHomeVC
-        
-        DispatchQueue.global(qos: .background).async {
-        
-        var puppyRecipes: [Recipe.Puppy] = []
-        var itemsToSearch: [String] {
-            if activeSearches.contains(where: {$0 == ("Expiring", .other)}) {
-                return expiringItems
-            } else {
-                return activeSearches.filter({$0.1 == .ingredient}).map { (str) -> String in
-                    (GenericItem(rawValue: str.0)?.description ?? "")
-                }.filter({$0 != ""})
-            }
-        }
-           
-        let ingredientText = itemsToSearch.map { (str) -> String in
-            str.replacingOccurrences(of: " ", with: "%20")
-        }.joined(separator: ",")
-           
-           
-        var potentialOtherThanIngredientText: String {
-            let otherSearches = activeSearches.filter({$0.1 != .ingredient})
-            if otherSearches.isEmpty == false {
-                return "&q=\(otherSearches.first!.0)"
-            } else {
-                return ""
-            }
-        }
-           
-        // if there is a search for something such as 'Italian' food, then need to add that on to after the ingredientText through potentialOtherThanIngredientText
-        var searchURL: URL? {
-            if ingredientText != "" {
-                return URL(string: "http://www.recipepuppy.com/api/?i=\(ingredientText)\(potentialOtherThanIngredientText)")
-            } else {
-                print("Doing general query")
-                let txt = (activeSearches.first?.0)?.replacingOccurrences(of: " ", with: "%20")
-                return URL(string: "http://www.recipepuppy.com/api/?q=\(txt ?? "\(GenericItem.all.randomElement() ?? "")")")
-            }
-        }
-            
-        guard let url = searchURL else {
-            return
-        }
-           
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            
-            guard let data = data else {
-                print("Data was nil")
-                return
-            }
-            
-            if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
-                if let dictionary = json as? [String:Any] {
-                    let newData = dictionary["results"] as? [Any]
-                    
-                    if let newData = newData {
-                        for recipeData in newData {
-                            let recipeDataDict = recipeData as? [String:Any]
-                            if let recipeDataDict = recipeDataDict {
-                                // only need title, ingredients, and URL for displaying in OtherRecipes VC
-                                let title = recipeDataDict["title"] as? String
-                                let trimTitle = title?.trim()
-                                let ingredients = recipeDataDict["ingredients"] as? String
-                                let url = recipeDataDict["href"] as? String
-                                let puppyRecipe = Recipe.Puppy(title: trimTitle, ingredients: ingredients, url: URL(string: url ?? ""))
-                                puppyRecipes.append(puppyRecipe)
-                                   
-                            }
-                               
-                        }
-                        recipesFound(puppyRecipes)
-                    }
-                } else {
-                    recipesFound([])
-                }
-            } else {
-                // Need to account for API format being changed here
-                // Create a new function with the similar logic in both
-                guard let htmlString = String(data: data, encoding: .utf8) else { return }
-                let lowerRange = htmlString.startIndex
-                guard let upperRange = htmlString.range(of: "<!DOCTYPE")?.lowerBound else { return }
-                let range = lowerRange..<upperRange
-                let str = String(htmlString[range])
-                
-                let newData = Data(str.utf8)
-                
-                
-                
-                let json = try? JSONSerialization.jsonObject(with: newData, options: [])
-                if let dictionary = json as? [String:Any] {
-                    let newData = dictionary["results"] as? [Any]
-                    
-                    if let newData = newData {
-                        for recipeData in newData {
-                            let recipeDataDict = recipeData as? [String:Any]
-                            if let recipeDataDict = recipeDataDict {
-                                // only need title, ingredients, and URL for displaying in OtherRecipes VC
-                                let title = recipeDataDict["title"] as? String
-                                let trimTitle = title?.trim()
-                                let ingredients = recipeDataDict["ingredients"] as? String
-                                let url = recipeDataDict["href"] as? String
-                                let puppyRecipe = Recipe.Puppy(title: trimTitle, ingredients: ingredients, url: URL(string: url ?? ""))
-                                puppyRecipes.append(puppyRecipe)
-                                   
-                            }
-                               
-                        }
-                        recipesFound(puppyRecipes)
-                    }
-                } else {
-                    recipesFound([])
-                }
-                
-            }
-        }
-        
-        
-        task.resume()
-    }
-    }
-    
-}
-
 extension DocumentSnapshot {
     func getRecipe() -> Recipe {
-        let r = Recipe(name: self.get("name") as! String, recipeType: self.get("recipeType") as! [String], cuisineType: self.get("cuisineType") as! String, cookTime: self.get("cookTime") as! Int, prepTime: self.get("prepTime") as! Int, ingredients: self.get("ingredients") as! [String], instructions: self.get("instructions") as! [String], calories: self.get("calories") as? Int, numServes: self.get("numServes") as! Int, userID: self.get("userID") as? String, numReviews: self.get("numReviews") as? Int, numStars: self.get("numStars") as? Int, notes: self.get("notes") as? String, tagline: self.get("tagline") as? String, recipeImage: nil, imagePath: self.get("path") as? String, reviewImagePaths: self.get("reviewImagePaths") as? [String])
+        let r = Recipe(name: self.get("name") as! String, recipeType: self.get("recipeType") as! [String], cuisineType: self.get("cuisineType") as! String, cookTime: self.get("cookTime") as! Int, prepTime: self.get("prepTime") as! Int, ingredients: self.get("ingredients") as! [String], instructions: self.get("instructions") as! [String], calories: self.get("calories") as? Int, numServes: self.get("numServes") as! Int, userID: self.get("userID") as? String, numReviews: self.get("numReviews") as? Int, numStars: self.get("numStars") as? Int, notes: self.get("notes") as? String, tagline: self.get("tagline") as? String, recipeImage: nil, mainImage: self.get("path") as? String, reviewImagePaths: self.get("reviewImagePaths") as? [String])
         return r
     }
 }

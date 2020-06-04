@@ -12,6 +12,7 @@ import FirebaseFirestore
 
 class CookbookVC: UIViewController {
     
+    @IBOutlet weak var cookbookOutlet: UIButton!
     @IBOutlet weak var wholeStackView: UIStackView!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -33,7 +34,7 @@ class CookbookVC: UIViewController {
         scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
         self.view.backgroundColor = Colors.systemBackground
         searchBar.setUpAddItemToolbar(cancelAction: #selector(cancelSelector), addAction: #selector(addSelector))
-        
+        cookbookOutlet.handleSelectedForBottomTab(selected: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {

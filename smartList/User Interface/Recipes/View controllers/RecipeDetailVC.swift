@@ -192,7 +192,7 @@ class RecipeDetailVC: UIViewController {
         print("Save recipe")
         if let recipe = data?.recipe {
             let db = Firestore.firestore()
-            let path = recipe.imagePath ?? " "
+            let path = recipe.mainImage ?? " "
             if SharedValues.shared.savedRecipes?.contains(path ) ?? false {
                 Recipe.removeRecipeFromSavedRecipes(db: db, str: path)
                 recipe.removeRecipeDocumentFromUserProfile(db: db)
@@ -396,7 +396,7 @@ class RecipeDetailVC: UIViewController {
                 self.reviewsStackView.insertArrangedSubview(view, at: 1)
             }
         }
-        let path = recipe.imagePath ?? " "
+        let path = recipe.mainImage ?? " "
         if SharedValues.shared.savedRecipes?.contains(path ) ?? false {
             saveRecipeOutlet.isUserInteractionEnabled = false
             saveRecipeOutlet.alpha = 0.5
@@ -538,7 +538,7 @@ extension RecipeDetailVC: GiveRatingViewDelegate {
         reviewRecipeOutlet.setTitle("✓ Review the recipe", for: .normal)
         
         
-        let recipeID = data?.recipe.imagePath?.imagePathToDocID()
+        let recipeID = data?.recipe.mainImage?.imagePathToDocID()
         let reference = db.collection("recipes").document(recipeID ?? " ").collection("reviews")
         
         reference.whereField("user", isEqualTo: Auth.auth().currentUser?.uid ?? " ").getDocuments { (querySnapshot, error) in

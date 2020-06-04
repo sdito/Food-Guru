@@ -62,7 +62,7 @@ class RecipeCell: UICollectionViewCell {
         favoriteButton.addTarget(self, action: #selector(favoriteButtonPressed), for: .touchUpInside)
         
         
-        if SharedValues.shared.savedRecipes?.contains(recipe.imagePath ?? " ") ?? false {
+        if SharedValues.shared.savedRecipes?.contains(recipe.mainImage ?? " ") ?? false {
             self.favoriteButton.backgroundColor = Colors.main
         } else {
             self.favoriteButton.backgroundColor = Colors.systemGray
@@ -73,8 +73,8 @@ class RecipeCell: UICollectionViewCell {
     // MARK: Button pressed
     @objc func favoriteButtonPressed() {
         let db = Firestore.firestore()
-        let path = self.recipe?.imagePath ?? " "
-        if SharedValues.shared.savedRecipes?.contains(self.recipe?.imagePath ?? " ") ?? false {
+        let path = self.recipe?.mainImage ?? " "
+        if SharedValues.shared.savedRecipes?.contains(self.recipe?.mainImage ?? " ") ?? false {
             Recipe.removeRecipeFromSavedRecipes(db: db, str: path)
             self.recipe?.removeRecipeDocumentFromUserProfile(db: db)
         } else {

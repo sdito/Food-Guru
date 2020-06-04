@@ -217,9 +217,8 @@ class StorageHomeVC: UIViewController {
             if let rcps = rcps {
                 SharedValues.shared.sentRecipesInfo = (rcps, genericItems)
                 
-                #warning("would need to change this if/when i move the recipe tab")
                 // to set the RecipeHomeVC to the correct current view controller
-                self.tabBarController?.selectedIndex = 1
+                self.tabBarController?.selectedIndex = 0
                 (self.tabBarController?.viewControllers?[self.tabBarController!.selectedIndex] as? UITabBarController)?.selectedIndex = 0
                 ((self.tabBarController?.viewControllers?[self.tabBarController!.selectedIndex] as? UITabBarController)?.viewControllers?[0] as? UINavigationController)?.popToRootViewController(animated: true)
                 

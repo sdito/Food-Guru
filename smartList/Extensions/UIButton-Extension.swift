@@ -19,6 +19,16 @@ extension UIButton {
     func notSelected() {
         self.alpha = 0.6
     }
+    
+    func handleSelectedForBottomTab(selected: Bool) {
+        if selected {
+            self.layer.cornerRadius = 4.0
+            self.clipsToBounds = true
+            self.backgroundColor = Colors.secondary
+        } else {
+            self.backgroundColor = .clear
+        }
+    }
 
 }
 

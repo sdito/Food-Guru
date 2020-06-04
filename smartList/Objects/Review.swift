@@ -26,7 +26,7 @@ struct Review {
     
     static func getReviewsFrom(recipe: Recipe, db: Firestore, reviewsReturned: @escaping (_ reviews: [Review]) -> Void) {
         var reviews: [Review] = []
-        let id = recipe.imagePath?.imagePathToDocID()
+        let id = recipe.mainImage?.imagePathToDocID()
         if let id = id {
             let reference = db.collection("recipes").document(id).collection("reviews").whereField("hasText", isEqualTo: true).limit(to: 5)
             reference.getDocuments { (querySnapshot, error) in
@@ -66,7 +66,7 @@ struct Review {
     
     // used only when the review has an added image
     static func writeImageForReview(image: UIImage, recipe: Recipe, db: Firestore) {
-        guard let recipeID = recipe.imagePath?.imagePathToDocID() else { return }
+        guard let recipeID = recipe.mainImage?.imagePathToDocID() else { return }
         guard let uid = Auth.auth().currentUser?.uid else { return }
         guard let imageData: Data = image.jpegData(compressionQuality: 0.75) else { return }
         let random = String.randomString(length: 8)
