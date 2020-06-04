@@ -10,6 +10,7 @@ import Foundation
 import FirebaseFirestore
 
 struct Search {
+    #warning("eventually wont need this function")
     static func find(from info: [(String, SearchType)], db: Firestore, recipesReturned: @escaping(_ rs: [Recipe]?) -> Void) {
         print(info.map({$0.0}))
         var recipes: [Recipe] = []
@@ -1777,7 +1778,7 @@ struct Search {
 
 extension QueryDocumentSnapshot {
     func recipe() -> Recipe {
-        let recipe = Recipe(name: self.get("name") as! String, recipeType: self.get("recipeType") as! [String], cuisineType: self.get("cuisineType") as! String, cookTime: self.get("cookTime") as! Int, prepTime: self.get("prepTime") as! Int, ingredients: self.get("ingredients") as! [String], instructions: self.get("instructions") as! [String], calories: self.get("calories") as? Int, numServes: self.get("numServes") as! Int, userID: self.get("userID") as? String, numReviews: self.get("numReviews") as? Int, numStars: self.get("numStars") as? Int, notes: self.get("notes") as? String, tagline: self.get("tagline") as? String, recipeImage: nil, mainImage: self.get("path") as? String, reviewImagePaths: self.get("reviewImagePaths") as? [String])
+        let recipe = Recipe(name: self.get("name") as! String, recipeType: self.get("recipeType") as! [String], cuisineType: self.get("cuisineType") as! String, cookTime: self.get("cookTime") as! Int, prepTime: self.get("prepTime") as! Int, ingredients: self.get("ingredients") as! [String], instructions: self.get("instructions") as! [String], calories: self.get("calories") as? Int, numServes: self.get("numServes") as! Int, userID: self.get("userID") as? String, numReviews: self.get("numReviews") as? Int, numStars: self.get("numStars") as? Int, notes: self.get("notes") as? String, tagline: self.get("tagline") as? String, recipeImage: nil, mainImage: self.get("path") as? String, thumbImage: nil, reviewImagePaths: self.get("reviewImagePaths") as? [String])
         return recipe
     }
 }

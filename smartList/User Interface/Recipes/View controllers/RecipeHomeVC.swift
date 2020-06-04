@@ -56,7 +56,7 @@ class RecipeHomeVC: UIViewController {
         return collectionView.contentSize.height
     }
     
-    
+    #warning("Need to convert to NetworkSearch.NetworkSearchType")
     private var activeSearches: [(String, SearchType)] = [] {
         didSet {
             if SharedValues.shared.sentRecipesInfo == nil {
@@ -285,11 +285,21 @@ class RecipeHomeVC: UIViewController {
     private func handleRecipesToShow() {
         if SharedValues.shared.sentRecipesInfo == nil {
             if recipes.isEmpty {
+                
+                /*
                 Search.find(from: activeSearches, db: db) { (rcps) in
                     if let rs = rcps {
                         self.recipes = rs
                     }
                 }
+                */
+                #warning("first use with API")
+                Network.shared.getRecipes(searches: nil) { (rcps) in
+                    if let rs = rcps {
+                        self.recipes = rs
+                    }
+                }
+                
             }
         } else {
             recipes = SharedValues.shared.sentRecipesInfo!.recipes
@@ -401,7 +411,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
     }
     
-    
+        
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch savedRecipesActive {
         case true:
@@ -413,11 +423,23 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 cell.recipeImage.image = cachedImage
                 print("Cache for \(indexPath.row)")
             } else {
+                
+                #warning("need to implement the new image from url here")
+                
+                Network.shared.getImage(url: recipe.thumbImage) { (image) in
+                    cell.recipeImage.image = image
+                    self.imageCache.setObject(image, forKey: "\(indexPath.row)" as NSString)
+                }
+                
+                /*
                 recipe.getImageFromStorage(thumb: true) { (img) in
                     cell.recipeImage.image = img
                     self.imageCache.setObject(img!, forKey: "\(indexPath.row)" as NSString)
                     print("Read for \(indexPath.row)")
                 }
+                */
+                
+                
             }
             
             return cell
@@ -430,10 +452,16 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 cell.recipeImage.image = cachedImage
                 print("Cache for \(indexPath.row)")
             } else {
+                /*
                 recipe.getImageFromStorage(thumb: true) { (img) in
                     cell.recipeImage.image = img
                     self.imageCache.setObject(img!, forKey: "\(indexPath.row)" as NSString)
                     print("Read for \(indexPath.row)")
+                }
+                */
+                Network.shared.getImage(url: recipe.thumbImage) { (image) in
+                    cell.recipeImage.image = image
+                    self.imageCache.setObject(image, forKey: "\(indexPath.row)" as NSString)
                 }
             }
             

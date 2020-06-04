@@ -7,6 +7,7 @@
 //
 
 import Alamofire
+import AlamofireImage
 
 class Network {
     
@@ -38,6 +39,19 @@ class Network {
         
         let request = AF.request(Network.baseUrl + path, parameters: params, headers: headers)
         return request
+    }
+    
+    func getImage(url: String?, imageReturned: @escaping (UIImage) -> Void) {
+        
+        if let url = url {
+            AF.request(url).responseImage { (response) in
+                if let data = response.data {
+                    if let image = UIImage(data: data) {
+                        imageReturned(image)
+                    }
+                }
+            }
+        }
     }
     
     func getRecipes(searches: [NetworkSearch]?, recipesReturned: @escaping ([Recipe]?) -> Void) {
@@ -111,6 +125,7 @@ class Network {
                                     tagline: r["tagline"] as? String,
                                     recipeImage: nil,
                                     mainImage: r["main_image"] as? String,
+                                    thumbImage: r["thumb_image"] as? String,
                                     reviewImagePaths: nil)
                 recipes.append(recipe)
             }

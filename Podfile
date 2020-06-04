@@ -18,6 +18,7 @@ pod 'RealmSwift'
 pod 'GoogleSignIn'
 pod 'Firebase/Analytics'
 pod 'Alamofire' 
+pod 'AlamofireImage', '~> 4.1'
 
   target 'smartListTests' do
     inherit! :search_paths

@@ -50,15 +50,6 @@ class TabVC: UITabBarController {
         }
         
         
-        //Network.shared.setIngredients()
-        //Network.shared.setTags()
-        Network.shared.getRecipes(searches: nil) { (recipes) in
-            if let recipes = recipes {
-                for recipe in recipes {
-                    print(recipe.name)
-                }
-            }
-        }
         
     }
     

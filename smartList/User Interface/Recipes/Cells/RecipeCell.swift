@@ -61,7 +61,7 @@ class RecipeCell: UICollectionViewCell {
         
         favoriteButton.addTarget(self, action: #selector(favoriteButtonPressed), for: .touchUpInside)
         
-        
+        #warning("need to change this to use the ID of the recipe")
         if SharedValues.shared.savedRecipes?.contains(recipe.mainImage ?? " ") ?? false {
             self.favoriteButton.backgroundColor = Colors.main
         } else {

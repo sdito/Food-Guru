@@ -13,8 +13,8 @@ import FirebaseStorage
 import RealmSwift
 
 
-
 struct Recipe {
+    #warning("need to add id")
     var name: String
     var recipeType: [String]
     var cuisineType: String
@@ -31,9 +31,10 @@ struct Recipe {
     var tagline: String?
     var recipeImage: Data?
     var mainImage: String?
+    var thumbImage: String?
     var reviewImagePaths: [String]?
     
-    init(name: String, recipeType: [String], cuisineType: String, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, userID: String?, numReviews: Int?, numStars: Int?, notes: String?, tagline: String?, recipeImage: Data?, mainImage: String?, reviewImagePaths: [String]?) {
+    init(name: String, recipeType: [String], cuisineType: String, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, userID: String?, numReviews: Int?, numStars: Int?, notes: String?, tagline: String?, recipeImage: Data?, mainImage: String?, thumbImage: String?, reviewImagePaths: [String]?) {
         self.name = name
         self.recipeType = recipeType
         self.cuisineType = cuisineType
@@ -50,6 +51,7 @@ struct Recipe {
         self.tagline = tagline
         self.recipeImage = recipeImage
         self.mainImage = mainImage
+        self.thumbImage = thumbImage
         self.reviewImagePaths = reviewImagePaths
     }
     
@@ -557,11 +559,12 @@ struct Recipe {
             counter += 1
         }
     }
+    
 }
 
 extension DocumentSnapshot {
     func getRecipe() -> Recipe {
-        let r = Recipe(name: self.get("name") as! String, recipeType: self.get("recipeType") as! [String], cuisineType: self.get("cuisineType") as! String, cookTime: self.get("cookTime") as! Int, prepTime: self.get("prepTime") as! Int, ingredients: self.get("ingredients") as! [String], instructions: self.get("instructions") as! [String], calories: self.get("calories") as? Int, numServes: self.get("numServes") as! Int, userID: self.get("userID") as? String, numReviews: self.get("numReviews") as? Int, numStars: self.get("numStars") as? Int, notes: self.get("notes") as? String, tagline: self.get("tagline") as? String, recipeImage: nil, mainImage: self.get("path") as? String, reviewImagePaths: self.get("reviewImagePaths") as? [String])
+        let r = Recipe(name: self.get("name") as! String, recipeType: self.get("recipeType") as! [String], cuisineType: self.get("cuisineType") as! String, cookTime: self.get("cookTime") as! Int, prepTime: self.get("prepTime") as! Int, ingredients: self.get("ingredients") as! [String], instructions: self.get("instructions") as! [String], calories: self.get("calories") as? Int, numServes: self.get("numServes") as! Int, userID: self.get("userID") as? String, numReviews: self.get("numReviews") as? Int, numStars: self.get("numStars") as? Int, notes: self.get("notes") as? String, tagline: self.get("tagline") as? String, recipeImage: nil, mainImage: self.get("path") as? String, thumbImage: nil, reviewImagePaths: self.get("reviewImagePaths") as? [String])
         return r
     }
 }

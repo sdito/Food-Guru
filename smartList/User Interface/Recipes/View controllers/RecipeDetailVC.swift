@@ -65,9 +65,16 @@ class RecipeDetailVC: UIViewController {
         } else if let cookbook = cookbookRecipe {
             setUI(recipe: cookbook)
         }
+        #warning("need to change this")
+        Network.shared.getImage(url: data?.recipe.mainImage) { (image) in
+            self.imageView.image = image
+        }
+        
+        /*
         data?.recipe.getImageFromStorage(thumb: false, imageReturned: { (img) in
             self.imageView.image = img
         })
+        */
         
         createObserver()
     
