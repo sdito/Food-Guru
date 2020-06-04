@@ -14,9 +14,7 @@ class CreateNewItemCell: UITableViewCell {
     @IBOutlet weak var img: UIImageView!
     
     
-    func setUI(text: String, inItems: Bool, list: Bool) {
-        print("Is for list: \(list)")
-        
+    func setUI(text: String, inItems: Bool, list: Bool, search: Bool) {
         
         label.text = text
         
@@ -29,7 +27,9 @@ class CreateNewItemCell: UITableViewCell {
             }
         }
         
-        img.image = iconImage
+        if !search {
+            img.image = iconImage
+        }
         
         if inItems {
             img.isHidden = false

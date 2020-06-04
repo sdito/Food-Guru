@@ -13,7 +13,6 @@ extension Notification.Name {
     static let foodStorageIDchanged = Notification.Name("stevenDito.foodStorageIDchanged")
     static let groupIDchanged = Notification.Name("stevenDito.groupIDchanged")
     static let itemAddedFromRecipe = Notification.Name("stevenDito.itemAddedFromRecipe")
-    static let recipeSearchButtonPressed = Notification.Name("stevenDito.recipeSearchButtonPressed")
     static let savedRecipesChanged = Notification.Name("stevenDito.savedRecipesChanged")
     static let haveSavedRecipesAppear = Notification.Name("stevenDito.haveSavedRecipesAppear")
     static let recipeDataFromURLReceived = Notification.Name("stevenDito.recipeDataFromURLReceived")

@@ -11,7 +11,7 @@ import UIKit
 
 
 protocol CurrentSearchesViewDelegate: class {
-    func buttonPressedToDeleteSearch(index: Int)
+    func buttonPressedToDeleteSearch(search: NetworkSearch)
 }
 
 
@@ -22,7 +22,7 @@ class CurrentSearchesView: UIView {
     
     @IBOutlet weak var stackView: UIStackView!
     
-    func setUI(searches: [(String, SearchType)]) {
+    func setUI(searches: [NetworkSearch]) {
         stackView.subviews.forEach { (v) in
             if type(of: v) == UIButton.self || type(of: v) == UILabel.self {
                 v.removeFromSuperview()
@@ -32,15 +32,9 @@ class CurrentSearchesView: UIView {
         if !searches.isEmpty {
             for search in searches {
                 let b = UIButton()
-                var buttonText: String {
-                    if search.1 == .ingredient {
-                        return GenericItem(rawValue: search.0)?.description ?? "Search"
-                    } else {
-                        return search.0
-                    }
-                }
-                
-                b.setTitle(" X  \(buttonText) ", for: .normal)
+                let buttonText: String = search.text
+                b.tag = search.type.toTagRepresentation()
+                b.setTitle(buttonText, for: .normal)
                 
                 b.titleLabel?.font = UIFont(name: "futura", size: 13)
                 b.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
@@ -62,12 +56,11 @@ class CurrentSearchesView: UIView {
         }
         
     }
+    
     @objc func buttonAction(sender: UIButton) {
-        print(sender.titleLabel?.text as Any)
-        print()
-        if let idx = (sender.superview as? UIStackView)?.subviews.firstIndex(of: sender) {
-            delegate.buttonPressedToDeleteSearch(index: idx - 1)
-        }
+        let text = sender.titleLabel?.text
+        let tag = sender.tag
+        delegate.buttonPressedToDeleteSearch(search: NetworkSearch(text: text!, type: NetworkSearch.NetworkSearchType.toNetworkSearchTypeRepresentation(tag: tag)))
     }
 
 }

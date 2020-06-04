@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct NetworkSearch {
+struct NetworkSearch: Equatable {
     
     var text: String
     var type: NetworkSearchType
@@ -49,6 +49,33 @@ struct NetworkSearch {
                 case .unknown:
                     return true
             }
+        }
+        
+        func toTagRepresentation() -> Int {
+            switch self {
+            case .ingredient:
+                return 71
+            case .tag:
+                return 72
+            case .title:
+                return 73
+            case .avoidIngredient:
+                return 74
+            case .unknown:
+                return 75
+            }
+        }
+        
+        static func toNetworkSearchTypeRepresentation(tag: Int) -> NetworkSearchType {
+            // Don't need to update this if new searches are added, based on toTagRepresentation
+            for type in self.allCases {
+                let int = type.toTagRepresentation()
+                if int == tag {
+                    return type
+                }
+            }
+            // something went wrong
+            fatalError()
         }
         
         

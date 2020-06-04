@@ -78,6 +78,7 @@ class SelectMealPlanRecipeVC: UIViewController {
             }
         case .all:
             self.createLoadingView()
+            #warning("need to change this")
             Recipe.getNRecipes(num: pageCount, db: db, lastDoc: lastDocument) { (rcps, lastDocument)  in
                 self.recipes = rcps
                 self.lastDocument = lastDocument

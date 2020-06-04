@@ -8,10 +8,12 @@
 
 import Foundation
 
-
+#warning("delete eventually")
+/*
 enum SearchType {
     case cuisine
     case recipe
     case ingredient
     case other
 }
+*/

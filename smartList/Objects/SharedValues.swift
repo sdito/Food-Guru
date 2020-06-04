@@ -41,7 +41,7 @@ class SharedValues {
         }
     }
     
-    var sentRecipesInfo: (recipes: [Recipe], ingredients: [String])?
+    var sentRecipesInfo: (recipes: [Recipe], ingredients: [NetworkSearch])?
     
     var currentItemsInStorage: [String]? {
         didSet {

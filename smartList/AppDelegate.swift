@@ -22,6 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        Network.shared.setTags()
+        Network.shared.setIngredients()
         if Auth.auth().currentUser != nil {
             SharedValues.shared.userID = Auth.auth().currentUser?.uid
             

@@ -11,8 +11,8 @@ import AlamofireImage
 
 class Network {
     
-    var ingredients: [String] = []
-    var tags: [String] = []
+    var ingredients: [NetworkSearch] = []
+    var tags: [NetworkSearch] = []
     var nextUrl: String?
     static let shared = Network()
     private init() {}
@@ -76,7 +76,7 @@ class Network {
                 switch response.result {
                     case .success(let json):
                         if let tags = self.getElementFromJsonArray(json: json, key: "display") {
-                            self.tags = tags
+                            self.tags = tags.map({NetworkSearch(text: $0, type: .tag)})
                         }
                     case .failure(let error):
                         print(error)
@@ -93,7 +93,7 @@ class Network {
                 switch response.result {
                     case .success(let json):
                         if let ingredients = self.getElementFromJsonArray(json: json, key: "display") {
-                            self.ingredients = ingredients
+                            self.ingredients = ingredients.map({NetworkSearch(text: $0, type: .ingredient)})
                         }
                     case .failure(let error):
                         print(error)

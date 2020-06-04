@@ -20,13 +20,14 @@ class RecipeHomeVC: UIViewController {
     @IBOutlet weak var wholeStackView: UIStackView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var searchHelperView: UIView!
-    @IBOutlet weak var searchButtonStackView: UIStackView!
     @IBOutlet weak var scrollBackUpView: UIView!
     @IBOutlet weak var searchBarHeight: NSLayoutConstraint!
     
     var db: Firestore!
     var imageCache = NSCache<NSString, UIImage>()
+    private var keyboardHeight: CGFloat?
+    private var textAssistantViewActive = false
+    private var newItemVC: CreateNewItemVC?
     private var userWantsMoreRecipes = false
     private var lastContentOffset: CGFloat = 0
     private var allowButtonToBeShowed = true
@@ -34,6 +35,7 @@ class RecipeHomeVC: UIViewController {
     private var expiringItems: [String] = []
     private var previousContentOffset: CGPoint?
     private var timer: Timer?
+    private var delegate: SearchAssistantDelegate!
     private var savedRecipesActive = false {
         didSet {
             imageCache.removeAllObjects()
@@ -44,7 +46,6 @@ class RecipeHomeVC: UIViewController {
             case true:
                 searchBar.placeholder = "Filter saved recipes"
                 currentSearchesView.isHidden = true
-                searchHelperView.isHidden = true
             case false:
                 searchBar.placeholder = "Search all recipes"
                 currentSearchesView.isHidden = false
@@ -57,18 +58,21 @@ class RecipeHomeVC: UIViewController {
     }
     
     #warning("Need to convert to NetworkSearch.NetworkSearchType")
-    private var activeSearches: [(String, SearchType)] = [] {
+    private var activeSearches: [NetworkSearch] = [] {
         didSet {
             if SharedValues.shared.sentRecipesInfo == nil {
-                Search.find(from: self.activeSearches, db: db) { (rcps) in
+                Network.shared.getRecipes(searches: self.activeSearches) { (rcps) in
+                    
+                    for _ in 1...20 {
+                        print(self.recipes.count)
+                    }
+                    
                     if let rcps = rcps {
                         self.recipes = rcps
-                    } else {
-                        for _ in 1...10 {
-                            print("Recipes not found")
-                        }
                     }
                 }
+
+                
                 
             }
             if wholeStackView.subviews.contains(currentSearchesView) {
@@ -92,9 +96,6 @@ class RecipeHomeVC: UIViewController {
             collectionView?.collectionViewLayout.invalidateLayout()
             collectionView?.reloadData()
             
-            if self.recipes.isEmpty {
-                self.createMessageView(color: .red, text: "No recipes found")
-            }
             
         }
     }
@@ -135,12 +136,13 @@ class RecipeHomeVC: UIViewController {
         layout.delegate = self
         
         
-        searchButtonStackView.setUpQuickSearchButtons()
         createObserver()
         scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
         homeRecipesOutlet.handleSelectedForBottomTab(selected: true)
         
         FoodStorage.readAndPersistSystemItemsFromStorageWithListener(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -229,7 +231,7 @@ class RecipeHomeVC: UIViewController {
 
     
     private func createObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(recipeButtonPressed), name: .recipeSearchButtonPressed, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionView), name: .savedRecipesChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(haveSavedRecipesShow), name: .haveSavedRecipesAppear, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadCollectionView), name: UIApplication.willEnterForegroundNotification, object: nil)
@@ -246,25 +248,8 @@ class RecipeHomeVC: UIViewController {
             }
         }
     }
+
     
-    
-    
-    @objc func recipeButtonPressed(_ notification: NSNotification) {
-        handleSuggestedSearchButtonBeingPressed()
-        if let dict = notification.userInfo as NSDictionary? {
-            if let buttonName = dict["buttonName"] as? (String, SearchType) {
-                if buttonName.0 != "Select Ingredients" {
-                    handleDuplicateSearchesAndAddNew(newSearches: [buttonName])
-                } else {
-                    print("Got to this point")
-                    let sb = UIStoryboard(name: "Recipes", bundle: nil)
-                    let vc = sb.instantiateViewController(withIdentifier: "searchByIngredient") as! SearchByIngredientVC
-                    vc.recipesFoundDelegate = self
-                    self.present(vc, animated: true, completion: nil)
-                }
-            }
-        }
-    }
     @objc func haveSavedRecipesShow() {
         savedRecipesActive = true
         Recipe.readUserSavedRecipes(db: db) { (rcps) in
@@ -279,7 +264,6 @@ class RecipeHomeVC: UIViewController {
     private func handleSuggestedSearchButtonBeingPressed() {
         wholeStackView.insertArrangedSubview(currentSearchesView, at: 1)
         searchBar.endEditing(true)
-        searchHelperView.isHidden = true
     }
     
     private func handleRecipesToShow() {
@@ -303,7 +287,8 @@ class RecipeHomeVC: UIViewController {
             }
         } else {
             recipes = SharedValues.shared.sentRecipesInfo!.recipes
-            activeSearches = SharedValues.shared.sentRecipesInfo!.ingredients.map({($0, .ingredient)})
+            //activeSearches = SharedValues.shared.sentRecipesInfo!.ingredients.map({NetworkSearch(text: $0, type: .ingredient)})
+            activeSearches = SharedValues.shared.sentRecipesInfo?.1 ?? []
             imageCache.removeAllObjects()
             SharedValues.shared.sentRecipesInfo = nil
         }
@@ -318,28 +303,22 @@ class RecipeHomeVC: UIViewController {
         previousContentOffset = currentContentOffset
     }
     
-    private func handleDuplicateSearchesAndAddNew(newSearches: [(String, SearchType)]) {
-        var temp: [(String, SearchType)] = activeSearches
-        print("\(newSearches) are the newSearches")
-        for newSearch in newSearches {
-            switch newSearch.1 {
-            case .cuisine:
-                temp = temp.filter({$0.1 != .cuisine})
-                temp = temp.filter({$0.1 != .other})
-                temp += newSearches
-                activeSearches = temp
-            case .recipe:
-                temp = temp.filter({$0.1 != .recipe})
-                temp = temp.filter({$0.1 != .other})
-                temp += newSearches
-                activeSearches = temp
-            case .ingredient:
-                temp = temp.filter({$0.1 != .other})
-                temp += newSearches
-                activeSearches = temp
-            case .other:
-                activeSearches = newSearches
+    private func handleDuplicateSearchesAndAddNew(newSearches: [NetworkSearch]) {
+        for search in newSearches {
+            if !activeSearches.contains(search) {
+                activeSearches.append(search)
             }
+        }
+        
+    }
+    
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        print("Keyboard will show is being called")
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            keyboardHeight = keyboardRectangle.height
+            
         }
     }
 }
@@ -350,14 +329,16 @@ extension RecipeHomeVC: RecipesFoundFromSearchingDelegate {
     func recipesFound(ingredients: [String]) {
         self.imageCache.removeAllObjects()
         self.dismiss(animated: true, completion: nil)
-        activeSearches += ingredients.map({($0, .ingredient)})
+        activeSearches += ingredients.map({(NetworkSearch(text: $0, type: .ingredient))})
     }
 }
 
 // MARK: CurrentSearchesDelegate
 extension RecipeHomeVC: CurrentSearchesViewDelegate {
-    func buttonPressedToDeleteSearch(index: Int) {
-        activeSearches.remove(at: index)
+    func buttonPressedToDeleteSearch(search: NetworkSearch) {
+        if activeSearches.contains(search) {
+            activeSearches = activeSearches.filter({$0 != search})
+        }
     }
 }
 
@@ -495,22 +476,17 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
 extension RecipeHomeVC: UISearchBarDelegate {
     @objc func keyboardDismissed() {
         searchBar.endEditing(true)
-        searchHelperView.isHidden = true
     }
     
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        if savedRecipesActive == false {
-            searchHelperView.isHidden = false
-        }
-    }
+    
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if savedRecipesActive == false {
             let s = Search.searchFromSearchBar(string: searchBar.text!)
             handleDuplicateSearchesAndAddNew(newSearches: s)
             searchBar.endEditing(true)
-            searchHelperView.isHidden = true
             searchBar.text = ""
+            delegate.searchTextChanged(text: "")
         } else {
             print("Need different search, saved recipes is active")
         }
@@ -519,6 +495,46 @@ extension RecipeHomeVC: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if savedRecipesActive == true {
             filteredSavedRecipes = Recipe.filterSavedRecipesFrom(text: searchText, savedRecipes: savedRecipes)
+        } else {
+            if textAssistantViewActive == false {
+                // add the view here
+                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
+                self.newItemVC = vc
+                self.addChild(vc)
+                self.view.addSubview(vc.tableView)
+                vc.didMove(toParent: self)
+                vc.isForSearch = true
+                
+                vc.tableView.translatesAutoresizingMaskIntoConstraints = false
+                
+                vc.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+                vc.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+                vc.tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor).isActive = true
+                
+                let tb = (tabBarController?.tabBar.frame.height ?? 0.0)
+                let distance = (wholeStackView.frame.height) - (keyboardHeight ?? 0.0) - (searchBar.frame.height) + tb
+                
+                vc.tableView.heightAnchor.constraint(equalToConstant: distance).isActive = true
+                
+                vc.delegate = self as CreateNewItemDelegate
+                delegate = vc
+                delegate.searchTextChanged(text: searchText)
+                textAssistantViewActive = true
+            } else {
+                delegate.searchTextChanged(text: searchText)
+            }
         }
     }
+}
+
+
+extension RecipeHomeVC: CreateNewItemDelegate {
+    func searchCreated(search: NetworkSearch) {
+        print(search)
+        textAssistantViewActive = false
+    }
+    
+    func itemCreated(item: Item) {}
+    
+    
 }

@@ -356,54 +356,7 @@ extension String {
         let lines = self.split {$0.isNewline}
         return lines.map({String($0)})
     }
-    func buttonNameSearchType() -> SearchType {
-        switch self {
-        case "Select Ingredients":
-            return .ingredient
-        case "Expiring":
-            return .other
-        case "Breakfast":
-            return .recipe
-        case "Lunch":
-            return .recipe
-        case "Dinner":
-            return .recipe
-        case "Low Calorie":
-            return .recipe
-        case "Chicken":
-            return .ingredient
-        case "Pasta":
-            return .ingredient
-        case "Healthy":
-            return .recipe
-        case "Dessert":
-            return .recipe
-        case "Salad":
-            return .recipe
-        case "Beef":
-            return .ingredient
-        case "Seafood":
-            return .recipe
-        case "Casserole":
-            return .recipe
-        case "Vegetarian":
-            return .recipe
-        case "Vegan":
-            return .recipe
-        case "Italian":
-            return .cuisine
-        case "Snack":
-            return .recipe
-        case "Simple":
-            return .other
-        case "Quick":
-            return .other
-        case "Slow Cooker":
-            return .recipe
-        default:
-            return .other
-        }
-    }
+
     
     // MARK: URL recipe parse
     func getIngredientsFromString(ingredients: [String]) -> [String] {

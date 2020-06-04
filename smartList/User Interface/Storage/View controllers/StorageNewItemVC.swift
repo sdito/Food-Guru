@@ -128,6 +128,8 @@ class StorageNewItemVC: UIViewController {
 }
 // MARK: CreateNewItemDelegate
 extension StorageNewItemVC: CreateNewItemDelegate {
+    func searchCreated(search: NetworkSearch) {}
+    
     func itemCreated(item: Item) {
         print("Item to add to storage: \(item.name)")
         nameTextField.text = item.name

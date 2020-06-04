@@ -121,6 +121,10 @@ class SearchByIngredientVC: UIViewController {
 }
 // MARK: CreateNewItemDelegate
 extension SearchByIngredientVC: CreateNewItemDelegate {
+    func searchCreated(search: NetworkSearch) {
+        #warning("see if i need to implement")
+    }
+    
     func itemCreated(item: Item) {
         possibleItems.append(item)
         selectedItems.append(item)

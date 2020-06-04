@@ -509,6 +509,8 @@ extension AddItemsVC: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: CreateNewItemDelegate
 extension AddItemsVC: CreateNewItemDelegate {
+    func searchCreated(search: NetworkSearch) {}
+    
     func itemCreated(item: Item) {
         toAddItem(text: item.name)
         textField.text = ""
