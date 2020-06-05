@@ -175,6 +175,54 @@ class Network {
         return params
     }
     
-    
+    #warning("make sure im using this")
+    static func getSearchesFromText(text: String, currSearches: [NetworkSearch]) -> [NetworkSearch] {
+        // Will be sorted so unknown will be last
+        var currSearchesCopy: [NetworkSearch] = currSearches
+        var newSearches: [NetworkSearch] = []
+        
+        let textSearches = text.splitCommaAndQuotes()
+        
+        for textSearch in textSearches {
+            let txt = textSearch.trimmingCharacters(in: .whitespacesAndNewlines)
+            // if there are still searches that could have a match
+            if currSearchesCopy.count > 0 {
+                var match = false
+                var indexesToRemove: [Int] = []
+                for (i, s) in currSearchesCopy.enumerated() {
+                    // if there is a match, remove from currSearchesCopy and add to newSearches, set found to true
+                    if txt == s.text {
+                        if s.type == .unknown {
+                            // add at the back
+                            newSearches.append(s)
+                        } else {
+                            // add at the front
+                            newSearches.insert(s, at: 0)
+                        }
+                        
+                        // remove the element from currSearchesCopy
+                        currSearchesCopy.remove(at: i)
+                        indexesToRemove.append(i)
+                        match = true
+                        break
+                    }
+                }
+                if !match {
+                    newSearches.append(NetworkSearch(text: txt, type: .unknown))
+                }
+                
+            } else {
+                
+                newSearches.append(NetworkSearch(text: txt, type: .unknown))
+            }
+        }
+        
+        for s in newSearches {
+            print("\(s.text): \(s.type)")
+        }
+        
+        return newSearches
+        
+    }
     
 }

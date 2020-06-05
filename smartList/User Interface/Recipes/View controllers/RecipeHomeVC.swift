@@ -25,6 +25,7 @@ class RecipeHomeVC: UIViewController {
     
     var db: Firestore!
     var imageCache = NSCache<NSString, UIImage>()
+    private var searchQueue: [NetworkSearch] = []
     private var keyboardHeight: CGFloat?
     private var textAssistantViewActive = false
     private var newItemVC: CreateNewItemVC?
@@ -302,15 +303,7 @@ class RecipeHomeVC: UIViewController {
         }
         previousContentOffset = currentContentOffset
     }
-    
-    private func handleDuplicateSearchesAndAddNew(newSearches: [NetworkSearch]) {
-        for search in newSearches {
-            if !activeSearches.contains(search) {
-                activeSearches.append(search)
-            }
-        }
-        
-    }
+ 
     
     
     @objc private func keyboardWillShow(_ notification: Notification) {
@@ -482,9 +475,8 @@ extension RecipeHomeVC: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if savedRecipesActive == false {
-            let s = Search.searchFromSearchBar(string: searchBar.text!)
-            handleDuplicateSearchesAndAddNew(newSearches: s)
-            searchBar.endEditing(true)
+            activeSearches = searchQueue
+            searchQueue = []
             searchBar.text = ""
             delegate.searchTextChanged(text: "")
         } else {
@@ -496,6 +488,9 @@ extension RecipeHomeVC: UISearchBarDelegate {
         if savedRecipesActive == true {
             filteredSavedRecipes = Recipe.filterSavedRecipesFrom(text: searchText, savedRecipes: savedRecipes)
         } else {
+            #warning("doesn't work properly")
+            searchQueue = Network.getSearchesFromText(text: searchText, currSearches: searchQueue)
+            
             if textAssistantViewActive == false {
                 // add the view here
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
@@ -520,6 +515,8 @@ extension RecipeHomeVC: UISearchBarDelegate {
                 delegate = vc
                 delegate.searchTextChanged(text: searchText)
                 textAssistantViewActive = true
+                
+                
             } else {
                 delegate.searchTextChanged(text: searchText)
             }
@@ -530,11 +527,13 @@ extension RecipeHomeVC: UISearchBarDelegate {
 
 extension RecipeHomeVC: CreateNewItemDelegate {
     func searchCreated(search: NetworkSearch) {
-        print(search)
+        
+        searchQueue.insert(search, at: 0)
+        searchBar.text = searchBar.text?.updateSearchText(newItem: search.text)
+        searchQueue = Network.getSearchesFromText(text: searchBar.text ?? "", currSearches: searchQueue)
         textAssistantViewActive = false
+        
     }
-    
     func itemCreated(item: Item) {}
-    
     
 }

@@ -35,7 +35,7 @@ class CurrentSearchesView: UIView {
                 let buttonText: String = search.text
                 b.tag = search.type.toTagRepresentation()
                 b.setTitle(buttonText, for: .normal)
-                
+                b.contentEdgeInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
                 b.titleLabel?.font = UIFont(name: "futura", size: 13)
                 b.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
                 b.layer.cornerRadius = 5

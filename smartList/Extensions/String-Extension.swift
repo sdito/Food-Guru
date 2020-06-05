@@ -12,6 +12,67 @@ import UIKit
 
 extension String {
     
+    func updateSearchText(newItem: String) -> String {
+        let updatedNewItem: String = newItem.contains(",") ? "\"\(newItem)\"" : newItem
+        var parts = self.splitCommaAndQuotes()
+        if parts.count == 1 {
+            return "\(updatedNewItem), "
+        } else {
+            parts.removeLast(1)
+            parts.append(updatedNewItem)
+            let txt = parts.joined(separator: ", ")
+            return "\(txt), "
+        }
+    }
+    
+    func splitCommaAndQuotes() -> [String] {
+        var results: [String] = []
+        let quote = "\""
+        let comma = ","
+        var quoteOpen = false
+        var currString = ""
+        
+        for c in self {
+            let char = "\(c)"
+            if char == quote {
+                if quoteOpen {
+                    results.append(currString)
+                    quoteOpen = false
+                    currString = ""
+                } else {
+                    quoteOpen = true
+                    if currString != "" {
+                        results.append(currString)
+                        currString = ""
+                    }
+                }
+            } else if char == comma {
+                if !quoteOpen {
+                    if currString != "" {
+                        results.append(currString)
+                        currString = ""
+                    }
+                } else {
+                    currString.append(char)
+                }
+            } else {
+                if currString == "" {
+                    if char != " " {
+                        currString.append(char)
+                    }
+                } else {
+                    currString.append(char)
+                }
+            }
+        }
+        
+        if currString != "" {
+            results.append(currString)
+        }
+        
+        return results
+    }
+    
     func splitIngredientToNumberAndQuantity() -> (wholeNumber: String?, fraction: String?, quantity: String) {
         var idx: String.Index {
             let one = self.firstIndex(where: {$0.isLetter})

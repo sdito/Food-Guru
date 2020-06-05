@@ -23,6 +23,7 @@ class CreateNewItemVC: UITableViewController {
     var isForSearch: Bool = false
     private var searchText: String = "" {
         didSet {
+            #error("need to handle case for last element for when search is active")
             if self.searchText == "" {
                 tableView.isHidden = true
             } else {
