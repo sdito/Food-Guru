@@ -15,6 +15,7 @@ class Network {
     var tags: [NetworkSearch] = []
     var nextUrl: String?
     static let shared = Network()
+    
     private init() {}
     
     enum RequestType {
@@ -25,7 +26,6 @@ class Network {
     
     private func req(reqType: RequestType, params: Parameters?) -> DataRequest {
         let headers: HTTPHeaders = ["Authorization": Network.key]
-        
         var path: String {
             switch reqType {
             case .recipe:
@@ -38,6 +38,12 @@ class Network {
         }
         
         let request = AF.request(Network.baseUrl + path, parameters: params, headers: headers)
+        return request
+    }
+    
+    private func req(url: String) -> DataRequest {
+        let headers: HTTPHeaders = ["Authorization": Network.key]
+        let request = AF.request(url, headers: headers)
         return request
     }
     
@@ -59,13 +65,27 @@ class Network {
         let request = req(reqType: .recipe, params: params)
         request.responseJSON { (response) in
             switch response.result {
-                case .success(let json):
-                    let (recipes, nextUrl) = self.getRecipesAndUrlFromJson(json: json)
-                    self.nextUrl = nextUrl
-                    recipesReturned(recipes)
-                case .failure(let error):
-                    print(error)
-                }
+            case .success(let json):
+                let (recipes, nextUrl) = self.getRecipesAndUrlFromJson(json: json)
+                self.nextUrl = nextUrl
+                recipesReturned(recipes)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func getRecipes(url: String, recipesReturned: @escaping ([Recipe]?) -> Void) {
+        let request = req(url: url)
+        request.responseJSON { (response) in
+            switch response.result {
+            case .success(let json):
+                let (recipes, nextUrl) = self.getRecipesAndUrlFromJson(json: json)
+                self.nextUrl = nextUrl
+                recipesReturned(recipes)
+            case .failure(let error):
+                print(error)
+            }
         }
     }
     
@@ -103,9 +123,9 @@ class Network {
         }
     }
     private func getRecipesAndUrlFromJson(json: Any) -> ([Recipe]?, String?) {
-        
+        #warning("need to update this in the future when Recipe changes")
         guard let json = json as? [String:Any] else { return (nil, nil) }
-        let nextUrl: String? = json["next_block"] as? String
+        let nextUrl = json["next_block"] as? String
         var recipes: [Recipe] = []
         if let recipesJson = json["recipes"] as? [[String:Any]] {
             for r in recipesJson {

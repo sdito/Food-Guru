@@ -23,11 +23,19 @@ class CreateNewItemVC: UITableViewController {
     var isForSearch: Bool = false
     private var searchText: String = "" {
         didSet {
-            #error("need to handle case for last element for when search is active")
+            #warning("need to handle case for last element for when search is active")
             if self.searchText == "" {
                 tableView.isHidden = true
             } else {
-                let txt = self.searchText.trimUntilText().lowercased()
+                
+                var txt: String {
+                    if isForSearch {
+                        return self.searchText.getLastPartOfSearchForQuery().lowercased()
+                    } else {
+                        return self.searchText.trimUntilText().lowercased()
+                    }
+                }
+                print(txt)
                 tableView.isHidden = false
                 searchedItems.removeAll()
                 var allItems: [NetworkSearch] = []

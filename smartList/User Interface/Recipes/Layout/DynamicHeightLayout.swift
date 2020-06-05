@@ -29,8 +29,11 @@ class DynamicHeightLayout: UICollectionViewLayout {
     }
     
     override var collectionViewContentSize: CGSize {
-        return CGSize(width: width, height: contentHeight)
+        // 125 higher to have a buffer from the bottom so everything is not as tight,
+        // will easily give space to alert the user if there are more recipes loading or if there are no more recipes to find
+        return CGSize(width: width, height: contentHeight + 125.0)
     }
+    
     override func prepare() {
         super.prepare()
         cache.removeAll()

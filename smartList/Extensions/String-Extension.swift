@@ -12,6 +12,22 @@ import UIKit
 
 extension String {
     
+    func getLastPartOfSearchForQuery() -> String {
+        guard self != "" else { return self }
+        let reversed = self.reversed()
+        var ending = ""
+        
+        for char in reversed {
+            if char != "," && char != "\"" {
+                ending.insert(char, at: ending.startIndex)
+            } else {
+                return ending.trimmingCharacters(in: .whitespacesAndNewlines)
+            }
+        }
+        
+        return ending.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
     func updateSearchText(newItem: String) -> String {
         let updatedNewItem: String = newItem.contains(",") ? "\"\(newItem)\"" : newItem
         var parts = self.splitCommaAndQuotes()

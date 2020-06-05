@@ -14,6 +14,9 @@ import AVFoundation
 
 class RecipeHomeVC: UIViewController {
     
+    @IBOutlet weak var spinnerHolder: UIView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
     @IBOutlet weak var homeRecipesOutlet: UIButton!
     @IBOutlet weak var savedRecipesOutlet: UIButton!
     
@@ -25,6 +28,7 @@ class RecipeHomeVC: UIViewController {
     
     var db: Firestore!
     var imageCache = NSCache<NSString, UIImage>()
+    private var loadingMoreRecipes = false
     private var searchQueue: [NetworkSearch] = []
     private var keyboardHeight: CGFloat?
     private var textAssistantViewActive = false
@@ -64,16 +68,14 @@ class RecipeHomeVC: UIViewController {
             if SharedValues.shared.sentRecipesInfo == nil {
                 Network.shared.getRecipes(searches: self.activeSearches) { (rcps) in
                     
-                    for _ in 1...20 {
-                        print(self.recipes.count)
-                    }
                     
                     if let rcps = rcps {
                         self.recipes = rcps
+                        self.collectionViewReloadReset()
                     }
                 }
 
-                
+            
                 
             }
             if wholeStackView.subviews.contains(currentSearchesView) {
@@ -91,15 +93,7 @@ class RecipeHomeVC: UIViewController {
         }
     }
     
-    var recipes: [Recipe] = [] {
-        didSet {
-            imageCache.removeAllObjects()
-            collectionView?.collectionViewLayout.invalidateLayout()
-            collectionView?.reloadData()
-            
-            
-        }
-    }
+    var recipes: [Recipe] = []
     
     private var savedRecipes: [Recipe] = [] {
         didSet {
@@ -143,7 +137,8 @@ class RecipeHomeVC: UIViewController {
         
         FoodStorage.readAndPersistSystemItemsFromStorageWithListener(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
         
-        
+        spinnerHolder.layer.cornerRadius = spinnerHolder.frame.height / 2
+        spinnerHolder.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -282,12 +277,14 @@ class RecipeHomeVC: UIViewController {
                 Network.shared.getRecipes(searches: nil) { (rcps) in
                     if let rs = rcps {
                         self.recipes = rs
+                        self.collectionViewReloadReset()
                     }
                 }
                 
             }
         } else {
             recipes = SharedValues.shared.sentRecipesInfo!.recipes
+            collectionViewReloadReset()
             //activeSearches = SharedValues.shared.sentRecipesInfo!.ingredients.map({NetworkSearch(text: $0, type: .ingredient)})
             activeSearches = SharedValues.shared.sentRecipesInfo?.1 ?? []
             imageCache.removeAllObjects()
@@ -364,6 +361,13 @@ extension RecipeHomeVC: DynamicHeightLayoutDelegate {
 // MARK: Collection view
 extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
+    private func collectionViewReloadReset() {
+        // used when completely new recipes, not when recipes are added
+        imageCache.removeAllObjects()
+        collectionView?.collectionViewLayout.invalidateLayout()
+        collectionView?.reloadData()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch savedRecipesActive {
         case true:
@@ -397,22 +401,10 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 cell.recipeImage.image = cachedImage
                 print("Cache for \(indexPath.row)")
             } else {
-                
-                #warning("need to implement the new image from url here")
-                
                 Network.shared.getImage(url: recipe.thumbImage) { (image) in
                     cell.recipeImage.image = image
                     self.imageCache.setObject(image, forKey: "\(indexPath.row)" as NSString)
                 }
-                
-                /*
-                recipe.getImageFromStorage(thumb: true) { (img) in
-                    cell.recipeImage.image = img
-                    self.imageCache.setObject(img!, forKey: "\(indexPath.row)" as NSString)
-                    print("Read for \(indexPath.row)")
-                }
-                */
-                
                 
             }
             
@@ -426,13 +418,6 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 cell.recipeImage.image = cachedImage
                 print("Cache for \(indexPath.row)")
             } else {
-                /*
-                recipe.getImageFromStorage(thumb: true) { (img) in
-                    cell.recipeImage.image = img
-                    self.imageCache.setObject(img!, forKey: "\(indexPath.row)" as NSString)
-                    print("Read for \(indexPath.row)")
-                }
-                */
                 Network.shared.getImage(url: recipe.thumbImage) { (image) in
                     cell.recipeImage.image = image
                     self.imageCache.setObject(image, forKey: "\(indexPath.row)" as NSString)
@@ -459,6 +444,34 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         self.lastContentOffset = scrollView.contentOffset.y
         
+        let collectionViewHeight = scrollView.contentSize.height - collectionView.frame.height
+        
+        // Need to be at the bottom of collection view, not already loading more recipes, on the home tab, and a nextUrl has to exist to load more
+        if lastContentOffset >= collectionViewHeight - 50 && !loadingMoreRecipes && !savedRecipesActive, let nextUrl = Network.shared.nextUrl {
+            loadingMoreRecipes = true
+            spinner.startAnimating()
+            spinnerHolder.isHidden = false
+            print("Need to load the new recipes, if there are any: \(nextUrl)")
+            Network.shared.getRecipes(url: nextUrl) { (newRecipes) in
+                if let newRecipes = newRecipes {
+                    var indexPaths: [IndexPath] = []
+                    let prevLastIndex = self.recipes.count - 1
+                    for i in 1...newRecipes.count {
+                        let indexPath = IndexPath(item: prevLastIndex + i, section: 0)
+                        indexPaths.append(indexPath)
+                    }
+                    self.recipes.append(contentsOf: newRecipes)
+                    self.collectionView.insertItems(at: indexPaths)
+                    
+                    self.spinner.stopAnimating()
+                    self.spinnerHolder.isHidden = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        // have to set this false after a second or sometimes two pages of data can be loaded at same time (not the same page twice, but still not ideal)
+                        self.loadingMoreRecipes = false
+                    }
+                }
+            }
+        }
        
     }
 
@@ -488,9 +501,7 @@ extension RecipeHomeVC: UISearchBarDelegate {
         if savedRecipesActive == true {
             filteredSavedRecipes = Recipe.filterSavedRecipesFrom(text: searchText, savedRecipes: savedRecipes)
         } else {
-            #warning("doesn't work properly")
             searchQueue = Network.getSearchesFromText(text: searchText, currSearches: searchQueue)
-            
             if textAssistantViewActive == false {
                 // add the view here
                 let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC

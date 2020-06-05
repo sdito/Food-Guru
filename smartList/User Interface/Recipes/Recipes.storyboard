@@ -657,6 +657,22 @@
                                     </collectionView>
                                 </subviews>
                             </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tDs-zF-YdM">
+                                <rect key="frame" x="178.5" y="699" width="57" height="57"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="kST-sZ-VXN">
+                                        <rect key="frame" x="10" y="10" width="37" height="37"/>
+                                        <color key="color" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="kST-sZ-VXN" firstAttribute="top" secondItem="tDs-zF-YdM" secondAttribute="top" constant="10" id="2vA-dQ-4kR"/>
+                                    <constraint firstAttribute="trailing" secondItem="kST-sZ-VXN" secondAttribute="trailing" constant="10" id="7S7-Pu-xI6"/>
+                                    <constraint firstAttribute="bottom" secondItem="kST-sZ-VXN" secondAttribute="bottom" constant="10" id="kOr-e8-s6u"/>
+                                    <constraint firstItem="kST-sZ-VXN" firstAttribute="leading" secondItem="tDs-zF-YdM" secondAttribute="leading" constant="10" id="qQQ-ie-ue5"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qsm-p9-niT">
                                 <rect key="frame" x="31" y="761" width="352" height="42"/>
                                 <subviews>
@@ -718,8 +734,10 @@
                             <constraint firstItem="UIz-Lu-vUf" firstAttribute="trailing" secondItem="9cr-Gi-A3B" secondAttribute="trailing" id="6Li-hF-oCP"/>
                             <constraint firstItem="UIz-Lu-vUf" firstAttribute="top" secondItem="9cr-Gi-A3B" secondAttribute="top" id="KP7-Ap-2Wp"/>
                             <constraint firstItem="Qsm-p9-niT" firstAttribute="width" secondItem="wAq-7h-f7S" secondAttribute="width" multiplier="0.85" id="LoY-1C-0NX"/>
+                            <constraint firstItem="Qsm-p9-niT" firstAttribute="top" secondItem="tDs-zF-YdM" secondAttribute="bottom" constant="5" id="Tsd-u4-XIG"/>
                             <constraint firstItem="Qsm-p9-niT" firstAttribute="centerX" secondItem="wAq-7h-f7S" secondAttribute="centerX" id="bEq-tK-6s0"/>
                             <constraint firstItem="UIz-Lu-vUf" firstAttribute="leading" secondItem="9cr-Gi-A3B" secondAttribute="leading" id="coQ-Dk-B2g"/>
+                            <constraint firstItem="tDs-zF-YdM" firstAttribute="centerX" secondItem="wAq-7h-f7S" secondAttribute="centerX" id="y6w-W9-BN3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9cr-Gi-A3B"/>
                     </view>
@@ -731,6 +749,8 @@
                         <outlet property="scrollBackUpView" destination="Qsm-p9-niT" id="3ge-rY-kCy"/>
                         <outlet property="searchBar" destination="jsI-Wn-pNd" id="CcB-Gx-hbW"/>
                         <outlet property="searchBarHeight" destination="UDZ-oN-Dsj" id="5eF-cf-rjI"/>
+                        <outlet property="spinner" destination="kST-sZ-VXN" id="KIw-30-heI"/>
+                        <outlet property="spinnerHolder" destination="tDs-zF-YdM" id="UvP-AC-jk8"/>
                         <outlet property="wholeStackView" destination="UIz-Lu-vUf" id="Noi-hM-Lgm"/>
                         <segue destination="1BH-AS-PDt" kind="show" identifier="showRecipeDetail" id="2dj-Gl-wQz"/>
                         <segue destination="0v8-8k-M7K" kind="show" identifier="toCreateRecipe" id="D8T-sO-F9z"/>
