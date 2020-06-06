@@ -8,6 +8,8 @@
 
 import Alamofire
 import AlamofireImage
+import PDFKit
+
 
 class Network {
     
@@ -22,9 +24,10 @@ class Network {
         case recipe
         case tags
         case ingredients
+        case pdf
     }
     
-    private func req(reqType: RequestType, params: Parameters?) -> DataRequest {
+    private func req(reqType: RequestType, params: Parameters?, recipe: Recipe? = nil) -> DataRequest {
         let headers: HTTPHeaders = ["Authorization": Network.key]
         var path: String {
             switch reqType {
@@ -34,6 +37,8 @@ class Network {
                 return Network.tagsPath
             case .ingredients:
                 return Network.ingredientsPath
+            case .pdf:
+                return Network.pdfPath + "\(recipe!.djangoID)"
             }
         }
         
@@ -45,6 +50,27 @@ class Network {
         let headers: HTTPHeaders = ["Authorization": Network.key]
         let request = AF.request(url, headers: headers)
         return request
+    }
+    
+    func openPDF(recipe: Recipe, pdfDataReturned: @escaping (Data) -> Void) {
+        
+        if recipe.djangoID != -1 {
+            let request = req(reqType: .pdf, params: nil, recipe: recipe)
+            request.response { (response) in
+                switch response.result {
+                case .success(let data):
+                    print("have the data here: \(data)")
+                    if let data = data {
+                        pdfDataReturned(data)
+                        
+                    }
+                    
+                case .failure(let error):
+                    print(error)
+                    #warning("need to handle case")
+                }
+            }
+        }
     }
     
     func getImage(url: String?, imageReturned: @escaping (UIImage) -> Void) {
@@ -127,17 +153,18 @@ class Network {
         guard let json = json as? [String:Any] else { return (nil, nil) }
         let nextUrl = json["next_block"] as? String
         var recipes: [Recipe] = []
+        
         if let recipesJson = json["recipes"] as? [[String:Any]] {
             for r in recipesJson {
-                let recipe = Recipe(name: r["name"] as! String,
-                                    recipeType: [],
-                                    cuisineType: "",
+                let strServings = r["servings"] as? String
+                let recipe = Recipe(djangoID: r["id"] as! Int,
+                                    name: r["name"] as! String,
                                     cookTime: r["cook_time"] as? Int ?? 0,
                                     prepTime: r["prep_time"] as? Int ?? 0,
                                     ingredients: r["ingredients"] as! [String],
                                     instructions: r["instructions"] as! [String],
                                     calories: r["calories"] as? Int,
-                                    numServes: r["servings"] as? Int ?? 0,
+                                    numServes: Int(strServings ?? "4") ?? 4,
                                     userID: nil,
                                     numReviews: nil,
                                     numStars: nil,
@@ -195,7 +222,7 @@ class Network {
         return params
     }
     
-    #warning("make sure im using this")
+    
     static func getSearchesFromText(text: String, currSearches: [NetworkSearch]) -> [NetworkSearch] {
         // Will be sorted so unknown will be last
         var currSearchesCopy: [NetworkSearch] = currSearches

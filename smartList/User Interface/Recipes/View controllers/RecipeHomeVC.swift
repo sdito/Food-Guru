@@ -139,13 +139,18 @@ class RecipeHomeVC: UIViewController {
         
         spinnerHolder.layer.cornerRadius = spinnerHolder.frame.height / 2
         spinnerHolder.isHidden = true
+        
+        collectionView.refreshControl = UIRefreshControl()
+        collectionView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
+        collectionView.refreshControl?.tintColor = Colors.main
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
         handleRecipesToShow()
-        timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in self.handleTimer()}
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in self.handleTimer()}
         timer?.tolerance = 0.2
         
     }
@@ -266,14 +271,6 @@ class RecipeHomeVC: UIViewController {
         if SharedValues.shared.sentRecipesInfo == nil {
             if recipes.isEmpty {
                 
-                /*
-                Search.find(from: activeSearches, db: db) { (rcps) in
-                    if let rs = rcps {
-                        self.recipes = rs
-                    }
-                }
-                */
-                #warning("first use with API")
                 Network.shared.getRecipes(searches: nil) { (rcps) in
                     if let rs = rcps {
                         self.recipes = rs
@@ -360,6 +357,46 @@ extension RecipeHomeVC: DynamicHeightLayoutDelegate {
 
 // MARK: Collection view
 extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    @objc private func handleRefreshControl(sender: UIRefreshControl) {
+        
+        if savedRecipesActive {
+            // want to use this to not update the data right away, since the animation doesn't look good when that happens
+            // shouldn't add a delay if it already takes some time, thus using a startingTime
+            let startingTime = Date().timeIntervalSince1970
+            Recipe.readUserSavedRecipes(db: db) { (rcps) in
+                let secondsElapsed = Date().timeIntervalSince1970 - startingTime
+                if secondsElapsed >= 1.5 {
+                    self.savedRecipes = rcps
+                    self.searchBar.text = ""
+                    self.filteredSavedRecipes = self.savedRecipes
+                    self.collectionView.refreshControl?.endRefreshing()
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5-secondsElapsed) {
+                        self.savedRecipes = rcps
+                        self.searchBar.text = ""
+                        self.filteredSavedRecipes = self.savedRecipes
+                        self.collectionView.refreshControl?.endRefreshing()
+                    }
+                }
+            }
+        } else {
+            if let nextUrl = Network.shared.nextUrl {
+                Network.shared.getRecipes(url: nextUrl) { (recipes) in
+                    self.collectionView.refreshControl?.endRefreshing()
+                    if let rcps = recipes {
+                        self.recipes = rcps
+                        self.collectionViewReloadReset()
+                    }
+                }
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    // Pauses or else its a sudden drop off and doesn't look good
+                    self.collectionView.refreshControl?.endRefreshing()
+                    self.createMessageView(color: Colors.messageGreen, text: "No recipes to refresh")
+                }
+            }
+        }
+    }
     
     private func collectionViewReloadReset() {
         // used when completely new recipes, not when recipes are added
@@ -431,7 +468,6 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         if (self.lastContentOffset > scrollView.contentOffset.y) {
             if allowButtonToBeShowed == true && scrollView.contentOffset.y >= 0 {
                 scrollBackUpView.setIsHidden(false, animated: true)
@@ -439,6 +475,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         else if (self.lastContentOffset < scrollView.contentOffset.y) {
+            print("being set from here, need to undo something")
             scrollBackUpView.setIsHidden(true, animated: true)
         }
         
@@ -446,6 +483,8 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         let collectionViewHeight = scrollView.contentSize.height - collectionView.frame.height
         
+       
+        // load the next page of recipes
         // Need to be at the bottom of collection view, not already loading more recipes, on the home tab, and a nextUrl has to exist to load more
         if lastContentOffset >= collectionViewHeight - 50 && !loadingMoreRecipes && !savedRecipesActive, let nextUrl = Network.shared.nextUrl {
             loadingMoreRecipes = true

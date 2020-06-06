@@ -14,10 +14,8 @@ import RealmSwift
 
 
 struct Recipe {
-    #warning("need to add id")
+    var djangoID: Int
     var name: String
-    var recipeType: [String]
-    var cuisineType: String
     var cookTime: Int
     var prepTime: Int
     var ingredients: [String]
@@ -34,10 +32,9 @@ struct Recipe {
     var thumbImage: String?
     var reviewImagePaths: [String]?
     
-    init(name: String, recipeType: [String], cuisineType: String, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, userID: String?, numReviews: Int?, numStars: Int?, notes: String?, tagline: String?, recipeImage: Data?, mainImage: String?, thumbImage: String?, reviewImagePaths: [String]?) {
+    init(djangoID: Int, name: String, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, userID: String?, numReviews: Int?, numStars: Int?, notes: String?, tagline: String?, recipeImage: Data?, mainImage: String?, thumbImage: String?, reviewImagePaths: [String]?) {
+        self.djangoID = djangoID
         self.name = name
-        self.recipeType = recipeType
-        self.cuisineType = cuisineType
         self.cookTime = cookTime
         self.prepTime = prepTime
         self.ingredients = ingredients
@@ -64,9 +61,8 @@ struct Recipe {
         let doc = db.collection("recipes-external").document()
         self.mainImage = "recipe/\(doc.documentID).jpg"
         doc.setData([
+            "djangoID": self.djangoID,
             "name": self.name,
-            "recipeType": self.recipeType,
-            "cuisineType": self.cuisineType,
             "cookTime": self.cookTime,
             "prepTime": self.prepTime,
             "totalTime": self.cookTime + self.prepTime,
@@ -156,6 +152,7 @@ struct Recipe {
     }
     
     static func getNRecipes(num: Int, db: Firestore, lastDoc: QueryDocumentSnapshot?, recipesReturned: @escaping (_ recipe: [Recipe], _ lastDoc: QueryDocumentSnapshot?) -> Void) {
+        #warning("need to get rid of this and use from Network")
         var recipes: [Recipe] = []
         
         var reference: Query {
@@ -230,6 +227,7 @@ struct Recipe {
     // MARK: Previous viewed
     
     func addRecipeToRecentlyViewedRecipes(db: Firestore) {
+        #warning("need to update this with DJANGO id, basically fix the whole thing")
         DispatchQueue.main.async {
             if let uid = Auth.auth().currentUser?.uid {
                 let reference = db.collection("users").document(uid)
@@ -278,12 +276,12 @@ struct Recipe {
     
     
     func addRecipeDocumentToUserProfile(db: Firestore) {
-        guard let id = self.mainImage?.imagePathToDocID() else { return }
-        let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").collection("savedRecipes").document(id)
+        let id = "\(self.djangoID)"
+        guard let userID = SharedValues.shared.userID else { return }
+        let reference = db.collection("users").document(userID).collection("savedRecipes").document(id)
         reference.setData([
+            "djangoID": self.djangoID,
             "name": self.name,
-            "recipeType": self.recipeType,
-            "cuisineType": self.cuisineType,
             "cookTime": self.cookTime,
             "prepTime": self.prepTime,
             "totalTime": self.cookTime + self.prepTime,
@@ -291,16 +289,13 @@ struct Recipe {
             "instructions": self.instructions,
             "calories": self.calories as Any,
             "numServes": self.numServes,
-            "userID": self.userID as Any,
-            "numReviews": self.numReviews as Any,
-            "numStars": self.numStars as Any,
             "notes": self.notes as Any,
             "path": self.mainImage as Any,
             "tagline": self.tagline as Any,
-            "reviewImagePaths": self.reviewImagePaths as Any
+            "thumbImage": self.thumbImage as Any
         ]) { err in
         if let err = err {
-            print("Error writing document: \(err)")
+            print("Error saving recipe document: \(err)")
         } else {
             print("Document successfully written")
             }
@@ -308,10 +303,12 @@ struct Recipe {
     }
     
     func removeRecipeDocumentFromUserProfile(db: Firestore) {
-        guard let id = self.mainImage?.imagePathToDocID() else { return }
-        let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ").collection("savedRecipes").document(id)
+        let id = "\(self.djangoID)"
+        guard let userID = SharedValues.shared.userID else { return }
+        let reference = db.collection("users").document(userID).collection("savedRecipes").document(id)
         reference.delete()
     }
+    
     // MARK: Parse from URL
     
     
@@ -564,7 +561,23 @@ struct Recipe {
 
 extension DocumentSnapshot {
     func getRecipe() -> Recipe {
-        let r = Recipe(name: self.get("name") as! String, recipeType: self.get("recipeType") as! [String], cuisineType: self.get("cuisineType") as! String, cookTime: self.get("cookTime") as! Int, prepTime: self.get("prepTime") as! Int, ingredients: self.get("ingredients") as! [String], instructions: self.get("instructions") as! [String], calories: self.get("calories") as? Int, numServes: self.get("numServes") as! Int, userID: self.get("userID") as? String, numReviews: self.get("numReviews") as? Int, numStars: self.get("numStars") as? Int, notes: self.get("notes") as? String, tagline: self.get("tagline") as? String, recipeImage: nil, mainImage: self.get("path") as? String, thumbImage: nil, reviewImagePaths: self.get("reviewImagePaths") as? [String])
+        let r = Recipe(djangoID: self.get("djangoID") as? Int ?? -1,
+                       name: self.get("name") as! String,
+                       cookTime: self.get("cookTime") as! Int,
+                       prepTime: self.get("prepTime") as! Int,
+                       ingredients: self.get("ingredients") as! [String],
+                       instructions: self.get("instructions") as! [String],
+                       calories: self.get("calories") as? Int,
+                       numServes: self.get("numServes") as! Int,
+                       userID: self.get("userID") as? String,
+                       numReviews: self.get("numReviews") as? Int,
+                       numStars: self.get("numStars") as? Int,
+                       notes: self.get("notes") as? String,
+                       tagline: self.get("tagline") as? String,
+                       recipeImage: nil,
+                       mainImage: self.get("path") as? String,
+                       thumbImage: self.get("thumbImage") as? String,
+                       reviewImagePaths: self.get("reviewImagePaths") as? [String])
         return r
     }
 }

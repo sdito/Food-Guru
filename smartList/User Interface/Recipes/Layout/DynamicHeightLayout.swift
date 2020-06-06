@@ -24,7 +24,11 @@ class DynamicHeightLayout: UICollectionViewLayout {
     fileprivate var contentHeight: CGFloat = 0
     fileprivate var width: CGFloat {
         get {
-            return collectionView!.bounds.width
+            guard let collectionView = collectionView else {
+              return 0
+            }
+            let insets = collectionView.contentInset
+            return collectionView.bounds.width - (insets.left + insets.right)
         }
     }
     
@@ -54,7 +58,7 @@ class DynamicHeightLayout: UICollectionViewLayout {
                 let imageHeight = width
                 let height = delegate.collectionView(collectionView!, heightForTextAtIndexPath: indexPath, withWidth: width) + imageHeight + (cellPadding * 2)
                 
-                let frame = CGRect(x: xOffsets[column], y: yOffsets[column], width: width, height: height)
+                let frame = CGRect(x: xOffsets[column], y: yOffsets[column], width: columnWidth, height: height)
                 let insetFrame = frame.insetBy(dx: cellPadding, dy: cellPadding)
                 let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
                 

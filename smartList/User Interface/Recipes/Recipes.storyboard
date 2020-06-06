@@ -552,6 +552,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nrs-Z6-Jko">
+                                <rect key="frame" x="187" y="138" width="40" height="40"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="PvC-wU-M21"/>
+                                    <constraint firstAttribute="height" constant="40" id="nfg-Py-QaM"/>
+                                </constraints>
+                            </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="UIz-Lu-vUf">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
@@ -732,8 +740,10 @@
                             <constraint firstItem="UIz-Lu-vUf" firstAttribute="bottom" secondItem="9cr-Gi-A3B" secondAttribute="bottom" id="3vO-xb-Ha8"/>
                             <constraint firstItem="9cr-Gi-A3B" firstAttribute="bottom" secondItem="Qsm-p9-niT" secondAttribute="bottom" constant="10" id="600-kk-YMo"/>
                             <constraint firstItem="UIz-Lu-vUf" firstAttribute="trailing" secondItem="9cr-Gi-A3B" secondAttribute="trailing" id="6Li-hF-oCP"/>
+                            <constraint firstItem="nrs-Z6-Jko" firstAttribute="top" secondItem="9cr-Gi-A3B" secondAttribute="top" constant="50" id="Hn6-xA-7zN"/>
                             <constraint firstItem="UIz-Lu-vUf" firstAttribute="top" secondItem="9cr-Gi-A3B" secondAttribute="top" id="KP7-Ap-2Wp"/>
                             <constraint firstItem="Qsm-p9-niT" firstAttribute="width" secondItem="wAq-7h-f7S" secondAttribute="width" multiplier="0.85" id="LoY-1C-0NX"/>
+                            <constraint firstItem="nrs-Z6-Jko" firstAttribute="centerX" secondItem="wAq-7h-f7S" secondAttribute="centerX" id="RD4-Se-dc5"/>
                             <constraint firstItem="Qsm-p9-niT" firstAttribute="top" secondItem="tDs-zF-YdM" secondAttribute="bottom" constant="5" id="Tsd-u4-XIG"/>
                             <constraint firstItem="Qsm-p9-niT" firstAttribute="centerX" secondItem="wAq-7h-f7S" secondAttribute="centerX" id="bEq-tK-6s0"/>
                             <constraint firstItem="UIz-Lu-vUf" firstAttribute="leading" secondItem="9cr-Gi-A3B" secondAttribute="leading" id="coQ-Dk-B2g"/>
@@ -937,7 +947,7 @@
                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
                                         <state key="normal" title="PDF"/>
                                         <connections>
-                                            <segue destination="E6t-NB-wfD" kind="show" identifier="viewPDV" id="qrU-d9-oi4"/>
+                                            <action selector="viewPDF:" destination="1BH-AS-PDt" eventType="touchUpInside" id="WeR-dC-Sh0"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i0N-fb-OlL">
@@ -1341,6 +1351,7 @@
                         <outletCollection property="viewsToRemoveForCookbook" destination="WUC-Cb-mof" collectionClass="NSMutableArray" id="8Rg-r0-utl"/>
                         <outletCollection property="viewsToRemoveForCookbook" destination="i0N-fb-OlL" collectionClass="NSMutableArray" id="v3m-gK-dNm"/>
                         <outletCollection property="viewsToRemoveForCookbook" destination="DZF-Sb-Aiq" collectionClass="NSMutableArray" id="xso-YO-4wN"/>
+                        <segue destination="E6t-NB-wfD" kind="show" identifier="viewPDF" id="Q3z-aC-gyp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VWa-m6-4hC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1350,7 +1361,7 @@
         <!--RecipePDFVC-->
         <scene sceneID="fDw-Lj-ymd">
             <objects>
-                <viewController id="E6t-NB-wfD" customClass="RecipePDFVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="pdfVC" id="E6t-NB-wfD" customClass="RecipePDFVC" customModule="Food_Guru" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Vbe-mt-4o5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

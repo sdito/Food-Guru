@@ -201,14 +201,14 @@ class CreateRecipeVC: UIViewController {
                 return
             }
             
-            guard let rType = recipeType, let cType = cuisineType, let cookTime = cookTimeTextField.toInt(), let prepTime = prepTimeTextField.toInt(), let servings = servingsTextField.toInt(), let uid = Auth.auth().currentUser?.uid else {
+            guard let cookTime = cookTimeTextField.toInt(), let prepTime = prepTimeTextField.toInt(), let servings = servingsTextField.toInt(), let uid = Auth.auth().currentUser?.uid else {
                 let alert = UIAlertController(title: "Error", message: "Incomplete recipe data", preferredStyle: .alert)
                 alert.addAction(.init(title: "Ok", style: .default, handler: nil))
                 present(alert, animated: true)
                 return
             }
             
-            var recipe = Recipe(name: nameTextField.text!, recipeType: rType, cuisineType: cType, cookTime: cookTime, prepTime: prepTime, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servings, userID: uid, numReviews: nil, numStars: nil, notes: notesTextView.text, tagline: taglineTextView.text, recipeImage: img, mainImage: nil, thumbImage: nil, reviewImagePaths: nil)
+            var recipe = Recipe(djangoID: -1, name: nameTextField.text!, cookTime: cookTime, prepTime: prepTime, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servings, userID: uid, numReviews: nil, numStars: nil, notes: notesTextView.text, tagline: taglineTextView.text, recipeImage: img, mainImage: nil, thumbImage: nil, reviewImagePaths: nil)
             recipe.writeToFirestore(db: db, storage: storage)
             
             

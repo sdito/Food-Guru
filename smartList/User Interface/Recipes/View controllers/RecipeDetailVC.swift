@@ -102,7 +102,7 @@ class RecipeDetailVC: UIViewController {
                 return Array(cookbookRecipe!.instructions)
             }
         }
-        if segue.identifier == "viewPDV" {
+        if segue.identifier == "viewPDF" {
             guard let vc = segue.destination as? RecipePDFVC else { return }
             let pdfCreator = PDFCreator(title: pdfData, ingredients: ingredients, instructions: instructions)
             vc.documentData = pdfCreator.createPDF()
@@ -114,6 +114,24 @@ class RecipeDetailVC: UIViewController {
     }
     
     // MARK: @IBAction funcs
+    
+    @IBAction func viewPDF(_ sender: Any) {
+        if self.data?.recipe.djangoID == -1 || self.cookbookRecipe != nil {
+            performSegue(withIdentifier: "viewPDF", sender: nil)
+        } else {
+            if let r = data?.recipe {
+                Network.shared.openPDF(recipe: r) { (docData) in
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "pdfVC") as! RecipePDFVC
+                    vc.documentData = docData
+                    
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
+            
+        }
+    }
+    
+    
     @IBAction func addAllToList(_ sender: Any) {
         var ingredientsToAddToList: [String] {
             if data?.recipe != nil {
@@ -419,6 +437,7 @@ class RecipeDetailVC: UIViewController {
             v.delegate = self
         }
         
+        #warning("need to make sure addRecipeToRecentlyViewedWorks")
         recipe.addRecipeToRecentlyViewedRecipes(db: db)
         
     }
