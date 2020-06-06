@@ -16,23 +16,21 @@ import RealmSwift
 struct Recipe {
     var djangoID: Int
     var name: String
-    var cookTime: Int
-    var prepTime: Int
+    #warning("need to add author name (optional)")
+    var cookTime: Int ;#warning("should be optional")
+    var prepTime: Int ;#warning("should be optional")
     var ingredients: [String]
     var instructions: [String]
     var calories: Int?
     var numServes: Int
-    var userID: String?
-    var numReviews: Int?
-    var numStars: Int?
+    var userID: String? ;#warning("need to remove, do after authorName is added")
     var notes: String?
     var tagline: String?
     var recipeImage: Data?
     var mainImage: String?
     var thumbImage: String?
-    var reviewImagePaths: [String]?
     
-    init(djangoID: Int, name: String, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, userID: String?, numReviews: Int?, numStars: Int?, notes: String?, tagline: String?, recipeImage: Data?, mainImage: String?, thumbImage: String?, reviewImagePaths: [String]?) {
+    init(djangoID: Int, name: String, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, userID: String?, notes: String?, tagline: String?, recipeImage: Data?, mainImage: String?, thumbImage: String?) {
         self.djangoID = djangoID
         self.name = name
         self.cookTime = cookTime
@@ -42,14 +40,11 @@ struct Recipe {
         self.calories = calories
         self.numServes = numServes
         self.userID = userID
-        self.numReviews = numReviews
-        self.numStars = numStars
         self.notes = notes
         self.tagline = tagline
         self.recipeImage = recipeImage
         self.mainImage = mainImage
         self.thumbImage = thumbImage
-        self.reviewImagePaths = reviewImagePaths
     }
     
     // MARK: General
@@ -71,12 +66,9 @@ struct Recipe {
             "calories": self.calories as Any,
             "numServes": self.numServes,
             "userID": self.userID as Any,
-            "numReviews": self.numReviews as Any,
-            "numStars": self.numStars as Any,
             "notes": self.notes as Any,
             "path": self.mainImage as Any,
             "tagline": self.tagline as Any,
-            "reviewImagePaths": self.reviewImagePaths as Any,
             "numberIngredients": self.ingredients.count as Any
         ]) { err in
             if err != nil {
@@ -178,17 +170,18 @@ struct Recipe {
     }
     
     // MARK: Saved recipes
-    
-    static func addRecipeToSavedRecipes(db: Firestore, str: String) {
+    #warning("do i need this")
+    static func addRecipeToSavedRecipes(db: Firestore, recipe: Recipe) {
         let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ")
         reference.updateData([
-            "savedRecipes": FieldValue.arrayUnion([str])
+            "savedRecipes": FieldValue.arrayUnion(["\(recipe.djangoID)"])
         ])
     }
-    static func removeRecipeFromSavedRecipes(db: Firestore, str: String) {
+    #warning("do i need this")
+    static func removeRecipeFromSavedRecipes(db: Firestore, recipe: Recipe) {
         let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ")
         reference.updateData([
-            "savedRecipes": FieldValue.arrayRemove([str])
+            "savedRecipes": FieldValue.arrayRemove(["\(recipe.djangoID)"])
         ])
     }
     
@@ -474,67 +467,7 @@ struct Recipe {
         }
         task.resume()
     }
-    
-    // MARK: Review
-    
-    func updateRecipeReviewInfo(stars: Int, reviews: Int, db: Firestore) {
-        
-        let recipeID = self.mainImage?.imagePathToDocID()
-        let starsValue = self.numStars
-        let reviewsValue = self.numReviews
-        
-        if starsValue == nil || reviewsValue == nil {
-            db.collection("recipes").document(recipeID ?? " ").updateData([
-                "numReviews": reviews,
-                "numStars": stars
-            ])
-        } else {
-            if var starsValue = starsValue, var reviewsValue = reviewsValue {
-                starsValue += stars
-                reviewsValue += reviews
-                db.collection("recipes").document(recipeID ?? " ").updateData([
-                    "numStars": starsValue,
-                    "numReviews": reviewsValue
-                ])
-            } else {
-                print("Error - updateRecipeReviewInfo(stars: Int, reviews: Int, db: Firestore)")
-            }
-        }
-    }
-    
-    func addReviewToRecipe(stars: Int, review: String?, db: Firestore) {
-        let recipeID = self.mainImage?.imagePathToDocID()
-        var hasTextReview: Bool {
-            if review == nil || review == "" {
-                return false
-            } else {
-                return true
-            }
-        }
-        let reference = db.collection("recipes").document(recipeID ?? " ").collection("reviews").document()
-        reference.setData([
-            "stars": stars,
-            "review": review as Any,
-            "user": Auth.auth().currentUser?.uid as Any,
-            "timeIntervalSince1970": Date().timeIntervalSince1970,
-            "hasText": hasTextReview
-        ]) {err in
-            if let err = err {
-                print("Error writing document: \(err)")
-            } else {
-                print("Document successfully written")
-                User.getNameFromUid(db: db, uid: self.userID ?? " ") { (name) in
-                    reference.updateData([
-                        "name": name as Any
-                    ])
-                }
-                self.updateRecipeReviewInfo(stars: stars, reviews: 1, db: db)
-                
-                // do the recalculation stuff here
-                
-            }
-        }
-    }
+
     
     // MARK: UI
     
@@ -570,14 +503,11 @@ extension DocumentSnapshot {
                        calories: self.get("calories") as? Int,
                        numServes: self.get("numServes") as! Int,
                        userID: self.get("userID") as? String,
-                       numReviews: self.get("numReviews") as? Int,
-                       numStars: self.get("numStars") as? Int,
                        notes: self.get("notes") as? String,
                        tagline: self.get("tagline") as? String,
                        recipeImage: nil,
                        mainImage: self.get("path") as? String,
-                       thumbImage: self.get("thumbImage") as? String,
-                       reviewImagePaths: self.get("reviewImagePaths") as? [String])
+                       thumbImage: self.get("thumbImage") as? String)
         return r
     }
 }

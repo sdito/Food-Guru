@@ -13,7 +13,6 @@
 		E2023D9A2488B2CF00224278 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2023D992488B2CF00224278 /* Network.swift */; };
 		E2023D9C2488B2DA00224278 /* NetworkSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2023D9B2488B2DA00224278 /* NetworkSearch.swift */; };
 		E2023D9E2488B80D00224278 /* Network-Values.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2023D9D2488B80D00224278 /* Network-Values.swift */; };
-		E2023DA22488CE8400224278 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2023DA12488CE8400224278 /* Review.swift */; };
 		E206E15F236FA4D4005C3422 /* CookbookVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E206E15E236FA4D4005C3422 /* CookbookVC.swift */; };
 		E2088BD22369EF9000370D09 /* SearchType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2088BD12369EF9000370D09 /* SearchType.swift */; };
 		E20BC6CB2327376000F1E5E7 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20BC6CA2327376000F1E5E7 /* SettingCell.swift */; };
@@ -122,15 +121,11 @@
 		E2DA80BD2347F10400BD7101 /* SortItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA80BC2347F10400BD7101 /* SortItemView.swift */; };
 		E2DA80CC2349957700BD7101 /* StarRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2DA80C92349957600BD7101 /* StarRatingView.xib */; };
 		E2DA80CD2349957700BD7101 /* StarRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA80CA2349957700BD7101 /* StarRatingView.swift */; };
-		E2DA80D02349BB6100BD7101 /* GiveRatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2DA80CF2349BB6100BD7101 /* GiveRatingView.xib */; };
-		E2DA80D22349BB9000BD7101 /* GiveRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DA80D12349BB9000BD7101 /* GiveRatingView.swift */; };
 		E2DC0F2723B1DF920094FDB2 /* EditItemInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2DC0F2623B1DF920094FDB2 /* EditItemInfoView.xib */; };
 		E2DC0F2923B1DFA60094FDB2 /* EditItemInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DC0F2823B1DFA60094FDB2 /* EditItemInfoView.swift */; };
 		E2DC33D0241DE0B8001A01C1 /* SevenTutorialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DC33CF241DE0B8001A01C1 /* SevenTutorialVC.swift */; };
 		E2DC33D2241EDD66001A01C1 /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2DC33D1241EDD66001A01C1 /* LoadingView.xib */; };
 		E2DC33D4241EDD84001A01C1 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2DC33D3241EDD84001A01C1 /* LoadingView.swift */; };
-		E2E29034234C3EFB00620576 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E29033234C3EFB00620576 /* RatingView.swift */; };
-		E2E29036234C3F1300620576 /* RatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E29035234C3F1300620576 /* RatingView.xib */; };
 		E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */; };
 		E2E529D222FA7F9100C55DA0 /* GroceryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D122FA7F9100C55DA0 /* GroceryList.swift */; };
 		E2E529D522FA80C400C55DA0 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E529D422FA80C400C55DA0 /* Item.swift */; };
@@ -138,8 +133,6 @@
 		E2E940DC23DEB995009C4BED /* ListHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E940DB23DEB995009C4BED /* ListHomeVC.swift */; };
 		E2E940DE23DEB9FD009C4BED /* SettingsDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E940DD23DEB9FD009C4BED /* SettingsDetailVC.swift */; };
 		E2E940E523DF57A2009C4BED /* SettingsHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E940E423DF57A2009C4BED /* SettingsHomeVC.swift */; };
-		E2E980CE238E3A5600FAD549 /* ReviewImagesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E980CD238E3A5600FAD549 /* ReviewImagesView.xib */; };
-		E2E980D0238E3A6D00FAD549 /* ReviewImagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E980CF238E3A6D00FAD549 /* ReviewImagesView.swift */; };
 		E2EA019C2370E27300DD55C9 /* CookbookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EA019B2370E27300DD55C9 /* CookbookCell.swift */; };
 		E2EAE38623E6350A001EDD72 /* Calendar-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EAE38523E6350A001EDD72 /* Calendar-Extension.swift */; };
 		E2EAE38823E63656001EDD72 /* MealPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EAE38723E63656001EDD72 /* MealPlanner.swift */; };
@@ -182,7 +175,6 @@
 		E2023D992488B2CF00224278 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		E2023D9B2488B2DA00224278 /* NetworkSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkSearch.swift; sourceTree = "<group>"; };
 		E2023D9D2488B80D00224278 /* Network-Values.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Network-Values.swift"; sourceTree = "<group>"; };
-		E2023DA12488CE8400224278 /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		E206E15E236FA4D4005C3422 /* CookbookVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookbookVC.swift; sourceTree = "<group>"; };
 		E2088BD12369EF9000370D09 /* SearchType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchType.swift; sourceTree = "<group>"; };
 		E20BC6CA2327376000F1E5E7 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
@@ -296,15 +288,11 @@
 		E2DA80BC2347F10400BD7101 /* SortItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortItemView.swift; sourceTree = "<group>"; };
 		E2DA80C92349957600BD7101 /* StarRatingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StarRatingView.xib; sourceTree = "<group>"; };
 		E2DA80CA2349957700BD7101 /* StarRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarRatingView.swift; sourceTree = "<group>"; };
-		E2DA80CF2349BB6100BD7101 /* GiveRatingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GiveRatingView.xib; sourceTree = "<group>"; };
-		E2DA80D12349BB9000BD7101 /* GiveRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveRatingView.swift; sourceTree = "<group>"; };
 		E2DC0F2623B1DF920094FDB2 /* EditItemInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EditItemInfoView.xib; sourceTree = "<group>"; };
 		E2DC0F2823B1DFA60094FDB2 /* EditItemInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemInfoView.swift; sourceTree = "<group>"; };
 		E2DC33CF241DE0B8001A01C1 /* SevenTutorialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SevenTutorialVC.swift; sourceTree = "<group>"; };
 		E2DC33D1241EDD66001A01C1 /* LoadingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingView.xib; sourceTree = "<group>"; };
 		E2DC33D3241EDD84001A01C1 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		E2E29033234C3EFB00620576 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
-		E2E29035234C3F1300620576 /* RatingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingView.xib; sourceTree = "<group>"; };
 		E2E529CF22F9442B00C55DA0 /* UIButton-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton-Extension.swift"; sourceTree = "<group>"; };
 		E2E529D122FA7F9100C55DA0 /* GroceryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryList.swift; sourceTree = "<group>"; };
 		E2E529D422FA80C400C55DA0 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
@@ -312,8 +300,6 @@
 		E2E940DB23DEB995009C4BED /* ListHomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListHomeVC.swift; sourceTree = "<group>"; };
 		E2E940DD23DEB9FD009C4BED /* SettingsDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsDetailVC.swift; path = "smartList/User Interface/Settings/View controllers/SettingsDetailVC.swift"; sourceTree = SOURCE_ROOT; };
 		E2E940E423DF57A2009C4BED /* SettingsHomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsHomeVC.swift; path = "smartList/User Interface/Settings/View controllers/SettingsHomeVC.swift"; sourceTree = SOURCE_ROOT; };
-		E2E980CD238E3A5600FAD549 /* ReviewImagesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReviewImagesView.xib; sourceTree = "<group>"; };
-		E2E980CF238E3A6D00FAD549 /* ReviewImagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewImagesView.swift; sourceTree = "<group>"; };
 		E2EA019B2370E27300DD55C9 /* CookbookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookbookCell.swift; sourceTree = "<group>"; };
 		E2EAE38523E6350A001EDD72 /* Calendar-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar-Extension.swift"; sourceTree = "<group>"; };
 		E2EAE38723E63656001EDD72 /* MealPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlanner.swift; sourceTree = "<group>"; };
@@ -735,7 +721,6 @@
 				E2A8A634234CF75400A676FA /* Search.swift */,
 				E20BC6D0232752A600F1E5E7 /* Setting.swift */,
 				E2C49342230887F3002907C2 /* User.swift */,
-				E2023DA12488CE8400224278 /* Review.swift */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -791,15 +776,6 @@
 			path = StarRatingView;
 			sourceTree = "<group>";
 		};
-		E2DA80D32349BB9E00BD7101 /* GiveRatingView */ = {
-			isa = PBXGroup;
-			children = (
-				E2DA80CF2349BB6100BD7101 /* GiveRatingView.xib */,
-				E2DA80D12349BB9000BD7101 /* GiveRatingView.swift */,
-			);
-			path = GiveRatingView;
-			sourceTree = "<group>";
-		};
 		E2DC0F2A23B1F0300094FDB2 /* EditItemInfoView */ = {
 			isa = PBXGroup;
 			children = (
@@ -816,15 +792,6 @@
 				E2DC33D3241EDD84001A01C1 /* LoadingView.swift */,
 			);
 			path = LoadingView;
-			sourceTree = "<group>";
-		};
-		E2E29039234C5C9500620576 /* RatingView */ = {
-			isa = PBXGroup;
-			children = (
-				E2E29033234C3EFB00620576 /* RatingView.swift */,
-				E2E29035234C3F1300620576 /* RatingView.xib */,
-			);
-			path = RatingView;
 			sourceTree = "<group>";
 		};
 		E2E409C9236B629A0082A84D /* CurrentSearchesView */ = {
@@ -896,27 +863,15 @@
 		E2E940E723DF8CF2009C4BED /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E2E29039234C5C9500620576 /* RatingView */,
 				E25B12AE2346E48800B7FACF /* LabelInstructionView */,
 				E2DA80B92347F0C700BD7101 /* SortItemView */,
 				E2A54E1F23186DEB00BEBF39 /* InstructionView */,
-				E2DA80D32349BB9E00BD7101 /* GiveRatingView */,
 				E2F380AE2319847F003857F7 /* IngredientView */,
 				E2E409C9236B629A0082A84D /* CurrentSearchesView */,
 				E2DA80CE2349958600BD7101 /* StarRatingView */,
 				E253AC0923431FA70018274A /* ButtonIngredientView */,
-				E2E980D1238F36E900FAD549 /* ReviewImagesView */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		E2E980D1238F36E900FAD549 /* ReviewImagesView */ = {
-			isa = PBXGroup;
-			children = (
-				E2E980CD238E3A5600FAD549 /* ReviewImagesView.xib */,
-				E2E980CF238E3A6D00FAD549 /* ReviewImagesView.swift */,
-			);
-			path = ReviewImagesView;
 			sourceTree = "<group>";
 		};
 		E2F380AE2319847F003857F7 /* IngredientView */ = {
@@ -1044,9 +999,7 @@
 				E28A4CBF23DE818100C94DF9 /* Recipes.storyboard in Resources */,
 				E28A4CBD23DE817800C94DF9 /* Lists.storyboard in Resources */,
 				E29FDE1023E554CF005CE08B /* CalendarView.xib in Resources */,
-				E2E980CE238E3A5600FAD549 /* ReviewImagesView.xib in Resources */,
 				E2DC0F2723B1DF920094FDB2 /* EditItemInfoView.xib in Resources */,
-				E2DA80D02349BB6100BD7101 /* GiveRatingView.xib in Resources */,
 				E253AC06234315170018274A /* ButtonIngredientView.xib in Resources */,
 				E25DEC702362B4810007535C /* CurrentSearchesView.xib in Resources */,
 				E28A4CC123DE818B00C94DF9 /* Storage.storyboard in Resources */,
@@ -1058,7 +1011,6 @@
 				E216204E22F658D20074A0DF /* Assets.xcassets in Resources */,
 				E242494923BFDD5E007C03F5 /* Tutorial.storyboard in Resources */,
 				E2CE480F23442F6F0045FCC0 /* LabelInstructionView.xib in Resources */,
-				E2E29036234C3F1300620576 /* RatingView.xib in Resources */,
 				E2DA80BB2347F0E400BD7101 /* SortItemView.xib in Resources */,
 				E216204C22F658D10074A0DF /* Main.storyboard in Resources */,
 				E2DC33D2241EDD66001A01C1 /* LoadingView.xib in Resources */,
@@ -1210,7 +1162,6 @@
 				E20BC6DC23288B9C00F1E5E7 /* EmailCheck.swift in Sources */,
 				E25DEC722362B4BF0007535C /* CurrentSearchesView.swift in Sources */,
 				E25F071923146E5E00E6738E /* CuisineType.swift in Sources */,
-				E2023DA22488CE8400224278 /* Review.swift in Sources */,
 				E2369B7323EE5D2F00A2293D /* SelectMealPlanRecipeVC.swift in Sources */,
 				E26B9C50234A6F960039E9EE /* UITextView-Extension.swift in Sources */,
 				E20BC6D323275BC200F1E5E7 /* SettingBasicCell.swift in Sources */,
@@ -1221,7 +1172,6 @@
 				E253AC08234315BB0018274A /* ButtonIngredientView.swift in Sources */,
 				E206E15F236FA4D4005C3422 /* CookbookVC.swift in Sources */,
 				E24ADB0E233DB063008F2F9F /* SettingContactDeveloperCell.swift in Sources */,
-				E2DA80D22349BB9000BD7101 /* GiveRatingView.swift in Sources */,
 				E25F071B23148F8D00E6738E /* SelectRecipeTypeVC.swift in Sources */,
 				E2023D9C2488B2DA00224278 /* NetworkSearch.swift in Sources */,
 				E2C5EC39239A0A400030E3CD /* SignUpVC.swift in Sources */,
@@ -1239,7 +1189,6 @@
 				E242494B23BFDE4B007C03F5 /* TutorialVC.swift in Sources */,
 				E20BC6CB2327376000F1E5E7 /* SettingCell.swift in Sources */,
 				E2088BD22369EF9000370D09 /* SearchType.swift in Sources */,
-				E2E980D0238E3A6D00FAD549 /* ReviewImagesView.swift in Sources */,
 				E20BC6E0232AB39F00F1E5E7 /* SetUpListVC.swift in Sources */,
 				E2C4934123066012002907C2 /* UIView-Extension.swift in Sources */,
 				E273F213235A6E96007B54E2 /* RecipeSearchCell.swift in Sources */,
@@ -1261,7 +1210,6 @@
 				E27D70C223404414009C68B3 /* DynamicHeightLayout.swift in Sources */,
 				E253AC042341B4460018274A /* RecipeDetailVC.swift in Sources */,
 				E20BC6D82328429F00F1E5E7 /* GroupNameCell.swift in Sources */,
-				E2E29034234C3EFB00620576 /* RatingView.swift in Sources */,
 				E20BC6DA232843E400F1E5E7 /* CreateGroupVC.swift in Sources */,
 				E2E940E523DF57A2009C4BED /* SettingsHomeVC.swift in Sources */,
 				E2E529D022F9442B00C55DA0 /* UIButton-Extension.swift in Sources */,

@@ -62,7 +62,7 @@ class RecipeHomeVC: UIViewController {
         return collectionView.contentSize.height
     }
     
-    #warning("Need to convert to NetworkSearch.NetworkSearchType")
+    
     private var activeSearches: [NetworkSearch] = [] {
         didSet {
             if SharedValues.shared.sentRecipesInfo == nil {
@@ -333,20 +333,23 @@ extension RecipeHomeVC: CurrentSearchesViewDelegate {
 extension RecipeHomeVC: DynamicHeightLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForTextAtIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
         let minForDescription = heightForText("str", width: CGFloat(MAXFLOAT), font: UIFont(name: "futura", size: 13)!) * 5.0
-        switch savedRecipesActive {
-        case true:
-            let textData = filteredSavedRecipes[indexPath.item]
-            let title = heightForText(textData.name, width: width - 12, font: UIFont(name: "futura", size: 20)!)
-            let description = heightForText(textData.tagline ?? "", width: width - 12, font: UIFont(name: "futura", size: 13)!)
-            let actualDescription = min(minForDescription, description)
-            return title + actualDescription + 8
-        case false:
-            let textData = recipes[indexPath.item]
-            let title = heightForText(textData.name, width: width - 12, font: UIFont(name: "futura", size: 20)!)
-            let description = heightForText(textData.tagline ?? "", width: width - 12, font: UIFont(name: "futura", size: 13)!)
-            let actualDescription = min(minForDescription, description)
-            return title + actualDescription + 8
+        let minForTitle = heightForText("str", width: CGFloat(MAXFLOAT), font: UIFont(name: "futura", size: 20)!) * 2.0
+        
+        var textData: Recipe {
+            switch savedRecipesActive {
+            case true:
+                return filteredSavedRecipes[indexPath.item]
+            case false:
+                return recipes[indexPath.item]
+            
+            }
         }
+        let title = heightForText(textData.name, width: width - 8, font: UIFont(name: "futura", size: 20)!)
+        let description = heightForText(textData.tagline ?? "", width: width - 8, font: UIFont(name: "futura", size: 13)!)
+        let actualTitle = min(minForTitle, title)
+        let actualDescription = min(minForDescription, description)
+        return actualTitle + actualDescription + 8
+        
         
     }
     func heightForText(_ text: String, width: CGFloat, font: UIFont) -> CGFloat {
@@ -524,13 +527,16 @@ extension RecipeHomeVC: UISearchBarDelegate {
     }
     
     
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if savedRecipesActive == false {
+            
             activeSearches = searchQueue
             searchQueue = []
             searchBar.text = ""
-            delegate.searchTextChanged(text: "")
+            if delegate != nil {
+                delegate.searchTextChanged(text: "")
+            }
+            
         } else {
             print("Need different search, saved recipes is active")
         }

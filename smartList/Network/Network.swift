@@ -25,9 +25,10 @@ class Network {
         case tags
         case ingredients
         case pdf
+        case singleRecipe
     }
     
-    private func req(reqType: RequestType, params: Parameters?, recipe: Recipe? = nil) -> DataRequest {
+    private func req(reqType: RequestType, params: Parameters?, recipeID: Int? = nil) -> DataRequest {
         let headers: HTTPHeaders = ["Authorization": Network.key]
         var path: String {
             switch reqType {
@@ -38,7 +39,10 @@ class Network {
             case .ingredients:
                 return Network.ingredientsPath
             case .pdf:
-                return Network.pdfPath + "\(recipe!.djangoID)"
+                return Network.pdfPath + "\(recipeID!)"
+            case .singleRecipe:
+                return Network.searchPath + "\(recipeID!)/"
+            
             }
         }
         
@@ -52,14 +56,13 @@ class Network {
         return request
     }
     
-    func openPDF(recipe: Recipe, pdfDataReturned: @escaping (Data) -> Void) {
+    func openPDF(recipeID: Int, pdfDataReturned: @escaping (Data) -> Void) {
         
-        if recipe.djangoID != -1 {
-            let request = req(reqType: .pdf, params: nil, recipe: recipe)
+        if recipeID != -1 {
+            let request = req(reqType: .pdf, params: nil, recipeID: recipeID)
             request.response { (response) in
                 switch response.result {
                 case .success(let data):
-                    print("have the data here: \(data)")
                     if let data = data {
                         pdfDataReturned(data)
                         
@@ -115,6 +118,26 @@ class Network {
         }
     }
     
+    func getSingleRecipe(id: Int, recipeReturned: @escaping (Recipe?) -> Void) {
+        #warning("need to finish this and also implement")
+        if id != -1 {
+            let request = req(reqType: .singleRecipe, params: nil, recipeID: id)
+            request.responseJSON { (response) in
+                switch response.result {
+                case .success(let json):
+                    if let dict = json as? [String:Any] {
+                        print(dict)
+                        let recipe = self.getOneRecipeFromJson(r: dict)
+                        recipeReturned(recipe)
+                    }
+                case .failure(let error):
+                    print(error)
+                    #warning("need to handle this")
+                }
+            }
+        }
+    }
+    
     func setTags() {
         if tags.isEmpty {
             let request = req(reqType: .tags, params: nil)
@@ -156,24 +179,7 @@ class Network {
         
         if let recipesJson = json["recipes"] as? [[String:Any]] {
             for r in recipesJson {
-                let strServings = r["servings"] as? String
-                let recipe = Recipe(djangoID: r["id"] as! Int,
-                                    name: r["name"] as! String,
-                                    cookTime: r["cook_time"] as? Int ?? 0,
-                                    prepTime: r["prep_time"] as? Int ?? 0,
-                                    ingredients: r["ingredients"] as! [String],
-                                    instructions: r["instructions"] as! [String],
-                                    calories: r["calories"] as? Int,
-                                    numServes: Int(strServings ?? "4") ?? 4,
-                                    userID: nil,
-                                    numReviews: nil,
-                                    numStars: nil,
-                                    notes: r["notes"] as? String,
-                                    tagline: r["tagline"] as? String,
-                                    recipeImage: nil,
-                                    mainImage: r["main_image"] as? String,
-                                    thumbImage: r["thumb_image"] as? String,
-                                    reviewImagePaths: nil)
+                let recipe = getOneRecipeFromJson(r: r)
                 recipes.append(recipe)
             }
         }
@@ -181,6 +187,25 @@ class Network {
         
         return (recipes, nextUrl)
         
+    }
+    
+    private func getOneRecipeFromJson(r: [String:Any]) -> Recipe {
+        let strServings = r["servings"] as? String
+        let recipe = Recipe(djangoID: r["id"] as! Int,
+            name: r["name"] as! String,
+            cookTime: r["cook_time"] as? Int ?? 0,
+            prepTime: r["prep_time"] as? Int ?? 0,
+            ingredients: r["ingredients"] as! [String],
+            instructions: r["instructions"] as! [String],
+            calories: r["calories"] as? Int,
+            numServes: Int(strServings ?? "4") ?? 4, // set recipe to 4 servings so user can change the ratio, if it doesn't have a servings
+            userID: nil,
+            notes: r["notes"] as? String,
+            tagline: r["tagline"] as? String,
+            recipeImage: nil,
+            mainImage: r["main_image"] as? String,
+            thumbImage: r["thumb_image"] as? String)
+        return recipe
     }
     
     private func getElementFromJsonArray(json: Any, key: String) -> [String]? {
@@ -193,6 +218,7 @@ class Network {
         }
         return arr
     }
+    
     
     
     private func getParams(from searches: [NetworkSearch]?) -> Parameters? {

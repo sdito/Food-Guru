@@ -19,7 +19,6 @@ class RecipeDetailVC: UIViewController {
     @IBOutlet weak var servingSliderNumber: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var mainStackView: UIStackView!
-    @IBOutlet weak var reviewRecipeOutlet: UIButton!
     @IBOutlet weak var addAllToListOutlet: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var recipeName: UILabel!
@@ -32,7 +31,6 @@ class RecipeDetailVC: UIViewController {
     @IBOutlet weak var calories: UILabel!
     @IBOutlet weak var ingredientsStackView: UIStackView!
     @IBOutlet weak var instructionsStackView: UIStackView!
-    @IBOutlet weak var reviewsStackView: UIStackView!
     @IBOutlet weak var notes: UILabel!
     @IBOutlet weak var printRecipeOutlet: UIButton!
     @IBOutlet weak var downloadRecipeOutlet: UIButton!
@@ -119,8 +117,8 @@ class RecipeDetailVC: UIViewController {
         if self.data?.recipe.djangoID == -1 || self.cookbookRecipe != nil {
             performSegue(withIdentifier: "viewPDF", sender: nil)
         } else {
-            if let r = data?.recipe {
-                Network.shared.openPDF(recipe: r) { (docData) in
+            if let r = data?.recipe.djangoID {
+                Network.shared.openPDF(recipeID: r) { (docData) in
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "pdfVC") as! RecipePDFVC
                     vc.documentData = docData
                     
@@ -169,17 +167,7 @@ class RecipeDetailVC: UIViewController {
         }
         
     }
-    
-    @IBAction func reviewRecipe(_ sender: Any) {
-        if SharedValues.shared.anonymousUser != true {
-            self.createRatingView(delegateVC: self)
-        } else {
-            let alert = UIAlertController(title: "Error", message: "Create a free account to be able to leave reviews on recipes.", preferredStyle: .alert)
-            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-            present(alert, animated: true)
-        }
-        
-    }
+
     
     @IBAction func scaleSlider(_ sender: Any) {
         newServingsValue = Int(scaleSlider.value.rounded())
@@ -218,11 +206,11 @@ class RecipeDetailVC: UIViewController {
         if let recipe = data?.recipe {
             let db = Firestore.firestore()
             let path = recipe.mainImage ?? " "
-            if SharedValues.shared.savedRecipes?.contains(path ) ?? false {
-                Recipe.removeRecipeFromSavedRecipes(db: db, str: path)
+            if SharedValues.shared.savedRecipes?.contains("\(recipe.djangoID)") ?? false {
+                Recipe.removeRecipeFromSavedRecipes(db: db, recipe: recipe)
                 recipe.removeRecipeDocumentFromUserProfile(db: db)
             } else {
-                Recipe.addRecipeToSavedRecipes(db: db, str: path)
+                Recipe.addRecipeToSavedRecipes(db: db, recipe: recipe)
                 recipe.addRecipeDocumentToUserProfile(db: db)
                 self.createMessageView(color: Colors.messageGreen, text: "Recipe saved")
             }
@@ -375,7 +363,6 @@ class RecipeDetailVC: UIViewController {
         }
         
         recipeName.text = recipe.name
-        addStarRatingViewIfApplicable(recipe: recipe)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.nameAndTitleView.shadowAndRounded(cornerRadius: 25.0, border: true)
         }
@@ -416,25 +403,11 @@ class RecipeDetailVC: UIViewController {
         recipe.addInstructionsToInstructionStackView(stackView: instructionsStackView)
         
         
-        Review.getReviewsFrom(recipe: recipe, db: db) { (rvws) in
-            Review.getViewsFrom(reviews: rvws).forEach { (view) in
-                self.reviewsStackView.insertArrangedSubview(view, at: 1)
-            }
-        }
-        let path = recipe.mainImage ?? " "
-        if SharedValues.shared.savedRecipes?.contains(path ) ?? false {
+        
+        if SharedValues.shared.savedRecipes?.contains("\(recipe.djangoID)") ?? false {
             saveRecipeOutlet.isUserInteractionEnabled = false
             saveRecipeOutlet.alpha = 0.5
             saveRecipeOutlet.setTitle("✓ Save", for: .normal)
-        }
-        
-        
-        if let imagePaths = data?.recipe.reviewImagePaths?.shuffled().prefix(8) {
-            let v = Bundle.main.loadNibNamed("ReviewImagesView", owner: nil, options: nil)?.first! as! ReviewImagesView
-            v.setUI(imagePaths: Array(imagePaths))
-            v.widthAnchor.constraint(equalToConstant: self.view.bounds.width).isActive = true
-            wholeSV.insertArrangedSubview(v, at: 2)
-            v.delegate = self
         }
         
         #warning("need to make sure addRecipeToRecentlyViewedWorks")
@@ -468,21 +441,8 @@ class RecipeDetailVC: UIViewController {
             
         }
     }
+
     
-    private func addStarRatingViewIfApplicable(recipe: Recipe) {
-        if let nr = recipe.numReviews, let ns = recipe.numStars {
-            let v = Bundle.main.loadNibNamed("StarRatingView", owner: nil, options: nil)?.first as! StarRatingView
-            v.setUI(rating: Double(ns)/Double(nr), nReviews: nr)
-            mainStackView.insertArrangedSubview(v, at: 2)
-            let gr = UITapGestureRecognizer(target: self, action: #selector(ratingTapSelector))
-            v.addGestureRecognizer(gr)
-            
-        }
-    }
-    @objc private func ratingTapSelector() {
-        let location = reviewsStackView.frame.minY
-        scrollView.setContentOffset(CGPoint(x: 0, y: location), animated: true)
-    }
     private func createObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(itemAddedSelector), name: .itemAddedFromRecipe, object: nil)
     }
@@ -538,61 +498,7 @@ extension RecipeDetailVC: DisableAddAllItemsDelegate {
         removeAddAllButton()
     }
 }
-// MARK: RecipeImagesViewDelegate
-extension RecipeDetailVC: ReviewImagesViewDelegate {
-    func showDetailedImage(path: String?, initialImage: UIImage?) {
-        self.createImageDetailView(imagePath: path, initialImage: initialImage)
-        
-    }
-}
-// MARK: GiveRatingViewDelegate
-extension RecipeDetailVC: GiveRatingViewDelegate {
-    
-    func writeImageForReview(image: UIImage) {
-        if let r = data?.recipe {
-            Review.writeImageForReview(image: image, recipe: r, db: db)
-        }
-        
-    }
-    
-    
-    func publishRating(stars: Int, rating: String?) {
-        
-        reviewRecipeOutlet.isUserInteractionEnabled = false
-        reviewRecipeOutlet.alpha = 0.4
-        reviewRecipeOutlet.setTitleColor(.black, for: .normal)
-        reviewRecipeOutlet.setTitle("✓ Review the recipe", for: .normal)
-        
-        
-        let recipeID = data?.recipe.mainImage?.imagePathToDocID()
-        let reference = db.collection("recipes").document(recipeID ?? " ").collection("reviews")
-        
-        reference.whereField("user", isEqualTo: Auth.auth().currentUser?.uid ?? " ").getDocuments { (querySnapshot, error) in
-            if (querySnapshot?.documents.count) == nil || querySnapshot?.documents.count == 0 {
-                self.data?.recipe.addReviewToRecipe(stars: stars, review: rating, db: self.db)
-                self.dismiss(animated: false) {
-                    self.createMessageView(color: Colors.messageGreen, text: "Review successfully written")
-                }
-                
-                
-            } else {
-                if let doc = querySnapshot?.documents.first {
-                    let starsToDelete = doc.get("stars") as? Int
-                    if self.data?.recipe.numStars != nil && self.data?.recipe.numReviews != nil {
-                        self.data?.recipe.numStars! -= starsToDelete ?? 0
-                        self.data?.recipe.numReviews! -= 1
-                    }
-                    querySnapshot?.documents.first?.reference.delete()
-                    
-                    self.data?.recipe.addReviewToRecipe(stars: stars, review: rating, db: self.db)
-                    self.dismiss(animated: false) {
-                        self.createMessageView(color: Colors.messageGreen, text: "Wrote over your previous review")
-                    }
-                }
-            }
-        }
-    }
-}
+
 
 
 // MARK: SelectDateViewDelegate

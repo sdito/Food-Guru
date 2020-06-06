@@ -27,6 +27,7 @@ class SharedValues {
             NotificationCenter.default.post(name: .groupIDchanged, object: nil)
         }
     }
+    
     var groupEmails: [String]?
     var groupDate: TimeInterval?
     var foodStorageEmails: [String]?

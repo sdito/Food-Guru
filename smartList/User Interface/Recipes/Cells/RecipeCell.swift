@@ -33,18 +33,7 @@ class RecipeCell: UICollectionViewCell {
         recipeImage.clipsToBounds = true
         favoriteButton.layer.cornerRadius = favoriteButton.frame.size.height/2
         favoriteButton.clipsToBounds = true
-        
-        if let stars = recipe.numStars, let reviews = recipe.numReviews {
-            let v = Bundle.main.loadNibNamed("StarRatingView", owner: nil, options: nil)?.first as! StarRatingView
-            v.translatesAutoresizingMaskIntoConstraints = false
-            v.setUI(rating: Double(stars) / Double(reviews), nReviews: reviews)
-            v.layer.cornerRadius = 4
-            v.clipsToBounds = true
-            //v.widthAnchor.constraint(equalToConstant: 100).isActive = true
-            recipeImage.insertSubview(v, at: 1)
-        }
-        
-        
+
         // image set from RecipeHomeVC for easier control of cache
         self.contentView.layer.cornerRadius = 4.0
         self.contentView.layer.borderWidth = 1.0
@@ -61,26 +50,30 @@ class RecipeCell: UICollectionViewCell {
         
         favoriteButton.addTarget(self, action: #selector(favoriteButtonPressed), for: .touchUpInside)
         
-        #warning("need to change this to use the ID of the recipe")
-        if SharedValues.shared.savedRecipes?.contains(recipe.mainImage ?? " ") ?? false {
+        
+        if SharedValues.shared.savedRecipes?.contains("\(recipe.djangoID)") ?? false {
             self.favoriteButton.backgroundColor = Colors.main
         } else {
             self.favoriteButton.backgroundColor = Colors.systemGray
-            
         }
         
     }
     // MARK: Button pressed
     @objc func favoriteButtonPressed() {
         let db = Firestore.firestore()
-        let path = self.recipe?.mainImage ?? " "
-        if SharedValues.shared.savedRecipes?.contains(self.recipe?.mainImage ?? " ") ?? false {
-            Recipe.removeRecipeFromSavedRecipes(db: db, str: path)
-            self.recipe?.removeRecipeDocumentFromUserProfile(db: db)
-        } else {
-            Recipe.addRecipeToSavedRecipes(db: db, str: path)
-            self.recipe?.addRecipeDocumentToUserProfile(db: db)
+        
+        if let recipe = self.recipe {
+            if SharedValues.shared.savedRecipes?.contains("\(recipe.djangoID)") ?? false {
+                Recipe.removeRecipeFromSavedRecipes(db: db, recipe: recipe)
+                self.recipe?.removeRecipeDocumentFromUserProfile(db: db)
+            } else {
+                Recipe.addRecipeToSavedRecipes(db: db, recipe: recipe)
+                self.recipe?.addRecipeDocumentToUserProfile(db: db)
+            }
         }
+        
+        
+        
     }
     
 }

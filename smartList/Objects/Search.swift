@@ -10,19 +10,7 @@ import Foundation
 import FirebaseFirestore
 
 struct Search {
-    
-    static func searchFromSearchBar(string: String) -> [NetworkSearch] {
-        #warning("make this so it takes comma seperated searches with double quotes")
-        var currentSearches: [NetworkSearch] = []
-        let split = string.split(separator: ",")
-        for i in split {
-            currentSearches.append(NetworkSearch(text: String(i), type: .unknown))
-        }
-        
-        return currentSearches
-        
-    }
-    
+
     
     static func getRecipesFromIngredients(db: Firestore, ingredients: [String], recipesReturned: @escaping(_ recipes: [Recipe]?) -> Void) {
         var recipes: [Recipe] = []
@@ -1333,7 +1321,20 @@ struct Search {
 
 extension QueryDocumentSnapshot {
     func recipe() -> Recipe {
-        let recipe = Recipe(djangoID: self.get("id") as? Int ?? -1, name: self.get("name") as! String, cookTime: self.get("cookTime") as! Int, prepTime: self.get("prepTime") as! Int, ingredients: self.get("ingredients") as! [String], instructions: self.get("instructions") as! [String], calories: self.get("calories") as? Int, numServes: self.get("numServes") as! Int, userID: self.get("userID") as? String, numReviews: self.get("numReviews") as? Int, numStars: self.get("numStars") as? Int, notes: self.get("notes") as? String, tagline: self.get("tagline") as? String, recipeImage: nil, mainImage: self.get("path") as? String, thumbImage: nil, reviewImagePaths: self.get("reviewImagePaths") as? [String])
+        let recipe = Recipe(djangoID: self.get("id") as? Int ?? -1,
+                            name: self.get("name") as! String,
+                            cookTime: self.get("cookTime") as! Int,
+                            prepTime: self.get("prepTime") as! Int,
+                            ingredients: self.get("ingredients") as! [String],
+                            instructions: self.get("instructions") as! [String],
+                            calories: self.get("calories") as? Int,
+                            numServes: self.get("numServes") as! Int,
+                            userID: self.get("userID") as? String,
+                            notes: self.get("notes") as? String,
+                            tagline: self.get("tagline") as? String,
+                            recipeImage: nil,
+                            mainImage: self.get("path") as? String,
+                            thumbImage: self.get("thumbImage") as? String)
         return recipe
     }
 }
