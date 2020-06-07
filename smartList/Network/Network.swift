@@ -172,7 +172,7 @@ class Network {
         }
     }
     private func getRecipesAndUrlFromJson(json: Any) -> ([Recipe]?, String?) {
-        #warning("need to update this in the future when Recipe changes")
+        
         guard let json = json as? [String:Any] else { return (nil, nil) }
         let nextUrl = json["next_block"] as? String
         var recipes: [Recipe] = []
@@ -191,20 +191,26 @@ class Network {
     
     private func getOneRecipeFromJson(r: [String:Any]) -> Recipe {
         let strServings = r["servings"] as? String
-        let recipe = Recipe(djangoID: r["id"] as! Int,
-            name: r["name"] as! String,
-            cookTime: r["cook_time"] as? Int ?? 0,
-            prepTime: r["prep_time"] as? Int ?? 0,
-            ingredients: r["ingredients"] as! [String],
-            instructions: r["instructions"] as! [String],
-            calories: r["calories"] as? Int,
-            numServes: Int(strServings ?? "4") ?? 4, // set recipe to 4 servings so user can change the ratio, if it doesn't have a servings
-            userID: nil,
-            notes: r["notes"] as? String,
-            tagline: r["tagline"] as? String,
-            recipeImage: nil,
-            mainImage: r["main_image"] as? String,
-            thumbImage: r["thumb_image"] as? String)
+        var recipe = Recipe(djangoID: r["id"] as! Int,
+                            name: r["name"] as! String,
+                            authorName: r["author"] as? String,
+                            cookTime: r["cook_time"] as? Int,
+                            prepTime: r["prep_time"] as? Int,
+                            ingredients: r["ingredients"] as! [String],
+                            instructions: r["instructions"] as! [String],
+                            calories: r["calories"] as? Int,
+                            numServes: Int(strServings ?? "4") ?? 4, // set recipe to 4 servings so user can change the ratio, if it doesn't have a servings
+                            notes: r["notes"] as? String,
+                            tagline: r["tagline"] as? String,
+                            recipeImage: nil,
+                            mainImage: r["main_image"] as? String,
+                            thumbImage: r["thumb_image"] as? String)
+        
+        if recipe.djangoID % 3 == 0 {
+            recipe.thumbImage = nil
+            recipe.mainImage = nil
+        }
+        
         return recipe
     }
     

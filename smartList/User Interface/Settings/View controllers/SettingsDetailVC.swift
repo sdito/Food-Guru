@@ -433,14 +433,26 @@ extension SettingsDetailVC: UpdateScreenDelegate {
 
 // MARK: SettingViewedRecipeCellDeleagate
 extension SettingsDetailVC: SettingViewedRecipeCellDelegate {
-    func recipeDocumentIdPressed(id: String) {
+    func recipeDocumentIdPressed(djangoID: Int) {
+        /*
         Recipe.readOneRecipeFrom(id: id, db: db) { (rcp) in
             let vc = UIStoryboard(name: "Recipes", bundle: nil).instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC
             let data = (UIImage(), rcp)
             vc.data = data
             self.navigationController?.pushViewController(vc, animated: true)
         }
+        */
+        
+        Network.shared.getSingleRecipe(id: djangoID) { (rcp) in
+            if let rcp = rcp {
+                let vc = UIStoryboard(name: "Recipes", bundle: nil).instantiateViewController(withIdentifier: "recipeDetailVC") as! RecipeDetailVC
+                let data = (UIImage(), rcp)
+                vc.data = data
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
     }
+    
 }
 
 // MARK: Table view

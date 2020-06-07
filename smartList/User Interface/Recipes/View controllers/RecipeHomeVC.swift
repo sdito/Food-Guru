@@ -431,42 +431,35 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
         
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch savedRecipesActive {
-        case true:
-            let recipe = filteredSavedRecipes[indexPath.row]
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCell
-            cell.setUI(recipe: recipe)
-            //cell.delegate = self as RecipeCellDelegate
-            if let cachedImage = imageCache.object(forKey: "\(indexPath.row)" as NSString) {
-                cell.recipeImage.image = cachedImage
-                print("Cache for \(indexPath.row)")
-            } else {
-                Network.shared.getImage(url: recipe.thumbImage) { (image) in
-                    cell.recipeImage.image = image
-                    self.imageCache.setObject(image, forKey: "\(indexPath.row)" as NSString)
-                }
-                
+        
+        var recipe: Recipe {
+            switch savedRecipesActive {
+            case true:
+                return filteredSavedRecipes[indexPath.row]
+            case false:
+                return recipes[indexPath.row]
             }
-            
-            return cell
-        case false:
-            let recipe = recipes[indexPath.row]
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCell
-            cell.setUI(recipe: recipe)
-            //cell.delegate = self as RecipeCellDelegate
-            if let cachedImage = imageCache.object(forKey: "\(indexPath.row)" as NSString) {
-                cell.recipeImage.image = cachedImage
-                print("Cache for \(indexPath.row)")
-            } else {
-                Network.shared.getImage(url: recipe.thumbImage) { (image) in
-                    cell.recipeImage.image = image
-                    self.imageCache.setObject(image, forKey: "\(indexPath.row)" as NSString)
-                }
-            }
-            
-            return cell
         }
-
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "recipeCell", for: indexPath) as! RecipeCell
+        cell.setUI(recipe: recipe)
+        //cell.delegate = self as RecipeCellDelegate
+        if let cachedImage = imageCache.object(forKey: "\(indexPath.row)" as NSString) {
+            cell.recipeImage.image = cachedImage
+            print("Cache for \(indexPath.row)")
+        } else {
+            if let thumbImageUrl = recipe.thumbImage {
+                Network.shared.getImage(url: thumbImageUrl) { (image) in
+                    cell.recipeImage.image = image
+                    self.imageCache.setObject(image, forKey: "\(indexPath.row)" as NSString)
+                }
+            } else {
+                cell.recipeImage.image = UIImage(named: "no_image")
+            }
+            
+        }
+        
+        return cell
     }
     
     
@@ -478,7 +471,6 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
         else if (self.lastContentOffset < scrollView.contentOffset.y) {
-            print("being set from here, need to undo something")
             scrollBackUpView.setIsHidden(true, animated: true)
         }
         

@@ -43,6 +43,7 @@ class RecipeDetailVC: UIViewController {
     @IBOutlet weak var scaleSV: UIStackView!
     @IBOutlet var      viewsToRemoveForCookbook: [UIView]!
     @IBOutlet weak var scaleSlider: UISlider!
+    @IBOutlet weak var imageViewAspect: NSLayoutConstraint!
     
     var db: Firestore!
     var data: (image: UIImage?, recipe: Recipe)?
@@ -63,16 +64,9 @@ class RecipeDetailVC: UIViewController {
         } else if let cookbook = cookbookRecipe {
             setUI(recipe: cookbook)
         }
-        #warning("need to change this")
-        Network.shared.getImage(url: data?.recipe.mainImage) { (image) in
-            self.imageView.image = image
-        }
         
-        /*
-        data?.recipe.getImageFromStorage(thumb: false, imageReturned: { (img) in
-            self.imageView.image = img
-        })
-        */
+        
+        
         
         createObserver()
     
@@ -178,8 +172,6 @@ class RecipeDetailVC: UIViewController {
             }
             
         }
-        
-        
         
     }
     
@@ -362,16 +354,46 @@ class RecipeDetailVC: UIViewController {
             imageView.image = img
         }
         
+        if let mainImageUrl = data?.recipe.mainImage {
+            
+            Network.shared.getImage(url: mainImageUrl) { (image) in
+                self.imageView.image = image
+            }
+        } else {
+            print("Doesn't have mainImageURL")
+            imageView.image = UIImage(named: "no_image")
+            
+        }
+        
+        
+        
         recipeName.text = recipe.name
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.nameAndTitleView.shadowAndRounded(cornerRadius: 25.0, border: true)
         }
         nameAndTitleView.alpha = 0.95
         tagline.text = recipe.tagline
-        prepTime.text = recipe.prepTime.getDisplayHoursAndMinutes()
-        cookTime.text = recipe.cookTime.getDisplayHoursAndMinutes()
+        
+        if let pTime = recipe.prepTime {
+            prepTime.text = pTime.getDisplayHoursAndMinutes()
+        } else {
+            prepSV.removeFromSuperview()
+        }
+        
+        if let cTime = recipe.cookTime {
+            cookTime.text = cTime.getDisplayHoursAndMinutes()
+        } else {
+            cookSV.removeFromSuperview()
+        }
+        
+        if let cals = recipe.calories {
+            calories.text = "\(cals)"
+        } else {
+            caloriesSV.removeFromSuperview()
+        }
+        
         servings.text = "\(recipe.numServes)"
-        calories.text = "\(recipe.calories!)"
+        
         
         scaleSlider.minimumValue = 1
         scaleSlider.maximumValue = Float(max(20, (recipe.numServes * 4)))
@@ -394,11 +416,13 @@ class RecipeDetailVC: UIViewController {
         } else {
             notes.removeFromSuperview()
         }
-        if let uid = recipe.userID {
-            User.getNameFromUid(db: db, uid: uid) { (name) in
-                self.author.text = "By \(name ?? "unknown user")"
-            }
+        
+        if let authorName = recipe.authorName {
+            self.author.text = "By \(authorName)"
+        } else {
+            self.author.removeFromSuperview()
         }
+        
         recipe.addButtonIngredientViewsTo(stackView: ingredientsStackView, delegateVC: self)
         recipe.addInstructionsToInstructionStackView(stackView: instructionsStackView)
         

@@ -208,7 +208,7 @@ class CreateRecipeVC: UIViewController {
                 return
             }
             
-            var recipe = Recipe(djangoID: -1, name: nameTextField.text!, cookTime: cookTime, prepTime: prepTime, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servings, userID: uid, notes: notesTextView.text, tagline: taglineTextView.text, recipeImage: img, mainImage: nil, thumbImage: nil)
+            var recipe = Recipe(djangoID: -1, name: nameTextField.text!, authorName: nil, cookTime: cookTime, prepTime: prepTime, ingredients: IngredientView.getIngredients(stack: ingredientsStackView), instructions: InstructionView.getInstructions(stack: instructionsListStackView), calories: caloriesTextField.toInt(), numServes: servings, notes: notesTextView.text, tagline: taglineTextView.text, recipeImage: img, mainImage: nil, thumbImage: nil)
             recipe.writeToFirestore(db: db, storage: storage)
             
             

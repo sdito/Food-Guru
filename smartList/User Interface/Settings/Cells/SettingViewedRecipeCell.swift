@@ -11,13 +11,13 @@ import UIKit
 
 
 protocol SettingViewedRecipeCellDelegate {
-    func recipeDocumentIdPressed(id: String)
+    func recipeDocumentIdPressed(djangoID: Int)
 }
 
 
 
 class SettingViewedRecipeCell: UITableViewCell {
-    var path: String?
+    var djangoID: String?
     var delegate: SettingViewedRecipeCellDelegate!
     
     @IBOutlet weak var name: UILabel!
@@ -35,7 +35,7 @@ class SettingViewedRecipeCell: UITableViewCell {
     func setUIfromData(data: [String:Any]) {
         name.text = data["name"] as? String
         time.text = (data["timeIntervalSince1970"] as? TimeInterval)?.timeSince()
-        path = data["path"] as? String
+        djangoID = data["path"] as? String
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(recognizer))
         
@@ -44,8 +44,9 @@ class SettingViewedRecipeCell: UITableViewCell {
     }
     
     @objc func recognizer() {
-        if let path = path?.imagePathToDocID() {
-            delegate.recipeDocumentIdPressed(id: path)
+        if let djangoIDint = Int(djangoID ?? "x") {
+            #warning("should do something to signify that the recipe is loading here...")
+            delegate.recipeDocumentIdPressed(djangoID: djangoIDint)
         }
         
     }

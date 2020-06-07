@@ -16,30 +16,29 @@ import RealmSwift
 struct Recipe {
     var djangoID: Int
     var name: String
-    #warning("need to add author name (optional)")
-    var cookTime: Int ;#warning("should be optional")
-    var prepTime: Int ;#warning("should be optional")
+    var authorName: String?
+    var cookTime: Int?
+    var prepTime: Int?
     var ingredients: [String]
     var instructions: [String]
     var calories: Int?
     var numServes: Int
-    var userID: String? ;#warning("need to remove, do after authorName is added")
     var notes: String?
     var tagline: String?
     var recipeImage: Data?
     var mainImage: String?
     var thumbImage: String?
     
-    init(djangoID: Int, name: String, cookTime: Int, prepTime: Int, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, userID: String?, notes: String?, tagline: String?, recipeImage: Data?, mainImage: String?, thumbImage: String?) {
+    init(djangoID: Int, name: String, authorName: String?, cookTime: Int?, prepTime: Int?, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, notes: String?, tagline: String?, recipeImage: Data?, mainImage: String?, thumbImage: String?) {
         self.djangoID = djangoID
         self.name = name
+        self.authorName = authorName
         self.cookTime = cookTime
         self.prepTime = prepTime
         self.ingredients = ingredients
         self.instructions = instructions
         self.calories = calories
         self.numServes = numServes
-        self.userID = userID
         self.notes = notes
         self.tagline = tagline
         self.recipeImage = recipeImage
@@ -58,14 +57,14 @@ struct Recipe {
         doc.setData([
             "djangoID": self.djangoID,
             "name": self.name,
-            "cookTime": self.cookTime,
-            "prepTime": self.prepTime,
-            "totalTime": self.cookTime + self.prepTime,
+            "authorName": self.authorName as Any,
+            "cookTime": self.cookTime as Any,
+            "prepTime": self.prepTime as Any,
+            "totalTime": (self.cookTime ?? 0) + (self.prepTime ?? 0),
             "ingredients": self.ingredients,
             "instructions": self.instructions,
             "calories": self.calories as Any,
             "numServes": self.numServes,
-            "userID": self.userID as Any,
             "notes": self.notes as Any,
             "path": self.mainImage as Any,
             "tagline": self.tagline as Any,
@@ -231,7 +230,7 @@ struct Recipe {
                     if var dict = data["recentlyViewedRecipes"] as? [String:[String:Any]] {
                         // update the data, already have saved recipes
                         print(dict.keys.count)
-                        dict["\(Date().timeIntervalSince1970)"] = ["name": self.name, "path": self.mainImage as Any, "timeIntervalSince1970": Date().timeIntervalSince1970]
+                        dict["\(Date().timeIntervalSince1970)"] = ["name": self.name, "path": "\(self.djangoID)", "timeIntervalSince1970": Date().timeIntervalSince1970]
                         // should have the dict, just would need to write over the previous dict with this new dict, also might need to delete the oldest entry
                         
                         print(dict.keys.count)
@@ -246,7 +245,7 @@ struct Recipe {
                         ])
                     } else {
                         // no saved recipes, need to create the dictionary
-                        let dict: [String:[String:Any]] = ["\(Date().timeIntervalSince1970)":["name": self.name, "path": self.mainImage as Any, "timeIntervalSince1970": Date().timeIntervalSince1970]]
+                        let dict: [String:[String:Any]] = ["\(Date().timeIntervalSince1970)":["name": self.name, "path": "\(self.djangoID)", "timeIntervalSince1970": Date().timeIntervalSince1970]]
                         reference.updateData([
                             "recentlyViewedRecipes" : dict
                         ])
@@ -275,9 +274,10 @@ struct Recipe {
         reference.setData([
             "djangoID": self.djangoID,
             "name": self.name,
-            "cookTime": self.cookTime,
-            "prepTime": self.prepTime,
-            "totalTime": self.cookTime + self.prepTime,
+            "authorName": self.authorName as Any,
+            "cookTime": self.cookTime as Any,
+            "prepTime": self.prepTime as Any,
+            "totalTime": (self.cookTime ?? 0) + (self.prepTime ?? 0),
             "ingredients": self.ingredients,
             "instructions": self.instructions,
             "calories": self.calories as Any,
@@ -496,13 +496,13 @@ extension DocumentSnapshot {
     func getRecipe() -> Recipe {
         let r = Recipe(djangoID: self.get("djangoID") as? Int ?? -1,
                        name: self.get("name") as! String,
-                       cookTime: self.get("cookTime") as! Int,
-                       prepTime: self.get("prepTime") as! Int,
+                       authorName: self.get("authorName") as? String,
+                       cookTime: self.get("cookTime") as? Int,
+                       prepTime: self.get("prepTime") as? Int,
                        ingredients: self.get("ingredients") as! [String],
                        instructions: self.get("instructions") as! [String],
                        calories: self.get("calories") as? Int,
                        numServes: self.get("numServes") as! Int,
-                       userID: self.get("userID") as? String,
                        notes: self.get("notes") as? String,
                        tagline: self.get("tagline") as? String,
                        recipeImage: nil,
