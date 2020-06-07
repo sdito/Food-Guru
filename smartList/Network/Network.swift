@@ -205,12 +205,7 @@ class Network {
                             recipeImage: nil,
                             mainImage: r["main_image"] as? String,
                             thumbImage: r["thumb_image"] as? String)
-        
-        if recipe.djangoID % 3 == 0 {
-            recipe.thumbImage = nil
-            recipe.mainImage = nil
-        }
-        
+
         return recipe
     }
     

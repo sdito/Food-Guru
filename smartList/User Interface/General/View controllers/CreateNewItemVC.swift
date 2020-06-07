@@ -21,6 +21,7 @@ class CreateNewItemVC: UITableViewController {
     var delegate: CreateNewItemDelegate!
     var isForList: Bool = true
     var isForSearch: Bool = false
+    
     private var searchText: String = "" {
         didSet {
             
@@ -95,7 +96,7 @@ class CreateNewItemVC: UITableViewController {
             }
             
         }
-        cell.setUI(text: search.text, inItems: contains, list: isForList, search: false)
+        cell.setUI(networkSearch: search, inItems: contains, list: isForList, search: isForSearch)
         
         return cell
     }

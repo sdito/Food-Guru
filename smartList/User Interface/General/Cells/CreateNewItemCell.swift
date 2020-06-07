@@ -11,12 +11,13 @@ import UIKit
 class CreateNewItemCell: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var secondaryLabel: UILabel!
     @IBOutlet weak var img: UIImageView!
     
     
-    func setUI(text: String, inItems: Bool, list: Bool, search: Bool) {
+    func setUI(networkSearch: NetworkSearch, inItems: Bool, list: Bool, search: Bool)  {
         
-        label.text = text
+        label.text = networkSearch.text
         
         var iconImage: UIImage {
             switch list {
@@ -29,6 +30,15 @@ class CreateNewItemCell: UITableViewCell {
         
         if !search {
             img.image = iconImage
+            secondaryLabel.isHidden = true
+        } else {
+            secondaryLabel.isHidden = false
+            if networkSearch.type == .ingredient {
+                secondaryLabel.text = "INGREDIENT"
+            } else {
+                secondaryLabel.text = "TAG/TYPE"
+                
+            }
         }
         
         if inItems {
