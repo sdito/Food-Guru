@@ -10,6 +10,8 @@ import UIKit
 import RealmSwift
 import FirebaseFirestore
 
+#warning("doesn't update when a new recipe is added, need to fix")
+
 class CookbookVC: UIViewController {
     
     @IBOutlet weak var cookbookOutlet: UIButton!
@@ -24,17 +26,18 @@ class CookbookVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let realm = try! Realm()
         searchBar.setTextProperties()
         searchBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
-        recipes = Array(realm.objects(CookbookRecipe.self))
         tableView.reloadData()
-        scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
+        
         self.view.backgroundColor = Colors.systemBackground
         searchBar.setUpAddItemToolbar(cancelAction: #selector(cancelSelector), addAction: #selector(addSelector))
         cookbookOutlet.handleSelectedForBottomTab(selected: true)
+        
+        scrollBackUpView.layoutIfNeeded()
+        scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,6 +46,7 @@ class CookbookVC: UIViewController {
         let realm = try! Realm()
         recipes = Array(realm.objects(CookbookRecipe.self))
         filteredRecipes = recipes
+        tableView.reloadData()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -59,11 +63,13 @@ class CookbookVC: UIViewController {
     // MARK: @IBAction funcs
     @IBAction func savedRecipes(_ sender: Any) {
         tabBarController?.selectedIndex = 0
-        NotificationCenter.default.post(name: .haveSavedRecipesAppear, object: nil)
+        NotificationCenter.default.post(name: .haveSavedRecipesAppear, object: nil, userInfo: ["haveSavedRecipesShow": true])
     }
     
     @IBAction func allRecipes(_ sender: Any) {
+        #warning("does not switch to home tab when saved was selected before, saved works always due to the notification, could alter the notification to take in a boolean")
         tabBarController?.selectedIndex = 0
+        NotificationCenter.default.post(name: .haveSavedRecipesAppear, object: nil, userInfo: ["haveSavedRecipesShow": false])
         
     }
     // MARK: functions

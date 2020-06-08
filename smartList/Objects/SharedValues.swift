@@ -18,8 +18,7 @@ class SharedValues {
 
     var listIdentifier: DocumentReference?
     var userID: String?
-    var recipeType: [String]?
-    var cuisineType: String?
+    
     var currText: UIView?
     
     var groupID: String? {

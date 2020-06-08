@@ -130,9 +130,8 @@ class RecipeHomeVC: UIViewController {
         
         layout.delegate = self
         
-        
         createObserver()
-        scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
+        
         homeRecipesOutlet.handleSelectedForBottomTab(selected: true)
         
         FoodStorage.readAndPersistSystemItemsFromStorageWithListener(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
@@ -144,6 +143,8 @@ class RecipeHomeVC: UIViewController {
         collectionView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
         collectionView.refreshControl?.tintColor = Colors.main
         
+        scrollBackUpView.layoutIfNeeded()
+        scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -186,15 +187,12 @@ class RecipeHomeVC: UIViewController {
     
    
     // MARK: @IBAction funcs
-    @IBAction func createRecipePressed(_ sender: Any) {
-        if SharedValues.shared.anonymousUser == false {
-            performSegue(withIdentifier: "toCreateRecipe", sender: nil)
-        } else {
-            let alert = UIAlertController(title: "Error", message: "Create a free account in order to publish recipes.", preferredStyle: .alert)
-            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-            present(alert, animated: true)
-        }
+
+    @IBAction func startAdvancedSearch(_ sender: Any) {
+        self.createAdvancedSearchView()
     }
+    
+    
     
     @IBAction func homeRecipes(_ sender: Any) {
         if savedRecipesActive {
@@ -249,14 +247,26 @@ class RecipeHomeVC: UIViewController {
             }
         }
     }
-
     
-    @objc func haveSavedRecipesShow() {
-        savedRecipesActive = true
-        Recipe.readUserSavedRecipes(db: db) { (rcps) in
-            self.savedRecipes = rcps
+    
+    @objc func haveSavedRecipesShow(_ notification: NSNotification) {
+        
+        if let dict = notification.userInfo as NSDictionary? {
+            if let haveSavedRecipesShow = dict["haveSavedRecipesShow"] as? Bool {
+                if haveSavedRecipesShow != savedRecipesActive {
+                    savedRecipesActive = haveSavedRecipesShow
+                    
+                    if savedRecipesActive {
+                        Recipe.readUserSavedRecipes(db: db) { (rcps) in
+                            self.savedRecipes = rcps
+                        }
+                    }
+                    
+                }
+            }
         }
     }
+    
     @objc func reloadCollectionView() {
         print("Collection view should be reloaded")
         collectionView.reloadData()

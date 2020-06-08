@@ -84,8 +84,6 @@ struct User {
     static func resetSharedValues() {
         SharedValues.shared.listIdentifier = nil
         SharedValues.shared.userID = nil
-        SharedValues.shared.recipeType = nil
-        SharedValues.shared.cuisineType = nil
         SharedValues.shared.currText = nil
         SharedValues.shared.groupID = nil
         SharedValues.shared.groupEmails = nil

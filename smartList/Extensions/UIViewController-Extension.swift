@@ -94,6 +94,36 @@ extension UIViewController {
         self.present(vc, animated: false)
         
     }
+    
+    func createAdvancedSearchView() {
+        let vc = UIViewController()
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
+        button.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height).isActive = true
+        button.addTarget(self, action: #selector(removeFromSuperViewSelector), for: .touchUpInside)
+        button.backgroundColor = .black
+        button.alpha = 0.3
+        vc.view.insertSubview(button, at: 1)
+        
+        let v = Bundle.main.loadNibNamed("AdvancedSearchView", owner: nil, options: nil)?.first as! AdvancedSearchView
+        vc.view.insertSubview(v, at: 2)
+        
+        v.center.x = vc.view.center.x
+        let yOffset = vc.view.center.y - v.bounds.height/2 - 50 // use this to set the top constraint 50 from the top of the view
+        v.center.y = vc.view.center.y - yOffset
+        v.alpha = 0
+        v.shadowAndRounded(cornerRadius: 25.0, border: false)
+        v.setUI()
+        vc.modalPresentationStyle = .overFullScreen
+        
+        self.present(vc, animated: false) {
+            UIView.animate(withDuration: 0.3) {
+                v.alpha = 1.0
+            }
+        }
+        
+    }
 
     
     func createDatePickerView(delegateVC: UIViewController, recipe: MealPlanner.RecipeTransfer, copyRecipe: Bool, forRecipeDetail: Bool = false) {

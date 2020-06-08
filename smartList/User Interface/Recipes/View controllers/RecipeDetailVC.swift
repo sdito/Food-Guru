@@ -365,12 +365,11 @@ class RecipeDetailVC: UIViewController {
             
         }
         
-        
-        
         recipeName.text = recipe.name
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.nameAndTitleView.shadowAndRounded(cornerRadius: 25.0, border: true)
-        }
+        
+        nameAndTitleView.layoutIfNeeded()
+        self.nameAndTitleView.shadowAndRounded(cornerRadius: 25.0, border: true)
+        
         nameAndTitleView.alpha = 0.95
         tagline.text = recipe.tagline
         
