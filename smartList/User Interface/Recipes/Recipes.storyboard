@@ -729,10 +729,10 @@
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" secondItem="LjC-gm-bTF" secondAttribute="height" multiplier="1:1" constant="-35" id="JiO-gR-Wqu"/>
                                                     <constraint firstAttribute="bottom" secondItem="WUC-Cb-mof" secondAttribute="bottom" id="KMs-oM-uFU"/>
                                                     <constraint firstAttribute="trailing" secondItem="iGN-YT-XRW" secondAttribute="trailing" id="SMb-YM-u6S"/>
                                                     <constraint firstItem="iGN-YT-XRW" firstAttribute="top" secondItem="LjC-gm-bTF" secondAttribute="top" id="cnK-Qf-XR3"/>
+                                                    <constraint firstAttribute="height" secondItem="iGN-YT-XRW" secondAttribute="height" constant="35" id="jE5-m5-YWw"/>
                                                     <constraint firstItem="WUC-Cb-mof" firstAttribute="centerX" secondItem="LjC-gm-bTF" secondAttribute="centerX" id="v3Q-Ow-fyy"/>
                                                     <constraint firstItem="iGN-YT-XRW" firstAttribute="leading" secondItem="LjC-gm-bTF" secondAttribute="leading" id="zbe-EV-Juc"/>
                                                 </constraints>

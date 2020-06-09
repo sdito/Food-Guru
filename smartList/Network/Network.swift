@@ -15,7 +15,6 @@ class Network {
     
     var ingredients: [NetworkSearch] = []
     var tags: [NetworkSearch] = []
-    var nextUrl: String?
     static let shared = Network()
     
     private init() {}
@@ -89,29 +88,27 @@ class Network {
         }
     }
     
-    func getRecipes(searches: [NetworkSearch]?, recipesReturned: @escaping ([Recipe]?) -> Void) {
+    func getRecipes(searches: [NetworkSearch]?, recipesReturned: @escaping ([Recipe]?, String?) -> Void) {
         let params = getParams(from: searches)
         let request = req(reqType: .recipe, params: params)
         request.responseJSON { (response) in
             switch response.result {
             case .success(let json):
                 let (recipes, nextUrl) = self.getRecipesAndUrlFromJson(json: json)
-                self.nextUrl = nextUrl
-                recipesReturned(recipes)
+                recipesReturned(recipes, nextUrl)
             case .failure(let error):
                 print(error)
             }
         }
     }
     
-    func getRecipes(url: String, recipesReturned: @escaping ([Recipe]?) -> Void) {
+    func getRecipes(url: String, recipesReturned: @escaping ([Recipe]?, String?) -> Void) {
         let request = req(url: url)
         request.responseJSON { (response) in
             switch response.result {
             case .success(let json):
                 let (recipes, nextUrl) = self.getRecipesAndUrlFromJson(json: json)
-                self.nextUrl = nextUrl
-                recipesReturned(recipes)
+                recipesReturned(recipes, nextUrl)
             case .failure(let error):
                 print(error)
             }
@@ -191,7 +188,7 @@ class Network {
     
     private func getOneRecipeFromJson(r: [String:Any]) -> Recipe {
         let strServings = r["servings"] as? String
-        var recipe = Recipe(djangoID: r["id"] as! Int,
+        let recipe = Recipe(djangoID: r["id"] as! Int,
                             name: r["name"] as! String,
                             authorName: r["author"] as? String,
                             cookTime: r["cook_time"] as? Int,

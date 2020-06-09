@@ -28,6 +28,7 @@ class RecipeHomeVC: UIViewController {
     
     var db: Firestore!
     var imageCache = NSCache<NSString, UIImage>()
+    private var nextUrl: String?
     private var loadingMoreRecipes = false
     private var searchQueue: [NetworkSearch] = []
     private var keyboardHeight: CGFloat?
@@ -66,11 +67,12 @@ class RecipeHomeVC: UIViewController {
     private var activeSearches: [NetworkSearch] = [] {
         didSet {
             if SharedValues.shared.sentRecipesInfo == nil {
-                Network.shared.getRecipes(searches: self.activeSearches) { (rcps) in
+                Network.shared.getRecipes(searches: self.activeSearches) { (rcps, next) in
                     if let rcps = rcps {
                         self.recipes = rcps
                         self.collectionViewReloadReset()
                     }
+                    self.nextUrl = next
                 }
             }
             if wholeStackView.subviews.contains(currentSearchesView) {
@@ -126,10 +128,7 @@ class RecipeHomeVC: UIViewController {
         layout.delegate = self
         
         createObserver()
-        
         homeRecipesOutlet.handleSelectedForBottomTab(selected: true)
-        
-        FoodStorage.readAndPersistSystemItemsFromStorageWithListener(db: db, storageID: SharedValues.shared.foodStorageID ?? " ")
         
         spinnerHolder.layer.cornerRadius = spinnerHolder.frame.height / 2
         spinnerHolder.isHidden = true
@@ -263,7 +262,6 @@ class RecipeHomeVC: UIViewController {
     }
     
     @objc func reloadCollectionView() {
-        print("Collection view should be reloaded")
         collectionView.reloadData()
     }
     
@@ -276,11 +274,12 @@ class RecipeHomeVC: UIViewController {
         if SharedValues.shared.sentRecipesInfo == nil {
             if recipes.isEmpty {
                 
-                Network.shared.getRecipes(searches: nil) { (rcps) in
+                Network.shared.getRecipes(searches: nil) { (rcps, next) in
                     if let rs = rcps {
                         self.recipes = rs
                         self.collectionViewReloadReset()
                     }
+                    self.nextUrl = next
                 }
                 
             }
@@ -388,13 +387,14 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 }
             }
         } else {
-            if let nextUrl = Network.shared.nextUrl {
-                Network.shared.getRecipes(url: nextUrl) { (recipes) in
+            if let nextUrl = nextUrl {
+                Network.shared.getRecipes(url: nextUrl) { (recipes, next) in
                     self.collectionView.refreshControl?.endRefreshing()
                     if let rcps = recipes {
                         self.recipes = rcps
                         self.collectionViewReloadReset()
                     }
+                    self.nextUrl = next
                 }
             } else {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -485,12 +485,12 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         // load the next page of recipes
         // Need to be at the bottom of collection view, not already loading more recipes, on the home tab, and a nextUrl has to exist to load more
-        if lastContentOffset >= collectionViewHeight - 50 && !loadingMoreRecipes && !savedRecipesActive, let nextUrl = Network.shared.nextUrl {
+        if lastContentOffset >= collectionViewHeight - 50 && !loadingMoreRecipes && !savedRecipesActive, let nextUrl = nextUrl {
             loadingMoreRecipes = true
             spinner.startAnimating()
             spinnerHolder.isHidden = false
             print("Need to load the new recipes, if there are any: \(nextUrl)")
-            Network.shared.getRecipes(url: nextUrl) { (newRecipes) in
+            Network.shared.getRecipes(url: nextUrl) { (newRecipes, next) in
                 if let newRecipes = newRecipes {
                     var indexPaths: [IndexPath] = []
                     let prevLastIndex = self.recipes.count - 1
@@ -508,6 +508,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                         self.loadingMoreRecipes = false
                     }
                 }
+                self.nextUrl = next
             }
         }
     }

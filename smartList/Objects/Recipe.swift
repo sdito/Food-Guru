@@ -141,32 +141,7 @@ struct Recipe {
             imageReturned(image)
         }
     }
-    
-    static func getNRecipes(num: Int, db: Firestore, lastDoc: QueryDocumentSnapshot?, recipesReturned: @escaping (_ recipe: [Recipe], _ lastDoc: QueryDocumentSnapshot?) -> Void) {
-        #warning("need to get rid of this and use from Network")
-        var recipes: [Recipe] = []
-        
-        var reference: Query {
-            if let lastDoc = lastDoc {
-                return db.collection("recipes").limit(to: num).start(afterDocument: lastDoc)
-            } else {
-                return db.collection("recipes").limit(to: num)
-            }
-        }
-        
-        reference.getDocuments { (querySnapshot, error) in
-            guard let documents = querySnapshot?.documents else {
-                print("Error fetching documents: \(String(describing: error))")
-                return
-            }
-            
-            for doc in documents {
-                let r = doc.getRecipe()
-                recipes.append(r)
-            }
-            recipesReturned(recipes, documents.last)
-        }
-    }
+
     
     // MARK: Saved recipes
     #warning("do i need this")

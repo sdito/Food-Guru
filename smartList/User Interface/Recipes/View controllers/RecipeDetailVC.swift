@@ -354,15 +354,35 @@ class RecipeDetailVC: UIViewController {
             imageView.image = img
         }
         
+        
         if let mainImageUrl = data?.recipe.mainImage {
-            
             Network.shared.getImage(url: mainImageUrl) { (image) in
-                self.imageView.image = image
+                
+                let aspect = image.size.height / image.size.width
+                if aspect != 1.0 {
+                    self.imageViewAspect.isActive = false
+                    self.imageView.translatesAutoresizingMaskIntoConstraints = false
+                    let imageViewWidth = self.imageView.bounds.width
+                    self.imageView.image = image
+                    
+                    #warning("this animation doesn't do anything")
+                    UIView.animate(withDuration: 0.3) {
+                        self.imageView.heightAnchor.constraint(equalToConstant: imageViewWidth * aspect).isActive = true
+                    }
+                    
+                    
+                } else {
+                    self.imageView.image = image
+                }
+                
             }
         } else {
             print("Doesn't have mainImageURL")
-            imageView.image = UIImage(named: "no_image")
-            
+            imageViewAspect.isActive = false
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            //imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor, multiplier: 1.0/3.0).isActive = true
+            imageView.heightAnchor.constraint(equalToConstant: 70.0).isActive = true
+
         }
         
         recipeName.text = recipe.name

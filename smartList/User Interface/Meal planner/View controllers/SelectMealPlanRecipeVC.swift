@@ -13,14 +13,16 @@ import FirebaseFirestore
 class SelectMealPlanRecipeVC: UIViewController {
     
     var mealPlanner: MealPlanner?
-    private let pageCount = 25
+    private var nextUrl: String?
+    private var loadingMoreRecipes = false
     private var recipeSelectionUsed: RecipeSelection?
     @IBOutlet weak var bottomViewChangeHeight: UIView!
     @IBOutlet weak var tableView: UITableView!
+    private let standardPageSize = 30
     
     private var recipes: [Any] = [] {
         didSet {
-            if self.recipes.count <= pageCount {
+            if self.recipes.count <= standardPageSize {
                 tableView.reloadData()
             }
             if self.recipes.isEmpty {
@@ -79,10 +81,14 @@ class SelectMealPlanRecipeVC: UIViewController {
         case .all:
             self.createLoadingView()
             #warning("need to change this")
-            Recipe.getNRecipes(num: pageCount, db: db, lastDoc: lastDocument) { (rcps, lastDocument)  in
-                self.recipes = rcps
-                self.lastDocument = lastDocument
-                self.dismiss(animated: false, completion: nil)
+            
+            Network.shared.getRecipes(searches: nil) { (rcps, nextUrl) in
+                if let rcps = rcps {
+                    self.recipes = rcps
+                    self.dismiss(animated: false, completion: nil)
+                    
+                }
+                self.nextUrl = nextUrl
             }
         }
     }
@@ -162,33 +168,34 @@ extension SelectMealPlanRecipeVC: UITableViewDelegate, UITableViewDataSource {
         if let rs = recipeSelectionUsed {
             if rs == .all {
                 if indexPath.row + 1 == recipes.count {
-                    print("load more recipes")
                     
-                    Recipe.getNRecipes(num: pageCount, db: db, lastDoc: lastDocument) { (rcps, lastDocument) in
-                        
-                        if !rcps.isEmpty {
-                            self.recipes += rcps
-                            self.lastDocument = lastDocument
-                            
-                            self.tableView.beginUpdates()
-                            
-                            // get the index of the first newly added item, and the indexPath of the last item
-                            let lastIdx = self.recipes.count
-                            let prevIdx = lastIdx - rcps.count
-                            
-                            let indexPaths: [IndexPath] = (prevIdx..<lastIdx).map({IndexPath(row: $0, section: 0)})
-                            self.tableView.insertRows(at: indexPaths, with: .automatic)
-                            
-                            self.tableView.endUpdates()
-                            
+                    if let nextUrl = nextUrl, !loadingMoreRecipes {
+                        loadingMoreRecipes = true
+                        Network.shared.getRecipes(url: nextUrl) { (rcps, next) in
+                            if let rcps = rcps {
+                                self.recipes += rcps
+                                
+                                self.tableView.beginUpdates()
+                                
+                                // get the index of the first newly added item, and the indexPath of the last item
+                                let lastIdx = self.recipes.count
+                                let prevIdx = lastIdx - rcps.count
+                                
+                                let indexPaths: [IndexPath] = (prevIdx..<lastIdx).map({IndexPath(row: $0, section: 0)})
+                                self.tableView.insertRows(at: indexPaths, with: .automatic)
+                                self.tableView.endUpdates()
+                                
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                    self.loadingMoreRecipes = false
+                                }
+                            }
+                            self.nextUrl = next
                         }
                     }
+                    
                 }
             }
         }
-        
-        
-        
-        
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,11 +11,11 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="SelectDateView" customModule="Food_Guru" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="404" height="309"/>
+            <rect key="frame" x="0.0" y="0.0" width="347" height="299"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="78j-J1-5lm">
-                    <rect key="frame" x="0.0" y="37" width="404" height="216"/>
+                    <rect key="frame" x="0.0" y="37" width="347" height="206"/>
                     <date key="minimumDate" timeIntervalSinceReferenceDate="599569200">
                         <!--2020-01-01 11:00:00 +0000-->
                     </date>
@@ -24,7 +24,7 @@
                     </date>
                 </datePicker>
                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uSi-zh-akw">
-                    <rect key="frame" x="330" y="261" width="49" height="38"/>
+                    <rect key="frame" x="273" y="251" width="49" height="38"/>
                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="20"/>
                     <state key="normal" title="Done">
                         <color key="titleColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -34,7 +34,7 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Recipe name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mJf-fz-5Wa">
-                    <rect key="frame" x="10" y="10" width="384" height="17"/>
+                    <rect key="frame" x="10" y="10" width="327" height="17"/>
                     <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
                     <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
@@ -59,7 +59,7 @@
                 <outlet property="datePicker" destination="78j-J1-5lm" id="4gt-Z2-uvd"/>
                 <outlet property="recipeNameLabel" destination="mJf-fz-5Wa" id="3F3-YO-Br4"/>
             </connections>
-            <point key="canvasLocation" x="-8.6956521739130448" y="15.736607142857142"/>
+            <point key="canvasLocation" x="-50.000000000000007" y="12.388392857142856"/>
         </view>
     </objects>
 </document>

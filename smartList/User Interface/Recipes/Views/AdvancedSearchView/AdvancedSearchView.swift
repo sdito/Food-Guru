@@ -63,7 +63,20 @@ class AdvancedSearchView: UIView {
     @objc private func textFieldDidChange(textField: UITextField) {
         if let text = textField.text {
             delegate.searchTextChanged(text: text.getLastPartOfSearchForQuery())
+            
+            if textField == tagTF {
+                #warning("left off here")
+                if Network.shared.tags.map({$0.text.lowercased()}).contains(text.lowercased()) {
+                    textField.textColor = Colors.main
+                } else {
+                    textField.textColor = .red
+                }
+            }
+            
         }
+        
+        
+        
     }
     
     private func collectSearches() -> [NetworkSearch] {
@@ -159,8 +172,10 @@ extension AdvancedSearchView: CreateNewItemDelegate {
         print("search created: \(search.text)")
         if let string = activeTextField?.text {
             if activeTextField == tagTF {
+                activeTextField?.textColor = Colors.main
                 activeTextField?.text = search.text
                 activeTextField?.resignFirstResponder()
+                
             } else {
                 activeTextField?.text = string.updateSearchText(newItem: search.text)
             }

@@ -37,17 +37,15 @@ class SharedValues {
     }
     var foodStorageID: String? {
         didSet {
+            #warning("should so something with deleting the listener when there is a new one, come back")
+            FoodStorage.readAndPersistSystemItemsFromStorageWithListener(db: Firestore.firestore(), storageID: foodStorageID ?? " ")
             NotificationCenter.default.post(name: .foodStorageIDchanged, object: nil)
         }
     }
     
     var sentRecipesInfo: (recipes: [Recipe], ingredients: [NetworkSearch])?
     
-    var currentItemsInStorage: [String]? {
-        didSet {
-            print(self.currentItemsInStorage as Any)
-        }
-    }
+    var currentItemsInStorage: [String]?
     
     var anonymousUser: Bool?
     

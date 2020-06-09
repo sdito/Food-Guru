@@ -38,7 +38,7 @@ class CreateNewItemVC: UITableViewController {
                         return self.searchText.trimUntilText().lowercased()
                     }
                 }
-                print(txt)
+                
                 tableView.isHidden = false
                 searchedItems.removeAll()
                 var allItems: [NetworkSearch] = []
