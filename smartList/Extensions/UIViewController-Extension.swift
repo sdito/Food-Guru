@@ -114,7 +114,7 @@ extension UIViewController {
         v.center.y = vc.view.center.y - yOffset
         v.alpha = 0
         v.shadowAndRounded(cornerRadius: 25.0, border: false)
-        v.setUI()
+        v.setUI(vc: self)
         vc.modalPresentationStyle = .overFullScreen
         
         self.present(vc, animated: false) {

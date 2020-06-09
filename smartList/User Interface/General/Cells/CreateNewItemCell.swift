@@ -15,7 +15,7 @@ class CreateNewItemCell: UITableViewCell {
     @IBOutlet weak var img: UIImageView!
     
     
-    func setUI(networkSearch: NetworkSearch, inItems: Bool, list: Bool, search: Bool)  {
+    func setUI(networkSearch: NetworkSearch, inItems: Bool, list: Bool, search: Bool, smallStyle: Bool)  {
         
         label.text = networkSearch.text
         
@@ -48,8 +48,17 @@ class CreateNewItemCell: UITableViewCell {
         }
         // if iPad, then make the font slightly bigger
         if !SharedValues.shared.isPhone {
+            
+        }
+        
+        if smallStyle && SharedValues.shared.isPhone  {
+            // make smaller to fit better
+            label.font = UIFont(name: "futura", size: 13)
+        } else if !smallStyle && !SharedValues.shared.isPhone {
+            // if iPad and small style, just leave at standard
             label.font = UIFont(name: "futura", size: 23)
         }
+        
     }
     
     

@@ -67,16 +67,11 @@ class RecipeHomeVC: UIViewController {
         didSet {
             if SharedValues.shared.sentRecipesInfo == nil {
                 Network.shared.getRecipes(searches: self.activeSearches) { (rcps) in
-                    
-                    
                     if let rcps = rcps {
                         self.recipes = rcps
                         self.collectionViewReloadReset()
                     }
                 }
-
-            
-                
             }
             if wholeStackView.subviews.contains(currentSearchesView) {
                 currentSearchesView.setUI(searches: self.activeSearches)
@@ -488,7 +483,6 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         let collectionViewHeight = scrollView.contentSize.height - collectionView.frame.height
         
-       
         // load the next page of recipes
         // Need to be at the bottom of collection view, not already loading more recipes, on the home tab, and a nextUrl has to exist to load more
         if lastContentOffset >= collectionViewHeight - 50 && !loadingMoreRecipes && !savedRecipesActive, let nextUrl = Network.shared.nextUrl {
@@ -516,10 +510,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 }
             }
         }
-       
     }
-
-    
 }
 
 // MARK: Search bar
@@ -582,7 +573,7 @@ extension RecipeHomeVC: UISearchBarDelegate {
     }
 }
 
-
+// MARK: CreateNewItemDelegate
 extension RecipeHomeVC: CreateNewItemDelegate {
     func searchCreated(search: NetworkSearch) {
         
@@ -594,4 +585,20 @@ extension RecipeHomeVC: CreateNewItemDelegate {
     }
     func itemCreated(item: Item) {}
     
+}
+
+
+// MARK: AdvancedSearchViewDelegate {
+extension RecipeHomeVC: AdvancedSearchViewDelegate {
+    func searchesSent(searches: [NetworkSearch]) {
+        searchBar.text = ""
+        searchQueue = searches
+        activeSearches = searchQueue
+        searchQueue = []
+        searchBar.text = ""
+        if delegate != nil {
+            delegate.searchTextChanged(text: "")
+        }
+        #warning("need to search like normal here")
+    }
 }

@@ -21,6 +21,8 @@ class CreateNewItemVC: UITableViewController {
     var delegate: CreateNewItemDelegate!
     var isForList: Bool = true
     var isForSearch: Bool = false
+    var isForIngredients: Bool = false
+    var isForTags: Bool = false
     
     private var searchText: String = "" {
         didSet {
@@ -42,6 +44,10 @@ class CreateNewItemVC: UITableViewController {
                 var allItems: [NetworkSearch] = []
                 if isForSearch {
                     allItems = Network.shared.ingredients + Network.shared.tags
+                } else if isForIngredients {
+                    allItems = Network.shared.ingredients
+                } else if isForTags {
+                    allItems = Network.shared.tags
                 } else {
                     let strAllItems = Array(Set<String>((items.map({$0.lowercased()}) + itemsFromList.map({$0.lowercased()})))).map({$0.capitalized})
                     allItems = strAllItems.map({NetworkSearch(text: $0, type: .ingredient)})
@@ -96,13 +102,17 @@ class CreateNewItemVC: UITableViewController {
             }
             
         }
-        cell.setUI(networkSearch: search, inItems: contains, list: isForList, search: isForSearch)
+        cell.setUI(networkSearch: search, inItems: contains, list: isForList, search: isForSearch, smallStyle: isForIngredients || isForTags)
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if !isForSearch {
+        #warning("changed this, make sure it works")
+        if isForSearch || isForTags || isForIngredients {
+            let search = searchedItems[indexPath.row]
+            delegate.searchCreated(search: search)
+        } else {
             let number = searchText.getAmountForNewItem()
             let search = searchedItems[indexPath.row]
             let words = search.text.split{ !$0.isLetter }.map { (sStr) -> String in
@@ -114,15 +124,20 @@ class CreateNewItemVC: UITableViewController {
             let displayText = "\(number)\(search.text)"
             let item = Item(name: displayText, selected: false, category: category.rawValue, store: nil, user: nil, ownID: nil, storageSection: nil, timeAdded: nil, timeExpires: nil, systemItem: systemItem, systemCategory: category, quantity: nil)
             delegate.itemCreated(item: item)
-        } else {
-            let search = searchedItems[indexPath.row]
-            delegate.searchCreated(search: search)
         }
         
         
-        self.willMove(toParent: nil)
-        self.view.removeFromSuperview()
-        self.removeFromParent()
+        if !isForTags && !isForIngredients {
+            self.willMove(toParent: nil)
+            self.view.removeFromSuperview()
+            self.removeFromParent()
+        } else {
+            // don't want the view to be removed in this case
+            searchText = ""
+        }
+        
+        
+        
     }
     
 }

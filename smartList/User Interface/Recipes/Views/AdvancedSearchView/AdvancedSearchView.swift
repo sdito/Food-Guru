@@ -8,32 +8,49 @@
 
 import UIKit
 
+
+
+
+protocol AdvancedSearchViewDelegate: class {
+    func searchesSent(searches: [NetworkSearch])
+}
+
+
+
+
 class AdvancedSearchView: UIView {
 
     @IBOutlet weak var mainStackView: UIStackView!
+    
     @IBOutlet weak var ingredientsTF: UITextField!
     @IBOutlet weak var titleTF: UITextField!
     @IBOutlet weak var tagTF: UITextField!
     @IBOutlet weak var avoidIngsTF: UITextField!
     
-    func setUI() {
+    private var parentVC: UIViewController?
+    private var delegate: SearchAssistantDelegate!
+    private var createNewItemVC: CreateNewItemVC?
+    private var activeTextField: UITextField?
+    
+    weak var advancedSearchViewDelegate: AdvancedSearchViewDelegate!
+    
+    func setUI(vc: UIViewController) {
+        advancedSearchViewDelegate = vc as? AdvancedSearchViewDelegate
         print("initial set up")
         ingredientsTF.delegate = self
-        titleTF.delegate = self
         tagTF.delegate = self
         avoidIngsTF.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        self.parentVC = self.findViewController()
+        
+        ingredientsTF.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        tagTF.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        avoidIngsTF.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
     }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
-    }
-    
-    
+
     @IBAction func searchPressed(_ sender: Any) {
         print("search has been pressed")
         self.findViewController()?.dismiss(animated: false, completion: nil)
-        // do the stuff to transfer the searches here
+        advancedSearchViewDelegate.searchesSent(searches: collectSearches())
         
     }
     
@@ -41,56 +58,115 @@ class AdvancedSearchView: UIView {
         print("Info button selected")
         #warning("need to complete")
     }
+
     
-    
-    @objc private func keyboardWillShow(_ notification: Notification) {
-        print("Keyboard will show is being called")
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            print(keyboardRectangle.height)
-            
+    @objc private func textFieldDidChange(textField: UITextField) {
+        if let text = textField.text {
+            delegate.searchTextChanged(text: text.getLastPartOfSearchForQuery())
         }
     }
+    
+    private func collectSearches() -> [NetworkSearch] {
+        var foundSearches: [NetworkSearch] = []
+        // Ingredients
+        if let ingredientsText = ingredientsTF.text, ingredientsText != "" {
+            let strIngs = ingredientsText.splitCommaAndQuotes()
+            strIngs.forEach {
+                let ns = NetworkSearch(text: $0, type: .ingredient)
+                foundSearches.append(ns)
+            }
+        }
+        // Title
+        if let titleText = titleTF.text, titleText != "" {
+            foundSearches.append(NetworkSearch(text: titleText, type: .title))
+        }
+        
+        // Avoid ingredients
+        if let avoidIngredientsText = avoidIngsTF.text, avoidIngredientsText != "" {
+            let strAvoidIngs = avoidIngredientsText.splitCommaAndQuotes()
+            strAvoidIngs.forEach {
+                let ns = NetworkSearch(text: $0, type: .avoidIngredient)
+                foundSearches.append(ns)
+            }
+        }
+        
+        // Tag
+        if let tagText = tagTF.text, tagText != "" {
+            foundSearches.append(NetworkSearch(text: tagText, type: .tag))
+        }
+        
+        return foundSearches
+    }
+    
 }
 
 
 extension AdvancedSearchView: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("Text field did begin editing")
-        let stackView = textField.superview
-        mainStackView.bringSubviewToFront(mainStackView.subviews[2])
+        activeTextField = textField
+        addSuggestions(below: textField, forIngredients: textField == avoidIngsTF || textField == ingredientsTF)
+    }
+    
+    
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        print("Textfield did end editing")
+        if let createNewItemVC = createNewItemVC {
+            createNewItemVC.willMove(toParent: nil)
+            createNewItemVC.view.removeFromSuperview()
+            createNewItemVC.removeFromParent()
+        }
     }
 }
 
+// MARK: Handle suggested searches
+extension AdvancedSearchView {
+    private func addSuggestions(below view: UIView, forIngredients: Bool) {
+        if let parentVC = parentVC {
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
+            self.createNewItemVC = vc
+            parentVC.addChild(vc)
+            parentVC.view.addSubview(vc.tableView)
+            vc.didMove(toParent: parentVC)
+            
+            if forIngredients {
+                vc.isForIngredients = true
+            } else {
+                vc.isForTags = true
+            }
+            
+            vc.tableView.translatesAutoresizingMaskIntoConstraints = false
+            
+            vc.tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            vc.tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            vc.tableView.topAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+            
+            vc.tableView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+            
+            vc.delegate = self as CreateNewItemDelegate
+            delegate = vc
+            delegate.searchTextChanged(text: "")
+            
+        }
+    }
+    
+}
 
-/*
- if textAssistantViewActive == false {
-     // add the view here
-     let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "createNewItemVC") as! CreateNewItemVC
-     self.newItemVC = vc
-     self.addChild(vc)
-     self.view.addSubview(vc.tableView)
-     vc.didMove(toParent: self)
-     vc.isForSearch = true
-     
-     vc.tableView.translatesAutoresizingMaskIntoConstraints = false
-     
-     vc.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-     vc.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-     vc.tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor).isActive = true
-     
-     let tb = (tabBarController?.tabBar.frame.height ?? 0.0)
-     let distance = (wholeStackView.frame.height) - (keyboardHeight ?? 0.0) - (searchBar.frame.height) + tb
-     
-     vc.tableView.heightAnchor.constraint(equalToConstant: distance).isActive = true
-     
-     vc.delegate = self as CreateNewItemDelegate
-     delegate = vc
-     delegate.searchTextChanged(text: searchText)
-     textAssistantViewActive = true
-     
-     
- } else {
-     delegate.searchTextChanged(text: searchText)
- }
- */
+extension AdvancedSearchView: CreateNewItemDelegate {
+    func itemCreated(item: Item) {}
+    
+    func searchCreated(search: NetworkSearch) {
+        print("search created: \(search.text)")
+        if let string = activeTextField?.text {
+            if activeTextField == tagTF {
+                activeTextField?.text = search.text
+                activeTextField?.resignFirstResponder()
+            } else {
+                activeTextField?.text = string.updateSearchText(newItem: search.text)
+            }
+            
+        }
+        
+    }
+    
+}
