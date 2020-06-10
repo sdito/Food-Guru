@@ -28,6 +28,7 @@ class SelectRecipeCell: UITableViewCell {
     private var r: Recipe?
     
     func setUI(recipe: Any) {
+        self.titleLabel.numberOfLines = 0
         if type(of: recipe) == CookbookRecipe.self {
             let cbr = recipe as! CookbookRecipe
             self.cbr = cbr

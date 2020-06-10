@@ -299,6 +299,10 @@ struct Recipe {
         }
     }
     
+    static func randomRecipeForSkeletonView() -> Recipe {
+        return Recipe(djangoID: -1, name: "Recipe", authorName: nil, cookTime: nil, prepTime: nil, ingredients: [], instructions: [], calories: nil, numServes: 0, notes: nil, tagline: "s", recipeImage: nil, mainImage: nil, thumbImage: nil)
+    }
+    
 }
 
 extension DocumentSnapshot {

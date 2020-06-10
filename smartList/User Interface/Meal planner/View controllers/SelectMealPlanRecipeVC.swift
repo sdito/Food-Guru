@@ -80,8 +80,6 @@ class SelectMealPlanRecipeVC: UIViewController {
             }
         case .all:
             self.createLoadingView()
-            #warning("need to change this")
-            
             Network.shared.getRecipes(searches: nil) { (rcps, nextUrl) in
                 if let rcps = rcps {
                     self.recipes = rcps

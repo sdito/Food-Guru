@@ -8,8 +8,6 @@
 
 import UIKit
 import FirebaseFirestore
-import FirebaseAuth
-
 
 
 class RecipeCell: UICollectionViewCell {
@@ -71,10 +69,6 @@ class RecipeCell: UICollectionViewCell {
                 self.recipe?.addRecipeDocumentToUserProfile(db: db)
             }
         }
-        
-        
-        
     }
     
 }
-

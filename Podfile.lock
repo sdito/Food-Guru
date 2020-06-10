@@ -348,6 +348,7 @@ PODS:
   - Realm/Headers (4.1.1)
   - RealmSwift (4.1.1):
     - Realm (= 4.1.1)
+  - SkeletonView (1.8.7)
 
 DEPENDENCIES:
   - Alamofire
@@ -360,6 +361,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - GoogleSignIn
   - RealmSwift
+  - SkeletonView
 
 SPEC REPOS:
   trunk:
@@ -397,6 +399,7 @@ SPEC REPOS:
     - Protobuf
     - Realm
     - RealmSwift
+    - SkeletonView
 
 SPEC CHECKSUMS:
   abseil: 18063d773f5366ff8736a050fe035a28f635fd27
@@ -433,7 +436,8 @@ SPEC CHECKSUMS:
   Protobuf: 394b2bf29ec303f4325e3ee4892c09e675647152
   Realm: 25f0a8244cbb1c2271c922963ea8666fc2d8104d
   RealmSwift: 9e2657b33764f80e4a4dffd6d440e24715782052
+  SkeletonView: ba5370f41280b2f0a76918bb143c1294232bb4f4
 
-PODFILE CHECKSUM: 56d5be2b23328798629a9f597221b82ad6ed50ac
+PODFILE CHECKSUM: 13cbbaf420d46fff4eeedc20ab2b5e80ddc354ae
 
 COCOAPODS: 1.8.4

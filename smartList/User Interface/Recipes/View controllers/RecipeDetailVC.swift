@@ -356,6 +356,7 @@ class RecipeDetailVC: UIViewController {
         
         
         if let mainImageUrl = data?.recipe.mainImage {
+            
             Network.shared.getImage(url: mainImageUrl) { (image) in
                 
                 let aspect = image.size.height / image.size.width
@@ -365,10 +366,7 @@ class RecipeDetailVC: UIViewController {
                     let imageViewWidth = self.imageView.bounds.width
                     self.imageView.image = image
                     
-                    #warning("this animation doesn't do anything")
-                    UIView.animate(withDuration: 0.3) {
-                        self.imageView.heightAnchor.constraint(equalToConstant: imageViewWidth * aspect).isActive = true
-                    }
+                    self.imageView.heightAnchor.constraint(equalToConstant: imageViewWidth * aspect).isActive = true
                     
                     
                 } else {

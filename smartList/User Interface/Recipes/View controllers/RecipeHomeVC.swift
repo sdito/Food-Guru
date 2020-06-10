@@ -9,8 +9,7 @@
 import UIKit
 import FirebaseFirestore
 import AVFoundation
-
-
+import SkeletonView
 
 class RecipeHomeVC: UIViewController {
     
@@ -28,6 +27,7 @@ class RecipeHomeVC: UIViewController {
     
     var db: Firestore!
     var imageCache = NSCache<NSString, UIImage>()
+    private var skeletonViewActive = false
     private var nextUrl: String?
     private var loadingMoreRecipes = false
     private var searchQueue: [NetworkSearch] = []
@@ -52,6 +52,9 @@ class RecipeHomeVC: UIViewController {
             case true:
                 searchBar.placeholder = "Filter saved recipes"
                 currentSearchesView.isHidden = true
+                if skeletonViewActive {
+                    stopSkeleton()
+                }
             case false:
                 searchBar.placeholder = "Search all recipes"
                 currentSearchesView.isHidden = false
@@ -67,6 +70,7 @@ class RecipeHomeVC: UIViewController {
     private var activeSearches: [NetworkSearch] = [] {
         didSet {
             if SharedValues.shared.sentRecipesInfo == nil {
+                startSkeleton()
                 Network.shared.getRecipes(searches: self.activeSearches) { (rcps, next) in
                     if let rcps = rcps {
                         self.recipes = rcps
@@ -139,6 +143,11 @@ class RecipeHomeVC: UIViewController {
         
         scrollBackUpView.layoutIfNeeded()
         scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
+
+        skeletonViewActive = true
+        collectionView.showAnimatedGradientSkeleton()
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -339,14 +348,21 @@ extension RecipeHomeVC: DynamicHeightLayoutDelegate {
         let minForDescription = heightForText("str", width: CGFloat(MAXFLOAT), font: UIFont(name: "futura", size: 13)!) * 5.0
         let minForTitle = heightForText("str", width: CGFloat(MAXFLOAT), font: UIFont(name: "futura", size: 20)!) * 2.0
         
+        #warning("need to have a boolean if skeletonView is active")
+        
         var textData: Recipe {
-            switch savedRecipesActive {
-            case true:
-                return filteredSavedRecipes[indexPath.item]
-            case false:
-                return recipes[indexPath.item]
-            
+            if skeletonViewActive {
+                return Recipe.randomRecipeForSkeletonView()
+            } else {
+                switch savedRecipesActive {
+                case true:
+                    return filteredSavedRecipes[indexPath.item]
+                case false:
+                    return recipes[indexPath.item]
+                }
             }
+            
+            
         }
         let title = heightForText(textData.name, width: width - 8, font: UIFont(name: "futura", size: 20)!)
         let description = heightForText(textData.tagline ?? "", width: width - 8, font: UIFont(name: "futura", size: 13)!)
@@ -408,9 +424,12 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     private func collectionViewReloadReset() {
         // used when completely new recipes, not when recipes are added
+        stopSkeleton()
+        skeletonViewActive = false
         imageCache.removeAllObjects()
         collectionView?.collectionViewLayout.invalidateLayout()
         collectionView?.reloadData()
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -602,4 +621,27 @@ extension RecipeHomeVC: AdvancedSearchViewDelegate {
         }
         #warning("need to search like normal here")
     }
+}
+
+// MARK: SkeletonView
+extension RecipeHomeVC: SkeletonCollectionViewDataSource {
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> ReusableCellIdentifier {
+        return "recipeCell"
+    }
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 6
+    }
+    
+    private func stopSkeleton() {
+        skeletonViewActive = false
+        collectionView.hideSkeleton()
+        collectionView.stopSkeletonAnimation()
+    }
+    
+    private func startSkeleton() {
+        collectionView.showSkeleton()
+        collectionView.startSkeletonAnimation()
+        skeletonViewActive = true
+    }
+    
 }
