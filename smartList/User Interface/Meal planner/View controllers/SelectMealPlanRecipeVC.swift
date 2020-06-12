@@ -80,13 +80,19 @@ class SelectMealPlanRecipeVC: UIViewController {
             }
         case .all:
             self.createLoadingView()
-            Network.shared.getRecipes(searches: nil) { (rcps, nextUrl) in
-                if let rcps = rcps {
-                    self.recipes = rcps
-                    self.dismiss(animated: false, completion: nil)
+            Network.shared.getRecipes(searches: nil) { (response) in
+                switch response {
                     
+                case .success((let rcps, let nxtUrl)):
+                    if let rcps = rcps {
+                        self.recipes = rcps
+                        self.dismiss(animated: false, completion: nil)
+                        
+                    }
+                    self.nextUrl = nxtUrl
+                case .failure(_):
+                    #warning("need to handle this")
                 }
-                self.nextUrl = nextUrl
             }
         }
     }
@@ -169,29 +175,28 @@ extension SelectMealPlanRecipeVC: UITableViewDelegate, UITableViewDataSource {
                     
                     if let nextUrl = nextUrl, !loadingMoreRecipes {
                         loadingMoreRecipes = true
-                        Network.shared.getRecipes(url: nextUrl) { (rcps, next) in
-                            if let rcps = rcps {
-                                self.recipes += rcps
-                                
-                                self.tableView.beginUpdates()
-                                
-                                // get the index of the first newly added item, and the indexPath of the last item
-                                let lastIdx = self.recipes.count
-                                let prevIdx = lastIdx - rcps.count
-                                
-                                let indexPaths: [IndexPath] = (prevIdx..<lastIdx).map({IndexPath(row: $0, section: 0)})
-                                self.tableView.insertRows(at: indexPaths, with: .automatic)
-                                self.tableView.endUpdates()
-                                
-                                
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                                    self.loadingMoreRecipes = false
+                        Network.shared.getRecipes(url: nextUrl) { (response) in
+                            switch response {
+                            case .success((let rcps, let nextUrl)):
+                                if let rcps = rcps {
+                                    self.recipes += rcps
+                                    self.tableView.beginUpdates()
+                                    // get the index of the first newly added item, and the indexPath of the last item
+                                    let lastIdx = self.recipes.count
+                                    let prevIdx = lastIdx - rcps.count
+                                    let indexPaths: [IndexPath] = (prevIdx..<lastIdx).map({IndexPath(row: $0, section: 0)})
+                                    self.tableView.insertRows(at: indexPaths, with: .automatic)
+                                    self.tableView.endUpdates()
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                        self.loadingMoreRecipes = false
+                                    }
                                 }
+                                self.nextUrl = nextUrl
+                            case .failure(_):
+                                #warning("need to handle this")
                             }
-                            self.nextUrl = next
                         }
                     }
-                    
                 }
             }
         }

@@ -45,7 +45,6 @@ class SettingViewedRecipeCell: UITableViewCell {
     
     @objc func recognizer() {
         if let djangoIDint = Int(djangoID ?? "x") {
-            #warning("should do something to signify that the recipe is loading here...")
             delegate.recipeDocumentIdPressed(djangoID: djangoIDint)
         }
         

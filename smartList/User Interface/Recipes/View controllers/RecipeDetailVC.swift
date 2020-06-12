@@ -113,10 +113,15 @@ class RecipeDetailVC: UIViewController {
         } else {
             if let r = data?.recipe.djangoID {
                 Network.shared.openPDF(recipeID: r) { (docData) in
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "pdfVC") as! RecipePDFVC
-                    vc.documentData = docData
+                    switch docData {
+                    case .success(let pdfData):
+                        let vc = self.storyboard?.instantiateViewController(withIdentifier: "pdfVC") as! RecipePDFVC
+                        vc.documentData = pdfData
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    case .failure(_):
+                        #warning("need to handle this")
+                    }
                     
-                    self.navigationController?.pushViewController(vc, animated: true)
                 }
             }
             
@@ -384,7 +389,11 @@ class RecipeDetailVC: UIViewController {
         }
         
         recipeName.text = recipe.name
-        
+        if let authorName = recipe.authorName {
+            self.author.text = "By \(authorName)"
+        } else {
+            self.author.removeFromSuperview()
+        }
         nameAndTitleView.layoutIfNeeded()
         self.nameAndTitleView.shadowAndRounded(cornerRadius: 25.0, border: true)
         
@@ -434,11 +443,7 @@ class RecipeDetailVC: UIViewController {
             notes.removeFromSuperview()
         }
         
-        if let authorName = recipe.authorName {
-            self.author.text = "By \(authorName)"
-        } else {
-            self.author.removeFromSuperview()
-        }
+        
         
         recipe.addButtonIngredientViewsTo(stackView: ingredientsStackView, delegateVC: self)
         recipe.addInstructionsToInstructionStackView(stackView: instructionsStackView)

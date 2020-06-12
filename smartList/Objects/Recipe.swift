@@ -144,14 +144,13 @@ struct Recipe {
 
     
     // MARK: Saved recipes
-    #warning("do i need this")
     static func addRecipeToSavedRecipes(db: Firestore, recipe: Recipe) {
         let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ")
         reference.updateData([
             "savedRecipes": FieldValue.arrayUnion(["\(recipe.djangoID)"])
         ])
     }
-    #warning("do i need this")
+    
     static func removeRecipeFromSavedRecipes(db: Firestore, recipe: Recipe) {
         let reference = db.collection("users").document(Auth.auth().currentUser?.uid ?? " ")
         reference.updateData([
@@ -194,7 +193,6 @@ struct Recipe {
     // MARK: Previous viewed
     
     func addRecipeToRecentlyViewedRecipes(db: Firestore) {
-        #warning("need to update this with DJANGO id, basically fix the whole thing")
         DispatchQueue.main.async {
             if let uid = Auth.auth().currentUser?.uid {
                 let reference = db.collection("users").document(uid)

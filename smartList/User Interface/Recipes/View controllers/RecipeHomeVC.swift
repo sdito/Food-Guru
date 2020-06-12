@@ -11,6 +11,7 @@ import FirebaseFirestore
 import AVFoundation
 import SkeletonView
 
+
 class RecipeHomeVC: UIViewController {
     
     @IBOutlet weak var spinnerHolder: UIView!
@@ -71,14 +72,21 @@ class RecipeHomeVC: UIViewController {
         didSet {
             if SharedValues.shared.sentRecipesInfo == nil {
                 startSkeleton()
-                Network.shared.getRecipes(searches: self.activeSearches) { (rcps, next) in
-                    if let rcps = rcps {
-                        self.recipes = rcps
-                        self.collectionViewReloadReset()
+                Network.shared.getRecipes(searches: self.activeSearches) { (response) in
+                    switch response {
+                    case .success((let rcps, let nxtUrl)):
+                        if let rcps = rcps {
+                            self.recipes = rcps
+                            self.collectionViewReloadReset()
+                        }
+                        self.nextUrl = nxtUrl
+                    case .failure(_):
+                        #warning("probably create no connection view here")
+                        self.stopSkeleton()
                     }
-                    self.nextUrl = next
                 }
             }
+            
             if wholeStackView.subviews.contains(currentSearchesView) {
                 currentSearchesView.setUI(searches: self.activeSearches)
             } else {
@@ -117,9 +125,7 @@ class RecipeHomeVC: UIViewController {
         searchBar.delegate = self
         searchBar.setTextProperties()
         searchBar.setUpToolBar(action: #selector(keyboardDismissed))
-        
         db = Firestore.firestore()
-        
         currentSearchesView.delegate = self
         let layout = collectionView.collectionViewLayout as! DynamicHeightLayout
         
@@ -128,25 +134,18 @@ class RecipeHomeVC: UIViewController {
         } else {
             layout.numberOfColumns = 2
         }
-        
         layout.delegate = self
-        
         createObserver()
         homeRecipesOutlet.handleSelectedForBottomTab(selected: true)
-        
         spinnerHolder.layer.cornerRadius = spinnerHolder.frame.height / 2
         spinnerHolder.isHidden = true
-        
         collectionView.refreshControl = UIRefreshControl()
         collectionView.refreshControl?.addTarget(self, action: #selector(handleRefreshControl), for: .valueChanged)
         collectionView.refreshControl?.tintColor = Colors.main
-        
         scrollBackUpView.layoutIfNeeded()
         scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
-
         skeletonViewActive = true
         collectionView.showAnimatedGradientSkeleton()
-        
         
     }
     
@@ -282,23 +281,25 @@ class RecipeHomeVC: UIViewController {
     private func handleRecipesToShow() {
         if SharedValues.shared.sentRecipesInfo == nil {
             if recipes.isEmpty {
-                
-                Network.shared.getRecipes(searches: nil) { (rcps, next) in
-                    if let rs = rcps {
-                        self.recipes = rs
-                        self.collectionViewReloadReset()
+                Network.shared.getRecipes(searches: nil) { (response) in
+                    switch response {
+                    case .success((let rcps, let next)):
+                        if let rs = rcps {
+                            self.recipes = rs
+                            self.collectionViewReloadReset()
+                        }
+                        self.nextUrl = next
+                    case .failure(_):
+                        #warning("actually create the noConnectionView here")
                     }
-                    self.nextUrl = next
                 }
                 
             }
         } else {
-            recipes = SharedValues.shared.sentRecipesInfo!.recipes
-            collectionViewReloadReset()
-            //activeSearches = SharedValues.shared.sentRecipesInfo!.ingredients.map({NetworkSearch(text: $0, type: .ingredient)})
-            activeSearches = SharedValues.shared.sentRecipesInfo?.1 ?? []
-            imageCache.removeAllObjects()
-            SharedValues.shared.sentRecipesInfo = nil
+            if let newSearches = SharedValues.shared.sentRecipesInfo, newSearches.count > 0 {
+                SharedValues.shared.sentRecipesInfo = nil
+                activeSearches = newSearches
+            }
         }
     }
     private func handleTimer() {
@@ -323,16 +324,6 @@ class RecipeHomeVC: UIViewController {
     }
 }
 
-
-// MARK: RecipesFoundFromSearchingDelegate
-extension RecipeHomeVC: RecipesFoundFromSearchingDelegate {
-    func recipesFound(ingredients: [String]) {
-        self.imageCache.removeAllObjects()
-        self.dismiss(animated: true, completion: nil)
-        activeSearches += ingredients.map({(NetworkSearch(text: $0, type: .ingredient))})
-    }
-}
-
 // MARK: CurrentSearchesDelegate
 extension RecipeHomeVC: CurrentSearchesViewDelegate {
     func buttonPressedToDeleteSearch(search: NetworkSearch) {
@@ -347,8 +338,6 @@ extension RecipeHomeVC: DynamicHeightLayoutDelegate {
     func collectionView(_ collectionView: UICollectionView, heightForTextAtIndexPath indexPath: IndexPath, withWidth width: CGFloat) -> CGFloat {
         let minForDescription = heightForText("str", width: CGFloat(MAXFLOAT), font: UIFont(name: "futura", size: 13)!) * 5.0
         let minForTitle = heightForText("str", width: CGFloat(MAXFLOAT), font: UIFont(name: "futura", size: 20)!) * 2.0
-        
-        #warning("need to have a boolean if skeletonView is active")
         
         var textData: Recipe {
             if skeletonViewActive {
@@ -404,14 +393,21 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             }
         } else {
             if let nextUrl = nextUrl {
-                Network.shared.getRecipes(url: nextUrl) { (recipes, next) in
+                
+                Network.shared.getRecipes(url: nextUrl) { (response) in
                     self.collectionView.refreshControl?.endRefreshing()
-                    if let rcps = recipes {
-                        self.recipes = rcps
-                        self.collectionViewReloadReset()
+                    switch response {
+                    case .success((let rcps, let nxtUrl)):
+                        if let rcps = rcps {
+                            self.recipes = rcps
+                            self.collectionViewReloadReset()
+                        }
+                        self.nextUrl = nxtUrl
+                    case .failure(_):
+                        break
                     }
-                    self.nextUrl = next
                 }
+                
             } else {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     // Pauses or else its a sudden drop off and doesn't look good
@@ -509,25 +505,35 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             spinner.startAnimating()
             spinnerHolder.isHidden = false
             print("Need to load the new recipes, if there are any: \(nextUrl)")
-            Network.shared.getRecipes(url: nextUrl) { (newRecipes, next) in
-                if let newRecipes = newRecipes {
-                    var indexPaths: [IndexPath] = []
-                    let prevLastIndex = self.recipes.count - 1
-                    for i in 1...newRecipes.count {
-                        let indexPath = IndexPath(item: prevLastIndex + i, section: 0)
-                        indexPaths.append(indexPath)
+            
+            Network.shared.getRecipes(url: nextUrl) { (response) in
+                switch response {
+                case .success((let rcps, let nxtUrl)):
+                    if let newRecipes = rcps {
+                        var indexPaths: [IndexPath] = []
+                        let prevLastIndex = self.recipes.count - 1
+                        for i in 1...newRecipes.count {
+                            let indexPath = IndexPath(item: prevLastIndex + i, section: 0)
+                            indexPaths.append(indexPath)
+                        }
+                        self.recipes.append(contentsOf: newRecipes)
+                        self.collectionView.insertItems(at: indexPaths)
+                        
+                        self.spinner.stopAnimating()
+                        self.spinnerHolder.isHidden = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            // have to set this false after a second or sometimes two pages of data can be loaded at same time (not the same page twice, but still not ideal)
+                            self.loadingMoreRecipes = false
+                        }
                     }
-                    self.recipes.append(contentsOf: newRecipes)
-                    self.collectionView.insertItems(at: indexPaths)
-                    
+                    self.nextUrl = nxtUrl
+                case .failure(_):
                     self.spinner.stopAnimating()
                     self.spinnerHolder.isHidden = true
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        // have to set this false after a second or sometimes two pages of data can be loaded at same time (not the same page twice, but still not ideal)
-                        self.loadingMoreRecipes = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                        self.loadingMoreRecipes = false // see if there is a connection then
                     }
                 }
-                self.nextUrl = next
             }
         }
     }
@@ -639,9 +645,18 @@ extension RecipeHomeVC: SkeletonCollectionViewDataSource {
     }
     
     private func startSkeleton() {
-        collectionView.showSkeleton()
+        collectionView.setContentOffset(CGPoint(x:0,y:0), animated: false)
+        collectionView.showAnimatedGradientSkeleton()
         collectionView.startSkeletonAnimation()
         skeletonViewActive = true
     }
     
+}
+
+extension RecipeHomeVC: NoConnectionViewDelegate {
+    func tryAgain() {
+        // remove all the searches, remove the noConnectionView, reload a random page of recipes
+        #warning("need to do this")
+        
+    }
 }

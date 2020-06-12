@@ -67,7 +67,6 @@ class CookbookVC: UIViewController {
     }
     
     @IBAction func allRecipes(_ sender: Any) {
-        #warning("does not switch to home tab when saved was selected before, saved works always due to the notification, could alter the notification to take in a boolean")
         tabBarController?.selectedIndex = 0
         NotificationCenter.default.post(name: .haveSavedRecipesAppear, object: nil, userInfo: ["haveSavedRecipesShow": false])
         

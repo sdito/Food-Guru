@@ -203,35 +203,15 @@ class StorageHomeVC: UIViewController {
     
     @IBAction func findRecipes(_ sender: Any) {
         
-        let genericItemsFirst = currentlySelectedItems.map({$0.systemItem!.rawValue})
-        let genericItems = genericItemsFirst.filter({$0 != "other"})
-        
-        if genericItems.count == 0 {
-            let alert = UIAlertController(title: "Unable to find recipes with selected items", message: "These items do not match any records in the application, these items may be added in the future!", preferredStyle: .alert)
-            alert.addAction(.init(title: "Ok", style: .default, handler: nil))
-            present(alert, animated: true)
+        let searches = currentlySelectedItems.map({NetworkSearch(text: $0.name, type: .ingredient)}) // collect the ingredients in network search
+        if searches.count > 0 {
+            SharedValues.shared.sentRecipesInfo = searches
+            // to set the RecipeHomeVC to the correct current view controller
+            self.tabBarController?.selectedIndex = 0
+            (self.tabBarController?.viewControllers?[self.tabBarController!.selectedIndex] as? UITabBarController)?.selectedIndex = 0
+            ((self.tabBarController?.viewControllers?[self.tabBarController!.selectedIndex] as? UITabBarController)?.viewControllers?[0] as? UINavigationController)?.popToRootViewController(animated: true)
         }
         
-        
-        Search.getRecipesFromIngredients(db: db, ingredients: genericItems) { (rcps) in
-            if let rcps = rcps {
-                let genericSearches = genericItems.map({NetworkSearch(text: $0, type: .ingredient)})
-                SharedValues.shared.sentRecipesInfo = (rcps, genericSearches)
-                
-                // to set the RecipeHomeVC to the correct current view controller
-                self.tabBarController?.selectedIndex = 0
-                (self.tabBarController?.viewControllers?[self.tabBarController!.selectedIndex] as? UITabBarController)?.selectedIndex = 0
-                ((self.tabBarController?.viewControllers?[self.tabBarController!.selectedIndex] as? UITabBarController)?.viewControllers?[0] as? UINavigationController)?.popToRootViewController(animated: true)
-                
-                
-                
-                if (UserDefaults.standard.value(forKey: "doneSeeingNoIngredientView") as? Bool != true) && (genericItems.count != genericItemsFirst.count) {
-                    print("Some items were deleted, have a little message or something")
-                    self.tabBarController?.createIngredientsDidntShowInSearchView()
-                }
-                
-            }
-        }
         
     }
     

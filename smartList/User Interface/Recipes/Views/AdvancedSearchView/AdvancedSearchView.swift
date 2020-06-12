@@ -49,13 +49,13 @@ class AdvancedSearchView: UIView {
 
     @IBAction func searchPressed(_ sender: Any) {
         print("search has been pressed")
+        #error("some black magic stuff is happening when searching on the server for this with title, *ingredient")
         self.findViewController()?.dismiss(animated: false, completion: nil)
         advancedSearchViewDelegate.searchesSent(searches: collectSearches())
         
     }
     
     @IBAction func infoButton(_ sender: Any) {
-        print("Info button selected")
         #warning("need to complete")
     }
 
@@ -91,6 +91,7 @@ class AdvancedSearchView: UIView {
         }
         // Title
         if let titleText = titleTF.text, titleText != "" {
+            print("adding title text: \(titleText)")
             foundSearches.append(NetworkSearch(text: titleText, type: .title))
         }
         

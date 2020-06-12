@@ -16,7 +16,7 @@ class Network {
     var ingredients: [NetworkSearch] = []
     var tags: [NetworkSearch] = []
     static let shared = Network()
-    
+    typealias RecipeResponse = (recipes: [Recipe]?, nextUrl: String?)
     private init() {}
     
     enum RequestType {
@@ -25,6 +25,11 @@ class Network {
         case ingredients
         case pdf
         case singleRecipe
+    }
+    
+    enum NetworkResponse<T> {
+        case success(_ data: T)
+        case failure(_ error: Error?)
     }
     
     private func req(reqType: RequestType, params: Parameters?, recipeID: Int? = nil) -> DataRequest {
@@ -55,28 +60,25 @@ class Network {
         return request
     }
     
-    func openPDF(recipeID: Int, pdfDataReturned: @escaping (Data) -> Void) {
-        
+    func openPDF(recipeID: Int, pdfDataReturned: @escaping (NetworkResponse<Data>) -> Void) {
         if recipeID != -1 {
             let request = req(reqType: .pdf, params: nil, recipeID: recipeID)
             request.response { (response) in
                 switch response.result {
                 case .success(let data):
                     if let data = data {
-                        pdfDataReturned(data)
-                        
+                        pdfDataReturned(NetworkResponse.success(data))
+                    } else {
+                        pdfDataReturned(NetworkResponse.failure(nil))
                     }
-                    
                 case .failure(let error):
-                    print(error)
-                    #warning("need to handle case")
+                    pdfDataReturned(NetworkResponse.failure(error))
                 }
             }
         }
     }
     
     func getImage(url: String?, imageReturned: @escaping (UIImage) -> Void) {
-        
         if let url = url {
             AF.request(url).responseImage { (response) in
                 if let data = response.data {
@@ -88,48 +90,47 @@ class Network {
         }
     }
     
-    func getRecipes(searches: [NetworkSearch]?, recipesReturned: @escaping ([Recipe]?, String?) -> Void) {
+    func getRecipes(searches: [NetworkSearch]?, recipesReturned: @escaping (NetworkResponse<RecipeResponse>) -> Void) {
+        
         let params = getParams(from: searches)
         let request = req(reqType: .recipe, params: params)
         request.responseJSON { (response) in
             switch response.result {
             case .success(let json):
-                let (recipes, nextUrl) = self.getRecipesAndUrlFromJson(json: json)
-                recipesReturned(recipes, nextUrl)
+                let result = self.getRecipesAndUrlFromJson(json: json)
+                recipesReturned(NetworkResponse.success(result))
             case .failure(let error):
-                print(error)
+               recipesReturned(NetworkResponse.failure(error))
             }
         }
+        
     }
     
-    func getRecipes(url: String, recipesReturned: @escaping ([Recipe]?, String?) -> Void) {
+    func getRecipes(url: String, recipesReturned: @escaping (NetworkResponse<(RecipeResponse)>) -> Void) {
         let request = req(url: url)
         request.responseJSON { (response) in
             switch response.result {
             case .success(let json):
-                let (recipes, nextUrl) = self.getRecipesAndUrlFromJson(json: json)
-                recipesReturned(recipes, nextUrl)
+                let result = self.getRecipesAndUrlFromJson(json: json)
+                recipesReturned(NetworkResponse.success(result))
             case .failure(let error):
-                print(error)
+                recipesReturned(NetworkResponse.failure(error))
             }
         }
     }
     
-    func getSingleRecipe(id: Int, recipeReturned: @escaping (Recipe?) -> Void) {
-        #warning("need to finish this and also implement")
+    func getSingleRecipe(id: Int, recipeReturned: @escaping (NetworkResponse<Recipe>) -> Void) {
         if id != -1 {
             let request = req(reqType: .singleRecipe, params: nil, recipeID: id)
             request.responseJSON { (response) in
                 switch response.result {
                 case .success(let json):
                     if let dict = json as? [String:Any] {
-                        print(dict)
                         let recipe = self.getOneRecipeFromJson(r: dict)
-                        recipeReturned(recipe)
+                        recipeReturned(NetworkResponse.success(recipe))
                     }
                 case .failure(let error):
-                    print(error)
-                    #warning("need to handle this")
+                    recipeReturned(NetworkResponse.failure(error))
                 }
             }
         }
@@ -144,9 +145,8 @@ class Network {
                         if let tags = self.getElementFromJsonArray(json: json, key: "display") {
                             self.tags = tags.map({NetworkSearch(text: $0, type: .tag)})
                         }
-                    case .failure(let error):
-                        print(error)
-                        #warning("need to handle this")
+                    case .failure(_):
+                        return
                 }
             }
         }
@@ -161,9 +161,8 @@ class Network {
                         if let ingredients = self.getElementFromJsonArray(json: json, key: "display") {
                             self.ingredients = ingredients.map({NetworkSearch(text: $0, type: .ingredient)})
                         }
-                    case .failure(let error):
-                        print(error)
-                        #warning("need to handle this")
+                    case .failure(_):
+                        return
                 }
             }
         }

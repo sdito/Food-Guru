@@ -8,12 +8,15 @@
 
 import UIKit
 
+protocol SearchAssistantDelegate {
+    func searchTextChanged(text: String)
+    func removeChildVC()
+}
 
 protocol CreateNewItemDelegate {
     func itemCreated(item: Item)
     func searchCreated(search: NetworkSearch)
 }
-
 
 
 class CreateNewItemVC: UITableViewController {
