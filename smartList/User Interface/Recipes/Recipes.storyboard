@@ -258,7 +258,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z8h-iE-1gc">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                         <subviews>
-                                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search all recipes" translatesAutoresizingMaskIntoConstraints="NO" id="jsI-Wn-pNd">
+                                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search recipes" translatesAutoresizingMaskIntoConstraints="NO" id="jsI-Wn-pNd">
                                                 <rect key="frame" x="0.0" y="0.0" width="370" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="UDZ-oN-Dsj"/>
@@ -268,9 +268,9 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fji-kJ-QVj">
                                                 <rect key="frame" x="370" y="0.0" width="44" height="44"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G1A-Jd-TAq">
-                                                        <rect key="frame" x="10" y="10" width="24" height="24"/>
-                                                        <state key="normal" title="A"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G1A-Jd-TAq">
+                                                        <rect key="frame" x="3" y="3" width="38" height="38"/>
+                                                        <state key="normal" image="star_search"/>
                                                         <connections>
                                                             <action selector="startAdvancedSearch:" destination="G0K-EC-evF" eventType="touchUpInside" id="Fvn-ZN-8Ts"/>
                                                         </connections>
@@ -278,11 +278,11 @@
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="bottom" secondItem="G1A-Jd-TAq" secondAttribute="bottom" constant="10" id="AmG-zM-c2d"/>
-                                                    <constraint firstAttribute="trailing" secondItem="G1A-Jd-TAq" secondAttribute="trailing" constant="10" id="PJq-bq-Eyu"/>
-                                                    <constraint firstItem="G1A-Jd-TAq" firstAttribute="top" secondItem="fji-kJ-QVj" secondAttribute="top" constant="10" id="beW-32-VhQ"/>
+                                                    <constraint firstAttribute="bottom" secondItem="G1A-Jd-TAq" secondAttribute="bottom" constant="3" id="AmG-zM-c2d"/>
+                                                    <constraint firstAttribute="trailing" secondItem="G1A-Jd-TAq" secondAttribute="trailing" constant="3" id="PJq-bq-Eyu"/>
+                                                    <constraint firstItem="G1A-Jd-TAq" firstAttribute="top" secondItem="fji-kJ-QVj" secondAttribute="top" constant="3" id="beW-32-VhQ"/>
                                                     <constraint firstAttribute="width" secondItem="fji-kJ-QVj" secondAttribute="height" multiplier="1:1" id="ras-ws-EQR"/>
-                                                    <constraint firstItem="G1A-Jd-TAq" firstAttribute="leading" secondItem="fji-kJ-QVj" secondAttribute="leading" constant="10" id="zQR-17-o7Y"/>
+                                                    <constraint firstItem="G1A-Jd-TAq" firstAttribute="leading" secondItem="fji-kJ-QVj" secondAttribute="leading" constant="3" id="zQR-17-o7Y"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -495,12 +495,15 @@
                     </view>
                     <navigationItem key="navigationItem" id="XpY-Yh-O3R"/>
                     <connections>
+                        <outlet property="advancedSearchContainerView" destination="fji-kJ-QVj" id="aqR-tQ-34t"/>
+                        <outlet property="advancedSearchOutlet" destination="G1A-Jd-TAq" id="B6b-pz-Pb0"/>
                         <outlet property="collectionView" destination="Ue9-GA-t8m" id="Oj2-IA-wxT"/>
                         <outlet property="homeRecipesOutlet" destination="uEn-u6-4dp" id="PxF-yS-0bJ"/>
                         <outlet property="savedRecipesOutlet" destination="qXf-sI-YAT" id="APt-mc-rV1"/>
                         <outlet property="scrollBackUpView" destination="Qsm-p9-niT" id="3ge-rY-kCy"/>
                         <outlet property="searchBar" destination="jsI-Wn-pNd" id="CcB-Gx-hbW"/>
                         <outlet property="searchBarHeight" destination="UDZ-oN-Dsj" id="5eF-cf-rjI"/>
+                        <outlet property="searchStackView" destination="z8h-iE-1gc" id="Ua6-iq-e7F"/>
                         <outlet property="spinner" destination="kST-sZ-VXN" id="KIw-30-heI"/>
                         <outlet property="spinnerHolder" destination="tDs-zF-YdM" id="UvP-AC-jk8"/>
                         <outlet property="wholeStackView" destination="UIz-Lu-vUf" id="Noi-hM-Lgm"/>
@@ -1164,5 +1167,6 @@
         <image name="add-file-xl" width="64" height="64"/>
         <image name="book" width="30" height="30"/>
         <image name="heart.black.white" width="100" height="100"/>
+        <image name="star_search" width="512" height="512"/>
     </resources>
 </document>

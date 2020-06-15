@@ -20,6 +20,9 @@ class RecipeHomeVC: UIViewController {
     @IBOutlet weak var homeRecipesOutlet: UIButton!
     @IBOutlet weak var savedRecipesOutlet: UIButton!
     
+    @IBOutlet weak var searchStackView: UIStackView!
+    @IBOutlet weak var advancedSearchContainerView: UIView!
+    @IBOutlet weak var advancedSearchOutlet: UIButton!
     @IBOutlet weak var wholeStackView: UIStackView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -28,6 +31,12 @@ class RecipeHomeVC: UIViewController {
     
     var db: Firestore!
     var imageCache = NSCache<NSString, UIImage>()
+    
+    private var mainLastContentOffset: CGFloat = 0.0
+    private var savedLastContentOffset: CGFloat = 0.0
+    
+    private var instantChangeForAdvancedSearchViewActive = false
+    private var noConnectionView: NoConnectionView?
     private var skeletonViewActive = false
     private var nextUrl: String?
     private var loadingMoreRecipes = false
@@ -45,20 +54,35 @@ class RecipeHomeVC: UIViewController {
     private var delegate: SearchAssistantDelegate!
     private var savedRecipesActive = false {
         didSet {
+            
             imageCache.removeAllObjects()
             collectionView?.collectionViewLayout.invalidateLayout()
             collectionView?.reloadData()
             
             switch self.savedRecipesActive {
             case true:
+                collectionView.setContentOffset(CGPoint(x:0,y:savedLastContentOffset), animated: false)
+                if instantChangeForAdvancedSearchViewActive {
+                    advancedSearchContainerView.isHidden = true
+                } else {
+                    advancedSearchContainerView.hideAnimated(in: searchStackView)
+                }
                 searchBar.placeholder = "Filter saved recipes"
                 currentSearchesView.isHidden = true
                 if skeletonViewActive {
                     stopSkeleton()
                 }
             case false:
+                loadingMoreRecipes = true
+                collectionView.setContentOffset(CGPoint(x:0,y:mainLastContentOffset), animated: false)
+                if instantChangeForAdvancedSearchViewActive {
+                    advancedSearchContainerView.isHidden = false
+                } else {
+                    advancedSearchContainerView.showAnimated(in: searchStackView)
+                }
                 searchBar.placeholder = "Search all recipes"
                 currentSearchesView.isHidden = false
+                loadingMoreRecipes = false
             }
         }
     }
@@ -70,6 +94,7 @@ class RecipeHomeVC: UIViewController {
     
     private var activeSearches: [NetworkSearch] = [] {
         didSet {
+            mainLastContentOffset = 0.0
             if SharedValues.shared.sentRecipesInfo == nil {
                 startSkeleton()
                 Network.shared.getRecipes(searches: self.activeSearches) { (response) in
@@ -83,6 +108,7 @@ class RecipeHomeVC: UIViewController {
                     case .failure(_):
                         #warning("probably create no connection view here")
                         self.stopSkeleton()
+                        self.noConnectionView = NoConnectionView.show(vc: self)
                     }
                 }
             }
@@ -146,7 +172,6 @@ class RecipeHomeVC: UIViewController {
         scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
         skeletonViewActive = true
         startSkeleton()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -256,8 +281,9 @@ class RecipeHomeVC: UIViewController {
         if let dict = notification.userInfo as NSDictionary? {
             if let haveSavedRecipesShow = dict["haveSavedRecipesShow"] as? Bool {
                 if haveSavedRecipesShow != savedRecipesActive {
+                    instantChangeForAdvancedSearchViewActive = true
                     savedRecipesActive = haveSavedRecipesShow
-                    
+                    instantChangeForAdvancedSearchViewActive = false
                     if savedRecipesActive {
                         Recipe.readUserSavedRecipes(db: db) { (rcps) in
                             self.savedRecipes = rcps
@@ -291,6 +317,8 @@ class RecipeHomeVC: UIViewController {
                         self.nextUrl = next
                     case .failure(_):
                         #warning("actually create the noConnectionView here")
+                        self.stopSkeleton()
+                        self.noConnectionView = NoConnectionView.show(vc: self)
                     }
                 }
                 
@@ -496,6 +524,12 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         self.lastContentOffset = scrollView.contentOffset.y
         
+        if !savedRecipesActive {
+            mainLastContentOffset = scrollView.contentOffset.y
+        } else {
+            savedLastContentOffset = scrollView.contentOffset.y
+        }
+        
         let collectionViewHeight = scrollView.contentSize.height - collectionView.frame.height
         
         // load the next page of recipes
@@ -660,6 +694,8 @@ extension RecipeHomeVC: NoConnectionViewDelegate {
     func tryAgain() {
         // remove all the searches, remove the noConnectionView, reload a random page of recipes
         #warning("need to do this")
+        noConnectionView?.removeFromSuperview()
+        activeSearches = []
         
     }
 }

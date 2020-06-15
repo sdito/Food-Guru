@@ -27,7 +27,7 @@ class NoConnectionView: UIView {
     
     
     
-    static func show(vc: UIViewController) {
+    static func show(vc: UIViewController) -> NoConnectionView {
         let noConnectionView = Bundle.main.loadNibNamed("NoConnectionView", owner: nil, options: nil)?.first as! NoConnectionView
         noConnectionView.delegate = vc as? NoConnectionViewDelegate
         noConnectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +38,9 @@ class NoConnectionView: UIView {
         
         noConnectionView.layoutIfNeeded()
         noConnectionView.shadowAndRounded(cornerRadius: 15.0, border: false)
+        return noConnectionView
     }
+    
     
     
     
