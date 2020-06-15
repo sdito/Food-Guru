@@ -36,7 +36,6 @@ class AdvancedSearchView: UIView {
     
     func setUI(vc: UIViewController) {
         advancedSearchViewDelegate = vc as? AdvancedSearchViewDelegate
-        print("initial set up")
         ingredientsTF.delegate = self
         tagTF.delegate = self
         avoidIngsTF.delegate = self
@@ -48,8 +47,6 @@ class AdvancedSearchView: UIView {
     }
 
     @IBAction func searchPressed(_ sender: Any) {
-        print("search has been pressed")
-        #error("some black magic stuff is happening when searching on the server for this with title, *ingredient")
         self.findViewController()?.dismiss(animated: false, completion: nil)
         advancedSearchViewDelegate.searchesSent(searches: collectSearches())
         
@@ -57,6 +54,43 @@ class AdvancedSearchView: UIView {
     
     @IBAction func infoButton(_ sender: Any) {
         #warning("need to complete")
+        #warning("need to handle iPad case/left off here")
+        let actionSheet = UIAlertController(title: nil, message: "Info for", preferredStyle: .actionSheet)
+        actionSheet.addAction(.init(title: "Ingredients search", style: .default, handler: { (alert) in
+            self.parentVC?.createAlertOkButton(title: "Info for ingredients search",
+                                               body: "Searching for ingredients will find recipes that have all the ingredients that you have added. " +
+                                               "Separate the ingredients you want to find with commas. An example query is:\n\n" +
+                                               "'pasta, broccoli, peas'")
+        }))
+        actionSheet.addAction(.init(title: "Title search", style: .default, handler: { (alert) in
+            self.parentVC?.createAlertOkButton(title: "Info for title search",
+                                               body: "Searching for the title will match recipes that have the same text in the title. You do not need to worry about capitalization.")
+        }))
+        actionSheet.addAction(.init(title: "Tag/title search", style: .default, handler: { (alert) in
+            self.parentVC?.createAlertOkButton(title: "Info for tag/title search",
+                                               body: "Searching with a tag will help you find a recipe in a certain category. " +
+                                               "For example, if you want a vegetarian recipe or an Italian recipe this would be the field to specify that.")
+            
+        }))
+        actionSheet.addAction(.init(title: "Avoid ing search", style: .default, handler: { (alert) in
+            self.parentVC?.createAlertOkButton(title: "Info for avoid ing search",
+                                               body: "Searching with avoid ingredients will find recipes that do not have the ingredients in them. " +
+                                               "For example, if you do not like mushrooms this is the field to specify that. An example query is:\n\n" +
+                                               "'mushrooms, peanuts'")
+        }))
+        actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            parentVC?.present(actionSheet, animated: true)
+        } else {
+            // do other stuff for iPad
+            guard let viewRect = sender as? UIView else { return }
+            if let presenter = actionSheet.popoverPresentationController {
+                presenter.sourceView = viewRect
+                presenter.sourceRect = viewRect.bounds
+            }
+            parentVC?.present(actionSheet, animated: true, completion: nil)
+        }
     }
 
     

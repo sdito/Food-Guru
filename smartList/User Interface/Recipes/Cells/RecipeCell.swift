@@ -21,6 +21,7 @@ class RecipeCell: UICollectionViewCell {
 
     func setUI(recipe: Recipe) {
         self.recipe = recipe
+        
         for subview in recipeImage.subviews {
             subview.removeFromSuperview()
         }

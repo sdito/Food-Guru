@@ -145,7 +145,7 @@ class RecipeHomeVC: UIViewController {
         scrollBackUpView.layoutIfNeeded()
         scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
         skeletonViewActive = true
-        collectionView.showAnimatedGradientSkeleton()
+        startSkeleton()
         
     }
     
@@ -635,7 +635,11 @@ extension RecipeHomeVC: SkeletonCollectionViewDataSource {
         return "recipeCell"
     }
     func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        if UIDevice().userInterfaceIdiom == .phone {
+            return 6
+        } else {
+            return 12
+        }
     }
     
     private func stopSkeleton() {
@@ -646,8 +650,7 @@ extension RecipeHomeVC: SkeletonCollectionViewDataSource {
     
     private func startSkeleton() {
         collectionView.setContentOffset(CGPoint(x:0,y:0), animated: false)
-        collectionView.showAnimatedGradientSkeleton()
-        collectionView.startSkeletonAnimation()
+        collectionView.showAnimatedGradientSkeleton(transition: .none)
         skeletonViewActive = true
     }
     

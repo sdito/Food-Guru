@@ -13,6 +13,12 @@ import AVFoundation
 
 extension UIViewController {
     
+    func createAlertOkButton(title: String, body: String) {
+        let alert = UIAlertController(title: title, message: body, preferredStyle: .alert)
+        alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
+    }
+    
     func getImageForTutorial(imageText: String, imageReturned: @escaping (_ image: UIImage) -> Void) {
         let storage = Storage.storage()
         
