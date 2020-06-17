@@ -22,6 +22,11 @@ class AdvancedSearchView: UIView {
 
     @IBOutlet weak var mainStackView: UIStackView!
     
+    
+    @IBOutlet weak var caloriesSlider: UISlider!
+    @IBOutlet weak var caloriesLabel: UILabel!
+    @IBOutlet weak var readyInSlider: UISlider!
+    @IBOutlet weak var readyInLabel: UILabel!
     @IBOutlet weak var ingredientsTF: UITextField!
     @IBOutlet weak var titleTF: UITextField!
     @IBOutlet weak var tagTF: UITextField!
@@ -31,6 +36,11 @@ class AdvancedSearchView: UIView {
     private var delegate: SearchAssistantDelegate!
     private var createNewItemVC: CreateNewItemVC?
     private var activeTextField: UITextField?
+    
+    private let sliderMaxCalories: Float = 1000.0
+    private let intervalSizeCalories = 100
+    private let sliderMaxReadyIn: Float = 120.0
+    private let intervalSizeReadyIn = 10
     
     weak var advancedSearchViewDelegate: AdvancedSearchViewDelegate!
     
@@ -44,6 +54,14 @@ class AdvancedSearchView: UIView {
         ingredientsTF.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
         tagTF.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
         avoidIngsTF.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        
+        readyInSlider.maximumValue = sliderMaxReadyIn
+        readyInSlider.minimumValue = 0
+        readyInSlider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
+        
+        caloriesSlider.maximumValue = sliderMaxCalories
+        caloriesSlider.minimumValue = 0
+        caloriesSlider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
     }
 
     @IBAction func searchPressed(_ sender: Any) {
@@ -53,8 +71,7 @@ class AdvancedSearchView: UIView {
     }
     
     @IBAction func infoButton(_ sender: Any) {
-        #warning("need to complete")
-        #warning("need to handle iPad case/left off here")
+        
         let actionSheet = UIAlertController(title: nil, message: "Info for", preferredStyle: .actionSheet)
         actionSheet.addAction(.init(title: "Ingredients search", style: .default, handler: { (alert) in
             self.parentVC?.createAlertOkButton(title: "Info for ingredients search",
@@ -97,20 +114,41 @@ class AdvancedSearchView: UIView {
     @objc private func textFieldDidChange(textField: UITextField) {
         if let text = textField.text {
             delegate.searchTextChanged(text: text.getLastPartOfSearchForQuery())
-            
             if textField == tagTF {
-                #warning("left off here")
                 if Network.shared.tags.map({$0.text.lowercased()}).contains(text.lowercased()) {
                     textField.textColor = Colors.main
                 } else {
                     textField.textColor = .red
                 }
             }
-            
         }
-        
-        
-        
+    }
+    
+    @objc private func sliderValueChanged(sender: UISlider) {
+        if sender == caloriesSlider {
+            let value = Int(caloriesSlider.value)
+            let calories = value.roundToInterval(interval: intervalSizeCalories)
+            
+            var display: String {
+                if calories == 0 {
+                    return "Any"
+                } else {
+                    return "< \(calories)"
+                }
+            }
+            caloriesLabel.text = display
+        } else if sender == readyInSlider {
+            let value = Int(readyInSlider.value)
+            let time = value.roundToInterval(interval: intervalSizeReadyIn) // get the time closest to each intervalSize block
+            var display: String {
+                if time == 0 {
+                    return "Any"
+                } else {
+                    return time.getDisplayHoursAndMinutes()
+                }
+            }
+            readyInLabel.text = display
+        }
     }
     
     private func collectSearches() -> [NetworkSearch] {
@@ -141,6 +179,20 @@ class AdvancedSearchView: UIView {
         // Tag
         if let tagText = tagTF.text, tagText != "" {
             foundSearches.append(NetworkSearch(text: tagText, type: .tag))
+        }
+        
+        // Ready in
+        let readyInValue = Int(readyInSlider.value).roundToInterval(interval: intervalSizeReadyIn)
+        if readyInValue > 0 {
+            let networkSearch = NetworkSearch(text: "Ready in \(readyInValue.getDisplayHoursAndMinutes())", type: .readyIn, associatedNumber: readyInValue)
+            foundSearches.append(networkSearch)
+        }
+        
+        // Calories
+        let caloriesValue = Int(caloriesSlider.value).roundToInterval(interval: intervalSizeCalories)
+        if caloriesValue > 0 {
+            let networkSearch = NetworkSearch(text: "< \(caloriesValue) calories", type: .calories, associatedNumber: caloriesValue)
+            foundSearches.append(networkSearch)
         }
         
         return foundSearches

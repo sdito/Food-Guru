@@ -13,12 +13,15 @@ struct NetworkSearch: Equatable {
     
     var text: String
     var type: NetworkSearchType
+    var associatedNumber: Int? = nil
     
     enum NetworkSearchType: CaseIterable {
         case ingredient
         case tag
         case title
         case avoidIngredient
+        case readyIn
+        case calories
         case unknown
         
         func getParam() -> String {
@@ -31,8 +34,12 @@ struct NetworkSearch: Equatable {
                     return Network.titleParam
                 case .avoidIngredient:
                     return Network.avoidIngredientsParam
+                case .readyIn:
+                    return Network.readyInParam
                 case .unknown:
                     return Network.unknownParam
+                case .calories:
+                    return Network.caloriesParam
             }
         }
         
@@ -46,8 +53,12 @@ struct NetworkSearch: Equatable {
                     return false
                 case .avoidIngredient:
                     return true
+                case .readyIn:
+                    return false
                 case .unknown:
                     return true
+                case .calories:
+                    return false
             }
         }
         
@@ -63,6 +74,10 @@ struct NetworkSearch: Equatable {
                 return 74
             case .unknown:
                 return 75
+            case .readyIn:
+                return 76
+            case .calories:
+                return 77
             }
         }
         

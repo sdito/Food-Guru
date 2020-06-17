@@ -80,7 +80,7 @@ class RecipeHomeVC: UIViewController {
                 } else {
                     advancedSearchContainerView.showAnimated(in: searchStackView)
                 }
-                searchBar.placeholder = "Search all recipes"
+                searchBar.placeholder = "Search comma separated"
                 currentSearchesView.isHidden = false
                 loadingMoreRecipes = false
             }
@@ -119,11 +119,6 @@ class RecipeHomeVC: UIViewController {
                 wholeStackView.insertArrangedSubview(currentSearchesView, at: 1)
                 currentSearchesView.setUI(searches: self.activeSearches)
             }
-            if self.activeSearches.isEmpty {
-                searchBar.placeholder = "Search recipes"
-            } else {
-                searchBar.placeholder = "Add another search"
-            }
             
         }
     }
@@ -150,7 +145,7 @@ class RecipeHomeVC: UIViewController {
         collectionView.delegate = self
         searchBar.delegate = self
         searchBar.setTextProperties()
-        searchBar.setUpToolBar(action: #selector(keyboardDismissed))
+        searchBar.setUpToolBar(dismiss: #selector(keyboardDismissed), search: #selector(searchBarSearchSelector))
         db = Firestore.firestore()
         currentSearchesView.delegate = self
         let layout = collectionView.collectionViewLayout as! DynamicHeightLayout
@@ -355,9 +350,17 @@ class RecipeHomeVC: UIViewController {
 // MARK: CurrentSearchesDelegate
 extension RecipeHomeVC: CurrentSearchesViewDelegate {
     func buttonPressedToDeleteSearch(search: NetworkSearch) {
-        if activeSearches.contains(search) {
-            activeSearches = activeSearches.filter({$0 != search})
+        //print(search.text)
+        if search.type == .readyIn {
+            activeSearches = activeSearches.filter({$0.type != .readyIn})
+        } else if search.type == .calories {
+            activeSearches = activeSearches.filter({$0.type != .calories})
+        } else {
+            if activeSearches.contains(search) {
+                activeSearches = activeSearches.filter({$0 != search})
+            }
         }
+        
     }
 }
 
@@ -578,18 +581,21 @@ extension RecipeHomeVC: UISearchBarDelegate {
     @objc func keyboardDismissed() {
         searchBar.endEditing(true)
     }
-    
+    @objc func searchBarSearchSelector() {
+        
+        searchBarSearchButtonClicked(searchBar)
+    }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if savedRecipesActive == false {
             
             activeSearches = searchQueue
-            searchQueue = []
-            searchBar.text = ""
+            //searchQueue = []
+            //searchBar.text = ""
             if delegate != nil {
                 delegate.searchTextChanged(text: "")
             }
-            
+            searchBar.endEditing(true)
         } else {
             print("Need different search, saved recipes is active")
         }
@@ -616,6 +622,7 @@ extension RecipeHomeVC: UISearchBarDelegate {
                 vc.tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor).isActive = true
                 
                 let tb = (tabBarController?.tabBar.frame.height ?? 0.0)
+                //#error("need to add the thing above the searchBar's height")
                 let distance = (wholeStackView.frame.height) - (keyboardHeight ?? 0.0) - (searchBar.frame.height) + tb
                 
                 vc.tableView.heightAnchor.constraint(equalToConstant: distance).isActive = true
@@ -693,9 +700,8 @@ extension RecipeHomeVC: SkeletonCollectionViewDataSource {
 extension RecipeHomeVC: NoConnectionViewDelegate {
     func tryAgain() {
         // remove all the searches, remove the noConnectionView, reload a random page of recipes
-        #warning("need to do this")
         noConnectionView?.removeFromSuperview()
         activeSearches = []
-        
+        Network.shared.retryTagsOrIngredientsIfNeeded()
     }
 }

@@ -17,17 +17,23 @@ extension UISearchBar {
         
         
     }
-    func setUpToolBar(action: Selector) {
-        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let done = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: action)
     
+    func setUpToolBar(dismiss: Selector, search: Selector) {
+        
+        let done = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: dismiss)
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let search = UIBarButtonItem(barButtonSystemItem: .search, target: nil, action: search)
+        
         done.tintColor = Colors.main
+        search.tintColor = Colors.main
+        
         let toolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 40))
         
         toolbar.autoresizingMask = .flexibleHeight
-        toolbar.setItems([space, done], animated: false)
+        toolbar.setItems([done, space, search], animated: false)
         self.inputAccessoryView = toolbar
     }
+    
     func setUpAddItemToolbar(cancelAction: Selector, addAction: Selector) {
         let toolbar = UIToolbar(frame: CGRect.init(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 40))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)

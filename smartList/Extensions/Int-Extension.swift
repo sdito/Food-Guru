@@ -11,6 +11,10 @@ import Foundation
 
 extension Int {
     
+    func roundToInterval(interval: Int) -> Int {
+        return self - self % interval
+    }
+    
     func getMonthDayEnding() -> String {
         switch self {
         case 1, 21, 31:

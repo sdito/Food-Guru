@@ -112,7 +112,9 @@ class RecipeDetailVC: UIViewController {
             performSegue(withIdentifier: "viewPDF", sender: nil)
         } else {
             if let r = data?.recipe.djangoID {
+                self.createLoadingView()
                 Network.shared.openPDF(recipeID: r) { (docData) in
+                    self.dismiss(animated: false, completion: nil)
                     switch docData {
                     case .success(let pdfData):
                         let vc = self.storyboard?.instantiateViewController(withIdentifier: "pdfVC") as! RecipePDFVC

@@ -258,7 +258,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z8h-iE-1gc">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                         <subviews>
-                                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search recipes" translatesAutoresizingMaskIntoConstraints="NO" id="jsI-Wn-pNd">
+                                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search comma separated" translatesAutoresizingMaskIntoConstraints="NO" id="jsI-Wn-pNd">
                                                 <rect key="frame" x="0.0" y="0.0" width="370" height="44"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="44" id="UDZ-oN-Dsj"/>

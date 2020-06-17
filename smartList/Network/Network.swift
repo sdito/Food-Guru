@@ -221,6 +221,7 @@ class Network {
     private func getParams(from searches: [NetworkSearch]?) -> Parameters? {
         guard let searches = searches else { return nil }
         var params: Parameters = [:]
+        
         for t in NetworkSearch.NetworkSearchType.allCases {
             let matchingSearches = searches.filter({$0.type == t})
             if matchingSearches.count > 0 {
@@ -237,7 +238,12 @@ class Network {
                 case false:
                     let s = matchingSearches[0]
                     // surround with double quotes if contains a comma
-                    paramValue = s.text.contains(",") ? "\"\(s.text)\"" : s.text
+                    if let num = s.associatedNumber {
+                        paramValue = "\(num)"
+                    } else {
+                        paramValue = s.text.contains(",") ? "\"\(s.text)\"" : s.text
+                    }
+                    
                 }
                 params[t.getParam()] = paramValue
             }
@@ -293,6 +299,15 @@ class Network {
         
         return newSearches
         
+    }
+    
+    func retryTagsOrIngredientsIfNeeded() {
+        if tags.isEmpty {
+            Network.shared.setTags()
+        }
+        if ingredients.isEmpty {
+            Network.shared.setIngredients()
+        }
     }
     
 }
