@@ -211,7 +211,16 @@ class RecipeHomeVC: UIViewController {
     // MARK: @IBAction funcs
 
     @IBAction func startAdvancedSearch(_ sender: Any) {
-        self.createAdvancedSearchView()
+        var searchesToSend: [NetworkSearch]? {
+            if !activeSearches.isEmpty {
+                return activeSearches
+            } else if !searchQueue.isEmpty {
+                return searchQueue
+            } else {
+                return nil
+            }
+        }
+        self.createAdvancedSearchView(startSearches: searchesToSend)
     }
     
     
@@ -311,7 +320,6 @@ class RecipeHomeVC: UIViewController {
                         }
                         self.nextUrl = next
                     case .failure(_):
-                        #warning("actually create the noConnectionView here")
                         self.stopSkeleton()
                         self.noConnectionView = NoConnectionView.show(vc: self)
                     }
@@ -349,6 +357,12 @@ class RecipeHomeVC: UIViewController {
 
 // MARK: CurrentSearchesDelegate
 extension RecipeHomeVC: CurrentSearchesViewDelegate {
+    func clearAllSearches() {
+        activeSearches = []
+        searchQueue = []
+        searchBar.text = ""
+    }
+    
     func buttonPressedToDeleteSearch(search: NetworkSearch) {
         //print(search.text)
         if search.type == .readyIn {
@@ -580,10 +594,20 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
 extension RecipeHomeVC: UISearchBarDelegate {
     @objc func keyboardDismissed() {
         searchBar.endEditing(true)
+        if delegate != nil {
+            delegate.searchTextChanged(text: "")
+        }
     }
     @objc func searchBarSearchSelector() {
         
         searchBarSearchButtonClicked(searchBar)
+    }
+    
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        if delegate != nil {
+            delegate.searchTextChanged(text: searchBar.text ?? "")
+        }
+        return true
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -623,9 +647,10 @@ extension RecipeHomeVC: UISearchBarDelegate {
                 
                 let tb = (tabBarController?.tabBar.frame.height ?? 0.0)
                 //#error("need to add the thing above the searchBar's height")
-                let distance = (wholeStackView.frame.height) - (keyboardHeight ?? 0.0) - (searchBar.frame.height) + tb
-                
-                vc.tableView.heightAnchor.constraint(equalToConstant: distance).isActive = true
+                let distance = (wholeStackView.frame.height) - (keyboardHeight ?? 0.0) - (searchBar.frame.height) + tb - 44
+                vc.maximumAllowedHeight = distance
+                vc.heightConstraint = vc.tableView.heightAnchor.constraint(equalToConstant: distance)
+                vc.heightConstraint!.isActive = true
                 
                 vc.delegate = self as CreateNewItemDelegate
                 delegate = vc
@@ -666,7 +691,6 @@ extension RecipeHomeVC: AdvancedSearchViewDelegate {
         if delegate != nil {
             delegate.searchTextChanged(text: "")
         }
-        #warning("need to search like normal here")
     }
 }
 

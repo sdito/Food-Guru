@@ -26,6 +26,8 @@ class CreateNewItemVC: UITableViewController {
     var isForSearch: Bool = false
     var isForIngredients: Bool = false
     var isForTags: Bool = false
+    var maximumAllowedHeight: CGFloat?
+    var heightConstraint: NSLayoutConstraint?
     
     private var searchText: String = "" {
         didSet {
@@ -72,8 +74,23 @@ class CreateNewItemVC: UITableViewController {
                     tableView.isHidden = false
                 }
                 tableView.reloadData()
+                
+                #warning("this works, but it breaks constraints, need to set the previous one to inactive")
+                if let height = maximumAllowedHeight, let currHeight = tableView.heightOfCells() {
+                    if currHeight < height {
+                        heightConstraint?.isActive = false
+                        heightConstraint = self.tableView.heightAnchor.constraint(equalToConstant: currHeight)
+                        heightConstraint?.isActive = true
+                    } else {
+                        heightConstraint?.isActive = false
+                        heightConstraint = self.tableView.heightAnchor.constraint(equalToConstant: height)
+                        heightConstraint?.isActive = true
+                    }
+                }
+                
             }
         }
+        
     }
     
     private var searchedItems: [NetworkSearch] = []
@@ -111,7 +128,6 @@ class CreateNewItemVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        #warning("changed this, make sure it works")
         if isForSearch || isForTags || isForIngredients {
             let search = searchedItems[indexPath.row]
             delegate.searchCreated(search: search)
@@ -138,10 +154,8 @@ class CreateNewItemVC: UITableViewController {
             // don't want the view to be removed in this case
             searchText = ""
         }
-        
-        
-        
     }
+    
     
 }
 

@@ -12,6 +12,7 @@ import UIKit
 
 protocol CurrentSearchesViewDelegate: class {
     func buttonPressedToDeleteSearch(search: NetworkSearch)
+    func clearAllSearches()
 }
 
 
@@ -32,29 +33,27 @@ class CurrentSearchesView: UIView {
         if !searches.isEmpty {
             for search in searches {
                 let b = UIButton()
-                let buttonText: String = search.text
-                b.tag = search.type.toTagRepresentation()
-                b.setTitle(buttonText, for: .normal)
-                b.contentEdgeInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
-                b.titleLabel?.font = UIFont(name: "futura", size: 13)
+                b.currentSearchStyle(search: search)
                 b.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-                b.layer.cornerRadius = 5
-                if #available(iOS 13.0, *) {
-                    b.backgroundColor = .systemGray6
-                    b.setTitleColor(.systemGray, for: .normal)
-                } else {
-                    b.backgroundColor = .lightGray
-                    b.setTitleColor(Colors.main, for: .normal)
-                }
-                b.clipsToBounds = true
-                
-                stackView.insertArrangedSubview(b, at: stackView.subviews.count)
-                
+                stackView.addArrangedSubview(b)
             }
+            
+            if searches.count >= 2 {
+                // Add a clear all button
+                let b = UIButton()
+                b.clearAllCurrentSearchesStyle()
+                b.addTarget(self, action: #selector(clear), for: .touchUpInside)
+                stackView.insertArrangedSubview(b, at: 1)
+            }
+            
         } else {
             stackView.addArrangedSubview(UILabel())
         }
         
+    }
+    
+    @objc func clear() {
+        delegate.clearAllSearches()
     }
     
     @objc func buttonAction(sender: UIButton) {

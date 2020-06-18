@@ -22,7 +22,7 @@ class AdvancedSearchView: UIView {
 
     @IBOutlet weak var mainStackView: UIStackView!
     
-    
+    @IBOutlet weak var clearButtonOutlet: UIButton!
     @IBOutlet weak var caloriesSlider: UISlider!
     @IBOutlet weak var caloriesLabel: UILabel!
     @IBOutlet weak var readyInSlider: UISlider!
@@ -44,7 +44,7 @@ class AdvancedSearchView: UIView {
     
     weak var advancedSearchViewDelegate: AdvancedSearchViewDelegate!
     
-    func setUI(vc: UIViewController) {
+    func setUI(vc: UIViewController, startSearches: [NetworkSearch]?) {
         advancedSearchViewDelegate = vc as? AdvancedSearchViewDelegate
         ingredientsTF.delegate = self
         tagTF.delegate = self
@@ -54,6 +54,7 @@ class AdvancedSearchView: UIView {
         ingredientsTF.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
         tagTF.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
         avoidIngsTF.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
+        titleTF.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: .editingChanged)
         
         readyInSlider.maximumValue = sliderMaxReadyIn
         readyInSlider.minimumValue = 0
@@ -62,56 +63,56 @@ class AdvancedSearchView: UIView {
         caloriesSlider.maximumValue = sliderMaxCalories
         caloriesSlider.minimumValue = 0
         caloriesSlider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
+        
+        setUpInitialSearches(searches: startSearches)
     }
-
+    // MARK: IBAction funs
     @IBAction func searchPressed(_ sender: Any) {
         self.findViewController()?.dismiss(animated: false, completion: nil)
         advancedSearchViewDelegate.searchesSent(searches: collectSearches())
         
     }
     
+    @IBAction func clearPressed(_ sender: Any) {
+        // reset all the values
+        ingredientsTF.text = ""
+        avoidIngsTF.text = ""
+        tagTF.text = ""
+        titleTF.text = ""
+        caloriesSlider.value = 0.0; sliderValueChanged(sender: caloriesSlider)
+        readyInSlider.value = 0.0; sliderValueChanged(sender: readyInSlider)
+    }
+    
     @IBAction func infoButton(_ sender: Any) {
-        
-        let actionSheet = UIAlertController(title: nil, message: "Info for", preferredStyle: .actionSheet)
-        actionSheet.addAction(.init(title: "Ingredients search", style: .default, handler: { (alert) in
-            self.parentVC?.createAlertOkButton(title: "Info for ingredients search",
-                                               body: "Searching for ingredients will find recipes that have all the ingredients that you have added. " +
-                                               "Separate the ingredients you want to find with commas. An example query is:\n\n" +
-                                               "'pasta, broccoli, peas'")
-        }))
-        actionSheet.addAction(.init(title: "Title search", style: .default, handler: { (alert) in
-            self.parentVC?.createAlertOkButton(title: "Info for title search",
-                                               body: "Searching for the title will match recipes that have the same text in the title. You do not need to worry about capitalization.")
-        }))
-        actionSheet.addAction(.init(title: "Tag/title search", style: .default, handler: { (alert) in
-            self.parentVC?.createAlertOkButton(title: "Info for tag/title search",
-                                               body: "Searching with a tag will help you find a recipe in a certain category. " +
-                                               "For example, if you want a vegetarian recipe or an Italian recipe this would be the field to specify that.")
-            
-        }))
-        actionSheet.addAction(.init(title: "Avoid ing search", style: .default, handler: { (alert) in
-            self.parentVC?.createAlertOkButton(title: "Info for avoid ing search",
-                                               body: "Searching with avoid ingredients will find recipes that do not have the ingredients in them. " +
-                                               "For example, if you do not like mushrooms this is the field to specify that. An example query is:\n\n" +
-                                               "'mushrooms, peanuts'")
-        }))
-        actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
-        
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            parentVC?.present(actionSheet, animated: true)
-        } else {
-            // do other stuff for iPad
-            guard let viewRect = sender as? UIView else { return }
-            if let presenter = actionSheet.popoverPresentationController {
-                presenter.sourceView = viewRect
-                presenter.sourceRect = viewRect.bounds
+        guard let senderView = sender as? UIView else { return }
+        parentVC?.createInfoAboutSearchesAlert(viewRect: senderView)
+    }
+    
+    // MARK: Functions
+    private func handleShowingClearButton() {
+        var somethingSet = false
+        [tagTF, titleTF, avoidIngsTF, ingredientsTF].forEach { (tf) in
+            if tf?.text != "" {
+                somethingSet = true
             }
-            parentVC?.present(actionSheet, animated: true, completion: nil)
+        }
+        if !somethingSet {
+            [caloriesLabel, readyInLabel].forEach { (label) in
+                if label?.text != "Any" {
+                    somethingSet = true
+                }
+            }
+        }
+        
+        if somethingSet {
+            clearButtonOutlet.isHidden = false
+        } else {
+            clearButtonOutlet.isHidden = true
         }
     }
-
     
     @objc private func textFieldDidChange(textField: UITextField) {
+        guard textField != titleTF else { handleShowingClearButton(); return }
         if let text = textField.text {
             delegate.searchTextChanged(text: text.getLastPartOfSearchForQuery())
             if textField == tagTF {
@@ -122,6 +123,7 @@ class AdvancedSearchView: UIView {
                 }
             }
         }
+        handleShowingClearButton()
     }
     
     @objc private func sliderValueChanged(sender: UISlider) {
@@ -149,6 +151,57 @@ class AdvancedSearchView: UIView {
             }
             readyInLabel.text = display
         }
+        handleShowingClearButton()
+    }
+    
+    private func setUpInitialSearches(searches: [NetworkSearch]?) {
+        if let searches = searches {
+            for type in NetworkSearch.NetworkSearchType.allCases {
+                let hasMultiple = type.takesMultiple()
+                let potential = searches.filter({$0.type == type})
+                if potential.count > 0 {
+                    switch hasMultiple {
+                    case true:
+                        var text = ""
+                        for s in potential {
+                            let t = s.text
+                            if text == "" {
+                                text = "\(t), "
+                            } else {
+                                text = "\(text)\(t), "
+                            }
+                        }
+                        if text != "" {
+                            // FINAL TEXT HERE, NOW JUST NEED TO USE IT
+                            if type == .ingredient {
+                                ingredientsTF.text = text
+                            } else if type == .avoidIngredient {
+                                avoidIngsTF.text = text
+                            }
+                            #warning("could do something with the unknown searches here")
+                        }
+                    case false:
+                        let potentialSearch = potential[0]
+                        switch potentialSearch.type {
+                        case .calories:
+                            caloriesSlider.value = Float(potentialSearch.associatedNumber ?? 0)
+                            sliderValueChanged(sender: caloriesSlider)
+                        case .readyIn:
+                            readyInSlider.value = Float(potentialSearch.associatedNumber ?? 0)
+                            sliderValueChanged(sender: readyInSlider)
+                        case .tag:
+                            tagTF.text = potentialSearch.text
+                        case .title:
+                            titleTF.text = potentialSearch.text
+                        
+                        default:
+                            return
+                        }
+                    }
+                }
+            }
+        }
+        handleShowingClearButton()
     }
     
     private func collectSearches() -> [NetworkSearch] {
@@ -240,21 +293,21 @@ extension AdvancedSearchView {
             vc.tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
             vc.tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
             vc.tableView.topAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+            let heightForTable: CGFloat = 200.0
+            vc.maximumAllowedHeight = heightForTable
             
-            vc.tableView.heightAnchor.constraint(equalToConstant: 200).isActive = true
+            vc.heightConstraint = vc.tableView.heightAnchor.constraint(equalToConstant: heightForTable)
+            vc.heightConstraint!.isActive = true
             
             vc.delegate = self as CreateNewItemDelegate
             delegate = vc
             delegate.searchTextChanged(text: "")
-            
         }
     }
-    
 }
-
+// MARK: CreateNewItemDelegate
 extension AdvancedSearchView: CreateNewItemDelegate {
     func itemCreated(item: Item) {}
-    
     func searchCreated(search: NetworkSearch) {
         print("search created: \(search.text)")
         if let string = activeTextField?.text {
@@ -262,13 +315,9 @@ extension AdvancedSearchView: CreateNewItemDelegate {
                 activeTextField?.textColor = Colors.main
                 activeTextField?.text = search.text
                 activeTextField?.resignFirstResponder()
-                
             } else {
                 activeTextField?.text = string.updateSearchText(newItem: search.text)
             }
-            
         }
-        
     }
-    
 }

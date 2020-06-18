@@ -159,7 +159,7 @@
                     </constraints>
                 </stackView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="detailDisclosure" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cpk-W7-JUw">
-                    <rect key="frame" x="333" y="10" width="25" height="24"/>
+                    <rect key="frame" x="328" y="15" width="25" height="24"/>
                     <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <state key="normal">
                         <color key="titleColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -168,14 +168,26 @@
                         <action selector="infoButton:" destination="iN0-l3-epB" eventType="touchUpInside" id="nYJ-uu-uhA"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dkH-RO-GAg">
+                    <rect key="frame" x="15" y="15" width="30" height="28"/>
+                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="12"/>
+                    <state key="normal" title="Clear">
+                        <color key="titleColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="clearPressed:" destination="iN0-l3-epB" eventType="touchUpInside" id="iSy-HU-njE"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="cpk-W7-JUw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="C89-nx-uh4"/>
-                <constraint firstAttribute="trailing" secondItem="cpk-W7-JUw" secondAttribute="trailing" constant="10" id="FVw-PQ-q5c"/>
+                <constraint firstItem="cpk-W7-JUw" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="C89-nx-uh4"/>
+                <constraint firstAttribute="trailing" secondItem="cpk-W7-JUw" secondAttribute="trailing" constant="15" id="FVw-PQ-q5c"/>
                 <constraint firstItem="PDn-I7-Wha" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" constant="-40" id="QmG-Nq-7hE"/>
+                <constraint firstItem="dkH-RO-GAg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="aGC-i3-S0s"/>
                 <constraint firstItem="PDn-I7-Wha" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="gQu-Ob-ky9"/>
                 <constraint firstItem="PDn-I7-Wha" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" constant="-40" id="mNM-hO-fyv"/>
+                <constraint firstItem="dkH-RO-GAg" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="15" id="oYy-0d-uld"/>
                 <constraint firstItem="PDn-I7-Wha" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="tZe-Qe-Vp6"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -184,6 +196,7 @@
                 <outlet property="avoidIngsTF" destination="NgH-t3-2nn" id="lD1-y0-Mmk"/>
                 <outlet property="caloriesLabel" destination="a0I-jO-PK9" id="zPH-4u-AaT"/>
                 <outlet property="caloriesSlider" destination="6vr-4s-RXP" id="4Yv-fP-0Ek"/>
+                <outlet property="clearButtonOutlet" destination="dkH-RO-GAg" id="AHC-5b-XOg"/>
                 <outlet property="ingredientsTF" destination="K7c-iI-2yB" id="IKC-6R-9VQ"/>
                 <outlet property="mainStackView" destination="PDn-I7-Wha" id="Ljd-k7-HKu"/>
                 <outlet property="readyInLabel" destination="ccd-pl-96S" id="Ged-le-yLW"/>

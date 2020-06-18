@@ -91,7 +91,7 @@ class SelectMealPlanRecipeVC: UIViewController {
                     }
                     self.nextUrl = nxtUrl
                 case .failure(_):
-                    #warning("need to handle this")
+                    self.dismiss(animated: false, completion: nil)
                 }
             }
         }

@@ -13,6 +13,55 @@ import AVFoundation
 
 extension UIViewController {
     
+    func createInfoAboutSearchesAlert(viewRect: UIView) {
+        let actionSheet = UIAlertController(title: nil, message: "Info for", preferredStyle: .actionSheet)
+        actionSheet.addAction(.init(title: "Ingredients search", style: .default, handler: { (alert) in
+            self.createAlertOkButton(title: "Info for ingredients search",
+                                               body: "Searching for ingredients will find recipes that have all the ingredients that you have added. " +
+                                               "Separate the ingredients you want to find with commas. An example query is:\n\n" +
+                                               "pasta, broccoli, peas")
+        }))
+        actionSheet.addAction(.init(title: "Title search", style: .default, handler: { (alert) in
+            self.createAlertOkButton(title: "Info for title search",
+                                               body: "Searching for the title will match recipes that have the same text in the title. You do not need to worry about capitalization.")
+        }))
+        actionSheet.addAction(.init(title: "Tag/title search", style: .default, handler: { (alert) in
+            self.createAlertOkButton(title: "Info for tag/title search",
+                                               body: "Searching with a tag will help you find a recipe in a certain category. " +
+                                               "For example, if you want a vegetarian recipe or an Italian recipe this would be the field to specify that.")
+            
+        }))
+        actionSheet.addAction(.init(title: "Avoid ing search", style: .default, handler: { (alert) in
+            self.createAlertOkButton(title: "Info for avoid ing search",
+                                               body: "Searching with avoid ingredients will find recipes that do not have the ingredients in them. " +
+                                               "For example, if you do not like mushrooms this is the field to specify that. An example query is:\n\n" +
+                                               "mushrooms, peanuts")
+        }))
+        actionSheet.addAction(.init(title: "Ready in search", style: .default, handler: { (alert) in
+            self.createAlertOkButton(title: "Info for ready in search",
+                                               body: "Searching for recipes that are ready in a certain time will find recipes that have a total preparation and cook time that is less than or" +
+                                               " equal to the time entered.")
+        }))
+        actionSheet.addAction(.init(title: "Calories search", style: .default, handler: { (alert) in
+            self.createAlertOkButton(title: "Info for calories search",
+                                               body: "Searching for recipes with calories will find recipes that a calorie total less than or equal to the amount entered.")
+        }))
+        
+        actionSheet.addAction(.init(title: "Cancel", style: .cancel, handler: nil))
+        
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            self.present(actionSheet, animated: true)
+        } else {
+            // do other stuff for iPad
+            
+            if let presenter = actionSheet.popoverPresentationController {
+                presenter.sourceView = viewRect
+                presenter.sourceRect = viewRect.bounds
+            }
+            self.present(actionSheet, animated: true, completion: nil)
+        }
+    }
+    
     func createAlertOkButton(title: String, body: String) {
         let alert = UIAlertController(title: title, message: body, preferredStyle: .alert)
         alert.addAction(.init(title: "Ok", style: .cancel, handler: nil))
@@ -101,7 +150,7 @@ extension UIViewController {
         
     }
     
-    func createAdvancedSearchView() {
+    func createAdvancedSearchView(startSearches: [NetworkSearch]?) {
         let vc = UIViewController()
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -120,7 +169,7 @@ extension UIViewController {
         v.center.y = vc.view.center.y - yOffset
         v.alpha = 0
         v.shadowAndRounded(cornerRadius: 25.0, border: false)
-        v.setUI(vc: self)
+        v.setUI(vc: self, startSearches: startSearches)
         vc.modalPresentationStyle = .overFullScreen
         
         self.present(vc, animated: false) {

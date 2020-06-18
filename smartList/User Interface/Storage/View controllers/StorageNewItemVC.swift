@@ -74,7 +74,10 @@ class StorageNewItemVC: UIViewController {
             vc.tableView.topAnchor.constraint(equalTo: nameTextField.bottomAnchor).isActive = true
             
             let distance = (view.frame.height) - (keyboardHeight ?? 0.0) - 50.0 - (nameTextField.frame.height)
-            vc.tableView.heightAnchor.constraint(equalToConstant: distance).isActive = true
+            vc.maximumAllowedHeight = distance
+            vc.heightConstraint = vc.tableView.heightAnchor.constraint(equalToConstant: distance)
+            vc.heightConstraint!.isActive = true
+            
             vc.tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
             vc.tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
             vc.delegate = self as CreateNewItemDelegate

@@ -194,7 +194,9 @@ class AddItemsVC: UIViewController {
             let tb = (tabBarController?.tabBar.frame.height ?? 0.0)
             let distance = (backView.frame.height) - (keyboardHeight ?? 0.0) - (topView.frame.height) + tb
             
-            vc.tableView.heightAnchor.constraint(equalToConstant: distance).isActive = true
+            vc.maximumAllowedHeight = distance
+            vc.heightConstraint = vc.tableView.heightAnchor.constraint(equalToConstant: distance)
+            vc.heightConstraint!.isActive = true
             
             vc.delegate = self as CreateNewItemDelegate
             delegate = vc
