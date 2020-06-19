@@ -200,7 +200,8 @@ class Network {
                             tagline: r["tagline"] as? String,
                             recipeImage: nil,
                             mainImage: r["main_image"] as? String,
-                            thumbImage: r["thumb_image"] as? String)
+                            thumbImage: r["thumb_image"] as? String,
+                            authorURL: r["author_url"] as? String)
 
         return recipe
     }

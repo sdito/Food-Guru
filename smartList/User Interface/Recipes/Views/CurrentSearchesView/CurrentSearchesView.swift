@@ -23,19 +23,19 @@ class CurrentSearchesView: UIView {
     
     @IBOutlet weak var stackView: UIStackView!
     
-    func setUI(searches: [NetworkSearch]) {
+    func setUI(searches: [NetworkSearch], viewController: UIViewController) {
         stackView.subviews.forEach { (v) in
-            if type(of: v) == UIButton.self || type(of: v) == UILabel.self {
+            if type(of: v) == UIButton.self || type(of: v) == UILabel.self || type(of: v) == CurrentSearchesButton.self {
                 v.removeFromSuperview()
             }
         }
         
         if !searches.isEmpty {
             for search in searches {
-                let b = UIButton()
-                b.currentSearchStyle(search: search)
-                b.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-                stackView.addArrangedSubview(b)
+                let currentSearchButton = Bundle.main.loadNibNamed("CurrentSearchesButton", owner: nil, options: nil)?.first as! CurrentSearchesButton
+                currentSearchButton.setUI(search: search, currSearchesView: self)
+                //b.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+                stackView.addArrangedSubview(currentSearchButton)
             }
             
             if searches.count >= 2 {

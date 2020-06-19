@@ -81,6 +81,25 @@ struct NetworkSearch: Equatable {
             }
         }
         
+        func toString() -> String {
+            switch self {
+            case .ingredient:
+                return "INGREDIENT"
+            case .tag:
+                return "TAG/TYPE"
+            case .title:
+                return "TITLE"
+            case .avoidIngredient:
+                return "AVOID ING"
+            case .readyIn:
+                return "READY IN"
+            case .calories:
+                return "CALORIES"
+            case .unknown:
+                return "GENERAL"
+            }
+        }
+        
         static func toNetworkSearchTypeRepresentation(tag: Int) -> NetworkSearchType {
             // Don't need to update this if new searches are added, based on toTagRepresentation
             for type in self.allCases {

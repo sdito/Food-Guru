@@ -13,29 +13,11 @@ import UIKit
 
 
 extension UIButton {
-    
-    func currentSearchStyle(search: NetworkSearch) {
-        let buttonText: String = search.text
-        self.tag = search.type.toTagRepresentation()
-        self.setTitle(buttonText, for: .normal)
-        self.contentEdgeInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
-        self.titleLabel?.font = UIFont(name: "futura", size: 13)
-        self.layer.cornerRadius = 5
-        if #available(iOS 13.0, *) {
-            self.backgroundColor = .systemGray6
-            self.setTitleColor(.systemGray, for: .normal)
-        } else {
-            self.backgroundColor = .lightGray
-            self.setTitleColor(Colors.main, for: .normal)
-        }
-        self.clipsToBounds = true
-    }
-    
     func clearAllCurrentSearchesStyle() {
         self.setTitle("Clear", for: .normal)
         self.contentEdgeInsets = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
         self.titleLabel?.font = UIFont(name: "futura", size: 13)
-        self.layer.cornerRadius = 5
+        self.layer.cornerRadius = 8.0
         self.backgroundColor = Colors.main
         if #available(iOS 13.0, *) {
             self.setTitleColor(.systemBackground, for: .normal)

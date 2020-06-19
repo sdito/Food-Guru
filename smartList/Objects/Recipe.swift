@@ -28,8 +28,9 @@ struct Recipe {
     var recipeImage: Data?
     var mainImage: String?
     var thumbImage: String?
+    var authorURL: String?
     
-    init(djangoID: Int, name: String, authorName: String?, cookTime: Int?, prepTime: Int?, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, notes: String?, tagline: String?, recipeImage: Data?, mainImage: String?, thumbImage: String?) {
+    init(djangoID: Int, name: String, authorName: String?, cookTime: Int?, prepTime: Int?, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, notes: String?, tagline: String?, recipeImage: Data?, mainImage: String?, thumbImage: String?, authorURL: String?) {
         self.djangoID = djangoID
         self.name = name
         self.authorName = authorName
@@ -44,11 +45,10 @@ struct Recipe {
         self.recipeImage = recipeImage
         self.mainImage = mainImage
         self.thumbImage = thumbImage
+        self.authorURL = authorURL
     }
     
     // MARK: General
-    
-    
     
     mutating func writeToFirestore(db: Firestore!, storage: Storage) {
         let ingredients = self.ingredients
@@ -258,7 +258,8 @@ struct Recipe {
             "notes": self.notes as Any,
             "path": self.mainImage as Any,
             "tagline": self.tagline as Any,
-            "thumbImage": self.thumbImage as Any
+            "thumbImage": self.thumbImage as Any,
+            "authorURL": self.authorURL as Any
         ]) { err in
         if let err = err {
             print("Error saving recipe document: \(err)")
@@ -298,7 +299,7 @@ struct Recipe {
     }
     
     static func randomRecipeForSkeletonView() -> Recipe {
-        return Recipe(djangoID: -1, name: "Recipe", authorName: nil, cookTime: nil, prepTime: nil, ingredients: [], instructions: [], calories: nil, numServes: 0, notes: nil, tagline: "s", recipeImage: nil, mainImage: nil, thumbImage: nil)
+        return Recipe(djangoID: -1, name: "Recipe", authorName: nil, cookTime: nil, prepTime: nil, ingredients: [], instructions: [], calories: nil, numServes: 0, notes: nil, tagline: "s", recipeImage: nil, mainImage: nil, thumbImage: nil, authorURL: nil)
     }
     
 }
@@ -318,7 +319,8 @@ extension DocumentSnapshot {
                        tagline: self.get("tagline") as? String,
                        recipeImage: nil,
                        mainImage: self.get("path") as? String,
-                       thumbImage: self.get("thumbImage") as? String)
+                       thumbImage: self.get("thumbImage") as? String,
+                       authorURL: self.get("authorURL") as? String)
         return r
     }
 }

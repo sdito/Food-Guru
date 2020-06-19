@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CurrentSearchesButton" customModule="Food_Guru" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="140" height="36"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="X" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lap-xY-DvP">
+                    <rect key="frame" x="0.0" y="0.0" width="25" height="36"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="25" id="mOe-4G-Rh6"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                    <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="fPL-UV-atH">
+                    <rect key="frame" x="25" y="5" width="110" height="26"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xxh-0d-yUx">
+                            <rect key="frame" x="0.0" y="0.0" width="110" height="13"/>
+                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3vc-kr-QeC">
+                            <rect key="frame" x="0.0" y="13" width="110" height="13"/>
+                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="10"/>
+                            <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Lap-xY-DvP" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="7y2-3D-WQZ"/>
+                <constraint firstItem="fPL-UV-atH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="ILg-wU-jfE"/>
+                <constraint firstAttribute="bottom" secondItem="fPL-UV-atH" secondAttribute="bottom" constant="5" id="LMx-hL-elI"/>
+                <constraint firstItem="Lap-xY-DvP" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Mh2-iL-Jla"/>
+                <constraint firstAttribute="bottom" secondItem="Lap-xY-DvP" secondAttribute="bottom" id="jIY-JV-TLE"/>
+                <constraint firstItem="fPL-UV-atH" firstAttribute="leading" secondItem="Lap-xY-DvP" secondAttribute="trailing" id="o4q-DQ-3gs"/>
+                <constraint firstAttribute="trailing" secondItem="fPL-UV-atH" secondAttribute="trailing" constant="5" id="sQB-3u-cv1"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="bottomLabel" destination="3vc-kr-QeC" id="XFi-7J-co6"/>
+                <outlet property="topLabel" destination="Xxh-0d-yUx" id="0zj-yu-Te4"/>
+            </connections>
+            <point key="canvasLocation" x="-60.869565217391312" y="-149.33035714285714"/>
+        </view>
+    </objects>
+</document>

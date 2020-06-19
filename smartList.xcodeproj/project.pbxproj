@@ -53,6 +53,8 @@
 		E2445CF22321D8F90089582F /* RecipeHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CF12321D8F90089582F /* RecipeHomeVC.swift */; };
 		E2445CF42321DC100089582F /* StorageHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CF32321DC100089582F /* StorageHomeVC.swift */; };
 		E2445CFE23220D950089582F /* TimeInterval-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2445CFD23220D950089582F /* TimeInterval-Extension.swift */; };
+		E248EC5F249BF84500958D56 /* CurrentSearchesButton.xib in Resources */ = {isa = PBXBuildFile; fileRef = E248EC5E249BF84500958D56 /* CurrentSearchesButton.xib */; };
+		E248EC61249BF85500958D56 /* CurrentSearchesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E248EC60249BF85500958D56 /* CurrentSearchesButton.swift */; };
 		E24ADB0A23386E69008F2F9F /* StorageNewItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADB0923386E69008F2F9F /* StorageNewItemVC.swift */; };
 		E24ADB0C23399BD8008F2F9F /* ListHomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADB0B23399BD8008F2F9F /* ListHomeCell.swift */; };
 		E24ADB0E233DB063008F2F9F /* SettingContactDeveloperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24ADB0D233DB063008F2F9F /* SettingContactDeveloperCell.swift */; };
@@ -221,6 +223,8 @@
 		E2445CF12321D8F90089582F /* RecipeHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeHomeVC.swift; sourceTree = "<group>"; };
 		E2445CF32321DC100089582F /* StorageHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageHomeVC.swift; sourceTree = "<group>"; };
 		E2445CFD23220D950089582F /* TimeInterval-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval-Extension.swift"; sourceTree = "<group>"; };
+		E248EC5E249BF84500958D56 /* CurrentSearchesButton.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurrentSearchesButton.xib; sourceTree = "<group>"; };
+		E248EC60249BF85500958D56 /* CurrentSearchesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentSearchesButton.swift; sourceTree = "<group>"; };
 		E24ADB0923386E69008F2F9F /* StorageNewItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageNewItemVC.swift; sourceTree = "<group>"; };
 		E24ADB0B23399BD8008F2F9F /* ListHomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListHomeCell.swift; sourceTree = "<group>"; };
 		E24ADB0D233DB063008F2F9F /* SettingContactDeveloperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingContactDeveloperCell.swift; sourceTree = "<group>"; };
@@ -515,6 +519,15 @@
 				E24ADB0923386E69008F2F9F /* StorageNewItemVC.swift */,
 			);
 			path = "View controllers";
+			sourceTree = "<group>";
+		};
+		E248EC62249BFB5500958D56 /* CurrentSearchesButton */ = {
+			isa = PBXGroup;
+			children = (
+				E248EC5E249BF84500958D56 /* CurrentSearchesButton.xib */,
+				E248EC60249BF85500958D56 /* CurrentSearchesButton.swift */,
+			);
+			path = CurrentSearchesButton;
 			sourceTree = "<group>";
 		};
 		E253AC0923431FA70018274A /* ButtonIngredientView */ = {
@@ -881,6 +894,7 @@
 				E2A54E1F23186DEB00BEBF39 /* InstructionView */,
 				E2F380AE2319847F003857F7 /* IngredientView */,
 				E2E409C9236B629A0082A84D /* CurrentSearchesView */,
+				E248EC62249BFB5500958D56 /* CurrentSearchesButton */,
 				E2DA80CE2349958600BD7101 /* StarRatingView */,
 				E253AC0923431FA70018274A /* ButtonIngredientView */,
 			);
@@ -1025,6 +1039,7 @@
 				E253AC06234315170018274A /* ButtonIngredientView.xib in Resources */,
 				E25DEC702362B4810007535C /* CurrentSearchesView.xib in Resources */,
 				E28A4CC123DE818B00C94DF9 /* Storage.storyboard in Resources */,
+				E248EC5F249BF84500958D56 /* CurrentSearchesButton.xib in Resources */,
 				E2F380B023198496003857F7 /* IngredientView.xib in Resources */,
 				E28A4CC323DE819400C94DF9 /* Settings.storyboard in Resources */,
 				E216207522F659860074A0DF /* GoogleService-Info.plist in Resources */,
@@ -1260,6 +1275,7 @@
 				E2DC33D4241EDD84001A01C1 /* LoadingView.swift in Sources */,
 				E20BC6E2232AE13300F1E5E7 /* UIStackView-Extension.swift in Sources */,
 				E2DC0F2923B1DFA60094FDB2 /* EditItemInfoView.swift in Sources */,
+				E248EC61249BF85500958D56 /* CurrentSearchesButton.swift in Sources */,
 				E2F35434248D5C14007CC359 /* AdvancedSearchView.swift in Sources */,
 				E2EAE38823E63656001EDD72 /* MealPlanner.swift in Sources */,
 				E2B6273323C278AC0039459B /* OneTutorialVC.swift in Sources */,
@@ -1460,7 +1476,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3;
+				MARKETING_VERSION = 3.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1575,7 +1591,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.3;
+				MARKETING_VERSION = 3.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

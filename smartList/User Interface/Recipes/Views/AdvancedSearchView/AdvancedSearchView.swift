@@ -156,7 +156,7 @@ class AdvancedSearchView: UIView {
     
     private func setUpInitialSearches(searches: [NetworkSearch]?) {
         if let searches = searches {
-            for type in NetworkSearch.NetworkSearchType.allCases {
+            for type in NetworkSearch.NetworkSearchType.allCases.filter({$0 != .unknown}) {
                 let hasMultiple = type.takesMultiple()
                 let potential = searches.filter({$0.type == type})
                 if potential.count > 0 {

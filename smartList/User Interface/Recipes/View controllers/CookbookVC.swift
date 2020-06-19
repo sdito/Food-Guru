@@ -10,7 +10,6 @@ import UIKit
 import RealmSwift
 import FirebaseFirestore
 
-#warning("doesn't update when a new recipe is added, need to fix")
 
 class CookbookVC: UIViewController {
     
@@ -138,12 +137,6 @@ extension CookbookVC: UITableViewDelegate, UITableViewDataSource {
         } else {
             return false
         }
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let v = UIView()
-        v.backgroundColor = .clear
-        return v
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

@@ -193,7 +193,10 @@ extension SelectMealPlanRecipeVC: UITableViewDelegate, UITableViewDataSource {
                                 }
                                 self.nextUrl = nextUrl
                             case .failure(_):
-                                #warning("need to handle this")
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    self.loadingMoreRecipes = false
+                                }
+                                return
                             }
                         }
                     }
@@ -201,4 +204,5 @@ extension SelectMealPlanRecipeVC: UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
+    
 }

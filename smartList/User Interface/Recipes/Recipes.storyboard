@@ -561,6 +561,7 @@
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sL5-uq-FxG">
                                         <rect key="frame" x="0.0" y="44" width="414" height="681"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="sectionIndexBackgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cookbookCell" rowHeight="77" id="STG-gp-1KJ" customClass="CookbookCell" customModule="Food_Guru" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="414" height="77"/>
@@ -684,48 +685,81 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="h5k-oF-6nd">
-                                <rect key="frame" x="0.0" y="88" width="414" height="40"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P63-kF-zaR">
+                                <rect key="frame" x="0.0" y="88" width="414" height="42"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ID-Wh-Tfi">
-                                        <rect key="frame" x="0.0" y="0.0" width="103.5" height="40"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                        <state key="normal" title="PDF"/>
-                                        <connections>
-                                            <action selector="viewPDF:" destination="1BH-AS-PDt" eventType="touchUpInside" id="WeR-dC-Sh0"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i0N-fb-OlL">
-                                        <rect key="frame" x="103.5" y="0.0" width="103.5" height="40"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                        <state key="normal" title="Cookbook"/>
-                                        <connections>
-                                            <action selector="downloadRecipe:" destination="1BH-AS-PDt" eventType="touchUpInside" id="5Pe-cX-ASb"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DZF-Sb-Aiq">
-                                        <rect key="frame" x="207" y="0.0" width="103.5" height="40"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                        <state key="normal" title="Save"/>
-                                        <connections>
-                                            <action selector="saveRecipe:" destination="1BH-AS-PDt" eventType="touchUpInside" id="HE3-u6-bED"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejU-dX-idp">
-                                        <rect key="frame" x="310.5" y="0.0" width="103.5" height="40"/>
-                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="15"/>
-                                        <state key="normal" title="Planner"/>
-                                        <connections>
-                                            <action selector="addToMealPlanner:" destination="1BH-AS-PDt" eventType="touchUpInside" id="Pie-dL-FE7"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="WV0-7n-DuB">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="42"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="h5k-oF-6nd">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="40"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4ID-Wh-Tfi">
+                                                        <rect key="frame" x="0.0" y="0.0" width="79" height="40"/>
+                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                                        <state key="normal" title="PDF"/>
+                                                        <connections>
+                                                            <action selector="viewPDF:" destination="1BH-AS-PDt" eventType="touchUpInside" id="WeR-dC-Sh0"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i0N-fb-OlL">
+                                                        <rect key="frame" x="84" y="0.0" width="78.5" height="40"/>
+                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                                        <state key="normal" title="Cookbook"/>
+                                                        <connections>
+                                                            <action selector="downloadRecipe:" destination="1BH-AS-PDt" eventType="touchUpInside" id="5Pe-cX-ASb"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DZF-Sb-Aiq">
+                                                        <rect key="frame" x="167.5" y="0.0" width="79" height="40"/>
+                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                                        <state key="normal" title="Save"/>
+                                                        <connections>
+                                                            <action selector="saveRecipe:" destination="1BH-AS-PDt" eventType="touchUpInside" id="HE3-u6-bED"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejU-dX-idp">
+                                                        <rect key="frame" x="251.5" y="0.0" width="78.5" height="40"/>
+                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                                        <state key="normal" title="Planner"/>
+                                                        <connections>
+                                                            <action selector="addToMealPlanner:" destination="1BH-AS-PDt" eventType="touchUpInside" id="Pie-dL-FE7"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jhh-al-pAJ">
+                                                        <rect key="frame" x="335" y="0.0" width="79" height="40"/>
+                                                        <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                                        <state key="normal" title="Author"/>
+                                                        <connections>
+                                                            <action selector="viewAuthorPage:" destination="1BH-AS-PDt" eventType="touchUpInside" id="MJX-Aj-nCr"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="FnO-sr-Vyc"/>
+                                                </constraints>
+                                            </stackView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PxQ-RO-Op5">
+                                                <rect key="frame" x="0.0" y="40" width="414" height="2"/>
+                                                <color key="backgroundColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="2" id="wn3-Oh-0ay"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
+                                <color key="backgroundColor" systemColor="secondarySystemBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="FnO-sr-Vyc"/>
+                                    <constraint firstAttribute="bottom" secondItem="WV0-7n-DuB" secondAttribute="bottom" id="0Aj-pB-Qj6"/>
+                                    <constraint firstItem="WV0-7n-DuB" firstAttribute="top" secondItem="P63-kF-zaR" secondAttribute="top" id="4Ki-eD-Fgw"/>
+                                    <constraint firstItem="WV0-7n-DuB" firstAttribute="leading" secondItem="P63-kF-zaR" secondAttribute="leading" id="jnl-8G-SJi"/>
+                                    <constraint firstAttribute="height" constant="42" id="sAf-iV-dwo"/>
+                                    <constraint firstAttribute="trailing" secondItem="WV0-7n-DuB" secondAttribute="trailing" id="xva-pY-ogH"/>
                                 </constraints>
-                            </stackView>
+                            </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SRZ-od-WWc">
-                                <rect key="frame" x="0.0" y="128" width="414" height="989"/>
+                                <rect key="frame" x="0.0" y="130" width="414" height="987"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="1gv-Tq-hzU">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="888.5"/>
@@ -1008,14 +1042,14 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="P63-kF-zaR" firstAttribute="top" secondItem="UWq-Dg-ole" secondAttribute="top" id="97A-hW-RGZ"/>
                             <constraint firstItem="UWq-Dg-ole" firstAttribute="trailing" secondItem="SRZ-od-WWc" secondAttribute="trailing" id="FRq-4j-Duh"/>
-                            <constraint firstItem="h5k-oF-6nd" firstAttribute="top" secondItem="UWq-Dg-ole" secondAttribute="top" id="FcH-fg-Cmb"/>
-                            <constraint firstItem="UWq-Dg-ole" firstAttribute="trailing" secondItem="h5k-oF-6nd" secondAttribute="trailing" id="Ib5-pV-km4"/>
                             <constraint firstItem="SRZ-od-WWc" firstAttribute="leading" secondItem="30N-S5-C1W" secondAttribute="leading" id="NAO-x0-351"/>
-                            <constraint firstItem="SRZ-od-WWc" firstAttribute="top" secondItem="UWq-Dg-ole" secondAttribute="top" constant="40" id="Piv-Jb-UPd"/>
+                            <constraint firstItem="SRZ-od-WWc" firstAttribute="top" secondItem="UWq-Dg-ole" secondAttribute="top" constant="42" id="Piv-Jb-UPd"/>
                             <constraint firstItem="WUC-Cb-mof" firstAttribute="width" relation="lessThanOrEqual" secondItem="30N-S5-C1W" secondAttribute="width" multiplier="0.9" id="WLK-tA-Rtk"/>
                             <constraint firstItem="UWq-Dg-ole" firstAttribute="bottom" secondItem="SRZ-od-WWc" secondAttribute="bottom" id="YFO-6A-r59"/>
-                            <constraint firstItem="h5k-oF-6nd" firstAttribute="leading" secondItem="UWq-Dg-ole" secondAttribute="leading" id="gi0-gg-SPW"/>
+                            <constraint firstItem="P63-kF-zaR" firstAttribute="leading" secondItem="UWq-Dg-ole" secondAttribute="leading" id="mGn-1o-Llt"/>
+                            <constraint firstItem="UWq-Dg-ole" firstAttribute="trailing" secondItem="P63-kF-zaR" secondAttribute="trailing" id="pII-OA-TNZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UWq-Dg-ole"/>
                     </view>
@@ -1025,6 +1059,7 @@
                     <connections>
                         <outlet property="addAllToListOutlet" destination="Nar-fs-aai" id="vH0-3E-YIm"/>
                         <outlet property="author" destination="OIb-1i-97W" id="MOP-Bd-C6n"/>
+                        <outlet property="authorButtonOutlet" destination="Jhh-al-pAJ" id="uMa-eW-QIv"/>
                         <outlet property="calories" destination="0an-s8-LFi" id="Ai6-hU-ZfP"/>
                         <outlet property="caloriesSV" destination="vxI-JN-1nx" id="ywK-Sf-Zlw"/>
                         <outlet property="cookSV" destination="dHS-pg-fni" id="qNE-Ar-AuF"/>
@@ -1055,14 +1090,15 @@
                         <outletCollection property="viewsToRemoveForCookbook" destination="LjC-gm-bTF" collectionClass="NSMutableArray" id="m3S-FM-FF5"/>
                         <outletCollection property="viewsToRemoveForCookbook" destination="jO8-ep-LZk" collectionClass="NSMutableArray" id="alv-6Q-lhU"/>
                         <outletCollection property="viewsToRemoveForCookbook" destination="WUC-Cb-mof" collectionClass="NSMutableArray" id="8Rg-r0-utl"/>
-                        <outletCollection property="viewsToRemoveForCookbook" destination="i0N-fb-OlL" collectionClass="NSMutableArray" id="v3m-gK-dNm"/>
                         <outletCollection property="viewsToRemoveForCookbook" destination="DZF-Sb-Aiq" collectionClass="NSMutableArray" id="xso-YO-4wN"/>
+                        <outletCollection property="viewsToRemoveForCookbook" destination="i0N-fb-OlL" collectionClass="NSMutableArray" id="v3m-gK-dNm"/>
+                        <outletCollection property="viewsToRemoveForCookbook" destination="Jhh-al-pAJ" collectionClass="NSMutableArray" id="ve4-vw-RRS"/>
                         <segue destination="E6t-NB-wfD" kind="show" identifier="viewPDF" id="Q3z-aC-gyp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VWa-m6-4hC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1207" y="500"/>
+            <point key="canvasLocation" x="1205.7971014492755" y="499.55357142857139"/>
         </scene>
         <!--RecipePDFVC-->
         <scene sceneID="fDw-Lj-ymd">
@@ -1159,8 +1195,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="2dj-Gl-wQz"/>
-        <segue reference="D8T-sO-F9z"/>
+        <segue reference="egj-PB-qyh"/>
+        <segue reference="zuL-PG-4um"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.58188301320000002" green="0.21569153669999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
     <resources>

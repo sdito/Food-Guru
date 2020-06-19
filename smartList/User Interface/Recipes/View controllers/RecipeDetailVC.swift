@@ -11,6 +11,7 @@ import FirebaseFirestore
 import FirebaseAuth
 import FirebaseStorage
 import RealmSwift
+import SafariServices
 
 class RecipeDetailVC: UIViewController {
     
@@ -44,6 +45,7 @@ class RecipeDetailVC: UIViewController {
     @IBOutlet var      viewsToRemoveForCookbook: [UIView]!
     @IBOutlet weak var scaleSlider: UISlider!
     @IBOutlet weak var imageViewAspect: NSLayoutConstraint!
+    @IBOutlet weak var authorButtonOutlet: UIButton!
     
     var db: Firestore!
     var data: (image: UIImage?, recipe: Recipe)?
@@ -121,7 +123,7 @@ class RecipeDetailVC: UIViewController {
                         vc.documentData = pdfData
                         self.navigationController?.pushViewController(vc, animated: true)
                     case .failure(_):
-                        #warning("need to handle this")
+                        self.createMessageView(color: .red, text: "Unable to get PDF")
                     }
                     
                 }
@@ -190,21 +192,29 @@ class RecipeDetailVC: UIViewController {
     
     
     @IBAction func downloadRecipe(_ sender: Any) {
-        print("Download recipe")
-        
+        print("Add to cookbook")
         let cbr = data?.recipe.turnRecipeIntoCookbookRecipe()
         cbr?.write()
         self.createMessageView(color: Colors.messageGreen, text: "Recipe added to cookbook")
         downloadRecipeOutlet.isUserInteractionEnabled = false
         downloadRecipeOutlet.alpha = 0.5
         downloadRecipeOutlet.setTitle("✓ Download", for: .normal)
-        
     }
+    
+    @IBAction func viewAuthorPage(_ sender: Any) {
+        if let stringUrl = data?.recipe.authorURL, let url = URL(string: stringUrl) {
+            let config = SFSafariViewController.Configuration()
+            config.entersReaderIfAvailable = true
+            let vc = SFSafariViewController(url: url, configuration: config)
+            present(vc, animated: true)
+        }
+    }
+    
+    
     @IBAction func saveRecipe(_ sender: Any) {
         print("Save recipe")
         if let recipe = data?.recipe {
             let db = Firestore.firestore()
-            let path = recipe.mainImage ?? " "
             if SharedValues.shared.savedRecipes?.contains("\(recipe.djangoID)") ?? false {
                 Recipe.removeRecipeFromSavedRecipes(db: db, recipe: recipe)
                 recipe.removeRecipeDocumentFromUserProfile(db: db)
@@ -361,25 +371,18 @@ class RecipeDetailVC: UIViewController {
             imageView.image = img
         }
         
-        
         if let mainImageUrl = data?.recipe.mainImage {
-            
             Network.shared.getImage(url: mainImageUrl) { (image) in
-                
                 let aspect = image.size.height / image.size.width
                 if aspect != 1.0 {
                     self.imageViewAspect.isActive = false
                     self.imageView.translatesAutoresizingMaskIntoConstraints = false
                     let imageViewWidth = self.imageView.bounds.width
                     self.imageView.image = image
-                    
                     self.imageView.heightAnchor.constraint(equalToConstant: imageViewWidth * aspect).isActive = true
-                    
-                    
                 } else {
                     self.imageView.image = image
                 }
-                
             }
         } else {
             print("Doesn't have mainImageURL")
@@ -420,6 +423,10 @@ class RecipeDetailVC: UIViewController {
             caloriesSV.removeFromSuperview()
         }
         
+        if recipe.authorURL == nil {
+            authorButtonOutlet.removeFromSuperview()
+        }
+        
         servings.text = "\(recipe.numServes)"
         
         
@@ -458,7 +465,6 @@ class RecipeDetailVC: UIViewController {
             saveRecipeOutlet.setTitle("✓ Save", for: .normal)
         }
         
-        #warning("need to make sure addRecipeToRecentlyViewedWorks")
         recipe.addRecipeToRecentlyViewedRecipes(db: db)
         
     }

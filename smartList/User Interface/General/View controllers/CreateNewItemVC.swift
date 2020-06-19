@@ -75,7 +75,7 @@ class CreateNewItemVC: UITableViewController {
                 }
                 tableView.reloadData()
                 
-                #warning("this works, but it breaks constraints, need to set the previous one to inactive")
+                
                 if let height = maximumAllowedHeight, let currHeight = tableView.heightOfCells() {
                     if currHeight < height {
                         heightConstraint?.isActive = false

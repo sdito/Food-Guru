@@ -444,7 +444,7 @@ extension SettingsDetailVC: SettingViewedRecipeCellDelegate {
                 vc.data = data
                 self.navigationController?.pushViewController(vc, animated: true)
             case .failure(_):
-                #warning("need to handle this")
+                self.createMessageView(color: .red, text: "Unable to open recipe")
             }
             
         }

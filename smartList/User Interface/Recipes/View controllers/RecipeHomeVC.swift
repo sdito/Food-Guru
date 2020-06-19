@@ -106,18 +106,18 @@ class RecipeHomeVC: UIViewController {
                         }
                         self.nextUrl = nxtUrl
                     case .failure(_):
-                        #warning("probably create no connection view here")
                         self.stopSkeleton()
+                        self.recipes = []
                         self.noConnectionView = NoConnectionView.show(vc: self)
                     }
                 }
             }
             
             if wholeStackView.subviews.contains(currentSearchesView) {
-                currentSearchesView.setUI(searches: self.activeSearches)
+                currentSearchesView.setUI(searches: self.activeSearches, viewController: self)
             } else {
                 wholeStackView.insertArrangedSubview(currentSearchesView, at: 1)
-                currentSearchesView.setUI(searches: self.activeSearches)
+                currentSearchesView.setUI(searches: self.activeSearches, viewController: self)
             }
             
         }
