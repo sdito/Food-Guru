@@ -35,6 +35,7 @@ class RecipeHomeVC: UIViewController {
     private var mainLastContentOffset: CGFloat = 0.0
     private var savedLastContentOffset: CGFloat = 0.0
     
+    private var dontHideBottomTab = false; #warning("make sure this is working")
     private var instantChangeForAdvancedSearchViewActive = false
     private var noConnectionView: NoConnectionView?
     private var skeletonViewActive = false
@@ -227,14 +228,19 @@ class RecipeHomeVC: UIViewController {
     
     @IBAction func homeRecipes(_ sender: Any) {
         if savedRecipesActive {
+            dontHideBottomTab = true
             savedRecipesActive = false
             homeRecipesOutlet.handleSelectedForBottomTab(selected: true)
             savedRecipesOutlet.handleSelectedForBottomTab(selected: false)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.dontHideBottomTab = false
         }
     }
     
     @IBAction func savedRecipes(_ sender: Any) {
         if !savedRecipesActive {
+            dontHideBottomTab = true
             savedRecipesActive = true
             homeRecipesOutlet.handleSelectedForBottomTab(selected: false)
             savedRecipesOutlet.handleSelectedForBottomTab(selected: true)
@@ -242,12 +248,15 @@ class RecipeHomeVC: UIViewController {
                 self.savedRecipes = rcps
             }
         }
-        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.dontHideBottomTab = false
+        }
     }
 
     
     @IBAction func goToCookbook(_ sender: Any) {
         tabBarController?.selectedIndex = 1
+        scrollBackUpView.isHidden = false
     }
     // MARK: functions
     
@@ -535,7 +544,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             }
         }
         
-        else if (self.lastContentOffset < scrollView.contentOffset.y) {
+        else if (self.lastContentOffset < scrollView.contentOffset.y) && !dontHideBottomTab {
             scrollBackUpView.setIsHidden(true, animated: true)
         }
         

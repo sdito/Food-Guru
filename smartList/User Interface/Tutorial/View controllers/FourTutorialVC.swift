@@ -23,7 +23,7 @@ class FourTutorialVC: UIViewController {
         str.append(plus)
         let second = NSAttributedString(string: " to add the item to your list. Select ")
         str.append(second)
-        let download = NSAttributedString(string: "Download", attributes: [.foregroundColor:Colors.main])
+        let download = NSAttributedString(string: "Cookbook", attributes: [.foregroundColor:Colors.main])
         str.append(download)
         let third = NSAttributedString(string: " to have the recipe saved to your cookbook and select ")
         str.append(third)

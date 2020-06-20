@@ -195,10 +195,10 @@ class RecipeDetailVC: UIViewController {
         print("Add to cookbook")
         let cbr = data?.recipe.turnRecipeIntoCookbookRecipe()
         cbr?.write()
-        self.createMessageView(color: Colors.messageGreen, text: "Recipe added to cookbook")
+        self.createMessageView(color: Colors.messageGreen, text: "Recipe downloaded to cookbook")
         downloadRecipeOutlet.isUserInteractionEnabled = false
         downloadRecipeOutlet.alpha = 0.5
-        downloadRecipeOutlet.setTitle("✓ Download", for: .normal)
+        downloadRecipeOutlet.setTitle("✓ Cookbook", for: .normal)
     }
     
     @IBAction func viewAuthorPage(_ sender: Any) {

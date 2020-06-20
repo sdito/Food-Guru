@@ -18,17 +18,17 @@ class ThreeTutorialVC: UIViewController {
         super.viewDidLoad()
         imageView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
         
-        let str = NSMutableAttributedString(string: "From the recipes tab, select the heart on the top right of a recipe to save it for later. These recipes can be found be pressing ")
-        let save = NSAttributedString(string: "Saved", attributes: [.foregroundColor:Colors.main])
-        str.append(save)
-        let second = NSAttributedString(string: " at the bottom. Select ")
-        str.append(second)
-        let cookbook = NSAttributedString(string: "Cookbook", attributes: [.foregroundColor:Colors.main])
-        str.append(cookbook)
-        let third = NSAttributedString(string: " to view recipes downloaded on your device")
-        str.append(third)
-        
+        let str = NSMutableAttributedString(string: "From the home tab, select the ")
+        let image = NSTextAttachment()
+        let img = UIImage(named: "star_search")
+        let imageString = NSAttributedString(attachment: image)
+        let resized = img!.resizeImage(targetSize: CGSize(width: 25, height: 25))
+        image.image = resized
+        str.append(imageString)
+        let next = NSAttributedString(string: " to get to the advanced search menu. This is the same as with searching from the search bar, but there are more options and you have more control. For ingredients, you can have multiple by separating them with a comma.")
+        str.append(next)
         topLabel.attributedText = str
+        
         self.view.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.secondary)
         topView.setUpTutorialLabel()
         

@@ -18,7 +18,7 @@ protocol ButtonIngredientViewDelegate {
 
 
 class ButtonIngredientView: UIView {
-    
+    private var alreadyPressed = false
     var delegate: ButtonIngredientViewDelegate!
     
     @IBOutlet weak var button: UIButton!
@@ -49,30 +49,30 @@ class ButtonIngredientView: UIView {
     }
     
     @objc private func bAction() {
-        print("CALLED")
-        let db = Firestore.firestore()
-        let userID = Auth.auth().currentUser?.uid ?? " "
-        guard let name = label.text else { return print("Name did not set property from ButtonIngredientView") }
-        
-        GroceryList.getUsersCurrentList(db: db, userID: userID) { (list) in
-            if let list = list {
-                if list.stores?.isEmpty == true {
-                    GroceryList.addItemToListFromRecipe(db: db, listID: list.ownID ?? " ", name: name, userID: userID, store: "")
-                } else if list.stores?.count == 1 {
-                    GroceryList.addItemToListFromRecipe(db: db, listID: list.ownID ?? " ", name: name, userID: userID, store: list.stores!.first!)
+        if !alreadyPressed {
+            print("CALLED")
+            let db = Firestore.firestore()
+            let userID = Auth.auth().currentUser?.uid ?? " "
+            guard let name = label.text else { return print("Name did not set property from ButtonIngredientView") }
+            GroceryList.getUsersCurrentList(db: db, userID: userID) { (list) in
+                if let list = list {
+                    if list.stores?.isEmpty == true {
+                        GroceryList.addItemToListFromRecipe(db: db, listID: list.ownID ?? " ", name: name, userID: userID, store: "")
+                    } else if list.stores?.count == 1 {
+                        GroceryList.addItemToListFromRecipe(db: db, listID: list.ownID ?? " ", name: name, userID: userID, store: list.stores!.first!)
+                    } else {
+                        print("stores is not empty, have picker view for user to decide")
+                        self.delegate.haveUserSortItem(addedItemName: [name], addedItemStores: list.stores, addedItemListID: list.ownID ?? " ")
+                    }
                 } else {
-                    print("stores is not empty, have picker view for user to decide")
-                    self.delegate.haveUserSortItem(addedItemName: [name], addedItemStores: list.stores, addedItemListID: list.ownID ?? " ")
+                    // To create and add the item to a list if the user does not currently have a list
+                    GroceryList.handleProcessForAutomaticallyGeneratedListFromRecipe(db: db, items: [name])
+                    self.findViewController()?.createMessageView(color: Colors.messageGreen, text: "List created and item added!")
                 }
-            } else {
-                // To create and add the item to a list if the user does not currently have a list
-                GroceryList.handleProcessForAutomaticallyGeneratedListFromRecipe(db: db, items: [name])
-                self.findViewController()?.createMessageView(color: Colors.messageGreen, text: "List created and item added!")
-                
             }
+            alreadyPressed = true
         }
     }
-    
 }
 
 

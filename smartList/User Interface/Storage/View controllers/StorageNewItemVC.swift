@@ -116,7 +116,6 @@ class StorageNewItemVC: UIViewController {
     
     // MARK: functions
     @objc private func doneAction() {
-        nameTextField.text = ""
         delegate.searchTextChanged(text: "")
         nameTextField.resignFirstResponder()
     }

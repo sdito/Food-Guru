@@ -282,7 +282,6 @@ struct Recipe {
     func addButtonIngredientViewsTo(stackView: UIStackView, delegateVC: UIViewController) {
         for item in self.ingredients {
             let v = Bundle.main.loadNibNamed("ButtonIngredientView", owner: nil, options: nil)?.first as! ButtonIngredientView
-            
             v.setUI(ingredient: item)
             v.delegate = delegateVC as? ButtonIngredientViewDelegate
             stackView.insertArrangedSubview(v, at: 1)

@@ -21,19 +21,6 @@ class OneTutorialVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-        let image = NSTextAttachment()
-        let img = UIImage(named: "checked-checkbox-xxl")
-        let imageString = NSAttributedString(attachment: image)
-        
-        let resized = img!.resizeImage(targetSize: CGSize(width: 15, height: 15))
-        
-        image.image = resized
-        
-        let str = NSMutableAttributedString(string: "Select ")
-        str.append(imageString)
-        str.append(NSAttributedString(string: " to add the selected items from your list to your storage"))
-        
-        topLabel.attributedText = str
         
         self.view.setGradientBackground(colorOne: Colors.main, colorTwo: Colors.secondary)
         topView.setUpTutorialLabel()

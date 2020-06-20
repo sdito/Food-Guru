@@ -15,13 +15,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZKV-ec-CBk">
-                    <rect key="frame" x="0.0" y="0.0" width="403" height="94"/>
+                    <rect key="frame" x="0.0" y="0.0" width="403" height="91"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="WaL-zk-brs">
-                            <rect key="frame" x="0.0" y="0.0" width="1" height="94"/>
+                            <rect key="frame" x="0.0" y="0.0" width="1" height="91"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uB4-WV-ybT">
-                                    <rect key="frame" x="0.0" y="0.0" width="1" height="94"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="1" height="91"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="1" id="8td-Dy-cxc"/>
@@ -46,7 +46,7 @@
                 <constraint firstItem="ZKV-ec-CBk" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Ulb-Qp-f4H"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ZKV-ec-CBk" secondAttribute="trailing" id="WNO-P9-9pg"/>
                 <constraint firstItem="ZKV-ec-CBk" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="qmw-xk-qKd"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ZKV-ec-CBk" secondAttribute="bottom" id="yOg-DG-Eq7"/>
+                <constraint firstAttribute="bottom" secondItem="ZKV-ec-CBk" secondAttribute="bottom" constant="3" id="yOg-DG-Eq7"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

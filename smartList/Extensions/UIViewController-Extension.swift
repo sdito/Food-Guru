@@ -82,7 +82,7 @@ extension UIViewController {
             }
         }
         
-        let reference = storage.reference(withPath: "tutorial/\(lightOrDark)/\(imageText)_\(lightOrDark).png")
+        let reference = storage.reference(withPath: "tutorial__6_18/\(lightOrDark)/\(imageText)_\(lightOrDark).png")
         reference.getData(maxSize: 3 * 1024 * 1024) { (data, error) in
             guard let data = data else {
                 print("Error downloading tutorial image: \(error.debugDescription)")
