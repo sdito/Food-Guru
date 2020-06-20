@@ -16,7 +16,7 @@ class Network {
     var ingredients: [NetworkSearch] = []
     var tags: [NetworkSearch] = []
     static let shared = Network()
-    typealias RecipeResponse = (recipes: [Recipe]?, nextUrl: String?)
+    typealias RecipeResponse = (recipes: [Recipe]?, nextUrl: String?, numberRecipesFound: Int)
     private init() {}
     
     enum RequestType {
@@ -97,7 +97,7 @@ class Network {
         request.responseJSON { (response) in
             switch response.result {
             case .success(let json):
-                let result = self.getRecipesAndUrlFromJson(json: json)
+                let result = self.getRecipeData(json: json)
                 recipesReturned(NetworkResponse.success(result))
             case .failure(let error):
                recipesReturned(NetworkResponse.failure(error))
@@ -111,7 +111,7 @@ class Network {
         request.responseJSON { (response) in
             switch response.result {
             case .success(let json):
-                let result = self.getRecipesAndUrlFromJson(json: json)
+                let result = self.getRecipeData(json: json)
                 recipesReturned(NetworkResponse.success(result))
             case .failure(let error):
                 recipesReturned(NetworkResponse.failure(error))
@@ -167,10 +167,11 @@ class Network {
             }
         }
     }
-    private func getRecipesAndUrlFromJson(json: Any) -> ([Recipe]?, String?) {
+    private func getRecipeData(json: Any) -> RecipeResponse {
         
-        guard let json = json as? [String:Any] else { return (nil, nil) }
+        guard let json = json as? [String:Any] else { return (nil, nil, 0) }
         let nextUrl = json["next_block"] as? String
+        let numberRecipesFound = json["total_count"] as? Int ?? 0
         var recipes: [Recipe] = []
         
         if let recipesJson = json["recipes"] as? [[String:Any]] {
@@ -181,7 +182,7 @@ class Network {
         }
         
         
-        return (recipes, nextUrl)
+        return (recipes, nextUrl, numberRecipesFound)
         
     }
     

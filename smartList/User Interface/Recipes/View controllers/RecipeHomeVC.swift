@@ -35,7 +35,15 @@ class RecipeHomeVC: UIViewController {
     private var mainLastContentOffset: CGFloat = 0.0
     private var savedLastContentOffset: CGFloat = 0.0
     
-    private var dontHideBottomTab = false; #warning("make sure this is working")
+    private var numberOfRecipesFound: Int = 0 {
+        didSet {
+            print("Number of recipes found: \(self.numberOfRecipesFound)")
+            if self.numberOfRecipesFound == 0 {
+                self.createMessageView(color: .red, text: "No recipes found")
+            }
+        }
+    }
+    private var dontHideBottomTab = false
     private var instantChangeForAdvancedSearchViewActive = false
     private var noConnectionView: NoConnectionView?
     private var skeletonViewActive = false
@@ -100,10 +108,13 @@ class RecipeHomeVC: UIViewController {
                 startSkeleton()
                 Network.shared.getRecipes(searches: self.activeSearches) { (response) in
                     switch response {
-                    case .success((let rcps, let nxtUrl)):
+                    case .success((let rcps, let nxtUrl, let numberRecipesFound)):
                         if let rcps = rcps {
                             self.recipes = rcps
                             self.collectionViewReloadReset()
+                        }
+                        if self.activeSearches.count > 0 {
+                            self.numberOfRecipesFound = numberRecipesFound
                         }
                         self.nextUrl = nxtUrl
                     case .failure(_):
@@ -322,7 +333,7 @@ class RecipeHomeVC: UIViewController {
             if recipes.isEmpty {
                 Network.shared.getRecipes(searches: nil) { (response) in
                     switch response {
-                    case .success((let rcps, let next)):
+                    case .success((let rcps, let next, _)):
                         if let rs = rcps {
                             self.recipes = rs
                             self.collectionViewReloadReset()
@@ -451,7 +462,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 Network.shared.getRecipes(url: nextUrl) { (response) in
                     self.collectionView.refreshControl?.endRefreshing()
                     switch response {
-                    case .success((let rcps, let nxtUrl)):
+                    case .success((let rcps, let nxtUrl, _)):
                         if let rcps = rcps {
                             self.recipes = rcps
                             self.collectionViewReloadReset()
@@ -568,7 +579,7 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             
             Network.shared.getRecipes(url: nextUrl) { (response) in
                 switch response {
-                case .success((let rcps, let nxtUrl)):
+                case .success((let rcps, let nxtUrl, _)):
                     if let newRecipes = rcps {
                         var indexPaths: [IndexPath] = []
                         let prevLastIndex = self.recipes.count - 1

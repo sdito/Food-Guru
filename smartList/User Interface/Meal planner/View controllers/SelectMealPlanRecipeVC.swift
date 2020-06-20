@@ -83,7 +83,7 @@ class SelectMealPlanRecipeVC: UIViewController {
             Network.shared.getRecipes(searches: nil) { (response) in
                 switch response {
                     
-                case .success((let rcps, let nxtUrl)):
+                case .success((let rcps, let nxtUrl, let numberRecipesFound)):
                     if let rcps = rcps {
                         self.recipes = rcps
                         self.dismiss(animated: false, completion: nil)
@@ -177,7 +177,7 @@ extension SelectMealPlanRecipeVC: UITableViewDelegate, UITableViewDataSource {
                         loadingMoreRecipes = true
                         Network.shared.getRecipes(url: nextUrl) { (response) in
                             switch response {
-                            case .success((let rcps, let nextUrl)):
+                            case .success((let rcps, let nextUrl, _)):
                                 if let rcps = rcps {
                                     self.recipes += rcps
                                     self.tableView.beginUpdates()
