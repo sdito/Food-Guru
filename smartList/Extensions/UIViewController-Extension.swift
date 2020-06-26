@@ -25,7 +25,7 @@ extension UIViewController {
             self.createAlertOkButton(title: "Info for title search",
                                                body: "Searching for the title will match recipes that have the same text in the title. You do not need to worry about capitalization.")
         }))
-        actionSheet.addAction(.init(title: "Tag/title search", style: .default, handler: { (alert) in
+        actionSheet.addAction(.init(title: "Tag/type search", style: .default, handler: { (alert) in
             self.createAlertOkButton(title: "Info for tag/title search",
                                                body: "Searching with a tag will help you find a recipe in a certain category. " +
                                                "For example, if you want a vegetarian recipe or an Italian recipe this would be the field to specify that.")

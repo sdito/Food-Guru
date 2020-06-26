@@ -28,9 +28,9 @@ struct Recipe {
     var recipeImage: Data?
     var mainImage: String?
     var thumbImage: String?
-    var authorURL: String?
+    var url: String?
     
-    init(djangoID: Int, name: String, authorName: String?, cookTime: Int?, prepTime: Int?, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, notes: String?, tagline: String?, recipeImage: Data?, mainImage: String?, thumbImage: String?, authorURL: String?) {
+    init(djangoID: Int, name: String, authorName: String?, cookTime: Int?, prepTime: Int?, ingredients: [String], instructions: [String], calories: Int?, numServes: Int, notes: String?, tagline: String?, recipeImage: Data?, mainImage: String?, thumbImage: String?, url: String?) {
         self.djangoID = djangoID
         self.name = name
         self.authorName = authorName
@@ -45,7 +45,7 @@ struct Recipe {
         self.recipeImage = recipeImage
         self.mainImage = mainImage
         self.thumbImage = thumbImage
-        self.authorURL = authorURL
+        self.url = url
     }
     
     // MARK: General
@@ -68,7 +68,8 @@ struct Recipe {
             "notes": self.notes as Any,
             "path": self.mainImage as Any,
             "tagline": self.tagline as Any,
-            "numberIngredients": self.ingredients.count as Any
+            "numberIngredients": self.ingredients.count as Any,
+            "url": self.url as Any
         ]) { err in
             if err != nil {
                 UIApplication.shared.keyWindow?.rootViewController?.createMessageView(color: .red, text: "Failed creating recipe")
@@ -259,7 +260,7 @@ struct Recipe {
             "path": self.mainImage as Any,
             "tagline": self.tagline as Any,
             "thumbImage": self.thumbImage as Any,
-            "authorURL": self.authorURL as Any
+            "url": self.url as Any
         ]) { err in
         if let err = err {
             print("Error saving recipe document: \(err)")
@@ -298,7 +299,7 @@ struct Recipe {
     }
     
     static func randomRecipeForSkeletonView() -> Recipe {
-        return Recipe(djangoID: -1, name: "Recipe", authorName: nil, cookTime: nil, prepTime: nil, ingredients: [], instructions: [], calories: nil, numServes: 0, notes: nil, tagline: "s", recipeImage: nil, mainImage: nil, thumbImage: nil, authorURL: nil)
+        return Recipe(djangoID: -1, name: "Recipe", authorName: nil, cookTime: nil, prepTime: nil, ingredients: [], instructions: [], calories: nil, numServes: 0, notes: nil, tagline: "s", recipeImage: nil, mainImage: nil, thumbImage: nil, url: nil)
     }
     
 }
@@ -319,7 +320,7 @@ extension DocumentSnapshot {
                        recipeImage: nil,
                        mainImage: self.get("path") as? String,
                        thumbImage: self.get("thumbImage") as? String,
-                       authorURL: self.get("authorURL") as? String)
+                       url: self.get("url") as? String)
         return r
     }
 }

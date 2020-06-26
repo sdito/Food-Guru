@@ -1103,7 +1103,7 @@ extension QueryDocumentSnapshot {
                             recipeImage: nil,
                             mainImage: self.get("path") as? String,
                             thumbImage: self.get("thumbImage") as? String,
-                            authorURL: self.get("authorURL") as? String)
+                            url: self.get("url") as? String)
         return recipe
     }
 }

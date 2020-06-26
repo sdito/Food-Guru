@@ -45,7 +45,7 @@ class RecipeDetailVC: UIViewController {
     @IBOutlet var      viewsToRemoveForCookbook: [UIView]!
     @IBOutlet weak var scaleSlider: UISlider!
     @IBOutlet weak var imageViewAspect: NSLayoutConstraint!
-    @IBOutlet weak var authorButtonOutlet: UIButton!
+    @IBOutlet weak var urlButtonOutlet: UIButton!
     
     var db: Firestore!
     var data: (image: UIImage?, recipe: Recipe)?
@@ -201,13 +201,14 @@ class RecipeDetailVC: UIViewController {
         downloadRecipeOutlet.setTitle("✓ Cookbook", for: .normal)
     }
     
-    @IBAction func viewAuthorPage(_ sender: Any) {
-        if let stringUrl = data?.recipe.authorURL, let url = URL(string: stringUrl) {
+    @IBAction func viewURL(_ sender: Any) {
+        if let stringUrl = data?.recipe.url, let url = URL(string: stringUrl) {
             let config = SFSafariViewController.Configuration()
             config.entersReaderIfAvailable = true
             let vc = SFSafariViewController(url: url, configuration: config)
             present(vc, animated: true)
         }
+        
     }
     
     
@@ -423,8 +424,8 @@ class RecipeDetailVC: UIViewController {
             caloriesSV.removeFromSuperview()
         }
         
-        if recipe.authorURL == nil {
-            authorButtonOutlet.removeFromSuperview()
+        if recipe.url == nil {
+            urlButtonOutlet.removeFromSuperview()
         }
         
         servings.text = "\(recipe.numServes)"

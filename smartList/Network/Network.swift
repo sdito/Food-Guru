@@ -103,7 +103,6 @@ class Network {
                recipesReturned(NetworkResponse.failure(error))
             }
         }
-        
     }
     
     func getRecipes(url: String, recipesReturned: @escaping (NetworkResponse<(RecipeResponse)>) -> Void) {
@@ -202,7 +201,7 @@ class Network {
                             recipeImage: nil,
                             mainImage: r["main_image"] as? String,
                             thumbImage: r["thumb_image"] as? String,
-                            authorURL: r["author_url"] as? String)
+                            url: r["url"] as? String)
 
         return recipe
     }

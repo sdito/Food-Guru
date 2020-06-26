@@ -729,9 +729,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jhh-al-pAJ">
                                                         <rect key="frame" x="335" y="0.0" width="79" height="40"/>
                                                         <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
-                                                        <state key="normal" title="Author"/>
+                                                        <state key="normal" title="URL"/>
                                                         <connections>
-                                                            <action selector="viewAuthorPage:" destination="1BH-AS-PDt" eventType="touchUpInside" id="MJX-Aj-nCr"/>
+                                                            <action selector="viewURL:" destination="1BH-AS-PDt" eventType="touchUpInside" id="MJX-Aj-nCr"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -1059,7 +1059,6 @@
                     <connections>
                         <outlet property="addAllToListOutlet" destination="Nar-fs-aai" id="vH0-3E-YIm"/>
                         <outlet property="author" destination="OIb-1i-97W" id="MOP-Bd-C6n"/>
-                        <outlet property="authorButtonOutlet" destination="Jhh-al-pAJ" id="uMa-eW-QIv"/>
                         <outlet property="calories" destination="0an-s8-LFi" id="Ai6-hU-ZfP"/>
                         <outlet property="caloriesSV" destination="vxI-JN-1nx" id="ywK-Sf-Zlw"/>
                         <outlet property="cookSV" destination="dHS-pg-fni" id="qNE-Ar-AuF"/>
@@ -1086,6 +1085,7 @@
                         <outlet property="servingsFromSliderLabel" destination="PGk-bM-ZyD" id="ivo-6e-pU5"/>
                         <outlet property="servingsSV" destination="o6c-Da-6hE" id="snr-4y-Gsw"/>
                         <outlet property="tagline" destination="jO8-ep-LZk" id="0gd-z0-mh6"/>
+                        <outlet property="urlButtonOutlet" destination="Jhh-al-pAJ" id="uMa-eW-QIv"/>
                         <outlet property="wholeSV" destination="1gv-Tq-hzU" id="f0D-N9-YsO"/>
                         <outletCollection property="viewsToRemoveForCookbook" destination="LjC-gm-bTF" collectionClass="NSMutableArray" id="m3S-FM-FF5"/>
                         <outletCollection property="viewsToRemoveForCookbook" destination="jO8-ep-LZk" collectionClass="NSMutableArray" id="alv-6Q-lhU"/>
