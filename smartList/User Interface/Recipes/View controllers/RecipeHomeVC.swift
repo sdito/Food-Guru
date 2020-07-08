@@ -10,6 +10,7 @@ import UIKit
 import FirebaseFirestore
 import AVFoundation
 import SkeletonView
+import Hero
 
 
 class RecipeHomeVC: UIViewController {
@@ -179,6 +180,7 @@ class RecipeHomeVC: UIViewController {
         scrollBackUpView.shadowAndRounded(cornerRadius: 10, border: false)
         skeletonViewActive = true
         startSkeleton()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -209,11 +211,13 @@ class RecipeHomeVC: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-           if segue.identifier == "showRecipeDetail" {
-               let destVC = segue.destination as! RecipeDetailVC
-               destVC.data = sender as? (UIImage?, Recipe)
-           }
-       }
+        if segue.identifier == "showRecipeDetail" {
+            self.navigationController?.isHeroEnabled = true
+            self.navigationController?.hero.navigationAnimationType = .auto
+            let destVC = segue.destination as! RecipeDetailVC
+            destVC.data = sender as? (UIImage?, Recipe)
+        }
+    }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -503,12 +507,25 @@ extension RecipeHomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let cell = collectionView.cellForItem(at: indexPath) as! RecipeCell
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            cell.recipeImage.hero.id = ""
+        }
+        
         switch savedRecipesActive {
         case true:
             let selected = filteredSavedRecipes[indexPath.item]
+            if selected.thumbImage != nil {
+                cell.recipeImage.hero.id = "7198"
+            }
             performSegue(withIdentifier: "showRecipeDetail", sender: (imageCache.object(forKey: "\(indexPath.row)" as NSString), selected))
         case false:
             let selected = recipes[indexPath.item]
+            if selected.thumbImage != nil {
+                cell.recipeImage.hero.id = "7198"
+            }
             performSegue(withIdentifier: "showRecipeDetail", sender: (imageCache.object(forKey: "\(indexPath.row)" as NSString), selected))
             
         }

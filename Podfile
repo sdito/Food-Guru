@@ -20,6 +20,7 @@ pod 'Firebase/Analytics'
 pod 'Alamofire' 
 pod 'AlamofireImage', '~> 4.1'
 pod 'SkeletonView'
+pod 'Hero'
 
   target 'smartListTests' do
     inherit! :search_paths

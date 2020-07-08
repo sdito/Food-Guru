@@ -12,6 +12,7 @@ import FirebaseAuth
 import FirebaseStorage
 import RealmSwift
 import SafariServices
+import Hero
 
 class RecipeDetailVC: UIViewController {
     
@@ -67,9 +68,7 @@ class RecipeDetailVC: UIViewController {
             setUI(recipe: cookbook)
         }
         
-        
-        
-        
+    
         createObserver()
     
     }
@@ -369,21 +368,17 @@ class RecipeDetailVC: UIViewController {
     
     private func setUI(recipe: Recipe, image: UIImage?) {
         if let img = image {
+            imageView.hero.id = "7198"
             imageView.image = img
+            
+            self.isHeroEnabled = true
         }
         
         if let mainImageUrl = data?.recipe.mainImage {
             Network.shared.getImage(url: mainImageUrl) { (image) in
                 let aspect = image.size.height / image.size.width
-                if aspect != 1.0 {
-                    self.imageViewAspect.isActive = false
-                    self.imageView.translatesAutoresizingMaskIntoConstraints = false
-                    let imageViewWidth = self.imageView.bounds.width
-                    self.imageView.image = image
-                    self.imageView.heightAnchor.constraint(equalToConstant: imageViewWidth * aspect).isActive = true
-                } else {
-                    self.imageView.image = image
-                }
+                self.imageView.image = image
+                self.imageView.contentMode = .scaleAspectFill
             }
         } else {
             print("Doesn't have mainImageURL")

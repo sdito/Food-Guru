@@ -32,7 +32,7 @@ class AdvancedSearchView: UIView {
     @IBOutlet weak var tagTF: UITextField!
     @IBOutlet weak var avoidIngsTF: UITextField!
     
-    private var parentVC: UIViewController?
+    private weak var parentVC: UIViewController?
     private var delegate: SearchAssistantDelegate!
     private var createNewItemVC: CreateNewItemVC?
     private var activeTextField: UITextField?
